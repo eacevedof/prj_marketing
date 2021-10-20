@@ -1,0 +1,8 @@
+[
+  {
+    "domain": "localhost:3000",
+    "sslenc_method":"AES-256-CBC",
+    "sslenc_key":"@ABC$1234@",
+    "sslsalt":"@##--1P8K$"
+  }
+]

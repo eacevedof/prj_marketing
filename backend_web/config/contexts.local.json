@@ -1,0 +1,24 @@
+[
+  {
+    "id":"c1",
+    "alias":"db-pos",
+    "description":"Main db for POS",
+    "type":"mysql",
+    "server":"php-eafpos-db",
+    "port":"3306",
+    "schemas":[
+      {
+        "alias": "db-eafpos",
+        "database":"db_eafpos",
+        "user":"root",
+        "password":"1234"
+      },
+      {
+        "alias": "db-eafpos-log",
+        "database":"db_eafpos_log",
+        "user":"root",
+        "password":"1234"
+      }
+    ]
+  }
+]
