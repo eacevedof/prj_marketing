@@ -1,0 +1,6 @@
+.env
+nginx/.env
+fpm/.env
+mariadb/dumps/*.sql
+mariadb/initdb/*.sql
+redis/bash/*.rdb
