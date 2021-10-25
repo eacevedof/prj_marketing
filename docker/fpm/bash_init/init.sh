@@ -2,7 +2,7 @@
 
 # https://docs.docker.com/config/containers/multi-service_container/
 
-# comento set-m y ./log-consumer.sh & pq me esta dando error
+# comento set-m y ./log-consumer.sh & pq me esta dando error, parece que son las ENV
 
 # turn on bash's job control
 #set -m

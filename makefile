@@ -27,11 +27,11 @@ build-db-:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-db
 	make ps
 
-build-web:
+build-web: #nginx
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-web
 	make ps
 
-build-be:
+build-be: #fpm
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-be
 	make ps
 
