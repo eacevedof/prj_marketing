@@ -1,61 +1,10 @@
 version: "3.5"
 
 services:
-  php-eafpos-zookeeper:
-    #hostname: zookeeper
-    container_name: php-eafpos-zookeeper
-    # version: 3.4.13
-    image: wurstmeister/zookeeper
-    environment:
-      TZ: ${TIME_ZONE}
-    # ports:
-      # - 2181:2181
-    networks:
-      - php-eafpos-net
-      - mariadb-univ_net
-
-  php-eafpos-kafka:
-    hostname: kafka
-    container_name: php-eafpos-kafka
-    #version: 2.13-2.7.0
-    build:
-      context: docker/kafka
-    depends_on:
-      - php-eafpos-zookeeper
-
-    environment:
-      TZ: ${TIME_ZONE}
-
-      #KAFKA_ADVERTISED_HOST_NAME: ${IP_HOSTMACHINE}
-      KAFKA_ADVERTISED_HOST_NAME: host.docker.internal
-      #KAFKA_LISTENERS: INTERNAL://kafka:9092
-      #KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092
-      #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
-      #KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-
-      KAFKA_ZOOKEEPER_CONNECT: php-eafpos-zookeeper:2181
-      KAFKA_BROKER_ID: 1
-      KAFKA_TOPIC_1: ${KAFKA_TOPIC}
-      #topic-name:partition:replicas
-      KAFKA_CREATE_TOPICS: ${KAFKA_TOPIC}:1:1
-      KAFKA_DELETE_TOPIC_ENABLE: "true"
-      #tiempo de vida del mensaje 4 horas
-      KAFKA_LOG_RETENTION_MINUTES: 320
-      CONFIG: /opt/kafka/config
-
-    ports:
-      - 9092:9092
-
-    volumes:
-      - ./docker/kafka/bash:/root/bash
-    networks:
-      - php-eafpos-net
-      - mariadb-univ_net
-
-  php-eafpos-db:
+  php-marketing-db:
     # mariadb: 10.5.9
     hostname: db
-    container_name: php-eafpos-db
+    container_name: php-marketing-db
     build:
       context: docker/mariadb
       args:
@@ -72,12 +21,12 @@ services:
     ports:
       - 3307:3306
     networks:
-      - php-eafpos-net
+      - php-marketing-net
 
-  php-eafpos-cron:
+  php-marketing-cron:
     # crontab
     hostname: cron
-    container_name: php-eafpos-cron
+    container_name: php-marketing-cron
     build:
       context: docker/crontab
       args:
@@ -91,14 +40,14 @@ services:
       - ./io:/appdata/io
       - ./docker/crontab/scripts:/appdata/scripts
     depends_on:
-      - php-eafpos-db
+      - php-marketing-db
     networks:
-      - php-eafpos-net
+      - php-marketing-net
 
-  php-eafpos-web:
+  php-marketing-web:
     # nginx:latest
     hostname: nginx
-    container_name: php-eafpos-web
+    container_name: php-marketing-web
     build:
       context: docker/nginx
     ports:
@@ -107,9 +56,6 @@ services:
 
       - 1000:100 #api sec
       - 1001:101 #spa sec
-    environment:
-      TZ: ${TIME_ZONE}
-      KAFKA_TOPIC: ${KAFKA_TOPIC}
 
     volumes:
       - ./io:/appdata/io
@@ -117,14 +63,14 @@ services:
       - ./frontend/restrict/build:/appdata/www/frontend/restrict/build
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php-eafpos-be
+      - php-marketing-be
     networks:
-      - php-eafpos-net
+      - php-marketing-net
 
-  php-eafpos-be:
+  php-marketing-be:
     # php:7.4.16-fpm
     hostname: php
-    container_name: php-eafpos-be
+    container_name: php-marketing-be
     build:
       context: docker/fpm
     environment:
@@ -140,28 +86,10 @@ services:
       - ./docker/fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
     networks:
-      - php-eafpos-net
-      - mariadb-univ_net
-
-  php-eafpos-redis:
-    hostname: redis
-    container_name: php-eafpos-redis
-    build:
-      context: docker/redis
-    environment:
-      TZ: ${TIME_ZONE}
-
-    volumes:
-      - ./docker/redis/bash:/root/bash
-
-    ports:
-      - 6379:6379
-
-    networks:
-      - php-eafpos-net
+      - php-marketing-net
       - mariadb-univ_net
 
 networks:
-  php-eafpos-net:
+  php-marketing-net:
   mariadb-univ_net:
     external: true
