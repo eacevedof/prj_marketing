@@ -38,6 +38,10 @@ build-be:
 start: ## start
 	docker-compose start
 
+start-be: ## start
+	docker-compose -f docker-compose.yml --env-file ./docker/.env restart php-marketing-be
+
+
 restart: ## restart the containers
 	docker-compose stop
 	docker-compose start
