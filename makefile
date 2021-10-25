@@ -13,8 +13,8 @@ ps:
 
 rebuild: ## rebuild containers
 	docker-compose -f docker-compose.yml down
-	docker-compose -f docker-compose.yml --env-file docker/.env up -d --build --remove-orphans
-	docker-compose --env-file docker/.env up -d --no-deps --build php-marketing-db
+	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
+	docker-compose --env-file ./docker/.env up -d --no-deps --build php-marketing-db
 
 destroy: ## destroy containers
 	docker-compose -f docker-compose.yml down
