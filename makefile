@@ -12,8 +12,8 @@ ps:
 	docker ps | grep marketing
 
 rebuild: ## rebuild containers
-	docker-compose -f docker-compose.yml down
-	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
+	docker-compose --env-file ./docker/.env -f docker-compose.yml down
+	docker-compose --env-file ./docker/.env -f docker-compose.yml up -d --build --remove-orphans
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-marketing-db
 
 config:
@@ -49,7 +49,7 @@ restart-web:
 	docker restart php-marketing-web
 
 restart-cron:
-	docker restart php-marketing-web
+	docker restart php-marketing-cron
 
 restart-db:
 	docker restart php-marketing-db
