@@ -2,11 +2,13 @@
 
 # https://docs.docker.com/config/containers/multi-service_container/
 
+# comento set-m y ./log-consumer.sh & pq me esta dando error
+
 # turn on bash's job control
-set -m
+#set -m
 
 # Start the primary process and put it in the background
-./log-consumer.sh &
+#./log-consumer.sh &
 
 # Start the helper process
 #./my_helper_process
@@ -17,4 +19,4 @@ set -m
 
 # now we bring the primary process back into the foreground
 # and leave it there
-fg %1
+#fg %1

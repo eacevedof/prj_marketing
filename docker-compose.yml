@@ -23,6 +23,49 @@ services:
     networks:
       - php-marketing-net
 
+  php-marketing-be:
+    # php:7.4.16-fpm
+    hostname: php
+    container_name: php-marketing-be
+    build:
+      context: docker/fpm
+    environment:
+      TZ: ${TIME_ZONE}
+      # estas variables sirven para cuando se ejecuta desde consola... creo :)
+      PHP_IDE_CONFIG: serverName=ServXdebug
+      PHP_XDEBUG_ENABLED: 1
+      XDEBUG_CONFIG: client_host=host.docker.internal client_port=9005 remote_connect_back=0
+    volumes:
+      - ./io:/appdata/io
+      - ./bash:/appdata/bash
+      - ./backend_web:/appdata/www/backend_web
+      - ./docker/fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+
+    networks:
+      - php-marketing-net
+      - mariadb-univ_net
+
+  php-marketing-web:
+    # nginx:latest
+    hostname: nginx
+    container_name: php-marketing-web
+    build:
+      context: docker/nginx
+    ports:
+      - 900:90 #api
+      - 901:91 #spa
+
+    volumes:
+      - ./io:/appdata/io
+      - ./backend_web/public:/appdata/www/backend_web/public
+      - ./frontend/restrict/build:/appdata/www/frontend/restrict/build
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-marketing-be
+    networks:
+      - php-marketing-net
+
+
 networks:
   php-marketing-net:
   mariadb-univ_net:
