@@ -9,39 +9,27 @@ ip:
 	ipconfig getifaddr en0
 
 ps:
-	docker ps | grep eafpos
+	docker ps | grep marketing
 
 rebuild: ## rebuild containers
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.yml --env-file ./docker/.env up -d --build --remove-orphans
-	docker-compose --env-file ./docker/.env up -d --no-deps --build php-eafpos-db
+	docker-compose --env-file ./docker/.env up -d --no-deps --build php-marketing-db
 
 build-cron:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-cron
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-cron
 	make ps
 
 build-db-:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-db
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-db
 	make ps
 
 build-web:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-web
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-web
 	make ps
 
 build-be:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-be
-	make ps
-
-build-zookeeper:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-zookeeper
-	make ps
-
-build-kafka:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-kafka
-	make ps
-
-build-redis:
-	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-eafpos-redis
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-be
 	make ps
 
 start: ## start
@@ -52,91 +40,52 @@ restart: ## restart the containers
 	docker-compose start
 
 restart-be:
-	docker restart php-eafpos-be
+	docker restart php-marketing-be
 
 restart-web:
-	docker restart php-eafpos-web
+	docker restart php-marketing-web
 
 restart-cron:
-	docker restart php-eafpos-web
+	docker restart php-marketing-web
 
 restart-db:
-	docker restart php-eafpos-db
-
-restart-zookeeper:
-	docker restart php-eafpos-zookeeper
-
-restart-kafka:
-	docker restart php-eafpos-kafka
-
-restart-redis:
-	docker restart php-eafpos-redis
+	docker restart php-marketing-db
 
 stop: ## stop containers
 	docker-compose stop
 
 stop-db: ## stop db
-	docker stop php-eafpos-db
+	docker stop php-marketing-db
 
 stop-cron: ## stop cron
-	docker stop php-eafpos-cron
+	docker stop php-marketing-cron
 
 stop-be: ## stop be
-	docker stop php-eafpos-be
+	docker stop php-marketing-be
 
 stop-web: ## stop web
-	docker stop php-eafpos-web
-
-stop-redis: ## stop redis
-	docker stop php-eafpos-redis
-
-stop-zookeeper: ## stop zookeeper
-	docker stop zookeeper
-
-stop-kafka: ## stop kafka
-	docker stop kafka
+	docker stop php-marketing-web
 
 logs-web: ## logs web
-	docker logs php-eafpos-web
+	docker logs php-marketing-web
 
 logs-be: ## logs be
-	docker logs php-eafpos-be
+	docker logs php-marketing-be
 
 logs-db: ## logs db
-	docker logs php-eafpos-db
-
-logs-cron: ## logs cron
-	docker logs php-eafpos-cron
-
-logs-zookeeper: ## logs php-eafpos-zookeeper
-	docker logs php-eafpos-zookeeper
-
-logs-kafka: ## logs kafka
-	docker logs php-eafpos-kafka
-
-logs-redis: ## logs redis
-	docker logs php-eafpos-redis
+	docker logs php-marketing-db
 
 ssh-be: ## fpm
-	docker exec -it --user root php-eafpos-be bash
+	docker exec -it --user root php-marketing-be bash
 
 ssh-web: ## web
-	docker exec -it --user root php-eafpos-web bash
+	docker exec -it --user root php-marketing-web bash
 
 ssh-db: ## ssh's into mysql
-	docker exec -it --user root php-eafpos-db bash
+	docker exec -it --user root php-marketing-db bash
 
 ssh-cron: ## ssh's into crontab
-	docker exec -it --user root php-eafpos-cron sh
-
-ssh-zookeeper: ## ssh's into php-eafpos-zookeeper
-	docker exec -it --user root php-eafpos-zookeeper bash
-
-ssh-kafka: ## ssh's into php-eafpos-kafka
-	docker exec -it --user root php-eafpos-kafka bash
-
-ssh-redis: ## ssh's into redis
-	docker exec -it --user root php-eafpos-redis bash
+	docker exec -it --user root php-marketing-cron sh
 
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly eduardoaf
@@ -161,8 +110,8 @@ run-consumer: ## be-container
 	run --class=App.Services.Kafka.LogConsumerService
 
 ips: ## get ips of containers
-	echo "php-eafpos-web"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-web
-	echo "php-eafpos-cron"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-cron
-	echo "php-eafpos-be"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-be
-	echo "php-eafpos-db"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-eafpos-db
+	echo "php-marketing-web"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-web
+	echo "php-marketing-cron"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-cron
+	echo "php-marketing-be"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-be
+	echo "php-marketing-db"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-db
 

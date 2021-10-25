@@ -24,7 +24,7 @@ final class LogConsumerService
     private function _get_pdo(): ?PDO
     {
         $context = new ComponentContext($_ENV["APP_CONTEXTS"], "c1");
-        return DbFactory::get_pdo_by_ctx($context, "db_eafpos_log");
+        return DbFactory::get_pdo_by_ctx($context, "db_marketing_log");
     }
 
     private function _get_query(): ComponentCrud

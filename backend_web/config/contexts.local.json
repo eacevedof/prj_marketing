@@ -1,21 +1,21 @@
 [
   {
     "id":"c1",
-    "alias":"db-pos",
-    "description":"Main db for POS",
+    "alias":"db-marketing",
+    "description":"Main db for MARKETING",
     "type":"mysql",
-    "server":"php-eafpos-db",
+    "server":"php-marketing-db",
     "port":"3306",
     "schemas":[
       {
-        "alias": "db-eafpos",
-        "database":"db_eafpos",
+        "alias": "db-marketing",
+        "database":"db_marketing",
         "user":"root",
         "password":"1234"
       },
       {
-        "alias": "db-eafpos-log",
-        "database":"db_eafpos_log",
+        "alias": "db-marketing-log",
+        "database":"db_marketing_log",
         "user":"root",
         "password":"1234"
       }
