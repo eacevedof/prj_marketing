@@ -19,8 +19,8 @@ rebuild: ## rebuild containers
 config:
 	docker-compose --env-file ./docker/.env config
 
-destroy: ## destroy containers
-	docker-compose -f docker-compose.yml down
+destroy-all: ## destroy containers
+	docker-compose --env-file ./docker/.env -f docker-compose.yml down
 
 build-cron:
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-cron
@@ -37,13 +37,6 @@ build-web: #nginx
 build-be: #fpm
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-be
 	make ps
-
-start: ## start
-	docker-compose start
-
-start-be: ## start
-	docker-compose -f docker-compose.yml --env-file ./docker/.env restart php-marketing-be
-
 
 restart: ## restart the containers
 	docker-compose stop
