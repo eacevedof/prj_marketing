@@ -12,7 +12,7 @@ ps:
 	docker ps | grep marketing
 
 rebuild: ## rebuild containers
-	docker-compose -f docker-compose.yml down
+	docker-compose --env-file ./docker/.env -f docker-compose.yml down
 	docker-compose --env-file ./docker/.env -f docker-compose.yml up -d --build --remove-orphans
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-marketing-db
 
