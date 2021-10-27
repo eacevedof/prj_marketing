@@ -25,13 +25,13 @@ RUN mkdir -p /appdata/www
 RUN mkdir -p /appdata/init
 RUN mkdir -p /appdata/bash
 
-COPY ./.bashrc /root/.bashrc
-COPY ./bash_init/log-consumer.sh /appdata/init/log-consumer.sh
-COPY ./bash_init/init.sh /appdata/init/init.sh
+#COPY ./.bashrc /root/.bashrc
+#COPY ./bash_init/log-consumer.sh /appdata/init/log-consumer.sh
+#COPY ./bash_init/init.sh /appdata/init/init.sh
 
-RUN chmod -R +x /appdata/init
-RUN chmod -R +x /appdata/bash
+#RUN chmod -R +x /appdata/init
+#RUN chmod -R +x /appdata/bash
 
-WORKDIR /appdata/www
+#WORKDIR /appdata/www
 
-CMD /appdata/init/init.sh
+#CMD /appdata/init/init.sh
