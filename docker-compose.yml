@@ -3,7 +3,6 @@ version: "3.5"
 services:
   php-marketing-db:
     # mariadb: 10.5.9
-    #env_file: ./docker/.env
     hostname: db
     container_name: php-marketing-db
     build:
@@ -25,8 +24,7 @@ services:
       - php-marketing-net
 
   php-marketing-be:
-    # php:7.4.16-fpm
-    #env_file: ./docker/.env
+    # php:8.0.12-fpm
     hostname: php
     container_name: php-marketing-be
     build:
@@ -49,7 +47,6 @@ services:
 
   php-marketing-web:
     # nginx:latest
-    #env_file: ./docker/.env
     hostname: nginx
     container_name: php-marketing-web
     build:
