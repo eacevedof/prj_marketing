@@ -35,4 +35,4 @@ RUN chmod -R +x /appdata/bash
 WORKDIR /appdata/www
 
 # esto me da error
-CMD /appdata/init/init.sh
+#CMD /appdata/init/init.sh
