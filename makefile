@@ -39,8 +39,8 @@ build-be: #fpm
 	make ps
 
 restart: ## restart the containers
-	docker-compose stop
-	docker-compose start
+	docker-compose --env-file ./docker/.env stop
+	docker-compose --env-file ./docker/.env start
 
 restart-be:
 	docker restart php-marketing-be
@@ -55,7 +55,7 @@ restart-db:
 	docker restart php-marketing-db
 
 stop: ## stop containers
-	docker-compose stop
+	docker-compose --env-file ./docker/.env stop
 
 stop-db: ## stop db
 	docker stop php-marketing-db
