@@ -51,10 +51,8 @@ final class AppView
 
     private function _load_path_template_name(): void
     {
-        if(!$this->pathtemplate) {
-            $action = $this->request["action"] ?? "index";
-            $this->pathtemplate .= "/$action.tpl";
-        }
+        $action = $this->request["action"] ?? "index";
+        $this->pathtemplate .= "/$action.tpl";
     }
 
     private function _template(): void
@@ -85,16 +83,15 @@ final class AppView
         throw new Exception($message, $code);
     }
 
-
     public function set_layout(string $pathlayout): AppView
     {
         if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout.tpl";
         return $this;
     }
 
-    public function set_template(string $pattemplate): AppView
+    public function set_template(string $pathtemplate): AppView
     {
-        if(pathtemplate) $this->pathtemplate = self::PATH_TEMPLATES ."/$pattemplate.tpl";
+        if($pathtemplate) $this->pathtemplate = self::PATH_TEMPLATES ."/$pathtemplate.tpl";
         return $this;
     }
 
@@ -103,8 +100,11 @@ final class AppView
         $this->_load_path_layout();
         if(!is_file($this->pathlayout)) $this->_exception("layout {$this->pathtemplate} not found");
 
-        $this->_load_path_folder_template();
-        $this->_load_path_template_name();
+        if (!$this->pathtemplate) {
+            $this->_load_path_folder_template();
+            $this->_load_path_template_name();
+        }
+
         if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
 
         foreach ($this->vars as $name => $value)
