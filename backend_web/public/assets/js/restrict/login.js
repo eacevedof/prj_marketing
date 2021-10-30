@@ -1,7 +1,12 @@
 const App = {
   data() {
     return {
-      counter: 0
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+      issending: false,
+
     }
   },
   mounted() {

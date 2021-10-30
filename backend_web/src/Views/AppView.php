@@ -22,7 +22,7 @@ final class AppView
     private const PATH_ELEMENTS = PATH_SRC."/Views/elements";
 
     private const PATH_ASSETS_JS = "/assets/js/";
-    private const PATH_ASSETS_IMG = "/assets/img/";
+    private const PATH_ASSETS_IMG = "/assets/images/";
     private const PATH_ASSETS_CSS = "/assets/css/";
 
     private $request;
