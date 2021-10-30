@@ -110,7 +110,7 @@ function __(string $msgid): string
         $_REQUEST["TRANSLATIONS"] = $trs;
     }
 
-    $msgchanged = $_REQUEST["TRANSLATIONS"][$msgid] ?? $msgid;
+    $msgchanged = !($_REQUEST["TRANSLATIONS"][$msgid] ?? "") ? $msgid : $_REQUEST["TRANSLATIONS"][$msgid];
     foreach ($args as $i => $str) {
         $rep = "{".$i."}";
         $msgchanged = str_replace($rep, $str, $msgchanged);
