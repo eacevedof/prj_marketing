@@ -50,7 +50,7 @@ final class AppView
            $strcontroller = str_replace("\\","/", $strcontroller);
            $strcontroller = strtolower($strcontroller);
            $strcontroller = str_replace("controller","", $strcontroller);
-           $this->pathtemplate = self::PATH_TEMPLATES . "/$strcontroller";
+           $this->pathtemplate = self::PATH_TEMPLATES . "$strcontroller";
         }
     }
 
@@ -88,6 +88,15 @@ final class AppView
     {
         $this->vars = $vars;
     }
+
+    public function template(): void
+    {
+       foreach ($this->vars as $name => $value)
+            $$name = $value;
+
+       include_once($this->pathtemplate);
+    }
+
 
     public function element(string $pathelement, $vars = []): void
     {
