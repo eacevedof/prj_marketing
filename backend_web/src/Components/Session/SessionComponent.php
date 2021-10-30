@@ -5,11 +5,6 @@ namespace App\Components\Session;
 
 final class SessionComponent
 {
-    public function __construct()
-    {
-
-    }
-
     public function add_value(string $key, $mxvalue): SessionComponent
     {
         $_SESSION[$key] = $mxvalue;
@@ -28,6 +23,23 @@ final class SessionComponent
         }
         session_destroy();
         return  $this;
+    }
+
+    public function start(): SessionComponent
+    {
+        session_start();
+        return $this;
+    }
+
+    public function get(string $key)
+    {
+        return $_SESSION[$key] ?? null;
+    }
+
+    public function get_once(string $key)
+    {
+        $value =  $this->get($key);
+        unset($_SESSION[$key]);
     }
 
 }
