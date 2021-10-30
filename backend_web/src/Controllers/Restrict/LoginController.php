@@ -7,14 +7,13 @@
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
-namespace App\Controllers\Restrict\RestrictController;
-
+namespace App\Controllers\Restrict;
 
 final class LoginController extends RestrictController
 {
     public function index(): void
     {
-
+        $this->render();
     }
 
 }//LoginController
