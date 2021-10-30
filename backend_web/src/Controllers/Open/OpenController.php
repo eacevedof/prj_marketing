@@ -22,7 +22,11 @@ final class OpenController extends AppController
         $this->add_var("a","prrito");
         $this->add_var("b", "dddd");
         $this->add_var("c", "rrr");
-        $this->render();
+        $this->render([
+            "a" => "hooolllaaa",
+            "b" => "bbbbbbbbbb",
+            "c" => "ccccccc"
+        ], "restrict/xxx");
     }
 
 }//OpenController
