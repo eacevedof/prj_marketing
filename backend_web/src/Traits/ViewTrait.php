@@ -37,10 +37,10 @@ trait ViewTrait
         return $this->view;
     }
 
-    protected function render(string $pathview=""): void
+    protected function render(string $pathview="", $vars=[]): void
     {
         $this->_init();
-        $this->view->set_vars($this->vars);
+        if($vars) $this->view->set_vars($vars);
         $this->view->render($pathview);
     }
 
