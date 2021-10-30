@@ -39,7 +39,7 @@ final class AppView
 
     private function _load_path_layout(): void
     {
-        $this->pathlayout = self::PATH_LAYOUTS."/default.php";
+        $this->pathlayout = self::PATH_LAYOUTS."/default.ctp";
     }
 
     private function _load_path_folder_template(): void
