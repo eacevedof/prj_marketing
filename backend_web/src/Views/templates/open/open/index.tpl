@@ -1,8 +1,11 @@
 <?php
+/**
+ * @var \App\Views\AppView $this
+ */
 echo " \n";
 echo "variables en vista <br/>";
 print_r($a);
 
-$this->element("common/hola", ["xxx"=>$a]);
+$this->_element("common/hola", ["xxx"=>$a]);
 
-$this->element("common/hola", ["xxx" => "agua"]);
+$this->_element("common/hola", ["xxx" => "agua"]);
