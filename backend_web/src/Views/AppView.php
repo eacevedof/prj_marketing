@@ -21,8 +21,9 @@ final class AppView
     use LogTrait;
     use EnvTrait;
 
+    //private const PATH_VIEWS = PATH_SRC."/Views";
     private const PATH_LAYOUTS = PATH_SRC."/Views/layouts";
-    private const PATH_VIEWS = PATH_SRC."/Views";
+    private const PATH_TEMPLATES = PATH_SRC."/Views/templates";
     private const PATH_ELEMENTS = PATH_SRC."/Views/elements";
 
     private $request;
@@ -49,15 +50,15 @@ final class AppView
            $strcontroller = str_replace("\\","/", $strcontroller);
            $strcontroller = strtolower($strcontroller);
            $strcontroller = str_replace("controller","", $strcontroller);
-           $this->pathview = self::PATH_VIEWS . "/$strcontroller";
+           $this->pathtemplate = self::PATH_TEMPLATES . "/$strcontroller";
         }
     }
 
     private function _load_path_template_name(): void
     {
-        if($this->pathview) {
+        if($this->pathtemplate) {
             $action = $this->request["action"] ?? "index";
-            $this->pathview .= "";
+            $this->pathtemplate .= "/$action.php";
         }
     }
 
@@ -70,26 +71,18 @@ final class AppView
     public function render(string $pathtemplate=""): void
     {
         $this->_load_path_layout();
-        if(!is_file($this->pathlayout)) throw new \Exception("layout {$this->pathview} not found");
+        if(!is_file($this->pathlayout)) throw new \Exception("layout {$this->pathtemplate} not found");
+
+        $this->_load_path_folder_template();
+        $this->_load_path_template_name();
+        if(!is_file($this->pathtemplate)) throw new \Exception("template {$this->pathtemplate} not found");
+
         foreach ($this->vars as $name => $value)
             $$name = $value;
         include_once($this->pathlayout);
         die();
 
-        $this->_load_path_folder_template();
-        $this->_load_path_template_name();
-
-
-        if(!is_file($this->pathview))  throw new \Exception("view {$this->pathview} not found");
-
-        foreach ($this->vars as $name => $value)
-            $$name = $value;
-        var_dump($this->vars);
-        if ($this->pathview) include($this->pathview);
-        die("rendred");
     }
-
-
 
     public function set_vars(array $vars): void
     {
