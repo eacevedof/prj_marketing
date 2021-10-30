@@ -22,7 +22,7 @@ final class AppView
     private const PATH_ELEMENTS = PATH_SRC."/Views/elements";
 
     private const PATH_ASSETS_JS = "/assets/js/";
-    private const PATH_ASSETS_IMG = "/assets/js/";
+    private const PATH_ASSETS_IMG = "/assets/img/";
     private const PATH_ASSETS_CSS = "/assets/css/";
 
     private $request;
@@ -90,14 +90,14 @@ final class AppView
 
     private function _asset_css(string $pathcss):string
     {
-        $path = self::PATH_ASSETS_JS.$pathcss.".css";
+        $path = self::PATH_ASSETS_CSS.$pathcss.".css";
         $html = "<link href=\"$path\" rel=\"stylesheet\">";
         return $html;
     }
 
     private function _asset_img(string $pathimg):string
     {
-        $path = self::PATH_ASSETS_JS.$pathimg;
+        $path = self::PATH_ASSETS_IMG.$pathimg;
         return $path;
     }
 
