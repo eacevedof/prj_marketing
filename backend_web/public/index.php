@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include("../boot/appbootstrap.php");
 //header("Access-Control-Allow-Origin: *");
 //Código de configuración de cabeceras que permiten consumir la API desde cualquier origen
@@ -65,4 +66,4 @@ catch (\Exception $ex)
     ];
     echo json_encode($response);
 }
-
+ob_end_flush();
