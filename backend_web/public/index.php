@@ -53,6 +53,8 @@ try {
             throw new \Exception("request method {$_SERVER["REQUEST_METHOD"]} not allowed");
     }
 
+    if($json = file_get_contents("php://input")) $_POST = json_decode($json, 1);
+
     $_REQUEST["ACTION"] = $arRun;
     $_REQUEST["ACTION_LANG"] = trim($_GET["lang"] ?? "en");
     $oController = new $arRun["controller"]();
