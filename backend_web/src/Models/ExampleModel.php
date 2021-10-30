@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Models\ExampleModel 
  * @file ExampleModel.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN

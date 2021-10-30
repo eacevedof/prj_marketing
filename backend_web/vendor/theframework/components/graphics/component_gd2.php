@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name ComponentGd2
  * @file component_gd2.php
  * @version 1.1.0

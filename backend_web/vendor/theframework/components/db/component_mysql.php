@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentMysql 
  * @file component_mysql.php v2.2.0
  * @date 10-06-2020 15:10 SPAIN

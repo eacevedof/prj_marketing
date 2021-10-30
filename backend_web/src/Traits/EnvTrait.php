@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Traits\EnvTrait
  * @file EnvTrait.php 1.0.0
  * @date 21-07-2020 19:00 SPAIN

@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @version 1.0.0
  * @name Helper Style
  * @date 21-02-2013 09:45

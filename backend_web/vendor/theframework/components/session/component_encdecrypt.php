@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @version 1.5.1
  * @name ComponentEncdecrypt
  * @file component_encdecrypt.php

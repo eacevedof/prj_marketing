@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Controllers\Apify\LoginController
  * @file LoginController.php 1.0.0
  * @date 03-06-2020 18:17 SPAIN

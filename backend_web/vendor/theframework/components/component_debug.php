@@ -1,7 +1,7 @@
 <?php
 /**
 * @author Eduardo Acevedo Farje.
-* @link www.eduardoaf.com
+* @link eduardoaf.com
 * @version 1.3.0
 * @name ComponentDebug 
 * @file component_debug.php

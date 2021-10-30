@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Services\Dbs\CoreQueriesService
  * @file CoreQueriesService.php 1.0.0
  * @date 15-01-2018 19:00 SPAIN

@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheApplication\Components\ComponentConfig
  * @file ComponentConfig.php 1.0.0
  * @date 04-06-2020 12:35 SPAIN

@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Controllers\Apify\ContextsController 
  * @file ContextsController.php 1.0.0
  * @date 27-06-2019 18:17 SPAIN

@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheApplication\Components\ComponentRouter 
  * @file ComponentRouter.php 1.0.0
  * @date 28-06-2019 08:19 SPAIN

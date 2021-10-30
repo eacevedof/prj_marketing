@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheApplication\Components\ComponentCurl 
  * @file ComponentCurl.php 1.1.0
  * @date 08-04-2019 10:10 SPAIN

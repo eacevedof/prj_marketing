@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
  * @file component_crud.php 2.7.1
  * @date 03-08-2020 14:54 SPAIN

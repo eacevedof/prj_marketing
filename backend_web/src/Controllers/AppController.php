@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Controllers\AppController 
  * @file AppController.php v1.2.0
  * @date 01-07-2021 20:14 SPAIN

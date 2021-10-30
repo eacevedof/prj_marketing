@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheApplication\Components\ComponentFile 
  * @file ComponentFile.php 1.0.0
  * @date 12-03-2019 16:27 SPAIN
