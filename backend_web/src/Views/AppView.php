@@ -70,7 +70,6 @@ final class AppView
 
     public function render(string $pathtemplate=""): void
     {
-
         $this->_load_path_layout();
         if(!is_file($this->pathlayout)) throw new \Exception("layout {$this->pathtemplate} not found");
 
