@@ -12,6 +12,9 @@ const App = {
 
   methods: {
     onSubmit() {
+      this.issending = true
+      this.btnsend = "...logging"
+
       const data = {
         email: this.email,
         password: this.password
@@ -34,6 +37,8 @@ const App = {
             })
           }
           else {
+            this.issending = false
+            this.btnsend = "enviar"
             console.log("xhr error:", xhr);
             Swal.fire({
               icon: 'warning',
