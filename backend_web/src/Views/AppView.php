@@ -10,18 +10,13 @@
  */
 namespace App\Views;
 
-use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
-use App\Traits\EnvTrait;
 use \Exception;
 
 final class AppView
 {
-    use ErrorTrait;
     use LogTrait;
-    use EnvTrait;
 
-    //private const PATH_VIEWS = PATH_SRC."/Views";
     private const PATH_LAYOUTS = PATH_SRC."/Views/layouts";
     private const PATH_TEMPLATES = PATH_SRC."/Views/templates";
     private const PATH_ELEMENTS = PATH_SRC."/Views/elements";
