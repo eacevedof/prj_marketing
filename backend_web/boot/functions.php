@@ -83,10 +83,10 @@ function __(): string
     $lang = strtolower(trim($_REQUEST["ACTION_LANG"] ?? "en"));
     if ($lang === "en") return $msgchanged;
 
-    $pathpo = PATH_BOOT."/locale/$lang/default.po";
+    $pathpo = PATH_ROOT."/locale/$lang/default.po";
     if(!is_file($pathpo)) return $msgchanged;
 
-    if(!$_REQUEST["TRANSLATIONS"] ?? []) {
+    if(!($_REQUEST["TRANSLATIONS"] ?? [])) {
         $content = file_get_contents($pathpo);
         $content = trim($content);
         if (!$content) return $msgchanged;
