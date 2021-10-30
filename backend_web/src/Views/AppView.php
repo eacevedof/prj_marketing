@@ -71,11 +71,11 @@ final class AppView
     public function render(string $pathtemplate=""): void
     {
         $this->_load_path_layout();
-        if(!is_file($this->pathlayout)) throw new \Exception("layout {$this->pathtemplate} not found");
+        if(!is_file($this->pathlayout)) $this->_exception("layout {$this->pathtemplate} not found");
 
         $this->_load_path_folder_template();
         $this->_load_path_template_name($pathtemplate);
-        if(!is_file($this->pathtemplate)) throw new \Exception("template {$this->pathtemplate} not found");
+        if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
 
         foreach ($this->vars as $name => $value)
             $$name = $value;
@@ -94,7 +94,7 @@ final class AppView
         return $this;
     }
 
-    public function template(): void
+    private function _template(): void
     {
        foreach ($this->vars as $name => $value)
             $$name = $value;
@@ -102,10 +102,10 @@ final class AppView
        include_once($this->pathtemplate);
     }
 
-    public function element(string $pathelement, $vars = []): void
+    private function _element(string $pathelement, $vars = []): void
     {
         $path = self::PATH_ELEMENTS."/$pathelement.tpl";
-        if(!is_file($path)) throw new \Exception("element $path does not exist!");
+        if(!is_file($path)) $this->_exception("element $path does not exist!");
 
         foreach ($this->vars as $name => $value)
             $$name = $value;
