@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?=$pagetitle?></title>
     <?= $this->_asset_css("index") ?>
-    <?= $this->_asset_css("restrict/index") ?>
+    <?= $this->_asset_css("restrict/restrict") ?>
     <script src="https://unpkg.com/vue@next"></script>
     <?= $this->_asset_js("index") ?>
 </head>
