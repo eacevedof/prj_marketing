@@ -2,6 +2,8 @@
 /**
  * @var \App\Views\AppView $this
  */
+
+//var_dump($login);
 ?>
 <h1>Login</h1>
 <div id="counter">

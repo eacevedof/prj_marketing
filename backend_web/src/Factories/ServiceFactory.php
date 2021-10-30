@@ -14,7 +14,7 @@ final class ServiceFactory
 {
     public static function get(string $service, array $params = []): ?object
     {
-        $service = "App\Sevices\{$service}";
+        $service = "\App\Services\\".$service;
         try {
             $reflection = new $service(...$params);
         }
