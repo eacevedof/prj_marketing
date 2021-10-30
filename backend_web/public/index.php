@@ -49,6 +49,7 @@ try {
     unset($arRoutes);
 
     $_REQUEST["ACTION"] = $arRun;
+    $_REQUEST["ACTION_LANG"] = "en";
     $oController = new $arRun["controller"]();
     $oController->{$arRun["method"]}();
 }

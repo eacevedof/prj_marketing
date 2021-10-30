@@ -68,6 +68,11 @@ function get_console_args($argv): array
     return $_ARG;
 }
 
+function __()
+{
+
+}
+
 use \App\Factories\KafkaFactory;
 
 function get_log_producer(): \App\Components\Kafka\ProducerComponent
