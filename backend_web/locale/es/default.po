@@ -1,2 +1,5 @@
-msgid "this account {0}"
-msgstr "esta cuenta {0}"
+msgid "Email"
+msgstr ""
+
+msgid "Password"
+msgstr "clave"
