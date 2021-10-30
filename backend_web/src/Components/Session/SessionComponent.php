@@ -5,7 +5,7 @@ namespace App\Components\Session;
 
 final class SessionComponent
 {
-    public function add_value(string $key, $mxvalue): SessionComponent
+    public function add(string $key, $mxvalue): SessionComponent
     {
         $_SESSION[$key] = $mxvalue;
         return  $this;
