@@ -13,11 +13,11 @@ const App = {
   mounted() {},
 
   methods: {
-    checkform(e) {
-      e.preventDefault()
+    onSubmit() {
       alert("checking")
     }
 
   }//methods
 }
-Vue.createApp(App).mount("#form-login")
+
+Vue.createApp(App).mount("#app")
