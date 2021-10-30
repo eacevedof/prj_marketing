@@ -17,15 +17,22 @@ trait ViewTrait
      * @var AppView
      */
     private $view = null;
+    private $vars = [];
 
     private function _init(): void
     {
         $this->view = new AppView();
     }
 
+    protected function add_var(string $varname, $value): void
+    {
+        $this->vars[$varname] = $value;
+    }
+
     protected function render(): void
     {
         $this->_init();
+        $this->view->set_vars($this->vars);
         $this->view->render();
     }
 

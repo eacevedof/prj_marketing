@@ -21,11 +21,21 @@ final class AppView
     use LogTrait;
     use EnvTrait;
 
+    private $vars = [];
+
     public function __construct(){;}
 
     public function render(): void
     {
+        foreach ($this->vars as $name => $value)
+            $$name = $value;
+        var_dump($this->vars);
         die("rendred");
+    }
+
+    public function set_vars(array $vars): void
+    {
+        $this->vars = $vars;
     }
 
     protected function _exception(string $message, int $code=500): void
