@@ -1,4 +1,4 @@
-const Counter = {
+const App = {
   data() {
     return {
       counter: 0
@@ -8,6 +8,14 @@ const Counter = {
     setInterval(() => {
       this.counter++
     }, 1000)
-  }
+  },
+
+  methods: {
+    checkform(e) {
+      e.preventDefault()
+      alert("checking")
+    }
+
+  }//methods
 }
-Vue.createApp(Counter).mount('#counter')
+Vue.createApp(App).mount("#form-login")
