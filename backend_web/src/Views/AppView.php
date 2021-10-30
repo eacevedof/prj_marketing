@@ -2,36 +2,35 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Services\AppService 
- * @file AppService.php 1.0.0
- * @date 29-11-2018 19:00 SPAIN
+ * @name App\Views\AppView
+ * @file AppView.php 1.0.0
+ * @date 30-10-2021 15:00 SPAIN
  * @observations
  * @tags: #apify
  */
-namespace App\Services;
+namespace App\Views;
 
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use \Exception;
 
-abstract class AppService
+final class AppView
 {
     use ErrorTrait;
     use LogTrait;
     use EnvTrait;
 
     public function __construct(){;}
- 
-    public function trim(&$arPost)
+
+    public function render(): void
     {
-        foreach($arPost as $sKey=>$sValue)
-            $arPost[$sKey] = trim($sValue);
+        die("rendred");
     }
 
-    protected function _exeption(string $message, int $code=500): void
+    protected function _exception(string $message, int $code=500): void
     {
         $this->logerr($message,"app-service.exception");
         throw new Exception($message, $code);
     }
-}//AppService
+}//AppView
