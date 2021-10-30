@@ -68,15 +68,14 @@ function get_console_args($argv): array
     return $_ARG;
 }
 
-function __(): string
+function __(string $msgid): string
 {
+    if (!$msgid = trim($msgid)) return "";
     $args = func_get_args();
-    $msgid = array_shift($args);
-    if (!$msgid) return "";
-
+    array_shift($args);
     $msgchanged = $msgid;
     foreach ($args as $i => $str) {
-        $rep = "{$i}";
+        $rep = "{".$i."}";
         $msgchanged = str_replace($rep, $str, $msgchanged);
     }
 
@@ -113,7 +112,7 @@ function __(): string
 
     $msgchanged = $_REQUEST["TRANSLATIONS"][$msgid] ?? $msgid;
     foreach ($args as $i => $str) {
-        $rep = "{$i}";
+        $rep = "{".$i."}";
         $msgchanged = str_replace($rep, $str, $msgchanged);
     }
 
