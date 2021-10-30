@@ -1,10 +1,8 @@
 const App = {
   data() {
     return {
-      name: "xxx",
       email: "eaf@eaf.com",
-      subject: "sss",
-      message: "mmmm",
+      password: "eaf@eaf.com",
       issending: false,
       btnsend: "enviar"
     }
