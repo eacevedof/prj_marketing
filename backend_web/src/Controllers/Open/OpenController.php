@@ -18,7 +18,7 @@ final class OpenController extends AppController
 
     public function index(): void
     {
-        $this->set_layout("restrict/default");
+        //$this->set_layout("restrict/default");
         $this->add_var("a","prrito");
         $this->add_var("b", "dddd");
         $this->add_var("c", "rrr");

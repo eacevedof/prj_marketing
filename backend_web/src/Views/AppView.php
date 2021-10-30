@@ -22,10 +22,10 @@ final class AppView
     private const PATH_ELEMENTS = PATH_SRC."/Views/elements";
 
     private $request;
-    
+
+    private $vars = [];
     private $pathlayout = "";
     private $pathtemplate = "";
-    private $vars = [];
 
     public function __construct()
     {
@@ -49,49 +49,12 @@ final class AppView
         }
     }
 
-    private function _load_path_template_name(string $pathtpl=null): void
+    private function _load_path_template_name(): void
     {
-        if($pathtpl) {
-            $this->pathtemplate = self::PATH_TEMPLATES ."/$pathtpl.tpl";
-            return;
-        }
-
-        if($this->pathtemplate) {
+        if(!$this->pathtemplate) {
             $action = $this->request["action"] ?? "index";
             $this->pathtemplate .= "/$action.tpl";
         }
-    }
-
-    public function set_layout(string $pathlayout): AppView
-    {
-        if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout.tpl";
-        return $this;
-    }
-
-    public function render(string $pathtemplate=""): void
-    {
-        $this->_load_path_layout();
-        if(!is_file($this->pathlayout)) $this->_exception("layout {$this->pathtemplate} not found");
-
-        $this->_load_path_folder_template();
-        $this->_load_path_template_name($pathtemplate);
-        if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
-
-        foreach ($this->vars as $name => $value)
-            $$name = $value;
-        include_once($this->pathlayout);
-    }
-
-    public function set_vars(array $vars): AppView
-    {
-        $this->vars = $vars;
-        return $this;
-    }
-
-    public function add_var(string $name, $var): AppView
-    {
-        if(trim($name)!=="") $this->vars[$name] = $var;
-        return $this;
     }
 
     private function _template(): void
@@ -116,9 +79,50 @@ final class AppView
         include($path);
     }
 
-    protected function _exception(string $message, int $code=500): void
+    private function _exception(string $message, int $code=500): void
     {
         $this->logerr($message,"app-service.exception");
         throw new Exception($message, $code);
     }
+
+
+    public function set_layout(string $pathlayout): AppView
+    {
+        if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout.tpl";
+        return $this;
+    }
+
+    public function set_template(string $pattemplate): AppView
+    {
+        if(pathtemplate) $this->pathtemplate = self::PATH_TEMPLATES ."/$pattemplate.tpl";
+        return $this;
+    }
+
+    public function render(): void
+    {
+        $this->_load_path_layout();
+        if(!is_file($this->pathlayout)) $this->_exception("layout {$this->pathtemplate} not found");
+
+        $this->_load_path_folder_template();
+        $this->_load_path_template_name();
+        if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
+
+        foreach ($this->vars as $name => $value)
+            $$name = $value;
+
+        include_once($this->pathlayout);
+    }
+
+    public function set_vars(array $vars): AppView
+    {
+        $this->vars = $vars;
+        return $this;
+    }
+
+    public function add_var(string $name, $var): AppView
+    {
+        if(trim($name)!=="") $this->vars[$name] = $var;
+        return $this;
+    }
+
 }//AppView
