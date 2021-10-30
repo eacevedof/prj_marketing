@@ -8,12 +8,18 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
+use App\Factories\ServiceFactory as SF;
+use App\Services\Restrict\LoginService;
+
 
 final class LoginController extends RestrictController
 {
+    private LoginService $login;
+
     public function index(): void
     {
-        $this->add_var("pagetitle", "LOGIN");
+        $this->login = SF::get("Restrict\LoginService");
+        $this->add_var("pagetitle", "LOGIN")->add_var("login", $this->login);
         $this->render();
     }
 
