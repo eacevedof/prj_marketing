@@ -36,7 +36,12 @@ final class AppView
         $this->request = $_REQUEST["ACTION"] ?? [];
     }
 
-    private function _load_path_folder_view(): void
+    private function _load_path_layout(): void
+    {
+        $this->pathlayout = self::PATH_LAYOUTS."/default.php";
+    }
+
+    private function _load_path_folder_template(): void
     {
         $strcontroller = $this->request["controller"] ?? "";
         if ($strcontroller) {
@@ -48,7 +53,7 @@ final class AppView
         }
     }
 
-    private function _load_path_view_name(): void
+    private function _load_path_template_name(): void
     {
         if($this->pathview) {
             $action = $this->request["action"] ?? "index";
@@ -58,14 +63,22 @@ final class AppView
 
     public function set_layout(string $pathlayout): AppView
     {
-        if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout";
+        if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout.php";
         return $this;
     }
 
     public function render(string $pathtemplate=""): void
     {
-        $this->_load_path_folder_view();
-        $this->_load_path_view_name();
+        $this->_load_path_layout();
+        if(!is_file($this->pathlayout)) throw new \Exception("layout {$this->pathview} not found");
+        foreach ($this->vars as $name => $value)
+            $$name = $value;
+        include_once($this->pathlayout);
+        die();
+
+        $this->_load_path_folder_template();
+        $this->_load_path_template_name();
+
 
         if(!is_file($this->pathview))  throw new \Exception("view {$this->pathview} not found");
 
@@ -75,6 +88,8 @@ final class AppView
         if ($this->pathview) include($this->pathview);
         die("rendred");
     }
+
+
 
     public function set_vars(array $vars): void
     {
