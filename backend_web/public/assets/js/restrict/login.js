@@ -1,19 +1,16 @@
 const App = {
   data() {
     return {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
+      name: "xxx",
+      email: "eaf@eaf.com",
+      subject: "sss",
+      message: "mmmm",
       issending: false,
-
+      btnsend: "enviar"
     }
   },
-  mounted() {
-    setInterval(() => {
-      this.counter++
-    }, 1000)
-  },
+
+  mounted() {},
 
   methods: {
     checkform(e) {

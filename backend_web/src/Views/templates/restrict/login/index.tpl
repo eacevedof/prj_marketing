@@ -26,7 +26,7 @@
     <div>
         <button id="btn-contact" class="btn btn-dark" :disabled="issending" >
             {{btnsend}}
-            <img v-if="issending" src="/assets/images/loading-bw.gif" width="25" height="25"/>
+            <img v-if="issending" src="/assets/images/common/loading.png" width="25" height="25"/>
         </button>
     </div>
 </form>
