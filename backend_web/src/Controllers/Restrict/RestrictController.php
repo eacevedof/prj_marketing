@@ -7,7 +7,7 @@
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
-namespace App\Controllers\Restrict\RestrictController;
+namespace App\Controllers\Restrict;
 
 use App\Controllers\AppController;
 use App\Traits\ViewTrait;
