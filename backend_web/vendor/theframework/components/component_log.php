@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheApplication\Components\ComponentLog 
  * @file ComponentLog.php 1.2.0
  * @date 30-11-2017 19:26 SPAIN

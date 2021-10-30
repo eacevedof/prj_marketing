@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Services\Apify\Mysql
  * @file TablesService.php 1.0.0
  * @date 27-06-2019 17:55 SPAIN

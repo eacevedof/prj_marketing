@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Services\Dbs\SchemaService
  * @file SchemaService.php 1.0.0
  * @date 28-01-2019 19:00 SPAIN

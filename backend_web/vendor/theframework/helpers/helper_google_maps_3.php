@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @version 1.1.11
  * @name Helper GoogleMaps3  
  * @date 27-10-2014 14:50

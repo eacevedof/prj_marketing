@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Factories\KafkaFactory 
  * @file KafkaFactory.php v1.0.0
  * @date 25-06-2021 19:50 SPAIN

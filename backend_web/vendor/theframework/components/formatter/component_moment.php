@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheFramework\Components\Formatter\ComponentMoment
  * @file component_moment.php 1.0.0
  * @date 04-06-2020 14:03 SPAIN

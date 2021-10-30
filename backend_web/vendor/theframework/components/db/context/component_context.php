@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheFramework\Components\Db\Context\ComponentContext 
  * @file component_context.php v3.1.0
  * @date 24-07-2020 20:37 SPAIN

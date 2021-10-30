@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name App\Services\Apify\Mysql
  * @file WriterService.php 1.0.0
  * @date 30-06-2019 12:42 SPAIN

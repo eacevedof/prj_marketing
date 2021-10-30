@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @version 1.6.0
  * @file functions_debug.php 
  * @date 01-12-2018 17:57 (SPAIN)

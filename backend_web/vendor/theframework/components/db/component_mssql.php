@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentMssql 
  * @file component_mssql.php v1.4.1
  * @date 19-09-2017 04:56 SPAIN

@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Eduardo Acevedo Farje.
- * @link www.eduardoaf.com
+ * @link eduardoaf.com
  * @version 1.1.0
  * @name TheFramework\Helpers\HelperJson
  * @date 29-06-2019 15:12 (SPAIN)
