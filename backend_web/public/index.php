@@ -1,5 +1,7 @@
 <?php
 ob_start();
+session_start();
+session_regenerate_id(true);
 include("../boot/appbootstrap.php");
 //header("Access-Control-Allow-Origin: *");
 //Código de configuración de cabeceras que permiten consumir la API desde cualquier origen
