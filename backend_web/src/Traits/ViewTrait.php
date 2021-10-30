@@ -17,17 +17,24 @@ trait ViewTrait
      * @var AppView
      */
     private $view = null;
-    private $vars = [];
 
     private function _init(): void
     {
-        $this->view = new AppView();
+        if(!$this->view) $this->view = new AppView();
     }
 
-    protected function add_var(string $varname, $value): void
+    protected function set_layout(string $pathlayout): AppView
     {
-        if(trim($varname)!=="" && $varname)
-            $this->vars[$varname] = $value;
+        $this->_init();
+        $this->view->set_layout($pathlayout);
+        return $this->view;
+    }
+
+    protected function add_var(string $varname, $value): AppView
+    {
+        $this->_init();
+        $this->view->add_var($varname, $value);
+        return $this->view;
     }
 
     protected function render(string $pathview=""): void

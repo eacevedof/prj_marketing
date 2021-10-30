@@ -84,9 +84,16 @@ final class AppView
 
     }
 
-    public function set_vars(array $vars): void
+    public function set_vars(array $vars): AppView
     {
         $this->vars = $vars;
+        return $this;
+    }
+
+    public function add_var(string $name, $var): AppView
+    {
+        if(trim($name)!=="") $this->vars[$name] = $var;
+        return $this;
     }
 
     public function template(): void
