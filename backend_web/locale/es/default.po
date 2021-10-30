@@ -1,0 +1,2 @@
+msgid "this account {0}"
+msgstr "esta cuenta {0}"
