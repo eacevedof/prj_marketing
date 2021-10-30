@@ -30,11 +30,11 @@ trait ViewTrait
             $this->vars[$varname] = $value;
     }
 
-    protected function render(): void
+    protected function render(string $pathview=""): void
     {
         $this->_init();
         $this->view->set_vars($this->vars);
-        $this->view->render();
+        $this->view->render($pathview);
     }
 
 }//AppView

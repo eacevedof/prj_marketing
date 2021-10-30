@@ -21,15 +21,48 @@ final class AppView
     use LogTrait;
     use EnvTrait;
 
+    private const PATH_VIEWS = PATH_SRC."/Views";
     private $vars = [];
+    private $request = [];
+    private $pathview = "";
 
-    public function __construct(){;}
-
-    public function render(): void
+    public function __construct()
     {
+        $this->request = $_REQUEST["ACTION"] ?? [];
+    }
+
+    private function _load_path_folder_view(): void
+    {
+        $strcontroller = $this->request["controller"] ?? "";
+        if ($strcontroller) {
+           $strcontroller = str_replace("App\Controllers","", $strcontroller);
+           $strcontroller = str_replace("\\","/", $strcontroller);
+           $strcontroller = strtolower($strcontroller);
+           $strcontroller = str_replace("controller","", $strcontroller);
+           $this->pathview = self::PATH_VIEWS . "/$strcontroller";
+        }
+    }
+
+    private function _load_path_view_name(): void
+    {
+        if($this->pathview) {
+            $action = $this->request["action"] ?? "index";
+            $this->pathview .= "";
+        }
+    }
+
+
+    public function render(string $pathview=""): void
+    {
+        $this->_load_path_folder_view();
+        $this->_load_path_view_name();
+
+        if(!is_file($this->pathview))  throw new \Exception("view {$this->pathview} not found");
+
         foreach ($this->vars as $name => $value)
             $$name = $value;
         var_dump($this->vars);
+        if ($this->pathview) include($this->pathview);
         die("rendred");
     }
 

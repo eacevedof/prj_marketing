@@ -47,6 +47,7 @@ try {
     $arRun = $oR->get_rundata();
     unset($arRoutes);
 
+    $_REQUEST["ACTION"] = $arRun;
     $oController = new $arRun["controller"]();
     $oController->{$arRun["method"]}();
 }
