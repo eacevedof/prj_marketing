@@ -39,7 +39,7 @@ final class AppView
 
     private function _load_path_layout(): void
     {
-        $this->pathlayout = self::PATH_LAYOUTS."/default.ctp";
+        $this->pathlayout = self::PATH_LAYOUTS."/default.tpl";
     }
 
     private function _load_path_folder_template(): void
@@ -58,13 +58,13 @@ final class AppView
     {
         if($this->pathtemplate) {
             $action = $this->request["action"] ?? "index";
-            $this->pathtemplate .= "/$action.php";
+            $this->pathtemplate .= "/$action.tpl";
         }
     }
 
     public function set_layout(string $pathlayout): AppView
     {
-        if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout.php";
+        if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout.tpl";
         return $this;
     }
 
@@ -106,7 +106,7 @@ final class AppView
 
     public function element(string $pathelement, $vars = []): void
     {
-        $path = self::PATH_ELEMENTS."/$pathelement.php";
+        $path = self::PATH_ELEMENTS."/$pathelement.tpl";
         if(!is_file($path))
             throw new \Exception("element $path does not exist!");
 
