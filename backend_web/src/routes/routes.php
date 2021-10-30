@@ -4,7 +4,7 @@
 
 return [   
     ["url"=>"/","controller"=>"App\Controllers\NotFoundController","method"=>"index"],
-    ["url"=>"/","controller"=>"App\Controllers\NotFoundController","method"=>"index"],
+    ["url"=>"/","controller"=>"App\Controllers\Open\OpenController","method"=>"index"],
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
     
     ["url"=>"/apify/contexts","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
