@@ -34,7 +34,7 @@ final class AppView
 
     private function _load_path_layout(): void
     {
-        $this->pathlayout = self::PATH_LAYOUTS."/default.tpl";
+        if (!$this->pathlayout) $this->pathlayout = self::PATH_LAYOUTS."/default.tpl";
     }
 
     private function _load_path_folder_template(): void
