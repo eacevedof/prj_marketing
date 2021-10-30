@@ -18,7 +18,9 @@ final class OpenController extends AppController
 
     public function index(): void
     {
-        $this->add_var("xxx","prrito");
+        $this->add_var("a","prrito");
+        $this->add_var("b", "dddd");
+        $this->add_var("c", "rrr");
         $this->render();
     }
 
