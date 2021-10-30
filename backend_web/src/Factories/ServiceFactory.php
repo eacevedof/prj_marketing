@@ -14,13 +14,13 @@ final class ServiceFactory
 {
     public static function get(string $service, array $params = []): ?object
     {
-        $service = "\App\Services\\".$service;
+        $Service = "\App\Services\\".$service;
         try {
-            $reflection = new $service(...$params);
+            $obj = new $Service(...$params);
         }
         catch (\Exception $e) {
             return null;
         }
-        return $reflection;
+        return $obj;
     }
 }//ServiceFactory
