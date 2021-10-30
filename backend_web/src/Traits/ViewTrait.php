@@ -26,7 +26,8 @@ trait ViewTrait
 
     protected function add_var(string $varname, $value): void
     {
-        $this->vars[$varname] = $value;
+        if(trim($varname)!=="" && $varname)
+            $this->vars[$varname] = $value;
     }
 
     protected function render(): void
