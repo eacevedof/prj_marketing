@@ -37,11 +37,12 @@ trait ViewTrait
         return $this->view;
     }
 
-    protected function render(string $pathview="", $vars=[]): void
+    protected function render($vars=[], string $pathtemplate=""): void
     {
         $this->_init();
         if($vars) $this->view->set_vars($vars);
-        $this->view->render($pathview);
+        if($pathtemplate) $this->view->set_template($pathtemplate);
+        $this->view->render();
     }
 
-}//AppView
+}//ViewTrait
