@@ -21,6 +21,10 @@ final class AppView
     private const PATH_TEMPLATES = PATH_SRC."/Views/templates";
     private const PATH_ELEMENTS = PATH_SRC."/Views/elements";
 
+    private const PATH_ASSETS_JS = "/assets/js/";
+    private const PATH_ASSETS_IMG = "/assets/js/";
+    private const PATH_ASSETS_CSS = "/assets/css/";
+
     private $request;
 
     private $vars = [];
@@ -75,6 +79,26 @@ final class AppView
             $$name = $value;
 
         include($path);
+    }
+
+    private function _asset_js(string $pathjs):string
+    {
+        $path = self::PATH_ASSETS_JS.$pathjs.".js";
+        $html = "<script type=\"module\" src=\"$path\"></script>";
+        return $html;
+    }
+
+    private function _asset_css(string $pathcss):string
+    {
+        $path = self::PATH_ASSETS_JS.$pathcss.".css";
+        $html = "<link href=\"$path\" rel=\"stylesheet\">";
+        return $html;
+    }
+
+    private function _asset_img(string $pathimg):string
+    {
+        $path = self::PATH_ASSETS_JS.$pathimg;
+        return $path;
     }
 
     private function _exception(string $message, int $code=500): void
