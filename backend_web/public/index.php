@@ -48,6 +48,11 @@ try {
     $arRun = $oR->get_rundata();
     unset($arRoutes);
 
+    if($methods = $arRun["req_meths"] ?? []) {
+        if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods))
+            throw new \Exception("request method {$_SERVER["REQUEST_METHOD"]} not allowed");
+    }
+
     $_REQUEST["ACTION"] = $arRun;
     $_REQUEST["ACTION_LANG"] = trim($_GET["lang"] ?? "en");
     $oController = new $arRun["controller"]();
