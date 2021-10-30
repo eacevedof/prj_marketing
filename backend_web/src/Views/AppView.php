@@ -21,10 +21,15 @@ final class AppView
     use LogTrait;
     use EnvTrait;
 
+    private const PATH_LAYOUTS = PATH_SRC."/Views/layouts";
     private const PATH_VIEWS = PATH_SRC."/Views";
+    private const PATH_ELEMENTS = PATH_SRC."/Views/elements";
+
+    private $request;
+    
+    private $pathlayout = "";
+    private $pathtemplate = "";
     private $vars = [];
-    private $request = [];
-    private $pathview = "";
 
     public function __construct()
     {
@@ -51,8 +56,13 @@ final class AppView
         }
     }
 
+    public function set_layout(string $pathlayout): AppView
+    {
+        if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout";
+        return $this;
+    }
 
-    public function render(string $pathview=""): void
+    public function render(string $pathtemplate=""): void
     {
         $this->_load_path_folder_view();
         $this->_load_path_view_name();
@@ -69,6 +79,21 @@ final class AppView
     public function set_vars(array $vars): void
     {
         $this->vars = $vars;
+    }
+
+    public function element(string $pathelement, $vars = []): void
+    {
+        $path = self::PATH_ELEMENTS."/$pathelement.php";
+        if(!is_file($path))
+            throw new \Exception("element $path does not exist!");
+
+        foreach ($this->vars as $name => $value)
+            $$name = $value;
+
+        foreach ($vars as $name => $value)
+            $$name = $value;
+
+        include($path);
     }
 
     protected function _exception(string $message, int $code=500): void
