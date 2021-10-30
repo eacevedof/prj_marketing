@@ -8,9 +8,10 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
+use App\Services\Apify\Security\LoginMiddleService;
 use App\Services\Restrict\LoginService;
 use App\Factories\ServiceFactory as SF;
-
+use TheFramework\Helpers\HelperJson;
 
 final class LoginController extends RestrictController
 {
@@ -25,6 +26,21 @@ final class LoginController extends RestrictController
     public function access(): void
     {
         $this->login = SF::get("Restrict\LoginService");
+        $this->logd("middle start");
+        $oJson = new HelperJson();
+        try{
+            $oServ = new LoginMiddleService($this->get_post());
+            $token = $oServ->get_token();
+            $oJson->set_payload(["token"=>$token])->show();
+        }
+        catch (\Exception $e)
+        {
+            $this->logerr($e->getMessage(),"LoginController.middle");
+            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show(1);
+        }
+        $this->logd("middle end");
     }
 
 }//LoginController
