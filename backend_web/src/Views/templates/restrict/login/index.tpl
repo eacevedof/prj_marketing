@@ -6,7 +6,8 @@
 //var_dump($login);
 ?>
 <h1>Login</h1>
-<form @submit="checkform" id="form-login">
+<div id="app">
+<form @submit.prevent="onSubmit" id="form-login">
     <div>
         <label for="name">Nombre *</label>
         <input type="text" id="name" v-model="name" placeholder="...tu nombre" required="required">
@@ -30,4 +31,5 @@
         </button>
     </div>
 </form>
+</div>
 <?= $this->_asset_js("restrict/login") ?>
