@@ -8,8 +8,8 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Factories\ServiceFactory as SF;
 use App\Services\Restrict\LoginService;
+use App\Factories\ServiceFactory as SF;
 
 
 final class LoginController extends RestrictController
