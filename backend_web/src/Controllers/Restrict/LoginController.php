@@ -18,9 +18,7 @@ final class LoginController extends RestrictController
 
     public function index(): void
     {
-        $this->add_var("pagetitle", "LOGIN")
-            ->add_var("login", $this->login)
-        ;
+        $this->add_var("pagetitle", "LOGIN");
         $this->render();
     }
 
