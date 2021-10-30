@@ -7,8 +7,9 @@
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
-namespace App\Controllers;
+namespace App\Controllers\Open;
 
+use App\Controllers\AppController;
 use App\Traits\ViewTrait;
 
 final class OpenController extends AppController
