@@ -68,9 +68,56 @@ function get_console_args($argv): array
     return $_ARG;
 }
 
-function __()
+function __(): string
 {
+    $args = func_get_args();
+    $msgid = array_shift($args);
+    if (!$msgid) return "";
 
+    $msgchanged = $msgid;
+    foreach ($args as $i => $str) {
+        $rep = "{$i}";
+        $msgchanged = str_replace($rep, $str, $msgchanged);
+    }
+
+    $lang = strtolower(trim($_REQUEST["ACTION_LANG"] ?? "en"));
+    if ($lang === "en") return $msgchanged;
+
+    $pathpo = PATH_BOOT."/locale/$lang/default.po";
+    if(!is_file($pathpo)) return $msgchanged;
+
+    if(!$_REQUEST["TRANSLATIONS"] ?? []) {
+        $content = file_get_contents($pathpo);
+        $content = trim($content);
+        if (!$content) return $msgchanged;
+
+        $lines = explode(PHP_EOL, $content);
+
+        $trs = [];
+        foreach ($lines as $i => $line) {
+
+            if (!$line = trim($line)) continue;
+            if(strstr($line, "msgstr \"")) continue;
+
+            $id = str_replace("msgid \"","", $line);
+            $id = substr($id, 0, -1);
+
+            $tr = trim($lines[$i+1] ?? "");
+            $tr = str_replace("msgstr \"","", $tr);
+            $tr = substr($tr, 0, -1);
+
+            $trs[$id] = $tr;
+        }
+        $_REQUEST["TRANSLATIONS"] = $trs;
+    }
+
+    $msgchanged = $_REQUEST["TRANSLATIONS"][$msgid] ?? $msgid;
+    foreach ($args as $i => $str) {
+        $rep = "{$i}";
+        $msgchanged = str_replace($rep, $str, $msgchanged);
+    }
+
+    return $msgchanged;
 }
 
 use \App\Factories\KafkaFactory;

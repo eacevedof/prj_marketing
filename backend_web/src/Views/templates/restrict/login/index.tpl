@@ -9,7 +9,7 @@
 <div id="app">
     <form @submit.prevent="onSubmit">
         <div>
-            <label for="name">Nombre *</label>
+            <label for="name"><?=__("this account {0}","9999")?> *</label>
             <input type="text" id="name" v-model="name" placeholder="...tu nombre" required="required">
         </div>
         <div>
