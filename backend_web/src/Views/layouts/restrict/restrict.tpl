@@ -13,6 +13,7 @@
     <?= $this->_asset_css("index") ?>
     <?= $this->_asset_css("restrict/restrict") ?>
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <?= $this->_asset_js("index") ?>
 </head>
 <body>
