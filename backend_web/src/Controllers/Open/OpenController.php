@@ -9,13 +9,15 @@
  */
 namespace App\Controllers;
 
-use App\Views\ViewTrait;
+use App\Traits\ViewTrait;
 
 final class OpenController extends AppController
 {
-    public function index()
-    {
+    use ViewTrait;
 
+    public function index(): void
+    {
+        $this->render();
     }
 
 }//OpenController
