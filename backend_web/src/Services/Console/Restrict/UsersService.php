@@ -10,10 +10,7 @@
 namespace App\Services\Console\Restrict;
 use App\Services\AppService;
 use App\Services\Console\IConsole;
-use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Traits\LogTrait;
-use App\Traits\EnvTrait;
 
 final class UsersService extends AppService implements IConsole
 {
