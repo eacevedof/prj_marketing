@@ -11,19 +11,24 @@ namespace App\Repositories;
 
 use App\Repositories\AppRepository;
 use TheFramework\Components\Db\ComponentMysql;
-
+use App\Models\ExampleModel;
 
 final class ExampleRepository extends AppRepository
 {
+
     public function __construct()
     {
-        $this->_set_table();
+        $this->table = "app_example";
+        $this->model = new ExampleModel();
+        $this->_load_crud();
     }
 
     public function get_all(): array
     {
+        $this->crud->set_getfields($this->model->get_fields);
 
-        return $this->crud->get_selectfrom();
+
+
     }
 
 }//ExampleRepository
