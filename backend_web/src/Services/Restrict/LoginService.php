@@ -15,4 +15,6 @@ final class LoginService extends AppService
         $this->input = $input;
     }
 
+    public function access(): void
+    {}
 }
