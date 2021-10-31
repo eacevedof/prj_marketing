@@ -8,11 +8,13 @@
  * @observations
  */
 namespace App\Repositories;
+use App\Models\AppModel;
 use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\ComponentMysql;
 
 abstract class AppRepository
 {
+    protected AppModel $model;
     protected ComponentMysql $db;
     protected ComponentCrud $crud;
     protected string $table;
@@ -23,12 +25,13 @@ abstract class AppRepository
         return $this;
     }
 
-    protected function _get_crud(): ComponentCrud
+    protected function _load_crud(): void
     {
         if (!$this->crud) {
             $this->crud = new ComponentCrud();
+            $this->crud->set_table($this->table);
         }
-        return $this->crud;
     }
+
 
 }//AppRepository

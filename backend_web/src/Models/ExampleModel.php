@@ -14,12 +14,10 @@ final class ExampleModel extends AppModel
     public function __construct() 
     {
         $this->table = "titles";
-        parent::__construct();
-        $this->load_pk_fields();
-        $this->load_fileds();
+        $this->_load_pk_fields()->_load_fileds();
     }
         
-    private function load_fileds()
+    private function _load_fileds(): self
     {
         $arTmp = [
             ["db"=>"emp_no","ui"=>"empno"],
@@ -28,24 +26,13 @@ final class ExampleModel extends AppModel
             ["db"=>"to_date","ui"=>"todate"]
         ];
         $this->fields = $arTmp;
+        return $this;
     }//load_fileds
     
-    private function load_pk_fields()
+    private function _load_pk_fields(): self
     {
         $this->pks = ["emp_no","title","from_date"];
-    }//load_pk_fields
-    
-    // carga combo
-    public function get_picklist()
-    {
-        $sSQL = "
-        /*ExampleModel.get_picklist*/
-        SELECT DISTINCT title,title
-        FROM titles
-        ORDER BY 2
-        ";
-        $arRows = $this->db->query($sSQL);
-        return $arRows;
-    }//get_picklist
-    
+        return $this;
+    }
+
 }//ExampleModel
