@@ -8,46 +8,25 @@
  * @observations
  */
 namespace App\Services\Console\Restrict;
+use App\Services\AppService;
 use App\Services\Console\IConsole;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 
-final class UsersService implements IConsole
+final class UsersService extends AppService implements IConsole
 {
-    use LogTrait;
-    use EnvTrait;
-    private $domain;
     private $input;
     /**
      * @var ComponentEncdecrypt
      */
-    private $encdec = null;
+    private $encdec;
 
     public function __construct(array $input)
     {
-        $this->domain = "localhost:900";
         $this->input = $input;
-        $this->_load_encdec();
-    }
-
-    private function _get_encdec_config(): array
-    {
-        $pathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
-        $arconf = (new ComponentConfig($pathfile))->get_node("domain",$this->domain);
-        return $arconf;
-    }
-
-    private function _load_encdec(): void
-    {
-        $config = $this->_get_encdec_config($this->domain);
-        if(!$config) throw new \Exception("Domain {$this->domain} is not authorized");
-
-        $this->encdec = new ComponentEncdecrypt(1);
-        $this->encdec->set_sslmethod($config["sslenc_method"]??"");
-        $this->encdec->set_sslkey($config["sslenc_key"]??"");
-        $this->encdec->set_sslsalt($config["sslsalt"]??"");
+        $this->encdec = $this->_get_encdec();
     }
 
     private function _get_password(): string
