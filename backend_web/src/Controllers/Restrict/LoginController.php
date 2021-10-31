@@ -34,6 +34,7 @@ final class LoginController extends RestrictController
         try{
             //$oServ = new LoginMiddleService($this->get_post());
             //$token = $oServ->get_token();
+            $this->login->access();
             $oJson->set_payload(["token"=>$this->sess_get()])->show();
         }
         catch (\Exception $e)
