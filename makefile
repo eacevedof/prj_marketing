@@ -78,7 +78,7 @@ logs-be: ## logs be
 logs-db: ## logs db
 	docker logs php-marketing-db
 
-rem-logs:
+rem-logs: ## remove logs
 	rm -fr ./backend_web/logs/*
 	rm -f ./backend_web/public/*.log
 
