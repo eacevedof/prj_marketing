@@ -10,6 +10,12 @@ final class SessionComponent
         $_SESSION[$key] = $mxvalue;
         return  $this;
     }
+
+    public function remove(string $key): SessionComponent
+    {
+        unset($_SESSION[$key]);
+        return  $this;
+    }
     
     public function destroy(): SessionComponent
     {

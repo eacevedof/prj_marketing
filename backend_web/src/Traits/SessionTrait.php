@@ -33,4 +33,9 @@ trait SessionTrait
         return $this->session->add($key, $mxvalue);
     }
 
+    protected function sess_remove(string $key): SessionComponent
+    {
+        return $this->session->remove($key);
+    }
+
 }//SessionTrait
