@@ -40,4 +40,10 @@ trait SessionTrait
         return $this->session;
     }
 
+    protected function sess_destroy(): SessionComponent
+    {
+        $this->session->destroy();
+        return $this->session;
+    }
+
 }//SessionTrait
