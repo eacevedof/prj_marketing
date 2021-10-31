@@ -4,7 +4,7 @@ const App = {
   data() {
     return {
       email: "eaf@eaf.com",
-      password: "eaf@eaf.com",
+      password: "Abcd3343980",
       issending: false,
       btnsend: "enviar"
     }
