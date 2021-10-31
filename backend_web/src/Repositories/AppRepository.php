@@ -8,8 +8,27 @@
  * @observations
  */
 namespace App\Repositories;
+use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\Db\ComponentMysql;
 
 abstract class AppRepository
 {
+    protected ComponentMysql $db;
+    protected ComponentCrud $crud;
+    protected string $table;
+
+    public function set_db(ComponentMysql $db): self
+    {
+        $this->db = $db;
+        return $this;
+    }
+
+    protected function _get_crud(): ComponentCrud
+    {
+        if (!$this->crud) {
+            $this->crud = new ComponentCrud();
+        }
+        return $this->crud;
+    }
 
 }//AppRepository
