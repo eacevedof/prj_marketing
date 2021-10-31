@@ -42,5 +42,15 @@ trait LogTrait
         $oLog = new ComponentLog("kafka",PATH_LOGS);
         $oLog->save($mxVar,$sTitle);
     }
+
+    protected function logpr($mxVar,$sTitle=NULL): void
+    {
+        $oLog = new ComponentLog("debug",PATH_LOGS);
+        $mxVar = print_r($mxVar, 1);
+        $oLog->save($mxVar, $sTitle);
+        echo date("Y-m-d H:i:s");
+        if($sTitle) echo "\n$sTitle:";
+        echo "\n$mxVar\n\n";
+    }
     
 }//LogTrait
