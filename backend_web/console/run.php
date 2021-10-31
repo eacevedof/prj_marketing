@@ -63,21 +63,29 @@ if($isCLI)
                     $arMethArgs[] =  $oParam->getDefaultValue();
             }
 
-            $mxR = $oRflecMethod->invokeArgs($instance, $arMethArgs);
+            return $oRflecMethod->invokeArgs($instance, $arMethArgs);
         }
         catch (\Exception $e) {
             echo "error:\n\t{$e->getMessage()}\n\n";
         }
     }
-    else
-    {
-        $alias = trim($ar_arg[1] ?? "");
-        if ($alias) {
-            $commands = include_once("./commands.php");
 
+    //parámetros separados por espacio
+    $alias = trim($argv[1] ?? "");
+    if ($alias) {
+        try {
+            $commands = include_once("./commands.php");
+            $classname = $commands[$alias] ?? "";
+            if (!$classname) return;
+            $reflection = new \ReflectionClass($classname);
+            //a partir de la pos 1 en adelante son parametros de input
+            $input = array_slice($argv, 2);
+            $object = $reflection->newInstanceArgs($input);
+            if($object) return $object->run();
         }
-        echo "no parameter --class\n";
+        catch (\Exception $e) {
+            echo "error:\n\t{$e->getMessage()}\n\n";
+        }
     }
+
 }// is cli
-else
-    echo "";
