@@ -4,7 +4,7 @@
     "alias":"db-marketing",
     "description":"Main db for MARKETING",
     "type":"mysql",
-    "server":"php-marketing-db",
+    "server":"cont-mariadb-univ",
     "port":"3306",
     "schemas":[
       {
