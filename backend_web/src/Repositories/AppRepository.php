@@ -8,7 +8,6 @@
  * @observations
  */
 namespace App\Repositories;
-use TheFramework\Components\Db\ComponentCrud;
 
 abstract class AppRepository
 {
