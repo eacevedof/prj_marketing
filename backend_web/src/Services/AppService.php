@@ -40,7 +40,7 @@ abstract class AppService
         throw new Exception($message, $code);
     }
 
-    private function get_db(): ?ComponentMysql
+    protected function _get_db(): ?ComponentMysql
     {
         $context = new ComponentContext($this->get_env("APP_CONTEXTS"), $this->get_env("APP_ID_CONTEXT"));
         $dbname = $context->get_dbname($this->get_env("APP_DB_ALIAS_1"));
