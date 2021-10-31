@@ -16,7 +16,7 @@ final class ServiceFactory
     {
         $Service = "\App\Services\\".$service;
         try {
-            $obj = new $Service(...$params);
+            $obj = new $Service($params);
         }
         catch (\Exception $e) {
             return null;
