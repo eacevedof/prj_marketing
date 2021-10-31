@@ -1,8 +1,8 @@
 [
   {
-    "domain": "localhost:3000",
+    "domain": "localhost:900",
     "sslenc_method":"AES-256-CBC",
-    "sslenc_key":"@ABC$1234@",
-    "sslsalt":"@##--1P8K$"
+    "sslenc_key":"P!RLes%96tZYdrUh$GnqjgPLN23G7m",
+    "sslsalt":"XmcjJZ7EokzjvtZ4UVWutXVXeY3LZa"
   }
 ]
