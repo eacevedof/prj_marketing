@@ -14,11 +14,8 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 
 final class UsersService extends AppService implements IConsole
 {
-    private $input;
-    /**
-     * @var ComponentEncdecrypt
-     */
-    private $encdec;
+    private array $input;
+    private ComponentEncdecrypt $encdec;
 
     public function __construct(array $input)
     {
