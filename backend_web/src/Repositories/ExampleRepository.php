@@ -2,16 +2,16 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Models\ExampleModel 
- * @file ExampleModel.php v1.0.0
+ * @name App\Repositories\ExampleRepository 
+ * @file ExampleRepository.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
-namespace App\Models;
+namespace App\Repositories;
 
-use App\Models\AppModel;
+use App\Repositories\AppRepository;
 
-class ExampleModel extends AppModel
+class ExampleRepository extends AppRepository
 {
     public function __construct() 
     {
@@ -41,7 +41,7 @@ class ExampleModel extends AppModel
     public function get_picklist()
     {
         $sSQL = "
-        /*ExampleModel.get_picklist*/
+        /*ExampleRepository.get_picklist*/
         SELECT DISTINCT title,title
         FROM titles
         ORDER BY 2
@@ -50,4 +50,4 @@ class ExampleModel extends AppModel
         return $arRows;
     }//get_picklist
     
-}//ExampleModel
+}//ExampleRepository
