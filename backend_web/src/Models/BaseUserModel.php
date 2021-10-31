@@ -11,11 +11,11 @@ namespace App\Models;
 
 use App\Models\AppModel;
 
-class ExampleModel extends AppModel
+final class BaseUserModel extends AppModel
 {
     public function __construct() 
     {
-        $this->table = "titles";
+        $this->sTable = "base_user";
         parent::__construct();
         $this->load_pk_fields();
         $this->load_fileds();
@@ -29,12 +29,12 @@ class ExampleModel extends AppModel
             ["db"=>"from_date","ui"=>"fromdate"],
             ["db"=>"to_date","ui"=>"todate"]
         ];
-        $this->fields = $arTmp;
+        $this->arFields = $arTmp;
     }//load_fileds
     
     private function load_pk_fields()
     {
-        $this->pks = ["emp_no","title","from_date"];
+        $this->arPks = ["emp_no","title","from_date"];
     }//load_pk_fields
     
     // carga combo
@@ -46,7 +46,7 @@ class ExampleModel extends AppModel
         FROM titles
         ORDER BY 2
         ";
-        $arRows = $this->db->query($sSQL);
+        $arRows = $this->oDb->query($sSQL);
         return $arRows;
     }//get_picklist
     
