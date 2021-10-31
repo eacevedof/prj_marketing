@@ -8,5 +8,11 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 
 final class LoginService extends AppService
 {
+    private array $input;
+
+    public function __construct(array $input)
+    {
+        $this->input = $input;
+    }
 
 }
