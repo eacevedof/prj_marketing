@@ -76,11 +76,14 @@ if($isCLI)
         try {
             $commands = include_once("./commands.php");
             $classname = $commands[$alias] ?? "";
-            if (!$classname) return;
+            if (!$classname) {
+                echo "no class found for cmd $alias";
+                return;
+            }
             $reflection = new \ReflectionClass($classname);
             //a partir de la pos 1 en adelante son parametros de input
             $input = array_slice($argv, 2);
-            $object = $reflection->newInstanceArgs($input);
+            $object = $reflection->newInstanceArgs([$input]);
             if($object) return $object->run();
         }
         catch (\Exception $e) {

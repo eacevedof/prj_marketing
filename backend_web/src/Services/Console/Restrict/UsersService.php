@@ -24,6 +24,6 @@ final class UsersService implements IConsole
 
     public function run(): void
     {
-        echo "users service. run()";
+        print_r($this->input);
     }
 }
