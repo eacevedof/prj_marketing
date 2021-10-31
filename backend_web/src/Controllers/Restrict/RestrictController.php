@@ -10,9 +10,7 @@
 namespace App\Controllers\Restrict;
 
 use App\Controllers\AppController;
-use App\Services\Restrict\LoginService;
 use App\Traits\ViewTrait;
-use App\Factories\ServiceFactory as SF;
 use App\Traits\SessionTrait;
 
 abstract class RestrictController extends AppController
@@ -22,7 +20,7 @@ abstract class RestrictController extends AppController
 
     public function __construct()
     {
-
+        $this->sess_load();
         $this->set_layout("restrict/restrict");
     }
 

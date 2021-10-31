@@ -24,18 +24,20 @@ trait SessionTrait
         return $this->session;
     }
 
-    protected function sess_get(string $key){return $this->session->get($key);}
+    protected function sess_get(string $key=""){return $this->session->get($key);}
 
     protected function sess_getonce(string $key){return $this->session->get_once($key);}
 
     protected function sess_add(string $key, $mxvalue): SessionComponent
     {
-        return $this->session->add($key, $mxvalue);
+        $this->session->add($key, $mxvalue);
+        return $this->session;
     }
 
     protected function sess_remove(string $key): SessionComponent
     {
-        return $this->session->remove($key);
+        $this->session->remove($key);
+        return $this->session;
     }
 
 }//SessionTrait
