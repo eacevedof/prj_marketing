@@ -25,10 +25,11 @@ final class BaseUserRepository extends AppRepository
     public function get_all(): array
     {
         $fields = array_keys($this->model->get_fields());
-        $this->crud->set_getfields($fields);
+        $this->crud->set_getfields(["*"]);
         $this->crud->get_selectfrom();
         $sql = $this->crud->get_sql();
-        return $this->db->query($sql);
+        $ar = $this->db->query($sql);
+        return $ar;
     }
 
 

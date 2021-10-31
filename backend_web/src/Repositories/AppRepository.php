@@ -29,10 +29,8 @@ abstract class AppRepository
 
     protected function _load_crud(): void
     {
-        if (!$this->crud) {
-            $this->crud = new ComponentCrud();
-            $this->crud->set_table($this->table);
-        }
+        $this->crud = new ComponentCrud();
+        $this->crud->set_table($this->table);
     }
 
     public function query($sSQL,$iCol=NULL,$iRow=NULL)
