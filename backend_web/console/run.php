@@ -71,6 +71,11 @@ if($isCLI)
     }
     else
     {
+        $alias = trim($ar_arg[1] ?? "");
+        if ($alias) {
+            $commands = include_once("./commands.php");
+
+        }
         echo "no parameter --class\n";
     }
 }// is cli
