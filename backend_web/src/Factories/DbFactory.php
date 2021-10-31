@@ -92,4 +92,12 @@ final class DbFactory
         }
     }
 
+    public static function get_by_default(): ComponentMysql
+    {
+        $context = new ComponentContext(getenv("APP_CONTEXTS"), getenv("APP_ID_CONTEXT"));
+        $dbname = $context->get_dbname(getenv("APP_DB_ALIAS_1"));
+        $db = self::get_dbobject_by_ctx($context, $dbname);
+        return $db;
+    }
+
 }//DbFactory
