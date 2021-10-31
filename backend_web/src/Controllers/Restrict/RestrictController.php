@@ -13,10 +13,12 @@ use App\Controllers\AppController;
 use App\Services\Restrict\LoginService;
 use App\Traits\ViewTrait;
 use App\Factories\ServiceFactory as SF;
+use App\Traits\SessionTrait;
 
 abstract class RestrictController extends AppController
 {
     use ViewTrait;
+    use SessionTrait;
 
     public function __construct()
     {
