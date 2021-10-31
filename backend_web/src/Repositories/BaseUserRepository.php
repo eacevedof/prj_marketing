@@ -25,7 +25,7 @@ final class BaseUserRepository extends AppRepository
     public function get_all(): array
     {
         $fields = array_keys($this->model->get_fields());
-        $this->crud->set_getfields(["*"]);
+        $this->crud->set_getfields(["id","email","password"]);
         $this->crud->get_selectfrom();
         $sql = $this->crud->get_sql();
         $ar = $this->db->query($sql);
