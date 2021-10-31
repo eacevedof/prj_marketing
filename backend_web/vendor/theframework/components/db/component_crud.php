@@ -51,6 +51,8 @@ class ComponentCrud
         $this->arUpdateFV = [];
         $this->arPksFV = [];
         $this->arGetFields = [];
+        $this->arJoins = [];
+        $this->arAnds = [];
         $this->arOrderBy = [];
         $this->arGroupBy = [];
         $this->arNumeric = [];
