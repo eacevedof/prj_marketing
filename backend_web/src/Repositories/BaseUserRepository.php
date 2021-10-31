@@ -17,7 +17,7 @@ final class BaseUserRepository extends AppRepository
     public function __construct()
     {
         $this->db = DbFactory::get_by_default();
-        $this->table = "app_example";
+        $this->table = "base_user";
         $this->model = new BaseUserModel();
         $this->_load_crud();
     }
