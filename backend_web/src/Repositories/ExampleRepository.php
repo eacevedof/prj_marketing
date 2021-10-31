@@ -15,7 +15,6 @@ use App\Models\ExampleModel;
 
 final class ExampleRepository extends AppRepository
 {
-
     public function __construct()
     {
         $this->table = "app_example";
@@ -25,7 +24,8 @@ final class ExampleRepository extends AppRepository
 
     public function get_all(): array
     {
-        $this->crud->set_getfields($this->model->get_fields);
+        $fields = array_keys($this->model->get_fields());
+        $this->crud->set_getfields($fields);
 
 
 
