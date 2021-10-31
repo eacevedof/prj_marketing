@@ -23,6 +23,6 @@ final class LoginService extends AppService
 
     public function access(): void
     {
-
+        $this->baseUserRepository->get_all();
     }
 }
