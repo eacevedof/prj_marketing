@@ -26,9 +26,9 @@ final class ExampleRepository extends AppRepository
     {
         $fields = array_keys($this->model->get_fields());
         $this->crud->set_getfields($fields);
-
-
-
+        $r = $this->crud->get_selectfrom();
+        $sql = $this->crud->get_sql();
+        return $this->db->query($sql);
     }
 
 }//ExampleRepository
