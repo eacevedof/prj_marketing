@@ -8,6 +8,7 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 
 final class LoginService extends AppService
 {
+    private const DOMAIN = "localhost:900";
     private array $input;
 
     public function __construct(array $input)
