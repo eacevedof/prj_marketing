@@ -52,15 +52,17 @@ final class UsersService implements IConsole
 
     private function _get_password(): string
     {
-        $word = $this->input[1] ?? ":)";
+        $word = $this->input[0] ?? ":)";
         $password = $this->encdec->get_hashpassword($word);
         return $password;
     }
 
+    //php run.php users 1234
     public function run(): void
     {
+        echo $this->input[0];
         $password = $this->_get_password();
-        $message = "word: {$this->input[1]}, password: {$password}";
-        $this->logpr($message, "password");
+        $message = "password: {$password}";
+        $this->logpr($message);
     }
 }
