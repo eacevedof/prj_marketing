@@ -15,7 +15,7 @@ use TheFramework\Components\Db\ComponentCrud;
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 
-class AppModel 
+abstract class AppModel
 {
     use ErrorTrait;
     use LogTrait;
@@ -107,7 +107,7 @@ class AppModel
         }
     }//insert    
 
-    private function get_pks($arData)
+    private function _get_pks($arData)
     {
         $pks = [];
         foreach($arData as $sFieldName=>$sValue)
@@ -116,7 +116,7 @@ class AppModel
         return $pks;
     }
     
-    private function get_no_pks($arData)
+    private function _get_no_pks($arData)
     {
         $pks = [];
         foreach($arData as $sFieldName=>$sValue)
@@ -131,8 +131,8 @@ class AppModel
         if($isUi)
             $arData = $this->get_keyvals($arPost);
         
-        $arNoPks = $this->get_no_pks($arData);
-        $pks = $this->get_pks($arData);
+        $arNoPks = $this->_get_no_pks($arData);
+        $pks = $this->_get_pks($arData);
         
         if ($arData) {
             //habría que comprobar count(pks)==count($this->pks)
@@ -158,7 +158,7 @@ class AppModel
     public function delete($arPost)
     {
         $arData = $this->get_keyvals($arPost);
-        $pks = $this->get_pks($arData);
+        $pks = $this->_get_pks($arData);
         if($pks)
         {
             $oCrud = new ComponentCrud($this->db);
@@ -183,7 +183,7 @@ class AppModel
     public function is_pks_ok($arPost)
     {
         $arData = $this->get_keyvals($arPost);
-        $pks = $this->get_no_pks($arData);
+        $pks = $this->_get_no_pks($arData);
         return (count($pks)===count($this->pks));
     }
         

@@ -9,9 +9,7 @@
  */
 namespace App\Models;
 
-use App\Models\AppModel;
-
-class ExampleModel extends AppModel
+final class ExampleModel extends AppModel
 {
     public function __construct() 
     {

@@ -11,7 +11,7 @@ namespace App\Repositories;
 
 use App\Repositories\AppRepository;
 
-class ExampleRepository extends AppRepository
+final class ExampleRepository extends AppRepository
 {
     public function __construct() 
     {
