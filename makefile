@@ -80,6 +80,7 @@ logs-db: ## logs db
 
 rem-logs:
 	rm -fr ./backend_web/logs/*
+	rm -f ./backend_web/public/*.log
 
 ssh-be: ## fpm
 	docker exec -it --user root php-marketing-be bash
@@ -98,9 +99,6 @@ deploy-test: ## deploy codeonly in test
 
 deploy-prod: ## deploy codeonly in prod
 	py.sh deploy.codeonly eduardoaf-prod
-
-remlogs: ## remove logs
-	rm -fr ./backend_web/logs/*
 
 start-front: ## npm run start
 	cd frontend/restrict; npm run start
