@@ -37,10 +37,12 @@ final class SessionComponent
         return $this;
     }
 
-    public function get(string $key)
+    public function get(string $key="")
     {
+        if (!$key) return $_SESSION;
         return $_SESSION[$key] ?? null;
     }
+
 
     public function get_once(string $key)
     {

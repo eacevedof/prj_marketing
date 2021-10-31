@@ -28,13 +28,13 @@ final class LoginController extends RestrictController
         //sleep(15);
         $this->sess_add("user", $this->get_post("email"))->add("pass",$this->get_post("password"));
 
-        $this->login = SF::get("Restrict\LoginService");
+        //$this->login = SF::get("Restrict\LoginService");
         $this->logd("middle start");
         $oJson = new HelperJson();
         try{
-            $oServ = new LoginMiddleService($this->get_post());
-            $token = $oServ->get_token();
-            $oJson->set_payload(["token"=>$token])->show();
+            //$oServ = new LoginMiddleService($this->get_post());
+            //$token = $oServ->get_token();
+            $oJson->set_payload(["token"=>$this->sess_get()])->show();
         }
         catch (\Exception $e)
         {
