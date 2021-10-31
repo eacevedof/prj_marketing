@@ -32,8 +32,7 @@ final class UsersService extends AppService implements IConsole
     private function _get_password(): string
     {
         $word = $this->input[0] ?? ":)";
-        $password = $this->encdec->get_hashpassword($word);
-        return $password;
+        return $this->encdec->get_hashpassword($word);
     }
 
     //php run.php users 1234
