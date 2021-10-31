@@ -15,8 +15,8 @@ final class BaseUserModel extends AppModel
 {
     public function __construct() 
     {
-        $this->table = "base_user";
-        parent::__construct();
+        $this->fields = [];
+        $this->pks = [];
     }
 
     
