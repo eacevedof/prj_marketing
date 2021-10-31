@@ -10,7 +10,7 @@
 namespace App\Repositories;
 
 use App\Factories\DbFactory;
-use App\Models\BaseUserMoel;
+use App\Models\BaseUserModel;
 
 final class BaseUserRepository extends AppRepository
 {
@@ -18,7 +18,7 @@ final class BaseUserRepository extends AppRepository
     {
         $this->db = DbFactory::get_by_default();
         $this->table = "app_example";
-        $this->model = new BaseUserMoel();
+        $this->model = new BaseUserModel();
         $this->_load_crud();
     }
 
