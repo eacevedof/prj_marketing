@@ -79,7 +79,7 @@ logs-db: ## logs db
 	docker logs php-marketing-db
 
 rem-logs:
-	rm -fr ./logs/*
+	rm -fr ./backend_web/logs/*
 
 ssh-be: ## fpm
 	docker exec -it --user root php-marketing-be bash
