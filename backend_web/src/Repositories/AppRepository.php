@@ -89,18 +89,18 @@ abstract class AppRepository
     private function _get_pks($arData)
     {
         $pks = [];
-        foreach($arData as $fieldnameName=>$sValue)
-            if(in_array($fieldnameName,$this->pks))
-                $pks[$fieldnameName] = $sValue;
+        foreach($arData as $fieldname=>$sValue)
+            if(in_array($fieldname,$this->model->get_pks()))
+                $pks[$fieldname] = $sValue;
         return $pks;
     }
 
     private function _get_no_pks($arData)
     {
         $pks = [];
-        foreach($arData as $fieldnameName=>$sValue)
-            if(!in_array($fieldnameName,$this->pks))
-                $pks[$fieldnameName] = $sValue;
+        foreach($arData as $fieldname=>$sValue)
+            if(!in_array($fieldname, $this->model->get_pks()))
+                $pks[$fieldname] = $sValue;
         return $pks;
     }
 
@@ -118,8 +118,8 @@ abstract class AppRepository
             //se le inyecta el objeto de bd para que la ejecute directamente
             //$this->crud = new ComponentCrud($this->db);
             $this->crud->set_dbobj($this->db)->set_table($this->table);
-            foreach($arData as $fieldnameName=>$sValue)
-                $this->crud->add_insert_fv($fieldnameName,$sValue);
+            foreach($arData as $fieldname=>$sValue)
+                $this->crud->add_insert_fv($fieldname,$sValue);
             $this->crud->autoinsert();
             //print_r($this->crud);die;
             $this->log($this->crud->get_sql());
@@ -139,17 +139,17 @@ abstract class AppRepository
         $pks = $this->_get_pks($arData);
 
         if ($arData) {
-            //habría que comprobar count(pks)==count($this->pks)
+            //habría que comprobar count(pks)==count($this->model->get_pks())
             //$this->crud = new ComponentCrud($this->db);
             $this->crud->set_table($this->table);
 
             //valores del "SET"
-            foreach($arNoPks as $fieldnameName=>$sValue)
-                $this->crud->add_update_fv($fieldnameName,$sValue);
+            foreach($arNoPks as $fieldname=>$sValue)
+                $this->crud->add_update_fv($fieldname,$sValue);
 
             //valores del WHERE
-            foreach($pks as $fieldnameName=>$sValue)
-                $this->crud->add_pk_fv($fieldnameName,$sValue);
+            foreach($pks as $fieldname=>$sValue)
+                $this->crud->add_pk_fv($fieldname,$sValue);
 
             $this->crud->autoupdate();
             if($this->crud->is_error())
@@ -167,8 +167,8 @@ abstract class AppRepository
         {
             //$this->crud = new ComponentCrud($this->db);
             $this->crud->set_table($this->table);
-            foreach($pks as $fieldnameName=>$sValue)
-                $this->crud->add_pk_fv($fieldnameName,$sValue);
+            foreach($pks as $fieldname=>$sValue)
+                $this->crud->add_pk_fv($fieldname,$sValue);
             $this->crud->autodelete();
 
             if($this->crud->is_error())
