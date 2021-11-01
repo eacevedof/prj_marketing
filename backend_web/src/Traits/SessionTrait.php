@@ -15,7 +15,7 @@ trait SessionTrait
 {
     private ?SessionComponent $session = null;
 
-    protected function _init(): SessionComponent
+    protected function _sessioninit(): SessionComponent
     {
         if(!$this->session) $this->session = SsF::get();
         return $this->session;
