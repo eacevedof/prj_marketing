@@ -33,6 +33,4 @@ final class UserRepository extends AppRepository
         return $ar;
     }
 
-
-
 }//ExampleRepository

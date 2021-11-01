@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.7.1
- * @date 03-08-2020 14:54 SPAIN
+ * @file component_crud.php 2.8.0
+ * @date 01-11-2021 12:54 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -43,7 +43,7 @@ class ComponentCrud
      * 
      * @param TheFramework\Components\Db\ComponentMysql $oDB
      */
-    public function __construct($oDB=NULL)
+    public function __construct($oDB=null)
     { 
         $this->arEnd = [];
         $this->arResult = [];
@@ -62,17 +62,14 @@ class ComponentCrud
     
     private function get_orderby()
     {
-        $sOrderBy = "";
+        if($this->arOrderBy) return "";
         $arSQL = [];
-        if($this->arOrderBy)
-        {
-            $sOrderBy = " ORDER BY ";
-            foreach($this->arOrderBy as $sField=>$sAD) {
-                $this->clean_reserved($sField);
-                $arSQL[] = "$sField $sAD";
-            }
-            $sOrderBy = $sOrderBy.implode(",",$arSQL);
+        $sOrderBy = " ORDER BY ";
+        foreach($this->arOrderBy as $sField=>$sAD) {
+            $this->clean_reserved($sField);
+            $arSQL[] = "$sField $sAD";
         }
+        $sOrderBy = $sOrderBy.implode(",",$arSQL);
         return $sOrderBy;
     }
 
@@ -89,6 +86,7 @@ class ComponentCrud
     
     private function get_groupby()
     {
+        if(!$this->arGroupBy) return "";
         $sGroupBy = "";
         $arSQL = [];
         if($this->arGroupBy)
@@ -105,12 +103,14 @@ class ComponentCrud
 
     private function get_joins()
     {
+        if(!$this->arJoins) return "";
         $sJoin = " ".implode("\n",$this->arJoins);
         return $sJoin;        
     }
     
     private function get_end()
     {
+        if(!$this->arEnd) return "";
         $sEnd = " ".implode("\n",$this->arEnd);
         return $sEnd;        
     }
@@ -168,7 +168,7 @@ class ComponentCrud
         return substr($tagged, 2, $ilen - 4);
     }
 
-    public function autoinsert($sTable=NULL,$arFieldVal=[])
+    public function autoinsert($sTable=null,$arFieldVal=[])
     {
         //Limpio la consulta 
         $this->sSQL = "-- autoinsert";
@@ -198,8 +198,8 @@ class ComponentCrud
                 //los paso a entrecomillado
                 foreach ($arValues as $i=>$sValue)
                 {
-                    if($sValue===NULL)
-                        $arAux[] = "NULL";
+                    if($sValue===null)
+                        $arAux[] = "null";
                     else
                         $arAux[] = "'$sValue'";
                 }
@@ -216,7 +216,7 @@ class ComponentCrud
         return $this;
     }//autoinsert
     
-    public function autoupdate($sTable=NULL,$arFieldVal=[],$arPksFV=[])
+    public function autoupdate($sTable=null,$arFieldVal=[],$arPksFV=[])
     {
         //Limpio la consulta 
         $this->sSQL = "-- autoupdate";
@@ -243,8 +243,8 @@ class ComponentCrud
             {
                 //echo "$sField  =  $sValue\n";
                 $this->clean_reserved($sField);
-                if($sValue===NULL)
-                    $arAux[] = "$sField=NULL";
+                if($sValue===null)
+                    $arAux[] = "$sField=null";
                 elseif($this->is_tagged($sValue)) {
                     $arAux[] = "$sField={$this->get_untagged($sValue)}";
                 }
@@ -263,8 +263,8 @@ class ComponentCrud
             foreach($arPksFV as $sField=>$sValue)
             {
                 $this->clean_reserved($sField);
-                if($sValue===NULL)
-                    $arAux[] = "$sField IS NULL";
+                if($sValue===null)
+                    $arAux[] = "$sField IS null";
                 elseif($this->is_tagged($sValue)) {
                     $arAux[] = "$sField={$this->get_untagged($sValue)}";
                 }
@@ -286,7 +286,7 @@ class ComponentCrud
         return $this;
     }//autoupdate
     
-    public function autodelete($sTable=NULL,$arPksFV=[])
+    public function autodelete($sTable=null,$arPksFV=[])
     {
         //Limpio la consulta 
         $this->sSQL = "-- autodelete";
@@ -310,8 +310,8 @@ class ComponentCrud
             foreach($arPksFV as $sField=>$sValue)
             {
                 $this->clean_reserved($sField);
-                if($sValue===NULL)
-                    $arAux[] = "$sField IS NULL";
+                if($sValue===null)
+                    $arAux[] = "$sField IS null";
                 elseif($this->is_tagged($sValue)) {
                     $arAux[] = "$sField={$this->get_untagged($sValue)}";
                 }
@@ -336,7 +336,7 @@ class ComponentCrud
         return $this;
     }//autodelete     
     
-    public function autodelete_logic($sTable=NULL,$arPksFV=[])
+    public function autodelete_logic($sTable=null,$arPksFV=[])
     {
         //Limpio la consulta 
         $this->sSQL = "-- autodelete_logic";
@@ -363,8 +363,8 @@ class ComponentCrud
                 foreach($arPksFV as $sField=>$sValue)
                 {
                     $this->clean_reserved($sField);
-                    if($sValue===NULL)
-                        $arAnd[] = "$sField IS NULL";
+                    if($sValue===null)
+                        $arAnd[] = "$sField IS null";
                     elseif($this->is_tagged($sValue)) {
                         $arAux[] = "$sField={$this->get_untagged($sValue)}";
                     }
@@ -384,7 +384,7 @@ class ComponentCrud
         return $this;
     }//autodelete_logic    
     
-    public function autoundelete_logic($sTable=NULL,$arPksFV=[])
+    public function autoundelete_logic($sTable=null,$arPksFV=[])
     {
         //Limpio la consulta 
         $this->sSQL = "-- autoundelete_logic";
@@ -406,8 +406,8 @@ class ComponentCrud
                 $sNow = date("Ymdhis");
                 $sSQL = "$sSQLComment UPDATE $sTable 
                         SET 
-                        delete_date=NULL
-                        ,delte_user=NULL
+                        delete_date=null
+                        ,delte_user=null
                         ,update_date='$sNow'
                         ,update_user='$codUserSession'
                         ";
@@ -417,8 +417,8 @@ class ComponentCrud
                 foreach($arPksFV as $sField=>$sValue)
                 {
                     $this->clean_reserved($sField);
-                    if($sValue===NULL)
-                        $arAnd[] = "$sField IS NULL";
+                    if($sValue===null)
+                        $arAnd[] = "$sField IS null";
                     elseif($this->is_numeric($sField))
                         $arAux[] = "$sField=$sValue";
                     else    
@@ -435,7 +435,7 @@ class ComponentCrud
         return $this;
     }//autoundelete_logic  
     
-    public function get_selectfrom($sTable=NULL,$arFields=[],$arPksFV=[])
+    public function get_selectfrom($sTable=null,$arFields=[],$arPksFV=[])
     {
         //Limpio la consulta 
         $this->sSQL = "-- get_selectfrom";
@@ -469,8 +469,8 @@ class ComponentCrud
                 foreach($arPksFV as $sField=>$sValue)
                 {
                     $this->clean_reserved($sField);
-                    if($sValue===NULL)
-                        $arAux[] = "$sField IS NULL";
+                    if($sValue===null)
+                        $arAux[] = "$sField IS null";
                     elseif($this->is_numeric($sField))
                         $arAux[] = "$sField=$sValue";
                     else    
@@ -491,13 +491,13 @@ class ComponentCrud
                 $this->query();
                 return $this->arResult;
             }//si se han proporcionado correctamente los datos campo=>valor y las claves
-            return NULL;
+            return null;
         }//se ha proporcionado una tabla
     }//get_selectfrom
     
     private function extract_top_sql($sSQL)
     {
-        $sTop = NULL;
+        $sTop = null;
         $sSQL = strtolower($sSQL);
         //puede ser select top x select distinct top 
         $sTopPatern = "/select[\s]+top[\s]+[\d]+[\s]/";
@@ -528,10 +528,10 @@ class ComponentCrud
         $sOrderBy = strstr($sSQL,"order by ");
 
         if($sDistinct) $sDistinct = "distinct";
-        else $sDistinct = NULL;
+        else $sDistinct = null;
 
         if($sTop) $sTop = $this->extract_top_sql($sSQL);
-        else $sTop = NULL;
+        else $sTop = null;
 
         //SELECT y FROM siempre existen en una sentencia SQL
         $sFields = explode("from ",$sSQL);
@@ -626,28 +626,28 @@ class ComponentCrud
         return $sFields;
     }
         
-    public function set_table($sTable=NULL){$this->sTable=$sTable; return $this;}
-    public function set_comment($sComment){$this->sSQLComment = $sComment; return $this;}
+    public function set_table($sTable=null):self{$this->sTable=$sTable; return $this;}
+    public function set_comment($sComment):self{$this->sSQLComment = $sComment; return $this;}
     
-    public function set_insert_fv($arFieldVal=[]){$this->arInsertFV = []; if(is_array($arFieldVal)) $this->arInsertFV=$arFieldVal; return $this;}
-    public function add_insert_fv($sFieldName,$sValue,$isSanit=1){$this->arInsertFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
+    public function set_insert_fv($arFieldVal=[]):self{$this->arInsertFV = []; if(is_array($arFieldVal)) $this->arInsertFV=$arFieldVal; return $this;}
+    public function add_insert_fv($sFieldName,$sValue,$isSanit=1):self{$this->arInsertFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
 
-    public function set_pks_fv($arFieldVal=[]){$this->arPksFV = []; if(is_array($arFieldVal)) $this->arPksFV=$arFieldVal; return $this;}
-    public function add_pk_fv($sFieldName,$sValue,$isSanit=1){$this->arPksFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
+    public function set_pks_fv($arFieldVal=[]):self{$this->arPksFV = []; if(is_array($arFieldVal)) $this->arPksFV=$arFieldVal; return $this;}
+    public function add_pk_fv($sFieldName,$sValue,$isSanit=1):self{$this->arPksFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
     
-    public function set_update_fv($arFieldVal=[]){$this->arUpdateFV = []; if(is_array($arFieldVal)) $this->arUpdateFV=$arFieldVal; return $this;}
-    public function add_update_fv($sFieldName,$sValue,$isSanit=1){$this->arUpdateFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
+    public function set_update_fv($arFieldVal=[]):self{$this->arUpdateFV = []; if(is_array($arFieldVal)) $this->arUpdateFV=$arFieldVal; return $this;}
+    public function add_update_fv($sFieldName,$sValue,$isSanit=1):self{$this->arUpdateFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
     
-    public function set_getfields($arFields=[]){$this->arGetFields = []; if(is_array($arFields)) $this->arGetFields=$arFields; return $this;}
-    public function add_getfield($sFieldName){$this->arGetFields[]=$sFieldName; return $this;}
+    public function set_getfields($arFields=[]):self{$this->arGetFields = []; if(is_array($arFields)) $this->arGetFields=$arFields; return $this;}
+    public function add_getfield($sFieldName):self{$this->arGetFields[]=$sFieldName; return $this;}
 
-    public function set_joins($arJoins=[]){$this->arJoins = []; if(is_array($arJoins)) $this->arJoins=$arJoins; return $this;}
-    public function set_orderby($arOrderBy=[]){$this->arOrderBy = []; if(is_array($arOrderBy)) $this->arOrderBy=$arOrderBy; return $this;}
-    public function set_groupby($arGroupBy=[]){$this->arGroupBy = []; if(is_array($arGroupBy)) $this->arGroupBy=$arGroupBy; return $this;}
-    public function set_having($arHaving=[]){$this->arHaving = []; if(is_array($arHaving)) $this->arHaving=$arHaving; return $this;}
+    public function set_joins($arJoins=[]):self{$this->arJoins = []; if(is_array($arJoins)) $this->arJoins=$arJoins; return $this;}
+    public function set_orderby($arOrderBy=[]):self{$this->arOrderBy = []; if(is_array($arOrderBy)) $this->arOrderBy=$arOrderBy; return $this;}
+    public function set_groupby($arGroupBy=[]):self{$this->arGroupBy = []; if(is_array($arGroupBy)) $this->arGroupBy=$arGroupBy; return $this;}
+    public function set_having($arHaving=[]):self{$this->arHaving = []; if(is_array($arHaving)) $this->arHaving=$arHaving; return $this;}
     
-    public function set_end($arEnd=[]){$this->arEnd = []; if(is_array($arEnd)) $this->arEnd=$arEnd; return $this;}
-    public function set_limit($iPPage=1000, $iRegfrom=0){
+    public function set_end($arEnd=[]):self{$this->arEnd = []; if(is_array($arEnd)) $this->arEnd=$arEnd; return $this;}
+    public function set_limit($iPPage=1000, $iRegfrom=0):self{
         $this->arLimit=["regfrom"=>$iRegfrom, "perpage"=>$iPPage];
         if($iPPage==null) $this->arLimit = [];
         return $this;
@@ -657,13 +657,13 @@ class ComponentCrud
     
     /**
      * @param string $sTable Tabla sobre la que se va a comprobar. Por defecto this.sTable
-     * 1: Delete_Date IS NOT NULL (con borrado logico)<br/>
-     * 0: Delete_Date IS NULL (sin borrado logico)<br/>
-     * NULL: No aplica filtro por fecha solo claves<br/>
+     * 1: Delete_Date IS NOT null (con borrado logico)<br/>
+     * 0: Delete_Date IS null (sin borrado logico)<br/>
+     * null: No aplica filtro por fecha solo claves<br/>
      * @param int $isDeleted
      * @return boolean
      */
-    public function is_intable($sTable=NULL,$isDeleted=1)
+    public function is_intable($sTable=null,$isDeleted=1)
     {
         if(!$sTable) $sTable = $this->sTable;
         
@@ -675,9 +675,9 @@ class ComponentCrud
             $arAnd[] = "$this->sTable.$sFieldName='$sFieldValue'";
 
         if($isDeleted===1)
-            $arAnd[] = "$this->sTable.Delete_Date IS NOT NULL";
+            $arAnd[] = "$this->sTable.Delete_Date IS NOT null";
         elseif($isDeleted===0)
-            $arAnd[] = "$this->sTable.Delete_Date IS NULL";
+            $arAnd[] = "$this->sTable.Delete_Date IS null";
         
         $sSQL .= implode(" AND ",$arAnd);
         $this->sSQL = $sSQL;
@@ -707,8 +707,8 @@ class ComponentCrud
             $arAux = [];
             foreach($this->arPksFV as $sField=>$sValue)
             {    
-                if($sValue===NULL)
-                    $arAux[] = "$sField IS NULL";
+                if($sValue===null)
+                    $arAux[] = "$sField IS null";
                 elseif($this->is_numeric($sField))
                     $arAux[] = "$sField=$sValue";
                 else    
@@ -718,7 +718,7 @@ class ComponentCrud
             if($arAux)
                 $sSQL .= " AND ".implode(" AND ",$arAux);
             
-            $iMax = NULL;
+            $iMax = null;
             $this->sSQL = $sSQL;
             if(is_object($this->oDB))
                 $iMax = $this->oDB->query($this->sSQL);            
@@ -726,7 +726,7 @@ class ComponentCrud
             $iMax++;
             return $iMax;
         }
-        return NULL;
+        return null;
     }//get_nextcode()
     
     public function get_sanitized($sValue)
@@ -761,25 +761,25 @@ class ComponentCrud
                 $this->add_error($this->oDB->get_error());
         }
     }//query
-    
-    public function get_result(){$this->arResult;}
-    public function is_distinct($isOn=TRUE){$this->isDistinct=$isOn;}
-    public function is_foundrows($isOn=TRUE){$this->isFoundrows=$isOn;}
-    public function add_orderby($sFieldName,$sOrder="ASC"){$this->arOrderBy[$sFieldName]=$sOrder;}
-    public function add_groupby($sFieldName){$this->arGroupBy[]=$sFieldName;}
-    public function add_having($sHavecond){$this->arHaving[]=$sHavecond;}
-    public function add_numeric($sFieldName){$this->arNumeric[]=$sFieldName;}
-    public function set_and($arAnds=[]){$this->arAnds = []; if(is_array($arAnds)) $this->arAnds=$arAnds;}
-    public function add_and($sAnd){$this->arAnds[]=$sAnd;}
-    public function add_and1($sFieldName,$sValue,$sOper="="){$this->arAnds[]="$sFieldName $sOper $sValue";}
-    public function add_join($sJoin,$sKey=NULL){if($sKey)$this->arJoins[$sKey]=$sJoin;else$this->arJoins[]=$sJoin;}
-    public function add_end($sEnd,$sKey=NULL){if($sKey)$this->arEnd[$sKey]=$sEnd;else$this->arEnd[]=$sEnd;}
-    
-    protected function add_error($sMessage){$this->isError = TRUE;$this->arErrors[]=$sMessage;}
+
+    public function is_distinct($isOn=TRUE):self{$this->isDistinct=$isOn; return $this;}
+    public function is_foundrows($isOn=TRUE):self {$this->isFoundrows=$isOn; return $this;}
+    public function add_orderby($sFieldName,$sOrder="ASC"):self{$this->arOrderBy[$sFieldName]=$sOrder; return $this;}
+    public function add_groupby($sFieldName):self{$this->arGroupBy[]=$sFieldName; return $this;}
+    public function add_having($sHavecond):self{$this->arHaving[]=$sHavecond; return $this;}
+    public function add_numeric($sFieldName):self{$this->arNumeric[]=$sFieldName; return $this;}
+    public function set_and($arAnds=[]):self{$this->arAnds = []; if(is_array($arAnds)) $this->arAnds=$arAnds; return $this;}
+    public function add_and($sAnd):self{$this->arAnds[]=$sAnd; return $this;}
+    public function add_and1($sFieldName,$sValue,$sOper="="):self{$this->arAnds[]="$sFieldName $sOper $sValue"; return $this;}
+    public function add_join($sJoin,$sKey=null):self{if($sKey)$this->arJoins[$sKey]=$sJoin;else$this->arJoins[]=$sJoin; return $this;}
+    public function add_end($sEnd,$sKey=null):self{if($sKey)$this->arEnd[$sKey]=$sEnd;else$this->arEnd[]=$sEnd; return $this;}
+    private function add_error($sMessage):self{$this->isError = TRUE;$this->arErrors[]=$sMessage; return $this; return $this;}
+    public function set_dbobj($oDb=null):self{$this->oDB=$oDb; return $this;}
+
     public function is_error(){return $this->isError;}
+    public function get_result(){return $this->arResult;}
     public function get_errors($inJson=0){if($inJson) return json_encode($this->arErrors); return $this->arErrors;}
-    public function get_error($i=0){isset($this->arErrors[$i])?$this->arErrors[$i]:NULL;}
+    public function get_error($i=0){return isset($this->arErrors[$i])?$this->arErrors[$i]:null;}
     public function show_errors(){echo "<pre>".var_export($this->arErrors,1);}
-    public function set_dbobj($oDb=NULL){$this->oDB=$oDb;}
     
-}//Crud 2.7.1
+}//Crud 2.8.0
