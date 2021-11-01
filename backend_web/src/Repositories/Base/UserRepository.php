@@ -7,8 +7,9 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
-namespace App\Repositories;
+namespace App\Repositories\Base;
 
+use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use App\Factories\ModelFactory as MF;
 
