@@ -9,6 +9,7 @@
  */
 namespace App\Repositories\Base;
 
+use App\Models\Base\UserModel;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use App\Factories\ModelFactory as MF;
@@ -19,6 +20,9 @@ final class UserRepository extends AppRepository
     {
         $this->db = DbF::get_by_default();
         $this->table = "base_user";
+        /**
+         * @var UserModel
+         */
         $this->model = MF::get("Base\User");
         $this->_load_crud();
     }
