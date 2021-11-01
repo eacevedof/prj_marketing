@@ -58,7 +58,11 @@ try {
     if($json = file_get_contents("php://input")) $_POST = json_decode($json, 1);
 
     $_REQUEST["ACTION"] = $arRun;
-    $_REQUEST["ACTION_LANG"] = trim($_GET["lang"] ?? "en");
+    $_REQUEST["ACTION_LANG"] = trim($_GET["lang"] ?? "")
+                                ?: trim($_SESSION["lang"] ?? "")
+                                ?: trim($_ENV["lang"] ?? "")
+                                ?: "en";
+
     $oController = new $arRun["controller"]();
     $oController->{$arRun["method"]}();
 }

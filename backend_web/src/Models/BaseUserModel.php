@@ -13,9 +13,15 @@ use App\Models\AppModel;
 
 final class BaseUserModel extends AppModel
 {
+    public int $id;
+    public string $email;
+    public string $password;
+
     public function __construct() 
     {
-        $this->fields = [];
+        $this->fields = [
+            "id" => ""
+        ];
         $this->pks = [];
     }
 
