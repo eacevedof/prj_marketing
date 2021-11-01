@@ -9,6 +9,8 @@ $sPath = realpath(DOCROOT.DS."../src");
 define("PATH_SRC",$sPath);
 $sPath = realpath(DOCROOT.DS."../config");
 define("PATH_SRC_CONFIG",$sPath);
+$sPath = realpath(DOCROOT.DS."../console");
+define("PATH_CONSOLE",$sPath);
 $sPath = realpath(DOCROOT.DS."../public");
 define("PATH_PUBLIC",$sPath);
 $sPath = realpath(DOCROOT.DS."../vendor");
@@ -65,30 +67,29 @@ if($isCLI)
 
             return $oRflecMethod->invokeArgs($instance, $arMethArgs);
         }
-        catch (\Exception $e) {
+        catch (\Throwable $e) {
             echo "error:\n\t{$e->getMessage()}\n\n";
         }
     }
 
     //parámetros separados por espacio
     $alias = trim($argv[1] ?? "");
-    if ($alias) {
-        try {
-            $commands = include_once("./commands.php");
-            $classname = $commands[$alias] ?? "";
-            if (!$classname) {
-                echo "no class found for cmd $alias";
-                return;
-            }
-            $reflection = new \ReflectionClass($classname);
-            //a partir de la pos 1 en adelante son parametros de input
-            $input = array_slice($argv, 2);
-            $object = $reflection->newInstanceArgs([$input]);
-            if($object) return $object->run();
+    if (!$alias) $alias = "help";
+    try {
+        $commands = include_once("./services.php");
+        $classname = $commands[$alias] ?? "";
+        if (!$classname) {
+            echo "no class found for cmd $alias";
+            return;
         }
-        catch (\Exception $e) {
-            echo "error:\n\t{$e->getMessage()}\n\n";
-        }
+        $reflection = new \ReflectionClass($classname);
+        //a partir de la pos 1 en adelante son parametros de input
+        $input = array_slice($argv, 2);
+        $object = $reflection->newInstanceArgs([$input]);
+        if($object) return $object->run();
+    }
+    catch (\Throwable $e) {
+        echo "error:\n\t{$e->getMessage()}\n\n";
     }
 
 }// is cli

@@ -7,5 +7,6 @@ mapping:
 */
 return [
     //commands
-    "users"                   => "App\\Services\\Console\\Restrict\\UsersService",
+    "help"                   => "App\\Services\\Console\\HelpService",
+    "users"                  => "App\\Services\\Console\\Restrict\\UsersService",
 ];
