@@ -16,7 +16,7 @@ final class RepositoryFactory
     public static function get(string $repository): ?AppRepository
     {
         $repository = str_replace("/","\\",$repository);
-        if(strstr($repository,"Repository")) $repository .= "Repository";
+        if (!strstr($repository,"Repository")) $repository .= "Repository";
         $Repository = "\App\Repositories\\".$repository;
         try {
             $obj = new $Repository();

@@ -16,7 +16,7 @@ final class ModelFactory
     public static function get(string $model): ?AppModel
     {
         $model = str_replace("/","\\",$model);
-        if(strstr($model,"Model")) $model .= "Model";
+        if (!strstr($model,"Model")) $model .= "Model";
         $Model = "\App\Models\\".$model;
         try {
             $obj = new $Model();

@@ -11,7 +11,6 @@ namespace App\Repositories;
 
 use App\Factories\DbFactory as DbF;
 use App\Factories\ModelFactory as MF;
-use App\Models\Base\UserModel;
 
 final class UserRepository extends AppRepository
 {
