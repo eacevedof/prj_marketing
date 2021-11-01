@@ -9,16 +9,17 @@
  */
 namespace App\Repositories;
 
-use App\Factories\DbFactory;
-use App\Models\BaseUserModel;
+use App\Factories\DbFactory as DbF;
+use App\Factories\ModelFactory as MF;
+use App\Models\Base\UserModel;
 
-final class BaseUserRepository extends AppRepository
+final class UserRepository extends AppRepository
 {
     public function __construct()
     {
-        $this->db = DbFactory::get_by_default();
+        $this->db = DbF::get_by_default();
         $this->table = "base_user";
-        $this->model = new BaseUserModel();
+        $this->model = MF::get("Base\User");
         $this->_load_crud();
     }
 

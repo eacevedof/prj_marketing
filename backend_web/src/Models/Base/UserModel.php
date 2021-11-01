@@ -7,22 +7,27 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
-namespace App\Models;
+namespace App\Models\Base;
 
 use App\Models\AppModel;
 
-final class BaseUserModel extends AppModel
+final class UserModel extends AppModel
 {
     public int $id;
-    public string $email;
-    public string $password;
+    public string $email = "";
+    public string $password = "";
 
     public function __construct() 
     {
         $this->fields = [
-            "id" => ""
+            "id" => "id",
+            "email" => "eamil",
+            "password" => "password"
         ];
-        $this->pks = [];
+
+        $this->pks = [
+            "id"
+        ];
     }
 
     

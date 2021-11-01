@@ -11,6 +11,7 @@ namespace App\Repositories;
 use App\Models\AppModel;
 use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\ComponentMysql;
+use App\Factories\ModelFactory as MF;
 use App\Traits\LogTrait;
 
 abstract class AppRepository
@@ -176,4 +177,8 @@ abstract class AppRepository
         }
     }//delete
 
+    private function get_model(string $model): AppModel
+    {
+        return MF::get($model);
+    }
 }//AppRepository
