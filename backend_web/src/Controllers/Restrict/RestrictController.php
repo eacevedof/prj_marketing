@@ -29,7 +29,7 @@ abstract class RestrictController extends AppController
         $this->set_layout("restrict/restrict");
     }
 
-    protected function logout(): void
+    public function logout(): void
     {
         $this->session->destroy();
         $url = self::URL_LOGIN;
