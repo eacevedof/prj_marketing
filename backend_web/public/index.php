@@ -72,6 +72,11 @@ try {
 catch (\Exception $ex)
 {
     lg($ex->getMessage(), "main-exception", "error");
+    lg($_POST,"main-exception POST", "error");
+    lg($_GET,"main-exception GET", "error");
+    lg($_SESSION,"main-exception SESSION", "error");
+    lg($_ENV,"main-exception ENV", "error");
+    lg($_REQUEST,"main-exception REQUEST", "error");
     http_response_code(500);
     $response = [
         "status" => false,
@@ -82,14 +87,21 @@ catch (\Exception $ex)
     ];
     echo json_encode($response);
 }
+
 catch (\Throwable $ex)
 {
-    lg($ex->getMessage(), "falta-error", "error");
+    lg($ex->getMessage(), "fatal-error", "error");
+    lg($_POST,"fatal-error POST", "error");
+    lg($_GET,"fatal-error GET", "error");
+    lg($_SESSION,"fatal-error SESSION", "error");
+    lg($_ENV,"fatal-error ENV", "error");
+    lg($_REQUEST,"fatal-error REQUEST", "error");
+
     http_response_code(500);
     $response = [
         "status" => false,
         "errors" => [
-            $ex->getMessage()
+            "Server throwable error"
         ],
         "data" => []
     ];
