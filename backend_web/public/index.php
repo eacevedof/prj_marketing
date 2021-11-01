@@ -1,8 +1,10 @@
 <?php
 ob_start();
+session_name("MARKETINGID");
 session_start();
 session_regenerate_id(true);
 include("../boot/appbootstrap.php");
+
 //header("Access-Control-Allow-Origin: *");
 //Código de configuración de cabeceras que permiten consumir la API desde cualquier origen
 //fuente: https://stackoverflow.com/questions/14467673/enable-cors-in-htaccess
@@ -65,6 +67,7 @@ try {
 
     $oController = new $arRun["controller"]();
     $oController->{$arRun["method"]}();
+
 }
 catch (\Exception $ex)
 {
@@ -73,7 +76,19 @@ catch (\Exception $ex)
     $response = [
         "status" => false,
         "errors" => [
-            "general exception",
+            $ex->getMessage()
+        ],
+        "data" => []
+    ];
+    echo json_encode($response);
+}
+catch (\Throwable $ex)
+{
+    lg($ex->getMessage(), "falta-error", "error");
+    http_response_code(500);
+    $response = [
+        "status" => false,
+        "errors" => [
             $ex->getMessage()
         ],
         "data" => []
