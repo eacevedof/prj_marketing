@@ -6,6 +6,7 @@ final class AuthComponent
 {
     public function is_user_allowed(?array $user, string $permission): bool
     {
-        return true;
+        return false;
+        //return true;
     }
 }
