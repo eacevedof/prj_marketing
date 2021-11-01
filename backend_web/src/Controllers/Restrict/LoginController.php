@@ -41,11 +41,4 @@ final class LoginController extends RestrictController
         }
         $this->logd("access end");
     }
-    
-    public function logout(): void
-    {
-        $this->login = SF::get("Restrict\Login", $this->get_post());
-        $this->login->out();
-    }
-
 }//LoginController
