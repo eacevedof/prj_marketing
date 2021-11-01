@@ -36,28 +36,28 @@ const App = {
         if(response?.errors?.length){
           console.error(response.errors)
           return Swal.fire({
-            icon: 'warning',
-            title: 'Proceso incompleto',
-            html: 'No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. <br/>'+response.errors[0],
+            icon: "warning",
+            title: "Proceso incompleto",
+            html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. <br/>"+response.errors[0],
           })
         }
 
         console.log("reponse ok",response)
 
         Swal.fire({
-          icon: 'success',
-          title: 'Gracias por contactar conmigo!',
-          html: 'En breves momentos recibirás una copia del mensaje en tu email.',
+          icon: "success",
+          title: "Gracias por contactar conmigo!",
+          html: "En breves momentos recibirás una copia del mensaje en tu email.",
         })
 
 
       })
       .catch(error => {
-        console.log("catch.error",error)
+        console.error("catch.error", error)
         Swal.fire({
-          icon: 'error',
-          title: 'Vaya! Algo ha ido mal (c)',
-          html: 'No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. \n'+error,
+          icon: "error",
+          title: "Vaya! Algo ha ido mal (c)",
+          html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias.",
         })
       })
       .finally(()=>{
