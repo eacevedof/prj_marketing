@@ -75,8 +75,8 @@ catch (\Exception $ex)
     lg($_POST,"main-exception POST", "error");
     lg($_GET,"main-exception GET", "error");
     lg($_SESSION,"main-exception SESSION", "error");
-    lg($_ENV,"main-exception ENV", "error");
     lg($_REQUEST,"main-exception REQUEST", "error");
+    lg($_ENV,"main-exception ENV", "error");
     http_response_code(500);
     $response = [
         "status" => false,
@@ -94,8 +94,8 @@ catch (\Throwable $ex)
     lg($_POST,"fatal-error POST", "error");
     lg($_GET,"fatal-error GET", "error");
     lg($_SESSION,"fatal-error SESSION", "error");
-    lg($_ENV,"fatal-error ENV", "error");
     lg($_REQUEST,"fatal-error REQUEST", "error");
+    lg($_ENV,"fatal-error ENV", "error");
 
     http_response_code(500);
     $response = [
