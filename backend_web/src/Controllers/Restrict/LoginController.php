@@ -29,7 +29,7 @@ final class LoginController extends RestrictController
         $this->logd("middle start");
         $oJson = new HelperJson();
         try{
-            $login->access();
+            $login->in();
             $oJson->set_payload(["message"=>__("auth ok")])->show();
         }
         catch (\Exception $e)
