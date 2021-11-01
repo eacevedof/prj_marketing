@@ -22,6 +22,11 @@ abstract class AppRepository
     protected ComponentCrud $crud;
     protected string $table;
 
+    protected function _get_sanitized(string $value)
+    {
+        return str_replace("'","\\'", $value);
+    }
+
     public function set_db(ComponentMysql $db): self
     {
         $this->db = $db;
