@@ -33,8 +33,9 @@ final class LoginService extends AppService
         $aruser = $this->repository->by_email($email);
         if (!($secret = $aruser["secret"])) $this->_exeption(__("Invalid data"));
 
-        if ($this->encdec->check_hashpassword($password, $secret)) {
-            $this->session->add("auth_user", $aruser);
-        }
+        if (!$this->encdec->check_hashpassword($password, $secret))
+            $this->_exeption(__("Unauthorized"));
+
+        $this->session->add("auth_user", $aruser);
     }
 }
