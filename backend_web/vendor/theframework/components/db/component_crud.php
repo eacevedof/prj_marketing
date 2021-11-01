@@ -12,7 +12,7 @@ namespace TheFramework\Components\Db;
 class ComponentCrud
 {
     private $sSQL;
-    private $sSQLComment;
+    private $querycomment;
     private $sTable; //Tabla sobre la que se realizará el crud
     private $arInsertFV;
     
@@ -173,9 +173,9 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autoinsert";
         
-        $sSQLComment = "";
-        if($this->sSQLComment)
-            $sSQLComment = "/*$this->sSQLComment*/";
+        $querycomment = "";
+        if($this->querycomment)
+            $querycomment = "/*$this->querycomment*/";
         
         if(!$sTable)
             $sTable = $this->sTable;
@@ -187,7 +187,7 @@ class ComponentCrud
             
             if($arFieldVal)
             {    
-                $sSQL = "$sSQLComment INSERT INTO ";
+                $sSQL = "$querycomment INSERT INTO ";
                 $sSQL .= "$sTable ( ";
 
                 $arFields = array_keys($arFieldVal);
@@ -221,9 +221,9 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autoupdate";
         
-        $sSQLComment = "";
-        if($this->sSQLComment)
-            $sSQLComment = "/*$this->sSQLComment*/";
+        $querycomment = "";
+        if($this->querycomment)
+            $querycomment = "/*$this->querycomment*/";
         
         if(!$sTable)
             $sTable = $this->sTable;
@@ -235,7 +235,7 @@ class ComponentCrud
             if(!$arPksFV)
                 $arPksFV = $this->arPksFV;
 
-            $sSQL = "$sSQLComment UPDATE $sTable ";
+            $sSQL = "$querycomment UPDATE $sTable ";
             $sSQL .= "SET ";
             //creo las asignaciones de campos set extras
             $arAux = [];
@@ -291,9 +291,9 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autodelete";
         
-        $sSQLComment = "";
-        if($this->sSQLComment)
-            $sSQLComment = "/*$this->sSQLComment*/";
+        $querycomment = "";
+        if($this->querycomment)
+            $querycomment = "/*$this->querycomment*/";
         
         if(!$sTable)
             $sTable = $this->sTable;
@@ -303,7 +303,7 @@ class ComponentCrud
             if(!$arPksFV)
                 $arPksFV = $this->arPksFV;
             
-            $sSQL = "$sSQLComment DELETE FROM $sTable ";
+            $sSQL = "$querycomment DELETE FROM $sTable ";
 
             //condiciones con las claves
             $arAux = [];
@@ -341,8 +341,8 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autodelete_logic";
         
-        if($this->sSQLComment)
-            $sSQLComment = "/*$this->sSQLComment*/";
+        if($this->querycomment)
+            $querycomment = "/*$this->querycomment*/";
         
         if(!$sTable)
             $sTable = $this->sTable;
@@ -355,7 +355,7 @@ class ComponentCrud
             if($arPksFV)
             {    
                 //@todo
-                $sSQL = "$sSQLComment UPDATE $sTable ";
+                $sSQL = "$querycomment UPDATE $sTable ";
                 $sSQL .= "SET  ";
 
                 //condiciones con las claves
@@ -389,8 +389,8 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autoundelete_logic";
         
-        if($this->sSQLComment)
-            $sSQLComment = "/*$this->sSQLComment*/";
+        if($this->querycomment)
+            $querycomment = "/*$this->querycomment*/";
         
         if(!$sTable)
             $sTable = $this->sTable;
@@ -404,7 +404,7 @@ class ComponentCrud
             {    
                 $codUserSession = getPostParam("userId");
                 $sNow = date("Ymdhis");
-                $sSQL = "$sSQLComment UPDATE $sTable 
+                $sSQL = "$querycomment UPDATE $sTable 
                         SET 
                         delete_date=null
                         ,delte_user=null
@@ -440,59 +440,49 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- get_selectfrom";
         
-        $sSQLComment = "";
-        if($this->sSQLComment)
-            $sSQLComment = "/*$this->sSQLComment*/";
+        $querycomment = "";
+        if($this->querycomment) $querycomment = "/*$this->querycomment*/";
+
+        if(!$sTable) $sTable = $this->sTable;
+        if(!$sTable) return $this->sSQL;
         
-        if(!$sTable)
-            $sTable = $this->sTable;
-        
-        if($sTable)
+        if(!$arFields) $arFields = $this->arGetFields;
+        if(!$arFields) return $this->sSQL;
+
+        if(!$arPksFV) $arPksFV = $this->arPksFV;
+
+        $sSQL = "$querycomment SELECT ";
+        if($this->isFoundrows) $sSQL .= "SQL_CALC_FOUND_ROWS ";
+        if($this->isDistinct) $sSQL .= "DISTINCT ";
+        $this->clean_reserved($arFields);
+        $sSQL .= implode(",",$arFields)." ";
+        $sSQL .= "FROM $sTable";
+
+        $sSQL .= $this->get_joins();
+        //condiciones con las claves
+        $arAux = [];
+        foreach($arPksFV as $sField=>$sValue)
         {
-            if(!$arFields)
-                $arFields = $this->arGetFields;
-            if(!$arPksFV)
-                $arPksFV = $this->arPksFV;
-            
-            if($arFields)
-            {
-                $sSQL = "$sSQLComment SELECT ";
-                if($this->isFoundrows) $sSQL .= "SQL_CALC_FOUND_ROWS ";
-                if($this->isDistinct) $sSQL .= "DISTINCT ";
-                $this->clean_reserved($arFields);
-                $sSQL .= implode(",",$arFields)." ";
-                $sSQL .= "FROM $sTable";
-                
-                $sSQL .= $this->get_joins();
-                //condiciones con las claves
-                $arAux = [];
-                foreach($arPksFV as $sField=>$sValue)
-                {
-                    $this->clean_reserved($sField);
-                    if($sValue===null)
-                        $arAux[] = "$sField IS null";
-                    elseif($this->is_numeric($sField))
-                        $arAux[] = "$sField=$sValue";
-                    else    
-                        $arAux[] = "$sField='$sValue'";
-                }
-                
-                $arAux = array_merge($arAux,$this->arAnds);
-                if($arAux)
-                    $sSQL .= " WHERE ".implode(" AND ",$arAux);
-                
-                $sSQL .= $this->get_groupby();
-                $sSQL .= $this->get_having();
-                $sSQL .= $this->get_orderby();
-                $sSQL .= $this->get_end();
-                $sSQL .= $this->get_limit();
-                $this->sSQL = $sSQL;
-                //bug($sSQL);die;
-                $this->query();
-                return $this->arResult;
-            }//si se han proporcionado correctamente los datos campo=>valor y las claves
-            return null;
-        }//se ha proporcionado una tabla
+            $this->clean_reserved($sField);
+            if($sValue===null)
+                $arAux[] = "$sField IS null";
+            elseif($this->is_numeric($sField))
+                $arAux[] = "$sField=$sValue";
+            else
+                $arAux[] = "$sField='$sValue'";
+        }
+
+        $arAux = array_merge($arAux,$this->arAnds);
+        if($arAux) $sSQL .= " WHERE ".implode(" AND ",$arAux);
+
+        $sSQL .= $this->get_groupby();
+        $sSQL .= $this->get_having();
+        $sSQL .= $this->get_orderby();
+        $sSQL .= $this->get_end();
+        $sSQL .= $this->get_limit();
+        $this->sSQL = $sSQL;
+
+        return $this->sSQL;
     }//get_selectfrom
     
     private function extract_top_sql($sSQL)
@@ -627,7 +617,7 @@ class ComponentCrud
     }
         
     public function set_table($sTable=null):self{$this->sTable=$sTable; return $this;}
-    public function set_comment($sComment):self{$this->sSQLComment = $sComment; return $this;}
+    public function set_comment($sComment):self{$this->querycomment = $sComment; return $this;}
     
     public function set_insert_fv($arFieldVal=[]):self{$this->arInsertFV = []; if(is_array($arFieldVal)) $this->arInsertFV=$arFieldVal; return $this;}
     public function add_insert_fv($sFieldName,$sValue,$isSanit=1):self{$this->arInsertFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
@@ -777,7 +767,7 @@ class ComponentCrud
     public function set_dbobj($oDb=null):self{$this->oDB=$oDb; return $this;}
 
     public function is_error(){return $this->isError;}
-    public function get_result(){return $this->arResult;}
+    public function get_result(){$this->query(); return $this->arResult;}
     public function get_errors($inJson=0){if($inJson) return json_encode($this->arErrors); return $this->arErrors;}
     public function get_error($i=0){return isset($this->arErrors[$i])?$this->arErrors[$i]:null;}
     public function show_errors(){echo "<pre>".var_export($this->arErrors,1);}
