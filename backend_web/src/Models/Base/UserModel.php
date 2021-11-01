@@ -30,5 +30,4 @@ final class UserModel extends AppModel
         ];
     }
 
-    
 }//ExampleModel
