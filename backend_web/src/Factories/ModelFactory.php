@@ -9,17 +9,17 @@
  */
 namespace App\Factories;
 
+use App\Models\AppModel;
 
-final class ServiceFactory
+final class ModelFactory
 {
-    public static function get(string $service, array $params = []): ?object
+    public static function get(string $model): ?AppModel
     {
-        $service = str_replace("/","\\",$service);
-        if(strstr($service,"Service")) $service .= "Service";
-        
-        $Service = "\App\Services\\".$service;
+        $model = str_replace("/","\\",$model);
+        if(strstr($model,"Model")) $model .= "Model";
+        $Model = "\App\Models\\".$model;
         try {
-            $obj = new $Service($params);
+            $obj = new $Model();
         }
         catch (\Exception $e) {
             return null;
