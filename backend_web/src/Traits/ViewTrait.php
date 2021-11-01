@@ -13,33 +13,30 @@ use App\Views\AppView;
 
 trait ViewTrait
 {
-    /**
-     * @var AppView
-     */
-    private $view = null;
+    private ?AppView $view = null;
 
-    private function _init(): void
+    private function _viewinit(): void
     {
         if(!$this->view) $this->view = new AppView();
     }
 
     protected function set_layout(string $pathlayout): AppView
     {
-        $this->_init();
+        $this->_viewinit();
         $this->view->set_layout($pathlayout);
         return $this->view;
     }
 
     protected function add_var(string $varname, $value): AppView
     {
-        $this->_init();
+        $this->_viewinit();
         $this->view->add_var($varname, $value);
         return $this->view;
     }
 
     protected function render($vars=[], string $pathtemplate=""): void
     {
-        $this->_init();
+        $this->_viewinit();
         if($vars) $this->view->set_vars($vars);
         if($pathtemplate) $this->view->set_template($pathtemplate);
         $this->view->render();

@@ -18,7 +18,7 @@ final class LoginService extends AppService
     public function __construct(array $input)
     {
         $this->input = $input;
-
+        $this->_sessioninit();
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
     }
