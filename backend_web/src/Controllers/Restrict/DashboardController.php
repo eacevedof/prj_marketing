@@ -8,18 +8,17 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Services\Restrict\LoginService;
-use App\Factories\ServiceFactory as SF;
-use TheFramework\Helpers\HelperJson;
+use App\Enums\Actions;
 
 final class DashboardController extends RestrictController
 {
     public function index(): void
     {
         $this->add_var("pagetitle", "DASHBOARD");
-        if (!$this->auth->is_user_allowed($this->sess_get("auth_user"),"restrict:read")) {
-           $this->render([],"/error/403");
-           die;
+        if (!$this->auth->is_user_allowed($this->sess_get("auth_user"),Actions::DASHBOARD_READ)) {
+           $this->render_error([
+               "h1"=>__("Unauthorized")
+           ],"/error/403");
         }
         $this->render();
     }

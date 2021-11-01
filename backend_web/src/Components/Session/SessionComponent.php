@@ -2,7 +2,6 @@
 
 namespace App\Components\Session;
 
-
 final class SessionComponent
 {
     public function add(string $key, $mxvalue): SessionComponent
@@ -27,6 +26,9 @@ final class SessionComponent
                 $params["secure"], $params["httponly"]
             );
         }
+        session_destroy();
+        session_start();
+        session_regenerate_id(true);
         session_destroy();
         return $this;
     }

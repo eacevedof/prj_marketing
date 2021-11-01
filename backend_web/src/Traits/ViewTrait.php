@@ -42,4 +42,13 @@ trait ViewTrait
         $this->view->render();
     }
 
+    protected function render_error($vars=[], string $pathtemplate=""): void
+    {
+        $this->_viewinit();
+        if($vars) $this->view->set_vars($vars);
+        if($pathtemplate) $this->view->set_template($pathtemplate);
+        $this->view->render();
+        exit();
+    }
+
 }//ViewTrait
