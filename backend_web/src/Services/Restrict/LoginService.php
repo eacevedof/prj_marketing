@@ -43,10 +43,4 @@ final class LoginService extends AppService
 
         //die();
     }
-
-    public function out(): void
-    {
-        $this->session->destroy();
-        header("Location: /login");
-    }
 }
