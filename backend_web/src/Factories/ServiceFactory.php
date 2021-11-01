@@ -9,7 +9,6 @@
  */
 namespace App\Factories;
 
-
 final class ServiceFactory
 {
     public static function get(string $service, array $params = []): ?object
