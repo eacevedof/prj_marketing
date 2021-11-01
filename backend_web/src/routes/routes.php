@@ -7,6 +7,7 @@ return [
     ["url"=>"/","controller"=>"App\Controllers\Open\OpenController","method"=>"index"],
     ["url"=>"/login","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"access", "req_meths"=>["post"]],
+    ["url"=>"/restrict","controller"=>"App\Controllers\Restrict\DashboardController", "method"=>"index"],
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
     

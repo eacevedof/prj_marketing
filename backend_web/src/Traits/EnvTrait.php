@@ -23,4 +23,6 @@ trait EnvTrait
 
     protected function is_envlocal(){return $this->get_appenv("ENV")==="local";}
 
+    protected function add_env(string $key, $mxvalue){$_ENV[$key] = $mxvalue;}
+
 }//EnvTrait

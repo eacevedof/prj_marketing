@@ -14,6 +14,7 @@ final class LoginService extends AppService
     private array $input;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
+    private const URL_LOGOUT = "/login";
 
     public function __construct(array $input)
     {
@@ -23,7 +24,7 @@ final class LoginService extends AppService
         $this->repository = RF::get("Base/User");
     }
 
-    public function access(): void
+    public function in(): void
     {
         $email = $this->input["email"];
         if (!$email) $this->_exeption(__("Empty email"));
@@ -38,5 +39,13 @@ final class LoginService extends AppService
             $this->_exeption(__("Unauthorized"));
 
         $this->session->add("auth_user", $aruser);
+        $this->session->add("lang", $aruser["language"] ?? "en");
+        //header("Location: /dashboard");
+        //die();
+    }
+
+    public function out(): void
+    {
+        $this->session->destroy();
     }
 }
