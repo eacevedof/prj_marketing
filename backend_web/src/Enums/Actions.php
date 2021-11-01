@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Actions: string {
-    case DASHBOARD_READ = "dashboard:read";
-    case DASHBOARD_WRITE = "dashboard:write";
+abstract class Action {
+    const DASHBOARD_READ = "dashboard:read";
+    const DASHBOARD_WRITE = "dashboard:write";
 }
