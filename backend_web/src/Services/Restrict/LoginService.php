@@ -40,12 +40,13 @@ final class LoginService extends AppService
 
         $this->session->add("auth_user", $aruser);
         $this->session->add("lang", $aruser["language"] ?? "en");
-        //header("Location: /dashboard");
+
         //die();
     }
 
     public function out(): void
     {
         $this->session->destroy();
+        header("Location: /login");
     }
 }
