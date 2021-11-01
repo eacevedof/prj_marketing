@@ -13,7 +13,7 @@ use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use App\Factories\ModelFactory as MF;
 
-final class UserRepositoryx extends AppRepository
+final class UserRepository extends AppRepository
 {
     public function __construct()
     {
