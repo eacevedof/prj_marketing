@@ -61,7 +61,7 @@ final class ComponentMysql
         return $arResult;
     }
     
-    public function query($sSQL, $iCol=NULL,$iRow=NULL)
+    public function query($sSQL, $iCol=NULL, $iRow=NULL)
     {
         $arResult = [];        
         try 
@@ -91,7 +91,7 @@ final class ComponentMysql
 
                 $this->iAffected = count($arResult);
                 if($arResult)
-                    $arResult = $this->get_rowcol($arResult,$iCol,$iRow);
+                    $arResult = $this->get_rowcol($arResult, $iCol, $iRow);
             }
         }
         catch(\PDOException $oE)

@@ -27,15 +27,18 @@ final class UserRepository extends AppRepository
         $this->_load_crud();
     }
 
-    public function get_all(): array
+
+    public function by_email(string $email): array
     {
+        $email = $this->_get_sanitized($email);
         $fields = $this->model->get_fields();
         $sql = $this->crud
                 ->set_getfields($fields)
+                ->add_and("email='$email'")
                 ->get_selectfrom()
         ;
         $ar = $this->db->query($sql);
-        return $ar;
+        return $ar[0] ?? [];
     }
 
 }//ExampleRepository
