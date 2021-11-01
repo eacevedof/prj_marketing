@@ -13,7 +13,7 @@ use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use App\Factories\ModelFactory as MF;
 
-final class UserRepository extends AppRepository
+final class UserRepositoryx extends AppRepository
 {
     public function __construct()
     {
@@ -25,8 +25,8 @@ final class UserRepository extends AppRepository
 
     public function get_all(): array
     {
-        $fields = array_keys($this->model->get_fields());
-        $this->crud->set_getfields();
+        $fields = $this->model->get_fields();
+        $this->crud->set_getfields($fields);
         $this->crud->get_selectfrom();
         $sql = $this->crud->get_sql();
         $ar = $this->db->query($sql);

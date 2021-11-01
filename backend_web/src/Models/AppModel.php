@@ -14,6 +14,6 @@ abstract class AppModel
     protected array $fields;
     protected array $pks;
 
-    public function get_fields(){return $this->fields;}
+    public function get_fields(){return array_keys($this->fields);}
     public function get_pks(){return $this->pks;}
 }//AppModel
