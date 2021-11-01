@@ -26,9 +26,10 @@ final class UserRepository extends AppRepository
     public function get_all(): array
     {
         $fields = $this->model->get_fields();
-        $this->crud->set_getfields($fields);
-        $this->crud->get_selectfrom();
-        $sql = $this->crud->get_sql();
+        $sql = $this->crud
+                ->set_getfields($fields)
+                ->get_selectfrom()
+        ;
         $ar = $this->db->query($sql);
         return $ar;
     }
