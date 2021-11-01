@@ -28,7 +28,7 @@ final class SessionComponent
             );
         }
         session_destroy();
-        return  $this;
+        return $this;
     }
 
     public function start(): SessionComponent
