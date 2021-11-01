@@ -61,7 +61,7 @@ final class ComponentMysql
         return $arResult;
     }
     
-    public function query($sSQL,$iCol=NULL,$iRow=NULL)
+    public function query($sSQL, $iCol=NULL,$iRow=NULL)
     {
         $arResult = [];        
         try 
