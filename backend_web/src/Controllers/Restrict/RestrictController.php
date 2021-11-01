@@ -19,20 +19,22 @@ abstract class RestrictController extends AppController
     use ViewTrait;
     use SessionTrait;
 
-    protected const URL_LOGIN = "/login";
+    protected const URL_ON_LOGOUT = "/login";
     protected AuthComponent $auth;
+    protected ?array $authuser = null;
 
     public function __construct()
     {
         $this->auth = new AuthComponent();
-        $this->_sessioninit();
+        $this->authuser = $this->_sessioninit()->get("auth_user");
         $this->set_layout("restrict/restrict");
     }
 
     public function logout(): void
     {
         $this->session->destroy();
-        $url = self::URL_LOGIN;
+        $url = self::URL_ON_LOGOUT;
         header("Location: {$url}");
+        exit();
     }
 }//RestrictController
