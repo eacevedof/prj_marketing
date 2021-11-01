@@ -2,7 +2,7 @@
 namespace App\Services\Restrict;
 use App\Services\AppService;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Repositories\UserRepository;
+use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Factories\RepositoryFactory as RF;
 use \Exception;
