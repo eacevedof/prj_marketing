@@ -17,8 +17,11 @@
     <?= $this->_asset_js("index") ?>
 </head>
 <body>
+<main>
 <?
+$this->_element("common/nav-menu");
 $this->_template();
 ?>
+</main>
 </body>
 </html>
