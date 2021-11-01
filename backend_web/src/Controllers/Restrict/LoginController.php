@@ -14,22 +14,22 @@ use TheFramework\Helpers\HelperJson;
 
 final class LoginController extends RestrictController
 {
+    private LoginService $login;
+    
     public function index(): void
     {
         $this->add_var("pagetitle", "LOGIN");
         $this->render();
     }
 
+    //@post
     public function access(): void
     {
-        /**
-         * @var LoginService
-         */
-        $login = SF::get("Restrict\Login", $this->get_post());
+        $this->login = SF::get("Restrict\Login", $this->get_post());
         $this->logd("middle start");
         $oJson = new HelperJson();
         try{
-            $login->in();
+            $this->login->in();
             $oJson->set_payload(["message"=>__("auth ok")])->show();
         }
         catch (\Exception $e)
@@ -40,6 +40,12 @@ final class LoginController extends RestrictController
                 ->show(1);
         }
         $this->logd("access end");
+    }
+    
+    public function logout(): void
+    {
+        $this->login = SF::get("Restrict\Login", $this->get_post());
+        $this->login->out();
     }
 
 }//LoginController

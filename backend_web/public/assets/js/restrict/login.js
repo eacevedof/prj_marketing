@@ -42,6 +42,7 @@ const App = {
           })
         }
 
+        window.location = "/restrict"
         console.log("reponse ok",response)
 
         Swal.fire({

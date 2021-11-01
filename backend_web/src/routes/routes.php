@@ -8,6 +8,7 @@ return [
     ["url"=>"/login","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"access", "req_meths"=>["post"]],
     ["url"=>"/restrict","controller"=>"App\Controllers\Restrict\DashboardController", "method"=>"index"],
+    ["url"=>"/restrict/logout","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"logout"],
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
     
