@@ -33,12 +33,12 @@ const App = {
         this.issending = false
         this.btnsend = "Enviar"
 
-        if(response?.errors){
+        if(response?.errors?.length){
           console.error(response.errors)
           return Swal.fire({
             icon: 'warning',
             title: 'Proceso incompleto',
-            html: 'No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. <br/>'+response.error,
+            html: 'No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. <br/>'+response.errors[0],
           })
         }
 
