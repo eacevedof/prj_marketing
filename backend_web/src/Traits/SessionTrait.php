@@ -13,12 +13,9 @@ use App\Factories\SessionFactory as SsF;
 
 trait SessionTrait
 {
-    /**
-     * @var SessionComponent
-     */
-    private $session = null;
+    private ?SessionComponent $session = null;
 
-    protected function sess_load(): SessionComponent
+    protected function _init(): SessionComponent
     {
         if(!$this->session) $this->session = SsF::get();
         return $this->session;

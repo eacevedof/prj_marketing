@@ -20,7 +20,7 @@ abstract class RestrictController extends AppController
 
     public function __construct()
     {
-        $this->sess_load();
+        $this->_init();
         $this->set_layout("restrict/restrict");
     }
 
