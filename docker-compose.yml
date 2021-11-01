@@ -34,7 +34,7 @@ services:
       # estas variables sirven para cuando se ejecuta desde consola... creo :)
       PHP_IDE_CONFIG: serverName=ServXdebug
       PHP_XDEBUG_ENABLED: 1
-      XDEBUG_CONFIG: client_host=host.docker.internal client_port=9005 remote_connect_back=0
+      XDEBUG_CONFIG: client_host=host.docker.internal client_port=9005
     volumes:
       - ./io:/appdata/io
       - ./bash:/appdata/bash
