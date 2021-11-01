@@ -32,15 +32,17 @@ const App = {
       .then(response => {
         this.issending = false
         this.btnsend = "Enviar"
-        console.log("reponse ok",response)
 
-        if(response?.error){
+        if(response?.errors){
+          console.error(response.errors)
           return Swal.fire({
             icon: 'warning',
             title: 'Proceso incompleto',
             html: 'No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. <br/>'+response.error,
           })
         }
+
+        console.log("reponse ok",response)
 
         Swal.fire({
           icon: 'success',
