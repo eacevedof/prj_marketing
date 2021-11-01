@@ -2,7 +2,6 @@
 ob_start();
 session_name("MARKETINGID");
 session_start();
-session_regenerate_id(true);
 include("../boot/appbootstrap.php");
 
 //header("Access-Control-Allow-Origin: *");

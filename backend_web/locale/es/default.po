@@ -3,3 +3,6 @@ msgstr ""
 
 msgid "Password"
 msgstr "clave"
+
+msgid "Unauthorized"
+msgstr "No autorizado"
