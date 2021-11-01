@@ -34,7 +34,7 @@ final class UsersService extends AppService implements IConsole
     //php run.php users 1234
     public function run(): void
     {
-        $this->_pr($this->word);
+        $this->_pr($this->word,"word");
         $password = $this->_get_password();
         $message = "password: {$password}";
         $this->logpr($message);
