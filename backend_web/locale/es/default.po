@@ -9,3 +9,6 @@ msgstr "No autorizado"
 
 msgid "Dashboard"
 msgstr "Cuadro de mandos"
+
+msgid "Promotions"
+msgstr "Promociones"
