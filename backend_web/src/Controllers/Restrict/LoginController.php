@@ -22,6 +22,9 @@ final class LoginController extends RestrictController
 
     public function access(): void
     {
+        /**
+         * @var LoginService
+         */
         $login = SF::get("Restrict\Login", $this->get_post());
         $this->logd("middle start");
         $oJson = new HelperJson();
