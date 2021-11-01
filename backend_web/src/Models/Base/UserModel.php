@@ -22,7 +22,7 @@ final class UserModel extends AppModel
         $this->fields = [
             "id" => "id",
             "email" => "eamil",
-            "password" => "password"
+            "secret" => "password"
         ];
 
         $this->pks = [

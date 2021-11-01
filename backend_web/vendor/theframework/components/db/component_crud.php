@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.8.0
+ * @file component_crud.php 2.8.1
  * @date 01-11-2021 12:54 SPAIN
  * @observations
  */
@@ -62,7 +62,7 @@ class ComponentCrud
     
     private function get_orderby()
     {
-        if($this->arOrderBy) return "";
+        if(!$this->arOrderBy) return "";
         $arSQL = [];
         $sOrderBy = " ORDER BY ";
         foreach($this->arOrderBy as $sField=>$sAD) {
@@ -772,4 +772,4 @@ class ComponentCrud
     public function get_error($i=0){return isset($this->arErrors[$i])?$this->arErrors[$i]:null;}
     public function show_errors(){echo "<pre>".var_export($this->arErrors,1);}
     
-}//Crud 2.8.0
+}//Crud 2.8.1
