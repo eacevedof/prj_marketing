@@ -37,7 +37,7 @@ class ComponentCrud
     protected $arErrors = [];
     protected $isError = FALSE;
 
-    protected $reserved = ["get","order"];
+    protected $reserved = ["get","order","password"];
 
     /**
      * 
