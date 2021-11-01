@@ -28,7 +28,7 @@ final class LoginController extends RestrictController
         //$this->sess_add("user", $this->get_post("email"))->add("pass",$this->get_post("password"));
         //$this->sess_destroy();
 
-        $this->login = SF::get("Restrict\LoginService", $this->get_post());
+        $this->login = SF::get("Restrict\Login", $this->get_post());
         $this->logd("middle start");
         $oJson = new HelperJson();
         try{

@@ -15,7 +15,7 @@ final class ServiceFactory
     public static function get(string $service, array $params = []): ?object
     {
         $service = str_replace("/","\\",$service);
-        if(strstr($service,"Service")) $service .= "Service";
+        if (!strstr($service,"Service")) $service .= "Service";
         
         $Service = "\App\Services\\".$service;
         try {
