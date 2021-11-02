@@ -68,7 +68,15 @@ final class ComponentCookie
     {
         if($name) $this->_name = $name;
         if($value) $this->_value = $value;
-        $this->_is_error=setcookie($this->_name,$this->_value,$this->_expire,$this->_valid_path,$this->_domain,$this->isSecured,$this->isHttpOnly);//
+        $this->_is_error = setcookie(
+            $this->_name,
+            $this->_value,
+            $this->_expire,
+            $this->_valid_path,
+            $this->_domain,
+            $this->isSecured,
+            $this->isHttpOnly
+        );//
         return $this;
     }
     
