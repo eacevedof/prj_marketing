@@ -24,7 +24,7 @@ final class LoginService extends AppService
         $this->_sessioninit();
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
-        $this->premissionrepo = RF::get("Base/UserPermissions");
+        $this->permissionrepo = RF::get("Base/UserPermissions");
     }
 
     public function in(): void
