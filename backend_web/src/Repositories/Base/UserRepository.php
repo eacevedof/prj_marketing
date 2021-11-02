@@ -20,9 +20,6 @@ final class UserRepository extends AppRepository
     {
         $this->db = DbF::get_by_default();
         $this->table = "base_user";
-        /**
-         * @var UserModel
-         */
         $this->_load_crud();
     }
 

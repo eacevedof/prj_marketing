@@ -20,11 +20,7 @@ final class UserPermissionsRepository extends AppRepository
     public function __construct()
     {
         $this->db = DbF::get_by_default();
-        $this->table = "base_users_permissions";
-        /**
-         * @var UserPermissionsModel
-         */
-        //$this->model = MF::get("Base\UserPermissions");
+        $this->table = "base_user_permissions";
         $this->_load_crud();
     }
 

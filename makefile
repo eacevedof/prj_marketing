@@ -125,3 +125,8 @@ tail-error:
 	cd ./backend_web/public; \
 	rm -f *.log; touch lg_${TODAY}_error.log; clear; \
 	tail -f lg_${TODAY}_error.log;
+
+tail-sql:
+	cd ./backend_web/logs/sql; \
+	rm -f *.log; touch app_${TODAY}.log; clear; \
+	tail -f app_${TODAY}.log;
