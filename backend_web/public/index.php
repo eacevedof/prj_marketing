@@ -60,6 +60,7 @@ try {
 
     $_REQUEST["ACTION"] = $arRun;
     $_REQUEST["ACTION_LANG"] = trim($_GET["lang"] ?? "")
+                                ?: trim($_COOKIE["lang"] ?? "")
                                 ?: trim($_SESSION["lang"] ?? "")
                                 ?: trim($_ENV["lang"] ?? "")
                                 ?: "en";
