@@ -25,4 +25,4 @@
     </div>
     </form>
 </div>
-<?= $this->_asset_js("restrict/login") ?>
+<?= $this->_asset_js_module("restrict/login") ?>
