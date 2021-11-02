@@ -2,15 +2,17 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @version 2.0.0
+ * @version 2.1.0
  * @name ComponentCookie 
  * @file component_cookie.php
- * @date 20-05-2017 10:23 (SPAIN)
+ * @date 02-11-2021 21:58 (SPAIN)
  * @observations: Usa las funciones básicas de php para tratar cookies
  * La cookie realmente es el par (clave,valor) que se guarda y tiene un tiempo de caducidad (expire)
  * El archivo como tal que guarda estos valores no es la cookie!
  */
-class ComponentCookie 
+namespace TheFramework\Components\Session;
+
+final class ComponentCookie
 {
     private $_name;
     private $_value;
@@ -43,6 +45,7 @@ class ComponentCookie
         //setcookie suele dar un error si se hace un echo o algun print por pantalla antes de llamar a esta función
         $this->_is_error=setcookie($this->_name,"",time()-3600,$this->_valid_path,$this->_domain,$this->isSecured,$this->isHttpOnly);//
         unset($_COOKIE[$this->_name]);
+        return $this;
     }
     
     public function killall()
@@ -57,7 +60,8 @@ class ComponentCookie
                 setcookie($sName,"",time()-1000);
                 setcookie($sName,"",time()-1000,"/");
             }
-        }        
+        }
+        return $this;
     }//killall
     
     public function write($name=null,$value=null)
@@ -65,15 +69,17 @@ class ComponentCookie
         if($name) $this->_name = $name;
         if($value) $this->_value = $value;
         $this->_is_error=setcookie($this->_name,$this->_value,$this->_expire,$this->_valid_path,$this->_domain,$this->isSecured,$this->isHttpOnly);//
+        return $this;
     }
     
-    private function load_value($name=null){if($name) $this->_name = $name; $this->_value=(isset($_COOKIE[$this->_name])?$_COOKIE[$this->_name]:NULL);}
+    private function load_value($name=null){if($name) $this->_name = $name; $this->_value=(isset($_COOKIE[$this->_name])?$_COOKIE[$this->_name]:NULL);return $this;}
         
-    public function set_name($value){$this->_name=$value;}
+    public function set_name($value){$this->_name=$value;return $this;}
     public function set_value($value)
     {
         $this->_value = $value;
-        $this->write();    
+        $this->write();
+        return $this;
     }
     
     public function add_value($sName,$sValue)
@@ -82,13 +88,14 @@ class ComponentCookie
         $this->_value = $sValue;
         if($this->_name)
             $this->write();
+        return $this;
     }
     
-    public function set_expire($value){$this->_expire = $value;}
-    public function set_valid_path($value){$this->_valid_path = $value;}
-    public function set_domain($value){$this->_domain = $value;}
-    public function set_secured($isOn=true){$this->isSecured = $isOn;}
-    public function set_httponly($isOn=true){$this->isHttpOnly = $isOn;}
+    public function set_expire($value){$this->_expire = $value;return $this;}
+    public function set_valid_path($value){$this->_valid_path = $value;return $this;}
+    public function set_domain($value){$this->_domain = $value;return $this;}
+    public function set_secured($isOn=true){$this->isSecured = $isOn;return $this;}
+    public function set_httponly($isOn=true){$this->isHttpOnly = $isOn;return $this;}
     
     public function get_name(){return $this->_name;}
     public function get_value($name=null){$this->load_value($name); return $this->_value;}

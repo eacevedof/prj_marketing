@@ -49,10 +49,6 @@ spl_autoload_register(function($sNSClassName)
         {
             lg("Class not found: $sClassName");
         }
-        elseif($isComp) 
-        {
-            echo "Class not found: $sClassName";
-        }
     }
 });//spl_autoload_register
 
