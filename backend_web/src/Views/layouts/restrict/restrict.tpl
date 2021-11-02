@@ -12,9 +12,12 @@
     <title><?=$pagetitle?></title>
     <?= $this->_asset_css("index") ?>
     <?= $this->_asset_css("restrict/restrict") ?>
+    <?= $this->_asset_css("vendor/datatable-1.11.3") ?>
     <script src="https://unpkg.com/vue@next"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <?= $this->_asset_js("index") ?>
+    <?= $this->_asset_js_module("index") ?>
+    <?= $this->_asset_js("vendor/datatable/datatable-1.11.3") ?>
+    <?= $this->_asset_js("vendor/jquery/jquery-3.6.0") ?>
 </head>
 <body>
 <main>

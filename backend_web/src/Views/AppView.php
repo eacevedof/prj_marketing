@@ -81,10 +81,17 @@ final class AppView
         include($path);
     }
 
-    private function _asset_js(string $pathjs):string
+    private function _asset_js_module(string $pathjs):string
     {
         $path = self::PATH_ASSETS_JS.$pathjs.".js";
         $html = "<script type=\"module\" src=\"$path\"></script>";
+        return $html;
+    }
+
+    private function _asset_js(string $pathjs):string
+    {
+        $path = self::PATH_ASSETS_JS.$pathjs.".js";
+        $html = "<script src=\"$path\"></script>";
         return $html;
     }
 
