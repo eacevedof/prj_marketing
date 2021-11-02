@@ -66,7 +66,9 @@ try {
                                 ?: "en";
 
     $oController = new $arRun["controller"]();
-    $oController->{$arRun["method"]}();
+    $oController->{$arRun["method"]}(
+        ...($arRun["args"] ?? [])
+    );
 
 }
 catch (\Exception $ex)
