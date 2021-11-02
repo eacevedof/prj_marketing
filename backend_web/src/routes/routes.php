@@ -6,11 +6,13 @@ return [
     //["url"=>"/","controller"=>"App\Controllers\NotFoundController","method"=>"index"],
     ["url"=>"/","controller"=>"App\Controllers\Open\OpenController","method"=>"index"],
     ["url"=>"/login","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"index"],
-    ["url"=>"/login/access","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"access", "req_meths"=>["post"]],
+    ["url"=>"/login/access","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"access", "allowed"=>["post"]],
 
     ["url"=>"/restrict/logout","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"logout"],
     ["url"=>"/restrict","controller"=>"App\Controllers\Restrict\DashboardController", "method"=>"index"],
     ["url"=>"/restrict/promotions","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"index"],
+
+    ["url"=>"/restrict/promotions/:id","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"detail"],
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
     
