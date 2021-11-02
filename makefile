@@ -123,5 +123,5 @@ ips: ## get ips of containers
 
 tail-error:
 	cd ./backend_web/public; clear; \
-	rm *.log; touch lg_${TODAY}_error.log; \
+	rm -f *.log; touch lg_${TODAY}_error.log; \
 	tail -f lg_${TODAY}_error.log;
