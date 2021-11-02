@@ -26,4 +26,5 @@ final class RepositoryFactory
         }
         return $obj;
     }
-}//ServiceFactory
+
+}//RepositoryFactory
