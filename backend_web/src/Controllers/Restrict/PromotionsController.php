@@ -27,4 +27,11 @@ final class PromotionsController extends RestrictController
         ]);
     }
 
+    public function detail(string $id)
+    {
+        $this->render([
+            "h1" => __("Promotion detail {0}", $id)
+        ]);
+    }
+
 }//PromotionController

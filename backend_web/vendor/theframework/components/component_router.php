@@ -49,7 +49,7 @@ class ComponentRouter
     
     private function search()
     {
-        $isFound = FALSE;
+        $isFound = false;
         foreach($this->arRoutes as $i=>$arRoute)
         {
             $sUrl = $arRoute["url"];
@@ -70,18 +70,18 @@ class ComponentRouter
         return $this->search();
     }
     
-    private function compare_pieces($arRequest,$arRoute)
+    private function compare_pieces($arRequest, $arRoute)
     {
         //bug($arRequest);pr($arRoute);
         if(count($arRequest)!=count($arRoute))
-            return FALSE;
+            return false;
         
         foreach($arRoute as $i=>$sPiece)
         {
             if($this->is_tag($sPiece)) continue;
             $sReqval = $arRequest[$i];
             if($sReqval != $sPiece)
-                return FALSE;
+                return false;
         }
         return TRUE;
     }
