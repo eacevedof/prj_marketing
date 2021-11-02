@@ -41,6 +41,5 @@ final class LoginService extends AppService
         $this->session->add("auth_user", $aruser);
         $this->session->add("lang", $aruser["language"] ?? "en");
 
-        //die();
     }
 }
