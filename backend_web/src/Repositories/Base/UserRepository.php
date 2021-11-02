@@ -26,13 +26,13 @@ final class UserRepository extends AppRepository
         $this->_load_crud();
     }
 
-    public function by_email(string $email): array
+    public function get_by_email(string $email): array
     {
         $email = $this->_get_sanitized($email);
         $sql = $this->crud
                 ->set_table("$this->table as m")
                 ->set_getfields([
-                    "m.id","m.email","m.secret","m.id_language",
+                    "m.id","m.email","m.secret","m.id_language", "m.id_profile",
                     "ar.code_erp as language"
                 ])
                 ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
