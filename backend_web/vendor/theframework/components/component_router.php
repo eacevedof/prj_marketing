@@ -9,13 +9,14 @@
  */
 namespace TheFramework\Components;
 
-class ComponentRouter 
+final class ComponentRouter
 {   
     private $sRequestUri;
     private $sPathRoutes;
     private $arRoutes;
     private $arPieces;
-        
+    private $arArgs;
+
     public function __construct($arRoutes=[],$sPathRoutes="") 
     {
         $this->sRequestUri = $_SERVER["REQUEST_URI"];
@@ -54,6 +55,7 @@ class ComponentRouter
         {
             $sUrl = $arRoute["url"];
             $arRouteSep = $this->get_urlsep_params($sUrl);
+            $this->arArgs = [];
             $isFound = $this->compare_pieces($this->arPieces["urlsep_exploded"], $arRouteSep);
             if($isFound)
                 break;
@@ -62,7 +64,10 @@ class ComponentRouter
         if($isFound)
             $this->add_to_get($this->arPieces["urlsep_exploded"],$arRouteSep);
 
-        return $this->arRoutes[$i];
+        return array_merge(
+            $this->arRoutes[$i],
+            $this->arArgs ? ["args" => $this->arArgs] : []
+        );
     }
     
     public function get_rundata()
@@ -78,12 +83,17 @@ class ComponentRouter
         
         foreach($arRoute as $i=>$sPiece)
         {
-            if($this->is_tag($sPiece)) continue;
+            if($this->is_tag($sPiece)) {
+                $arg = str_replace(":","",$sPiece);
+                $value = $arRequest[$i];
+                $this->arArgs[$arg] = $value;
+                continue;
+            }
             $sReqval = $arRequest[$i];
             if($sReqval != $sPiece)
                 return false;
         }
-        return TRUE;
+        return true;
     }
     
     private function add_to_get($arRequest,$arRoute)
@@ -97,7 +107,7 @@ class ComponentRouter
         }
     }
     
-    private function is_tag($sPiece){return strstr($sPiece,"{") && strstr($sPiece,"}");}
+    private function is_tag($sPiece){return (strstr($sPiece,"{") && strstr($sPiece,"}")) || strstr($sPiece,":");}
     
     private function get_tagkey($sPiece){return str_replace(["{","}"],["",""],$sPiece);}
     
