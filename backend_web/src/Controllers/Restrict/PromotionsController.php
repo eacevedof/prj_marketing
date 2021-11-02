@@ -16,7 +16,7 @@ final class PromotionsController extends RestrictController
     {
         $this->add_var("pagetitle", "DASHBOARD");
 
-        if (!$this->auth->is_user_allowed($this->authuser,Action::DASHBOARD_READ)) {
+        if (!$this->auth->is_user_allowed(Action::DASHBOARD_READ)) {
            $this->render_error([
                "h1"=>__("Unauthorized")
            ],"/error/403");
