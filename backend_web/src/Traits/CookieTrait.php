@@ -18,7 +18,7 @@ trait CookieTrait
     protected function _cookieinit(): SessionComponent
     {
         if(!$this->cookie) $this->cookie = new ComponentCookie();
-        return $this->session;
+        return $this->cookie;
     }
 
 }//SessionTrait

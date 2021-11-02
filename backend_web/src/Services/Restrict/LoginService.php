@@ -5,6 +5,7 @@ use App\Services\AppService;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
+use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
 use App\Enums\Key;
 use \Exception;
@@ -12,6 +13,8 @@ use \Exception;
 final class LoginService extends AppService
 {
     use SessionTrait;
+    use CookieTrait;
+
     private string $domain;
     private array $input;
     private ComponentEncdecrypt $encdec;
@@ -23,6 +26,7 @@ final class LoginService extends AppService
     {
         $this->input = $input;
         $this->_sessioninit();
+        $this->_cookieinit();
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
@@ -43,9 +47,10 @@ final class LoginService extends AppService
             $this->_exeption(__("Unauthorized"));
 
         $this->session->add(Key::AUTH_USER, $aruser);
-        $this->session->add(Key::LANG, $aruser["language"] ?? "en");
+        $this->session->add(Key::LANG, $lang = ($aruser["language"] ?? "en"));
 
         $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
         $this->session->add(Key::AUTH_USER_PERMISSIONS, $permissions);
+        $this->cookie->add_value(key::LANG, $lang);
     }
 }
