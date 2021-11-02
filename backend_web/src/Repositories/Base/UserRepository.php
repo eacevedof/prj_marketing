@@ -23,7 +23,6 @@ final class UserRepository extends AppRepository
         /**
          * @var UserModel
          */
-        $this->model = MF::get("Base\User");
         $this->_load_crud();
     }
 

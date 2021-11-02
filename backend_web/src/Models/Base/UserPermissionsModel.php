@@ -11,7 +11,7 @@ namespace App\Models\Base;
 
 use App\Models\AppModel;
 
-final class UserPermissionModel extends AppModel
+final class UserPermissionsModel extends AppModel
 {
     public function __construct()
     {
