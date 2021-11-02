@@ -10,7 +10,7 @@
 namespace App\Repositories\Base;
 
 use App\Models\Base\UserModel;
-use App\Models\Base\UserPermissionModel;
+use App\Models\Base\UserPermissionsModel;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use App\Factories\ModelFactory as MF;
@@ -22,18 +22,18 @@ final class UserPermissionsRepository extends AppRepository
         $this->db = DbF::get_by_default();
         $this->table = "base_users_permissions";
         /**
-         * @var UserPermissionModel
+         * @var UserPermissionsModel
          */
-        $this->model = MF::get("Base\UserPermissions");
+        //$this->model = MF::get("Base\UserPermissions");
         $this->_load_crud();
     }
 
-    public function by_user(int $userid): array
+    public function get_by_user(int $userid): array
     {
         $sql = $this->crud
             ->set_table("$this->table as m")
             ->set_getfields([
-
+                "m.id","m.json_rw"
             ])
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
@@ -41,8 +41,6 @@ final class UserPermissionsRepository extends AppRepository
             ->get_selectfrom()
         ;
         $ar = $this->db->query($sql);
-
-        if(count($ar)>1) return [];
         return $ar[0] ?? [];
     }
 

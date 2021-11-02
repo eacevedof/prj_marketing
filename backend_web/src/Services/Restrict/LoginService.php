@@ -1,5 +1,6 @@
 <?php
 namespace App\Services\Restrict;
+use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Repositories\Base\UserRepository;
@@ -14,6 +15,7 @@ final class LoginService extends AppService
     private array $input;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
+    private UserPermissionsRepository $permissionrepo;
     private const URL_LOGOUT = "/login";
 
     public function __construct(array $input)
@@ -22,6 +24,7 @@ final class LoginService extends AppService
         $this->_sessioninit();
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
+        $this->premissionrepo = RF::get("Base/UserPermissions");
     }
 
     public function in(): void
@@ -41,5 +44,7 @@ final class LoginService extends AppService
         $this->session->add("auth_user", $aruser);
         $this->session->add("lang", $aruser["language"] ?? "en");
 
+        $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
+        $this->session->add("auth_user_permissions", $permissions);
     }
 }
