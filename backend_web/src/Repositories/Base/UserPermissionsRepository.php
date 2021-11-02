@@ -31,7 +31,7 @@ final class UserPermissionsRepository extends AppRepository
             ->set_getfields([
                 "m.id","m.json_rw"
             ])
-            ->add_and("m.is_enabled=1")
+            //->add_and("m.is_enabled=1") no existe esta col
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$userid")
             ->get_selectfrom()
