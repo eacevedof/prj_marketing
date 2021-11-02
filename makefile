@@ -122,6 +122,6 @@ ips: ## get ips of containers
 	echo "php-marketing-db"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-db
 
 tail-error:
-	cd ./backend_web/public; clear; \
-	rm -f *.log; touch lg_${TODAY}_error.log; \
+	cd ./backend_web/public; \
+	rm -f *.log; touch lg_${TODAY}_error.log; clear; \
 	tail -f lg_${TODAY}_error.log;
