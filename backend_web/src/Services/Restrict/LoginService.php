@@ -6,6 +6,7 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Factories\RepositoryFactory as RF;
+use App\Enums\Key;
 use \Exception;
 
 final class LoginService extends AppService
@@ -41,10 +42,10 @@ final class LoginService extends AppService
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exeption(__("Unauthorized"));
 
-        $this->session->add("auth_user", $aruser);
-        $this->session->add("lang", $aruser["language"] ?? "en");
+        $this->session->add(Key::AUTH_USER, $aruser);
+        $this->session->add(Key::LANG, $aruser["language"] ?? "en");
 
         $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
-        $this->session->add("auth_user_permissions", $permissions);
+        $this->session->add(Key::AUTH_USER_PERMISSIONS, $permissions);
     }
 }
