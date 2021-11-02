@@ -1,5 +1,5 @@
 #!/bin/bash
-TODAY := $(date +'%Y%m%d')
+TODAY := $(shell date +'%Y%m%d')
 
 help: ## Show this help message
 	@echo "usage: make [target]"
@@ -122,5 +122,6 @@ ips: ## get ips of containers
 	echo "php-marketing-db"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-db
 
 tail-error:
-	cd ./backend_web/public; clear; rm *.log; touch lg_$${TODAY}_error.log;
-	tail -f lg_$${TODAY}_error.log;
+	cd ./backend_web/public; clear; \
+	rm *.log; touch lg_${TODAY}_error.log; \
+	tail -f lg_${TODAY}_error.log;
