@@ -64,20 +64,13 @@ final class ComponentCookie
         return $this;
     }//killall
     
-    public function write($name=null,$value=null)
+    public function write($name=null,$value=null): self
     {
         if($name) $this->_name = $name;
         if($value) $this->_value = $value;
-        $r = setcookie(
-            "TestCookie",
-            $this->_value,
-            time() + 48 * 3600,
-            "/",
-            "localhost:900"
-        );
 
-        return $this;
-        $this->_is_error = setcookie(
+        //setcookie devuelve true si todo va bien
+        $this->_is_error = !setcookie(
             $this->_name,
             $this->_value,
             $this->_expire,
@@ -85,7 +78,8 @@ final class ComponentCookie
             $this->_domain,
             $this->isSecured,
             $this->isHttpOnly
-        );//
+        );
+
         return $this;
     }
     
