@@ -68,6 +68,15 @@ final class ComponentCookie
     {
         if($name) $this->_name = $name;
         if($value) $this->_value = $value;
+        $r = setcookie(
+            "TestCookie",
+            $this->_value,
+            time() + 48 * 3600,
+            "/",
+            "localhost:900"
+        );
+
+        return $this;
         $this->_is_error = setcookie(
             $this->_name,
             $this->_value,

@@ -26,7 +26,12 @@ final class LoginService extends AppService
     {
         $this->input = $input;
         $this->_sessioninit();
-        $this->_cookieinit();
+        $this->_cookieinit()
+            ->set_name("nombre")
+            ->set_domain("localhost")
+            ->set_valid_path("/")
+        ;
+
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
@@ -51,6 +56,7 @@ final class LoginService extends AppService
 
         $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
         $this->session->add(Key::AUTH_USER_PERMISSIONS, $permissions);
-        $this->cookie->add_value(key::LANG, $lang);
+        $r = $this->cookie->add_value(key::LANG, $lang);
+        return;
     }
 }
