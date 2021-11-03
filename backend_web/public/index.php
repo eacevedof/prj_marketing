@@ -73,12 +73,13 @@ try {
 }
 catch (\Exception $ex)
 {
+    if($_POST) lg($_POST,"main-exception POST", "error");
+    if($_GET) lg($_GET,"main-exception GET", "error");
+    if($_SESSION) lg($_SESSION,"main-exception SESSION", "error");
+    if($_REQUEST) lg($_REQUEST,"main-exception REQUEST", "error");
+    if($_ENV) lg($_ENV,"main-exception ENV", "error");
     lg($ex->getMessage(), "main-exception", "error");
-    lg($_POST,"main-exception POST", "error");
-    lg($_GET,"main-exception GET", "error");
-    lg($_SESSION,"main-exception SESSION", "error");
-    lg($_REQUEST,"main-exception REQUEST", "error");
-    lg($_ENV,"main-exception ENV", "error");
+
     http_response_code(500);
     $response = [
         "status" => false,
@@ -92,12 +93,12 @@ catch (\Exception $ex)
 
 catch (\Throwable $ex)
 {
+    if($_POST) lg($_POST,"fatal-error POST", "error");
+    if($_GET) lg($_GET,"fatal-error GET", "error");
+    if($_SESSION) lg($_SESSION,"fatal-error SESSION", "error");
+    if($_REQUEST) lg($_REQUEST,"fatal-error REQUEST", "error");
+    if($_ENV) lg($_ENV,"fatal-error ENV", "error");
     lg($ex->getMessage(), "fatal-error", "error");
-    lg($_POST,"fatal-error POST", "error");
-    lg($_GET,"fatal-error GET", "error");
-    lg($_SESSION,"fatal-error SESSION", "error");
-    lg($_REQUEST,"fatal-error REQUEST", "error");
-    lg($_ENV,"fatal-error ENV", "error");
 
     http_response_code(500);
     $response = [
