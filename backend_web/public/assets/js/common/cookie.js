@@ -17,7 +17,9 @@ const set_cookie = (name, value, days) => {
   }
 
   document.cookie = name.concat("=")
-    .concat(value || "").concat(strexpire).concat("; path=/")
+                      .concat(value || "")
+                      .concat(strexpire)
+                      .concat("; path=/")
 }
 
 export const erase_cookie = name => document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
