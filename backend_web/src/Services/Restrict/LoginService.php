@@ -56,7 +56,7 @@ final class LoginService extends AppService
 
         $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
         $this->session->add(Key::AUTH_USER_PERMISSIONS, $permissions);
-        $r = $this->cookie->add_value(key::LANG, $lang);
-        return;
+        //esto no me vale pq la respuesta es ajax y el navegador no escribe
+        $this->cookie->add_value(key::LANG, $lang);
     }
 }
