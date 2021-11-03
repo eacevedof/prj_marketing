@@ -1,5 +1,17 @@
-export const get_cookie = (name, value, days) => {
+export const get_cookie = name => {
+  const nameEQ = name.concat("=")
+  const parts = document.cookie.split(";")
 
+  for(let i=0; i < parts.length; i++) {
+    let c = parts[i];
+    while (c.charAt(0) === " ")
+      c = c.substring(1, c.length)
+
+    if (c.indexOf(nameEQ) === 0)
+        return c.substring(nameEQ.length,c.length);
+  }
+
+  return null
 }
 
 const set_cookie = (name, value, days) => {
