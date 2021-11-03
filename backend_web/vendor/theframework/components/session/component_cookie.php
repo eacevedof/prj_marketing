@@ -80,9 +80,9 @@ final class ComponentCookie
         return $this;
     }
     
-    private function load_value($name=null){if($name) $this->_name = $name; $this->_value=(isset($_COOKIE[$this->_name])?$_COOKIE[$this->_name]:NULL);return $this;}
+    private function load_value($name=null){if($name) $this->_name = $name; $this->_value=(isset($_COOKIE[$this->_name])?$_COOKIE[$this->_name]:NULL); return $this;}
         
-    public function set_name($value){$this->_name=$value;return $this;}
+    public function set_name($value){$this->_name=$value; return $this;}
     public function set_value($value)
     {
         $this->_value = $value;
@@ -98,12 +98,12 @@ final class ComponentCookie
             $this->write();
         return $this;
     }
-    
-    public function set_expire($value){$this->_expire = $value;return $this;}
-    public function set_valid_path($value){$this->_valid_path = $value;return $this;}
-    public function set_domain($value){$this->_domain = $value;return $this;}
-    public function set_secured($isOn=true){$this->isSecured = $isOn;return $this;}
-    public function set_httponly($isOn=true){$this->isHttpOnly = $isOn;return $this;}
+
+    public function set_expire($value){$this->_expire = $value; return $this;}
+    public function set_valid_path($value){$this->_valid_path = $value; return $this;}
+    public function set_domain($value){$this->_domain = $value; return $this;}
+    public function set_secured($isOn=true){$this->isSecured = $isOn; return $this;}
+    public function set_httponly($isOn=true){$this->isHttpOnly = $isOn; return $this;}
     
     public function get_name(){return $this->_name;}
     public function get_value($name=null){$this->load_value($name); return $this->_value;}
@@ -113,7 +113,7 @@ final class ComponentCookie
     public function get_secured(){return $this->isSecured;}
     public function get_httponly(){return $this->isHttpOnly;}
     public function get_all(){return $_COOKIE;}
-    public function exists($name=null){if($name)$this->_name=$name;return key_exists($this->_name,$_COOKIE);}
+    public function exists($name=null){if($name)$this->_name=$name; return key_exists($this->_name,$_COOKIE);}
     public function get_array($sName)
     {
         $arCookie=array();
