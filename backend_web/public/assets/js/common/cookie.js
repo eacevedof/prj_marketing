@@ -2,6 +2,7 @@ export const get_cookie = name => {
   const nameEQ = name.concat("=")
   const parts = document.cookie.split(";")
 
+  //lang=es; MARKETINGID=c97b6ee7e06bc76fc75763ba9745bd3b; login=ok'
   for(let i=0; i < parts.length; i++) {
     let c = parts[i];
     while (c.charAt(0) === " ")

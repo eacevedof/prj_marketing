@@ -1,3 +1,5 @@
+import set_cookie from "../common/cookie.js"
+
 const URL = "/login/access"
 
 const App = {
@@ -42,7 +44,9 @@ const App = {
           })
         }
 
-        //window.location = "/restrict"
+        set_cookie("login","ok")
+        set_cookie("lang","es")
+        window.location = "/restrict"
         console.log("reponse ok",response)
 
         Swal.fire({
