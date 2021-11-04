@@ -69,4 +69,10 @@ final class UsersController extends RestrictController
 
     }
 
+    //@get
+    public function search(string $page): void
+    {
+
+    }
+
 }//UsersController
