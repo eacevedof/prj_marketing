@@ -9,7 +9,7 @@ export const get_cookie = name => {
 
 const set_cookie = (name, value, days) => {
   const pieces = [
-    `${name}=${value.toString()}`
+    `${name}=${value?.toString() || ""}`
   ]
 
   if (days) {
