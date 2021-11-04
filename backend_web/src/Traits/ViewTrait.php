@@ -37,7 +37,8 @@ trait ViewTrait
     protected function render($vars=[], string $pathtemplate=""): void
     {
         $this->_viewinit();
-        if($vars) $this->view->set_vars($vars);
+        foreach ($vars as $k => $v)
+            $this->view->add_var($k,$v);
         if($pathtemplate) $this->view->set_template($pathtemplate);
         $this->view->render();
     }
@@ -45,7 +46,8 @@ trait ViewTrait
     protected function render_error($vars=[], string $pathtemplate=""): void
     {
         $this->_viewinit();
-        if($vars) $this->view->set_vars($vars);
+        foreach ($vars as $k => $v)
+            $this->view->add_var($k,$v);
         if($pathtemplate) $this->view->set_template($pathtemplate);
         $this->view->render();
         exit();
