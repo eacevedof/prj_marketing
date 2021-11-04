@@ -14,7 +14,7 @@ final class PromotionsController extends RestrictController
 {
     public function index(): void
     {
-        $this->add_var("pagetitle", "DASHBOARD");
+        $this->add_var("pagetitle", "PROMOTIONS");
 
         if (!$this->auth->is_user_allowed(Action::DASHBOARD_READ)) {
            $this->render_error([
