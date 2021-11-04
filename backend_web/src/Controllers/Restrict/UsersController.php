@@ -10,6 +10,8 @@
 namespace App\Controllers\Restrict;
 use App\Enums\Action;
 use App\Enums\Key;
+use App\Factories\ServiceFactory as SF;
+use TheFramework\Helpers\HelperJson;
 
 final class UsersController extends RestrictController
 {
@@ -66,7 +68,24 @@ final class UsersController extends RestrictController
     //@get
     public function search(string $page): void
     {
+        $oJson = new HelperJson();
+        $this->login = SF::get("Restrict\Login", $this->get_post());
 
+
+        try{
+            $result = $this->login->in();
+            $oJson->set_payload([
+                "message"=>__("auth ok"),
+                "lang" => $result["lang"]
+            ])->show();
+        }
+        catch (\Exception $e)
+        {
+            $this->logerr($e->getMessage(),"LoginController.access");
+            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show(1);
+        }
     }
 
     //@post

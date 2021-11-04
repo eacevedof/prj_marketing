@@ -5,6 +5,9 @@
 return [   
     //["url"=>"/","controller"=>"App\Controllers\NotFoundController","method"=>"index"],
     ["url"=>"/","controller"=>"App\Controllers\Open\OpenController","method"=>"index"],
+
+    ["url"=>"/forbidden","controller"=>"App\Controllers\Open\OpenController","method"=>"forbidden"],
+
     ["url"=>"/login","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"access", "allowed"=>["post"]],
 
