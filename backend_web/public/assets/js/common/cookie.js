@@ -8,19 +8,29 @@ export const get_cookie = name => {
 }
 
 const set_cookie = (name, value, days) => {
-  let strexpire = ""
+  const pieces = [
+    `${name}=${value.toString()}`
+  ]
+
   if (days) {
-    const date = new Date();
+    const date = new Date()
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
-    strexpire = "; expires=" + date.toUTCString()
+    pieces.push(`expires=${date.toUTCString()}`)
   }
 
-  document.cookie = name.concat("=")
-                      .concat(value || "")
-                      .concat(strexpire)
-                      .concat("; path=/")
+  pieces.push("path=/")
+  console.log(pieces)
+  document.cookie = pieces.join("; ")
 }
 
-export const erase_cookie = name => document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+export const erase_cookie = name => {
+  const pieces = [
+    name,
+    "path=/",
+    "expires=Thu, 01 Jan 1970 00:00:01 GMT"
+  ]
+
+  document.cookie = pieces.join("; ")
+}
 
 export default set_cookie
