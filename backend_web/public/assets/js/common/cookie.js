@@ -19,7 +19,6 @@ const set_cookie = (name, value, days) => {
   }
 
   pieces.push("path=/")
-  console.log(pieces)
   document.cookie = pieces.join("; ")
 }
 
