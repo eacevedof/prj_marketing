@@ -33,10 +33,10 @@
     {
       "name":       "Tiger Nixon",
       "position":   "System Architect",
-      "salary":     "$3,120",
-      "start_date": "2011/04/25",
       "office":     "Edinburgh",
-      "extn":       "5421"
+      "extn":       "5421",
+      "start_date": "2011/04/25",
+      "salary":     "$3,120",
     },
     {
       "name":       "Garrett Winters",
@@ -54,7 +54,7 @@
       { data: "position" },
       { data: "office" },
       { data: "extn" },
-      { data: "start-date" },
+      { data: "start_date" },
       { data: "salary" },
     ]
   } );
