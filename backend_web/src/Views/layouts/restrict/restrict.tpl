@@ -22,7 +22,7 @@
 <body>
 <main>
 <?
-$this->_element("common/nav-menu");
+$this->_element("common/elem-nav-menu");
 $this->_template();
 ?>
 </main>

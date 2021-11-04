@@ -36,7 +36,7 @@ final class OpenController extends AppController
         $this->add_var(Key::PAGE_TITLE, __("Forbidden - 403"));
         $this->render_error([
             "h1"=>__("Unauthorized")
-        ],"/error/403");
+        ],"error/403");
     }
 
 }//OpenController
