@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?=$pagetitle?></title>
+    <title><?=$pagetitle ?? ""?></title>
     <?= $this->_asset_css("index") ?>
     <?= $this->_asset_css("restrict/restrict") ?>
     <?= $this->_asset_css("vendor/datatable/datatable-1.11.3") ?>
