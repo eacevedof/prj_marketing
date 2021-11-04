@@ -10,12 +10,22 @@ return [
 
     ["url"=>"/restrict/logout","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"logout"],
     ["url"=>"/restrict","controller"=>"App\Controllers\Restrict\DashboardController", "method"=>"index"],
-    ["url"=>"/restrict/promotions","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"index"],
 
-    ["url"=>"/restrict/promotions/:id","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"detail"],
+    ["url"=>"/restrict/promotions","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"index"],
+    ["url"=>"/restrict/promotions/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"detail"],
+
+    //@users
+    ["url"=>"/restrict/users/:uuid/info","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
+    ["url"=>"/restrict/users/:uuid/update","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
+    ["url"=>"/restrict/users/:uuid/delete","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["url"]],
+    ["url"=>"/restrict/users/:page/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search", "allowed"=>["post"]],
+    ["url"=>"/restrict/users/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
+    ["url"=>"/restrict/users","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
+
+
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
-    
+
     ["url"=>"/apify/contexts","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
     ["url"=>"/apify/contexts/{id}","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
     
