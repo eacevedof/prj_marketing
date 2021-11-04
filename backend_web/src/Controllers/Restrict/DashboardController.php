@@ -10,18 +10,16 @@
 namespace App\Controllers\Restrict;
 use App\Enums\Action;
 use App\Enums\Key;
+use App\Enums\Url;
 
 final class DashboardController extends RestrictController
 {
     public function index(): void
     {
-        $this->add_var(Key::PAGE_TITLE, __("DASHBOARD"));
+        if (!$this->auth->is_user_allowed(Action::DASHBOARD_READ))
+            $this->location(Url::FORBIDDEN);
 
-        if (!$this->auth->is_user_allowed(Action::DASHBOARD_READ)) {
-           $this->render_error([
-               "h1"=>__("Unauthorized")
-           ],"/error/403");
-        }
+        $this->add_var(Key::PAGE_TITLE, __("DASHBOARD"));
         $this->render([
             "h1" => __("Dashboard")
         ]);
