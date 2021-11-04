@@ -14,8 +14,6 @@ const App = {
 
   methods: {
     onSubmit() {
-      const self = this
-
       this.issending = true
       this.btnsend = "Enviando..."
 
@@ -44,17 +42,15 @@ const App = {
           })
         }
 
-        set_cookie("login","ok")
-        set_cookie("lang","es")
-        window.location = "/restrict"
         console.log("reponse ok",response)
+        set_cookie("lang", response.data.lang)
+        window.location = "/restrict"
 
         Swal.fire({
           icon: "success",
           title: "Gracias por contactar conmigo!",
           html: "En breves momentos recibirás una copia del mensaje en tu email.",
         })
-
 
       })
       .catch(error => {

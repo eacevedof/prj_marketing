@@ -15,7 +15,7 @@ use TheFramework\Helpers\HelperJson;
 final class LoginController extends RestrictController
 {
     private LoginService $login;
-    
+
     public function index(): void
     {
         $this->add_var("pagetitle", "LOGIN");
@@ -29,8 +29,11 @@ final class LoginController extends RestrictController
         $this->logd("middle start");
         $oJson = new HelperJson();
         try{
-            $this->login->in();
-            $oJson->set_payload(["message"=>__("auth ok")])->show();
+            $result = $this->login->in();
+            $oJson->set_payload([
+                        "message"=>__("auth ok"),
+                        "lang" => $result["lang"]
+                    ])->show();
         }
         catch (\Exception $e)
         {
