@@ -17,7 +17,7 @@ final class UsersController extends RestrictController
     {
         $this->add_var(Key::PAGE_TITLE, __("USERS - list"));
 
-        if (!$this->auth->is_user_allowed(Action::DASHBOARD_READ)) {
+        if (!$this->auth->is_user_allowed(Action::USERS_READ)) {
            $this->render_error([
                "h1"=>__("Unauthorized")
            ],"/error/403");
@@ -41,14 +41,32 @@ final class UsersController extends RestrictController
     public function info(string $uuid): void
     {
         $this->add_var(Key::PAGE_TITLE, __("USERS - info"));
+        if (!$this->auth->is_user_allowed(Action::USERS_READ)) {
+            $this->render_error([
+                "h1"=>__("Unauthorized")
+            ],"/error/403");
+        }
+
     }
 
     public function detail(string $uuid): void
     {
         $this->add_var(Key::PAGE_TITLE, __("USERS - detail"));
+        if (!$this->auth->is_user_allowed(Action::USERS_WRITE)) {
+            $this->render_error([
+                "h1"=>__("Unauthorized")
+            ],"/error/403");
+        }
+
         $this->render([
             "h1" => __("User detail {0}", $uuid)
         ]);
+    }
+
+    //@get
+    public function search(string $page): void
+    {
+
     }
 
     //@post
@@ -65,12 +83,6 @@ final class UsersController extends RestrictController
 
     //@get
     public function remove(string $uuid): void
-    {
-
-    }
-
-    //@get
-    public function search(string $page): void
     {
 
     }
