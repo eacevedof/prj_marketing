@@ -5,6 +5,7 @@
 ?>
 <h1><?=$h1?></h1>
 <div id="div-datatable">
+    https://datatables.net/examples/non_jquery/dt_events.html
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
         <tr>
