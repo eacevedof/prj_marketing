@@ -10,6 +10,8 @@
 namespace App\Controllers\Open;
 
 use App\Controllers\AppController;
+use App\Enums\Action;
+use App\Enums\Key;
 use App\Traits\ViewTrait;
 
 final class OpenController extends AppController
@@ -27,6 +29,14 @@ final class OpenController extends AppController
             "b" => "bbbbbbbbbb",
             "c" => "ccccccc"
         ], "restrict/xxx");
+    }
+
+    public function forbidden(): void
+    {
+        $this->add_var(Key::PAGE_TITLE, __("Forbidden - 403"));
+        $this->render_error([
+            "h1"=>__("Unauthorized")
+        ],"/error/403");
     }
 
 }//OpenController

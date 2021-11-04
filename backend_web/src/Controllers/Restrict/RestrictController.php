@@ -13,13 +13,13 @@ use App\Components\Auth\AuthComponent;
 use App\Controllers\AppController;
 use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
+use App\Enums\Url;
 
 abstract class RestrictController extends AppController
 {
     use ViewTrait;
     use SessionTrait;
 
-    protected const URL_ON_LOGOUT = "/login";
     protected AuthComponent $auth;
     protected ?array $authuser = null;
 
@@ -30,11 +30,15 @@ abstract class RestrictController extends AppController
         $this->set_layout("restrict/restrict");
     }
 
+    protected function location(string $url): void
+    {
+        header("Location: {$url}");
+        exit();
+    }
+
     public function logout(): void
     {
         $this->session->destroy();
-        $url = self::URL_ON_LOGOUT;
-        header("Location: {$url}");
-        exit();
+        $this->location(Url::ON_LOGOUT);
     }
 }//RestrictController
