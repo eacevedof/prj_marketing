@@ -9,12 +9,13 @@
  */
 namespace App\Controllers\Restrict;
 use App\Enums\Action;
+use App\Enums\Key;
 
 final class PromotionsController extends RestrictController
 {
     public function index(): void
     {
-        $this->add_var("pagetitle", "PROMOTIONS");
+        $this->add_var(Key::PAGE_TITLE, __("PROMOTIONS"));
 
         if (!$this->auth->is_user_allowed(Action::DASHBOARD_READ)) {
            $this->render_error([
@@ -29,7 +30,7 @@ final class PromotionsController extends RestrictController
 
     public function detail(string $id)
     {
-        $this->add_var("pagetitle", "PROMOTIONS - detail");
+        $this->add_var(Key::PAGE_TITLE, __("PROMOTIONS - detail"));
         $this->render([
             "h1" => __("Promotion detail {0}", $id)
         ]);
