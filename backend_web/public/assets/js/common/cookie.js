@@ -2,9 +2,8 @@ export const get_cookie = name => {
   const parts = document.cookie.split("; ")
   const obj = parts
                 .map(str => str.split("="))
-                .map(ar => ({key:ar[0], value:ar[1]}))
-                .filter(obj => obj.key === name)
-                .map(obj => obj.value)
+                .filter(ar => ar[0] === name)
+                .map(ar => ar[1])
   return obj.length ? obj[0] : null
 }
 
