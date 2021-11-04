@@ -37,7 +37,7 @@ final class LoginService extends AppService
         $this->permissionrepo = RF::get("Base/UserPermissions");
     }
 
-    public function in(): void
+    public function in(): array
     {
         $email = $this->input["email"];
         if (!$email) $this->_exeption(__("Empty email"));
@@ -56,6 +56,10 @@ final class LoginService extends AppService
 
         $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
         $this->session->add(Key::AUTH_USER_PERMISSIONS, $permissions);
+
+        return [
+            "lang" => $lang
+        ];
         //esto no me vale pq la respuesta es ajax y el navegador no escribe
         //$this->cookie->add_value(key::LANG, $lang);
     }
