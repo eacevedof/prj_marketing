@@ -28,6 +28,12 @@ final class UsersController extends RestrictController
         ]);
     }
 
+    //@get
+    public function info(string $uuid): void
+    {
+
+    }
+
     public function detail(string $uuid): void
     {
         $this->add_var(Key::PAGE_TITLE, __("USERS - detail"));
