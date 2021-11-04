@@ -25,7 +25,7 @@ const set_cookie = (name, value, days) => {
 
 export const erase_cookie = name => {
   const pieces = [
-    name,
+    `name=`,
     "path=/",
     "expires=Thu, 01 Jan 1970 00:00:01 GMT"
   ]
