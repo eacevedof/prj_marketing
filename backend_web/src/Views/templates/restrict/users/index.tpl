@@ -41,19 +41,21 @@
     {
       "name":       "Garrett Winters",
       "position":   "Director",
+      "office":     "Edinburgh",
+      "extn":       "8422",
       "salary":     "$5,300",
       "start_date": "2011/07/25",
-      "office":     "Edinburgh",
-      "extn":       "8422"
     }
   ]
-  $('#table-datatable').DataTable( {
+  $("#table-datatable").DataTable( {
     data: data,
     columns: [
-      { data: 'name' },
-      { data: 'position' },
-      { data: 'salary' },
-      { data: 'office' }
+      { data: "name" },
+      { data: "position" },
+      { data: "office" },
+      { data: "extn" },
+      { data: "start-date" },
+      { data: "salary" },
     ]
   } );
 </script>
