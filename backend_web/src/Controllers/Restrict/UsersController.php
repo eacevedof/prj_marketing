@@ -15,7 +15,7 @@ final class UsersController extends RestrictController
 {
     public function index(): void
     {
-        $this->add_var(Key::PAGE_TITLE, __("USERS"));
+        $this->add_var(Key::PAGE_TITLE, __("USERS - list"));
 
         if (!$this->auth->is_user_allowed(Action::DASHBOARD_READ)) {
            $this->render_error([
@@ -37,10 +37,10 @@ final class UsersController extends RestrictController
     ["url"=>"/restrict/users/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
     ["url"=>"/restrict/users","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
  * */
-    //@get
+
     public function info(string $uuid): void
     {
-
+        $this->add_var(Key::PAGE_TITLE, __("USERS - info"));
     }
 
     public function detail(string $uuid): void
