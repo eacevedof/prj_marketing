@@ -29,6 +29,7 @@ final class PromotionsController extends RestrictController
 
     public function detail(string $id)
     {
+        $this->add_var("pagetitle", "PROMOTIONS - detail");
         $this->render([
             "h1" => __("Promotion detail {0}", $id)
         ]);
