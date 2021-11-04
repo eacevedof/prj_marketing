@@ -13,7 +13,7 @@ ip:
 ps:
 	docker ps | grep marketing
 
-save-db:
+save-db: ## copia el dump a la carpeta db
 	cp ${HOME}/dockercfg/db_dumps/db_marketing.sql ./backend_web/db
 
 rebuild: ## rebuild containers
