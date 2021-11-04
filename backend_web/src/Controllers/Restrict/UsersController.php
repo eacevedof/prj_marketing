@@ -28,6 +28,15 @@ final class UsersController extends RestrictController
         ]);
     }
 
+/*
+["url"=>"/restrict/users/:uuid/info","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
+    ["url"=>"/restrict/users/:uuid/update","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
+    ["url"=>"/restrict/users/:uuid/delete","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["url"]],
+    ["url"=>"/restrict/users/:page/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
+    ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert"],
+    ["url"=>"/restrict/users/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
+    ["url"=>"/restrict/users","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
+ * */
     //@get
     public function info(string $uuid): void
     {
