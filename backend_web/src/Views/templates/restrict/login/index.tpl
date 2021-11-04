@@ -3,9 +3,8 @@
  * @var \App\Views\AppView $this
  */
 
-//var_dump($login);
 ?>
-<h1>Login</h1>
+<h1><?= __("Login") ?></h1>
 <div id="app">
     <form @submit.prevent="onSubmit">
     <div>
@@ -25,4 +24,9 @@
     </div>
     </form>
 </div>
+<script>
+const trs = {
+
+}
+</script>
 <?= $this->_asset_js_module("restrict/login") ?>
