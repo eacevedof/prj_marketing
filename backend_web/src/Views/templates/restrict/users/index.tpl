@@ -5,8 +5,27 @@
 ?>
 <h1><?=$h1?></h1>
 <div id="div-datatable">
-    <table id="table-datatable">
-
+    <table id="table-datatable" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+        </tfoot>
     </table>
 </div>
 <script>
