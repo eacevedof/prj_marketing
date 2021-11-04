@@ -10,6 +10,7 @@
 namespace App\Controllers\Restrict;
 use App\Enums\Action;
 use App\Enums\Key;
+use App\Enums\Url;
 use App\Factories\ServiceFactory as SF;
 use TheFramework\Helpers\HelperJson;
 
@@ -17,16 +18,12 @@ final class UsersController extends RestrictController
 {
     public function index(): void
     {
+        if (!$this->auth->is_user_allowed(Action::USERS_READ))
+            $this->location(Url::FORBIDDEN);
+
         $this->add_var(Key::PAGE_TITLE, __("USERS - list"));
-
-        if (!$this->auth->is_user_allowed(Action::USERS_READ)) {
-           $this->render_error([
-               "h1"=>__("Unauthorized")
-           ],"/error/403");
-        }
-
         $this->render([
-            "h1" => __("USERS")
+            "h1" => __("Users")
         ]);
     }
 
@@ -42,6 +39,9 @@ final class UsersController extends RestrictController
 
     public function info(string $uuid): void
     {
+        if (!$this->auth->is_user_allowed(Action::USERS_READ))
+            $this->location(Url::FORBIDDEN);
+
         $this->add_var(Key::PAGE_TITLE, __("USERS - info"));
         if (!$this->auth->is_user_allowed(Action::USERS_READ)) {
             $this->render_error([
