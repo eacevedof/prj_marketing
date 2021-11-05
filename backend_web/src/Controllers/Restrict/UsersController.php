@@ -69,19 +69,18 @@ final class UsersController extends RestrictController
     public function search(string $page): void
     {
         $oJson = new HelperJson();
-        $this->login = SF::get("Restrict\Login", $this->get_post());
+        $search = SF::get("Restrict\Users\UsersSearch", $this->get_post());
 
-
-        try{
-            $result = $this->login->in();
+        try {
+            $result = $search();
             $oJson->set_payload([
                 "message"=>__("auth ok"),
-                "lang" => $result["lang"]
+                "result" => $result
             ])->show();
         }
         catch (\Exception $e)
         {
-            $this->logerr($e->getMessage(),"LoginController.access");
+            $this->logerr($e->getMessage(),"UsersController.search");
             $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
                 ->show(1);
