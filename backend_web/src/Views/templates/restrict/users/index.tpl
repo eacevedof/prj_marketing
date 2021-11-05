@@ -30,35 +30,13 @@
     </table>
 </div>
 <script type="module">
-
-  const request = new Request("/restrict/users/1/search", {
-    method: 'GET',
-    headers: new Headers({
-      'Accept': 'application/json',
-      'custom-security':'XXXX',
-      'Purchase-Code':'XXXXXXX',
-      'Content-Type':'application/json',
-      'Cache-Control':'max-age=640000'
-    })
-  });
-    fetch(request)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      //console.log("response",responseJson)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-
-  $("#table-datatable").DataTable( {
-    "ajax":
-      {
-        "url":'/restrict/users/1/search',
-        "dataSrc": function (data) {
+$("#table-datatable").DataTable( {
+    ajax: {
+        url:'/restrict/users/1/search',
+        dataSrc: function (data) {
           return data.data.result
         }
-      },
+    },
     columns: [
       { data: "name" },
       { data: "position" },
@@ -67,6 +45,6 @@
       { data: "start_date" },
       { data: "salary" },
     ]
-  } );
+});
 </script>
 
