@@ -56,7 +56,7 @@
       {
         "url":'/restrict/users/1/search',
         "dataSrc": function (data) {
-          console.log("data",data.data.result)
+          return data.data.result
         }
       },
     columns: [
