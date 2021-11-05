@@ -30,56 +30,7 @@
     </table>
 </div>
 <script>
-  const data = [
-    {
-      "name":       "Tiger Nixon",
-      "position":   "System Architect",
-      "office":     "Edinburgh",
-      "extn":       "5421",
-      "start_date": "2011/04/25",
-      "salary":     "$3,120",
-    },
-    {
-      "name":       "Garrett Winters",
-      "position":   "Director",
-      "office":     "Edinburgh",
-      "extn":       "8422",
-      "salary":     "$5,300",
-      "start_date": "2011/07/25",
-    },
-    {
-      "name":       "Tiger Nixon",
-      "position":   "System Architect",
-      "office":     "Edinburgh",
-      "extn":       "5421",
-      "start_date": "2011/04/25",
-      "salary":     "$3,120",
-    },
-    {
-      "name":       "Garrett Winters",
-      "position":   "Director",
-      "office":     "Edinburgh",
-      "extn":       "8422",
-      "salary":     "$5,300",
-      "start_date": "2011/07/25",
-    },
-    {
-      "name":       "Tiger Nixon",
-      "position":   "System Architect",
-      "office":     "Edinburgh",
-      "extn":       "5421",
-      "start_date": "2011/04/25",
-      "salary":     "$3,120",
-    },
-    {
-      "name":       "Garrett Winters",
-      "position":   "Director",
-      "office":     "Edinburgh",
-      "extn":       "8422",
-      "salary":     "$5,300",
-      "start_date": "2011/07/25",
-    }
-  ]
+  const data = []
   $("#table-datatable").DataTable( {
     data: data,
     columns: [
