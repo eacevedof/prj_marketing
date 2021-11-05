@@ -43,4 +43,24 @@ final class UserRepository extends AppRepository
         return $ar[0] ?? [];
     }
 
+    public function search(array $search): array
+    {
+        $email = $this->_get_sanitized($search);
+        $sql = $this->crud
+            ->set_table("$this->table as m")
+            ->set_getfields([
+                "m.id","m.email","m.secret","m.id_language", "m.id_profile",
+                "ar.code_erp as language"
+            ])
+            ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
+            ->add_and("m.is_enabled=1")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.email='$email'")
+            ->get_selectfrom()
+        ;
+        $ar = $this->db->query($sql);
+        if(count($ar)>1) return [];
+        return $ar[0] ?? [];
+    }
+
 }//ExampleRepository

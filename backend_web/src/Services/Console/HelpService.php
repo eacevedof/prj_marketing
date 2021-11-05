@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name App\Services\Console\Restrict\UsersService
- * @file UsersService.php 1.0.0
+ * @file UsersAccessService.php 1.0.0
  * @date 31-10-2020 17:46 SPAIN
  * @observations
  */

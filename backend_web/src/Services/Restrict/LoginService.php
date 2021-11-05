@@ -20,7 +20,6 @@ final class LoginService extends AppService
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
     private UserPermissionsRepository $permissionrepo;
-    private const URL_LOGOUT = "/login";
 
     public function __construct(array $input)
     {
