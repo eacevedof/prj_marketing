@@ -116,7 +116,7 @@ $(document).ready(function (){
     //bSort:false, //desactiva flechas de ordenacion
     orderCellsTop: true,
     fixedHeader: true,
-    pageLength: 10,
+    pageLength: 1000,
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {

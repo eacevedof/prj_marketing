@@ -38,7 +38,11 @@ final class UsersSearchService extends AppService
 
     public function __invoke(): array
     {
-        return  [
+        return [
+            "draw" => "3",
+            "recordsFiltered" => 18,
+            "recordsTotal" => 18,
+            "data"=>[
             [
                 "name"=>       "Tiger Alfa",
                 "position"=>   "System Architect",
@@ -183,7 +187,7 @@ final class UsersSearchService extends AppService
                 "salary"=>     "$5,300",
                 "start_date"=> "2011/07/25",
             ]
-
-        ];
+        ]
+            ];
     }
 }

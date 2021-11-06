@@ -75,7 +75,10 @@ final class UsersController extends RestrictController
             $result = $search();
             $oJson->set_payload([
                 "message"=>__("auth ok"),
-                "result" => $result
+                "result" => $result["data"],
+                "recordsFiltered" => $result["recordsFiltered"],
+                "recordsTotal" => $result["recordsTotal"],
+                "draw" => 3
             ])->show();
         }
         catch (\Exception $e)
