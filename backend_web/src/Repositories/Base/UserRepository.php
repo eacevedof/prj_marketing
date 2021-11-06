@@ -49,6 +49,7 @@ final class UserRepository extends AppRepository
         $sql = $this->crud
             ->set_table("$this->table as m")
             ->set_getfields([
+                "m.uuid",
                 "m.address",
                 "m.birthdate",
                 "m.date_validated",
@@ -70,7 +71,6 @@ final class UserRepository extends AppRepository
                 "m.is_notificable",
                 "m.secret",
                 "m.phone",
-                "m.uuid",
 
                 "ar.description as language",
 

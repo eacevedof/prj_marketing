@@ -18,30 +18,33 @@
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Extn.</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>uuid</th>
+            <th>fullname</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>id_profile</th>
+            <th>id_nationality</th>
+            <th>id_language</th>
         </tr>
         <tr row="search">
-            <td approle="column-name" appcol="name" appcolidx="0">Name</td>
-            <td approle="column-name" appcol="position" appcolidx="1">Position</td>
-            <td approle="column-name" appcol="office" appcolidx="2">Office</td>
-            <td approle="column-name" appcol="extn" appcolidx="3">Extn.</td>
-            <td approle="column-name" appcol="start_date" appcolidx="4">Start date</td>
-            <td approle="column-name" appcol="salary" appcolidx="5">Salary</td>
+            <td approle="column-name" appcol="uuid" appcolidx="0">uuid</td>
+            <td approle="column-name" appcol="fullname" appcolidx="1">fullname</td>
+            <td approle="column-name" appcol="email" appcolidx="2">email</td>
+            <td approle="column-name" appcol="phone" appcolidx="3">phone/td>
+            <td approle="column-name" appcol="id_profile" appcolidx="4">id_profile</td>
+            <td approle="column-name" appcol="id_nationality" appcolidx="5">id_nationality</td>
+            <td approle="column-name" appcol="id_language" appcolidx="5">id_language</td>
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Extn.</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>uuid</th>
+            <th>fullname</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>id_profile</th>
+            <th>id_nationality</th>
+            <th>id_language</th>
         </tr>
         </tfoot>
     </table>
@@ -177,12 +180,13 @@ $(document).ready(function (){
       'print'
     ],
     columns: [
-      { data: "name" },
-      { data: "position" },
-      { data: "office" },
-      { data: "extn" },
-      { data: "start_date" },
-      { data: "salary" },
+      { data: "uuid" },
+      { data: "fullname" },
+      { data: "email" },
+      { data: "phone" },
+      { data: "id_profile" },
+      { data: "id_nationality" },
+      { data: "id_language" },
     ]
   });
 
