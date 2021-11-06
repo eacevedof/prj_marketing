@@ -18,12 +18,12 @@
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Extn.</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th approle="column-name">Name</th>
+            <th approle="column-name">Position</th>
+            <th approle="column-name">Office</th>
+            <th approle="column-name">Extn.</th>
+            <th approle="column-name">Start date</th>
+            <th approle="column-name">Salary</th>
         </tr>
         </thead>
         <tfoot>
@@ -38,18 +38,33 @@
         </tfoot>
     </table>
 </div>
+<style>
+  body {
+    font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #fff;
+  }
+
+</style>
 <script type="module">
+  function debounce(func, timeout = 300){
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
+
 let table = null
+const jqid = "#table-datatable"
+
 var eventFired = function ( type ) {
     var n = document.querySelector('#demo_info');
     n.innerHTML += '<div>'+type+' event - '+new Date().getTime()+'</div>';
     n.scrollTop = n.scrollHeight;
 }
-document.addEventListener('DOMContentLoaded', function () {
-//  let table = new DataTable('#table-datatable');
-
-
-});
 
 function refresh (table) {
   //table.clear()
@@ -59,7 +74,7 @@ function refresh (table) {
 
 $(document).ready(function (){
 
-$("#btn-draw").on("click", () => refresh(table) )
+    $("#btn-draw").on("click", () => refresh(table) )
 
 
   const trs = {
@@ -85,29 +100,28 @@ $("#btn-draw").on("click", () => refresh(table) )
     }
   }
 
-  $('#table-datatable tfoot th').each( function () {
+  // Setup - add a text input to each footer cell
+  $(`[approle="column-name"]`).each( function () {
     var title = $(this).text();
-    console.log("redner inputs in footer",title)
-    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    console.log("header table search:", this, "title:", title)
+    $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search" approle="column-search" />' );
   } );
 
   table = $("#table-datatable").DataTable( {
+    orderCellsTop: true,
+    fixedHeader: true,
+    pageLength: 10,
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
       // Apply the search
-      this.api().columns().every( function () {
-        var that = this;
+      $(`[approle='column-search']`).each((i, $input) => {
 
-        $( 'input', this.footer() ).on( 'keyup change clear', function () {
-          console.log("keyup change clear")
-          if ( that.search() !== this.value ) {
-            that
-              .search( this.value )
-              .draw();
-          }
-        } );
-      } );
+        if($input)
+            $($input).on( 'keyup change clear', debounce(function (e) {
+              console.log("column_search keyup change and clear", e)
+            },1000) )
+      });
       console.log("init complete")
     },
     ajax: {
@@ -140,16 +154,19 @@ $("#btn-draw").on("click", () => refresh(table) )
 
   table
     .on('order', function (e) {
+      e.preventDefault();
       //post all
       console.log("order",e)
       eventFired( 'Order' );
     })
     .on('search', function (e) {
+      e.preventDefault();
       //post all
       console.log("search",e)
       eventFired( 'Search' );
     })
     .on('page', function (e) {
+      e.preventDefault();
       console.log("page",e)
       eventFired( 'Page' );
     });
