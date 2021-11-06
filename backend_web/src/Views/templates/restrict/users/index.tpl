@@ -166,9 +166,11 @@ $(document).ready(function (){
       eventFired( 'Search' );
     })
     .on('page', function (e) {
-      e.preventDefault();
-      console.log("page",e)
-      eventFired( 'Page' );
+      //e.preventDefault();
+      //page se mueve de 0 a n
+      const page = table.page.info()
+      console.log("page:", page.page ,"pages:", page.pages )
+      //eventFired( 'Page' );
     });
 
 })
