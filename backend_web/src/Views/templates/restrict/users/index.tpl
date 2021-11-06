@@ -106,7 +106,8 @@ $(document).ready(function (){
     const title = $($th).text();
     const colidx = $th.getAttribute("appcolidx")
     $(this).html(
-      `<input type="text" placeholder="Search ${title}" class="column_search" approle="column-search" appcolidx="${colidx}" />`
+      `<label>${title}</label>
+        <input type="text" placeholder="Search ${title}" class="column_search" approle="column-search" appcolidx="${colidx}" />`
     );
   });
 
@@ -116,7 +117,7 @@ $(document).ready(function (){
     //bSort:false, //desactiva flechas de ordenacion
     orderCellsTop: true,
     fixedHeader: true,
-    pageLength: 1000,
+    pageLength: 10,
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
@@ -125,7 +126,7 @@ $(document).ready(function (){
 
         if($input) {
           console.log("column-search",$input)
-          $($input).on('keyup change clear', debounce(function (e) {
+          $($input).on('change', debounce(function (e) {
             const idx = $input.getAttribute("appcolidx")
             const value = $input.value
             table.columns(idx).search(value).draw() //sin draw no busca
@@ -134,12 +135,22 @@ $(document).ready(function (){
       });
       console.log("init complete")
     },
-    ajax: {
-      url:'/restrict/users/1/search',
-      dataSrc: function (data) {
-        console.log("dataSrc.data:", data)
-        return data.data.result
-      }
+    ajax: function(data, callback, settings) {
+      // make a regular ajax request using data.start and data.length
+      $.get('/restrict/users/1/search', {
+        limit: data.length,
+        offset: data.start,
+        dept_name__icontains: data.search.value
+      }, function(res) {
+        console.log("res", res)
+        // map your server's response to the DataTables format and pass it to
+        // DataTables' callback
+        callback({
+          recordsTotal: res.data.recordsTotal,
+          recordsFiltered: res.data.recordsFiltered,
+          data: res.data.result
+        });
+      });
     },
     dom: 'Bfrtip',//buttons in dom
     buttons: [
