@@ -721,6 +721,7 @@ class ComponentCrud
     
     public function get_sanitized($sValue)
     {
+        if($sValue===null) return null;
         // no se pq he escapado el % y el _ pero no debería
         $sFixed = str_replace("'","\'",$sValue);
         //$sFixed = str_replace("%","\%",$sFixed);
