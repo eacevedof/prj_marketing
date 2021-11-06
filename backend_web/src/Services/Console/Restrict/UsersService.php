@@ -14,6 +14,7 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Traits\ConsoleTrait;
 use App\Factories\DbFactory as DbF;
 use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\ComponentFaker;
 
 final class UsersService extends AppService implements IConsole
 {
@@ -36,10 +37,44 @@ final class UsersService extends AppService implements IConsole
     private function _faker(): void
     {
         $db = DbF::get_by_default();
-        $crud = new ComponentCrud();
-        $crud->set_table("base_users");
+        $faker = new ComponentFaker();
 
-        $db->exec();
+        for ($i=0; $i<100; $i++) {
+            $crud = new ComponentCrud();
+            $deldate = rand(0,1)?$faker->get_datetime("2020-01-01","2021-11-05"):null;
+
+            $crud->set_table("base_user")
+                ->add_insert_fv("address", $faker->get_paragraph(25))
+                ->add_insert_fv("birthdate", $faker->get_date())
+                ->add_insert_fv("date_validated", $faker->get_date("2020-01-01"))
+                ->add_insert_fv("delete_date", $deldate)
+                ->add_insert_fv("delete_platform", $faker->get_rndint(1,4))
+                ->add_insert_fv("delete_user", $faker->get_rndint(1,5))
+                ->add_insert_fv("description", $fullname = $faker->get_paragraph(2,5))
+                ->add_insert_fv("email", $faker->get_email())
+                ->add_insert_fv("fullname", $fullname)
+                ->add_insert_fv("id_country", $faker->get_rndint(1,10))
+                ->add_insert_fv("id_gender", $faker->get_rndint(1,3))
+                ->add_insert_fv("id_language", $faker->get_rndint(1,4))
+                ->add_insert_fv("id_nationality", $faker->get_rndint(1,10))
+                ->add_insert_fv("id_parent", $i>10 ? $faker->get_rndint(1,5): null)
+                ->add_insert_fv("id_profile", $faker->get_rndint(1,4))
+                ->add_insert_fv("insert_date", $faker->get_datetime("2017-01-01","2021-11-05"))
+                ->add_insert_fv("insert_platform", $faker->get_rndint(1,4))
+                ->add_insert_fv("insert_user", $faker->get_rndint(1,5))
+                ->add_insert_fv("is_notificable", $faker->get_rndint(0,1))
+                ->add_insert_fv("secret", $faker->get_hash(8))
+                ->add_insert_fv("phone",$faker->get_int(9,9))
+                ->add_insert_fv("uuid",uniqid())
+                ->autoinsert()
+            ;
+            $sql = $crud->get_sql();
+            $r = $db->exec($sql);
+            if(!$db->is_error()) {
+                $this->_pr($this->get_error());
+                return;
+            }
+        }
     }
 
     //php run.php users 1234
