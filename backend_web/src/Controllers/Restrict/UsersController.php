@@ -66,7 +66,7 @@ final class UsersController extends RestrictController
     }
 
     //@get
-    public function search(string $page): void
+    public function search(): void
     {
         $oJson = new HelperJson();
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_post());
