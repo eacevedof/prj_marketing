@@ -61,7 +61,7 @@ $(document).ready(function (){
     }
   }
 
-  $('#example tfoot th').each( function () {
+  $('#table-datatable tfoot th').each( function () {
     var title = $(this).text();
     console.log("title",title)
     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
