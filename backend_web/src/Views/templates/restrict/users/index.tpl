@@ -18,12 +18,20 @@
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
         <tr>
-            <th approle="column-name" appcol="name" appcolidx="0">Name</th>
-            <th approle="column-name" appcol="position" appcolidx="1">Position</th>
-            <th approle="column-name" appcol="office" appcolidx="2">Office</th>
-            <th approle="column-name" appcol="extn" appcolidx="3">Extn.</th>
-            <th approle="column-name" appcol="start_date" appcolidx="4">Start date</th>
-            <th approle="column-name" appcol="salary" appcolidx="5">Salary</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+        <tr row="search">
+            <td approle="column-name" appcol="name" appcolidx="0">Name</td>
+            <td approle="column-name" appcol="position" appcolidx="1">Position</td>
+            <td approle="column-name" appcol="office" appcolidx="2">Office</td>
+            <td approle="column-name" appcol="extn" appcolidx="3">Extn.</td>
+            <td approle="column-name" appcol="start_date" appcolidx="4">Start date</td>
+            <td approle="column-name" appcol="salary" appcolidx="5">Salary</td>
         </tr>
         </thead>
         <tfoot>
@@ -102,12 +110,11 @@ $(document).ready(function (){
 
   // Setup - add a text input to each footer cell
   $(`[approle="column-name"]`).each( function () {
-    const $th = this
-    const title = $($th).text();
-    const colidx = $th.getAttribute("appcolidx")
+    const $td = this
+    const title = $($td).text();
+    const colidx = $td.getAttribute("appcolidx")
     $(this).html(
-      `<label>${title}</label>
-        <input type="text" placeholder="Search ${title}" class="column_search" approle="column-search" appcolidx="${colidx}" />`
+      `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
     );
   });
 
@@ -136,12 +143,9 @@ $(document).ready(function (){
       console.log("init complete")
     },
     ajax: function(data, callback, settings) {
+      console.log("data on ajax", data)
       // make a regular ajax request using data.start and data.length
-      $.get('/restrict/users/1/search', {
-        limit: data.length,
-        offset: data.start,
-        dept_name__icontains: data.search.value
-      }, function(res) {
+      $.get('/restrict/users/1/search', data, function(res) {
         console.log("res", res)
         // map your server's response to the DataTables format and pass it to
         // DataTables' callback
