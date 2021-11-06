@@ -8,5 +8,5 @@ mapping:
 return [
     //commands
     "help"                   => "App\\Services\\Console\\HelpService",
-    "users"                  => "App\\Services\\Console\\Restrict\\UsersAccessService",
+    "users"                  => "App\\Services\\Console\\Restrict\\UsersService",
 ];
