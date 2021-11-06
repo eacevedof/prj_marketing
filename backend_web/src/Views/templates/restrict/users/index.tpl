@@ -143,9 +143,23 @@ $(document).ready(function (){
       console.log("init complete")
     },
     ajax: function(data, callback, settings) {
+      let urlPath = ""
+      if(table?.page) {
+        const page = table.page.info().page+1
+        console.log("page", page)
+
+        urlPath = "/restrict/users/"+page
+      }
+      else {
+        urlPath = "/restrict/users/1"
+
+      }
+
+      window.history.pushState({},"", urlPath);
       console.log("data on ajax", data)
+
       // make a regular ajax request using data.start and data.length
-      $.get('/restrict/users/1/search', data, function(res) {
+      $.get('/restrict/users/search', data, function(res) {
         console.log("res", res)
         // map your server's response to the DataTables format and pass it to
         // DataTables' callback
