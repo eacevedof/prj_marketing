@@ -25,4 +25,15 @@ final class ServiceFactory
         }
         return $obj;
     }
+
+    public static function get_callable(string $service, array $params = []): callable
+    {
+        $service = str_replace("/","\\",$service);
+        if (!strstr($service,"Service")) $service .= "Service";
+
+        $Service = "\App\Services\\".$service;
+        $callable = new $Service($params);
+
+        return $callable;
+    }
 }//ServiceFactory
