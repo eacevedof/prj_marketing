@@ -41,13 +41,12 @@ final class UsersService extends AppService implements IConsole
 
         for ($i=0; $i<100; $i++) {
             $crud = new ComponentCrud();
-            $deldate = rand(0,1)?$faker->get_datetime("2020-01-01","2021-11-05"):null;
 
             $crud->set_table("base_user")
                 ->add_insert_fv("address", $faker->get_paragraph(25))
                 ->add_insert_fv("birthdate", $faker->get_date())
                 ->add_insert_fv("date_validated", $faker->get_date("2020-01-01"))
-                ->add_insert_fv("delete_date", $deldate)
+                ->add_insert_fv("delete_date", rand(0,1)?$faker->get_datetime("2020-01-01","2021-11-05"):null)
                 ->add_insert_fv("delete_platform", $faker->get_rndint(1,4))
                 ->add_insert_fv("delete_user", $faker->get_rndint(1,5))
                 ->add_insert_fv("description", $fullname = $faker->get_paragraph(2,5))
@@ -70,7 +69,7 @@ final class UsersService extends AppService implements IConsole
             ;
             $sql = $crud->get_sql();
             $r = $db->exec($sql);
-            if(!$db->is_error()) {
+            if($db->is_error()) {
                 $this->_pr($this->get_error());
                 return;
             }
