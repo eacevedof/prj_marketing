@@ -108,6 +108,9 @@ $(document).ready(function (){
   } );
 
   table = $("#table-datatable").DataTable( {
+    processing: true,
+    serverSide: true,
+    //bSort:false, //desactiva flechas de ordenacion
     orderCellsTop: true,
     fixedHeader: true,
     pageLength: 10,
@@ -148,22 +151,19 @@ $(document).ready(function (){
     ]
   });
 
+  /*
   table.on("draw", function (){
     console.log("on draw")
   })
 
   table
     .on('order', function (e) {
-      e.preventDefault();
-      //post all
-      console.log("order",e)
-      eventFired( 'Order' );
+      const order = table.order()
+      console.log("order colidx:",order[0][0],"orientation",order[0][1])
     })
     .on('search', function (e) {
-      e.preventDefault();
       //post all
       console.log("search",e)
-      eventFired( 'Search' );
     })
     .on('page', function (e) {
       //e.preventDefault();
@@ -172,6 +172,8 @@ $(document).ready(function (){
       console.log("page:", page.page ,"pages:", page.pages )
       //eventFired( 'Page' );
     });
+
+   */
 
 })
 
