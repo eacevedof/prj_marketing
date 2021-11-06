@@ -37,12 +37,36 @@
     </table>
 </div>
 <script type="module">
+const trs = {
+  processing:     "Procesando...",
+  search:         "Busqueda&nbsp;:",
+  lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
+  info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+  infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+  infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+  infoPostFix:    "",
+  loadingRecords: "Cargando...",
+  zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+  emptyTable:     "Aucune donnée disponible dans le tableau",
+  paginate: {
+    first:      "Primer",
+    previous:   "Anterior",
+    next:       "Siguiente",
+    last:       "Último"
+  },
+  aria: {
+    sortAscending:  ": activer pour trier la colonne par ordre croissant",
+    sortDescending: ": activer pour trier la colonne par ordre décroissant"
+  }
+}
+
   $('#example tfoot th').each( function () {
     var title = $(this).text();
     console.log("title",title)
     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
   } );
-$("#table-datatable").DataTable( {
+const table = $("#table-datatable").DataTable( {
+  language: trs,
   // Setup - add a text input to each footer cell
   initComplete: function () {
     // Apply the search
@@ -80,5 +104,9 @@ $("#table-datatable").DataTable( {
       { data: "salary" },
     ]
 });
+
+table.on("draw", function (){
+
+})
 </script>
 
