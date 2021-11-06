@@ -13,6 +13,7 @@
 <h1><?=$h1?></h1>
 <div id="div-datatable">
     <div id="demo_info" class="box"></div>
+    <button type="button" id="btn-draw">draw table</button>
     https://datatables.net/examples/non_jquery/dt_events.html
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
@@ -38,6 +39,7 @@
     </table>
 </div>
 <script type="module">
+let table = null
 var eventFired = function ( type ) {
     var n = document.querySelector('#demo_info');
     n.innerHTML += '<div>'+type+' event - '+new Date().getTime()+'</div>';
@@ -49,8 +51,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+function refresh (table) {
+  //table.clear()
+  //table.data = [{"name":"Tiger Alfa","position":"xxxx","office":"Edinburgh","extn":"5421","start_date":"2011-04-25","salary":"$3,120"},{"name":"Garrett Winters","position":"Director","office":"Edinburgh","extn":"8422","salary":"$5,300","start_date":"2011-07-25"},{"name":"Tiger Alfa","position":"xxxx","office":"Edinburgh","extn":"5421","start_date":"2011-04-25","salary":"$3,120"},{"name":"Garrett Winters","position":"Director","office":"Edinburgh","extn":"8422","salary":"$5,300","start_date":"2011-07-25"},{"name":"Tiger Alfa","position":"xxxx","office":"Edinburgh","extn":"5421","start_date":"2011-04-25","salary":"$3,120"},{"name":"Garrett Winters","position":"Director","office":"Edinburgh","extn":"8422","salary":"$5,300","start_date":"2011-07-25"}]
+  table.ajax.reload()
+}
 
 $(document).ready(function (){
+
+$("#btn-draw").on("click", () => refresh(table) )
+
+
   const trs = {
     processing:     "Procesando...",
     search:         "Busqueda&nbsp;:",
@@ -79,7 +90,8 @@ $(document).ready(function (){
     console.log("redner inputs in footer",title)
     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
   } );
-  const table = $("#table-datatable").DataTable( {
+
+  table = $("#table-datatable").DataTable( {
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
@@ -88,6 +100,7 @@ $(document).ready(function (){
         var that = this;
 
         $( 'input', this.footer() ).on( 'keyup change clear', function () {
+          console.log("keyup change clear")
           if ( that.search() !== this.value ) {
             that
               .search( this.value )
@@ -122,19 +135,25 @@ $(document).ready(function (){
   });
 
   table.on("draw", function (){
-    console.log("draw")
+    console.log("on draw")
   })
 
   table
-    .on('order', function () {
+    .on('order', function (e) {
+      //post all
+      console.log("order",e)
       eventFired( 'Order' );
     })
-    .on('search', function () {
+    .on('search', function (e) {
+      //post all
+      console.log("search",e)
       eventFired( 'Search' );
     })
-    .on('page', function () {
+    .on('page', function (e) {
+      console.log("page",e)
       eventFired( 'Page' );
     });
+
 })
 
 </script>
