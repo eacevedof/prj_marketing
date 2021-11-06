@@ -12,6 +12,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
 <h1><?=$h1?></h1>
 <div id="div-datatable">
+    <div id="demo_info" class="box"></div>
     https://datatables.net/examples/non_jquery/dt_events.html
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
@@ -37,6 +38,18 @@
     </table>
 </div>
 <script type="module">
+var eventFired = function ( type ) {
+    var n = document.querySelector('#demo_info');
+    n.innerHTML += '<div>'+type+' event - '+new Date().getTime()+'</div>';
+    n.scrollTop = n.scrollHeight;
+}
+document.addEventListener('DOMContentLoaded', function () {
+//  let table = new DataTable('#table-datatable');
+
+
+});
+
+
 $(document).ready(function (){
   const trs = {
     processing:     "Procesando...",
@@ -63,7 +76,7 @@ $(document).ready(function (){
 
   $('#table-datatable tfoot th').each( function () {
     var title = $(this).text();
-    console.log("title",title)
+    console.log("redner inputs in footer",title)
     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
   } );
   const table = $("#table-datatable").DataTable( {
@@ -82,10 +95,12 @@ $(document).ready(function (){
           }
         } );
       } );
+      console.log("init complete")
     },
     ajax: {
       url:'/restrict/users/1/search',
       dataSrc: function (data) {
+        console.log("dataSrc.data:", data)
         return data.data.result
       }
     },
@@ -109,6 +124,17 @@ $(document).ready(function (){
   table.on("draw", function (){
     console.log("draw")
   })
+
+  table
+    .on('order', function () {
+      eventFired( 'Order' );
+    })
+    .on('search', function () {
+      eventFired( 'Search' );
+    })
+    .on('page', function () {
+      eventFired( 'Page' );
+    });
 })
 
 </script>
