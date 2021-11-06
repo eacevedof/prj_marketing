@@ -12,6 +12,8 @@ use App\Services\AppService;
 use App\Services\Console\IConsole;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Traits\ConsoleTrait;
+use App\Factories\DbFactory as DbF;
+use TheFramework\Components\Db\ComponentCrud;
 
 final class UsersService extends AppService implements IConsole
 {
@@ -31,9 +33,19 @@ final class UsersService extends AppService implements IConsole
         return $this->encdec->get_hashpassword($this->word);
     }
 
+    private function _faker(): void
+    {
+        $db = DbF::get_by_default();
+        $crud = new ComponentCrud();
+        $crud->set_table("base_users");
+
+        $db->exec();
+    }
+
     //php run.php users 1234
     public function run(): void
     {
+        $this->_faker();
         $this->_pr($this->word,"word");
         $password = $this->_get_password();
         $message = "password: {$password}";
