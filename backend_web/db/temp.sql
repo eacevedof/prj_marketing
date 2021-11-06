@@ -21,7 +21,9 @@ INSERT INTO base_user
  is_notificable,
  secret,
  phone,
- uuid)
+ uuid
+
+ )
 VALUES
 ('c ibapalO BI Up UJI it KiYo eGOSoYU Of IwugIwOGA Un uzeyeh dEgal UnIdA ItEwuqasIf OBube aWItuzeZip AXOfoCok wIFOrePEx saJaPoYoV UvU Oh ITum mEGOQusoGi JUV',
  '2009-08-24','2020-11-10','2005-04-06 10:12:45','4','1','go Ec','ifeka@unola.hut','go Ec','5','1','1','4'
