@@ -18,12 +18,12 @@
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
         <tr>
-            <th approle="column-name">Name</th>
-            <th approle="column-name">Position</th>
-            <th approle="column-name">Office</th>
-            <th approle="column-name">Extn.</th>
-            <th approle="column-name">Start date</th>
-            <th approle="column-name">Salary</th>
+            <th approle="column-name" appcol="name" appcolidx="0">Name</th>
+            <th approle="column-name" appcol="position" appcolidx="1">Position</th>
+            <th approle="column-name" appcol="office" appcolidx="2">Office</th>
+            <th approle="column-name" appcol="extn" appcolidx="3">Extn.</th>
+            <th approle="column-name" appcol="start_date" appcolidx="4">Start date</th>
+            <th approle="column-name" appcol="salary" appcolidx="5">Salary</th>
         </tr>
         </thead>
         <tfoot>
@@ -102,10 +102,13 @@ $(document).ready(function (){
 
   // Setup - add a text input to each footer cell
   $(`[approle="column-name"]`).each( function () {
-    var title = $(this).text();
-    console.log("header table search:", this, "title:", title)
-    $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search" approle="column-search" />' );
-  } );
+    const $th = this
+    const title = $($th).text();
+    const colidx = $th.getAttribute("appcolidx")
+    $(this).html(
+      `<input type="text" placeholder="Search ${title}" class="column_search" approle="column-search" appcolidx="${colidx}" />`
+    );
+  });
 
   table = $("#table-datatable").DataTable( {
     processing: true,
@@ -120,10 +123,14 @@ $(document).ready(function (){
       // Apply the search
       $(`[approle='column-search']`).each((i, $input) => {
 
-        if($input)
-            $($input).on( 'keyup change clear', debounce(function (e) {
-              console.log("column_search keyup change and clear", e)
-            },1000) )
+        if($input) {
+          console.log("column-search",$input)
+          $($input).on('keyup change clear', debounce(function (e) {
+            const idx = $input.getAttribute("appcolidx")
+            const value = $input.value
+            table.columns(idx).search(value).draw() //sin draw no busca
+          }, 1000))
+        }
       });
       console.log("init complete")
     },
@@ -134,9 +141,8 @@ $(document).ready(function (){
         return data.data.result
       }
     },
-    dom: 'Bfrtip',
+    dom: 'Bfrtip',//buttons in dom
     buttons: [
-
       'colvis',
       'excel',
       'print'
