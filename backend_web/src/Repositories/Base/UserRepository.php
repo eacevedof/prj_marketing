@@ -48,6 +48,7 @@ final class UserRepository extends AppRepository
         //$email = $this->_get_sanitized($search);
         $sql = $this->crud
             ->set_table("$this->table as m")
+            ->is_foundrows()
             ->set_getfields([
                 "m.uuid",
                 "m.address",
@@ -78,10 +79,14 @@ final class UserRepository extends AppRepository
             ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
+            ->set_limit(50,0)
             ->get_selectfrom()
         ;
-        $ar = $this->db->query($sql);
-        return $ar;
+
+        return [
+            "result" => $this->db->query($sql),
+            "total" => $this->db->get_foundrows()
+        ];
     }
 
 }//ExampleRepository

@@ -39,11 +39,11 @@ final class UsersSearchService extends AppService
     public function __invoke(): array
     {
         $rows = $this->repository->search($this->input);
-        $i = count($rows);
+
         return [
-            "recordsFiltered" => $i,
+            "recordsFiltered" => ($i=$rows["total"]),
             "recordsTotal" => $i,
-            "data"=> $rows
+            "data"=> $rows["result"]
         ];
     }
 }
