@@ -51,7 +51,7 @@ final class UserRepository extends AppRepository
 
         if($fields = $search["fields"])
             foreach ($fields as $field => $value )
-                $crud->add_and("m.$field = '$value'");
+                $crud->add_and("m.$field LIKE '%$value%'");
 
         if($limit = $search["limit"])
             $crud->set_limit($limit["length"], $limit["from"]);
