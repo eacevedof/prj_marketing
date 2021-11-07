@@ -45,4 +45,9 @@ final class Datatable
             "length" => $this->request["length"] ?? 25
         ];
     }
+
+    public function get_value(string $field): string
+    {
+        return $this->fields[$field]["value"] ?? "";
+    }
 }
