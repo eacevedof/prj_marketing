@@ -108,6 +108,8 @@ $(document).ready(function (){
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
+      const  page = getUrlParameter()
+      this.api().page(2).draw('page')
       // Apply the search
       $(`[approle='column-search']`).each((i, $input) => {
 
