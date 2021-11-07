@@ -13,6 +13,11 @@ final class DatatableComponent
         $this->_load_fields();
     }
 
+    protected function _get_sanitized(string $value)
+    {
+        return str_replace("'","\\'", $value);
+    }
+
     private function _load_fields(): void
     {
         foreach ($this->request["columns"] as $i => $column) {
@@ -33,7 +38,7 @@ final class DatatableComponent
 
         foreach ($this->fields as $field => $data)
             if ($value = $data["value"])
-                $search["fields"][$field] = $value;
+                $search["fields"][$field] = $this->_get_sanitized($value);
 
         return $search;
     }

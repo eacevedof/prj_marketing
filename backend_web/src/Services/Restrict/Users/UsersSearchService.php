@@ -39,8 +39,8 @@ final class UsersSearchService extends AppService
 
     public function __invoke(): array
     {
-        $search = CF::get("Datattable", $this->input);
-        $rows = $this->repository->search($this->input);
+        $search = CF::get_datatable($this->input)->get_search();
+        $rows = $this->repository->search($search);
 
         return [
             "recordsFiltered" => ($i=$rows["total"]),
