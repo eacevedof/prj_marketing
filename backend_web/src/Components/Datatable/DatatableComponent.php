@@ -13,8 +13,9 @@ final class DatatableComponent
         $this->_load_fields();
     }
 
-    protected function _get_sanitized(string $value)
+    protected function _get_sanitized(?string $value)
     {
+        if($value===null) return null;
         return str_replace("'","\\'", $value);
     }
 
