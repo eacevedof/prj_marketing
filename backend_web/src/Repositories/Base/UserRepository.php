@@ -101,7 +101,7 @@ final class UserRepository extends AppRepository
 
         $this->_add_search($crud, $search);
 
-        $sql = $crud->get_sql();
+        $sql = $crud->get_selectfrom();
         return [
             "result" => $this->db->query($sql),
             "total" => $this->db->get_foundrows()
