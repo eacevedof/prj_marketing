@@ -22,9 +22,23 @@ final class Datatable
         }
     }
 
-    public function get_search(){return $this->request["search"]["value"] ?? "";}
+    public function get_search(): array
+    {
+        $search = [
+            "global" => $this->request["search"]["value"] ?? "",
+            "fields" => [],
+            "order" => $this->_get_order(),
+            "limit" => $this->_get_limit()
+        ];
 
-    public function get_order(): array
+        foreach ($this->fields as $field => $data)
+            if ($value = $data["value"])
+                $search["fields"][$field] = $value;
+
+        return $search;
+    }
+
+    private function _get_order(): array
     {
         $pos = (int)$this->request["order"][0]["column"] ?? 0;
 
@@ -38,7 +52,7 @@ final class Datatable
         ];
     }
 
-    public function get_limit(): array
+    private function _get_limit(): array
     {
         return [
             "from" => $this->request["start"] ?? 0,
@@ -46,7 +60,7 @@ final class Datatable
         ];
     }
 
-    public function get_value(string $field): string
+    private function _get_value(string $field): string
     {
         return $this->fields[$field]["value"] ?? "";
     }
