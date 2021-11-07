@@ -5,7 +5,6 @@ const URL = "/login/access"
 const App = {
   data() {
     return {
-      csrf: "",
       email: "eaf@eaf.com",
       password: "1234",
       issending: false,
