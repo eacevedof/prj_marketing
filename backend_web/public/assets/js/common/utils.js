@@ -6,7 +6,9 @@ export const getUrlParameter = (name) => {
 }
 
 export const getUrlPosition = pos => {
-  
+  let parts = location.pathname.split("?")
+  parts = parts.split("/")
+
 }
 
 export const onDocumentready = callbackFunction =>{

@@ -57,7 +57,7 @@ final class UserRepository extends AppRepository
             $crud->set_limit($limit["length"], $limit["from"]);
 
         if($order = $search["order"])
-            $crud->set_orderby("m.{$order["field"]} {$order["dir"]}");
+            $crud->set_orderby(["m.{$order["field"]}"=>"{$order["dir"]}"]);
 
         if($global = $search["global"]) {
             $or = [];
@@ -106,7 +106,7 @@ final class UserRepository extends AppRepository
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->set_limit(25, 0)
-            ->set_orderby("m.id DESC")
+            ->set_orderby(["m.id"=>"DESC"])
         ;
 
         $this->_add_search($crud, $search);
