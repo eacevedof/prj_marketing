@@ -31,6 +31,7 @@ final class UserRepository extends AppRepository
                 ->set_table("$this->table as m")
                 ->set_getfields([
                     "m.id","m.email","m.secret","m.id_language", "m.id_profile",
+                    "m.uuid",
                     "ar.code_erp as language"
                 ])
                 ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
