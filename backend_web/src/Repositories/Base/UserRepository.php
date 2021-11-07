@@ -90,7 +90,6 @@ final class UserRepository extends AppRepository
                 "m.phone",
 
                 "ar.description as language",
-
             ])
             ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
             ->add_and("m.is_enabled=1")
@@ -98,6 +97,8 @@ final class UserRepository extends AppRepository
             ->set_limit(25, 0)
             ->set_orderby("m.id DESC")
         ;
+
+        $this->_add_search($crud, $search);
 
         $sql = $crud->get_sql();
         return [
