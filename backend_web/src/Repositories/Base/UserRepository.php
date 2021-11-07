@@ -13,6 +13,7 @@ use App\Models\Base\UserModel;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use App\Factories\ModelFactory as MF;
+use TheFramework\Components\Db\ComponentCrud;
 
 final class UserRepository extends AppRepository
 {
@@ -41,6 +42,19 @@ final class UserRepository extends AppRepository
         $ar = $this->db->query($sql);
         if(count($ar)>1) return [];
         return $ar[0] ?? [];
+    }
+
+    private function _add_search(ComponentCrud $crud, array $search): void
+    {
+        if($fields = $search["fields"])
+            foreach ($fields as $field => $value )
+                $crud->add_and("m.$field = '$value'");
+
+        if($limit = $search["limit"])
+            $crud->set_limit($limit["length"], $limit["from"]);
+
+        if($order = $search["order"])
+            $crud->set_orderby("m.{$order["field"]} {$order["dir"]}");
     }
 
     public function search(array $search): array
@@ -82,16 +96,6 @@ final class UserRepository extends AppRepository
             ->set_limit(25, 0)
             ->set_orderby("m.id DESC")
         ;
-
-        if($fields = $search["fields"])
-            foreach ($fields as $field => $value )
-                $crud->add_and("m.$field = '$value'");
-
-        if($limit = $search["limit"])
-            $crud->set_limit($limit["length"], $limit["from"]);
-
-        if($order = $search["order"])
-            $crud->set_orderby("m.{$order["field"]} {$order["dir"]}");
 
         $sql = $crud->get_sql();
         return [

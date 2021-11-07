@@ -29,6 +29,8 @@ final class DatatableComponent
 
     public function get_search(): array
     {
+        if(!$this->request) return [];
+
         $search = [
             "global" => $this->request["search"]["value"] ?? "",
             "fields" => [],
