@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Services\Auth;
-use App\Factories\SessionFactory as SF;
 use App\Enums\Key;
 use App\Services\AppService;
-use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Formatter\ComponentMoment;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Traits\SessionTrait;
-use \Exception;
 
 final class CsrfService extends AppService
 {
