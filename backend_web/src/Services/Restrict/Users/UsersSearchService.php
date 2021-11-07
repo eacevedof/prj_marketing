@@ -1,5 +1,6 @@
 <?php
 namespace App\Services\Restrict\Users;
+use App\Factories\ComponentFactory as CF;
 use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use TheFramework\Components\Session\ComponentEncdecrypt;
@@ -7,7 +8,7 @@ use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
-use App\Enums\Key;
+
 use \Exception;
 
 final class UsersSearchService extends AppService
@@ -38,6 +39,7 @@ final class UsersSearchService extends AppService
 
     public function __invoke(): array
     {
+        $comp = CF::get("Datattable");
         $rows = $this->repository->search($this->input);
 
         return [
