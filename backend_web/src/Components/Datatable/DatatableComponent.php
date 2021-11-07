@@ -35,14 +35,16 @@ final class DatatableComponent
         $search = [
             "global" => $this->request["search"]["value"] ?? "",
             "fields" => [],
+            "all" => [],
             "order" => $this->_get_order(),
             "limit" => $this->_get_limit()
         ];
 
-        foreach ($this->fields as $field => $data)
+        foreach ($this->fields as $field => $data) {
+            $search["all"][] = $field;
             if ($value = $data["value"])
                 $search["fields"][$field] = $this->_get_sanitized($value);
-
+        }
         return $search;
     }
 
