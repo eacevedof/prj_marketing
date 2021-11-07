@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Components\Datatable\DatatableComponent;
 use App\Repositories\AppRepository;
 
 final class ComponentFactory
@@ -18,5 +19,10 @@ final class ComponentFactory
             return null;
         }
         return $obj;
+    }
+
+    public static function get_datatable(array $input): ?DatatableComponent
+    {
+        return new DatatableComponent($input);
     }
 }

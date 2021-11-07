@@ -39,7 +39,7 @@ final class UsersSearchService extends AppService
 
     public function __invoke(): array
     {
-        $comp = CF::get("Datattable");
+        $search = CF::get("Datattable", $this->input);
         $rows = $this->repository->search($this->input);
 
         return [
