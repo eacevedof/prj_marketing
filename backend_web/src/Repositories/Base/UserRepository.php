@@ -87,9 +87,11 @@ final class UserRepository extends AppRepository
             foreach ($fields as $field => $value )
                 $crud->add_and("m.$field = '$value'");
 
+        if($limit = $search["limit"])
+            $crud->set_limit($limit["length"], $limit["from"]);
+
         if($order = $search["order"])
             $crud->set_orderby("m.{$order["field"]} {$order["dir"]}");
-
 
         $sql = $crud->get_sql();
         return [
