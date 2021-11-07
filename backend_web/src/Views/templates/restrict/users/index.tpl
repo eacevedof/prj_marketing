@@ -58,7 +58,7 @@
 
 </style>
 <script type="module">
-import {debounce, getUrlParameter} from "/assets/js/common/utils.js"
+import {debounce, getUrlPosition} from "/assets/js/common/utils.js"
 
 let table = null
 const jqid = "#table-datatable"
@@ -108,8 +108,10 @@ $(document).ready(function (){
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
-      const  page = getUrlParameter()
-      this.api().page(2).draw('page')
+      let page = getUrlPosition(2)
+      if(isNaN(page))
+        page=1
+      this.api().page(page).draw('page')
       // Apply the search
       $(`[approle='column-search']`).each((i, $input) => {
 
