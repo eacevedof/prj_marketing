@@ -45,7 +45,7 @@ final class UserRepository extends AppRepository
 
     public function search(array $search): array
     {
-        $sql = $this->crud
+        $crud = $this->crud
             ->set_table("$this->table as m")
             ->is_foundrows()
             ->set_getfields([
@@ -79,11 +79,19 @@ final class UserRepository extends AppRepository
             ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
-            ->set_limit($search["length"],$search["start"])
+            ->set_limit(25, 0)
             ->set_orderby("m.id DESC")
-            ->get_selectfrom()
         ;
 
+        if($fields = $search["fields"])
+            foreach ($fields as $field => $value )
+                $crud->add_and("m.$field = '$value'");
+
+        if($order = $search["order"])
+            $crud->set_orderby("m.{$order["field"]} {$order["dir"]}");
+
+
+        $sql = $crud->get_sql();
         return [
             "result" => $this->db->query($sql),
             "total" => $this->db->get_foundrows()
