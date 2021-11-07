@@ -25,7 +25,7 @@ const App = {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          csrf: this.csrf,
+          csrf: document.getElementById("_csrf")?.value ?? "",
           email: this.email,
           password: this.password,
         })

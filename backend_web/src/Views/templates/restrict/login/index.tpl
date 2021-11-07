@@ -7,7 +7,7 @@
 <h1><?= __("Login") ?></h1>
 <div id="app">
     <form @submit.prevent="onSubmit">
-        <input type="hidden" id="csrf" v-model="csrf" value="<?=$csrf?>" />
+        <input type="hidden" id="_csrf" value="<?=$csrf?>" />
         <div>
             <label for="email"><?=__("Email")?> *</label>
             <input type="email" id="email" v-model="email" placeholder="<?=__("your email")?>" required="required">
