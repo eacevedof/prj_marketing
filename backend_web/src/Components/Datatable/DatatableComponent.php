@@ -22,7 +22,7 @@ final class DatatableComponent
     {
         foreach ($this->request["columns"] as $i => $column) {
             $name = $column["data"] ?? $i;
-            $value = $column["search"] ?? "";
+            $value = $column["search"]["value"] ?? "";
             $this->fields[$name] = ["position"=>$i, "value"=>$value];
         }
     }
