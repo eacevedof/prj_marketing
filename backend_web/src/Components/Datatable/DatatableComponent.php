@@ -2,7 +2,7 @@
 
 namespace App\Components\Datatable;
 
-final class Datatable
+final class DatatableComponent
 {
     private array $request;
     private array $fields;
