@@ -136,7 +136,7 @@ $(document).ready(function (){
 
         if($input) {
           console.log("column-search",$input)
-          $($input).on('change', debounce(function (e) {
+          $($input).on('keyup change clear', debounce(function (e) {
             const idx = $input.getAttribute("appcolidx")
             const value = $input.value
             table.columns(idx).search(value).draw() //sin draw no busca
