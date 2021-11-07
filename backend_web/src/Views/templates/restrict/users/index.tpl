@@ -58,7 +58,10 @@
 
 </style>
 <script type="module">
-import {debounce, getUrlPosition} from "/assets/js/common/utils.js"
+import {
+  debounce, getUrlPosition,
+  addPageInUrlByPosition, addPageToUrl
+} from "/assets/js/common/utils.js"
 
 let table = null
 const jqid = "#table-datatable"
@@ -108,9 +111,17 @@ $(document).ready(function (){
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
+      console.log("initComplet")
+      addPageInUrlByPosition(2)
       let page = getUrlPosition(2)
-      if(isNaN(page))
-        page=1
+
+      if(isNaN(page) || parseInt(page)<0) {
+        page=0
+      }
+      else {
+          page = page-1
+      }
+
       this.api().page(page).draw('page')
       // Apply the search
       $(`[approle='column-search']`).each((i, $input) => {
@@ -127,19 +138,11 @@ $(document).ready(function (){
       console.log("init complete")
     },
     ajax: function(data, callback, settings) {
-      let urlPath = ""
+      console.log("calling ajax with data:", data)
       if(table?.page) {
         const page = table.page.info().page+1
-        console.log("page", page)
-        urlPath = "/restrict/users/"+page
+        addPageToUrl(page)
       }
-      else {
-        urlPath = "/restrict/users/1"
-
-      }
-
-      window.history.pushState({},"", urlPath);
-      console.log("data on ajax", data)
 
       // make a regular ajax request using data.start and data.length
       $.get('/restrict/users/search', data, function(res) {
