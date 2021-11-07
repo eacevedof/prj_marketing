@@ -16,6 +16,7 @@ use App\Services\Auth\CsrfService;
 use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
 use App\Enums\Url;
+use App\Components\Auth\AuthComponent;
 
 abstract class RestrictController extends AppController
 {

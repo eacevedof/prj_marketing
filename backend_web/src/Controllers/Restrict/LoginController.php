@@ -22,7 +22,7 @@ final class LoginController extends RestrictController
     {
         $this
             ->add_var(Key::PAGE_TITLE, __("LOGIN"))
-            ->add_var(Key::KEY_CSRF, $this->csrf);
+            ->add_var(Key::KEY_CSRF, $this->csrf->get_token());
 
         $this->render();
     }
