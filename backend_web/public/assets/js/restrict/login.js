@@ -5,6 +5,7 @@ const URL = "/login/access"
 const App = {
   data() {
     return {
+      csrf: "",
       email: "eaf@eaf.com",
       password: "1234",
       issending: false,
@@ -24,6 +25,7 @@ const App = {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          csrf: this.csrf,
           email: this.email,
           password: this.password,
         })
