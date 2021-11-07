@@ -15,6 +15,7 @@ final class CsrfService extends AppService
     use SessionTrait;
 
     private ComponentEncdecrypt $encdec;
+    private const VALID_TIME_IN_MINS = 20;
 
     public function __construct()
     {
@@ -28,12 +29,12 @@ final class CsrfService extends AppService
 
     private function _get_user_agent(): string {return $_SERVER["HTTP_USER_AGENT"] ?? ":)"; }
 
-    private function get_token(): string
+    public function get_token(): string
     {
         $user = $this->session->get(Key::AUTH_USER);
 
         $arpackage = [
-            "salt0"    => date("Ymd-His"),
+            "salt0"    => date("Y-m-d H:i:s"),
             "domain"   => $this->_get_domain(),
             "salt1"    => rand(0,3),
             "remoteip" => $this->_get_remote_ip(),
@@ -44,14 +45,13 @@ final class CsrfService extends AppService
             "salt4"    => rand(11,15),
             "password" => md5($user["secret"] ?? ""),
             "salt5"    => rand(15,19),
-            "today"    => date("Ymd-His"),
+            "today"    => date("Y-m-d H:i:s"),
         ];
 
         $instring = implode("|",$arpackage);
         $token = $this->encdec->get_sslencrypted($instring);
         return $token;
     }
-
 
     private function _validate_package($arpackage): void
     {
@@ -61,22 +61,22 @@ final class CsrfService extends AppService
 
         if($domain!==$this->domain) $this->_exeption(__("Invalid csrf {0}",2));;
 
-        //hago validacion en local por peticiones entre las ips de docker y mi maquina host que usan distitntas ips
-        if ($remoteip !== $this->_get_remote_ip()) $this->_exeption(__("Invalid csrf {0}",3));;
+        //hago validacion en local por peticiones entre las ips de docker y mi maquina host
+        //que usan distitntas ips
+        if ($remoteip !== $this->_get_remote_ip())
+            $this->_exeption(__("Invalid csrf {0}",3));
 
+        if($useragent !== md5($this->_get_user_agent())) $this->_exeption(__("Invalid csrf {0}",4));
 
-        if($useragent !== md5($this->_get_user_agent())) throw new Exception("Wrong user agent");
-
-        $md5pass = $this->_get_user_password($domain, $username);
+        $user = $this->session->get(Key::AUTH_USER);
+        $md5pass = $user["secret"] ?? "";
         $md5pass = md5($md5pass);
-        if($md5pass!==$password) throw new Exception("Wrong user or password submitted");
+        if($md5pass!==$password) $this->_exeption(__("Invalid csrf {0}",5));
 
-        list($day) = explode("-",$date);
-        $now = date("Ymd");
-        $moment = new ComponentMoment($day);
-        $ndays = $moment->get_ndays($now);
-        if($ndays>30)
-            throw new Exception("Token has expired");
+        $moment = new ComponentMoment($date);
+        $now = date("Y-m-d H:i:s");
+        $mins = (int) $moment->get_nmins($now);
+        if($mins > self::VALID_TIME_IN_MINS) $this->_exeption(__("Expired csrf {0}",6));
     }
 
     public function is_valid(?string $token): bool

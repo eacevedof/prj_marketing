@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Formatter\ComponentMoment
- * @file component_moment.php 1.0.0
- * @date 04-06-2020 14:03 SPAIN
+ * @file component_moment.php 1.1.0
+ * @date 07-11-2021 14:03 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Formatter;
@@ -163,6 +163,14 @@ final class ComponentMoment
         $earlier = new \DateTime($this->cleaned);
         $later = new \DateTime($yyymmdd);
         $diff = $later->diff($earlier)->format("%a");
+        return $diff;
+    }
+
+    public function get_nmins($yyymmddhis)
+    {
+        $earlier = new \DateTime($this->cleaned);
+        $later = new \DateTime($yyymmddhis);
+        $diff = ($later->getTimestamp() - $earlier->getTimestamp())/60;
         return $diff;
     }
 
