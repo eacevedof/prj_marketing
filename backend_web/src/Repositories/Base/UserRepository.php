@@ -45,7 +45,6 @@ final class UserRepository extends AppRepository
 
     public function search(array $search): array
     {
-        //$email = $this->_get_sanitized($search);
         $sql = $this->crud
             ->set_table("$this->table as m")
             ->is_foundrows()
