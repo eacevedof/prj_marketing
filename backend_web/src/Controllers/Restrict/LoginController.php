@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Restrict;
 use App\Enums\Key;
+use App\Services\Auth\CsrfService;
 use App\Services\Restrict\LoginService;
 use App\Factories\ServiceFactory as SF;
 use TheFramework\Helpers\HelperJson;
@@ -19,17 +20,22 @@ final class LoginController extends RestrictController
 
     public function index(): void
     {
-        $this->add_var(Key::PAGE_TITLE, __("LOGIN"));
+        $this
+            ->add_var(Key::PAGE_TITLE, __("LOGIN"))
+            ->add_var(Key::KEY_CSRF, $this->csrf);
+
         $this->render();
     }
 
     //@post
     public function access(): void
     {
-        $this->login = SF::get("Restrict\Login", $this->get_post());
-        $this->logd("middle start");
         $oJson = new HelperJson();
-        try{
+        try {
+            $post = $this->get_post();
+            $this->csrf->is_valid($post["csrf"]);
+            $this->login = SF::get("Restrict\Login", $post);
+
             $result = $this->login->in();
             $oJson->set_payload([
                         "message"=>__("auth ok"),
@@ -43,6 +49,5 @@ final class LoginController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show(1);
         }
-        $this->logd("access end");
     }
 }//LoginController
