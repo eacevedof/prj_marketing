@@ -59,6 +59,15 @@ final class UserRepository extends AppRepository
         if($order = $search["order"])
             $crud->set_orderby("m.{$order["field"]} {$order["dir"]}");
 
+        if($global = $search["global"]) {
+            $or = [];
+            foreach ($search["all"] as $field)
+                $or[] = "m.$field LIKE '%$global%'";
+            $or = implode(" OR ",$or);
+            $crud->add_and("($or)");
+        }
+
+
     }
 
     public function search(array $search): array

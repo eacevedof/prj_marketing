@@ -33,7 +33,7 @@ final class DatatableComponent
         if(!$this->request) return [];
 
         $search = [
-            "global" => $this->request["search"]["value"] ?? "",
+            "global" => $this->_get_sanitized($this->request["search"]["value"] ?? ""),
             "fields" => [],
             "all" => [],
             "order" => $this->_get_order(),
