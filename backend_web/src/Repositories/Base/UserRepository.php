@@ -58,6 +58,7 @@ final class UserRepository extends AppRepository
 
         if($order = $search["order"])
             $crud->set_orderby("m.{$order["field"]} {$order["dir"]}");
+
     }
 
     public function search(array $search): array
