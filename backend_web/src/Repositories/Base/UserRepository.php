@@ -46,6 +46,8 @@ final class UserRepository extends AppRepository
 
     private function _add_search(ComponentCrud $crud, array $search): void
     {
+        if(!$search) return;
+
         if($fields = $search["fields"])
             foreach ($fields as $field => $value )
                 $crud->add_and("m.$field = '$value'");
