@@ -52,11 +52,11 @@ final class CsrfService extends AppService
 
     private function _validate_package($arpackage): void
     {
-        if(count($arpackage)!==12) $this->_exeption(__("Invalid csrf {0}",1));;
+        if(count($arpackage)!==12) $this->_exeption(__("Invalid csrf {0}",1));
 
         list($s0,$domain,$s1,$remoteip,$s2,$useragent,$s3,$username,$s4,$password,$s5,$date) = $arpackage;
 
-        if($domain!==$this->domain) $this->_exeption(__("Invalid csrf {0}",2));;
+        if($domain!==$this->_get_domain()) $this->_exeption(__("Invalid csrf {0}",2));
 
         //hago validacion en local por peticiones entre las ips de docker y mi maquina host
         //que usan distitntas ips
