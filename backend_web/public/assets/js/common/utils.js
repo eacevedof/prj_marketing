@@ -5,6 +5,10 @@ export const getUrlParameter = (name) => {
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+export const getUrlPosition = pos => {
+  
+}
+
 export const onDocumentready = callbackFunction =>{
   if(document.readyState != 'loading')
     callbackFunction(event)
