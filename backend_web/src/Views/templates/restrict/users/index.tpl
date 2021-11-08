@@ -141,7 +141,7 @@ $(document).ready(function (){
       console.log("calling ajax with data:", data)
       if(table?.page) {
         const page = table.page.info().page+1
-        addPageToUrl(page)
+        addPageToUrl(page,2)
       }
 
       // make a regular ajax request using data.start and data.length
