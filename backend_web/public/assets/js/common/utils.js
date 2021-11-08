@@ -42,10 +42,10 @@ export const addPageToUrl = (page, pos) => {
   let parts2 = parts1[0].split("/")
   parts2[pos] = page
   const p = [
-    "/".join(parts2),
+    parts2.join("/"),
     "?",
     parts1[1] ?? ""
   ]
-  url  = "".join(p)
+  url  = p.join("")
   window.history.pushState({}, "", url)
 }
