@@ -114,7 +114,7 @@ $(document).ready(function (){
       let page = get_page_from_url(3)
       if (!page) {
         page = 0
-        //add_page_to_url(1, 2)
+        add_page_to_url(1, 3)
       }
 
       this.api().page(page).draw("page")
@@ -137,6 +137,8 @@ $(document).ready(function (){
       if(table?.page) {
         const page = table.page.info().page+1
         console.log("page+1 before get:",page)
+        add_page_to_url(page, 3)
+
         //add_page_to_url()
       }
 
