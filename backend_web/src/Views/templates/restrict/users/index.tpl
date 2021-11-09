@@ -136,6 +136,7 @@ $(document).ready(function (){
       });
       console.log("init complete end page",page)
     },
+
     ajax: function(data, callback, settings) {
       let page = get_page_from_url(3)
       console.log("calling ajax with data:", data,"page", page)
