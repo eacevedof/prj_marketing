@@ -116,7 +116,7 @@ $(document).ready(function (){
         add_page_to_url(1, 2)
       }
 
-      this.api().page(page).draw('page')
+      this.api().page(page).draw("page")
       // Apply the search
       $(`[approle='column-search']`).each((i, $input) => {
 
