@@ -109,6 +109,7 @@ $(document).ready(function (){
     fixedHeader: true,
     pageLength: 25,
     language: trs,
+
     // Setup - add a text input to each footer cell
     initComplete: function () {
       let page = get_page_from_url(3)
@@ -116,7 +117,9 @@ $(document).ready(function (){
       if (!page) {
         page = 0
         add_page_to_url(1, 3)
-        this.api().page(page).draw("page")
+      }
+      else {
+        this.api().page(page-1).draw("page")
       }
 
       // Apply the search
@@ -135,6 +138,7 @@ $(document).ready(function (){
     },
     ajax: function(data, callback, settings) {
       console.log("calling ajax with data:", data)
+      /*
       if(table?.page) {
         let page = get_page_from_url(3)
         console.log("ajax page from url", page)
@@ -143,7 +147,7 @@ $(document).ready(function (){
         add_page_to_url(page, 3)
 
         //add_page_to_url()
-      }
+      }*/
 
       // make a regular ajax request using data.start and data.length
       $.get('/restrict/users/search', data, function(res) {
