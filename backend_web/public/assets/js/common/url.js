@@ -19,10 +19,14 @@ export const add_page_to_url = (page, position) => {
 
   if (parts2[position]) {
     parts2[position] = page
-    url = parts2.join("/")
-    if (parts1[1])  url = url.concat("?").concat(parts1[1])
-    window.history.pushState({}, "", url)
   }
+  else {
+    parts2.push(page)
+  }
+
+  url = parts2.join("/")
+  if (parts1[1])  url = url.concat("?").concat(parts1[1])
+  window.history.pushState({}, "", url)
 }
 
 export const get_page_from_url = position => {

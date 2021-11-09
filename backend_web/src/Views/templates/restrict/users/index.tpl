@@ -111,9 +111,10 @@ $(document).ready(function (){
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
-      let page = get_page_from_url(2)
+      let page = get_page_from_url(3)
       if (!page) {
-        add_page_to_url(1, 2)
+        page = 0
+        //add_page_to_url(1, 2)
       }
 
       this.api().page(page).draw("page")
@@ -135,7 +136,8 @@ $(document).ready(function (){
       console.log("calling ajax with data:", data)
       if(table?.page) {
         const page = table.page.info().page+1
-        addPageToUrl(page,2)
+        console.log("page+1 before get:",page)
+        //add_page_to_url()
       }
 
       // make a regular ajax request using data.start and data.length
