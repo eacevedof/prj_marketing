@@ -112,17 +112,18 @@ $(document).ready(function (){
     // Setup - add a text input to each footer cell
     initComplete: function () {
       let page = get_page_from_url(3)
+      console.log("init-complete page", page)
       if (!page) {
         page = 0
         add_page_to_url(1, 3)
+        this.api().page(page).draw("page")
       }
 
-      this.api().page(page).draw("page")
       // Apply the search
       $(`[approle='column-search']`).each((i, $input) => {
 
         if($input) {
-          console.log("column-search",$input)
+          //console.log("column-search",$input)
           $($input).on('keyup change clear', debounce(function (e) {
             const idx = $input.getAttribute("appcolidx")
             const value = $input.value
@@ -130,13 +131,15 @@ $(document).ready(function (){
           }, 1000))
         }
       });
-      console.log("init complete")
+      console.log("init complete end page",page)
     },
     ajax: function(data, callback, settings) {
       console.log("calling ajax with data:", data)
       if(table?.page) {
-        const page = table.page.info().page+1
-        console.log("page+1 before get:",page)
+        let page = get_page_from_url(3)
+        console.log("ajax page from url", page)
+        page = table.page.info().page+1
+        console.log("ajax page + 1:", page)
         add_page_to_url(page, 3)
 
         //add_page_to_url()
