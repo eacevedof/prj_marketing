@@ -58,10 +58,10 @@
 
 </style>
 <script type="module">
+import {debounce} from "/assets/js/common/utils.js"
 import {
-  debounce, getUrlPosition,
-  addPageInUrlByPosition, addPageToUrl
-} from "/assets/js/common/utils.js"
+  get_url_position, add_page_to_url, get_page_from_url
+} from "/assets/js/common/url.js"
 
 let table = null
 const jqid = "#table-datatable"
@@ -111,15 +111,9 @@ $(document).ready(function (){
     language: trs,
     // Setup - add a text input to each footer cell
     initComplete: function () {
-      console.log("initComplet")
-      addPageInUrlByPosition(2)
-      let page = getUrlPosition(2)
-
-      if(isNaN(page) || parseInt(page)<0) {
-        page=0
-      }
-      else {
-          page = page-1
+      let page = get_page_from_url(2)
+      if (!page) {
+        add_page_to_url(1, 2)
       }
 
       this.api().page(page).draw('page')
