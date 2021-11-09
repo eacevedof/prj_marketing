@@ -6,14 +6,14 @@ export const get_parameter = key => {
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-export const getUrlPosition = pos => {
+export const get_url_position = pos => {
   let parts = location.pathname.split("?")
   parts = parts[0].split("/")
   return parts[pos] ?? ""
 }
 
-export const addPageInUrlByPosition = (pos) => {
-  let page = getUrlPosition(pos)
+export const addPageInUrlByPosition = pos => {
+  let page = get_url_position(pos)
   let url = location.pathname
   if (isNaN(page) || parseInt(page)<1) {
     page = 1
