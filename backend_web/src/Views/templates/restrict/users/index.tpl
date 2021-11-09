@@ -60,7 +60,7 @@
 <script type="module">
 import {debounce} from "/assets/js/common/utils.js"
 import {
-  get_url_position, add_page_to_url, get_page_from_url
+  add_page_to_url, get_page_from_url
 } from "/assets/js/common/url.js"
 
 let table = null
