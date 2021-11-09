@@ -1,8 +1,7 @@
 
-
-export const getUrlParameter = (name) => {
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  const regex = new RegExp(`[\\?&]${name}=([^&#]*)`);
+export const get_parameter = key => {
+  key = key.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  const regex = new RegExp(`[\\?&]${key}=([^&#]*)`);
   const results = regex.exec(location.search);
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
