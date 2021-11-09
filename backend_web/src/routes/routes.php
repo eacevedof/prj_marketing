@@ -25,7 +25,7 @@ return [
     ["url"=>"/restrict/user/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
 
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
-    ["url"=>"/restrict/users/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
+    ["url"=>"/restrict/users/:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
     ["url"=>"/restrict/users","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
 
 

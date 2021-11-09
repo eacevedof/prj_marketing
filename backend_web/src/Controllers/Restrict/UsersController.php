@@ -16,7 +16,7 @@ use TheFramework\Helpers\HelperJson;
 
 final class UsersController extends RestrictController
 {
-    public function index(): void
+    public function index(?string $page=null): void
     {
         if (!$this->auth->is_user_allowed(Action::USERS_READ))
             $this->location(Url::FORBIDDEN);
