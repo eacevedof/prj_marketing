@@ -139,17 +139,15 @@ $(document).ready(function (){
 
     ajax: function(data, callback, settings) {
       let page = get_page_from_url(3)
-      console.log("calling ajax with data:", data,"page", page)
-      /*
-      if(table?.page) {
-        let page = get_page_from_url(3)
-        console.log("ajax page from url", page)
-        page = table.page.info().page+1
-        console.log("ajax page + 1:", page)
-        add_page_to_url(page, 3)
+      let page2 = table?.page?.info()?.page
+      console.log("calling ajax with data:",
+        "page",page,"page2", page2)
 
-        //add_page_to_url()
-      }*/
+      if (page!==(page2+1)) {
+        if(isNaN(page2))
+          page2 = 0
+        add_page_to_url(page2+1, 3)
+      }
 
       // make a regular ajax request using data.start and data.length
       $.get('/restrict/users/search', data, function(res) {
