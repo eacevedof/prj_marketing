@@ -12,12 +12,15 @@ export const get_url_position = pos => {
   return parts[pos] ?? ""
 }
 
-export const addPageInUrlByPosition = pos => {
-  let page = get_url_position(pos)
+export const add_page_to_url = (page, position) => {
   let url = location.pathname
-  if (isNaN(page) || parseInt(page)<1) {
-    page = 1
-    url = url.concat(`/${page}`)
+  const parts1 = url.split("?")
+  const parts2 = parts1[0].split("/")
+
+  if (parts2[position]) {
+    parts2[position] = page
+    url = parts2.join("/")
+    if (parts1[1])  url = url.concat("?").concat(parts1[1])
     window.history.pushState({}, "", url)
   }
 }
