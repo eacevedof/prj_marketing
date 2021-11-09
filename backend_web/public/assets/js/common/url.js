@@ -25,16 +25,6 @@ export const add_page_to_url = (page, position) => {
   }
 }
 
-export const addPageToUrl = (page, pos) => {
-  let url = location.pathname
-  let parts1 = url.split("?")
-  let parts2 = parts1[0].split("/")
-  parts2[pos] = page
-  const p = [
-    parts2.join("/"),
-    "?",
-    parts1[1] ?? ""
-  ]
-  url  = p.join("")
-  window.history.pushState({}, "", url)
+export const get_page_from_url = position => {
+
 }
