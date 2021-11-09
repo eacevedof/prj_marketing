@@ -26,5 +26,9 @@ export const add_page_to_url = (page, position) => {
 }
 
 export const get_page_from_url = position => {
+  const page = get_url_position(position)
+  if(!page) return null
+  if (isNaN(page)) return null
+  return parseInt(page)
 
 }
