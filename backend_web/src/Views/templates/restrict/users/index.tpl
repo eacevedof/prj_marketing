@@ -137,6 +137,7 @@ $(document).ready(function (){
 
     // Setup - add a text input to each footer cell
     initComplete: function () {
+      console.log("init complete start")
       /*
       let page = get_page_from_url(3)
       console.log("init-complete page", page)
@@ -162,7 +163,7 @@ $(document).ready(function (){
           }, 1000))
         }
       });
-      console.log("init complete end page",page)
+      console.log("init complete end page")
     },
 
     dom: "Bfrtip",//buttons in dom
