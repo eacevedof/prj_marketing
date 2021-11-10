@@ -72,8 +72,8 @@ $(document).ready(function (){
     processing:     "Procesando...",
     search:         "Busqueda&nbsp;:",
     lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
-    info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-    infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+    info:           "Affichage de l&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+    infoEmpty:      "Affichage de l&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
     infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
     infoPostFix:    "",
     loadingRecords: "Cargando...",
@@ -123,10 +123,10 @@ $(document).ready(function (){
       }
 
       // make a regular ajax request using data.start and data.length
-      $.get('/restrict/users/search', data, function(res) {
+      $.get("/restrict/users/search", data, function(res) {
         console.log("res", res)
-        // map your server's response to the DataTables format and pass it to
-        // DataTables' callback
+        // map your server"s response to the DataTables format and pass it to
+        // DataTables" callback
         callback({
           recordsTotal: res.data.recordsTotal,
           recordsFiltered: res.data.recordsFiltered,
@@ -151,11 +151,11 @@ $(document).ready(function (){
        */
 
       // Apply the search
-      $(`[approle='column-search']`).each((i, $input) => {
+      $(`[approle="column-search"]`).each((i, $input) => {
 
         if($input) {
           //console.log("column-search",$input)
-          $($input).on('keyup change clear', debounce(function (e) {
+          $($input).on("keyup change clear", debounce(function (e) {
             const idx = $input.getAttribute("appcolidx")
             const value = $input.value
             table.columns(idx).search(value).draw() //sin draw no busca
@@ -165,11 +165,11 @@ $(document).ready(function (){
       console.log("init complete end page",page)
     },
 
-    dom: 'Bfrtip',//buttons in dom
+    dom: "Bfrtip",//buttons in dom
     buttons: [
-      'colvis',
-      'excel',
-      'print'
+      "colvis",
+      "excel",
+      "print"
     ],
     columns: [
       { data: "uuid" },
@@ -188,20 +188,20 @@ $(document).ready(function (){
   })
 
   table
-    .on('order', function (e) {
+    .on("order", function (e) {
       const order = table.order()
       console.log("order colidx:",order[0][0],"orientation",order[0][1])
     })
-    .on('search', function (e) {
+    .on("search", function (e) {
       //post all
       console.log("search",e)
     })
-    .on('page', function (e) {
+    .on("page", function (e) {
       //e.preventDefault();
       //page se mueve de 0 a n
       const page = table.page.info()
       console.log("page:", page.page ,"pages:", page.pages )
-      //eventFired( 'Page' );
+      //eventFired( "Page" );
     });
 
    */
