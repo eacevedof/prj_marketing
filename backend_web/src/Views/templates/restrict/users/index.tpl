@@ -111,12 +111,6 @@ $(document).ready(function (){
     language: trs,
 
     ajax: function(data, callback, settings) {
-      let page = get_page_from_url(3)
-      let page2 = table?.page?.info()?.page
-      console.log("calling ajax with data:",
-        "page",page,"page2", page2)
-
-
 
       // make a regular ajax request using data.start and data.length
       $.get("/restrict/users/search", data, function(res) {
@@ -181,6 +175,23 @@ $(document).ready(function (){
     ]
   });
 
+  table
+    .on("init.dt", function (e){
+      let page = get_page_from_url(3)
+      let page2 = table?.page?.info()?.page
+      console.log("on init.dt", "page",page,"page2", page2)
+
+      setTimeout( function () {
+        table.page( 1 ).draw( false );
+      }, 10);
+    })
+    .on("page", function (e) {
+      const page = table.page.info().page
+      add_page_to_url(page+1, 3)
+      console.log("on page", page)
+    })
+
+
   /*
   table.on("draw", function (){
     console.log("on draw")
@@ -204,6 +215,7 @@ $(document).ready(function (){
     });
 
    */
+
 
 })
 
