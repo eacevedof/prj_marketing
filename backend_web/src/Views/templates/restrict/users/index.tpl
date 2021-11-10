@@ -116,24 +116,22 @@ $(document).ready(function (){
       console.log("calling ajax with data:",
         "page",page,"page2", page2)
 
-      if (page!==(page2+1)) {
-        if(isNaN(page2))
-          page2 = 0
-        //add_page_to_url(page2+1, 3)
-      }
+
 
       // make a regular ajax request using data.start and data.length
       $.get("/restrict/users/search", data, function(res) {
-        console.log("res", res)
+        //console.log("res", res)
         // map your server"s response to the DataTables format and pass it to
         // DataTables" callback
         callback({
           recordsTotal: res.data.recordsTotal,
           recordsFiltered: res.data.recordsFiltered,
           data: res.data.result
-        });
-      });
-    },
+        })
+
+      })//get
+
+    },//ajax
 
     // Setup - add a text input to each footer cell
     initComplete: function () {
