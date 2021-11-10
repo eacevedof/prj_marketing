@@ -176,14 +176,23 @@ $(document).ready(function (){
   });
 
   table
-    .on("init.dt", function (e){
+    .on("init.dt", function (e) {
       let page = get_page_from_url(3)
       let page2 = table?.page?.info()?.page
       console.log("on init.dt", "page",page,"page2", page2)
 
+      if (!page) {
+        add_page_to_url(1, 3)
+      }
+
+      /*
       setTimeout( function () {
         table.page( 1 ).draw( false );
       }, 10);
+
+       */
+      //table.api().page(page-1).draw("page")
+
     })
     .on("page", function (e) {
       const page = table.page.info().page
