@@ -205,11 +205,14 @@ $(document).ready(function (){
       }, 10 )
     })
     .on("draw", function (e){
-      console.log("on redraw")
-    })
-    .on("column-reorder", function (){
+      const page = get_page_from_url(3)
       let page2 = table?.page?.info()?.page
-      console.log("on column reorder",page2)
+      console.log("on draw","page",page,"page2",page2)
+    })
+    .on("draw.dt", function (e){
+      const page = get_page_from_url(3)
+      let page2 = table?.page?.info()?.page
+      console.log("on redraw","page",page,"page2",page2)
     })
 
   /*
