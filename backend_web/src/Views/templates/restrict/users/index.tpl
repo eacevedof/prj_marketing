@@ -111,7 +111,7 @@ $(document).ready(function (){
     language: trs,
 
     ajax: function(data, callback, settings) {
-
+      console.log("on ajax")
       // make a regular ajax request using data.start and data.length
       $.get("/restrict/users/search", data, function(res) {
         //console.log("res", res)
@@ -186,6 +186,7 @@ $(document).ready(function (){
 
       if (page2!==(page-1)) {
         console.log("update to", page-1)
+        //esto dispara el ajax
         table.page(page-1).draw( false );
       }
     })
@@ -195,8 +196,20 @@ $(document).ready(function (){
       console.log("on page", page)
     })
     .on("order", function (e) {
-      console.log("order")
+      const page = get_page_from_url(3)
+      console.log("order:", page)
       //add_page_to_url(1, 3)
+      //table.page(page).draw( false )
+      setTimeout( function () {
+        //table.page( page-1 ).draw( false );
+      }, 10 )
+    })
+    .on("draw", function (e){
+      console.log("on redraw")
+    })
+    .on("column-reorder", function (){
+      let page2 = table?.page?.info()?.page
+      console.log("on column reorder",page2)
     })
 
   /*
