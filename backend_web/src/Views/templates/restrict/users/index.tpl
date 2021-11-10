@@ -181,9 +181,15 @@ $(document).ready(function (){
       let page2 = table?.page?.info()?.page
       console.log("on init.dt", "page",page,"page2", page2)
 
-      if (!page) {
-        add_page_to_url(1, 3)
+      if (!page)
+        return add_page_to_url(1, 3)
+
+      if (page2!==(page-1)) {
+        table.page(page-1).draw( false );
       }
+
+
+
 
       /*
       setTimeout( function () {
@@ -199,7 +205,9 @@ $(document).ready(function (){
       add_page_to_url(page+1, 3)
       console.log("on page", page)
     })
-
+    .on("order", function (e) {
+      add_page_to_url(1, 3)
+    })
 
   /*
   table.on("draw", function (){
