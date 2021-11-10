@@ -137,6 +137,7 @@ $(document).ready(function (){
 
     // Setup - add a text input to each footer cell
     initComplete: function () {
+      /*
       let page = get_page_from_url(3)
       console.log("init-complete page", page)
       if (!page) {
@@ -146,6 +147,8 @@ $(document).ready(function (){
       else {
         this.api().page(page-1).draw("page")
       }
+
+       */
 
       // Apply the search
       $(`[approle='column-search']`).each((i, $input) => {
