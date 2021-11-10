@@ -185,20 +185,9 @@ $(document).ready(function (){
         return add_page_to_url(1, 3)
 
       if (page2!==(page-1)) {
+        console.log("update to", page-1)
         table.page(page-1).draw( false );
       }
-
-
-
-
-      /*
-      setTimeout( function () {
-        table.page( 1 ).draw( false );
-      }, 10);
-
-       */
-      //table.api().page(page-1).draw("page")
-
     })
     .on("page", function (e) {
       const page = table.page.info().page
@@ -206,7 +195,8 @@ $(document).ready(function (){
       console.log("on page", page)
     })
     .on("order", function (e) {
-      add_page_to_url(1, 3)
+      console.log("order")
+      //add_page_to_url(1, 3)
     })
 
   /*
