@@ -65,6 +65,7 @@ import {
 
 let table = null
 const jqid = "#table-datatable"
+let rendered = false
 
 $(document).ready(function (){
 
@@ -129,7 +130,7 @@ $(document).ready(function (){
 
     // Setup - add a text input to each footer cell
     initComplete: function () {
-      console.log("init complete start")
+      console.log("INIT complete start")
       /*
       let page = get_page_from_url(3)
       console.log("init-complete page", page)
@@ -155,7 +156,8 @@ $(document).ready(function (){
           }, 1000))
         }
       });
-      console.log("init complete end page")
+      rendered = true
+      console.log("INIT complete end page")
     },
     "drawCallback": function( settings ) {
       console.log("ondrawcallback",settings);
@@ -201,7 +203,7 @@ $(document).ready(function (){
       //table.page(page).draw( false )
       let order = table.order()[0][0]
       console.log("order:","page", page,"page2", page2,"order",order)
-      if (order!==0 && page!==1) {
+      if ((order!==0 && page!==1)) {
         add_page_to_url(1, 3)
       }
     })
