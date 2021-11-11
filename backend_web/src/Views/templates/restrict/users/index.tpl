@@ -196,14 +196,16 @@ $(document).ready(function (){
       page = parseInt(page)
       let page2 = table?.page?.info()?.page
       page2 = parseInt(page)
-      console.log("order:","page", page,"page2", page2,"e",e)
+
       //add_page_to_url(1, 3)
       //table.page(page).draw( false )
-      if (page2===page) {
-        //si se entra desde url se setea a 1
+      let order = table.order()[0][0]
+      console.log("order:","page", page,"page2", page2,"order",order)
+      if (order!==0 && page!==1) {
         add_page_to_url(1, 3)
       }
     })
+
     .on("draw", function (e){
       const page = get_page_from_url(3)
       let page2 = table?.page?.info()?.page
@@ -212,7 +214,11 @@ $(document).ready(function (){
     .on("draw.dt", function (e){
       const page = get_page_from_url(3)
       let page2 = table?.page?.info()?.page
-      console.log("on redraw","page",page,"page2",page2)
+      let lastpage = table.page.info().pages
+      if(lastpage<page) {
+        add_page_to_url(1,3)
+      }
+      console.log("on redraw","page",page,"page2",page2,"lp",lastpage)
     })
 
   /*
