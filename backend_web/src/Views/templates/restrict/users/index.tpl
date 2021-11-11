@@ -157,13 +157,9 @@ $(document).ready(function (){
       });
       console.log("init complete end page")
     },
-
-    dom: "Bfrtip",//buttons in dom
-    buttons: [
-      "colvis",
-      "excel",
-      "print"
-    ],
+    "drawCallback": function( settings ) {
+      console.log("ondrawcallback",settings);
+    },
     columns: [
       { data: "uuid" },
       { data: "fullname" },
@@ -196,13 +192,17 @@ $(document).ready(function (){
       console.log("on page", page)
     })
     .on("order", function (e) {
-      const page = get_page_from_url(3)
-      console.log("order:", page)
+      let page = get_page_from_url(3)
+      page = parseInt(page)
+      let page2 = table?.page?.info()?.page
+      page2 = parseInt(page)
+      console.log("order:","page", page,"page2", page2,"e",e)
       //add_page_to_url(1, 3)
       //table.page(page).draw( false )
-      setTimeout( function () {
-        //table.page( page-1 ).draw( false );
-      }, 10 )
+      if (page2===page) {
+        //si se entra desde url se setea a 1
+        add_page_to_url(1, 3)
+      }
     })
     .on("draw", function (e){
       const page = get_page_from_url(3)
