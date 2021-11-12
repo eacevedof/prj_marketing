@@ -67,6 +67,16 @@ let table = null
 const jqid = "#table-datatable"
 let rendered = false
 
+const get_page = perpage => {
+  let page = get_page_from_url(3)
+  if (!page || isNaN(page)) {
+    page = 1
+    add_page_to_url(page, 3)
+  }
+  const pagemin = page - 1
+  return pagemin * perpage
+}
+
 $(document).ready(function (){
 
   const trs = {
@@ -110,7 +120,7 @@ $(document).ready(function (){
     fixedHeader: true,
     pageLength: 25,
     language: trs,
-    displayStart: 4*25,
+    displayStart: get_page(25),
 
     ajax: function(data, callback, settings) {
       let page2 = table?.page?.info()?.page
@@ -175,27 +185,23 @@ $(document).ready(function (){
       { data: "id_language" },
     ]
   });
-
-
-
-  //ejemplo pagina inicial
-  //https://stackoverflow.com/questions/31523581/how-to-change-page-number-datatable-in-outside-datatable-with-jquery
-  let page = get_page_from_url(3)
-  if(!isNaN(page)) {
-    page = parseInt(page)
-    const pagemin = page - 1
-    console.log("go to page", pagemin)
-    //table.page(pagemin).draw("page")
-  }
-  else {
-    add_page_to_url(1,3)
-    console.log("go to page", 1)
-    //table.page(0).draw("page")
-  }
-
-  //error
-  //table.fnPageChange(4,true)
-
+  //$("#table-datatable")
+    table.on( "page.dt",   function () {
+      const info = table.page.info()
+      //console.log( 'Showing page: '+info.page+' of '+info.pages )
+      const pagemin = info.page
+      add_page_to_url(pagemin+1, 3)
+    } )
+    .on("order.dt", function (e) {
+      //const order = table.order()
+      //console.log("order colidx:",order[0][0],"orientation",order[0][1])
+      if (rendered) {
+        add_page_to_url(1, 3)
+      }
+    })
+    .on("draw.dt", function() {
+      // do action here
+    });
     /*
     .on("xx",function (e){
      console.log("on xx")
