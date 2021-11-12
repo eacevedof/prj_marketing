@@ -115,6 +115,7 @@ $(document).ready(function (){
       console.log("on ajax")
       // make a regular ajax request using data.start and data.length
       $.get("/restrict/users/search", data, function(res) {
+        console.log("get request start")
         //console.log("res", res)
         // map your server"s response to the DataTables format and pass it to
         // DataTables" callback
@@ -123,9 +124,9 @@ $(document).ready(function (){
           recordsFiltered: res.data.recordsFiltered,
           data: res.data.result
         })
-
+        console.log("get request end")
       })//get
-
+      console.log("on ajax end")
     },//ajax
 
     // Setup - add a text input to each footer cell
@@ -185,8 +186,9 @@ $(document).ready(function (){
       if (page2!==(page-1)) {
         console.log("update to", page-1)
         //esto dispara el ajax
-        table.page(page-1).draw( false );
+        return table.page(page-1).draw(false)
       }
+      console.log("end init.dt")
     })
     .on("page", function (e) {
       const page = table.page.info().page
@@ -207,22 +209,26 @@ $(document).ready(function (){
         add_page_to_url(1, 3)
       }
     })
-
     .on("draw", function (e){
       const page = get_page_from_url(3)
       let page2 = table?.page?.info()?.page
       console.log("on draw","page",page,"page2",page2)
     })
     .on("draw.dt", function (e){
-      const page = get_page_from_url(3)
+      //const page = get_page_from_url(3)
       let page2 = table?.page?.info()?.page
-      let lastpage = table.page.info().pages
-      if(lastpage<page) {
-        add_page_to_url(1,3)
-      }
-      console.log("on redraw","page",page,"page2",page2,"lp",lastpage)
+      add_page_to_url(page2+1,3)
+      //let lastpage = table.page.info().pages
+      //if(lastpage<page) {
+        //add_page_to_url(1,3)
+      //}
+      //console.log("on draw.dt","page",page,"page2",page2,"lp",lastpage)
     })
-
+    /*
+    .on("xx",function (e){
+     console.log("on xx")
+    })
+     */
   /*
   table.on("draw", function (){
     console.log("on draw")
