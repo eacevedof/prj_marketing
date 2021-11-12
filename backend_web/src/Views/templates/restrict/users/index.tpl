@@ -110,9 +110,11 @@ $(document).ready(function (){
     fixedHeader: true,
     pageLength: 25,
     language: trs,
+    displayStart: 4*25,
 
     ajax: function(data, callback, settings) {
-      console.log("on ajax")
+      let page2 = table?.page?.info()?.page
+      console.log("on ajax page",page2, "data", data)
       // make a regular ajax request using data.start and data.length
       $.get("/restrict/users/search", data, function(res) {
         console.log("get request start")
@@ -174,56 +176,26 @@ $(document).ready(function (){
     ]
   });
 
-  table
-    .on("init.dt", function (e) {
-      let page = get_page_from_url(3)
-      let page2 = table?.page?.info()?.page
-      console.log("on init.dt", "page",page,"page2", page2)
 
-      if (!page)
-        return add_page_to_url(1, 3)
 
-      if (page2!==(page-1)) {
-        console.log("update to", page-1)
-        //esto dispara el ajax
-        return table.page(page-1).draw(false)
-      }
-      console.log("end init.dt")
-    })
-    .on("page", function (e) {
-      const page = table.page.info().page
-      add_page_to_url(page+1, 3)
-      console.log("on page", page)
-    })
-    .on("order", function (e) {
-      let page = get_page_from_url(3)
-      page = parseInt(page)
-      let page2 = table?.page?.info()?.page
-      page2 = parseInt(page)
+  //ejemplo pagina inicial
+  //https://stackoverflow.com/questions/31523581/how-to-change-page-number-datatable-in-outside-datatable-with-jquery
+  let page = get_page_from_url(3)
+  if(!isNaN(page)) {
+    page = parseInt(page)
+    const pagemin = page - 1
+    console.log("go to page", pagemin)
+    //table.page(pagemin).draw("page")
+  }
+  else {
+    add_page_to_url(1,3)
+    console.log("go to page", 1)
+    //table.page(0).draw("page")
+  }
 
-      //add_page_to_url(1, 3)
-      //table.page(page).draw( false )
-      let order = table.order()[0][0]
-      console.log("order:","page", page,"page2", page2,"order",order)
-      if ((order!==0 && page!==1)) {
-        add_page_to_url(1, 3)
-      }
-    })
-    .on("draw", function (e){
-      const page = get_page_from_url(3)
-      let page2 = table?.page?.info()?.page
-      console.log("on draw","page",page,"page2",page2)
-    })
-    .on("draw.dt", function (e){
-      //const page = get_page_from_url(3)
-      let page2 = table?.page?.info()?.page
-      add_page_to_url(page2+1,3)
-      //let lastpage = table.page.info().pages
-      //if(lastpage<page) {
-        //add_page_to_url(1,3)
-      //}
-      //console.log("on draw.dt","page",page,"page2",page2,"lp",lastpage)
-    })
+  //error
+  //table.fnPageChange(4,true)
+
     /*
     .on("xx",function (e){
      console.log("on xx")
