@@ -107,8 +107,7 @@ const add_filter_events = $table => {
   inputs.forEach($input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime)))
 }
 
-$(document).ready(function (){
-
+const on_document_ready = () => {
   const trs = {
     processing:     "Procesando...",
     search:         "Busqueda&nbsp;:",
@@ -137,7 +136,6 @@ $(document).ready(function (){
     responsive: true,
     processing: true,
     serverSide: true,
-    //bSort:false, //desactiva flechas de ordenacion
     orderCellsTop: true,
     fixedHeader: true,
     pageLength: 25,
@@ -155,14 +153,9 @@ $(document).ready(function (){
     ],
 
     ajax: function(data, callback, settings) {
-      let page2 = table?.page?.info()?.page
-      console.log("on ajax page",page2, "data", data)
-      // make a regular ajax request using data.start and data.length
+      console.log("ajax start")
       $.get("/restrict/users/search", data, function(res) {
         console.log("get request start")
-        //console.log("res", res)
-        // map your server"s response to the DataTables format and pass it to
-        // DataTables" callback
         callback({
           recordsTotal: res.data.recordsTotal,
           recordsFiltered: res.data.recordsFiltered,
@@ -185,54 +178,17 @@ $(document).ready(function (){
       console.log("ondrawcallback",settings);
     },
   });
-  //$("#table-datatable")
-    table.on( "page.dt",   function () {
-      const info = table.page.info()
-      //console.log( 'Showing page: '+info.page+' of '+info.pages )
-      const pagemin = info.page
-      add_page_to_url(pagemin+1, 3)
-    } )
-    .on("order.dt", function (e) {
-      //const order = table.order()
-      //console.log("order colidx:",order[0][0],"orientation",order[0][1])
-      if (rendered) {
-        add_page_to_url(1, 3)
-      }
-    })
-    .on("draw.dt", function() {
-      // do action here
-    });
-    /*
-    .on("xx",function (e){
-     console.log("on xx")
-    })
-     */
-  /*
-  table.on("draw", function (){
-    console.log("on draw")
+
+  table.on( "page.dt", function () {
+    const pagemin = table.page.info()?.page ?? 0
+    add_page_to_url(pagemin+1, 3)
+  })
+  .on("order.dt", function () {
+    if (rendered) add_page_to_url(1, 3)
   })
 
-  table
-    .on("order", function (e) {
-      const order = table.order()
-      console.log("order colidx:",order[0][0],"orientation",order[0][1])
-    })
-    .on("search", function (e) {
-      //post all
-      console.log("search",e)
-    })
-    .on("page", function (e) {
-      //e.preventDefault();
-      //page se mueve de 0 a n
-      const page = table.page.info()
-      console.log("page:", page.page ,"pages:", page.pages )
-      //eventFired( "Page" );
-    });
+}// on_document_ready
 
-   */
-
-
-})
-
+$(document).ready(on_document_ready)
 </script>
 
