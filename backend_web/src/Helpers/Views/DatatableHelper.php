@@ -164,6 +164,9 @@ final class DatatableHelper extends AppHelper implements IHelper
             $i++;
             $title = __("search")." ".$coldata["label"];
             $input = "<input type=\"text\" placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$i}\" />";
+            $options = $this->searchopts[$colname] ?? null;
+            $select = $this->_get_select($options, $coldata, $i);
+            if($select) $input = $select;
             $issearch = ($coldata["is_searchable"] && !$coldata["is_virtual"]);
             if(!$issearch) $input = "";
             $tds[] = "<td>$input</td>";
@@ -171,15 +174,18 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode("\n", $tds);
     }
 
-    private function _get_select(string $colname, array $coldata, int $i): string
+    private function _get_select(?string $options, array $coldata, int $i): string
     {
-        if(!$options = ($this->searchopts[$colname] ?? []))
-            return "";
+        if($options === null) return "";
+
         $title = __("search")." ".$coldata["label"];
         $select = [
             "<select placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$i}\" />"
         ];
-
+        foreach ($options as $key => $value) {
+            $value = htmlentities($value);
+            $select[] = "<option value=\"$key\">$value</option>";
+        }
         $select[] = "</select>";
         return implode("\n", $select);
     }
