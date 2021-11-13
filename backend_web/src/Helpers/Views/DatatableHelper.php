@@ -162,6 +162,8 @@ final class DatatableHelper extends AppHelper implements IHelper
             $i++;
             $title = __("search")." ".$coldata["label"];
             $input = "<input type=\"text\" placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$i}\" />";
+            $issearch = ($coldata["is_searchable"] && !$coldata["is_virtual"]);
+            if(!$issearch) $input = "";
             $tds[] = "<td>$input</td>";
         }
         return implode("\n", $tds);
