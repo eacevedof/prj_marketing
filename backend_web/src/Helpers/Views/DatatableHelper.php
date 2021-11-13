@@ -44,6 +44,7 @@ final class DatatableHelper extends AppHelper implements IHelper
         $this->colname = $name;
         $this->columns[$name] = [
             "css" => "",
+            "is_virtual" => false,
             "is_visible" => true,
             "name" => $name,
             //"data-page-length" => 25,
@@ -66,6 +67,12 @@ final class DatatableHelper extends AppHelper implements IHelper
     public function is_ordenable(bool $isordenable=false): self
     {
         $this->columns[$this->colname]["is_ordenable"] = $isordenable;
+        return $this;
+    }
+
+    public function is_virtual(bool $isvirtual=true): self
+    {
+        $this->columns[$this->colname]["is_virtual"] = $isvirtual;
         return $this;
     }
 
@@ -101,12 +108,15 @@ final class DatatableHelper extends AppHelper implements IHelper
 
     private function _get_attribs(array $coldata): string
     {
+        $orderable = $coldata["is_ordenable"];
+        $orderable = $coldata["is_virtual"] ? false: $orderable;
+
         $attribs = [
             "class=\"{$coldata["css"]}\"",
             "data-visible=\"{$coldata["is_visible"]}\"",
             "data-name=\"{$coldata["name"]}\"",
             "data-data=\"{$coldata["path-schema"]}\"",
-            "data-orderable=\"{$coldata["is_ordenable"]}\"",
+            "data-orderable=\"$orderable\"",
             "data-searchable=\"{$coldata["is_searchable"]}\"",
         ];
         return implode(" ", $attribs);
