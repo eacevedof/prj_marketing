@@ -10,6 +10,9 @@
  */
 namespace App\Helpers;
 
+use App\Traits\ErrorTrait;
+use App\Traits\LogTrait;
+use App\Traits\EnvTrait;
 use \Exception;
 
 abstract class AppHelper
