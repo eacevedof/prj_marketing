@@ -129,6 +129,11 @@ final class DatatableHelper extends AppHelper implements IHelper
             $th = "<th$attribs><span title=\"$label\">$label</span>$tooltip</th>";
             $ths[] = $th;
         }
+        if($this->actions) {
+            $actions = __("Actions");
+            $actions = htmlentities($actions);
+            $ths[] = "<th>$actions</th>";
+        }
         return implode("\n", $ths);
     }
 
@@ -151,6 +156,11 @@ final class DatatableHelper extends AppHelper implements IHelper
             $th = "<th$attribs><span title=\"$label\">$label</span>$tooltip</th>";
             $ths[] = $th;
         }
+        if($this->actions) {
+            $actions = __("Actions");
+            $actions = htmlentities($actions);
+            $ths[] = "<th>$actions</th>";
+        }
         return implode("\n", $ths);
     }
 
@@ -168,6 +178,9 @@ final class DatatableHelper extends AppHelper implements IHelper
             $issearch = ($coldata["is_searchable"] && !$coldata["is_virtual"]);
             if(!$issearch) $input = "";
             $tds[] = "<td>$input</td>";
+        }
+        if($this->actions) {
+            $tds[] = "<th></th>";
         }
         return implode("\n", $tds);
     }

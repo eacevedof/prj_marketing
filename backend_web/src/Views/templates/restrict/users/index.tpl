@@ -142,6 +142,20 @@ const get_columns = () => {
 
     final.push(obj)
   })
+
+  final.push({
+      targets: -1,
+      data: null,
+      render: function(data, type, row) {
+        const links = [
+          `<span>show</span>`,
+          `<span>edit</span>`,
+          `<span>del</span>`,
+        ];
+
+        return links.join("&nbsp;");
+      },
+    })
   console.log(final)
   return final
 }
