@@ -41,13 +41,7 @@ $dt->add_column("uuid")
         </thead>
         <tfoot>
             <tr>
-                <th>uuid</th>
-                <th>fullname</th>
-                <th>email</th>
-                <th>phone</th>
-                <th>id_profile</th>
-                <th>id_nationality</th>
-                <th>id_language</th>
+                <?= $dt->get_tf() ?>
             </tr>
         </tfoot>
     </table>
@@ -137,7 +131,7 @@ const get_columns = () => [
 
 const on_document_ready = () => {
 
-  const ITEMS_PER_PAGE = 25
+  const ITEMS_PER_PAGE = <?$dt->show_perpage();?>
 
   add_filter_fileds()
 
