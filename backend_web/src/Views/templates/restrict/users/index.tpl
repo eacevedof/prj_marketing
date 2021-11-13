@@ -137,6 +137,8 @@ const get_columns = () => {
     const obj = {
       targets: i,
       data: colname,
+      //searchable: false, no afecta en nada
+      visible: true,
       render: function (data, type, row) {
         return data
       }
