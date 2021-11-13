@@ -137,7 +137,7 @@ const get_columns = () => {
 
 const get_buttons = () => [
   {
-    text: "",
+    text: "button xxx",
     action: function (e, dt, node, config) {
       window.location.href = "#";
     },
@@ -155,12 +155,14 @@ const on_document_ready = () => {
   //add_filter_fileds()
 
   $table = $(tablesel).DataTable({
-    //dom: "Blftipr",
+    dom: "Blftipr",
     //searchDelay: 1500,
     responsive: true,
     processing: true,
     //lengthMenu: [[15, 30, 60, 90], [15, 30, 60, 90]],
-    buttons: get_buttons(),
+    buttons: {
+      buttons: get_buttons()
+    },
     serverSide: true,
     orderCellsTop: true,
     fixedHeader: true,

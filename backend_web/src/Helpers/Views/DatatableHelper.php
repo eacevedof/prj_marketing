@@ -12,8 +12,6 @@ namespace App\Helpers\Views;
 
 use App\Helpers\IHelper;
 use App\Helpers\AppHelper;
-use \Exception;
-use phpDocumentor\Reflection\DocBlock\Tags\Param;
 
 final class DatatableHelper extends AppHelper implements IHelper
 {
@@ -84,7 +82,7 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
-    public function schema_path(string $path): self
+    public function path_schema(string $path): self
     {
         $this->columns[$this->colname]["path_schema"] = $path;
         return $this;
