@@ -12,6 +12,7 @@ $dt->add_column("uuid")
     ->add_column("email")
     ->add_column("phone")
     ->add_column("id_profile")
+    ->add_search_opts(["" => __("select an option"),"1"=>"uno","2"=>"dos"])
     ->add_column("id_nationality")
     ->add_column("id_language")
 ?>

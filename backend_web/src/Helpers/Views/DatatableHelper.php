@@ -174,7 +174,7 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode("\n", $tds);
     }
 
-    private function _get_select(?string $options, array $coldata, int $i): string
+    private function _get_select(?array $options, array $coldata, int $i): string
     {
         if($options === null) return "";
 
