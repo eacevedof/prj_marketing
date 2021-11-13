@@ -157,9 +157,11 @@ final class DatatableHelper extends AppHelper implements IHelper
     public function get_search_tds(): string
     {
         $tds = [];
-        foreach ($this->columns as $colidx => $coldata) {
+        $i = -1;
+        foreach ($this->columns as $colname => $coldata) {
+            $i++;
             $title = __("search")." ".$coldata["label"];
-            $input = "<input type=\"text\" placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$colidx}\" />";
+            $input = "<input type=\"text\" placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$i}\" />";
             $tds[] = "<td>$input</td>";
         }
         return implode("\n", $tds);
