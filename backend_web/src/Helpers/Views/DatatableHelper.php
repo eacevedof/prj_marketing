@@ -27,17 +27,17 @@ final class DatatableHelper extends AppHelper implements IHelper
         return json_encode($data);
     }
 
-    //"<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span title=\"%s\">%s</span>%s</th>\n",
+    //"<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span label=\"%s\">%s</span>%s</th>\n",
     /*
-     *          "<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span title=\"%s\">%s</span>%s</th>\n",
+     *          "<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span label=\"%s\">%s</span>%s</th>\n",
                                 $column->id, # class="column-xxx"
                                 empty($columnsToShow) || in_array($column->id, $columnsToShow) ? 'true' : 'false', # visible by default
                                 $column->id, # data-name="xxxx"
                                 $column->dataIdentifier, # data-data="xxx"
                                 $column->virtual || $column->disableOrdering ? 'false' : 'true', # data-orderable="xxx"
                                 $column->searchable ? 'true' : 'false', # data-searchable="xxx"
-                                $column->title, # span title
-                                $column->title, # title
+                                $column->label, # span label
+                                $column->label, # label
                                 $helpIcon         # help*/
     public function add_column(string $name): self
     {
@@ -47,11 +47,10 @@ final class DatatableHelper extends AppHelper implements IHelper
             "is_virtual" => false,
             "is_visible" => true,
             "name" => $name,
-            //"data-page-length" => 25,
             "path-schema" => $name,
             "is_ordenable" => true,
             "is_searchable" => true,
-            "title" => "",
+            "label" => $name,
             "tooltip" => "",
         ];
 
@@ -82,9 +81,9 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
-    public function add_title(string $label): self
+    public function add_label(string $label): self
     {
-        $this->columns[$this->colname]["title"] = $label;
+        $this->columns[$this->colname]["label"] = $label;
         return $this;
     }
 
@@ -131,13 +130,13 @@ final class DatatableHelper extends AppHelper implements IHelper
         $ths = [];
         foreach ($this->columns as $coldata) {
             $attribs = $this->_get_attribs($coldata);
-            $label = htmlentities($coldata["title"]);
+            $label = htmlentities($coldata["label"]);
             $tooltip = "";
             if($coldata["tooltip"]) {
                 $tooltip = htmlentities($coldata["tooltip"]);
                 $tooltip = "<i data-tooltip=\"$tooltip\"></i>";
             }
-            $th = "<th $attribs><span title=\"$label\">$label</span>$tooltip</th>";
+            $th = "<th $attribs><span label=\"$label\">$label</span>$tooltip</th>";
             $ths[] = $th;
         }
         return implode("\n", $ths);
