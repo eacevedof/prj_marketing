@@ -119,6 +119,16 @@ const get_translations = () => (
   }
 )
 
+const get_columns = () => [
+  { data: "uuid" },
+  { data: "fullname" },
+  { data: "email" },
+  { data: "phone" },
+  { data: "id_profile" },
+  { data: "id_nationality" },
+  { data: "id_language" },
+]
+
 const on_document_ready = () => {
 
   add_filter_fileds()
@@ -133,15 +143,7 @@ const on_document_ready = () => {
     language: get_translations(),
     displayStart: get_page(25),
 
-    columns: [
-      { data: "uuid" },
-      { data: "fullname" },
-      { data: "email" },
-      { data: "phone" },
-      { data: "id_profile" },
-      { data: "id_nationality" },
-      { data: "id_language" },
-    ],
+    columns: get_columns(),
 
     ajax: function(data, fnRender, settings) {
       console.log("ajax start", settings)
