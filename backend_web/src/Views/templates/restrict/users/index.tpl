@@ -69,15 +69,13 @@ const get_page = perpage => {
 
 const add_filter_fileds = () => {
   const columns = document.querySelectorAll(`[approle="column-name"]`)
-  if (columns) {
     columns.forEach($column => {
       const title = $column.textContent
       const colidx = $column.getAttribute("appcolidx")
-      if (colidx) {
+      if (colidx)
         $column.innerHTML = `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
-      }
-    })
-  }
+  })
+
 }
 
 const add_filter_events = $table => {
