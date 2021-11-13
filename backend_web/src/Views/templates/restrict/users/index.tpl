@@ -9,8 +9,11 @@ $dt->add_column("uuid")
     ->add_label("uuid")
     ->add_tooltip(__("uuid"))
     ->add_column("fullname")
-    ->add_label("fullname")
     ->add_column("email")
+    ->add_column("phone")
+    ->add_column("id_profile")
+->add_column("id_nationality")
+->add_column("id_language")
 ?>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.css"/>
@@ -24,13 +27,7 @@ $dt->add_column("uuid")
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>uuid</th>
-                <th>fullname</th>
-                <th>email</th>
-                <th>phone</th>
-                <th>id_profile</th>
-                <th>id_nationality</th>
-                <th>id_language</th>
+                <?= $dt->get_ths() ?>
             </tr>
             <tr row="search">
                 <td approle="column-name" appcol="uuid" appcolidx="0">uuid</td>
