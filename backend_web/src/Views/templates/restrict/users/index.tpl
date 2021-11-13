@@ -104,7 +104,7 @@ const get_translations = () => (
   }
 )
 
-const clear_filters = () => {
+const reset_filters = () => {
   const inputs = Array.from(document.querySelectorAll(`[approle="column-search"]`))
   const $input = document.querySelector(`[type="search"]`)
   inputs.push($input)
