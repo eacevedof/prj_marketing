@@ -85,7 +85,7 @@ const add_filter_events = $table => {
     $table.columns(colidx).search(value).draw()
   }
 
-  const inputs = document.querySelectorAll(`[approle="column-search"][type="text"]`)
+  const inputs = document.querySelectorAll(`[approle="column-search"]`)
   inputs.forEach($input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime)))
 }
 
