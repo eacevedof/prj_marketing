@@ -94,19 +94,16 @@ const add_filter_events = $table => {
   if (!$table) return
   const debouncetime = 1000
 
-  const on_event = (e) => debounce( () => {
+  const on_event = e => debounce(() => {
     const $input = e.target
+    console.log("input on event",$input)
     const colidx = $input.getAttribute("appcolidx")
     const value = $input.value
     $table.columns(colidx).search(value).draw() //sin draw no busca
   }, debouncetime)
 
-  const inputs = document.querySelectorAll(`[approle="column-search" type="text"]`)
-  inputs.forEach($input => {
-    $input.addEventListener("keyup", on_event, false)
-    $input.addEventListener("change", on_event, false)
-    $input.addEventListener("clear", on_event, false)
-  })
+  const inputs = document.querySelectorAll(`[approle="column-search"][type="text"]`)
+  inputs.forEach($input => $input.addEventListener("input", on_event, false))
 }
 
 $(document).ready(function (){
@@ -154,7 +151,7 @@ $(document).ready(function (){
       { data: "id_profile" },
       { data: "id_nationality" },
       { data: "id_language" },
-    ]
+    ],
 
     ajax: function(data, callback, settings) {
       let page2 = table?.page?.info()?.page
