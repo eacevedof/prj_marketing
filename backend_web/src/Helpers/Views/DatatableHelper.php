@@ -121,7 +121,8 @@ final class DatatableHelper extends AppHelper implements IHelper
             $orderable ? "data-orderable=\"$orderable\"" : "",
             $searchable ? "data-searchable=\"$searchable\"" : "",
         ];
-        return trim(implode(" ", $attribs)) ?? "";
+        $attribs = trim(implode(" ", $attribs));
+        return $attribs ? " $attribs": "";
     }
 
     public function get_ths(): string
