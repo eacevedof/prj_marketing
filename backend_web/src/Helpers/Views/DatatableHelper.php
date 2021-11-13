@@ -107,21 +107,21 @@ final class DatatableHelper extends AppHelper implements IHelper
 
     private function _get_attribs(array $coldata): string
     {
-        $orderable = $coldata["is_orderable"];
-        $orderable = ($isvirtual = $coldata["is_virtual"]) ? false: $orderable;
+        $orderable = ($coldata["is_orderable"] ?? "");
+        $orderable = ($isvirtual = $coldata["is_virtual"] ?? "") ? false: $orderable;
 
-        $searchable = $coldata["is_searchable"];
+        $searchable = ($coldata["is_searchable"] ?? "");
         $searchable = $isvirtual ? false: $searchable;
 
         $attribs = [
-            "class=\"{$coldata["css"]}\"",
-            "data-visible=\"{$coldata["is_visible"]}\"",
-            "data-name=\"{$coldata["name"]}\"",
-            "data-data=\"{$coldata["path-schema"]}\"",
-            "data-orderable=\"$orderable\"",
-            "data-searchable=\"$searchable\"",
+            ($coldata["css"] ?? "") ? "class=\"{$coldata["css"]}\"": "",
+            ($coldata["is_visible"] ?? "") ? "data-visible=\"{$coldata["is_visible"]}\"": "",
+            ($coldata["name"] ?? "") ? "data-name=\"{$coldata["name"]}\"": "",
+            ($coldata["path-schema"] ?? "") ? "data-data=\"{$coldata["path-schema"]}\"" : "",
+            $orderable ? "data-orderable=\"$orderable\"" : "",
+            $searchable ? "data-searchable=\"$searchable\"" : "",
         ];
-        return implode(" ", $attribs);
+        return trim(implode(" ", $attribs)) ?? "";
     }
 
     public function get_ths(): string
@@ -134,6 +134,28 @@ final class DatatableHelper extends AppHelper implements IHelper
             $tooltip = "";
             if($coldata["tooltip"]) {
                 $tooltip = htmlentities($coldata["tooltip"]);
+                $tooltip = "<i data-tooltip=\"$tooltip\"></i>";
+            }
+            $th = "<th$attribs><span title=\"$label\">$label</span>$tooltip</th>";
+            $ths[] = $th;
+        }
+        return implode("\n", $ths);
+    }
+
+    public function get_tf(): string
+    {
+        if(!$this->columns) return "";
+        $ths = [];
+        foreach ($this->columns as $coldata) {
+            $data["css"] = $coldata["css"];
+            $data["label"] = $coldata["label"];
+            $data["tooltip"] = $coldata["tooltip"];
+
+            $attribs = $this->_get_attribs($data);
+            $label = htmlentities($data["label"]);
+            $tooltip = "";
+            if($data["tooltip"]) {
+                $tooltip = htmlentities($data["tooltip"]);
                 $tooltip = "<i data-tooltip=\"$tooltip\"></i>";
             }
             $th = "<th $attribs><span title=\"$label\">$label</span>$tooltip</th>";
