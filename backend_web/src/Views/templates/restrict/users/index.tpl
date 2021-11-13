@@ -80,14 +80,33 @@ const get_page = perpage => {
 const add_filter_fileds = () => {
   const columns = document.querySelectorAll(`[approle="column-name"]`)
   if (columns) {
-    columns.forEach(column => {
-      const title = column.textContent
-      const colidx = column.getAttribute("appcolidx")
+    columns.forEach($column => {
+      const title = $column.textContent
+      const colidx = $column.getAttribute("appcolidx")
       if (colidx) {
-        column.innerHTML = `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
+        $column.innerHTML = `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
       }
     })
   }
+}
+
+const add_filter_events = $table => {
+  if (!$table) return
+  const debouncetime = 1000
+
+  const on_event = (e) => debounce( () => {
+    const $input = e.target
+    const colidx = $input.getAttribute("appcolidx")
+    const value = $input.value
+    $table.columns(colidx).search(value).draw() //sin draw no busca
+  }, debouncetime)
+
+  const inputs = document.querySelectorAll(`[approle="column-search" type="text"]`)
+  inputs.forEach($input => {
+    $input.addEventListener("keyup", on_event, false)
+    $input.addEventListener("change", on_event, false)
+    $input.addEventListener("clear", on_event, false)
+  })
 }
 
 $(document).ready(function (){
@@ -127,6 +146,16 @@ $(document).ready(function (){
     language: trs,
     displayStart: get_page(25),
 
+    columns: [
+      { data: "uuid" },
+      { data: "fullname" },
+      { data: "email" },
+      { data: "phone" },
+      { data: "id_profile" },
+      { data: "id_nationality" },
+      { data: "id_language" },
+    ]
+
     ajax: function(data, callback, settings) {
       let page2 = table?.page?.info()?.page
       console.log("on ajax page",page2, "data", data)
@@ -139,7 +168,8 @@ $(document).ready(function (){
         callback({
           recordsTotal: res.data.recordsTotal,
           recordsFiltered: res.data.recordsFiltered,
-          data: res.data.result
+          data: res.data.result,
+          myExtra: "hola myExtra"
         })
         console.log("get request end")
       })//get
@@ -149,46 +179,13 @@ $(document).ready(function (){
     // Setup - add a text input to each footer cell
     initComplete: function () {
       console.log("INIT complete start")
-      /*
-      let page = get_page_from_url(3)
-      console.log("init-complete page", page)
-      if (!page) {
-        page = 0
-        add_page_to_url(1, 3)
-      }
-      else {
-        this.api().page(page-1).draw("page")
-      }
-
-       */
-
-      // Apply the search
-      $(`[approle="column-search"]`).each((i, $input) => {
-
-        if($input) {
-          //console.log("column-search",$input)
-          $($input).on("keyup change clear", debounce(function (e) {
-            const idx = $input.getAttribute("appcolidx")
-            const value = $input.value
-            table.columns(idx).search(value).draw() //sin draw no busca
-          }, 1000))
-        }
-      });
+      add_filter_events(this)
       rendered = true
       console.log("INIT complete end page")
     },
     "drawCallback": function( settings ) {
       console.log("ondrawcallback",settings);
     },
-    columns: [
-      { data: "uuid" },
-      { data: "fullname" },
-      { data: "email" },
-      { data: "phone" },
-      { data: "id_profile" },
-      { data: "id_nationality" },
-      { data: "id_language" },
-    ]
   });
   //$("#table-datatable")
     table.on( "page.dt",   function () {
