@@ -119,15 +119,36 @@ const get_translations = () => (
   }
 )
 
-const get_columns = () => [
-  { data: "uuid" },
-  { data: "fullname" },
-  { data: "email" },
-  { data: "phone" },
-  { data: "id_profile" },
-  { data: "id_nationality" },
-  { data: "id_language" },
-]
+const get_columns = () => {
+  const cols = [
+    "uuid:string",
+    "fullname:string",
+    "email:string",
+    "phone:string",
+    "id_profile:string",
+    "id_nationality:string",
+    "id_language:string",
+  ]
+
+  const final = []
+  cols.forEach((colconfig, i )=> {
+    const [colname, type] = colconfig.split(":")
+    console.log("colanme",colname, "type:", type)
+    const obj = {
+      targets: i,
+      data: colname,
+      render: function (data, type, row) {
+        return data
+      }
+    }
+
+    final.push(obj)
+  })
+  console.log(final)
+  return final
+}
+
+const get_buttons = () => []
 
 const on_document_ready = () => {
 
@@ -136,8 +157,12 @@ const on_document_ready = () => {
   add_filter_fileds()
 
   $table = $(tablesel).DataTable({
+    dom: "Blftipr",
+    searchDelay: 1500,
     responsive: true,
     processing: true,
+    lengthMenu: [[15, 30, 60, 90], [15, 30, 60, 90]],
+    buttons: get_buttons(),
     serverSide: true,
     orderCellsTop: true,
     fixedHeader: true,
@@ -145,7 +170,7 @@ const on_document_ready = () => {
     language: get_translations(),
     displayStart: get_page(ITEMS_PER_PAGE),
 
-    columns: get_columns(),
+    columnDefs: get_columns(),
 
     ajax: function(data, fnRender, settings) {
       console.log("ajax start", settings)
