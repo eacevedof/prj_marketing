@@ -205,4 +205,8 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
+    public function show_buttons(): void
+    {
+        echo $this->_get_json(array_unique($this->actions));
+    }
 }//DatatableHelper
