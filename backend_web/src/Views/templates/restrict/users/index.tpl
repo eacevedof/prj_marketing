@@ -62,16 +62,6 @@ const get_page = perpage => {
   return pagemin * perpage
 }
 
-const add_filter_fileds = () => {
-  const columns = document.querySelectorAll(`[approle="column-name"]`)
-  columns.forEach($column => {
-    const title = $column.textContent
-    const colidx = $column.getAttribute("appcolidx")
-    if (colidx)
-      $column.innerHTML = `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
-  })
-}
-
 const add_filter_events = $table => {
   if (!$table) return
   const debouncetime = 1000
@@ -162,7 +152,7 @@ const on_document_ready = () => {
 
   const ITEMS_PER_PAGE = <?$dt->show_perpage();?>
 
-  add_filter_fileds()
+  //add_filter_fileds()
 
   $table = $(tablesel).DataTable({
     //dom: "Blftipr",
