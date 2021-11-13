@@ -77,6 +77,19 @@ const get_page = perpage => {
   return pagemin * perpage
 }
 
+const add_filter_fileds = () => {
+  const columns = document.querySelectorAll(`[approle="column-name"]`)
+  if (columns) {
+    columns.forEach(column => {
+      const title = column.textContent
+      const colidx = column.getAttribute("appcolidx")
+      if (colidx) {
+        column.innerHTML = `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
+      }
+    })
+  }
+}
+
 $(document).ready(function (){
 
   const trs = {
@@ -101,18 +114,10 @@ $(document).ready(function (){
       sortDescending: ": activer pour trier la colonne par ordre décroissant"
     }
   }
-
-  // Setup - add a text input to each footer cell
-  $(`[approle="column-name"]`).each( function () {
-    const $td = this
-    const title = $($td).text();
-    const colidx = $td.getAttribute("appcolidx")
-    $(this).html(
-      `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
-    );
-  });
+  add_filter_fileds()
 
   table = $("#table-datatable").DataTable({
+    responsive: true,
     processing: true,
     serverSide: true,
     //bSort:false, //desactiva flechas de ordenacion
