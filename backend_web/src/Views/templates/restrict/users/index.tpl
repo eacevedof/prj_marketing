@@ -104,6 +104,20 @@ const get_translations = () => (
   }
 )
 
+const clear_filters = () => {
+  const inputs = Array.from(document.querySelectorAll(`[approle="column-search"]`))
+  const $input = document.querySelector(`[type="search"]`)
+  //console.log("--input--",$input)
+  inputs.push($input)
+  inputs.forEach(($input,i) => {
+    $input.value = ""
+  })
+  $table.search("").columns().search("").draw()
+
+  //$table.columns(0).search("").draw()
+  //$table.search("")
+}
+
 const get_columns = () => {
   const cols = [
     "uuid:string",
@@ -145,7 +159,16 @@ const get_buttons = () => [
     attr: {
       "data-tooltip": <?= json_encode(__("Add")) ?>
     }
-  }
+  },
+  {
+    text: "Clear search",
+    action: function (e, dt, node, config) {
+        clear_filters()
+    },
+    attr: {
+      "data-tooltip": <?= json_encode(__("Add")) ?>
+    }
+  },
 ]
 
 const on_document_ready = () => {
