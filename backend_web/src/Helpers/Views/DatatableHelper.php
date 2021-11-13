@@ -13,6 +13,7 @@ namespace App\Helpers\Views;
 use App\Helpers\IHelper;
 use App\Helpers\AppHelper;
 use \Exception;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
 
 final class DatatableHelper extends AppHelper implements IHelper
 {
@@ -21,6 +22,7 @@ final class DatatableHelper extends AppHelper implements IHelper
     private int $perpage = 25;
     private array $buttons = [];
     private string $colname = "";
+    private array $searchopts = [];
 
     private function _get_json($data): string
     {
@@ -169,9 +171,28 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode("\n", $tds);
     }
 
+    private function _get_select(string $colname, array $coldata, int $i): string
+    {
+        if(!$options = ($this->searchopts[$colname] ?? []))
+            return "";
+        $title = __("search")." ".$coldata["label"];
+        $select = [
+            "<select placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$i}\" />"
+        ];
+
+        $select[] = "</select>";
+        return implode("\n", $select);
+    }
+
     public function show_perpage(): void
     {
         echo $this->_get_json($this->perpage);
+    }
+
+    public function add_search_opts(array $options): self
+    {
+        $this->searchopts[$this->colname] = $options;
+        return $this;
     }
 
 }//DatatableHelper
