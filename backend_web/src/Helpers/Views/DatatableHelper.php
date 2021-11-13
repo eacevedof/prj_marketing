@@ -153,6 +153,13 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode("\n", $ths);
     }
 
+    public function get_search_tr(): string
+    {
+        $tr = [];
+
+        return implode("\n", $tr);
+    }
+
     public function show_perpage(): void
     {
         echo $this->_get_json($this->perpage);
