@@ -27,18 +27,6 @@ final class DatatableHelper extends AppHelper implements IHelper
         return json_encode($data);
     }
 
-    //"<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span label=\"%s\">%s</span>%s</th>\n",
-    /*
-     *          "<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span label=\"%s\">%s</span>%s</th>\n",
-                                $column->id, # class="column-xxx"
-                                empty($columnsToShow) || in_array($column->id, $columnsToShow) ? 'true' : 'false', # visible by default
-                                $column->id, # data-name="xxxx"
-                                $column->dataIdentifier, # data-data="xxx"
-                                $column->virtual || $column->disableOrdering ? 'false' : 'true', # data-orderable="xxx"
-                                $column->searchable ? 'true' : 'false', # data-searchable="xxx"
-                                $column->label, # span label
-                                $column->label, # label
-                                $helpIcon         # help*/
     public function add_column(string $name): self
     {
         $this->colname = $name;
@@ -115,11 +103,11 @@ final class DatatableHelper extends AppHelper implements IHelper
 
         $attribs = [
             ($coldata["css"] ?? "") ? "class=\"{$coldata["css"]}\"": "",
-            ($coldata["is_visible"] ?? "") ? "data-visible=\"{$coldata["is_visible"]}\"": "",
-            ($coldata["name"] ?? "") ? "data-columns=\"{$coldata["name"]}\"": "",
-            ($coldata["path-schema"] ?? "") ? "data-data=\"{$coldata["path-schema"]}\"" : "",
-            $orderable ? "data-orderable=\"$orderable\"" : "",
-            $searchable ? "data-searchable=\"$searchable\"" : "",
+            ($coldata["is_visible"] ?? "") ? "visible=\"{$coldata["is_visible"]}\"": "",
+            ($coldata["name"] ?? "") ? "column=\"{$coldata["name"]}\"": "",
+            ($coldata["path-schema"] ?? "") ? "path=\"{$coldata["path-schema"]}\"" : "",
+            $orderable ? "orderable=\"$orderable\"" : "",
+            $searchable ? "searchable=\"$searchable\"" : "",
         ];
         $attribs = trim(implode(" ", $attribs));
         return $attribs ? " $attribs": "";
