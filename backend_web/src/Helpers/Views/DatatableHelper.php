@@ -147,7 +147,7 @@ final class DatatableHelper extends AppHelper implements IHelper
                 $tooltip = htmlentities($data["tooltip"]);
                 $tooltip = "<i data-tooltip=\"$tooltip\"></i>";
             }
-            $th = "<th $attribs><span title=\"$label\">$label</span>$tooltip</th>";
+            $th = "<th$attribs><span title=\"$label\">$label</span>$tooltip</th>";
             $ths[] = $th;
         }
         return implode("\n", $ths);
