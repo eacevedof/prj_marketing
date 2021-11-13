@@ -116,7 +116,7 @@ final class DatatableHelper extends AppHelper implements IHelper
         $attribs = [
             ($coldata["css"] ?? "") ? "class=\"{$coldata["css"]}\"": "",
             ($coldata["is_visible"] ?? "") ? "data-visible=\"{$coldata["is_visible"]}\"": "",
-            ($coldata["name"] ?? "") ? "data-name=\"{$coldata["name"]}\"": "",
+            ($coldata["name"] ?? "") ? "data-columns=\"{$coldata["name"]}\"": "",
             ($coldata["path-schema"] ?? "") ? "data-data=\"{$coldata["path-schema"]}\"" : "",
             $orderable ? "data-orderable=\"$orderable\"" : "",
             $searchable ? "data-searchable=\"$searchable\"" : "",
