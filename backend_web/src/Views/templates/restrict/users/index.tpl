@@ -75,7 +75,6 @@ const add_filter_fileds = () => {
       if (colidx)
         $column.innerHTML = `<input type="text" placeholder="Search ${title}" approle="column-search" appcolidx="${colidx}" />`
   })
-
 }
 
 const add_filter_events = $table => {
