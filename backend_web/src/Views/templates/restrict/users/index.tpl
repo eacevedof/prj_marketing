@@ -12,7 +12,6 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
 <h1><?=$h1?></h1>
 <div id="div-datatable">
-    https://datatables.net/examples/non_jquery/dt_events.html
     <table id="table-datatable" class="display" style="width:100%">
     <thead>
     <tr>
@@ -47,25 +46,16 @@
     </tfoot>
     </table>
 </div>
-<style>
-  body {
-    font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    background-color: #fff;
-  }
-
-</style>
 <script type="module">
 import {debounce} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url
 } from "/assets/js/common/url.js"
 
-let table = null
-const jqid = "#table-datatable"
-let rendered = false
+let is_rendered = false
+let $table = null
+const tableid = "table-datatable"
+const tablesel = `#${tableid}`
 
 const get_page = perpage => {
   let page = get_page_from_url(3)
@@ -132,7 +122,7 @@ const on_document_ready = () => {
   }
   add_filter_fileds()
 
-  table = $("#table-datatable").DataTable({
+  $table = $(tablesel).DataTable({
     responsive: true,
     processing: true,
     serverSide: true,
@@ -152,15 +142,15 @@ const on_document_ready = () => {
       { data: "id_language" },
     ],
 
-    ajax: function(data, callback, settings) {
-      console.log("ajax start")
+    ajax: function(data, fnRender, settings) {
+      console.log("ajax start", settings)
+      data.myExtra = "hola extra"
       $.get("/restrict/users/search", data, function(res) {
         console.log("get request start")
-        callback({
+        fnRender({
           recordsTotal: res.data.recordsTotal,
           recordsFiltered: res.data.recordsFiltered,
           data: res.data.result,
-          myExtra: "hola myExtra"
         })
         console.log("get request end")
       })//get
@@ -168,23 +158,20 @@ const on_document_ready = () => {
     },//ajax
 
     // Setup - add a text input to each footer cell
-    initComplete: function () {
+    initComplete: function() {
       console.log("initComplete start")
-      add_filter_events(table)
-      rendered = true
+      add_filter_events($table)
+      is_rendered = true
       console.log("initComplete end")
-    },
-    "drawCallback": function( settings ) {
-      console.log("ondrawcallback",settings);
     },
   });
 
-  table.on( "page.dt", function () {
-    const pagemin = table.page.info()?.page ?? 0
+  $table.on( "page.dt", function() {
+    const pagemin = $table.page.info()?.page ?? 0
     add_page_to_url(pagemin+1, 3)
   })
-  .on("order.dt", function () {
-    if (rendered) add_page_to_url(1, 3)
+  .on("order.dt", function() {
+    if (is_rendered) add_page_to_url(1, 3)
   })
 
 }// on_document_ready
