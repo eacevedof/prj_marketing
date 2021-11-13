@@ -97,4 +97,15 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
+    public function get_ths(): string
+    {
+        if(!$this->columns) return "";
+        $ths = [];
+        foreach ($this->columns as $coldata) {
+            $th = "<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span title=\"%s\">%s</span>%s</th>";
+            $ths[] = $th;
+        }
+        return implode("\n", $ths);
+    }
+
 }//DatatableHelper
