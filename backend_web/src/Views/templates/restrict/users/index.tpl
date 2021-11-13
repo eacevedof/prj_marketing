@@ -148,7 +148,18 @@ const get_columns = () => {
   return final
 }
 
-const get_buttons = () => []
+const get_buttons = () => [
+  {
+    text: "",
+    action: function (e, dt, node, config) {
+      window.location.href = "#";
+    },
+    className: "button small button-action add",
+    attr: {
+      "data-tooltip": <?= json_encode(__("Add")) ?>
+    }
+  }
+]
 
 const on_document_ready = () => {
 
