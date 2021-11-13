@@ -94,23 +94,21 @@ const add_filter_events = $table => {
   if (!$table) return
   const debouncetime = 1000
 
-  const on_event_ = function (e) {
+  const on_event = function (e) {
     const $input = e.target
-    debounce(() => {
-      console.log("input on event_", $input)
-      const colidx = $input.getAttribute("appcolidx")
-      const value = $input.value
-      //sin draw no busca
-      $table.columns(colidx).search(value).draw()
-    }, debouncetime)
+    console.log("input on event_", $input)
+    const colidx = $input.getAttribute("appcolidx")
+    const value = $input.value
+    //sin draw no busca
+    $table.columns(colidx).search(value).draw()
+    //debounce(() => $table.columns(colidx).search(value).draw(), debouncetime)
   }
-
-  const on_event = function (e) { console.log("e",e)}
 
   const inputs = document.querySelectorAll(`[approle="column-search"][type="text"]`)
   //inputs.forEach($input => $input.oninput = on_event)
-  inputs.forEach($input => $input.addEventListener("change", on_event))
-  inputs.forEach($input => $input.addEventListener("change", on_event_))
+  //inputs.forEach($input => $input.addEventListener("change", on_event))
+  //inputs.forEach($input => $input.addEventListener("change", on_event_))
+  inputs.forEach($input => $input.addEventListener("change", debounce(e => on_event(e), debouncetime)))
 }
 
 $(document).ready(function (){
@@ -182,8 +180,9 @@ $(document).ready(function (){
 
     // Setup - add a text input to each footer cell
     initComplete: function () {
+      //const $table = this
       console.log("INIT complete start")
-      add_filter_events(this)
+      add_filter_events(table)
       rendered = true
       console.log("INIT complete end page")
     },
