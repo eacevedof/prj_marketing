@@ -157,11 +157,11 @@ const on_document_ready = () => {
   add_filter_fileds()
 
   $table = $(tablesel).DataTable({
-    dom: "Blftipr",
-    searchDelay: 1500,
+    //dom: "Blftipr",
+    //searchDelay: 1500,
     responsive: true,
     processing: true,
-    lengthMenu: [[15, 30, 60, 90], [15, 30, 60, 90]],
+    //lengthMenu: [[15, 30, 60, 90], [15, 30, 60, 90]],
     buttons: get_buttons(),
     serverSide: true,
     orderCellsTop: true,
@@ -169,7 +169,6 @@ const on_document_ready = () => {
     pageLength: ITEMS_PER_PAGE,
     language: get_translations(),
     displayStart: get_page(ITEMS_PER_PAGE),
-
     columnDefs: get_columns(),
 
     ajax: function(data, fnRender, settings) {
