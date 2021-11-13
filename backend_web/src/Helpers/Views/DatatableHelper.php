@@ -18,7 +18,7 @@ final class DatatableHelper extends AppHelper implements IHelper
     private array $columns = [];
     private array $tranlations = [];
     private int $perpage = 25;
-    private array $buttons = [];
+    private array $actions = [];
     private string $colname = "";
     private array $searchopts = [];
 
@@ -196,6 +196,12 @@ final class DatatableHelper extends AppHelper implements IHelper
     public function add_search_opts(array $options): self
     {
         $this->searchopts[$this->colname] = $options;
+        return $this;
+    }
+
+    public function add_action(string $action): self
+    {
+        $this->actions[] = $action;
         return $this;
     }
 
