@@ -40,6 +40,7 @@ final class DatatableHelper extends AppHelper implements IHelper
             "is_searchable" => true,
             "label" => $name,
             "tooltip" => "",
+            "input" => "",
         ];
 
         return $this;
@@ -153,11 +154,15 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode("\n", $ths);
     }
 
-    public function get_search_tr(): string
+    public function get_search_tds(): string
     {
-        $tr = [];
-
-        return implode("\n", $tr);
+        $tds = [];
+        foreach ($this->columns as $colidx => $coldata) {
+            $title = __("search")." ".$coldata["label"];
+            $input = "<input type=\"text\" placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$colidx}\" />";
+            $tds[] = "<td>$input</td>";
+        }
+        return implode("\n", $tds);
     }
 
     public function show_perpage(): void

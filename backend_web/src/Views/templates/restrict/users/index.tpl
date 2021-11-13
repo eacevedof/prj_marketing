@@ -30,13 +30,7 @@ $dt->add_column("uuid")
                 <?= $dt->get_ths() ?>
             </tr>
             <tr row="search">
-                <td approle="column-name" appcol="uuid" appcolidx="0">uuid</td>
-                <td approle="column-name" appcol="fullname" appcolidx="1">fullname</td>
-                <td approle="column-name" appcol="email" appcolidx="2">email</td>
-                <td approle="column-name" appcol="phone" appcolidx="3">phone</td>
-                <td approle="column-name" appcol="id_profile" appcolidx="4">id_profile</td>
-                <td approle="column-name" appcol="id_nationality" appcolidx="5">id_nationality</td>
-                <td approle="column-name" appcol="id_language" appcolidx="5">id_language</td>
+                <?= $dt->get_search_tds() ?>
             </tr>
         </thead>
         <tfoot>
