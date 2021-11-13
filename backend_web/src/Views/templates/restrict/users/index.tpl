@@ -131,6 +131,8 @@ const get_columns = () => [
 
 const on_document_ready = () => {
 
+  const ITEMS_PER_PAGE = 25
+
   add_filter_fileds()
 
   $table = $(tablesel).DataTable({
@@ -139,9 +141,9 @@ const on_document_ready = () => {
     serverSide: true,
     orderCellsTop: true,
     fixedHeader: true,
-    pageLength: 25,
+    pageLength: ITEMS_PER_PAGE,
     language: get_translations(),
-    displayStart: get_page(25),
+    displayStart: get_page(ITEMS_PER_PAGE),
 
     columns: get_columns(),
 
