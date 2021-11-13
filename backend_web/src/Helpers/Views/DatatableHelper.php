@@ -48,7 +48,7 @@ final class DatatableHelper extends AppHelper implements IHelper
             "is_visible" => true,
             "name" => $name,
             "path-schema" => $name,
-            "is_ordenable" => true,
+            "is_orderable" => true,
             "is_searchable" => true,
             "label" => $name,
             "tooltip" => "",
@@ -63,9 +63,9 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
-    public function is_ordenable(bool $isordenable=false): self
+    public function is_orderable(bool $isordenable=false): self
     {
-        $this->columns[$this->colname]["is_ordenable"] = $isordenable;
+        $this->columns[$this->colname]["is_orderable"] = $isordenable;
         return $this;
     }
 
@@ -107,7 +107,7 @@ final class DatatableHelper extends AppHelper implements IHelper
 
     private function _get_attribs(array $coldata): string
     {
-        $orderable = $coldata["is_ordenable"];
+        $orderable = $coldata["is_orderable"];
         $orderable = ($isvirtual = $coldata["is_virtual"]) ? false: $orderable;
 
         $searchable = $coldata["is_searchable"];
