@@ -180,6 +180,6 @@ const on_document_ready = () => {
 
 }// on_document_ready
 
-$(document).ready(on_document_ready)
+window.addEventListener("load", on_document_ready)
 </script>
 
