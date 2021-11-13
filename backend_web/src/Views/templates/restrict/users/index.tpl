@@ -157,7 +157,7 @@ const get_buttons = () => [
   {
     text: "Clear search",
     action: function (e, dt, node, config) {
-        clear_filters()
+        reset_filters()
     },
     attr: {
       "data-tooltip": <?= json_encode(__("Add")) ?>
