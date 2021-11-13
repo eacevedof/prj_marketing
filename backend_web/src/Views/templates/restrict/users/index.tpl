@@ -107,15 +107,9 @@ const get_translations = () => (
 const clear_filters = () => {
   const inputs = Array.from(document.querySelectorAll(`[approle="column-search"]`))
   const $input = document.querySelector(`[type="search"]`)
-  //console.log("--input--",$input)
   inputs.push($input)
-  inputs.forEach(($input,i) => {
-    $input.value = ""
-  })
+  inputs.forEach( $input => $input.value = "")
   $table.search("").columns().search("").draw()
-
-  //$table.columns(0).search("").draw()
-  //$table.search("")
 }
 
 const get_columns = () => {
