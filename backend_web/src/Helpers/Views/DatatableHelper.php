@@ -35,7 +35,7 @@ final class DatatableHelper extends AppHelper implements IHelper
             "is_virtual" => false,
             "is_visible" => true,
             "name" => $name,
-            "path-schema" => $name,
+            "path_schema" => $name,
             "is_orderable" => true,
             "is_searchable" => true,
             "label" => $name,
@@ -83,7 +83,7 @@ final class DatatableHelper extends AppHelper implements IHelper
 
     public function schema_path(string $path): self
     {
-        $this->columns[$this->colname]["path-schema"] = $path;
+        $this->columns[$this->colname]["path_schema"] = $path;
         return $this;
     }
 
@@ -105,7 +105,7 @@ final class DatatableHelper extends AppHelper implements IHelper
             ($coldata["css"] ?? "") ? "class=\"{$coldata["css"]}\"": "",
             ($coldata["is_visible"] ?? "") ? "visible=\"{$coldata["is_visible"]}\"": "",
             ($coldata["name"] ?? "") ? "column=\"{$coldata["name"]}\"": "",
-            ($coldata["path-schema"] ?? "") ? "path=\"{$coldata["path-schema"]}\"" : "",
+            ($coldata["path_schema"] ?? "") ? "path=\"{$coldata["path_schema"]}\"" : "",
             $orderable ? "orderable=\"$orderable\"" : "",
             $searchable ? "searchable=\"$searchable\"" : "",
         ];
