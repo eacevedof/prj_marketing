@@ -97,29 +97,33 @@ const add_filter_events = $table => {
   inputs.forEach($input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime)))
 }
 
-const on_document_ready = () => {
-  const trs = {
-    processing:     "Procesando...",
-    search:         "Busqueda&nbsp;:",
-    lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
-    info:           "Affichage de l&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-    infoEmpty:      "Affichage de l&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-    infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-    infoPostFix:    "",
+const get_translations = () => (
+  {
+    processing: "Procesando...",
+    search: "Busqueda&nbsp;:",
+    lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+    info: "Affichage de l&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+    infoEmpty: "Affichage de l&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+    infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+    infoPostFix: "",
     loadingRecords: "Cargando...",
-    zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-    emptyTable:     "Aucune donnée disponible dans le tableau",
+    zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+    emptyTable: "Aucune donnée disponible dans le tableau",
     paginate: {
-      first:      "Primer",
-      previous:   "Anterior",
-      next:       "Siguiente",
-      last:       "Último"
+      first: "Primer",
+      previous: "Anterior",
+      next: "Siguiente",
+      last: "Último"
     },
     aria: {
-      sortAscending:  ": activer pour trier la colonne par ordre croissant",
+      sortAscending: ": activer pour trier la colonne par ordre croissant",
       sortDescending: ": activer pour trier la colonne par ordre décroissant"
     }
   }
+)
+
+const on_document_ready = () => {
+
   add_filter_fileds()
 
   $table = $(tablesel).DataTable({
@@ -129,7 +133,7 @@ const on_document_ready = () => {
     orderCellsTop: true,
     fixedHeader: true,
     pageLength: 25,
-    language: trs,
+    language: get_translations(),
     displayStart: get_page(25),
 
     columns: [
