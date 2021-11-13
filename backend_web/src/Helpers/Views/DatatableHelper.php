@@ -43,8 +43,10 @@ final class DatatableHelper extends AppHelper implements IHelper
     {
         $this->colname = $name;
         $this->columns[$name] = [
+            "css" => "",
             "is_visible" => true,
-            "data-name" => $name,
+            "name" => $name,
+            //"data-page-length" => 25,
             "path-schema" => $name,
             "is_ordenable" => true,
             "is_searchable" => true,
@@ -73,9 +75,9 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
-    public function add_title(string $title): self
+    public function add_title(string $label): self
     {
-        $this->columns[$this->colname]["title"] = $title;
+        $this->columns[$this->colname]["title"] = $label;
         return $this;
     }
 
@@ -97,12 +99,32 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
+    private function _get_attribs(array $coldata): string
+    {
+        $attribs = [
+            "class=\"{$coldata["css"]}\"",
+            "data-visible=\"{$coldata["is_visible"]}\"",
+            "data-name=\"{$coldata["name"]}\"",
+            "data-data=\"{$coldata["path-schema"]}\"",
+            "data-orderable=\"{$coldata["is_ordenable"]}\"",
+            "data-searchable=\"{$coldata["is_searchable"]}\"",
+        ];
+        return implode(" ", $attribs);
+    }
+
     public function get_ths(): string
     {
         if(!$this->columns) return "";
         $ths = [];
         foreach ($this->columns as $coldata) {
-            $th = "<th class=\"column-%s\" data-visible=\"%s\" data-name=\"%s\" data-data=\"%s\" data-orderable=\"%s\" data-searchable=\"%s\"><span title=\"%s\">%s</span>%s</th>";
+            $attribs = $this->_get_attribs($coldata);
+            $label = htmlentities($coldata["title"]);
+            $tooltip = "";
+            if($coldata["tooltip"]) {
+                $tooltip = htmlentities($coldata["tooltip"]);
+                $tooltip = "<i data-tooltip=\"$tooltip\"></i>";
+            }
+            $th = "<th $attribs><span title=\"$label\">$label</span>$tooltip</th>";
             $ths[] = $th;
         }
         return implode("\n", $ths);
