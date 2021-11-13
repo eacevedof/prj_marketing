@@ -109,7 +109,10 @@ final class DatatableHelper extends AppHelper implements IHelper
     private function _get_attribs(array $coldata): string
     {
         $orderable = $coldata["is_ordenable"];
-        $orderable = $coldata["is_virtual"] ? false: $orderable;
+        $orderable = ($isvirtual = $coldata["is_virtual"]) ? false: $orderable;
+
+        $searchable = $coldata["is_searchable"];
+        $searchable = $isvirtual ? false: $searchable;
 
         $attribs = [
             "class=\"{$coldata["css"]}\"",
@@ -117,7 +120,7 @@ final class DatatableHelper extends AppHelper implements IHelper
             "data-name=\"{$coldata["name"]}\"",
             "data-data=\"{$coldata["path-schema"]}\"",
             "data-orderable=\"$orderable\"",
-            "data-searchable=\"{$coldata["is_searchable"]}\"",
+            "data-searchable=\"$searchable\"",
         ];
         return implode(" ", $attribs);
     }
