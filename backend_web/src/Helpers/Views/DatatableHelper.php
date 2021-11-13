@@ -142,4 +142,9 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode("\n", $ths);
     }
 
+    public function show_perpage(): void
+    {
+        echo $this->_get_json($this->perpage);
+    }
+
 }//DatatableHelper
