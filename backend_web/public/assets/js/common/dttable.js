@@ -38,8 +38,9 @@ const add_filter_events = () => {
 }
 
 const reset_filters = () => {
-  const inputs = Array.from(document.querySelectorAll(`[approle="column-search"]`))
+  const inputs = Array.from($table.querySelectorAll(`[approle="column-search"]`))
   const $input = $table.querySelector(`[type="search"]`)
+  console.log("search input:",$input)
   inputs.push($input)
   inputs.forEach( $input => $input.value = "")
   $dttable.search("").columns().search("").draw()
@@ -160,6 +161,7 @@ const dt_render = (options) => {
   const tablesel = `#${idtable}`
 
   $table = document.getElementById(idtable)
+  if(!$table) return console.error(`table with id ${idtable} not found`)
   console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
