@@ -53,7 +53,25 @@ window.addEventListener("load", () => dt_render({
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
   URL_SEARCH: "/restrict/users/search",
-  URL_ADD: "",
+  URL_ADD: "/restrict/users/insert",
+  BUTTONS: {
+    INSERT: {
+      LABEL: <?$this->echo_js(__("Add"));?>,
+      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+    },
+    REFRESH: {
+      LABEL: <?$this->echo_js(__("Add"));?>,
+      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+    },
+    FILTER_SHOW: {
+      LABEL: <?$this->echo_js(__("Add"));?>,
+      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+    },
+    FILTER_RESET: {
+      LABEL: <?$this->echo_js(__("Add"));?>,
+      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+    },
+  }
 }))
 </script>
 
