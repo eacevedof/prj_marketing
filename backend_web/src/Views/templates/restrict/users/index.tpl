@@ -27,7 +27,7 @@ $dt->add_column("uuid")
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
 <h1><?=$h1?></h1>
-<div id="div-datatable">
+<div id="div-datatable" style="width: 50%">
     <table id="table-datatable" class="display" style="width:100%">
         <thead>
             <tr>
@@ -204,6 +204,7 @@ const on_document_ready = () => {
     language: get_translations(),
     displayStart: get_page(ITEMS_PER_PAGE),
     columnDefs: get_columns(),
+    scrollX: false,
 
     ajax: function(data, fnRender, settings) {
       console.log("ajax start", settings)
