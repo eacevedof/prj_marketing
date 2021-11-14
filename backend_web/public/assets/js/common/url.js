@@ -30,13 +30,13 @@ export const add_page_to_url = (page, position) => {
 }
 
 function get_querystring(obj, prefix) {
-  return Object.keys(obj).map(objKey => {
+  return Object.keys(obj ?? {}).map(objKey => {
     if (obj.hasOwnProperty(objKey)) {
       const key = prefix ? `${prefix}[${objKey}]` : objKey;
       const value = obj[objKey];
 
       return typeof value === "object" ?
-        this.get_querystring(value, key) :
+        get_querystring(value, key) :
         `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     }
 
@@ -50,8 +50,7 @@ export const get_url_with_params = (url, params) => {
   const parts = [
     url,
     "?",
-
-    //Object.entries(params).map(s => s[1].map(e => `${s[0]}=${e.id}`)).flat().join('&')
+    qs
   ]
   return parts.join("")
 }
