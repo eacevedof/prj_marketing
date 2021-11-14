@@ -39,6 +39,16 @@ const add_filter_events = () => {
   )
 }
 
+const add_col_idx = () => {
+  $dttable
+    .column(0, {search:"applied", order:"applied"})
+    .nodes()
+    .each(function ($cell, i) {
+      console.log("CELL:", $cell,"i-cell", i)
+      $cell.innerHTML = i+1
+    })
+}
+
 const reset_filters = () => {
   const inputs = Array.from($table.querySelectorAll(`[approle="column-search"]`))
   inputs.push($search)
@@ -57,12 +67,18 @@ const get_columns = () => {
     "id_language:string",
   ]
 
-  const final = []
+  const final = [{
+    searchable: false,
+    orderable: false,
+    targets: 0,
+    data: null,
+  }]
+
   cols.forEach((colconfig, i )=> {
     const [colname, type] = colconfig.split(":")
     console.log("colanme",colname, "type:", type)
     const obj = {
-      targets: i,
+      targets: i+1,
       data: colname,
       //searchable: false, no afecta en nada
       visible: true,
@@ -141,6 +157,7 @@ const get_init_conf = () => (
     lengthMenu: [25, 50, 75, 100],
     orderCellsTop: true,
     fixedHeader: true,
+    order: [[ 1, "desc" ]],
     //language: get_language(),
     //searchDelay: 1500,
   }
@@ -187,18 +204,25 @@ const dt_render = (options) => {
         .querySelector(`[type="search"]`)
       console.log("initComplete end")
     },
+    drawCallback: add_col_idx
   }
 
   console.log("CONFIG", dtconfig)
   $dttable = $(tablesel).DataTable(dtconfig)
 
-  $dttable.on("page.dt", function() {
-    const pagemin = $dttable.page.info()?.page ?? 0
-    add_page_to_url(pagemin+1, 3)
-  })
-  .on("order.dt", function() {
-    if (is_rendered) add_page_to_url(1, 3)
-  })
+  $dttable
+    .on("page.dt", function() {
+      const pagemin = $dttable.page.info()?.page ?? 0
+      add_page_to_url(pagemin+1, 3)
+      //add_col_idx()
+    })
+    .on("order.dt", function() {
+      if (is_rendered) add_page_to_url(1, 3)
+      //add_col_idx()
+    })
+    .on("search.dt", function(){
+      //add_col_idx()
+    })
   console.log("$dttable:",$dttable)
 }//dt_render
 

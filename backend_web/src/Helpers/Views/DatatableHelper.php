@@ -143,7 +143,7 @@ final class DatatableHelper extends AppHelper implements IHelper
     public function get_ths(): string
     {
         if(!$this->columns) return "";
-        $ths = [];
+        $ths = ["<th></th>"];
         foreach ($this->columns as $coldata) {
             $attribs = $this->_get_attribs($coldata);
             $label = htmlentities($coldata["label"]);
@@ -166,7 +166,7 @@ final class DatatableHelper extends AppHelper implements IHelper
     public function get_tf(): string
     {
         if(!$this->columns) return "";
-        $ths = [];
+        $ths = ["<td></td>"];
         foreach ($this->columns as $coldata) {
             $data["css"] = $coldata["css"];
             $data["label"] = $coldata["label"];
@@ -192,8 +192,8 @@ final class DatatableHelper extends AppHelper implements IHelper
 
     public function get_search_tds(): string
     {
-        $tds = [];
-        $i = -1;
+        $tds = ["<td></td>"];
+        $i = 0;
         foreach ($this->columns as $colname => $coldata) {
             $i++;
             $title = __("search")." ".$coldata["label"];
