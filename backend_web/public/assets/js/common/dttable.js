@@ -155,10 +155,12 @@ const get_init_conf = () => (
 )
 
 const dt_render = (options) => {
-  let tableid = options.table_id
-  const tablesel = `#${tableid}`
+  console.log("options:", options)
+  let idtable = options.id_table
+  const tablesel = `#${idtable}`
 
-  $table = document.getElementById(tableid)
+  $table = document.getElementById(idtable)
+  console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
     ...options,
@@ -169,7 +171,7 @@ const dt_render = (options) => {
 
     ajax: function(data, fnRender, settings) {
       console.log("ajax start")
-      $.get(options.GET_URL, data, function(res) {
+      window.$.get(options.GET_URL, data, function(res) {
         console.log("response start")
         fnRender({
           recordsTotal: res.data.recordsTotal,
@@ -199,6 +201,7 @@ const dt_render = (options) => {
   .on("order.dt", function() {
     if (is_rendered) add_page_to_url(1, 3)
   })
-}
+  console.log("$dttable:",$dttable)
+}//dt_render
 
 export default dt_render
