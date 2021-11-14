@@ -11,6 +11,7 @@ const dt_render = (options) => {
   let tableid = options.table_id
   const tablesel = `#${tableid}`
   const $table = document.getElementById(tableid)
+  $dttable = $(tablesel).DataTable({})
 
   $dttable.on("page.dt", function() {
     const pagemin = $dttable.page.info()?.page ?? 0
