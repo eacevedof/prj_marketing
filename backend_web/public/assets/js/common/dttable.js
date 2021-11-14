@@ -92,9 +92,7 @@ const get_columns = () => {
 
 const toggle_filters = () => {
   const $row = $table.querySelector(`tr[row="search"]`)
-  if ($row) {
-    $row.classList.toggle("hidden")
-  }
+  if ($row) $row.classList.toggle("hidden")
 }
 
 const get_buttons = () => [
