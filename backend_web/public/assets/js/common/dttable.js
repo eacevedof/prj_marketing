@@ -90,6 +90,13 @@ const get_columns = () => {
   return final
 }
 
+const toggle_filters = () => {
+  const $row = $table.querySelector(`tr[row="search"]`)
+  if ($row) {
+    $row.classList.toggle("hidden")
+  }
+}
+
 const get_buttons = () => [
   {
     text: "Add",
@@ -102,13 +109,6 @@ const get_buttons = () => [
       }
   },
   {
-    text: "Clear search",
-    action: reset_filters,
-    attr: {
-      "data-tooltip": "clear"
-    }
-  },
-  {
     text: "refresh",
     action: () => $dttable.draw(),
     attr: {
@@ -117,15 +117,16 @@ const get_buttons = () => [
   },
   {
     text: "show filters",
-    action: function (e, dt, node, config) {
-      const $row = $table.querySelector(`tr[row="search"]`)
-      if ($row) {
-        //$row.classList.contains("hidden") ? $row.classList.remove("hidden"): $row.classList.add("hidden")
-        $row.classList.toggle("hidden")
-      }
-    },
+    action: toggle_filters,
     attr: {
       "data-tooltip":"show_filters"
+    }
+  },
+  {
+    text: "Clear search",
+    action: reset_filters,
+    attr: {
+      "data-tooltip": "clear"
     }
   },
 ]
