@@ -50,9 +50,10 @@ $now = date("YmdHis");
 import dt_render from "/assets/js/common/dttable.js?<?=$now?>"
 
 window.addEventListener("load", () => dt_render({
-  id_table: "table-datatable",
+  ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
-  GET_URL: "/restrict/users/search",
+  URL_SEARCH: "/restrict/users/search",
+  URL_ADD: "",
 }))
 </script>
 

@@ -4,6 +4,7 @@ import {
   add_page_to_url, get_page_from_url
 } from "./url.js"
 
+let OPTIONS = {}
 let is_rendered = false
 let $dttable = null
 let $table = null
@@ -148,8 +149,9 @@ const get_init_conf = () => (
 )
 
 const dt_render = (options) => {
-  console.log("options:", options)
-  let idtable = options.id_table
+  let OPTIONS = {...options}
+  console.log("OPTIONS:", OPTIONS)
+  let idtable = OPTIONS.ID_TABLE
   const tablesel = `#${idtable}`
 
   $table = document.getElementById(idtable)
@@ -158,15 +160,15 @@ const dt_render = (options) => {
   console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
-    ...options,
+    ...OPTIONS,
     ...{
-      pageLength: options.ITEMS_PER_PAGE,
-      displayStart: get_page(options.ITEMS_PER_PAGE),
+      pageLength: OPTIONS.ITEMS_PER_PAGE,
+      displayStart: get_page(OPTIONS.ITEMS_PER_PAGE),
     },
 
     ajax: function(data, fnRender, settings) {
       console.log("ajax start")
-      window.$.get(options.GET_URL, data, function(res) {
+      window.$.get(options.URL_SEARCH, data, function(res) {
         console.log("response start")
         fnRender({
           recordsTotal: res.data.recordsTotal,
