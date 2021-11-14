@@ -60,16 +60,16 @@ window.addEventListener("load", () => dt_render({
       TOOLTIP: <?$this->echo_js(__("Add"));?>,
     },
     REFRESH: {
-      LABEL: <?$this->echo_js(__("Add"));?>,
-      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+      LABEL: <?$this->echo_js(__("Refresh"));?>,
+      TOOLTIP: <?$this->echo_js(__("Refresh"));?>,
     },
     FILTER_SHOW: {
-      LABEL: <?$this->echo_js(__("Add"));?>,
-      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+      LABEL: <?$this->echo_js(__("Show filters"));?>,
+      TOOLTIP: <?$this->echo_js(__("Show filters"));?>,
     },
     FILTER_RESET: {
-      LABEL: <?$this->echo_js(__("Add"));?>,
-      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+      LABEL: <?$this->echo_js(__("Reset filters"));?>,
+      TOOLTIP: <?$this->echo_js(__("Reset filters"));?>,
     },
   }
 }))
