@@ -7,6 +7,7 @@ import {
 let is_rendered = false
 let $dttable = null
 let $table = null
+let $search = null
 
 const get_page = perpage => {
   let page = get_page_from_url(3)
@@ -39,9 +40,7 @@ const add_filter_events = () => {
 
 const reset_filters = () => {
   const inputs = Array.from($table.querySelectorAll(`[approle="column-search"]`))
-  const $input = $table.querySelector(`[type="search"]`)
-  console.log("search input:",$input)
-  inputs.push($input)
+  inputs.push($search)
   inputs.forEach( $input => $input.value = "")
   $dttable.search("").columns().search("").draw()
 }
@@ -162,6 +161,11 @@ const dt_render = (options) => {
 
   $table = document.getElementById(idtable)
   if(!$table) return console.error(`table with id ${idtable} not found`)
+
+  $search = document
+            .getElementById(`${idtable}_filter`)
+            .querySelector(`[type="search"]`)
+
   console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
