@@ -162,10 +162,6 @@ const dt_render = (options) => {
   $table = document.getElementById(idtable)
   if(!$table) return console.error(`table with id ${idtable} not found`)
 
-  $search = document
-            .getElementById(`${idtable}_filter`)
-            .querySelector(`[type="search"]`)
-
   console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
@@ -193,6 +189,9 @@ const dt_render = (options) => {
       console.log("initComplete start")
       add_filter_events()
       is_rendered = true
+      $search = document
+        .getElementById(`${idtable}_filter`)
+        .querySelector(`[type="search"]`)
       console.log("initComplete end")
     },
   }
