@@ -16,7 +16,7 @@ use App\Helpers\AppHelper;
 final class DatatableHelper extends AppHelper implements IHelper
 {
     private array $columns = [];
-    private array $language = [];
+    private array $language;
     private int $perpage = 25;
     private array $actions = [];
     private string $colname = "";

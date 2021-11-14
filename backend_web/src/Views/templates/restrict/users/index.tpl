@@ -51,9 +51,10 @@ import {
 } from "/assets/js/common/url.js"
 
 let is_rendered = false
-let $table = null
+let $dttable = null
 const tableid = "table-datatable"
 const tablesel = `#${tableid}`
+const $table = document.getElementById(tableid)
 
 const get_page = perpage => {
   let page = get_page_from_url(3)
@@ -65,8 +66,8 @@ const get_page = perpage => {
   return pagemin * perpage
 }
 
-const add_filter_events = $table => {
-  if (!$table) return
+const add_filter_events = $dttable => {
+  if (!$dttable) return
   const debouncetime = 1000
 
   const on_event = e => {
@@ -75,7 +76,7 @@ const add_filter_events = $table => {
     if (!colidx) return
     const value = $input.value
     //sin draw no busca
-    $table.columns(colidx).search(value).draw()
+    $dttable.columns(colidx).search(value).draw()
   }
 
   const inputs = document.querySelectorAll(`[approle="column-search"]`)
@@ -83,36 +84,15 @@ const add_filter_events = $table => {
 }
 
 const get_language = () => (
-  {
-    processing: "Procesando...",
-    search: "Busqueda&nbsp;:",
-    lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
-    info: "Affichage de l&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-    infoEmpty: "Affichage de l&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-    infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-    infoPostFix: "",
-    loadingRecords: "Cargando...",
-    zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
-    emptyTable: "Aucune donnée disponible dans le tableau",
-    paginate: {
-      first: "Primer",
-      previous: "Anterior",
-      next: "Siguiente",
-      last: "Último"
-    },
-    aria: {
-      sortAscending: ": activer pour trier la colonne par ordre croissant",
-      sortDescending: ": activer pour trier la colonne par ordre décroissant"
-    }
-  }
+    <?$dt->show_lanaguage();?>
 )
 
 const reset_filters = () => {
   const inputs = Array.from(document.querySelectorAll(`[approle="column-search"]`))
-  const $input = document.querySelector(`[type="search"]`)
+  const $input = $table.querySelector(`[type="search"]`)
   inputs.push($input)
   inputs.forEach( $input => $input.value = "")
-  $table.search("").columns().search("").draw()
+  $dttable.search("").columns().search("").draw()
 }
 
 const get_columns = () => {
@@ -183,7 +163,7 @@ const get_buttons = () => [
   {
     text: "refresh",
     action: function (e, dt, node, config) {
-      $table.draw()
+      $dttable.draw()
     },
     attr: {
       "data-tooltip": <?= json_encode(__("Add")) ?>
@@ -209,7 +189,7 @@ const on_document_ready = () => {
 
   const ITEMS_PER_PAGE = <?$dt->show_perpage();?>
 
-  $table = $(tablesel).DataTable({
+  $dttable = $(tablesel).DataTable({
     dom: "Blftipr",
     //searchDelay: 1500,
     responsive: true,
@@ -222,7 +202,7 @@ const on_document_ready = () => {
     orderCellsTop: true,
     fixedHeader: true,
     pageLength: ITEMS_PER_PAGE,
-    language: get_language(),
+    //language: get_language(),
     displayStart: get_page(ITEMS_PER_PAGE),
     columnDefs: get_columns(),
     scrollX: false,
@@ -243,14 +223,14 @@ const on_document_ready = () => {
     // Setup - add a text input to each footer cell
     initComplete: function() {
       console.log("initComplete start")
-      add_filter_events($table)
+      add_filter_events($dttable)
       is_rendered = true
       console.log("initComplete end")
     },
   });
 
-  $table.on( "page.dt", function() {
-    const pagemin = $table.page.info()?.page ?? 0
+  $dttable.on( "page.dt", function() {
+    const pagemin = $dttable.page.info()?.page ?? 0
     add_page_to_url(pagemin+1, 3)
   })
   .on("order.dt", function() {
