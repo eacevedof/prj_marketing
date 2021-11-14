@@ -99,9 +99,7 @@ const toggle_filters = () => {
 const get_buttons = () => [
   {
     text: "Add",
-    action: function (e, dt, node, config) {
-        window.location.href = "#";
-      },
+    action:  () => window.location.href = OPTIONS.URL_ADD
       className: "button small button-action add",
       attr: {
         "data-tooltip": "add"
@@ -149,7 +147,7 @@ const get_init_conf = () => (
 )
 
 const dt_render = (options) => {
-  let OPTIONS = {...options}
+  OPTIONS = {...options}
   console.log("OPTIONS:", OPTIONS)
   let idtable = OPTIONS.ID_TABLE
   const tablesel = `#${idtable}`
