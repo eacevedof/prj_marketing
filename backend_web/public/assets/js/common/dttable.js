@@ -132,11 +132,39 @@ const get_buttons = () => [
   },
 ]
 
+const get_init_conf = () => (
+  {
+    dom: "Blftipr",
+    //searchDelay: 1500,
+    responsive: true,
+    processing: true,
+    //lengthMenu: [[15, 30, 60, 90], [15, 30, 60, 90]],
+    buttons: {
+      buttons: get_buttons()
+    },
+    serverSide: true,
+    orderCellsTop: true,
+    fixedHeader: true,
+    //pageLength: ITEMS_PER_PAGE,
+    //language: get_language(),
+    //displayStart: get_page(ITEMS_PER_PAGE),
+    columnDefs: get_columns(),
+  }
+)
+
 const dt_render = (options) => {
   let tableid = options.table_id
   const tablesel = `#${tableid}`
   $table = document.getElementById(tableid)
-  $dttable = $(tablesel).DataTable({...options})
+  const dtconfig = {
+    ...get_init_conf(),
+    ...options,
+    ...{
+      pageLength: options.ITEMS_PER_PAGE,
+      displayStart: get_page(options.ITEMS_PER_PAGE),
+    }
+  }
+  $dttable = $(tablesel).DataTable(dtconfig)
 
   $dttable.on("page.dt", function() {
     const pagemin = $dttable.page.info()?.page ?? 0
