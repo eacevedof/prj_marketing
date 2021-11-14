@@ -43,10 +43,7 @@ const add_col_idx = () => {
   $dttable
     .column(0, {search:"applied", order:"applied"})
     .nodes()
-    .each(function ($cell, i) {
-      console.log("CELL:", $cell,"i-cell", i)
-      $cell.innerHTML = i+1
-    })
+    .each(($cell, i) => $cell.innerHTML = i+1)
 }
 
 const reset_filters = () => {
@@ -164,8 +161,6 @@ const get_init_conf = () => (
 )
 
 const get_data = (data, fnrender) => {
-  console.log("get-data", data)
-
   const url = get_url_with_params(OPTIONS.URL_SEARCH, data)
   fetch(url, {
     method: "GET",

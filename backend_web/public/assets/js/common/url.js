@@ -37,11 +37,12 @@ function get_querystring(obj, prefix) {
 
       return typeof value === "object" ?
         get_querystring(value, key) :
-        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+        //`${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+          `${key}=${encodeURIComponent(value)}`
     }
 
     return null;
-  }).join("&");
+  }).filter(obj => obj).join("&");
 }
 
 export const get_url_with_params = (url, params) => {
