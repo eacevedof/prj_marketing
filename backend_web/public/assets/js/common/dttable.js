@@ -6,12 +6,13 @@ import {
 
 let is_rendered = false
 let $dttable = null
+let $table = null
 
 const dt_render = (options) => {
   let tableid = options.table_id
   const tablesel = `#${tableid}`
-  const $table = document.getElementById(tableid)
-  $dttable = $(tablesel).DataTable({})
+  $table = document.getElementById(tableid)
+  $dttable = $(tablesel).DataTable({...options})
 
   $dttable.on("page.dt", function() {
     const pagemin = $dttable.page.info()?.page ?? 0
