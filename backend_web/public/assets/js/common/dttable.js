@@ -157,6 +157,7 @@ const get_init_conf = () => (
 const dt_render = (options) => {
   let tableid = options.table_id
   const tablesel = `#${tableid}`
+
   $table = document.getElementById(tableid)
   const dtconfig = {
     ...get_init_conf(),
@@ -165,8 +166,24 @@ const dt_render = (options) => {
       pageLength: options.ITEMS_PER_PAGE,
       displayStart: get_page(options.ITEMS_PER_PAGE),
     },
+
+    ajax: function(data, fnRender, settings) {
+      console.log("ajax start")
+      $.get(options.GET_URL, data, function(res) {
+        console.log("response start")
+        fnRender({
+          recordsTotal: res.data.recordsTotal,
+          recordsFiltered: res.data.recordsFiltered,
+          data: res.data.result,
+        })
+        console.log("response end")
+      })//get
+      console.log("ajax end")
+    },//ajax
+
     initComplete: function() {
-      add_filter_events($dttable)
+      console.log("initComplete start")
+      add_filter_events()
       is_rendered = true
       console.log("initComplete end")
     },
