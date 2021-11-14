@@ -46,12 +46,14 @@ $dt->add_column("uuid")
 </div>
 <script type="module">
 import dt_render from "/assets/js/common/dttable.js"
-dt_render({
+window.addEventListener("load", () => dt_render({
   id_table: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
-})
-
+  GET_URL: "/restrict/users/search""
+}))
 </script>
+
+
 <script type="module">
 import {debounce} from "/assets/js/common/utils.js"
 import {
