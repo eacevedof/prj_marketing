@@ -92,29 +92,25 @@ const get_columns = () => {
 
 const get_buttons = () => [
   {
-    text: "button xxx",
+    text: "Add",
     action: function (e, dt, node, config) {
         window.location.href = "#";
       },
       className: "button small button-action add",
       attr: {
         "data-tooltip": "add"
-    }
+      }
   },
   {
     text: "Clear search",
-    action: function (e, dt, node, config) {
-      reset_filters()
-    },
+    action: reset_filters,
     attr: {
       "data-tooltip": "clear"
     }
   },
   {
     text: "refresh",
-    action: function (e, dt, node, config) {
-      $dttable.draw()
-    },
+    action: () => $dttable.draw(),
     attr: {
       "data-tooltip": "refresh"
     }
@@ -137,20 +133,18 @@ const get_buttons = () => [
 const get_init_conf = () => (
   {
     dom: "Blftipr",
-    //searchDelay: 1500,
-    responsive: true,
-    processing: true,
-    //lengthMenu: [[15, 30, 60, 90], [15, 30, 60, 90]],
     buttons: {
       buttons: get_buttons()
     },
+    columnDefs: get_columns(),
+    responsive: true,
+    processing: true,
+    lengthMenu: [25, 50, 75, 100],
     serverSide: true,
     orderCellsTop: true,
     fixedHeader: true,
-    //pageLength: ITEMS_PER_PAGE,
     //language: get_language(),
-    //displayStart: get_page(ITEMS_PER_PAGE),
-    columnDefs: get_columns(),
+    //searchDelay: 1500,
   }
 )
 
