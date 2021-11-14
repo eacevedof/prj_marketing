@@ -43,6 +43,95 @@ const reset_filters = () => {
   $dttable.search("").columns().search("").draw()
 }
 
+const get_columns = () => {
+  const cols = [
+    "uuid:string",
+    "fullname:string",
+    "email:string",
+    "phone:string",
+    "id_profile:string",
+    "id_nationality:string",
+    "id_language:string",
+  ]
+
+  const final = []
+  cols.forEach((colconfig, i )=> {
+    const [colname, type] = colconfig.split(":")
+    console.log("colanme",colname, "type:", type)
+    const obj = {
+      targets: i,
+      data: colname,
+      //searchable: false, no afecta en nada
+      visible: true,
+      render: function (data, type, row) {
+        return data
+      }
+    }
+
+    final.push(obj)
+  })
+
+  final.push({
+    targets: -1,
+    data: null,
+    render: function(data, type, row) {
+      const links = [
+        `<span>show</span>`,
+        `<span>edit</span>`,
+        `<span>del</span>`,
+      ];
+
+      return links.join("&nbsp;");
+    },
+  })
+  console.log(final)
+  return final
+}
+
+const get_buttons = () => [
+  {
+    text: "button xxx",
+    action: function (e, dt, node, config) {
+        window.location.href = "#";
+      },
+      className: "button small button-action add",
+      attr: {
+        "data-tooltip": "add"
+    }
+  },
+  {
+    text: "Clear search",
+    action: function (e, dt, node, config) {
+      reset_filters()
+    },
+    attr: {
+      "data-tooltip": "clear"
+    }
+  },
+  {
+    text: "refresh",
+    action: function (e, dt, node, config) {
+      $dttable.draw()
+    },
+    attr: {
+      "data-tooltip": "refresh"
+    }
+  },
+  {
+    text: "show filters",
+    action: function (e, dt, node, config) {
+      const $row = $table.querySelector(`tr[row="search"]`)
+      if ($row) {
+        //$row.classList.contains("hidden") ? $row.classList.remove("hidden"): $row.classList.add("hidden")
+        $row.classList.toggle("hidden")
+      }
+    },
+    attr: {
+      "data-tooltip":"show_filters"
+    }
+  },
+]
+
 const dt_render = (options) => {
   let tableid = options.table_id
   const tablesel = `#${tableid}`
