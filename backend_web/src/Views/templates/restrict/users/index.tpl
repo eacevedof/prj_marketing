@@ -195,7 +195,8 @@ const get_buttons = () => [
       const $table = document.querySelector(tablesel)
       const $row = $table.querySelector(`tr[row="search"]`)
       if ($row) {
-        $row.classList.contains("hidden") ? $row.classList.remove("hidden"): $row.classList.add("hidden")
+        //$row.classList.contains("hidden") ? $row.classList.remove("hidden"): $row.classList.add("hidden")
+        $row.classList.toggle("hidden")
       }
     },
     attr: {
@@ -227,8 +228,6 @@ const on_document_ready = () => {
     scrollX: false,
 
     ajax: function(data, fnRender, settings) {
-      console.log("ajax start", settings)
-      data.myExtra = "hola extra"
       $.get("/restrict/users/search", data, function(res) {
         console.log("get request start")
         fnRender({
