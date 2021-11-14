@@ -79,7 +79,7 @@ const add_filter_events = $dttable => {
     $dttable.columns(colidx).search(value).draw()
   }
 
-  const inputs = document.querySelectorAll(`[approle="column-search"]`)
+  const inputs = $table.querySelectorAll(`[approle="column-search"]`)
   inputs.forEach($input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime)))
 }
 
@@ -172,7 +172,6 @@ const get_buttons = () => [
   {
     text: "show filters",
     action: function (e, dt, node, config) {
-      const $table = document.querySelector(tablesel)
       const $row = $table.querySelector(`tr[row="search"]`)
       if ($row) {
         //$row.classList.contains("hidden") ? $row.classList.remove("hidden"): $row.classList.add("hidden")
@@ -229,7 +228,7 @@ const on_document_ready = () => {
     },
   });
 
-  $dttable.on( "page.dt", function() {
+  $dttable.on("page.dt", function() {
     const pagemin = $dttable.page.info()?.page ?? 0
     add_page_to_url(pagemin+1, 3)
   })
