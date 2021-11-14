@@ -163,6 +163,28 @@ const get_init_conf = () => (
   }
 )
 
+const get_data = (data, fnrender) => {
+  fetch(OPTIONS.URL_SEARCH, {
+    method: "get",
+    body: data
+  })
+  .then(response => response.json())
+  .then(response => {
+    console.log("response:", response)
+    fnrender({
+      recordsTotal: response.data.recordsTotal,
+      recordsFiltered: resp+.data.recordsFiltered,
+      data: response.data.result,
+    })
+  })
+  .catch(error => {
+    console.log("get_data.error",error)
+  })
+  .finally(()=>{
+
+  })
+}
+
 const dt_render = (options) => {
   OPTIONS = {...options}
   console.log("OPTIONS:", OPTIONS)
@@ -181,17 +203,9 @@ const dt_render = (options) => {
       displayStart: get_page(OPTIONS.ITEMS_PER_PAGE),
     },
 
-    ajax: function(data, fnRender, settings) {
+    ajax: function(data, fnrender, settings) {
       console.log("ajax start")
-      window.$.get(options.URL_SEARCH, data, function(res) {
-        console.log("response start")
-        fnRender({
-          recordsTotal: res.data.recordsTotal,
-          recordsFiltered: res.data.recordsFiltered,
-          data: res.data.result,
-        })
-        console.log("response end")
-      })//get
+      get_data(data, fnrender)
       console.log("ajax end")
     },//ajax
 
