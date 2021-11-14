@@ -16,11 +16,37 @@ use App\Helpers\AppHelper;
 final class DatatableHelper extends AppHelper implements IHelper
 {
     private array $columns = [];
-    private array $tranlations = [];
+    private array $language = [];
     private int $perpage = 25;
     private array $actions = [];
     private string $colname = "";
     private array $searchopts = [];
+
+    public function __construct()
+    {
+        $this->language = [
+            "processing" => __("Processing..."),
+            "search" => __("Search&nbsp;:"),
+            "lengthMenu" => __("Afficher _MENU_ &eacute;l&eacute;ments"),
+            "info" => __("Affichage de l&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments"),
+            "infoEmpty" => __("Affichage de l&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments"),
+            "infoFiltered" => __("(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)"),
+            "infoPostFix" => __(""),
+            "loadingRecords" => __("Loading..."),
+            "zeroRecords" => __("Aucun &eacute;l&eacute;ment &agrave; afficher"),
+            "emptyTable" => __("Aucune donnée disponible dans le tableau"),
+            "paginate" => [
+                "first" => __("First"),
+                "previous" => __("Previous"),
+                "next" => __("Next"),
+                "last" => __("Last"),
+            ],
+            "aria" => [
+                "sortAscending" => __(": activer pour trier la colonne par ordre croissant"),
+                "sortDescending" => __(": activer pour trier la colonne par ordre décroissant"),
+            ]
+        ];
+    }
 
     private function _get_json($data): string
     {
@@ -221,5 +247,10 @@ final class DatatableHelper extends AppHelper implements IHelper
     public function show_actions(): void
     {
         echo $this->_get_json(array_unique($this->actions));
+    }
+
+    public function show_lanaguage(): void
+    {
+        echo $this->_get_json($this->language);
     }
 }//DatatableHelper
