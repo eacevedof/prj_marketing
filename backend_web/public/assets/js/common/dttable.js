@@ -98,32 +98,32 @@ const toggle_filters = () => {
 
 const get_buttons = () => [
   {
-    text: "Add",
+    text: OPTIONS.BUTTONS.INSERT.LABEL,
     action:  () => window.location.href = OPTIONS.URL_ADD,
     className: "button small button-action add",
     attr: {
-      "data-tooltip": "add"
+      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
     }
   },
   {
-    text: "refresh",
+    text: OPTIONS.BUTTONS.INSERT.LABEL,
     action: () => $dttable.draw(),
     attr: {
-      "data-tooltip": "refresh"
+      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
     }
   },
   {
-    text: "show filters",
+    text: OPTIONS.BUTTONS.INSERT.LABEL,
     action: toggle_filters,
     attr: {
-      "data-tooltip":"show_filters"
+      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
     }
   },
   {
-    text: "Clear search",
+    text: OPTIONS.BUTTONS.INSERT.LABEL,
     action: reset_filters,
     attr: {
-      "data-tooltip": "clear"
+      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
     }
   },
 ]

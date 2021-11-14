@@ -156,4 +156,9 @@ final class AppView
         return $this;
     }
 
+    public function echo_js($any): void
+    {
+        echo json_encode($any);
+    }
+
 }//AppView
