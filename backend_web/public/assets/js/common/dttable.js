@@ -189,6 +189,7 @@ const dt_render = (options) => {
     },
   }
 
+  console.log("CONFIG", dtconfig)
   $dttable = $(tablesel).DataTable(dtconfig)
 
   $dttable.on("page.dt", function() {

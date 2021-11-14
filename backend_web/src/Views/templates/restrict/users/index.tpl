@@ -49,7 +49,7 @@ import dt_render from "/assets/js/common/dttable.js"
 window.addEventListener("load", () => dt_render({
   id_table: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
-  GET_URL: "/restrict/users/search""
+  GET_URL: "/restrict/users/search",
 }))
 </script>
 
@@ -248,6 +248,6 @@ const on_document_ready = () => {
 
 }// on_document_ready
 
-window.addEventListener("load", on_document_ready)
+//window.addEventListener("load", on_document_ready)
 </script>
 
