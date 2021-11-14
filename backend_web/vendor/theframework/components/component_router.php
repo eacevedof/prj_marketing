@@ -83,8 +83,8 @@ final class ComponentRouter
         
         foreach($arRoute as $i=>$sPiece)
         {
-            if($this->is_tag($sPiece)) {
-                $arg = str_replace(":","",$sPiece);
+            if ($this->is_tag($sPiece)) {
+                $arg = $this->get_tagkey($sPiece);
                 $value = $arRequest[$i];
                 $this->arArgs[$arg] = $value;
                 continue;
@@ -107,9 +107,16 @@ final class ComponentRouter
         }
     }
     
-    private function is_tag($sPiece){return (strstr($sPiece,"{") && strstr($sPiece,"}")) || strstr($sPiece,":");}
+    private function is_tag($sPiece)
+    {
+        return (
+            (strstr($sPiece,"{") && strstr($sPiece,"}")) ||
+            strstr($sPiece,":") ||
+            strstr($sPiece,"?:")
+        );
+    }
     
-    private function get_tagkey($sPiece){return str_replace(["{","}"],["",""],$sPiece);}
+    private function get_tagkey($sPiece){return str_replace(["{","}","?:",":"],"",$sPiece);}
     
     private function explode_and($sAndstring)
     {

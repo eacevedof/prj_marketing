@@ -144,6 +144,21 @@ final class AppView
         include_once($this->pathlayout);
     }
 
+    public function render_nl(): void
+    {
+        if (!$this->pathtemplate) {
+            $this->_load_path_folder_template();
+            $this->_load_path_template_name();
+        }
+
+        if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
+
+        foreach ($this->vars as $name => $value)
+            $$name = $value;
+
+        include_once($this->pathlayout);
+    }
+
     public function set_vars(array $vars): AppView
     {
         $this->vars = $vars;
