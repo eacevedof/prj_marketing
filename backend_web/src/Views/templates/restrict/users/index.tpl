@@ -27,13 +27,13 @@ $dt->add_column("uuid")
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
 <h1><?=$h1?></h1>
-<div id="div-datatable" style="width: 50%">
-    <table id="table-datatable" class="display" style="width:100%">
+<div id="div-datatable">
+    <table id="table-datatable" class="display" style="width:95%">
         <thead>
             <tr>
                 <?= $dt->get_ths() ?>
             </tr>
-            <tr row="search">
+            <tr row="search" class="hidden">
                 <?= $dt->get_search_tds() ?>
             </tr>
         </thead>
@@ -180,13 +180,33 @@ const get_buttons = () => [
       "data-tooltip": <?= json_encode(__("Add")) ?>
     }
   },
+  {
+    text: "refresh",
+    action: function (e, dt, node, config) {
+      $table.draw()
+    },
+    attr: {
+      "data-tooltip": <?= json_encode(__("Add")) ?>
+    }
+  },
+  {
+    text: "show filters",
+    action: function (e, dt, node, config) {
+      const $table = document.querySelector(tablesel)
+      const $row = $table.querySelector(`tr[row="search"]`)
+      if ($row) {
+        $row.classList.contains("hidden") ? $row.classList.remove("hidden"): $row.classList.add("hidden")
+      }
+    },
+    attr: {
+      "data-tooltip": <?= json_encode(__("Add")) ?>
+    }
+  },
 ]
 
 const on_document_ready = () => {
 
   const ITEMS_PER_PAGE = <?$dt->show_perpage();?>
-
-  //add_filter_fileds()
 
   $table = $(tablesel).DataTable({
     dom: "Blftipr",
