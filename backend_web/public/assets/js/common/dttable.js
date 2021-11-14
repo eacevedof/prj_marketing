@@ -164,16 +164,23 @@ const get_init_conf = () => (
 )
 
 const get_data = (data, fnrender) => {
+  console.log("get-data", data)
   fetch(OPTIONS.URL_SEARCH, {
-    method: "get",
-    body: data
+    method: "GET",
+    headers: new Headers({
+      "Accept": "application/json",
+      "custom-security":"XXXX",
+      "Purchase-Code":"XXXXXXX",
+      "Content-Type":"application/json",
+      "Cache-Control":"max-age=640000"
+    })
   })
   .then(response => response.json())
   .then(response => {
     console.log("response:", response)
     fnrender({
       recordsTotal: response.data.recordsTotal,
-      recordsFiltered: resp+.data.recordsFiltered,
+      recordsFiltered: response.data.recordsFiltered,
       data: response.data.result,
     })
   })
@@ -228,14 +235,9 @@ const dt_render = (options) => {
     .on("page.dt", function() {
       const pagemin = $dttable.page.info()?.page ?? 0
       add_page_to_url(pagemin+1, 3)
-      //add_col_idx()
     })
     .on("order.dt", function() {
       if (is_rendered) add_page_to_url(1, 3)
-      //add_col_idx()
-    })
-    .on("search.dt", function(){
-      //add_col_idx()
     })
   console.log("$dttable:",$dttable)
 }//dt_render
