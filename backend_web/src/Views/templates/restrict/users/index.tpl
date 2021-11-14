@@ -82,7 +82,7 @@ const add_filter_events = $table => {
   inputs.forEach($input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime)))
 }
 
-const get_translations = () => (
+const get_language = () => (
   {
     processing: "Procesando...",
     search: "Busqueda&nbsp;:",
@@ -222,7 +222,7 @@ const on_document_ready = () => {
     orderCellsTop: true,
     fixedHeader: true,
     pageLength: ITEMS_PER_PAGE,
-    language: get_translations(),
+    language: get_language(),
     displayStart: get_page(ITEMS_PER_PAGE),
     columnDefs: get_columns(),
     scrollX: false,
