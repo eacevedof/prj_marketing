@@ -99,11 +99,11 @@ const toggle_filters = () => {
 const get_buttons = () => [
   {
     text: "Add",
-    action:  () => window.location.href = OPTIONS.URL_ADD
-      className: "button small button-action add",
-      attr: {
-        "data-tooltip": "add"
-      }
+    action:  () => window.location.href = OPTIONS.URL_ADD,
+    className: "button small button-action add",
+    attr: {
+      "data-tooltip": "add"
+    }
   },
   {
     text: "refresh",
