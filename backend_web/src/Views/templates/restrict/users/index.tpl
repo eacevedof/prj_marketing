@@ -99,6 +99,7 @@ const get_language = () => (
 
 const reset_filters = () => {
   const inputs = Array.from(document.querySelectorAll(`[approle="column-search"]`))
+  console.log("reset_filters.table",$table)
   const $input = $table.querySelector(`[type="search"]`)
   inputs.push($input)
   inputs.forEach( $input => $input.value = "")
