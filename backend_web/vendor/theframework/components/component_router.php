@@ -77,7 +77,7 @@ final class ComponentRouter
     
     private function _compare_pieces($arRequest, $arRoute)
     {
-        //bug($arRequest);pr($arRoute);
+        //restrict/users/ === restrict/users/1 => restrict/users/?:page
         if(count($arRequest)!=count($arRoute))
             return false;
         
