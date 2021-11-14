@@ -18,7 +18,7 @@ const get_page = perpage => {
   return pagemin * perpage
 }
 
-const add_filter_events = $dttable => {
+const add_filter_events = () => {
   if (!$dttable) return
   const debouncetime = 1000
 
@@ -32,7 +32,9 @@ const add_filter_events = $dttable => {
   }
 
   const inputs = $table.querySelectorAll(`[approle="column-search"]`)
-  inputs.forEach($input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime)))
+  inputs.forEach(
+    $input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime))
+  )
 }
 
 const reset_filters = () => {
@@ -162,8 +164,14 @@ const dt_render = (options) => {
     ...{
       pageLength: options.ITEMS_PER_PAGE,
       displayStart: get_page(options.ITEMS_PER_PAGE),
-    }
+    },
+    initComplete: function() {
+      add_filter_events($dttable)
+      is_rendered = true
+      console.log("initComplete end")
+    },
   }
+
   $dttable = $(tablesel).DataTable(dtconfig)
 
   $dttable.on("page.dt", function() {
