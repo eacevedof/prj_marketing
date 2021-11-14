@@ -29,10 +29,36 @@ export const add_page_to_url = (page, position) => {
   window.history.pushState({}, "", url)
 }
 
+function get_querystring(obj, prefix) {
+  return Object.keys(obj).map(objKey => {
+    if (obj.hasOwnProperty(objKey)) {
+      const key = prefix ? `${prefix}[${objKey}]` : objKey;
+      const value = obj[objKey];
+
+      return typeof value === "object" ?
+        this.get_querystring(value, key) :
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    }
+
+    return null;
+  }).join("&");
+}
+
+export const get_url_with_params = (url, params) => {
+  const qs = get_querystring(params)
+  console.log("QS",qs)
+  const parts = [
+    url,
+    "?",
+
+    //Object.entries(params).map(s => s[1].map(e => `${s[0]}=${e.id}`)).flat().join('&')
+  ]
+  return parts.join("")
+}
+
 export const get_page_from_url = position => {
   const page = get_url_position(position)
   if(!page) return null
   if (isNaN(page)) return null
   return parseInt(page)
-
 }
