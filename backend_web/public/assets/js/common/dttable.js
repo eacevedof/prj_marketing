@@ -106,24 +106,24 @@ const get_buttons = () => [
     }
   },
   {
-    text: OPTIONS.BUTTONS.INSERT.LABEL,
+    text: OPTIONS.BUTTONS.REFRESH.LABEL,
     action: () => $dttable.draw(),
     attr: {
-      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
+      "data-tooltip": OPTIONS.BUTTONS.REFRESH.TOOLTIP
     }
   },
   {
-    text: OPTIONS.BUTTONS.INSERT.LABEL,
+    text: OPTIONS.BUTTONS.FILTER_SHOW.LABEL,
     action: toggle_filters,
     attr: {
-      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
+      "data-tooltip": OPTIONS.BUTTONS.FILTER_SHOW.TOOLTIP
     }
   },
   {
-    text: OPTIONS.BUTTONS.INSERT.LABEL,
+    text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
     action: reset_filters,
     attr: {
-      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
+      "data-tooltip": OPTIONS.BUTTONS.FILTER_RESET.TOOLTIP
     }
   },
 ]
