@@ -1,7 +1,7 @@
 //alert("hola")
 import {debounce} from "./utils.js"
 import {
-  add_page_to_url, get_page_from_url
+  add_page_to_url, get_page_from_url, get_url_with_params
 } from "./url.js"
 
 let OPTIONS = {}
@@ -165,12 +165,12 @@ const get_init_conf = () => (
 
 const get_data = (data, fnrender) => {
   console.log("get-data", data)
-  fetch(OPTIONS.URL_SEARCH, {
+
+  const url = get_url_with_params(OPTIONS.URL_SEARCH, data)
+  fetch(url, {
     method: "GET",
     headers: new Headers({
       "Accept": "application/json",
-      "custom-security":"XXXX",
-      "Purchase-Code":"XXXXXXX",
       "Content-Type":"application/json",
       "Cache-Control":"max-age=640000"
     })
