@@ -100,7 +100,7 @@ final class ComponentRouter
 
     private function _compare_pieces($arRequest, $arRoute)
     {
-        if(!$this->_is_nullable($arRoute))
+        if(!$this->_is_probable($arRequest, $arRoute))
             return false;
         
         foreach($arRoute as $i=>$sPiece)
