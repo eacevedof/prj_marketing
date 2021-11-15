@@ -74,7 +74,28 @@ final class ComponentRouter
     {
         return $this->_search();
     }
-    
+
+    private function _is_nullable(array $route): bool
+    {
+        $null = array_filter(
+            array_values($route),
+            function ($string) {
+                return strstr($string, "?:");
+            }
+        );
+        return (bool) count($null);
+    }
+
+    private function _is_probable(array $request, array $route): bool
+    {
+
+        if (
+            count($request)===count($route)
+        )
+            return true;
+
+    }
+
     private function _compare_pieces($arRequest, $arRoute)
     {
         //restrict/users/ === restrict/users/1 => restrict/users/?:page
