@@ -67,7 +67,7 @@ try {
 
     $oController = new $arRun["controller"]();
     $oController->{$arRun["method"]}(
-        ...($arRun["args"] ?? [])
+        ...($arRun["_args"] ?? [])
     );
 
 }
