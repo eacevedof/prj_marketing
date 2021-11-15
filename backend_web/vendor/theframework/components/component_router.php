@@ -91,6 +91,7 @@ final class ComponentRouter
         if (($ireq = count($request))===($iroute = count($route)))
             return true;
 
+        //esto no está del todo fino ya que no se permitiria varios ?: como partes de la ruta
         if($this->_is_nullable($route) && $ireq===($iroute-1))
             return true;
 
@@ -99,15 +100,14 @@ final class ComponentRouter
 
     private function _compare_pieces($arRequest, $arRoute)
     {
-        //restrict/users/ === restrict/users/1 => restrict/users/?:page
-        if(count($arRequest)!=count($arRoute))
+        if(!$this->_is_nullable($arRoute))
             return false;
         
         foreach($arRoute as $i=>$sPiece)
         {
             if ($this->is_tag($sPiece)) {
                 $arg = $this->get_tagkey($sPiece);
-                $value = $arRequest[$i];
+                $value = $arRequest[$i] ?? null;
                 $this->arArgs[$arg] = $value;
                 continue;
             }
