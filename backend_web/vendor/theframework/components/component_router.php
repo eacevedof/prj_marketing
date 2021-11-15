@@ -88,12 +88,13 @@ final class ComponentRouter
 
     private function _is_probable(array $request, array $route): bool
     {
-
-        if (
-            count($request)===count($route)
-        )
+        if (($ireq = count($request))===($iroute = count($route)))
             return true;
 
+        if($this->_is_nullable($route) && $ireq===($iroute-1))
+            return true;
+
+        return false;
     }
 
     private function _compare_pieces($arRequest, $arRoute)
