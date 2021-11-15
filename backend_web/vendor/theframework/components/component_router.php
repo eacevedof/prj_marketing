@@ -66,7 +66,7 @@ final class ComponentRouter
 
         return array_merge(
             $this->arRoutes[$i],
-            $this->arArgs ? ["args" => $this->arArgs] : []
+            $this->arArgs ? ["_args" => $this->arArgs] : []
         );
     }
     
