@@ -22,7 +22,7 @@ final class ComponentRouter
         $this->sRequestUri = $_SERVER["REQUEST_URI"];
         $this->sPathRoutes = $sPathRoutes;
         $this->arRoutes = $arRoutes;
-        $this->arPieces = ["urlsep_exploded"=>[],"get_params"=>[]];
+        $this->arPieces = ["url_pieces"=>[],"get_params"=>[]];
         $this->load_routes();
         $this->load_pieces();
         //print_r($this->sRequestUri);
@@ -43,26 +43,35 @@ final class ComponentRouter
     private function load_pieces()
     {
         $arGet = $this->get_get_params($this->sRequestUri);
-        $arUrlsep = $this->get_urlsep_params($this->sRequestUri);
-        $this->arPieces["urlsep_exploded"] = $arUrlsep;
+        $arUrlsep = $this->_get_url_pieces($this->sRequestUri);
+        $this->arPieces["url_pieces"] = $arUrlsep;
         $this->arPieces["get_params"] = $arGet;
     }
-    
-    private function _search()
+
+    private function _search_exact(): array
+    {
+        $requri = $this->sRequestUri;
+        $routes = array_filter($this->arRoutes, function ($route) use ($requri) {
+            return $route["url"] === $requri;
+        });
+        return reset($routes) ?: [];
+    }
+
+    private function _search_by_pieces(): array
     {
         $isFound = false;
         foreach($this->arRoutes as $i=>$arRoute)
         {
             $sUrl = $arRoute["url"];
-            $arRouteSep = $this->get_urlsep_params($sUrl);
+            $arRouteSep = $this->_get_url_pieces($sUrl);
             $this->arArgs = [];
-            $isFound = $this->_compare_pieces($this->arPieces["urlsep_exploded"], $arRouteSep);
+            $isFound = $this->_compare_pieces($this->arPieces["url_pieces"], $arRouteSep);
             if($isFound)
                 break;
         }
         
         if($isFound)
-            $this->add_to_get($this->arPieces["urlsep_exploded"],$arRouteSep);
+            $this->add_to_get($this->arPieces["url_pieces"], $arRouteSep);
 
         return array_merge(
             $this->arRoutes[$i],
@@ -70,9 +79,9 @@ final class ComponentRouter
         );
     }
     
-    public function get_rundata()
+    public function get_rundata(): array
     {
-        return $this->_search();
+        return $this->_search_exact() ?: $this->_search_by_pieces();
     }
 
     private function _is_nullable(array $route): bool
@@ -170,7 +179,7 @@ final class ComponentRouter
         $arPieces = $arNew;
     }
     
-    private function get_urlsep_params($sUrl)
+    private function _get_url_pieces($sUrl): array
     {
         $arTmp = explode("?",$sUrl);
         if(isset($arTmp[1])) $sUrl = $arTmp[0];
