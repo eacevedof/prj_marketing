@@ -25,8 +25,6 @@ final class ComponentRouter
         $this->arRequest = ["url"=>"","url_pieces"=>[],"get_params"=>[]];
         $this->load_routes();
         $this->load_pieces();
-        //print_r($this->sRequestUri);
-        //print_r($this->arRequest);
     }
     
     private function load_routes(): void
