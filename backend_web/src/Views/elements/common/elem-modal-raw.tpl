@@ -3,7 +3,7 @@
 * @var \App\Views\AppView $this
 */
 ?>
-<div id="modal-generic" class="modal-wrapper">
+<div id="modal-global" class="modal-wrapper">
     <div class="modal-dialog modal-dialog-grid" role="modal-dialog">
         <header class="area-header">
             <h2 role="title"></h2>
