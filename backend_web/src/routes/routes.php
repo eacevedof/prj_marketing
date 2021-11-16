@@ -26,8 +26,6 @@ return [
 
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
     ["url"=>"/restrict/users/?:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
-    //["url"=>"/restrict/users","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
-
 
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
