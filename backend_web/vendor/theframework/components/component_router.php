@@ -14,7 +14,7 @@ final class ComponentRouter
     private $sRequestUri;
     private $sPathRoutes;
     private $arRoutes;
-    private $arPieces;
+    private $arRequest;
     private $arArgs;
 
     public function __construct($arRoutes=[],$sPathRoutes="") 
@@ -22,11 +22,11 @@ final class ComponentRouter
         $this->sRequestUri = $_SERVER["REQUEST_URI"];
         $this->sPathRoutes = $sPathRoutes;
         $this->arRoutes = $arRoutes;
-        $this->arPieces = ["url_pieces"=>[],"get_params"=>[]];
+        $this->arRequest = ["url_pieces"=>[],"get_params"=>[]];
         $this->load_routes();
         $this->load_pieces();
         //print_r($this->sRequestUri);
-        //print_r($this->arPieces);
+        //print_r($this->arRequest);
     }
     
     private function load_routes()
@@ -44,8 +44,8 @@ final class ComponentRouter
     {
         $arGet = $this->get_get_params($this->sRequestUri);
         $arUrlsep = $this->_get_url_pieces($this->sRequestUri);
-        $this->arPieces["url_pieces"] = $arUrlsep;
-        $this->arPieces["get_params"] = $arGet;
+        $this->arRequest["url_pieces"] = $arUrlsep;
+        $this->arRequest["get_params"] = $arGet;
     }
 
     private function _search_exact(): array
@@ -65,13 +65,13 @@ final class ComponentRouter
             $sUrl = $arRoute["url"];
             $arRouteSep = $this->_get_url_pieces($sUrl);
             $this->arArgs = [];
-            $isFound = $this->_compare_pieces($this->arPieces["url_pieces"], $arRouteSep);
+            $isFound = $this->_compare_pieces($this->arRequest["url_pieces"], $arRouteSep);
             if($isFound)
                 break;
         }
         
         if($isFound)
-            $this->add_to_get($this->arPieces["url_pieces"], $arRouteSep);
+            $this->add_to_get($this->arRequest["url_pieces"], $arRouteSep);
 
         return array_merge(
             $this->arRoutes[$i],
@@ -169,24 +169,24 @@ final class ComponentRouter
         return $arParams;
     }
     
-    private function unset_empties(&$arPieces)
+    private function unset_empties(&$arRequest)
     {
         $arNew = [];
-        foreach($arPieces as $i=>$sValue)
+        foreach($arRequest as $i=>$sValue)
             if($sValue)
                 $arNew[] = $sValue;
         
-        $arPieces = $arNew;
+        $arRequest = $arNew;
     }
     
     private function _get_url_pieces($sUrl): array
     {
         $arTmp = explode("?",$sUrl);
         if(isset($arTmp[1])) $sUrl = $arTmp[0];
-        $arPieces = explode("/",$sUrl);
-        //pr($arPieces);
-        $this->unset_empties($arPieces);
-        return $arPieces;
+        $arRequest = explode("/",$sUrl);
+        //pr($arRequest);
+        $this->unset_empties($arRequest);
+        return $arRequest;
     }    
     
 }//ComponentRouter
