@@ -156,7 +156,7 @@ final class AppView
         foreach ($this->vars as $name => $value)
             $$name = $value;
 
-        include_once($this->pathlayout);
+        include_once($this->pathtemplate);
     }
 
     public function set_vars(array $vars): AppView
