@@ -1,8 +1,5 @@
 <?php
-//<project>\backend\src\routes\routes.php
-//mapeo de rutas y controladores
-
-return [   
+return [
     //["url"=>"/","controller"=>"App\Controllers\NotFoundController","method"=>"index"],
     ["url"=>"/","controller"=>"App\Controllers\Open\OpenController","method"=>"index"],
 
