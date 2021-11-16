@@ -36,6 +36,18 @@ final class UsersController extends RestrictController
     ["url"=>"/restrict/users/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
     ["url"=>"/restrict/users","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
  * */
+    public function create(): void
+    {
+        if (!$this->auth->is_user_allowed(Action::USERS_WRITE)) {
+            $this->render_error([
+                "h1"=>__("Unauthorized")
+            ],"/error/403");
+        }
+
+        $this->render_nl([
+            "h1" => __("User create")
+        ]);
+    }
 
     public function info(string $uuid): void
     {
