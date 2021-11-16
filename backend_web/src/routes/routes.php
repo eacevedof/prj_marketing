@@ -18,16 +18,13 @@ return [
     ["url"=>"/restrict/promotions/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"detail"],
 
     //@users
-    ["url"=>"/restrict/users/:uuid/info","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
-    ["url"=>"/restrict/users/:uuid/info","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
-    ["url"=>"/restrict/users/:uuid/update","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
-    ["url"=>"/restrict/users/:uuid/delete","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["post"]],
+    ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
+    ["url"=>"/restrict/users/detail/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
+    ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
+    ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["post"]],
     ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert"],
-    ["url"=>"/restrict/users/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
-
-    ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
     ["url"=>"/restrict/users/?:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
-
+    ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
