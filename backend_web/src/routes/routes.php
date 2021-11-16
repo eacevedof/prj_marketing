@@ -16,6 +16,7 @@ return [
     //@users
     ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
     ["url"=>"/restrict/users/create","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"create"],
+    ["url"=>"/restrict/users/edit","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"edit"],
     ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert", "allowed"=>["post"]],
     ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
     ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["post"]],
