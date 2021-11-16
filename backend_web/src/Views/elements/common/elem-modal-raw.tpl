@@ -13,5 +13,4 @@
         </div>
     </div>
 </div>
-<?=$this->_asset_js_module("common/modal-raw")?>
 
