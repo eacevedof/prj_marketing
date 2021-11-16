@@ -1,6 +1,5 @@
 <?php
 return [
-    //["url"=>"/","controller"=>"App\Controllers\NotFoundController","method"=>"index"],
     ["url"=>"/","controller"=>"App\Controllers\Open\OpenController","method"=>"index"],
 
     ["url"=>"/forbidden","controller"=>"App\Controllers\Open\OpenController","method"=>"forbidden"],
@@ -17,9 +16,9 @@ return [
     //@users
     ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
     ["url"=>"/restrict/users/detail/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
+    ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert", "allowed"=>["post"]],
     ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
     ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["post"]],
-    ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert"],
     ["url"=>"/restrict/users/?:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
 
