@@ -22,7 +22,7 @@ final class ComponentRouter
         $this->sRequestUri = $_SERVER["REQUEST_URI"];
         $this->sPathRoutes = $sPathRoutes;
         $this->arRoutes = $arRoutes;
-        $this->arRequest = ["url_pieces"=>[],"get_params"=>[]];
+        $this->arRequest = ["url"=>"","url_pieces"=>[],"get_params"=>[]];
         $this->load_routes();
         $this->load_pieces();
         //print_r($this->sRequestUri);
@@ -44,13 +44,14 @@ final class ComponentRouter
     {
         $arGet = $this->get_get_params($this->sRequestUri);
         $arUrlsep = $this->_get_url_pieces($this->sRequestUri);
+        $this->arRequest["url"] = "/".implode("/",$arUrlsep);
         $this->arRequest["url_pieces"] = $arUrlsep;
         $this->arRequest["get_params"] = $arGet;
     }
 
     private function _search_exact(): array
     {
-        $requri = $this->sRequestUri;
+        $requri = $this->arRequest["url"];
         $routes = array_filter($this->arRoutes, function ($route) use ($requri) {
             return $route["url"] === $requri;
         });
