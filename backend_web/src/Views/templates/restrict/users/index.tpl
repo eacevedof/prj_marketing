@@ -21,14 +21,12 @@ $dt->add_column("uuid")
 
 $now = date("YmdHis");
 ?>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.css"/>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fh-3.2.0/r-2.2.9/rg-1.1.4/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
 <h1><?=$h1?></h1>
+<div>
+    <button type="button" approle="btn-create">Create</button>
+</div>
 <div id="div-datatable">
     <table id="table-datatable" class="display" style="width:95%">
         <thead>
@@ -46,6 +44,25 @@ $now = date("YmdHis");
         </tfoot>
     </table>
 </div>
+<script type="module">
+const $btnCreate = document.querySelector(`[approle="btn-create"]`)
+$btnCreate.addEventListener("click", function (){
+  const url = "/restrict/users/create"
+  fetch(url, {
+    method: "GET"
+  })
+  .then(response => response.json())
+  .then(response => {
+    window.modalraw.set_body(response).show()
+  })
+  .catch(error => {
+    console.log("get_data.error",error)
+  })
+  .finally(()=>{
+
+  })
+})
+</script>
 <script type="module">
 import dt_render from "/assets/js/common/dttable.js?<?=$now?>"
 

@@ -13,4 +13,7 @@
         </div>
     </div>
 </div>
-
+<script type="module">
+import ModalRaw from "/assets/js/common/modal-raw.js"
+window.modalraw = new ModalRaw("modal-global")
+</script>
