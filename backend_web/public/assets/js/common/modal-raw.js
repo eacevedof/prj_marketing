@@ -1,4 +1,4 @@
-import {async_import} from "./utils.js"
+import {async_import, include_js} from "./utils.js"
 
 export default function ModalRaw(idModal, idOpener=null) {
 
@@ -24,8 +24,8 @@ export default function ModalRaw(idModal, idOpener=null) {
     const src = $script.attributes.src.value
     const type = $script.attributes.type.value
 
-    //include_js($script.attributes.src.value, $script.attributes.type.value)
-    import(src).then(module => module.default()).catch(err => console.log(err))
+    include_js(src,type)
+    //import(src).then(module => module.default()).catch(err => console.log(err))
     //async_import(src)
     Array.from(scripts).forEach(script => {
       console.log("script",script)
