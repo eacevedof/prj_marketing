@@ -55,7 +55,7 @@ final class AppView
 
     private function _load_path_template_name(): void
     {
-        $action = $this->request["action"] ?? "index";
+        $action = $this->request["method"] ?? "index";
         $this->pathtemplate .= "/$action.tpl";
     }
 
