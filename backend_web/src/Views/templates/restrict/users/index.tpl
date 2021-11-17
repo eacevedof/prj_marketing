@@ -49,12 +49,24 @@ const $btnCreate = document.querySelector(`[approle="btn-create"]`)
 $btnCreate.addEventListener("click", function (){
   const url = "/restrict/users/create"
   fetch(url, {
-    method: "GET"
+    method: "GET",
+    /*
+    headers: new Headers({
+      "Accept": "application/json",
+      "Content-Type":"application/json",
+      "Cache-Control":"max-age=640000"
+    })
+
+     */
   })
   .then(response => response.text())
   .then(response => {
     console.log(response)
-    window.modalraw.set_body(response).show()
+    const dom = new DOMParser()
+    const doc = dom.parseFromString(response, 'text/html');
+    console.log(doc.body)
+
+    window.modalraw.set_body(doc.body.innerHTML).show()
   })
   .catch(error => {
     console.log("get_data.error",error)
