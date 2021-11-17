@@ -1,5 +1,6 @@
 <?php
 return [
+    ["url"=>"/restrict/users/?:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
     ["url"=>"/","controller"=>"App\Controllers\Open\OpenController","method"=>"index"],
 
     ["url"=>"/forbidden","controller"=>"App\Controllers\Open\OpenController","method"=>"forbidden"],
