@@ -4,7 +4,7 @@
  */
 ?>
 <h1><?=$h1?></h1>
-<div id="app">
+<div id="appx">
     <form @submit.prevent="onSubmit">
         <input type="hidden" id="_csrf" value="<?=$csrf??""?>" />
         <div>

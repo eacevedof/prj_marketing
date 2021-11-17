@@ -64,8 +64,10 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   this.set_body = function (html) {
     if(!html || !$body) return this
-    $body.innerHTML = ""
-    //$($body).html("")
+    //$body.innerHTML = ""
+    //cuando se ejecuta vue la primera vez borra el form
+    console.log("setting body html", $body)
+    $($body).html("")
     $($body).append(html)
     return this
   }

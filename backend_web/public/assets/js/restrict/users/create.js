@@ -1,5 +1,5 @@
 import set_cookie from "/assets/js/common/cookie.js"
-const ID_WRAPPER = "#app"
+const ID_WRAPPER = "#appx"
 const URL = "/login/access"
 
 const App = {
@@ -72,6 +72,6 @@ const App = {
   }//methods
 }
 
-Vue.createApp(App).mount(ID_WRAPPER)
+//Vue.createApp(App).mount(ID_WRAPPER)
 
 export default () => Vue.createApp(App).mount(ID_WRAPPER)
