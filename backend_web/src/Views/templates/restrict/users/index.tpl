@@ -60,13 +60,14 @@ $btnCreate.addEventListener("click", function (){
      */
   })
   .then(response => response.text())
-  .then(response => {
-    console.log(response)
-    const dom = new DOMParser()
-    const doc = dom.parseFromString(response, 'text/html');
-    console.log(doc.body)
+  .then(html => {
+    console.log(html)
+    //const dom = new DOMParser()
+    //const doc = dom.parseFromString(html, 'text/html');
+    //console.log(doc.body)
 
-    window.modalraw.set_body(doc.body.innerHTML).show()
+    //window.modalraw.set_body(doc.body.innerHTML).show()
+    window.modalraw.set_body(html).show()
   })
   .catch(error => {
     console.log("get_data.error",error)

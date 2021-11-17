@@ -9,14 +9,7 @@
     <input type="text" id="txt-user">
     <button type="button" onclick="alert('envio')">boton de prueba</button>
 </form>
-<script>
-alert("xxx")
+<script type="module">
 document.getElementById("txt-user").focus()
-document.addEventListener("DOMNodeInserted",function (){
-  alert("holaxx")
-})
-var arr = MyDiv.getElementsByTagName('script')
-for (var n = 0; n < arr.length; n++)
-  eval(arr[n].innerHTML)//run script inside div
 </script>
 
