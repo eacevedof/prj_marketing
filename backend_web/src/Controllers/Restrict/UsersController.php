@@ -45,7 +45,7 @@ final class UsersController extends RestrictController
         }
 
         $this->render_nl([
-            "h1" => __("User create")
+            "h1" => __("User create ^^")
         ]);
     }
 
