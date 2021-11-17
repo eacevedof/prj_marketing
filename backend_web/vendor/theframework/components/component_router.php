@@ -58,8 +58,9 @@ final class ComponentRouter
         foreach($this->arRoutes as $i=>$arRoute)
         {
             $sUrl = $arRoute["url"];
-            $arRouteSep = $this->_get_url_pieces($sUrl);
+            $arRouteSep = $this->_get_url_pieces($sUrl, true);
             $this->arArgs = [];
+            //compare pieces comprueba todo, tammaño y tags
             $isFound = $this->_compare_pieces($this->arRequest["url_pieces"], $arRouteSep);
             if($isFound)
                 break;
@@ -129,7 +130,7 @@ final class ComponentRouter
             if(!$this->_is_tag($sPiece))
                 continue;
             $sKey = $this->get_tagkey($sPiece);
-            $_GET[$sKey] = $arRequest[$i];
+            $_GET[$sKey] = $arRequest[$i] ?? "";
         }
     }
     
@@ -174,10 +175,13 @@ final class ComponentRouter
         $arRequest = $arNew;
     }
     
-    private function _get_url_pieces($sUrl): array
+    private function _get_url_pieces(string $sUrl, bool $haspattern=false): array
     {
-        $arTmp = explode("?",$sUrl);
-        if(isset($arTmp[1])) $sUrl = $arTmp[0];
+        if (!$haspattern) {
+            $arTmp = explode("?",$sUrl);
+            if(isset($arTmp[1])) $sUrl = $arTmp[0];
+        }
+
         $arRequest = explode("/",$sUrl);
         //pr($arRequest);
         $this->_unset_empties($arRequest);
