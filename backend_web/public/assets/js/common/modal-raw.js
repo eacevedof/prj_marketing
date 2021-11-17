@@ -1,3 +1,5 @@
+import {async_import} from "./utils.js"
+
 export default function ModalRaw(idModal, idOpener=null) {
 
   const $modal = document.getElementById(idModal)
@@ -18,8 +20,19 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   const run_js = () => {
     const scripts = $body.getElementsByTagName("script")
-    Array.from(scripts).forEach(script => eval(script.innerHTML))
+    const $script = scripts[0]
+    const src = $script.attributes.src.value
+    const type = $script.attributes.type.value
+
+    //include_js($script.attributes.src.value, $script.attributes.type.value)
+    import(src).then(module => module.default()).catch(err => console.log(err))
+    //async_import(src)
+    Array.from(scripts).forEach(script => {
+      console.log("script",script)
+      //eval(script.innerHTML)
+    })
   }
+
 
   this.show = function (fnBefore, fnAfter) {
     if (fnBefore) {
