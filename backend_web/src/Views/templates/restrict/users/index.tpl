@@ -51,8 +51,9 @@ $btnCreate.addEventListener("click", function (){
   fetch(url, {
     method: "GET"
   })
-  .then(response => response.json())
+  .then(response => response.text())
   .then(response => {
+    console.log(response)
     window.modalraw.set_body(response).show()
   })
   .catch(error => {
