@@ -2,6 +2,8 @@ import set_cookie from "/assets/js/common/cookie.js"
 const ID_WRAPPER = "#app"
 const URL = "/login/access"
 
+alert("hola")
+
 const App = {
   data() {
     return {
