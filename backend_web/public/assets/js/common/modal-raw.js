@@ -16,6 +16,11 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   const hide = () => $modal.classList.add("modal-hide")
 
+  const run_js = () => {
+    const scripts = $body.getElementsByTagName("script")
+    Array.from(scripts).forEach(script => eval(script.innerHTML))
+  }
+
   this.show = function (fnBefore, fnAfter) {
     if (fnBefore) {
       const abort = fnBefore()
@@ -23,6 +28,7 @@ export default function ModalRaw(idModal, idOpener=null) {
     }
 
     show()
+    run_js()
     if(fnAfter) fnAfter()
     return this
   }
@@ -32,6 +38,8 @@ export default function ModalRaw(idModal, idOpener=null) {
       const abort = fnBefore()
       if (abort) return this
     }
+    $title.innerHTML = ""
+    $body.innerHTML = ""
     hide()
     if(fnAfter) fnAfter()
     return this
