@@ -20,19 +20,22 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   const run_js = () => {
     const scripts = $body.getElementsByTagName("script")
-    const $script = scripts[0]
-    const src = $script.attributes.src.value
-    const type = $script.attributes.type.value
-
-    include_js(src,type)
+    //include_js(src,type)
     //import(src).then(module => module.default()).catch(err => console.log(err))
     //async_import(src)
-    Array.from(scripts).forEach(script => {
-      console.log("script",script)
-      //eval(script.innerHTML)
+    Array.from(scripts).forEach($script => {
+      console.log("script",$script)
+      const src = $script.attributes.src.value
+      const type = $script.attributes.type.value
+      include_js(src, type)
     })
   }
 
+  const remove_js = () => {
+    const $mainbody = document.body
+    const scripts = $mainbody.querySelectorAll(`script[approle="jsmodal"]`)
+    Array.from(scripts).forEach($script => $script.parentElement.removeChild($script))
+  }
 
   this.show = function (fnBefore, fnAfter) {
     if (fnBefore) {
@@ -41,7 +44,7 @@ export default function ModalRaw(idModal, idOpener=null) {
     }
 
     show()
-    run_js()
+    //run_js()
     if(fnAfter) fnAfter()
     return this
   }
@@ -53,6 +56,7 @@ export default function ModalRaw(idModal, idOpener=null) {
     }
     $title.innerHTML = ""
     $body.innerHTML = ""
+    //remove_js()
     hide()
     if(fnAfter) fnAfter()
     return this
@@ -60,7 +64,9 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   this.set_body = function (html) {
     if(!html || !$body) return this
-    $body.innerHTML = html
+    $body.innerHTML = ""
+    //$($body).html("")
+    $($body).append(html)
     return this
   }
 

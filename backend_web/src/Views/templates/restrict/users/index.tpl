@@ -62,6 +62,7 @@ $btnCreate.addEventListener("click", function (){
   .then(response => response.text())
   .then(html => {
     console.log("window-modalraw",window.modalraw)
+    console.log("HTML",html)
     window.modalraw.set_body(html).show()
   })
   .catch(error => {

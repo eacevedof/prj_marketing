@@ -14,12 +14,14 @@ export const debounce = (func, timeout = 300) => {
 }
 
 export const include_js = (pathjs, type="text/javascript") => {
-  const $head = document.getElementsByTagName("head")[0]
+  //const $head = document.getElementsByTagName("head")[0]
+  const $body = document.body
   const $script = document.createElement("script")
   $script.src = pathjs
   $script.type = type
   $script.setAttribute("approle","jsmodal")
-  $head.appendChild($script)
+  //$head.appendChild($script)
+  $body.appendChild($script)
 }
 
 export const async_import = async (src) => {
