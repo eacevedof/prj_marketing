@@ -13,6 +13,7 @@ use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\ComponentMysql;
 use App\Factories\ModelFactory as MF;
 use App\Traits\LogTrait;
+use \Exception;
 
 abstract class AppRepository
 {
