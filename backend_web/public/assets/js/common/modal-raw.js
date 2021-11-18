@@ -1,4 +1,4 @@
-import {add_to_dom} from "./utils.js"
+import {run_js} from "./utils.js"
 
 export default function ModalRaw(idModal, idOpener=null) {
 
@@ -47,7 +47,7 @@ export default function ModalRaw(idModal, idOpener=null) {
     const $eltmp = document.createElement("div")
     $eltmp.innerHTML = html
     $body.innerHTML = html
-    add_to_dom($eltmp)
+    run_js($eltmp)
     return this
   }
 
