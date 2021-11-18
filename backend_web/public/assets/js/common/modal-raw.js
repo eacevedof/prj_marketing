@@ -1,4 +1,4 @@
-import {async_import, include_js} from "./utils.js"
+import {async_import, include_js, add_to_dom} from "./utils.js"
 
 export default function ModalRaw(idModal, idOpener=null) {
 
@@ -67,8 +67,23 @@ export default function ModalRaw(idModal, idOpener=null) {
     //$body.innerHTML = ""
     //cuando se ejecuta vue la primera vez borra el form
     console.log("setting body html", $body)
-    $($body).html("")
-    $($body).append(html)
+    $body.innerHTML = ""
+    //return $body.innerHTML = html
+
+    //const domnode = new DOMParser().parseFromString(html, "text/html")
+    //const domnode = get_as_element(html)
+
+    const $eltmp = document.createElement("div")
+    $eltmp.innerHTML = html
+    $body.innerHTML = html
+    add_to_dom($eltmp)
+
+    //$eltmp.childNodes.forEach(node => $body.appendChild(node))
+    //$body.appendChild($eltmp)
+    //$($body).append(html)
+    //$body.insertAdjacentHTML("afterbegin", html)
+    //console.log("after append",$body)
+
     return this
   }
 

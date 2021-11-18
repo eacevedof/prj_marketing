@@ -4,7 +4,7 @@
  */
 ?>
 <h1><?=$h1?></h1>
-<div id="appx">
+<div id="vue-users-create">
     <form @submit.prevent="onSubmit">
         <input type="hidden" id="_csrf" value="<?=$csrf??""?>" />
         <div>
@@ -31,10 +31,13 @@
         </div>
     </form>
 </div>
+<!--
+<script type="module" src="/assets/js/restrict/users/create.js"></script>
+-->
 <script type="module">
 import vue from "/assets/js/restrict/users/create.js"
 //document.addEventListener("DOMContentLoaded", ()=>vue())
-//document.addEventListener('DOMNodeInserted', ()=>vue())
+//document.addEventListener("DOMNodeInserted", ()=>vue())
 //setTimeout(()=>vue(), 1500)
 vue()
 </script>
