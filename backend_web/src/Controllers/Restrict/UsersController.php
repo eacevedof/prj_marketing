@@ -13,9 +13,12 @@ use App\Enums\Key;
 use App\Enums\Url;
 use App\Factories\ServiceFactory as SF;
 use TheFramework\Helpers\HelperJson;
+use App\Traits\JsonTrait;
 
 final class UsersController extends RestrictController
 {
+    use JsonTrait;
+
     public function index(?string $page=null): void
     {
         if (!$this->auth->is_user_allowed(Action::USERS_READ))
@@ -80,12 +83,10 @@ final class UsersController extends RestrictController
     //@get
     public function search(): void
     {
-        $oJson = new HelperJson();
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
-
         try {
             $result = $search();
-            $oJson->set_payload([
+            $this->_get_json()->set_payload([
                 "message"=>__("auth ok"),
                 "result" => $result["data"],
                 "recordsFiltered" => $result["recordsFiltered"],
@@ -96,7 +97,7 @@ final class UsersController extends RestrictController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"UsersController.search");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
                 ->show(1);
         }
@@ -105,7 +106,24 @@ final class UsersController extends RestrictController
     //@post
     public function insert(): void
     {
-
+        try {
+            $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
+            $result = $insert();
+            $this->_get_json()->set_payload([
+                "message"=>__("auth ok"),
+                "result" => $result["data"],
+                "recordsFiltered" => $result["recordsFiltered"],
+                "recordsTotal" => $result["recordsTotal"],
+                "draw" => 3
+            ])->show();
+        }
+        catch (\Exception $e)
+        {
+            $this->logerr($e->getMessage(),"UsersController.search");
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show(1);
+        }
     }
     
     //@post
