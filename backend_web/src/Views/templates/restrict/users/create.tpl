@@ -13,15 +13,19 @@
         </div>
         <div>
             <label for="password"><?=__("Password")?> *</label>
-            <input id="password" type="password" v-model="password" placeholder="<?=__("your secret password")?>" required="required">
+            <input id="password" type="password" v-model="password" required>
         </div>
         <div>
-            <label htmlFor="text"><?=__("Full name")?> *</label>
-            <input type="text" v-model="text" required="required">
+            <label for="text"><?=__("Full name")?> *</label>
+            <input type="text" v-model="fullname" required>
         </div>
         <div>
-            <label htmlFor="text"><?=__("Full name")?> *</label>
-            <input type="text" v-model="text" required="required">
+            <label for="text"><?=__("Address")?> *</label>
+            <input type="text" v-model="address">
+        </div>
+        <div>
+            <label for="text"><?=__("Birthdate")?> *</label>
+            <input type="date" v-model="birthdate">
         </div>
         <div>
             <button id="btn-contact" class="btn btn-dark" :disabled="issending" >
