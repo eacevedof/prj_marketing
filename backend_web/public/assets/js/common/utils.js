@@ -28,3 +28,32 @@ export const async_import = async (src) => {
   const { default: defaultFunc } = await import(src)
   defaultFunc()
 }
+
+export const get_as_element = html => {
+  const d=document
+  let i
+      ,a=d.createElement("div")
+      ,b=d.createDocumentFragment();
+
+  a.innerHTML= html;
+  while (i=a.firstChild) b.appendChild(i);
+  return b;
+}
+
+export const add_to_dom = elparent => {
+  const scripts = elparent.querySelectorAll("script")
+  if (!scripts) return
+
+  const doc = document;
+  const atrribs = ["type","src","nonce","noModule"]
+
+  scripts.forEach($script => {
+    const $docscript = doc.createElement( "script" );
+    $docscript.text =  $script.textContent
+    atrribs.forEach(attr => {
+      const val = $script.getAttribute(attr)
+      if(val) $docscript.setAttribute(attr, val)
+    })
+    doc.head.appendChild( $docscript ).parentNode.removeChild( $docscript )
+  })
+}

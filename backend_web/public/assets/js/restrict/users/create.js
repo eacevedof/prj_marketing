@@ -1,5 +1,5 @@
 import set_cookie from "/assets/js/common/cookie.js"
-const ID_WRAPPER = "#appx"
+const ID_WRAPPER = "#vue-users-create"
 const URL = "/login/access"
 
 const App = {
@@ -72,6 +72,8 @@ const App = {
   }//methods
 }
 
+//si esto se ejecuta desde aqui solo se ve bien en la primera llamada
+// en las siguientes no carga el form con vue. Por eso es mejor usar export
 //Vue.createApp(App).mount(ID_WRAPPER)
 
 export default () => Vue.createApp(App).mount(ID_WRAPPER)
