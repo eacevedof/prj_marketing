@@ -21,8 +21,6 @@ $dt->add_column("uuid")
 
 $now = date("YmdHis");
 ?>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <h1><?=$h1?></h1>
 <div>
     <button type="button" approle="btn-create">Create</button>
