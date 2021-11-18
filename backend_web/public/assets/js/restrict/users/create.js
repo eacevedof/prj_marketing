@@ -1,6 +1,7 @@
 const ID_WRAPPER = "#vue-users-create"
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
+const ACTION = "users.insert"
 
 const App = {
   data() {
@@ -28,9 +29,13 @@ const App = {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          csrf: document.getElementById("_csrf")?.value ?? "",
+          _action: ACTION,
+          _csrf: document.getElementById("_csrf")?.value ?? "",
           email: this.email,
           password: this.password,
+          fullname: this.fullname,
+          address: this.address,
+          birthdate: this.birthdate,
         })
       })
         .then(response => response.json())

@@ -116,10 +116,10 @@ final class UsersController extends RestrictController
 
         try {
             $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
-            $result = $insert();
+            $id = $insert();
             $this->_get_json()->set_payload([
                 "message"=>__("auth ok"),
-                "result" => ["affected"=>$result],
+                "result" => ["id"=>$id],
             ])->show();
         }
         catch (\Exception $e)
