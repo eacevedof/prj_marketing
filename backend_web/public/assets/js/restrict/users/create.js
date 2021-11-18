@@ -7,6 +7,10 @@ const App = {
     return {
       email: "eaf@eaf.com",
       password: "1234",
+      fullname: "",
+      address: "",
+      birthdate: "",
+
       issending: false,
       btnsend: "enviar"
     }
@@ -39,20 +43,10 @@ const App = {
             return Swal.fire({
               icon: "warning",
               title: "Proceso incompleto",
-              html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. <br/>"+response.errors[0],
+              html: "No se ha podido procesar esta acción. Por favor vuelve a intentarlo. <br/>"+response.errors[0],
             })
           }
-
-          console.log("reponse ok",response)
-          set_cookie("lang", response.data.lang)
-          window.location = "/restrict"
-
-          Swal.fire({
-            icon: "success",
-            title: "Gracias por contactar conmigo!",
-            html: "En breves momentos recibirás una copia del mensaje en tu email.",
-          })
-
+          window.location = "/restrict/users"
         })
         .catch(error => {
           console.error("catch.error", error)
