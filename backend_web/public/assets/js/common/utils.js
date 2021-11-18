@@ -40,8 +40,8 @@ export const get_as_element = html => {
   return b;
 }
 
-export const add_to_dom = elparent => {
-  const scripts = elparent.querySelectorAll("script")
+export const run_js = $jswrapper => {
+  const scripts = $jswrapper.querySelectorAll("script")
   if (!scripts) return
 
   const doc = document;
@@ -54,6 +54,6 @@ export const add_to_dom = elparent => {
       const val = $script.getAttribute(attr)
       if(val) $docscript.setAttribute(attr, val)
     })
-    doc.head.appendChild( $docscript ).parentNode.removeChild( $docscript )
+    doc.head.appendChild($docscript).parentNode.removeChild($docscript)
   })
 }
