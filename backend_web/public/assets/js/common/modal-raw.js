@@ -1,4 +1,4 @@
-import {async_import, include_js, add_to_dom} from "./utils.js"
+import {add_to_dom} from "./utils.js"
 
 export default function ModalRaw(idModal, idOpener=null) {
 
@@ -18,25 +18,6 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   const hide = () => $modal.classList.add("modal-hide")
 
-  const run_js = () => {
-    const scripts = $body.getElementsByTagName("script")
-    //include_js(src,type)
-    //import(src).then(module => module.default()).catch(err => console.log(err))
-    //async_import(src)
-    Array.from(scripts).forEach($script => {
-      console.log("script",$script)
-      const src = $script.attributes.src.value
-      const type = $script.attributes.type.value
-      include_js(src, type)
-    })
-  }
-
-  const remove_js = () => {
-    const $mainbody = document.body
-    const scripts = $mainbody.querySelectorAll(`script[approle="jsmodal"]`)
-    Array.from(scripts).forEach($script => $script.parentElement.removeChild($script))
-  }
-
   this.show = function (fnBefore, fnAfter) {
     if (fnBefore) {
       const abort = fnBefore()
@@ -44,7 +25,6 @@ export default function ModalRaw(idModal, idOpener=null) {
     }
 
     show()
-    //run_js()
     if(fnAfter) fnAfter()
     return this
   }
@@ -56,7 +36,6 @@ export default function ModalRaw(idModal, idOpener=null) {
     }
     $title.innerHTML = ""
     $body.innerHTML = ""
-    //remove_js()
     hide()
     if(fnAfter) fnAfter()
     return this
@@ -64,31 +43,17 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   this.set_body = function (html) {
     if(!html || !$body) return this
-    //$body.innerHTML = ""
-    //cuando se ejecuta vue la primera vez borra el form
-    console.log("setting body html", $body)
     $body.innerHTML = ""
-    //return $body.innerHTML = html
-
-    //const domnode = new DOMParser().parseFromString(html, "text/html")
-    //const domnode = get_as_element(html)
-
     const $eltmp = document.createElement("div")
     $eltmp.innerHTML = html
     $body.innerHTML = html
     add_to_dom($eltmp)
-
-    //$eltmp.childNodes.forEach(node => $body.appendChild(node))
-    //$body.appendChild($eltmp)
-    //$($body).append(html)
-    //$body.insertAdjacentHTML("afterbegin", html)
-    //console.log("after append",$body)
-
     return this
   }
 
   this.set_title = function (html) {
     if(!html || !$title) return this
+    $title.innerHTML = ""
     $title.innerHTML = html
     return this
   }
