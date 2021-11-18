@@ -9,8 +9,7 @@
             <h2 role="title"></h2>
             <button type="button" role="btn-close">x</button>
         </header>
-        <div class="area-body" role="body">
-        </div>
+        <div class="area-body" role="body"></div>
     </div>
 </div>
 <script type="module">
