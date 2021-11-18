@@ -31,13 +31,7 @@
         </div>
     </form>
 </div>
-<!--
-<script type="module" src="/assets/js/restrict/users/create.js"></script>
--->
 <script type="module">
 import vue from "/assets/js/restrict/users/create.js"
-//document.addEventListener("DOMContentLoaded", ()=>vue())
-//document.addEventListener("DOMNodeInserted", ()=>vue())
-//setTimeout(()=>vue(), 1500)
 vue()
 </script>

@@ -61,12 +61,10 @@ $btnCreate.addEventListener("click", function (){
   })
   .then(response => response.text())
   .then(html => {
-    console.log("window-modalraw",window.modalraw)
-    console.log("HTML",html)
     window.modalraw.set_body(html).show()
   })
   .catch(error => {
-    console.log("get_data.error",error)
+    console.log("users.create.tpl",error)
   })
   .finally(()=>{
 
