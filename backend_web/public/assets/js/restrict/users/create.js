@@ -1,6 +1,6 @@
-import set_cookie from "/assets/js/common/cookie.js"
 const ID_WRAPPER = "#vue-users-create"
-const URL = "/login/access"
+const URL_POST = "/restrict/users/insert"
+const URL_REDIRECT = "/restrict/users"
 
 const App = {
   data() {
@@ -21,7 +21,7 @@ const App = {
       this.issending = true
       this.btnsend = "Enviando..."
 
-      fetch(URL, {
+      fetch(URL_POST, {
         method: "post",
         headers: {
           "Accept": "application/json, text/plain, */*",
@@ -46,7 +46,7 @@ const App = {
               html: "No se ha podido procesar esta acción. Por favor vuelve a intentarlo. <br/>"+response.errors[0],
             })
           }
-          window.location = "/restrict/users"
+          window.location = URL_REDIRECT
         })
         .catch(error => {
           console.error("catch.error", error)
