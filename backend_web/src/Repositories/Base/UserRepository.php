@@ -66,8 +66,6 @@ final class UserRepository extends AppRepository
             $or = implode(" OR ",$or);
             $crud->add_and("($or)");
         }
-
-
     }
 
     public function search(array $search): array
@@ -118,4 +116,20 @@ final class UserRepository extends AppRepository
         ];
     }
 
-}//ExampleRepository
+    public function _insert(array $insert): int
+    {
+        $crud = $this->crud
+            ->set_table($this->table)
+        ;
+        foreach ($insert as $field => $value) {
+            $crud->add_insert_fv($field, $value);
+        }
+        $sql = $crud->autoinsert()->get_sql();
+        $this->db->exec($sql);
+        if ($this->db->is_error()) {
+            $this->logerr($insert,"user.insert");
+            $this->_exeption(__("Error saving user"));
+        }
+        return $this->db->get_affected();
+    }
+}//UserRepository

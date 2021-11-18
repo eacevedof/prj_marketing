@@ -119,7 +119,7 @@ final class UsersController extends RestrictController
             $result = $insert();
             $this->_get_json()->set_payload([
                 "message"=>__("auth ok"),
-                "result" => $result["data"],
+                "result" => ["affected"=>$result],
             ])->show();
         }
         catch (\Exception $e)

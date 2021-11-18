@@ -127,9 +127,11 @@ abstract class AppRepository
             $this->crud->autoinsert();
             //print_r($this->crud);die;
             $this->log($this->crud->get_sql());
-            if($this->crud->is_error())
-                $this->add_error("An error occurred while trying to save");
-            $this->log($this->crud->get_sql(),($this->crud->is_error()?"ERROR":NULL));
+            if($this->crud->is_error()) {
+                $this->logerr($arPost,"insert");
+                $this->_exeption(__("Error saving data"));
+            }
+            return $this->db->get_lastid();
         }
     }//insert
         
@@ -185,5 +187,11 @@ abstract class AppRepository
     private function get_model(string $model): AppModel
     {
         return MF::get($model);
+    }
+
+    protected function _exeption(string $message, int $code=500): void
+    {
+        $this->logerr($message,"app-service.exception");
+        throw new Exception($message, $code);
     }
 }//AppRepository
