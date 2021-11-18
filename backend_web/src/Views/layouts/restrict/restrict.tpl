@@ -19,7 +19,6 @@
     <?= $this->_asset_js_module("index") ?>
     <?= $this->_asset_js("vendor/jquery/jquery-3.6.0") ?>
     <?= $this->_asset_js("vendor/datatable/datatable-1.11.3") ?>
-
 </head>
 <body>
 <main>

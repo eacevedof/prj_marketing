@@ -76,7 +76,7 @@ window.addEventListener("load", () => dt_render({
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
   URL_SEARCH: "/restrict/users/search",
-  URL_ADD: "/restrict/users/insert",
+  URL_ADD: "/restrict/users/create",
   BUTTONS: {
     INSERT: {
       LABEL: <?$this->echo_js(__("Add"));?>,
