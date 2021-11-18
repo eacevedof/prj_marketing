@@ -83,6 +83,9 @@ final class UsersController extends RestrictController
     //@get
     public function search(): void
     {
+        if (!$this->auth->is_user_allowed(Action::USERS_READ))
+            $this->location(Url::FORBIDDEN);
+
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
         try {
             $result = $search();
@@ -106,15 +109,17 @@ final class UsersController extends RestrictController
     //@post
     public function insert(): void
     {
+        if (!$this->auth->is_user_allowed(Action::USERS_WRITE))
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([__("Not allowed to perform this operation")])
+                ->show(1);
+
         try {
             $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
             $result = $insert();
             $this->_get_json()->set_payload([
                 "message"=>__("auth ok"),
                 "result" => $result["data"],
-                "recordsFiltered" => $result["recordsFiltered"],
-                "recordsTotal" => $result["recordsTotal"],
-                "draw" => 3
             ])->show();
         }
         catch (\Exception $e)
