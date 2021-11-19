@@ -21,13 +21,12 @@ final class UserRepository extends AppRepository
     {
         $this->db = DbF::get_by_default();
         $this->table = "base_user";
-        $this->_load_crud();
     }
 
     public function get_by_email(string $email): array
     {
         $email = $this->_get_sanitized($email);
-        $sql = $this->crud
+        $sql = $this->_get_crud()
                 ->set_table("$this->table as m")
                 ->set_getfields([
                     "m.id","m.email","m.secret","m.id_language", "m.id_profile",
@@ -41,8 +40,8 @@ final class UserRepository extends AppRepository
                 ->get_selectfrom()
         ;
         $ar = $this->db->query($sql);
-        if(count($ar)>1) return [];
-        return $ar[0] ?? [];
+        if(count($ar)>1 || !$ar) return [];
+        return $ar[0];
     }
 
     private function _add_search(ComponentCrud $crud, array $search): void
@@ -70,7 +69,7 @@ final class UserRepository extends AppRepository
 
     public function search(array $search): array
     {
-        $crud = $this->crud
+        $crud = $this->_get_crud()
             ->set_table("$this->table as m")
             ->is_foundrows()
             ->set_getfields([
@@ -116,9 +115,9 @@ final class UserRepository extends AppRepository
         ];
     }
 
-    public function _insert(array $insert): int
+    private function _insert(array $insert): int
     {
-        $crud = $this->crud
+        $crud = $this->_get_crud()
             ->set_table($this->table)
         ;
         foreach ($insert as $field => $value) {

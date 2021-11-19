@@ -20,7 +20,6 @@ abstract class AppRepository
     use LogTrait;
     protected AppModel $model;
     protected ComponentMysql $db;
-    protected ComponentCrud $crud;
     protected string $table;
 
     protected function _get_sanitized(string $value)
@@ -28,16 +27,9 @@ abstract class AppRepository
         return str_replace("'","\\'", $value);
     }
 
-    public function set_db(ComponentMysql $db): self
+    protected function _get_crud(): ComponentCrud
     {
-        $this->db = $db;
-        return $this;
-    }
-
-    protected function _load_crud(): void
-    {
-        $this->crud = new ComponentCrud();
-        $this->crud->set_table($this->table);
+        return new ComponentCrud();
     }
 
     public function query($sSQL,$iCol=NULL,$iRow=NULL)
@@ -184,11 +176,6 @@ abstract class AppRepository
             $this->log($this->crud->get_sql(),($this->crud->is_error()?"ERROR":NULL));
         }
     }//delete
-
-    private function get_model(string $model): AppModel
-    {
-        return MF::get($model);
-    }
 
     protected function _exeption(string $message, int $code=500): void
     {
