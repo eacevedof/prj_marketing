@@ -65,12 +65,12 @@ abstract class AppRepository
         return $this->db->get_lastid();
     }
 
-    //$arPost = $_POST
+    //$post = $_POST
     //busca los campos de form en el post y guarda sus valores
     //en los campos de bd
-    private function _get_keyvals($arPost)
+    private function _get_keyvals($post)
     {
-        $fieldsUi = array_keys($arPost);
+        $fieldsUi = array_keys($post);
         $arReturn = [];
         $fields = $this->model->get_fields();
         foreach($fields as $mapfields)
@@ -78,7 +78,7 @@ abstract class AppRepository
             $fieldnameDb = $mapfields["db"];
             $fieldnameUi = $mapfields["ui"];
             if(in_array($fieldnameUi,$fieldsUi))
-                $arReturn[$fieldnameDb] = $arPost[$fieldnameUi];
+                $arReturn[$fieldnameDb] = $post[$fieldnameUi];
         }
         return $arReturn;
     }
@@ -102,32 +102,31 @@ abstract class AppRepository
     }
 
     //hace un insert automatico a partir de lo que viene en $_POST
-    public function insert($arPost,$isUi=1)
+    public function insert(array $post): int
     {
-        $arData = $arPost;
-        if($isUi)
-            $arData = $this->_get_keyvals($arPost);
+        $crud = $this->_get_crud()
+            ->set_dbobj($this->db)
+            ->set_table($this->table);
 
-        if($arData)
-        {
-            $crud = $this->_get_crud()->set_dbobj($this->db)->set_table($this->table);
-            foreach($arData as $fieldname=>$sValue)
-                $crud->add_insert_fv($fieldname,$sValue);
-            $crud->autoinsert();
-            $this->log($crud->get_sql());
-            if($crud->is_error()) {
-                $this->logerr($arPost,"insert");
-                $this->_exeption(__("Error saving data"));
-            }
-            return $this->db->get_lastid();
+        foreach($post as $field => $value)
+            $crud->add_insert_fv($field, $value);
+
+        $crud->autoinsert();
+        $this->log($crud->get_sql());
+
+        if($crud->is_error()) {
+            $this->logerr($post,"insert");
+            $this->_exeption(__("Error saving data"));
         }
+
+        return $this->db->get_lastid();
     }//insert
         
-    public function update($arPost, $isUi=1)
+    public function update($post, $isUi=1)
     {
-        $arData = $arPost;
+        $arData = $post;
         if($isUi)
-            $arData = $this->_get_keyvals($arPost);
+            $arData = $this->_get_keyvals($post);
 
         $arNoPks = $this->_get_no_pks($arData);
         $pks = $this->_get_pks($arData);
@@ -153,9 +152,9 @@ abstract class AppRepository
         }
     }//update
 
-    public function delete($arPost)
+    public function delete($post)
     {
-        $arData = $this->_get_keyvals($arPost);
+        $arData = $this->_get_keyvals($post);
         $pks = $this->_get_pks($arData);
         if($pks)
         {

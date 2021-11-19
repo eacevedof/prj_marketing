@@ -115,20 +115,8 @@ final class UserRepository extends AppRepository
         ];
     }
 
-    private function _insert(array $insert): int
+    private function insert(array $insert): int
     {
-        $crud = $this->_get_crud()
-            ->set_table($this->table)
-        ;
-        foreach ($insert as $field => $value) {
-            $crud->add_insert_fv($field, $value);
-        }
-        $sql = $crud->autoinsert()->get_sql();
-        $this->db->exec($sql);
-        if ($this->db->is_error()) {
-            $this->logerr($insert,"user.insert");
-            $this->_exeption(__("Error saving user"));
-        }
-        return $this->db->get_affected();
+
     }
 }//UserRepository
