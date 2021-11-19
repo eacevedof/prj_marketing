@@ -59,4 +59,18 @@ abstract class AppModel
         }
         return "";
     }
+
+    public function map_insert(array $post): array
+    {
+        $postfields = array_keys($post);
+        $mapped = [];
+        foreach ($postfields as $postfield) {
+            $dbfield = $this->get_field($postfield);
+            if($dbfield) {
+                $mapped[$dbfield] = $post[$postfield];
+            }
+        }
+        
+        return $mapped;
+    }
 }//AppModel
