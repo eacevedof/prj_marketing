@@ -5,10 +5,13 @@ use App\Factories\RepositoryFactory;
 use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
+use App\Traits\SessionTrait;
+use App\Enums\Key;
 
 
 final class UsersInsertService extends AppService
 {
+    use SessionTrait;
     private array $input;
     private UserRepository $repository;
 
@@ -16,6 +19,7 @@ final class UsersInsertService extends AppService
     {
         $this->repository = RepositoryFactory::get("Base/UserRepository");
         $this->input = $input;
+        $this->_sessioninit();
     }
 
     public function __invoke(): string
@@ -25,6 +29,8 @@ final class UsersInsertService extends AppService
         $insert = array_intersect_key($insert, array_flip($f));
         $insert["secret"] = $insert["password"];
         unset($insert["password"]);
+        $insert["insert_user"] = $this->session->get(Key::AUTH_USER)["id"] ?? "";
+        $insert["insert_date"] = date("Y-m-d H:i:s");
 
         if(!$insert) $this->_exeption(__("No data"));
         $r = $this->repository->insert($insert, false);

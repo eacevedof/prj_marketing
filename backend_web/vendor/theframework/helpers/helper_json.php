@@ -130,7 +130,7 @@ final class HelperJson
         }
     }
 
-    public function show($isExit=0)
+    public function show($isExit=1)
     {
         // clear the old headers
         header_remove();
