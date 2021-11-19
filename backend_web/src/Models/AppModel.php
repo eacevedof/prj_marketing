@@ -70,7 +70,12 @@ abstract class AppModel
                 $mapped[$dbfield] = $post[$postfield];
             }
         }
-        
+
         return $mapped;
+    }
+
+    public function add_sysinsert(array $post): self
+    {
+        $post
     }
 }//AppModel
