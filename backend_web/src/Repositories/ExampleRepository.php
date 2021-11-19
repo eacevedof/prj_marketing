@@ -19,7 +19,7 @@ final class ExampleRepository extends AppRepository
     {
         $this->table = "app_example";
         $this->model = new ExampleModel();
-        $this->_load_crud();
+        $this->_get_crud();
     }
 
     public function get_all(): array
