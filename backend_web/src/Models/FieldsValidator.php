@@ -52,9 +52,11 @@ final class FieldsValidator
             case Model::INT: return is_integer($value) || is_null($value);
             case Model::DECIMAL: return is_float($value) || is_null($value);
             case Model::DATE:
+                return strtotime($value) || is_null($value) || $value==="";
             case Model::DATETIME:
                 return $this->_is_datetime($value) || is_null($value) || $value==="";
-
+            case Model::STRING:
+                return is_string($field) || is_null($value) || is_integer($value) || is_float($value);
         }
 
         return false;
@@ -65,13 +67,34 @@ final class FieldsValidator
         $fields = $this->model->get_fieldnames();
 
         foreach ($fields as $field) {
+            $label = $this->model->get_label($field);
+            // hay q revisar
+            if (!$this->model->is_field($field)) {
+                $this->_add_error(
+                    $field,
+                    "unrecognized",
+                    __("Unrecognized field {0}",$label),
+                    $label);
+                continue;
+            }
+
             if (!$this->_is_length($field)) {
                 $ilen = $this->model->get_length();
                 $this->_add_error(
                     $field,
                     "length",
                     __("Max length allowed is {0}",$ilen),
-                    $this->model->get_label($field));
+                    $label);
+                continue;
+            }
+
+            if (!$this->_is_type($field)) {
+                $type = $this->model->get_type($field);
+                $this->_add_error(
+                    $field,
+                    "type",
+                    __("Wrong datatype. Allowed: {0}",$type),
+                    $label);
                 continue;
             }
 
