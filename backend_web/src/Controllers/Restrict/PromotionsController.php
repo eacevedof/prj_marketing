@@ -9,7 +9,7 @@
  */
 namespace App\Controllers\Restrict;
 use App\Enums\ActionType;
-use App\Enums\Key;
+use App\Enums\KeyType;
 use App\Enums\Url;
 
 final class PromotionsController extends RestrictController
@@ -19,7 +19,7 @@ final class PromotionsController extends RestrictController
         if (!$this->auth->is_user_allowed(ActionType::DASHBOARD_READ))
             $this->location(Url::FORBIDDEN);
 
-        $this->add_var(Key::PAGE_TITLE, __("PROMOTIONS"));
+        $this->add_var(KeyType::PAGE_TITLE, __("PROMOTIONS"));
 
         $this->render([
             "h1" => __("Promotions")
@@ -31,7 +31,7 @@ final class PromotionsController extends RestrictController
         if (!$this->auth->is_user_allowed(ActionType::DASHBOARD_READ))
             $this->location(Url::FORBIDDEN);
 
-        $this->add_var(Key::PAGE_TITLE, __("PROMOTIONS - detail"));
+        $this->add_var(KeyType::PAGE_TITLE, __("PROMOTIONS - detail"));
         $this->render([
             "h1" => __("Promotion detail {0}", $id)
         ]);

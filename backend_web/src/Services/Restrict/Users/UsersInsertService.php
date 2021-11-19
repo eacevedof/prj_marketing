@@ -6,7 +6,7 @@ use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
-use App\Enums\Key;
+use App\Enums\KeyType;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 
 
@@ -32,7 +32,7 @@ final class UsersInsertService extends AppService
         $insert = array_intersect_key($insert, array_flip($f));
         $insert["secret"] = $this->encdec->get_hashpassword($insert["password"]);
         unset($insert["password"]);
-        $insert["insert_user"] = $this->session->get(Key::AUTH_USER)["id"] ?? "";
+        $insert["insert_user"] = $this->session->get(KeyType::AUTH_USER)["id"] ?? "";
         $insert["insert_date"] = date("Y-m-d H:i:s");
 
         if(!$insert) $this->_exeption(__("No data"));
