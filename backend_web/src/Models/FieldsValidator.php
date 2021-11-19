@@ -22,13 +22,7 @@ final class FieldsValidator
         $this->data = $data;
         $this->model = $model;
     }
-
-    public function add_rule(string $field, string $rule, callable $fn): self
-    {
-        $this->rules[] = ["field"=>$field, "rule"=>$rule, "fn"=>$fn];
-        return $this;
-    }
-
+    
     private function _is_length($field): bool
     {
         $postkey = $this->model->get_postkey($field);
@@ -104,7 +98,38 @@ final class FieldsValidator
             }
         }
 
+        if($this->errors) return $this->errors;
+
+        $this->_check_rules();
         return $this->errors;
+    }
+
+    public function add_rule(string $field, string $rule, callable $fn): self
+    {
+        $this->rules[] = ["field"=>$field, "rule"=>$rule, "fn"=>$fn];
+        return $this;
+    }
+    
+    private function _check_rules(): void
+    {
+        foreach($this->rules as $rule) {
+            $postfield = $this->model->get_postkey($field = $rule["field"]);
+            $label = $this->model->get_label($field);
+            $message = $rule["fn"]([
+                "data" => $this->data,
+                "field" => $field,
+                "value" => $this->data[$postfield],
+                "label" => $label
+            ]);
+            
+            if ($message) {
+                $this->_add_error(
+                    $postfield,
+                    $rule["rule"],
+                    $message,
+                    $label);
+            }
+        }
     }
 
     private function _add_error(string $field, string $rule, string $message, string $label): self
