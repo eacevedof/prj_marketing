@@ -78,7 +78,71 @@ final class UserModel extends AppModel
                     "type" => Model::DATETIME
                 ]
             ],
-        ];
+
+            "id_parent" => [
+                "label" => __("User admin"),
+                "in_post" => "id_parent",
+                "config" => [
+                    "type" => Model::INT,
+                    "length" => 11
+                ]
+            ],
+
+            "id_gender" => [
+                "label" => __("Gender"),
+                "in_post" => "id_gender",
+                "config" => [
+                    "type" => Model::INT,
+                    "length" => 11
+                ]
+            ],
+
+            "id_nationality" => [
+                "label" => __("Nationality"),
+                "in_post" => "id_nationality",
+                "config" => [
+                    "type" => Model::INT,
+                    "length" => 11
+                ]
+            ],
+
+            "id_country" => [
+                "label" => __("Country"),
+                "in_post" => "id_country",
+                "config" => [
+                    "type" => Model::INT,
+                    "length" => 11
+                ]
+            ],
+
+            "id_language" => [
+                "label" => __("Language"),
+                "in_post" => "id_language",
+                "config" => [
+                    "type" => Model::INT,
+                    "length" => 11
+                ]
+            ],
+
+            "id_profile" => [
+                "label" => __("Role"),
+                "in_post" => "id_profile",
+                "config" => [
+                    "type" => Model::INT,
+                    "length" => 11
+                ]
+            ],
+
+            "uuid" => [
+                "label" => __("Code"),
+                "config" => [
+                    "type" => Model::STRING,
+                    "length" => 50,
+                    "default" => "uuid()"
+                ]
+            ],
+
+        ];//fileds
 
         $this->pks = [
             "id"
