@@ -16,4 +16,14 @@ abstract class AppModel
 
     public function get_fields(){return array_keys($this->fields);}
     public function get_pks(){return $this->pks;}
+
+    public function validate(array $post): array
+    {
+        $fields = $this->get_fields();
+        foreach ($fields as $field) {
+            if(!isset($post[$field])) continue;
+
+        }
+        return [];
+    }
 }//AppModel
