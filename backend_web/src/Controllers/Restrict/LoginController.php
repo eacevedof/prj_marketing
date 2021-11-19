@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\Key;
+use App\Enums\KeyType;
 use App\Services\Restrict\LoginService;
 use App\Factories\ServiceFactory as SF;
 use TheFramework\Helpers\HelperJson;
@@ -20,8 +20,8 @@ final class LoginController extends RestrictController
     public function index(): void
     {
         $this
-            ->add_var(Key::PAGE_TITLE, __("LOGIN"))
-            ->add_var(Key::KEY_CSRF, $this->csrf->get_token());
+            ->add_var(KeyType::PAGE_TITLE, __("LOGIN"))
+            ->add_var(KeyType::KEY_CSRF, $this->csrf->get_token());
 
         $this->render();
     }

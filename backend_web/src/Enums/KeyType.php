@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-abstract class Key
+abstract class KeyType
 {
     const LANG = "lang";
 
