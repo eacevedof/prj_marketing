@@ -107,7 +107,6 @@ final class FieldsValidator
         return $this->errors;
     }
 
-
     private function _add_error(string $field, string $rule, string $message, string $label): self
     {
         $this->errors[] = [
