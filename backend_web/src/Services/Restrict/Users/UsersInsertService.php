@@ -2,13 +2,15 @@
 namespace App\Services\Restrict\Users;
 use App\Factories\ComponentFactory as CF;
 use App\Factories\RepositoryFactory;
+use App\Factories\ValidatorFactory as VF;
+use App\Models\Base\UserModel;
 use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Enums\KeyType;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-
+use App\Factories\ModelFactory;
 
 final class UsersInsertService extends AppService
 {
@@ -16,9 +18,13 @@ final class UsersInsertService extends AppService
     private array $input;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
+    private FieldsValidator $validator;
+    private UserModel $model;
 
     public function __construct(array $input)
     {
+        $this->model = ModelFactory::get("Base/User");
+        $this->validator = VF::get($input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
         $this->input = $input;
         $this->_sessioninit();
@@ -27,6 +33,7 @@ final class UsersInsertService extends AppService
 
     public function __invoke(): string
     {
+
         $insert = $this->input;
         $f = array_filter(array_keys($insert), function ($k){ return substr($k,0,1)!=="_"; });
         $insert = array_intersect_key($insert, array_flip($f));
