@@ -10,7 +10,7 @@
 namespace App\Controllers\Open;
 
 use App\Controllers\AppController;
-use App\Enums\Action;
+use App\Enums\ActionType;
 use App\Enums\Key;
 use App\Traits\ViewTrait;
 

@@ -9,6 +9,8 @@
  */
 namespace App\Models;
 
+use App\Enums\Model;
+
 abstract class AppModel
 {
     protected array $fields;
@@ -76,6 +78,6 @@ abstract class AppModel
 
     public function add_sysinsert(array $post): self
     {
-        $post
+        return $this;
     }
 }//AppModel

@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\Action;
+use App\Enums\ActionType;
 use App\Enums\Key;
 use App\Enums\Url;
 use App\Factories\ServiceFactory as SF;
@@ -21,7 +21,7 @@ final class UsersController extends RestrictController
 
     public function index(?string $page=null): void
     {
-        if (!$this->auth->is_user_allowed(Action::USERS_READ))
+        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
             $this->location(Url::FORBIDDEN);
 
         $this->add_var(Key::PAGE_TITLE, __("USERS - list"));
@@ -41,7 +41,7 @@ final class UsersController extends RestrictController
  * */
     public function create(): void
     {
-        if (!$this->auth->is_user_allowed(Action::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
             $this->render_error([
                 "h1"=>__("Unauthorized")
             ],"/error/403");
@@ -54,11 +54,11 @@ final class UsersController extends RestrictController
 
     public function info(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(Action::USERS_READ))
+        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
             $this->location(Url::FORBIDDEN);
 
         $this->add_var(Key::PAGE_TITLE, __("USERS - info"));
-        if (!$this->auth->is_user_allowed(Action::USERS_READ)) {
+        if (!$this->auth->is_user_allowed(ActionType::USERS_READ)) {
             $this->render_error([
                 "h1"=>__("Unauthorized")
             ],"/error/403");
@@ -69,7 +69,7 @@ final class UsersController extends RestrictController
     public function detail(string $uuid): void
     {
         $this->add_var(Key::PAGE_TITLE, __("USERS - detail"));
-        if (!$this->auth->is_user_allowed(Action::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
             $this->render_error([
                 "h1"=>__("Unauthorized")
             ],"/error/403");
@@ -83,7 +83,7 @@ final class UsersController extends RestrictController
     //@get
     public function search(): void
     {
-        if (!$this->auth->is_user_allowed(Action::USERS_READ))
+        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
             $this->location(Url::FORBIDDEN);
 
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
@@ -109,7 +109,7 @@ final class UsersController extends RestrictController
     //@post
     public function insert(): void
     {
-        if (!$this->auth->is_user_allowed(Action::USERS_WRITE))
+        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([__("Not allowed to perform this operation")])
                 ->show();
