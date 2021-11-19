@@ -1,5 +1,6 @@
 <?php
 ob_start();
+debug_print_backtrace();
 session_name("MARKETINGID");
 session_start();
 include("../boot/appbootstrap.php");
@@ -69,7 +70,6 @@ try {
     $oController->{$arRun["method"]}(
         ...($arRun["_args"] ?? [])
     );
-
 }
 catch (\Exception $ex)
 {
@@ -78,6 +78,7 @@ catch (\Exception $ex)
     if($_SESSION) lg($_SESSION,"main-exception SESSION", "error");
     if($_REQUEST) lg($_REQUEST,"main-exception REQUEST", "error");
     if($_ENV) lg($_ENV,"main-exception ENV", "error");
+    lg(debug_backtrace());
     lg($ex->getMessage(), "main-exception", "error");
 
     http_response_code(500);

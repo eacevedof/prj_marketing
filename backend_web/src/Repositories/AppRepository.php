@@ -108,19 +108,14 @@ abstract class AppRepository
         if($isUi)
             $arData = $this->_get_keyvals($arPost);
 
-        //print_r($arData);die;
         if($arData)
         {
-            //helper generador de consulta.
-            //se le inyecta el objeto de bd para que la ejecute directamente
-            //$this->crud = new ComponentCrud($this->db);
-            $this->crud->set_dbobj($this->db)->set_table($this->table);
+            $crud = $this->_get_crud()->set_dbobj($this->db)->set_table($this->table);
             foreach($arData as $fieldname=>$sValue)
-                $this->crud->add_insert_fv($fieldname,$sValue);
-            $this->crud->autoinsert();
-            //print_r($this->crud);die;
-            $this->log($this->crud->get_sql());
-            if($this->crud->is_error()) {
+                $crud->add_insert_fv($fieldname,$sValue);
+            $crud->autoinsert();
+            $this->log($crud->get_sql());
+            if($crud->is_error()) {
                 $this->logerr($arPost,"insert");
                 $this->_exeption(__("Error saving data"));
             }
@@ -139,22 +134,22 @@ abstract class AppRepository
 
         if ($arData) {
             //habría que comprobar count(pks)==count($this->model->get_pks())
-            //$this->crud = new ComponentCrud($this->db);
-            $this->crud->set_table($this->table);
+            //$crud = new ComponentCrud($this->db);
+            $crud = $this->_get_crud()->set_table($this->table);
 
             //valores del "SET"
             foreach($arNoPks as $fieldname=>$sValue)
-                $this->crud->add_update_fv($fieldname,$sValue);
+                $crud->add_update_fv($fieldname,$sValue);
 
             //valores del WHERE
             foreach($pks as $fieldname=>$sValue)
-                $this->crud->add_pk_fv($fieldname,$sValue);
+                $crud->add_pk_fv($fieldname,$sValue);
 
-            $this->crud->autoupdate();
-            if($this->crud->is_error())
+            $crud->autoupdate();
+            if($crud->is_error())
                 $this->add_error("An error occurred while trying to delete");
 
-            $this->log($this->crud->get_sql(),($this->crud->is_error()?"ERROR":NULL));
+            $this->log($crud->get_sql(),($crud->is_error()?"ERROR":NULL));
         }
     }//update
 
@@ -164,16 +159,16 @@ abstract class AppRepository
         $pks = $this->_get_pks($arData);
         if($pks)
         {
-            //$this->crud = new ComponentCrud($this->db);
-            $this->crud->set_table($this->table);
+            //$crud = new ComponentCrud($this->db);
+            $crud = $this->_get_crud()->set_table($this->table);
             foreach($pks as $fieldname=>$sValue)
-                $this->crud->add_pk_fv($fieldname,$sValue);
-            $this->crud->autodelete();
+                $crud->add_pk_fv($fieldname,$sValue);
+            $crud->autodelete();
 
-            if($this->crud->is_error())
+            if($crud->is_error())
                 $this->add_error("An error occurred while trying to delete");
 
-            $this->log($this->crud->get_sql(),($this->crud->is_error()?"ERROR":NULL));
+            $this->log($crud->get_sql(),($crud->is_error()?"ERROR":NULL));
         }
     }//delete
 
