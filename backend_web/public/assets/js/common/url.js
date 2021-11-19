@@ -47,12 +47,8 @@ function get_querystring(obj, prefix) {
 
 export const get_url_with_params = (url, params) => {
   const qs = get_querystring(params)
-  console.log("QS",qs)
-  const parts = [
-    url,
-    "?",
-    qs
-  ]
+  //console.log("QS",qs)
+  const parts = [url, "?", qs]
   return parts.join("")
 }
 
