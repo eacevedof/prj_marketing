@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Models;
-use App\Enums\Model;
+use App\Enums\ModelType;
 
 final class FieldsValidator
 {
@@ -43,13 +43,13 @@ final class FieldsValidator
         $value = $this->data[$postkey] ?? null;
 
         switch ($type) {
-            case Model::INT: return is_integer($value) || is_null($value);
-            case Model::DECIMAL: return is_float($value) || is_null($value);
-            case Model::DATE:
+            case ModelType::INT: return is_integer($value) || is_null($value);
+            case ModelType::DECIMAL: return is_float($value) || is_null($value);
+            case ModelType::DATE:
                 return strtotime($value) || is_null($value) || $value==="";
-            case Model::DATETIME:
+            case ModelType::DATETIME:
                 return $this->_is_datetime($value) || is_null($value) || $value==="";
-            case Model::STRING:
+            case ModelType::STRING:
                 return is_string($field) || is_null($value) || is_integer($value) || is_float($value);
         }
 

@@ -9,7 +9,7 @@
  */
 namespace App\Models;
 
-use App\Enums\Model;
+use App\Enums\ModelType;
 
 abstract class AppModel
 {
