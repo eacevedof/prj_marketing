@@ -15,7 +15,7 @@ use App\Factories\ServiceFactory as SF;
 use App\Services\Auth\CsrfService;
 use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
-use App\Enums\Url;
+use App\Enums\UrlType;
 use App\Components\Auth\AuthComponent;
 
 abstract class RestrictController extends AppController
@@ -44,6 +44,6 @@ abstract class RestrictController extends AppController
     public function logout(): void
     {
         $this->session->destroy();
-        $this->location(Url::ON_LOGOUT);
+        $this->location(UrlType::ON_LOGOUT);
     }
 }//RestrictController
