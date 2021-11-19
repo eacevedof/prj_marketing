@@ -19,7 +19,7 @@ final class UserModel extends AppModel
         $this->fields = [
             "id" => [
                 "label" => __("ID"),
-                "in_post" => "id",
+                "postkey" => "id",
                 "config" => [
                     "type" => Model::INT,
                     "length" => 11
@@ -27,7 +27,7 @@ final class UserModel extends AppModel
             ],
             "email" => [
                 "label" => __("Email"),
-                "in_post" => "email",
+                "postkey" => "email",
                 "config" => [
                     "type" => Model::STRING,
                     "length" => 100
@@ -35,7 +35,7 @@ final class UserModel extends AppModel
             ],
             "secret" => [
                 "label" => __("Password"),
-                "in_post" => "password",
+                "postkey" => "password",
                 "config" => [
                     "type" => Model::STRING,
                     "length" => 100
@@ -43,15 +43,16 @@ final class UserModel extends AppModel
             ],
             "phone" => [
                 "label" => __("Phone"),
-                "in_post" => "phone",
+                "postkey" => "phone",
                 "config" => [
                     "type" => Model::STRING,
                     "length" => 20
                 ]
             ],
+            
             "fullname" => [
                 "label" => __("Fullname"),
-                "in_post" => "fullname",
+                "postkey" => "fullname",
                 "config" => [
                     "type" => Model::STRING,
                     "length" => 100
@@ -60,7 +61,7 @@ final class UserModel extends AppModel
 
             "address" => [
                 "label" => __("Address"),
-                "in_post" => "address",
+                "postkey" => "address",
                 "config" => [
                     "type" => Model::STRING,
                     "length" => 250
@@ -69,7 +70,7 @@ final class UserModel extends AppModel
 
             "birthdate" => [
                 "label" => __("Birthdate"),
-                "in_post" => "birthdate",
+                "postkey" => "birthdate",
                 "config" => [
                     "type" => Model::DATETIME
                 ]
@@ -77,7 +78,7 @@ final class UserModel extends AppModel
 
             "id_parent" => [
                 "label" => __("User admin"),
-                "in_post" => "id_parent",
+                "postkey" => "id_parent",
                 "config" => [
                     "type" => Model::INT,
                     "length" => 11
@@ -86,7 +87,7 @@ final class UserModel extends AppModel
 
             "id_gender" => [
                 "label" => __("Gender"),
-                "in_post" => "id_gender",
+                "postkey" => "id_gender",
                 "config" => [
                     "type" => Model::INT,
                     "length" => 11
@@ -95,7 +96,7 @@ final class UserModel extends AppModel
 
             "id_nationality" => [
                 "label" => __("Nationality"),
-                "in_post" => "id_nationality",
+                "postkey" => "id_nationality",
                 "config" => [
                     "type" => Model::INT,
                     "length" => 11
@@ -104,7 +105,7 @@ final class UserModel extends AppModel
 
             "id_country" => [
                 "label" => __("Country"),
-                "in_post" => "id_country",
+                "postkey" => "id_country",
                 "config" => [
                     "type" => Model::INT,
                     "length" => 11
@@ -113,7 +114,7 @@ final class UserModel extends AppModel
 
             "id_language" => [
                 "label" => __("Language"),
-                "in_post" => "id_language",
+                "postkey" => "id_language",
                 "config" => [
                     "type" => Model::INT,
                     "length" => 11
@@ -122,7 +123,7 @@ final class UserModel extends AppModel
 
             "id_profile" => [
                 "label" => __("Role"),
-                "in_post" => "id_profile",
+                "postkey" => "id_profile",
                 "config" => [
                     "type" => Model::INT,
                     "length" => 11
