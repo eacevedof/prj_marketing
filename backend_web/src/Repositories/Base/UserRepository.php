@@ -115,8 +115,4 @@ final class UserRepository extends AppRepository
         ];
     }
 
-    private function insert(array $insert): int
-    {
-
-    }
 }//UserRepository

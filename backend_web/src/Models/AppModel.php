@@ -10,6 +10,7 @@
 namespace App\Models;
 
 use App\Enums\ModelType;
+use App\Enums\PlatformType;
 
 abstract class AppModel
 {
@@ -62,7 +63,7 @@ abstract class AppModel
         return "";
     }
 
-    public function map_insert(array $post): array
+    public function map_post(array $post): array
     {
         $postfields = array_keys($post);
         $mapped = [];
@@ -72,12 +73,30 @@ abstract class AppModel
                 $mapped[$dbfield] = $post[$postfield];
             }
         }
-
         return $mapped;
     }
 
-    public function add_sysinsert(array $post): self
+    public function add_sysinsert(array &$post, string $user, string $platform=PlatformType::WEB): self
     {
+        $post[ModelType::INSERT_DATE] = date("Y-m-d H:i:s");
+        $post[ModelType::INSERT_USER] = $user;
+        $post[ModelType::INSERT_PLATFORM] = $platform;
+        return $this;
+    }
+
+    public function add_sysupdate(array &$post, string $user, string $platform=PlatformType::WEB): self
+    {
+        $post[ModelType::UPDATE_DATE] = date("Y-m-d H:i:s");
+        $post[ModelType::UPDATE_USER] = $user;
+        $post[ModelType::UPDATE_PLATFORM] = $platform;
+        return $this;
+    }
+
+    public function add_sysdelete(array &$post, string $user, string $platform=PlatformType::WEB): self
+    {
+        $post[ModelType::DELETE_DATE] = date("Y-m-d H:i:s");
+        $post[ModelType::DELETE_USER] = $user;
+        $post[ModelType::DELETE_PLATFORM] = $platform;
         return $this;
     }
 }//AppModel
