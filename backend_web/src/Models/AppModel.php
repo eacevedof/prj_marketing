@@ -14,16 +14,33 @@ abstract class AppModel
     protected array $fields;
     protected array $pks;
 
-    public function get_fields(){return array_keys($this->fields);}
-    public function get_pks(){return $this->pks;}
+    public function get_fields(): array {return $this->fields;}
+    public function get_pks(): array {return $this->pks;}
 
-    public function validate(array $post): array
+    public function get_fieldnames(): array {return array_keys($this->fields);}
+
+    public function get_label(string $field): string
     {
-        $fields = $this->get_fields();
-        foreach ($fields as $field) {
-            if(!isset($post[$field])) continue;
+        return $this->fields[$field]["label"] ?? "";
+    }
 
-        }
-        return [];
+    public function get_postkey(string $field): string
+    {
+        return $this->fields[$field]["in_post"] ?? $field;
+    }
+
+    public function get_type(string $field): string
+    {
+        return $this->fields[$field]["config"]["type"] ?? "";
+    }
+
+    public function get_length(string $field): ?int
+    {
+        return $this->fields[$field]["config"]["length"] ?? null;
+    }
+
+    public function is_field(string $field): bool
+    {
+        return in_array($field, $this->get_fieldnames());
     }
 }//AppModel
