@@ -23,9 +23,6 @@ $dt->add_column("id")
 $now = date("YmdHis");
 ?>
 <h1><?=$h1?></h1>
-<div>
-    <button type="button" approle="btn-create">Create</button>
-</div>
 <div id="div-datatable">
     <table id="table-datatable" class="display" style="width:95%">
         <thead>
@@ -44,33 +41,6 @@ $now = date("YmdHis");
     </table>
 </div>
 <script type="module">
-const $btnCreate = document.querySelector(`[approle="btn-create"]`)
-$btnCreate.addEventListener("click", function (){
-  const url = "/restrict/users/create"
-  fetch(url, {
-    method: "GET",
-    /*
-    headers: new Headers({
-      "Accept": "application/json",
-      "Content-Type":"application/json",
-      "Cache-Control":"max-age=640000"
-    })
-
-     */
-  })
-  .then(response => response.text())
-  .then(html => {
-    window.modalraw.set_body(html).show()
-  })
-  .catch(error => {
-    console.log("users.create.tpl",error)
-  })
-  .finally(()=>{
-
-  })
-})
-</script>
-<script type="module">
 import dt_render from "/assets/js/common/dttable.js?<?=$now?>"
 
 window.addEventListener("load", () => dt_render({
@@ -82,6 +52,20 @@ window.addEventListener("load", () => dt_render({
     INSERT: {
       LABEL: <?$this->echo_js(__("Add"));?>,
       TOOLTIP: <?$this->echo_js(__("Add"));?>,
+      ACTION: function (){
+        const url = "/restrict/users/create"
+        fetch(url)
+          .then(response => response.text())
+          .then(html => {
+            window.modalraw.set_body(html).show()
+          })
+          .catch(error => {
+            console.log("users.create.tpl",error)
+          })
+          .finally(()=>{
+
+          })
+      }
     },
     REFRESH: {
       LABEL: <?$this->echo_js(__("Refresh"));?>,

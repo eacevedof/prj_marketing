@@ -74,7 +74,7 @@ const get_columns = () => {
 
   cols.forEach((colconfig, i )=> {
     const [colname, type] = colconfig.split(":")
-    console.log("colanme",colname, "type:", type)
+    //console.log("colanme",colname, "type:", type)
     const obj = {
       targets: i+1,
       data: colname,
@@ -102,7 +102,7 @@ const get_columns = () => {
       return links.join("&nbsp;");
     },
   })
-  console.log(final)
+  //console.log(final)
   return final
 }
 
@@ -114,7 +114,7 @@ const toggle_filters = () => {
 const get_buttons = () => [
   {
     text: OPTIONS.BUTTONS.INSERT.LABEL,
-    action:  () => window.location.href = OPTIONS.URL_ADD,
+    action:  OPTIONS.BUTTONS.INSERT.ACTION,
     className: "button small button-action add",
     attr: {
       "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
@@ -174,7 +174,7 @@ const get_data = (data, fnrender) => {
   })
   .then(response => response.json())
   .then(response => {
-    console.log("response:", response)
+    //console.log("response:", response)
     fnrender({
       recordsTotal: response.data.recordsTotal,
       recordsFiltered: response.data.recordsFiltered,
@@ -182,7 +182,7 @@ const get_data = (data, fnrender) => {
     })
   })
   .catch(error => {
-    console.log("get_data.error",error)
+    //console.log("get_data.error",error)
   })
   .finally(()=>{
 
@@ -191,14 +191,14 @@ const get_data = (data, fnrender) => {
 
 const dt_render = (options) => {
   OPTIONS = {...options}
-  console.log("OPTIONS:", OPTIONS)
+  //console.log("OPTIONS:", OPTIONS)
   let idtable = OPTIONS.ID_TABLE
   const tablesel = `#${idtable}`
 
   $table = document.getElementById(idtable)
   if(!$table) return console.error(`table with id ${idtable} not found`)
 
-  console.log("dom.$table",$table)
+  //console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
     ...OPTIONS,
@@ -208,24 +208,24 @@ const dt_render = (options) => {
     },
 
     ajax: function(data, fnrender, settings) {
-      console.log("ajax start")
+      //console.log("ajax start")
       get_data(data, fnrender)
-      console.log("ajax end")
+      //console.log("ajax end")
     },//ajax
 
     initComplete: function() {
-      console.log("initComplete start")
+      //console.log("initComplete start")
       add_filter_events()
       is_rendered = true
       $search = document
         .getElementById(`${idtable}_filter`)
         .querySelector(`[type="search"]`)
-      console.log("initComplete end")
+      //console.log("initComplete end")
     },
     drawCallback: add_col_idx
   }
 
-  console.log("CONFIG", dtconfig)
+  //console.log("CONFIG", dtconfig)
   $dttable = $(tablesel).DataTable(dtconfig)
 
   $dttable
@@ -236,7 +236,7 @@ const dt_render = (options) => {
     .on("order.dt", function() {
       if (is_rendered) add_page_to_url(1, 3)
     })
-  console.log("$dttable:",$dttable)
+  //console.log("$dttable:",$dttable)
 }//dt_render
 
 export default dt_render
