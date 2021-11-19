@@ -55,6 +55,7 @@ const reset_filters = () => {
 
 const get_columns = () => {
   const cols = [
+    "id:int",
     "uuid:string",
     "fullname:string",
     "email:string",
@@ -78,7 +79,8 @@ const get_columns = () => {
       targets: i+1,
       data: colname,
       //searchable: false, no afecta en nada
-      visible: true,
+      visible: colname!=="id" ? true: false,
+      //visible: true,
       render: function (data, type, row) {
         return data
       }

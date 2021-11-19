@@ -14,11 +14,7 @@ use App\Enums\Model;
 
 final class UserModel extends AppModel
 {
-    public int $id;
-    public string $email = "";
-    public string $password = "";
-
-    public function __construct() 
+    public function __construct()
     {
         $this->fields = [
             "id" => [

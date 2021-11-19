@@ -5,7 +5,8 @@
  */
 use App\Factories\HelperFactory as HF;
 $dt = HF::get("Views/Datatable");
-$dt->add_column("uuid")
+$dt->add_column("id")
+    ->add_column("uuid")
     ->add_label("uuid")
     ->add_tooltip(__("uuid"))
     ->add_column("fullname")
