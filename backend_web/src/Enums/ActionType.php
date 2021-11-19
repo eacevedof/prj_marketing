@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-abstract class Action
+abstract class ActionType
 {
     const USERS_READ = "users:read";
     const USERS_WRITE = "users:write";
