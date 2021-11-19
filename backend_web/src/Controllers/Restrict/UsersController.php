@@ -10,7 +10,7 @@
 namespace App\Controllers\Restrict;
 use App\Enums\ActionType;
 use App\Enums\KeyType;
-use App\Enums\Url;
+use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
 use TheFramework\Helpers\HelperJson;
 use App\Traits\JsonTrait;
@@ -22,7 +22,7 @@ final class UsersController extends RestrictController
     public function index(?string $page=null): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
-            $this->location(Url::FORBIDDEN);
+            $this->location(UrlType::FORBIDDEN);
 
         $this->add_var(KeyType::PAGE_TITLE, __("USERS - list"));
         $this->render([
@@ -55,7 +55,7 @@ final class UsersController extends RestrictController
     public function info(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
-            $this->location(Url::FORBIDDEN);
+            $this->location(UrlType::FORBIDDEN);
 
         $this->add_var(KeyType::PAGE_TITLE, __("USERS - info"));
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ)) {
@@ -84,7 +84,7 @@ final class UsersController extends RestrictController
     public function search(): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
-            $this->location(Url::FORBIDDEN);
+            $this->location(UrlType::FORBIDDEN);
 
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
         try {
