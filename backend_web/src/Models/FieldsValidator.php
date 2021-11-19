@@ -62,26 +62,32 @@ final class FieldsValidator
         return false;
     }
 
+    private function _get_fields(): array
+    {
+        return array_keys($this->data);
+    }
+
     public function get_errors(): array
     {
-        $fields = $this->model->get_fieldnames();
+        $fields = $this->_get_fields();
 
-        foreach ($fields as $field) {
-            $label = $this->model->get_label($field);
-            // hay q revisar
-            if (!$this->model->is_field($field)) {
+        foreach ($fields as $postfield) {
+            $field = $this->model->get_field($postfield);
+            if(!$field) {
                 $this->_add_error(
-                    $field,
+                    $postfield,
                     "unrecognized",
-                    __("Unrecognized field {0}",$label),
-                    $label);
+                    __("Unrecognized field"),
+                    "");
                 continue;
             }
+
+            $label = $this->model->get_label($field);
 
             if (!$this->_is_length($field)) {
                 $ilen = $this->model->get_length();
                 $this->_add_error(
-                    $field,
+                    $postfield,
                     "length",
                     __("Max length allowed is {0}",$ilen),
                     $label);
@@ -91,18 +97,14 @@ final class FieldsValidator
             if (!$this->_is_type($field)) {
                 $type = $this->model->get_type($field);
                 $this->_add_error(
-                    $field,
+                    $postfield,
                     "type",
                     __("Wrong datatype. Allowed: {0}",$type),
                     $label);
-                continue;
             }
-
-
-
         }
 
-        return [];
+        return $this->errors;
     }
 
 
@@ -114,6 +116,7 @@ final class FieldsValidator
             "label" => $label,
             "message" => $message,
         ];
+        return $this;
     }
 
 }//FieldsValidator

@@ -41,6 +41,22 @@ abstract class AppModel
 
     public function is_field(string $field): bool
     {
-        return in_array($field, $this->get_fieldnames());
+         if(in_array($field, $this->get_fieldnames()))
+             return true;
+
+         $fields = array_map(function ($array){
+             return $array["in_post"] ?? "";
+         }, $this->fields);
+
+         return in_array($field, $fields);
+    }
+
+    public function get_field(string $postfield): string
+    {
+        foreach ($this->fields as $field => $array) {
+            if($array["in_post"] === $postfield)
+                return $field;
+        }
+        return "";
     }
 }//AppModel
