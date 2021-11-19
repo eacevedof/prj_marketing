@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-abstract class Platform
+abstract class PlatformType
 {
     const ETL = "0";
     const MOBILE = "1";
