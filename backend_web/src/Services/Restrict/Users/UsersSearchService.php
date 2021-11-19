@@ -9,8 +9,6 @@ use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
 
-use \Exception;
-
 final class UsersSearchService extends AppService
 {
     use SessionTrait;
@@ -18,7 +16,6 @@ final class UsersSearchService extends AppService
 
     private string $domain;
     private array $input;
-    private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
     private UserPermissionsRepository $permissionrepo;
 
@@ -26,13 +23,6 @@ final class UsersSearchService extends AppService
     {
         $this->input = $input;
         $this->_sessioninit();
-        $this->_cookieinit()
-            ->set_name("nombre")
-            ->set_domain("localhost")
-            ->set_valid_path("/")
-        ;
-
-        $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
     }

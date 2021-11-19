@@ -102,7 +102,7 @@ final class UsersController extends RestrictController
             $this->logerr($e->getMessage(),"UsersController.search");
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
-                ->show(1);
+                ->show();
         }
     }
 
@@ -112,7 +112,7 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(Action::USERS_WRITE))
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([__("Not allowed to perform this operation")])
-                ->show(1);
+                ->show();
 
         try {
             $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
@@ -127,7 +127,7 @@ final class UsersController extends RestrictController
             $this->logerr($e->getMessage(),"UsersController.search");
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
-                ->show(1);
+                ->show();
         }
     }
     
