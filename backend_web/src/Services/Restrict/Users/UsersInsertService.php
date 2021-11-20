@@ -34,13 +34,21 @@ final class UsersInsertService extends AppService
         $this->encdec = $this->_get_encdec();
     }
 
+    private function _add_rules(): FieldsValidator
+    {
+        $this->validator->add_rule("email", "email", function (){
+            return __("bad email");
+        });
+        return $this->validator;
+    }
+
     public function __invoke(): array
     {
         $insert = $this->_get_without_operations();
         if (!$insert)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        if ($errors = $this->validator->get_errors()) {
+        if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             $this->_exeption(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
         }
