@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Restrict;
 use App\Enums\ActionType;
+use App\Enums\ExceptionType;
 use App\Enums\KeyType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
@@ -37,10 +38,43 @@ final class UsersController extends RestrictController
                 "h1"=>__("Unauthorized")
             ],"/error/403");
         }
+        $this
+            ->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
+            ->render_nl([
+                "h1" => __("User create ^^")
+            ]);
+    }
 
-        $this->render_nl([
-            "h1" => __("User create ^^")
-        ]);
+    //@post
+    public function insert(): void
+    {
+        if (!$this->csrf->is_valid($csrf = $this->_get_csrf())) {
+            $this->_get_json()
+                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
+                ->set_error([__("Invalid CSRF token")])
+                ->show();
+        }
+
+        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([__("Not allowed to perform this operation")])
+                ->show();
+
+        try {
+            $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
+            $id = $insert();
+            $this->_get_json()->set_payload([
+                "message"=>__("auth ok"),
+                "result" => ["id"=>$id],
+            ])->show();
+        }
+        catch (\Exception $e)
+        {
+            $this->logerr($e->getMessage(),"UsersController.search");
+            $this->_get_json()->set_code($e->getCode())
+                ->set_error([$e->getMessage()])
+                ->show();
+        }
     }
 
     public function info(string $uuid): void
@@ -97,33 +131,6 @@ final class UsersController extends RestrictController
         }
     }
 
-    //@post
-    public function insert(): void
-    {
-        if (!$this->csrf->is_valid($this->_get_csrf())) {
-
-        }
-        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
-                ->set_error([__("Not allowed to perform this operation")])
-                ->show();
-
-        try {
-            $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
-            $id = $insert();
-            $this->_get_json()->set_payload([
-                "message"=>__("auth ok"),
-                "result" => ["id"=>$id],
-            ])->show();
-        }
-        catch (\Exception $e)
-        {
-            $this->logerr($e->getMessage(),"UsersController.search");
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
-                ->show();
-        }
-    }
     
     //@post
     public function update(string $uuid): void

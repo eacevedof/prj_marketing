@@ -144,7 +144,7 @@ final class AppView
         include_once($this->pathlayout);
     }
 
-    public function render_nl(): void
+    public function render_nl(array $vars = []): void
     {
         if (!$this->pathtemplate) {
             $this->_load_path_folder_template();
@@ -154,6 +154,9 @@ final class AppView
         if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
 
         foreach ($this->vars as $name => $value)
+            $$name = $value;
+
+        foreach ($vars as $name => $value)
             $$name = $value;
 
         include_once($this->pathtemplate);
