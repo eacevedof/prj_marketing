@@ -13,13 +13,13 @@ use App\Enums\ModelType;
 final class FieldsValidator
 {
     private array $rules = [];
-    private array $data;
+    private array $request;
     private AppModel $model;
     private array $errors = [];
 
-    public function __construct(array $data, AppModel $model)
+    public function __construct(array $request, AppModel $model)
     {
-        $this->data = $data;
+        $this->request = $request;
         $this->model = $model;
     }
     
@@ -27,7 +27,7 @@ final class FieldsValidator
     {
         $postkey = $this->model->get_postkey($field);
         $ilen = $this->model->get_length($field);
-        $value = $this->data[$postkey] ?? "";
+        $value = $this->request[$postkey] ?? "";
         return (strlen($value)<=$ilen);
     }
 
@@ -40,7 +40,7 @@ final class FieldsValidator
     {
         $postkey = $this->model->get_postkey($field);
         $type = $this->model->get_type($field);
-        $value = $this->data[$postkey] ?? null;
+        $value = $this->request[$postkey] ?? null;
 
         switch ($type) {
             case ModelType::INT: return is_integer($value) || is_null($value);
@@ -56,26 +56,26 @@ final class FieldsValidator
         return false;
     }
 
-    private function _get_fields(): array
+    private function _get_reqkeys(): array
     {
-        return array_keys($this->data);
+        return array_keys($this->request);
     }
 
     private function _check_rules(): void
     {
         foreach($this->rules as $rule) {
-            $postfield = $this->model->get_postkey($field = $rule["field"]);
+            $reqkey = $this->model->get_postkey($field = $rule["field"]);
             $label = $this->model->get_label($field);
             $message = $rule["fn"]([
-                "data" => $this->data,
+                "data" => $this->request,
                 "field" => $field,
-                "value" => $this->data[$postfield],
+                "value" => $this->request[$reqkey],
                 "label" => $label
             ]);
             
             if ($message) {
                 $this->_add_error(
-                    $postfield,
+                    $reqkey,
                     $rule["rule"],
                     $message,
                     $label);
@@ -96,13 +96,13 @@ final class FieldsValidator
 
     public function get_errors(): array
     {
-        $fields = $this->_get_fields();
+        $reqkeys = $this->_get_reqkeys();
 
-        foreach ($fields as $postfield) {
-            $field = $this->model->get_field($postfield);
+        foreach ($reqkeys as $reqkey) {
+            $field = $this->model->get_field($reqkey);
             if(!$field) {
                 $this->_add_error(
-                    $postfield,
+                    $reqkey,
                     "unrecognized",
                     __("Unrecognized field"),
                     "");
@@ -114,7 +114,7 @@ final class FieldsValidator
             if (!$this->_is_length($field)) {
                 $ilen = $this->model->get_length();
                 $this->_add_error(
-                    $postfield,
+                    $reqkey,
                     "length",
                     __("Max length allowed is {0}",$ilen),
                     $label);
@@ -124,7 +124,7 @@ final class FieldsValidator
             if (!$this->_is_type($field)) {
                 $type = $this->model->get_type($field);
                 $this->_add_error(
-                    $postfield,
+                    $reqkey,
                     "type",
                     __("Wrong datatype. Allowed: {0}",$type),
                     $label);
