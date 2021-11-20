@@ -79,14 +79,10 @@ final class FieldsValidator
                 "label" => $label
             ]);
             
-            if ($message) {
-                $this->_add_error(
-                    $reqkey,
-                    $rule["rule"],
-                    $message,
-                    $label);
-            }
-        }
+            if ($message)
+                $this->_add_error($reqkey, $rule["rule"], $message, $label);
+
+        }//foreach
     }
 
     private function _add_error(string $field, string $rule, string $message, string $label): self
