@@ -47,6 +47,7 @@ const App = {
 
           if(response?.errors?.length){
             console.error(response.errors)
+            //vendria errors[0].fields_validation
             return Swal.fire({
               icon: "warning",
               title: "Proceso incompleto",
