@@ -9,12 +9,14 @@
  */
 namespace App\Controllers\Restrict;
 use App\Enums\KeyType;
+use App\Enums\ExceptionType;
 use App\Services\Restrict\LoginService;
 use App\Factories\ServiceFactory as SF;
-use TheFramework\Helpers\HelperJson;
+use App\Traits\JsonTrait;
 
 final class LoginController extends RestrictController
 {
+    use JsonTrait;
     private LoginService $login;
 
     public function index(): void
@@ -29,24 +31,32 @@ final class LoginController extends RestrictController
     //@post
     public function access(): void
     {
-        $oJson = new HelperJson();
+        if (!$this->csrf->is_valid($this->_get_csrf())) {
+            $this->_get_json()
+                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
+                ->set_error([__("Invalid CSRF token")])
+                ->show();
+        }
+
         try {
             $post = $this->get_post();
-            $this->csrf->is_valid($post["csrf"]);
+
             $this->login = SF::get("Restrict\Login", $post);
 
             $result = $this->login->in();
-            $oJson->set_payload([
-                        "message"=>__("auth ok"),
-                        "lang" => $result["lang"]
-                    ])->show();
+            $this->_get_json()
+                ->set_payload([
+                    "message"=>__("auth ok"),
+                    "lang" => $result["lang"]
+                ])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.access");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+            $this->_get_json()
+                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
-                ->show(1);
+                ->show();
         }
     }
 }//LoginController

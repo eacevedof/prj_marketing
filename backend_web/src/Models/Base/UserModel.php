@@ -19,7 +19,7 @@ final class UserModel extends AppModel
         $this->fields = [
             "id" => [
                 "label" => __("ID"),
-                "postkey" => "id",
+                ModelType::REQUEST_KEY => "id",
                 "config" => [
                     "type" => ModelType::INT,
                     "length" => 11
@@ -27,7 +27,7 @@ final class UserModel extends AppModel
             ],
             "email" => [
                 "label" => __("Email"),
-                "postkey" => "email",
+                ModelType::REQUEST_KEY => "email",
                 "config" => [
                     "type" => ModelType::STRING,
                     "length" => 100
@@ -35,7 +35,7 @@ final class UserModel extends AppModel
             ],
             "secret" => [
                 "label" => __("Password"),
-                "postkey" => "password",
+                ModelType::REQUEST_KEY => "password",
                 "config" => [
                     "type" => ModelType::STRING,
                     "length" => 100
@@ -43,7 +43,7 @@ final class UserModel extends AppModel
             ],
             "phone" => [
                 "label" => __("Phone"),
-                "postkey" => "phone",
+                ModelType::REQUEST_KEY => "phone",
                 "config" => [
                     "type" => ModelType::STRING,
                     "length" => 20
@@ -52,7 +52,7 @@ final class UserModel extends AppModel
             
             "fullname" => [
                 "label" => __("Fullname"),
-                "postkey" => "fullname",
+                ModelType::REQUEST_KEY => "fullname",
                 "config" => [
                     "type" => ModelType::STRING,
                     "length" => 100
@@ -61,7 +61,7 @@ final class UserModel extends AppModel
 
             "address" => [
                 "label" => __("Address"),
-                "postkey" => "address",
+                ModelType::REQUEST_KEY => "address",
                 "config" => [
                     "type" => ModelType::STRING,
                     "length" => 250
@@ -70,7 +70,7 @@ final class UserModel extends AppModel
 
             "birthdate" => [
                 "label" => __("Birthdate"),
-                "postkey" => "birthdate",
+                ModelType::REQUEST_KEY => "birthdate",
                 "config" => [
                     "type" => ModelType::DATETIME
                 ]
@@ -78,7 +78,7 @@ final class UserModel extends AppModel
 
             "id_parent" => [
                 "label" => __("User admin"),
-                "postkey" => "id_parent",
+                ModelType::REQUEST_KEY => "id_parent",
                 "config" => [
                     "type" => ModelType::INT,
                     "length" => 11
@@ -87,7 +87,7 @@ final class UserModel extends AppModel
 
             "id_gender" => [
                 "label" => __("Gender"),
-                "postkey" => "id_gender",
+                ModelType::REQUEST_KEY => "id_gender",
                 "config" => [
                     "type" => ModelType::INT,
                     "length" => 11
@@ -96,7 +96,7 @@ final class UserModel extends AppModel
 
             "id_nationality" => [
                 "label" => __("Nationality"),
-                "postkey" => "id_nationality",
+                ModelType::REQUEST_KEY => "id_nationality",
                 "config" => [
                     "type" => ModelType::INT,
                     "length" => 11
@@ -105,7 +105,7 @@ final class UserModel extends AppModel
 
             "id_country" => [
                 "label" => __("Country"),
-                "postkey" => "id_country",
+                ModelType::REQUEST_KEY => "id_country",
                 "config" => [
                     "type" => ModelType::INT,
                     "length" => 11
@@ -114,7 +114,7 @@ final class UserModel extends AppModel
 
             "id_language" => [
                 "label" => __("Language"),
-                "postkey" => "id_language",
+                ModelType::REQUEST_KEY => "id_language",
                 "config" => [
                     "type" => ModelType::INT,
                     "length" => 11
@@ -123,7 +123,7 @@ final class UserModel extends AppModel
 
             "id_profile" => [
                 "label" => __("Role"),
-                "postkey" => "id_profile",
+                ModelType::REQUEST_KEY => "id_profile",
                 "config" => [
                     "type" => ModelType::INT,
                     "length" => 11

@@ -12,29 +12,40 @@ use App\Enums\RequestType;
 
 trait RequestTrait
 {
-    private array $request;
-    
+    protected array $request = [];
+
+    private function _load_request(array $request=[]): self
+    {
+        if($request) {
+            $this->request = $request;
+            return $this;
+        }
+        if($_GET) $this->request[RequestType::GET] = $_GET;
+        if($_POST) $this->request[RequestType::POST] = $_POST;
+        return $this;
+    }
+
     private function _get_without_operations(array $request=[]): array
     {
-        if(!$request) $request = $this->request;
+        if(!$request) $request = $this->request[RequestType::POST] ?? $this->request;
         if(!$request) return [];
         
         $without = [];
         foreach ($request as $key=>$value)
-            if(!substr($key,0,1)=="_")
+            if(substr($key,0,1)!="_")
                 $without[$key] = $value;
         return $without;
     }
 
-    private function _get_csrf(array $request=[]): string
+    protected function _get_csrf(array $request=[]): string
     {
-        if(!$request) $request = $this->request;
+        if(!$request) $request =  $this->request[RequestType::POST] ?? $this->request;
         return $request[RequestType::CSRF] ?? "";
     }
 
     private function _get_action(array $request=[]): string
     {
-        if(!$request) $request = $this->request;
+        if(!$request) $request =  $this->request[RequestType::POST] ?? $this->request;
         return $request[RequestType::ACTION] ?? "";
     }
 

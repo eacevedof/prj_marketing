@@ -13,25 +13,29 @@ use App\Controllers\AppController;
 use App\Factories\ComponentFactory as CF;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Auth\CsrfService;
+use App\Traits\RequestTrait;
 use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
 use App\Enums\UrlType;
 use App\Components\Auth\AuthComponent;
+use App\Enums\KeyType;
 
 abstract class RestrictController extends AppController
 {
     use ViewTrait;
     use SessionTrait;
+    use RequestTrait;
 
     protected CsrfService $csrf;
     protected AuthComponent $auth;
-    protected ?array $authuser = null;
+    protected ?array $authuser;
 
     public function __construct()
     {
+        $this->_load_request();
         $this->auth = CF::get("Auth\Auth");
         $this->csrf = SF::get("Auth\Csrf");
-        $this->authuser = $this->_sessioninit()->get("auth_user");
+        $this->authuser = $this->_sessioninit()->get(KeyType::AUTH_USER);
         $this->set_layout("restrict/restrict");
     }
 

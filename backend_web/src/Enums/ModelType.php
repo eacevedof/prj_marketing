@@ -21,4 +21,6 @@ abstract class ModelType
     const DELETE_USER = "delete_user";
     const DELETE_DATE = "delete_date";
     const DELETE_PLATFORM = "delete_platform";
+
+    const REQUEST_KEY = "requestkey";
 }
