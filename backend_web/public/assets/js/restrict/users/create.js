@@ -17,6 +17,11 @@ const fields = {
   btnsend: "enviar"
 }
 
+function clear_errors(){
+  const errors = Array.from($wrapper.querySelectorAll(`[approle="field-error"]`))
+  errors.forEach($div => $div.parentNode.removeChild($div))
+}
+
 function fields_errors(errors) {
   const fieldsid = Object.keys(fields)
 
@@ -77,6 +82,7 @@ const App = {
       .then(response => response.json())
       .then(response => {
         console.log("response",response)
+        clear_errors()
         this.issending = false
         this.btnsend = "Enviar"
 
