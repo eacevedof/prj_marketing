@@ -5,8 +5,28 @@ const ACTION = "users.insert"
 let CSRF = ""
 let $wrapper = null
 
+const fields = {
+  email: "eaf@eaf.com",
+  password: "1234",
+  password2: "1234",
+  fullname: "",
+  address: "",
+  birthdate: "",
 
-function renderError(error) {
+  issending: false,
+  btnsend: "enviar"
+}
+
+function fields_errors(errors) {
+  const fieldsid = Object.keys(fields)
+
+  const fiederrors = []
+  fieldsid.forEach(id => {
+    fiederrors.push({
+      id : errors.filter(objerr => objerr.field === id).map(objerr => objerr.message)
+    })
+  })
+
   let tpl = ""
   const fieldName = error.field
   if (fieldName) {
@@ -30,17 +50,7 @@ function renderError(error) {
 
 const App = {
   data() {
-    return {
-      email: "eaf@eaf.com",
-      password: "1234",
-      password2: "1234",
-      fullname: "",
-      address: "",
-      birthdate: "",
-
-      issending: false,
-      btnsend: "enviar"
-    }
+    return fields
   },
 
   methods: {
