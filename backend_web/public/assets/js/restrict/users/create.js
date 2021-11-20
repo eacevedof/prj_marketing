@@ -3,6 +3,7 @@ const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 let CSRF = ""
+let $wrapper = null
 
 const App = {
   data() {
@@ -49,6 +50,7 @@ const App = {
 
           if(response?.errors?.length){
             console.error(response.errors)
+            console.log(response.errors[0].fields_validation)
             //vendria errors[0].fields_validation
             return Swal.fire({
               icon: "warning",
@@ -81,8 +83,7 @@ const App = {
 //Vue.createApp(App).mount(ID_WRAPPER)
 
 export default () => {
-  //CSRF = document.querySelector(ID_WRAPPER).querySelector("#_csrf")?.value ?? ""
-  CSRF = document.querySelector("#_csrf")?.value ?? ""
-  console.log(CSRF)
+  $wrapper = document.querySelector(ID_WRAPPER)
+  CSRF = $wrapper.querySelector("#_csrf")?.value ?? ""
   Vue.createApp(App).mount(ID_WRAPPER)
 }
