@@ -67,6 +67,11 @@ export default function ModalRaw(idModal, idOpener=null) {
     return null
   }
 
+  this.no_background_click = () => {
+    if($modal) $modal.removeEventListener("click", hide)
+    return this
+  }
+
   (() => {
     //configuro los listeners
     $modal.addEventListener("click", hide)
