@@ -11,10 +11,10 @@ namespace App\Traits;
 
 trait ErrorTrait
 {
-    protected $arErrors = [];
-    protected $isError = FALSE;
+    protected array $arErrors = [];
+    protected bool $isError = false;
         
-    protected function add_error($sMessage){$this->isError = TRUE;$this->arErrors[]=$sMessage;}
+    protected function add_error($sMessage){$this->isError = true;$this->arErrors[]=$sMessage;}
 
     public function is_error(){return $this->isError;}
 
