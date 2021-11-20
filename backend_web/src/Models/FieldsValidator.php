@@ -16,6 +16,7 @@ final class FieldsValidator
     private array $request;
     private AppModel $model;
     private array $errors = [];
+    private array $skip = [];
 
     public function __construct(array $request, AppModel $model)
     {
@@ -99,12 +100,17 @@ final class FieldsValidator
         return (substr($key,0,1)=="_");
     }
 
+    private function _in_skip(string $key): bool
+    {
+        return in_array($key,$this->skip);
+    }
+
     public function get_errors(): array
     {
         $reqkeys = $this->_get_reqkeys();
 
         foreach ($reqkeys as $reqkey) {
-            if($this->_is_operation($reqkey))
+            if($this->_is_operation($reqkey) || $this->_in_skip($reqkey))
                 continue;
 
             $field = $this->model->get_field($reqkey);
@@ -143,6 +149,12 @@ final class FieldsValidator
 
         $this->_check_rules();
         return $this->errors;
+    }
+
+    public function add_skip(string $field): self
+    {
+        $this->skip[] = $field;
+        return $this;
     }
 
     public function add_rule(string $field, string $rule, callable $fn): self

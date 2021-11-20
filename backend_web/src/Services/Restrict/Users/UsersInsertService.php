@@ -34,6 +34,14 @@ final class UsersInsertService extends AppService
         $this->encdec = $this->_get_encdec();
     }
 
+    private function _skip_validation(): self
+    {
+        $this->validator
+            ->add_skip("password2")
+        ;
+        return $this;
+    }
+
     private function _add_rules(): FieldsValidator
     {
         $repository = $this->repository;
@@ -66,7 +74,7 @@ final class UsersInsertService extends AppService
         if (!$insert)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        if ($errors = $this->_add_rules()->get_errors()) {
+        if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             $this->_exeption(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
         }
