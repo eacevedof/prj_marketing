@@ -24,10 +24,11 @@ function clear_errors(){
 
 function fields_errors(errors) {
   const fieldsid = Object.keys(fields)
-
-  const fiederrors = []
+  const nonfieldsid = errors.filter(objerr => !fieldsid.includes(objerr.field)).map(objerr => objerr.field)
+  
+  const fielderrors = []
   fieldsid.forEach(id => {
-    fiederrors.push({
+    fielderrors.push({
       id,
       messages : errors.filter(objerr => objerr.field === id).map(objerr => objerr.message)
     })
@@ -38,11 +39,10 @@ function fields_errors(errors) {
       <ul>%lis%</ul>
     </div>
   `
-
-  fiederrors.forEach(obj => {
-    const lis = obj.messages.map(message => `<li>${message}</li>`).join("")
+  fielderrors.forEach(objfield => {
+    const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
     const html = tpl.replace("%lis%",lis)
-    let $input = $wrapper.querySelector(`#${obj.id}`)
+    let $input = $wrapper.querySelector(`#${objfield.id}`)
     if ($input) {
       $input.insertAdjacentHTML("afterend", html)
       $input.classList.add("form-error")
@@ -50,6 +50,21 @@ function fields_errors(errors) {
     }
   })
 
+  const nonerrors = []
+  nonfieldsid.forEach(id => {
+    nonerrors.push({
+      id,
+      label: errors.filter(objerr => objerr.field === id).map(objerr => objerr.label).join(""),
+      messages : errors.filter(objerr => objerr.field === id).map(objerr => objerr.message)
+    })
+  })
+  console.log(nonerrors)
+  nonerrors.forEach(objfield => {
+    const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
+    const html = tpl.replace("%lis%",`<li class="li-label">${objfield.label}</li>${lis}`)
+    console.log(html)
+    $wrapper.insertAdjacentHTML("afterbegin", html)
+  })
 }
 
 const App = {
