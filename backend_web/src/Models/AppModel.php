@@ -29,7 +29,7 @@ abstract class AppModel
 
     public function get_postkey(string $field): string
     {
-        return $this->fields[$field]["in_post"] ?? $field;
+        return $this->fields[$field][ModelType::REQUEST_KEY] ?? $field;
     }
 
     public function get_type(string $field): string
@@ -48,7 +48,7 @@ abstract class AppModel
              return true;
 
          $fields = array_map(function ($array){
-             return $array["in_post"] ?? "";
+             return $array[ModelType::REQUEST_KEY] ?? "";
          }, $this->fields);
 
          return in_array($field, $fields);
@@ -57,7 +57,7 @@ abstract class AppModel
     public function get_field(string $postfield): string
     {
         foreach ($this->fields as $field => $array) {
-            if($array["in_post"] === $postfield)
+            if($array[ModelType::REQUEST_KEY] === $postfield)
                 return $field;
         }
         return "";

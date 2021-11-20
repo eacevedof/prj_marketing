@@ -1,10 +1,8 @@
 <?php
 namespace App\Services\Restrict\Users;
-use App\Factories\ComponentFactory as CF;
 use App\Factories\RepositoryFactory;
 use App\Factories\ValidatorFactory as VF;
 use App\Models\Base\UserModel;
-use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
@@ -13,6 +11,7 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Factories\ModelFactory;
 use App\Traits\RequestTrait;
 use App\Enums\ExceptionType;
+use App\Models\FieldsValidator;
 
 final class UsersInsertService extends AppService
 {
@@ -30,7 +29,7 @@ final class UsersInsertService extends AppService
         $this->model = ModelFactory::get("Base/User");
         $this->validator = VF::get($input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
-        $this->request = $input;
+        $this->_load_request($input);
         $this->user = $this->_sessioninit()->get(KeyType::AUTH_USER);
         $this->encdec = $this->_get_encdec();
     }

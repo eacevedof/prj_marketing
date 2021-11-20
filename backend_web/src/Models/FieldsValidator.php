@@ -120,7 +120,7 @@ final class FieldsValidator
             $label = $this->model->get_label($field);
 
             if (!$this->_is_length($field)) {
-                $ilen = $this->model->get_length();
+                $ilen = $this->model->get_length($field);
                 $this->_add_error(
                     $reqkey,
                     "length",

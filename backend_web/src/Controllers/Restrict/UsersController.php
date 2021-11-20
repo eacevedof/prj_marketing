@@ -30,15 +30,6 @@ final class UsersController extends RestrictController
         ]);
     }
 
-/*
-["url"=>"/restrict/users/:uuid/info","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
-    ["url"=>"/restrict/users/:uuid/update","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
-    ["url"=>"/restrict/users/:uuid/delete","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["url"]],
-    ["url"=>"/restrict/users/:page/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
-    ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert"],
-    ["url"=>"/restrict/users/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"detail"],
-    ["url"=>"/restrict/users","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
- * */
     public function create(): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
@@ -109,6 +100,9 @@ final class UsersController extends RestrictController
     //@post
     public function insert(): void
     {
+        if (!$this->csrf->is_valid($this->_get_csrf())) {
+
+        }
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([__("Not allowed to perform this operation")])
@@ -125,7 +119,7 @@ final class UsersController extends RestrictController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"UsersController.search");
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
+            $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
                 ->show();
         }
