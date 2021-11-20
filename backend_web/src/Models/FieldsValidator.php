@@ -69,7 +69,7 @@ final class FieldsValidator
             $message = $rule["fn"]([
                 "data" => $this->request,
                 "field" => $field,
-                "value" => $this->request[$reqkey],
+                "value" => $this->request[$reqkey] ?? null,
                 "label" => $label
             ]);
             

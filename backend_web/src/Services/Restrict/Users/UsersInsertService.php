@@ -42,7 +42,19 @@ final class UsersInsertService extends AppService
                 return $repository->email_exists($data["value"]) ? __("This email already exists"): false;
             })
             ->add_rule("email", "email", function ($data) {
-                return __("Missing @");
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
+            ->add_rule("email", "email", function ($data) {
+                return filter_var($data["value"], FILTER_VALIDATE_EMAIL) ? false : __("Invalid email format");
+            })
+            ->add_rule("phone", "empty", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
+            ->add_rule("fullname", "empty", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
+            ->add_rule("birthdate", "empty", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
         ;
         return $this->validator;
