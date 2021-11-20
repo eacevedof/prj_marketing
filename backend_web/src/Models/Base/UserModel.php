@@ -72,7 +72,7 @@ final class UserModel extends AppModel
                 "label" => __("Birthdate"),
                 ModelType::REQUEST_KEY => "birthdate",
                 "config" => [
-                    "type" => ModelType::DATETIME
+                    "type" => ModelType::DATE
                 ]
             ],
 

@@ -28,7 +28,7 @@ abstract class AppModel
         return $this->fields[$field]["label"] ?? "";
     }
 
-    public function get_postkey(string $field): string
+    public function get_requestkey(string $field): string
     {
         return $this->fields[$field][ModelType::REQUEST_KEY] ?? $field;
     }

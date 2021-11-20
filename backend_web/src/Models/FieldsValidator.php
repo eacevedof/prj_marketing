@@ -26,22 +26,27 @@ final class FieldsValidator
     
     private function _is_length($field): bool
     {
-        $postkey = $this->model->get_postkey($field);
+        $reqkey = $this->model->get_requestkey($field);
         $ilen = $this->model->get_length($field);
-        $value = $this->request[$postkey] ?? "";
+        $value = $this->request[$reqkey] ?? "";
         return (strlen($value)<=$ilen);
     }
 
-    private function _is_datetime(string $datetime): bool
+    private function _is_datetime_ok(string $datetime): bool
     {
         return (date("Y-m-d H:i:s", strtotime($datetime)) == $datetime);
+    }
+
+    private function _is_date(string $field): bool
+    {
+        return in_array($this->model->get_type($field), [ModelType::DATE,ModelType::DATETIME]);
     }
     
     private function _is_type($field): bool
     {
-        $postkey = $this->model->get_postkey($field);
+        $reqkey = $this->model->get_requestkey($field);
         $type = $this->model->get_type($field);
-        $value = $this->request[$postkey] ?? null;
+        $value = $this->request[$reqkey] ?? null;
 
         switch ($type) {
             case ModelType::INT: return is_integer($value) || is_null($value);
@@ -49,7 +54,7 @@ final class FieldsValidator
             case ModelType::DATE:
                 return strtotime($value) || is_null($value) || $value==="";
             case ModelType::DATETIME:
-                return $this->_is_datetime($value) || is_null($value) || $value==="";
+                return $this->_is_datetime_ok($value) || is_null($value) || $value==="";
             case ModelType::STRING:
                 return is_string($field) || is_null($value) || is_integer($value) || is_float($value);
         }
@@ -65,7 +70,7 @@ final class FieldsValidator
     private function _check_rules(): void
     {
         foreach($this->rules as $rule) {
-            $reqkey = $this->model->get_postkey($field = $rule["field"]);
+            $reqkey = $this->model->get_requestkey($field = $rule["field"]);
             $label = $this->model->get_label($field);
             $message = $rule["fn"]([
                 "data" => $this->request,
@@ -125,12 +130,14 @@ final class FieldsValidator
 
             $label = $this->model->get_label($field);
 
-            if (!$this->_is_length($field)) {
+            if (!($this->_is_length($field) || $this->_is_date($field))) {
                 $ilen = $this->model->get_length($field);
+                $ilenreq = strlen($this->request[$reqkey] ?? "");
+
                 $this->_add_error(
                     $reqkey,
                     "length",
-                    __("Max length allowed is {0}",$ilen),
+                    __("Max length allowed is {0} chars. {1} size is {2}",$ilen, $label, $ilenreq),
                     $label);
                 continue;
             }
