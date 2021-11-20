@@ -2,6 +2,7 @@ const ID_WRAPPER = "#vue-users-create"
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
+const CSRF = document.getElementById("_csrf")?.value ?? ""
 
 const App = {
   data() {
@@ -30,7 +31,7 @@ const App = {
         },
         body: JSON.stringify({
           _action: ACTION,
-          _csrf: document.getElementById("_csrf")?.value ?? "",
+          _csrf: CSRF,
           email: this.email,
           password: this.password,
           fullname: this.fullname,
