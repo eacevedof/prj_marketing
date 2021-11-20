@@ -38,14 +38,12 @@ final class UsersController extends RestrictController
             $this->add_var(
                 "h1",__("Unauthorized"))
                 ->set_template("/error/403")
-                ->render()
-            ;
+                ->render_nl();
         }
-        $this
-            ->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
-            ->render_nl([
-                "h1" => __("User create ^^")
-            ]);
+
+        $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
+            ->add_var("h1",__("User create ^^"))
+            ->render_nl();
     }
 
     //@post
@@ -63,17 +61,24 @@ final class UsersController extends RestrictController
                 ->set_error([__("Not allowed to perform this operation")])
                 ->show();
 
+        /**
+         * @var UsersInsertService
+         */
+        $service = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
         try {
-            $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
-            $id = $insert();
+            $result = $service();
             $this->_get_json()->set_payload([
-                "message"=>__("auth ok"),
-                "result" => ["id"=>$id],
+                "message"=>__("User successfully created"),
+                "result" => $result,
             ])->show();
         }
         catch (\Exception $e)
         {
-            $this->logerr($e->getMessage(),"UsersController.search");
+            if ($service->is_error()) {
+                $this->_get_json()->set_code($e->getCode())
+                    ->set_error($service->get_errors())
+                    ->show();
+            }
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
                 ->show();

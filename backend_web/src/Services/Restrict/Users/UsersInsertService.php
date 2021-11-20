@@ -34,7 +34,7 @@ final class UsersInsertService extends AppService
         $this->encdec = $this->_get_encdec();
     }
 
-    public function __invoke(): string
+    public function __invoke(): array
     {
         $insert = $this->_get_without_operations();
         if (!$insert)
@@ -42,13 +42,18 @@ final class UsersInsertService extends AppService
 
         if ($errors = $this->validator->get_errors()) {
             $this->_set_errors($errors);
-            $this->_exeption(__("Fields validation"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exeption(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
         }
 
-        $insert["secret"] = $this->encdec->get_hashpassword($insert["password"]);
-        unset($insert["password"]);
+        $insert = $this->model->map_request($insert);
+        $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
+        $insert["uuid"] = uniqid();
         $this->model->add_sysinsert($insert,$this->user["id"]);
-        $r = $this->repository->insert($insert);
-        return $r;
+
+        $id = $this->repository->insert($insert);
+        return [
+            "id" => $id,
+            "uuid" => $insert["uuid"]
+        ];
     }
 }
