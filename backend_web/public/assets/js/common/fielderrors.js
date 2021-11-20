@@ -29,11 +29,10 @@ export const field_errors = () => {
   fielderrors.forEach(objfield => {
     const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
     const html = tpl.replace("%lis%",lis).replace("%css%","")
-    let $input = $wrapper.querySelector(`#${objfield.id}`)
+    const $input = $wrapper.querySelector(`#${objfield.id}`)
     if ($input) {
       $input.insertAdjacentHTML("afterend", html)
       $input.classList.add("form-error")
-      $input.focus()
     }
   })
 
@@ -53,6 +52,8 @@ export const field_errors = () => {
       .replace("%css%"," error-top")
     $wrapper.insertAdjacentHTML("afterbegin", html)
   })
+
+  if (fieldsid[0]) $wrapper.querySelector(`#${fieldsid[0]}`).focus()
 }
 
 const set_config = options => {
