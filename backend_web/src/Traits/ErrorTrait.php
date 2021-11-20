@@ -28,12 +28,10 @@ trait ErrorTrait
 
     public function is_error():bool{return $this->iserror;}
 
-    public function get_errors($inJson=0)
+    public function get_errors(bool $flattern=false): array
     {
-        $errors = $this->_get_flattened($this->errors);
-        if($inJson)
-            return json_encode($errors);
-        return $errors;
+        if(!$flattern) return $this->errors;
+        return $this->_get_flattened($this->errors);
     }
 
     public function get_error($i=0){return $this->errors[$i] ?? null;}
