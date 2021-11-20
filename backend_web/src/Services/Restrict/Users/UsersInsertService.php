@@ -11,11 +11,14 @@ use App\Traits\SessionTrait;
 use App\Enums\KeyType;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Factories\ModelFactory;
+use App\Traits\RequestTrait;
+use App\Enums\ExceptionType;
 
 final class UsersInsertService extends AppService
 {
     use SessionTrait;
-    private array $input;
+    use RequestTrait;
+
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
     private FieldsValidator $validator;
@@ -26,17 +29,16 @@ final class UsersInsertService extends AppService
         $this->model = ModelFactory::get("Base/User");
         $this->validator = VF::get($input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
-        $this->input = $input;
+        $this->request = $input;
         $this->_sessioninit();
         $this->encdec = $this->_get_encdec();
     }
 
     public function __invoke(): string
     {
+        $insert = $this->_get_without_operations();
+        $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        $insert = $this->input;
-        $f = array_filter(array_keys($insert), function ($k){ return substr($k,0,1)!=="_"; });
-        $insert = array_intersect_key($insert, array_flip($f));
         $insert["secret"] = $this->encdec->get_hashpassword($insert["password"]);
         unset($insert["password"]);
         $insert["insert_user"] = $this->session->get(KeyType::AUTH_USER)["id"] ?? "";
