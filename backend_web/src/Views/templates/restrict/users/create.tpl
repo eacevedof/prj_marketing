@@ -53,5 +53,24 @@
 </div>
 <script type="module">
 import vue from "/assets/js/restrict/users/create.js"
-vue()
+vue({
+  texts: {
+    tr00: <?$this->echo_js(__("send"));?>,
+    tr01: <?$this->echo_js(__("Sending..."));?>,
+    tr02: <?$this->echo_js(__("Send"));?>,
+    tr03: <?$this->echo_js(__("Incomplete process"));?>,
+    tr04: <?$this->echo_js(__("It was not possible to process your request. Please try again<br/>"));?>,
+    tr05: <?$this->echo_js(__("Something went wrong!"));?>,
+    tr06: <?$this->echo_js(__("Some unexpected error occurred"));?>,
+  },
+  fields:{
+    email: "",
+    password: "uu",
+    password2: "nnn",
+    fullname: "xx",
+    address: "xx",
+    birthdate: "",
+    phone: "mm",
+  }
+})
 </script>
