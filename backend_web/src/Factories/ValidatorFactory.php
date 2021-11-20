@@ -14,8 +14,8 @@ use App\Models\FieldsValidator;
 
 final class ValidatorFactory
 {
-    public static function get(array $post, AppModel $model): FieldsValidator
+    public static function get(array $request, AppModel $model): FieldsValidator
     {
-        return new FieldsValidator($post, $model);
+        return new FieldsValidator($request, $model);
     }
 }//ServiceFactory
