@@ -19,6 +19,7 @@ final class UsersInsertService extends AppService
     use SessionTrait;
     use RequestTrait;
 
+    private array $user;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
     private FieldsValidator $validator;
@@ -30,23 +31,25 @@ final class UsersInsertService extends AppService
         $this->validator = VF::get($input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
         $this->request = $input;
-        $this->_sessioninit();
+        $this->user = $this->_sessioninit()->get(KeyType::AUTH_USER);
         $this->encdec = $this->_get_encdec();
     }
 
     public function __invoke(): string
     {
         $insert = $this->_get_without_operations();
-        $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$insert)
+            $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
+        if ($errors = $this->validator->get_errors()) {
+            $this->_set_errors($errors);
+            $this->_exeption(__("Fields validation"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
         $insert["secret"] = $this->encdec->get_hashpassword($insert["password"]);
         unset($insert["password"]);
-        $insert["insert_user"] = $this->session->get(KeyType::AUTH_USER)["id"] ?? "";
-        $insert["insert_date"] = date("Y-m-d H:i:s");
-
-        if(!$insert) $this->_exeption(__("No data"));
-        $r = $this->repository->insert($insert, false);
-
+        $this->model->add_sysinsert($insert,$this->user["id"]);
+        $r = $this->repository->insert($insert);
         return $r;
     }
 }

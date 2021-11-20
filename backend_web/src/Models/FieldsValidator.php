@@ -94,11 +94,19 @@ final class FieldsValidator
         return $this;
     }
 
+    private function _is_operation(string $key): bool
+    {
+        return (substr($key,0,1)=="_");
+    }
+
     public function get_errors(): array
     {
         $reqkeys = $this->_get_reqkeys();
 
         foreach ($reqkeys as $reqkey) {
+            if($this->_is_operation($reqkey))
+                continue;
+
             $field = $this->model->get_field($reqkey);
             if(!$field) {
                 $this->_add_error(
