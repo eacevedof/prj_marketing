@@ -8,17 +8,13 @@ let CSRF = ""
 let $wrapper = null
 
 let texts = {
-  tr00: "enviar",
-  tr01: "Enviando...",
-  tr02: "Enviar",
-  tr03: "Proceso incompleto",
-  tr04: "No se ha podido procesar su petición. Por favor vuelva a intentarlo. <br/>",
-  tr05: "Vaya! Algo ha ido mal (c)",
-  tr06: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias.",
-  tr07: "",
-  tr08: "",
-  tr09: "",
-  tr10: "",
+  tr00: "send",
+  tr01: "Sending...",
+  tr02: "Send",
+  tr03: "Incomplete process",
+  tr04: "It was not possible to process your request. Please try again<br/>",
+  tr05: "Something went wrong!",
+  tr06: "Some unexpected error occurred",
 }
 
 const fields = {
