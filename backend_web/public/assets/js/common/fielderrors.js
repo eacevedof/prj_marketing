@@ -5,14 +5,13 @@ const tpl = `
   `
 let fieldsid = []
 let $wrapper = null
-let errors = []
 
-const clear_errors = () => {
+export const clear_errors = () => {
   const errors = Array.from($wrapper.querySelectorAll(`[approle="field-error"]`))
   errors.forEach($div => $div.parentNode.removeChild($div))
 }
 
-export const field_errors = () => {
+export const field_errors = (errors) => {
   clear_errors()
   const nonfieldsid = errors
                         .filter(objerr => !fieldsid.includes(objerr.field))
@@ -60,8 +59,6 @@ export const field_errors = () => {
 const set_config = options => {
   fieldsid = options.fields
   $wrapper = options.wrapper
-  errors = options.errors
-  console.log(options)
 }
 
 export default set_config
