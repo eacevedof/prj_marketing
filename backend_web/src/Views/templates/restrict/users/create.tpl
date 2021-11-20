@@ -64,13 +64,13 @@ vue({
     tr06: <?$this->echo_js(__("Some unexpected error occurred"));?>,
   },
   fields:{
-    email: "",
+    email: "mmm@ooo.com",
     password: "uu",
-    password2: "nnn",
-    fullname: "xx",
-    address: "xx",
+    password2: "uu",
+    fullname: "fff ulll",
+    address: "sss oo mmee aadd",
     birthdate: "",
-    phone: "mm",
+    phone: "444 333 222",
   }
 })
 </script>
