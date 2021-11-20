@@ -14,7 +14,8 @@ const fields = {
   birthdate: "",
 
   issending: false,
-  btnsend: "enviar"
+  btnsend: "enviar",
+  phone: "x",
 }
 
 function clear_errors(){
@@ -93,6 +94,7 @@ const App = {
           fullname: this.fullname,
           address: this.address,
           birthdate: this.birthdate,
+          phone: this.phone,
         })
       })
       .then(response => response.json())

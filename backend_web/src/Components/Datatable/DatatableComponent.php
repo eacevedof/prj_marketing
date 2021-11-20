@@ -22,7 +22,8 @@ final class DatatableComponent
     private function _load_fields(): void
     {
         foreach ($this->request["columns"] as $i => $column) {
-            $name = $column["data"] ?? $i;
+            if(!$name = ($column["data"] ?? ""))
+                continue;
             $value = $column["search"]["value"] ?? "";
             $this->fields[$name] = ["position"=>$i, "value"=>$value];
         }
