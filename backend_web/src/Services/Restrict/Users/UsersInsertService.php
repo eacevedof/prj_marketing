@@ -64,6 +64,12 @@ final class UsersInsertService extends AppService
             ->add_rule("birthdate", "empty", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
+            ->add_rule("password", "not-equal", function ($data){
+                return ($data["value"] === ($data["data"]["password2"] ?? "")) ? false : __("Bad password confirmation");
+            })
+            ->add_rule("password", "empty", function ($data){
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
         ;
         return $this->validator;
     }
