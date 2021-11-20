@@ -154,6 +154,8 @@ final class AppView
             $$name = $value;
 
         include_once($this->pathlayout);
+
+        $this->_flush();
     }
 
     public function render_nl(array $vars = []): void
@@ -173,6 +175,7 @@ final class AppView
             $$name = $value;
 
         include_once($this->pathtemplate);
+        $this->_flush();
     }
 
     public function add_var(string $name, $var): self
@@ -184,6 +187,12 @@ final class AppView
     public function echo_js($any): void
     {
         echo json_encode($any);
+    }
+
+    private function _flush(): void
+    {
+        ob_end_flush();
+        exit();
     }
 
 }//AppView

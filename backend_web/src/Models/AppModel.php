@@ -11,6 +11,7 @@ namespace App\Models;
 
 use App\Enums\ModelType;
 use App\Enums\PlatformType;
+use App\Enums\RequestType;
 
 abstract class AppModel
 {
@@ -54,49 +55,54 @@ abstract class AppModel
          return in_array($field, $fields);
     }
 
-    public function get_field(string $postfield): string
+    public function get_field(string $requestkey): string
     {
         foreach ($this->fields as $field => $array) {
-            if($array[ModelType::REQUEST_KEY] === $postfield)
+            if($array[ModelType::REQUEST_KEY] === $requestkey)
                 return $field;
         }
         return "";
     }
 
-    public function map_post(array $post): array
+    public function map_request(array $request): array
     {
-        $postfields = array_keys($post);
+        $reqkeys = array_keys($request);
         $mapped = [];
-        foreach ($postfields as $postfield) {
-            $dbfield = $this->get_field($postfield);
+        foreach ($reqkeys as $requestkey) {
+            $dbfield = $this->get_field($requestkey);
+            $dbtype = $this->get_type($dbfield);
             if($dbfield) {
-                $mapped[$dbfield] = $post[$postfield];
+                $mapped[$dbfield] = ($value = $request[$requestkey]);
+            }
+            
+            if(in_array($dbtype,[ModelType::DATE,ModelType::DATETIME]) && !$value) {
+                $mapped[$dbfield] = null;
             }
         }
         return $mapped;
     }
 
-    public function add_sysinsert(array &$post, string $user, string $platform=PlatformType::WEB): self
+    public function add_sysinsert(array &$request, string $user, string $platform=PlatformType::WEB): self
     {
-        $post[ModelType::INSERT_DATE] = date("Y-m-d H:i:s");
-        $post[ModelType::INSERT_USER] = $user;
-        $post[ModelType::INSERT_PLATFORM] = $platform;
+        $request[ModelType::INSERT_DATE] = date("Y-m-d H:i:s");
+        $request[ModelType::INSERT_USER] = $user;
+        $request[ModelType::INSERT_PLATFORM] = $platform;
         return $this;
     }
 
-    public function add_sysupdate(array &$post, string $user, string $platform=PlatformType::WEB): self
+    public function add_sysupdate(array &$request, string $user, string $platform=PlatformType::WEB): self
     {
-        $post[ModelType::UPDATE_DATE] = date("Y-m-d H:i:s");
-        $post[ModelType::UPDATE_USER] = $user;
-        $post[ModelType::UPDATE_PLATFORM] = $platform;
+        $request[ModelType::UPDATE_DATE] = date("Y-m-d H:i:s");
+        $request[ModelType::UPDATE_USER] = $user;
+        $request[ModelType::UPDATE_PLATFORM] = $platform;
         return $this;
     }
 
-    public function add_sysdelete(array &$post, string $user, string $platform=PlatformType::WEB): self
+    public function add_sysdelete(array &$request, string $user, string $platform=PlatformType::WEB): self
     {
-        $post[ModelType::DELETE_DATE] = date("Y-m-d H:i:s");
-        $post[ModelType::DELETE_USER] = $user;
-        $post[ModelType::DELETE_PLATFORM] = $platform;
+        $request[ModelType::DELETE_DATE] = date("Y-m-d H:i:s");
+        $request[ModelType::DELETE_USER] = $user;
+        $request[ModelType::DELETE_PLATFORM] = $platform;
         return $this;
     }
 }//AppModel
