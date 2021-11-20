@@ -23,29 +23,28 @@ function fields_errors(errors) {
   const fiederrors = []
   fieldsid.forEach(id => {
     fiederrors.push({
-      id : errors.filter(objerr => objerr.field === id).map(objerr => objerr.message)
+      id,
+      messages : errors.filter(objerr => objerr.field === id).map(objerr => objerr.message)
     })
   })
 
-  let tpl = ""
-  const fieldName = error.field
-  if (fieldName) {
-    tpl = `
-        <div approle="field-error">
-            <ul>
-                <li>${error.message}</li>
-            </ul>
-        </div>
-    `
-    let selector = `[name="${fieldName}"]`
-    let $input = document.querySelector(selector)
+  const tpl = `
+    <div approle="field-error">
+      <ul>%lis%</ul>
+    </div>
+  `
+
+  fiederrors.forEach(obj => {
+    const lis = obj.messages.map(message => `<li>${message}</li>`).join("")
+    const html = tpl.replace("%lis%",lis)
+    let $input = $wrapper.querySelector(`#${obj.id}`)
     if ($input) {
-      $input.insertAdjacentHTML("afterend", tpl)
+      $input.insertAdjacentHTML("afterend", html)
       $input.classList.add("form-error")
       $input.focus()
     }
-    return
-  }
+  })
+
 }
 
 const App = {
@@ -82,8 +81,10 @@ const App = {
         this.btnsend = "Enviar"
 
         if(response?.errors?.length){
-          console.error(response.errors)
-          console.log(response.errors[0].fields_validation)
+          const errors = response.errors[0]?.fields_validation
+          if(errors){
+            return fields_errors(errors)
+          }
           //vendria errors[0].fields_validation
           return Swal.fire({
             icon: "warning",
