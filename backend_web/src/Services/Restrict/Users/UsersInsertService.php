@@ -36,9 +36,15 @@ final class UsersInsertService extends AppService
 
     private function _add_rules(): FieldsValidator
     {
-        $this->validator->add_rule("email", "email", function (){
-            return __("bad email");
-        });
+        $repository = $this->repository;
+        $this->validator
+            ->add_rule("email", "email", function ($data) use ($repository){
+                return $repository->email_exists($data["value"]) ? __("This email already exists"): false;
+            })
+            ->add_rule("email", "email", function ($data) {
+                return __("Missing @");
+            })
+        ;
         return $this->validator;
     }
 
