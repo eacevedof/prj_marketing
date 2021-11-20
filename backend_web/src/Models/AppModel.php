@@ -58,7 +58,7 @@ abstract class AppModel
     public function get_field(string $requestkey): string
     {
         foreach ($this->fields as $field => $array) {
-            if($array[ModelType::REQUEST_KEY] === $requestkey)
+            if(($array[ModelType::REQUEST_KEY] ?? "") === $requestkey)
                 return $field;
         }
         return "";

@@ -10,13 +10,19 @@
         <div>
             <label for="email"><?=__("Email")?> *</label>
             <div id="field-email">
-                <input type="email" id="email" v-model="email" placeholder="<?=__("your email")?>" required="required">
+                <input type="email" id="email" v-model="email" required="required">
             </div>
         </div>
         <div>
             <label for="password"><?=__("Password")?> *</label>
             <div id="field-password">
-                <input id="password" id="password" type="password" v-model="password" required>
+                <input type="password" id="password"  v-model="password" required>
+            </div>
+        </div>
+        <div>
+            <label for="password2"><?=__("Password confirm")?> *</label>
+            <div id="field-password2">
+                <input type="password" id="password2" v-model="password2" required>
             </div>
         </div>
         <div>
