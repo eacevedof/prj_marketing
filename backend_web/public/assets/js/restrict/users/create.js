@@ -2,7 +2,7 @@ const ID_WRAPPER = "#vue-users-create"
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
-const CSRF = document.querySelector(ID_WRAPPER).querySelector("#_csrf")?.value ?? ""
+let CSRF = ""
 
 const App = {
   data() {
@@ -77,4 +77,9 @@ const App = {
 // en las siguientes no carga el form con vue. Por eso es mejor usar export
 //Vue.createApp(App).mount(ID_WRAPPER)
 
-export default () => Vue.createApp(App).mount(ID_WRAPPER)
+export default () => {
+  //CSRF = document.querySelector(ID_WRAPPER).querySelector("#_csrf")?.value ?? ""
+  CSRF = document.querySelector("#_csrf")?.value ?? ""
+  console.log(CSRF)
+  Vue.createApp(App).mount(ID_WRAPPER)
+}
