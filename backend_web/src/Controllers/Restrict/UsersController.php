@@ -76,7 +76,7 @@ final class UsersController extends RestrictController
         {
             if ($service->is_error()) {
                 $this->_get_json()->set_code($e->getCode())
-                    ->set_error($service->get_errors())
+                    ->set_error([["fields_validation" =>$service->get_errors()]])
                     ->show();
             }
             $this->_get_json()->set_code($e->getCode())
