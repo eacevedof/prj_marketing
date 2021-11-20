@@ -72,7 +72,7 @@ abstract class AppModel
             $dbfield = $this->get_field($requestkey);
             $dbtype = $this->get_type($dbfield);
             if($dbfield) {
-                $mapped[$dbfield] = ($value = $request[$requestkey]);
+                $mapped[$dbfield] = ($value = trim($request[$requestkey]));
             }
             
             if(in_array($dbtype,[ModelType::DATE,ModelType::DATETIME]) && !$value) {
