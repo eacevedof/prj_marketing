@@ -5,6 +5,29 @@ const ACTION = "users.insert"
 let CSRF = ""
 let $wrapper = null
 
+
+function renderError(error) {
+  let tpl = ""
+  const fieldName = error.field
+  if (fieldName) {
+    tpl = `
+        <div approle="field-error">
+            <ul>
+                <li>${error.message}</li>
+            </ul>
+        </div>
+    `
+    let selector = `[name="${fieldName}"]`
+    let $input = document.querySelector(selector)
+    if ($input) {
+      $input.insertAdjacentHTML("afterend", tpl)
+      $input.classList.add("form-error")
+      $input.focus()
+    }
+    return
+  }
+}
+
 const App = {
   data() {
     return {
@@ -42,36 +65,36 @@ const App = {
           birthdate: this.birthdate,
         })
       })
-        .then(response => response.json())
-        .then(response => {
-          console.log("response",response)
-          this.issending = false
-          this.btnsend = "Enviar"
+      .then(response => response.json())
+      .then(response => {
+        console.log("response",response)
+        this.issending = false
+        this.btnsend = "Enviar"
 
-          if(response?.errors?.length){
-            console.error(response.errors)
-            console.log(response.errors[0].fields_validation)
-            //vendria errors[0].fields_validation
-            return Swal.fire({
-              icon: "warning",
-              title: "Proceso incompleto",
-              html: "No se ha podido procesar esta acción. Por favor vuelve a intentarlo. <br/>"+response.errors[0],
-            })
-          }
-          window.location = URL_REDIRECT
-        })
-        .catch(error => {
-          console.error("catch.error", error)
-          Swal.fire({
-            icon: "error",
-            title: "Vaya! Algo ha ido mal (c)",
-            html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias.",
+        if(response?.errors?.length){
+          console.error(response.errors)
+          console.log(response.errors[0].fields_validation)
+          //vendria errors[0].fields_validation
+          return Swal.fire({
+            icon: "warning",
+            title: "Proceso incompleto",
+            html: "No se ha podido procesar esta acción. Por favor vuelve a intentarlo. <br/>"+response.errors[0],
           })
+        }
+        window.location = URL_REDIRECT
+      })
+      .catch(error => {
+        console.error("catch.error", error)
+        Swal.fire({
+          icon: "error",
+          title: "Vaya! Algo ha ido mal (c)",
+          html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias.",
         })
-        .finally(()=>{
-          this.issending = false
-          this.btnsend = "Enviar"
-        })
+      })
+      .finally(()=>{
+        this.issending = false
+        this.btnsend = "Enviar"
+      })
 
     }//onSubmit
 
