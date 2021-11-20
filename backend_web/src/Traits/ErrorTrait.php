@@ -15,10 +15,11 @@ trait ErrorTrait
     protected bool $iserror = false;
         
     protected function add_error($sMessage){$this->iserror = true;$this->errors[]=$sMessage;}
-    protected function _set_errors(array $errors){$this->iserror = true; $this->errors[]=$errors;}
+    protected function _set_errors(array $errors){$this->iserror = true; $this->errors=$errors;}
 
     private function _get_flattened(array $array): array
     {
+        //de un array asociativo devuelve un array simple
         $flatten = [];
         array_walk_recursive($array, function ($a) use (&$flatten) {
             $flatten[] = $a;
