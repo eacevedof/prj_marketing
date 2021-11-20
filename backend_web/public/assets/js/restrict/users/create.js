@@ -1,4 +1,4 @@
-import set_config, {field_errors} from "/assets/js/common/fielderrors.js"
+import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
 const ID_WRAPPER = "#vue-users-create"
 const URL_POST = "/restrict/users/insert"
@@ -7,15 +7,7 @@ const ACTION = "users.insert"
 let CSRF = ""
 let $wrapper = null
 
-let texts = {
-  tr00: "send",
-  tr01: "Sending...",
-  tr02: "Send",
-  tr03: "Incomplete process",
-  tr04: "It was not possible to process your request. Please try again<br/>",
-  tr05: "Something went wrong!",
-  tr06: "Some unexpected error occurred",
-}
+let texts = {}
 
 let fields = {
   email: "eaf@eaf.com",
@@ -40,6 +32,7 @@ const App = {
     onSubmit() {
       this.issending = true
       this.btnsend = texts.tr01
+      clear_errors()
 
       fetch(URL_POST, {
         method: "post",
@@ -68,11 +61,6 @@ const App = {
         if(response?.errors?.length){
           const errors = response.errors[0]?.fields_validation
           if(errors) {
-            set_config({
-              fields: Object.keys(fields),
-              wrapper: $wrapper,
-              errors
-            })
             return field_errors(errors)
           }
           return Swal.fire({
@@ -110,5 +98,9 @@ export default options => {
   fields = options.fields
   $wrapper = document.querySelector(ID_WRAPPER)
   CSRF = $wrapper.querySelector("#_csrf")?.value ?? ""
+  set_config({
+    fields: Object.keys(fields),
+    wrapper: $wrapper,
+  })
   Vue.createApp(App).mount(ID_WRAPPER)
 }
