@@ -9,26 +9,36 @@
         <input type="hidden" id="_csrf" value="<?=$csrf??""?>" />
         <div>
             <label for="email"><?=__("Email")?> *</label>
-            <input type="email" id="email" v-model="email" placeholder="<?=__("your email")?>" required="required">
+            <div id="field-email">
+                <input type="email" id="email" v-model="email" placeholder="<?=__("your email")?>" required="required">
+            </div>
         </div>
         <div>
             <label for="password"><?=__("Password")?> *</label>
-            <input id="password" type="password" v-model="password" required>
+            <div id="field-password">
+                <input id="password" id="password" type="password" v-model="password" required>
+            </div>
         </div>
         <div>
-            <label for="text"><?=__("Full name")?> *</label>
-            <input type="text" v-model="fullname" required>
+            <label for="fullname"><?=__("Full name")?> *</label>
+            <div id="field-fullname">
+                <input type="text" id="fullname" v-model="fullname" required>
+            </div>
         </div>
         <div>
-            <label for="text"><?=__("Address")?> *</label>
-            <input type="text" v-model="address">
+            <label for="address"><?=__("Address")?> *</label>
+            <div id="field-address">
+                <input type="text" id="address" v-model="address">
+            </div>
         </div>
         <div>
-            <label for="text"><?=__("Birthdate")?> *</label>
-            <input type="date" v-model="birthdate">
+            <label for="birthdate"><?=__("Birthdate")?> *</label>
+            <div id="field-birthdate">
+                <input type="date" id="birthdate" v-model="birthdate">
+            </div>
         </div>
         <div>
-            <button id="btn-contact" class="btn btn-dark" :disabled="issending" >
+            <button id="btn-submit" :disabled="issending" >
                 {{btnsend}}
                 <img v-if="issending" src="/assets/images/common/loading.png" width="25" height="25"/>
             </button>
