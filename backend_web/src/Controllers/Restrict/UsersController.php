@@ -25,18 +25,21 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
-        $this->add_var(KeyType::PAGE_TITLE, __("USERS - list"));
-        $this->render([
-            "h1" => __("Users")
-        ]);
+        $this
+            ->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
+            ->render([
+                "h1" => __("Users")
+            ]);
     }
 
     public function create(): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
-            $this->render_error([
-                "h1"=>__("Unauthorized")
-            ],"/error/403");
+            $this->add_var(
+                "h1",__("Unauthorized"))
+                ->set_template("/error/403")
+                ->render()
+            ;
         }
         $this
             ->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
@@ -48,7 +51,7 @@ final class UsersController extends RestrictController
     //@post
     public function insert(): void
     {
-        if (!$this->csrf->is_valid($csrf = $this->_get_csrf())) {
+        if (!$this->csrf->is_valid($this->_get_csrf())) {
             $this->_get_json()
                 ->set_code(ExceptionType::CODE_UNAUTHORIZED)
                 ->set_error([__("Invalid CSRF token")])

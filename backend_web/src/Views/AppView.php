@@ -25,11 +25,13 @@ final class AppView
     private const PATH_ASSETS_IMG = "/assets/images/";
     private const PATH_ASSETS_CSS = "/assets/css/";
 
-    private $request;
+    private array $request;
 
-    private $vars = [];
-    private $pathlayout = "";
-    private $pathtemplate = "";
+    private array $globals = [];
+    private array $locals = [];
+
+    private string $pathlayout = "";
+    private string $pathtemplate = "";
 
     public function __construct()
     {
@@ -61,7 +63,10 @@ final class AppView
 
     private function _template(): void
     {
-       foreach ($this->vars as $name => $value)
+       foreach ($this->globals as $name => $value)
+            $$name = $value;
+
+        foreach ($this->locals as $name => $value)
             $$name = $value;
 
        include_once($this->pathtemplate);
@@ -72,7 +77,7 @@ final class AppView
         $path = self::PATH_ELEMENTS."/$pathelement.tpl";
         if(!is_file($path)) $this->_exception("element $path does not exist!");
 
-        foreach ($this->vars as $name => $value)
+        foreach ($this->globals as $name => $value)
             $$name = $value;
 
         foreach ($vars as $name => $value)
@@ -114,20 +119,22 @@ final class AppView
         throw new Exception($message, $code);
     }
 
-    public function set_layout(string $pathlayout): AppView
+    public function set_layout(string $pathlayout): self
     {
         if($pathlayout) $this->pathlayout = self::PATH_LAYOUTS ."/$pathlayout.tpl";
         return $this;
     }
 
-    public function set_template(string $pathtemplate): AppView
+    public function set_template(string $pathtemplate): self
     {
         if($pathtemplate) $this->pathtemplate = self::PATH_TEMPLATES ."/$pathtemplate.tpl";
         return $this;
     }
 
-    public function render(): void
+    public function render(array $vars = []): void
     {
+        $this->locals = $vars;
+
         $this->_load_path_layout();
         if(!is_file($this->pathlayout)) $this->_exception("layout {$this->pathtemplate} not found");
 
@@ -138,7 +145,12 @@ final class AppView
 
         if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
 
-        foreach ($this->vars as $name => $value)
+        //esto publica para el layout más no para el template ya que
+        //el $this->_template() no ve estas variables y se llama dentro de pathlayout
+        foreach ($this->globals as $name => $value)
+            $$name = $value;
+
+        foreach ($this->locals as $name => $value)
             $$name = $value;
 
         include_once($this->pathlayout);
@@ -146,6 +158,7 @@ final class AppView
 
     public function render_nl(array $vars = []): void
     {
+        $this->locals = $vars;
         if (!$this->pathtemplate) {
             $this->_load_path_folder_template();
             $this->_load_path_template_name();
@@ -153,24 +166,18 @@ final class AppView
 
         if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
 
-        foreach ($this->vars as $name => $value)
+        foreach ($this->globals as $name => $value)
             $$name = $value;
 
-        foreach ($vars as $name => $value)
+        foreach ($this->locals as $name => $value)
             $$name = $value;
 
         include_once($this->pathtemplate);
     }
 
-    public function set_vars(array $vars): AppView
+    public function add_var(string $name, $var): self
     {
-        $this->vars = $vars;
-        return $this;
-    }
-
-    public function add_var(string $name, $var): AppView
-    {
-        if(trim($name)!=="") $this->vars[$name] = $var;
+        if(trim($name)!=="") $this->globals[$name] = $var;
         return $this;
     }
 
