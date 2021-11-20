@@ -17,7 +17,6 @@ use App\Traits\JsonTrait;
 final class LoginController extends RestrictController
 {
     use JsonTrait;
-    private LoginService $login;
 
     public function index(): void
     {
@@ -40,10 +39,7 @@ final class LoginController extends RestrictController
 
         try {
             $post = $this->get_post();
-
-            $this->login = SF::get("Restrict\Login", $post);
-
-            $result = $this->login->in();
+            $result = SF::get("Restrict\Login", $post)->in();
             $this->_get_json()
                 ->set_payload([
                     "message"=>__("auth ok"),
