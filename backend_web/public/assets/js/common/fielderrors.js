@@ -18,7 +18,7 @@ export const field_errors = () => {
                         .filter(objerr => !fieldsid.includes(objerr.field))
                         .map(objerr => objerr.field)
 
-  const fielderrors = []
+  let fielderrors = []
   fieldsid.forEach(id => {
     fielderrors.push({
       id,
@@ -26,6 +26,7 @@ export const field_errors = () => {
     })
   })
 
+  fielderrors = fielderrors.filter(obj => obj.messages.length>0)
   fielderrors.forEach(objfield => {
     const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
     const html = tpl.replace("%lis%",lis).replace("%css%","")
@@ -53,7 +54,7 @@ export const field_errors = () => {
     $wrapper.insertAdjacentHTML("afterbegin", html)
   })
 
-  if (fieldsid[0]) $wrapper.querySelector(`#${fieldsid[0]}`).focus()
+  if (fielderrors[0]) $wrapper.querySelector(`#${fielderrors[0].id}`).focus()
 }
 
 const set_config = options => {
