@@ -7,6 +7,20 @@ const ACTION = "users.insert"
 let CSRF = ""
 let $wrapper = null
 
+let texts = {
+  tr00: "enviar",
+  tr01: "Enviando...",
+  tr02: "Enviar",
+  tr03: "Proceso incompleto",
+  tr04: "No se ha podido procesar su petición. Por favor vuelva a intentarlo. <br/>",
+  tr05: "Vaya! Algo ha ido mal (c)",
+  tr06: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias.",
+  tr07: "",
+  tr08: "",
+  tr09: "",
+  tr10: "",
+}
+
 const fields = {
   email: "eaf@eaf.com",
   password: "1234",
@@ -14,7 +28,7 @@ const fields = {
   fullname: "",
   address: "",
   birthdate: "",
-  phone: "x",
+  phone: "888999777",
 }
 
 const App = {
@@ -22,14 +36,14 @@ const App = {
     return {
       ...fields,
       issending: false,
-      btnsend: "enviar",
+      btnsend: texts.tr00,
     }
   },
 
   methods: {
     onSubmit() {
       this.issending = true
-      this.btnsend = "Enviando..."
+      this.btnsend = texts.tr01
 
       fetch(URL_POST, {
         method: "post",
@@ -53,7 +67,7 @@ const App = {
       .then(response => {
         console.log("response",response)
         this.issending = false
-        this.btnsend = "Enviar"
+        this.btnsend = texts.tr01
 
         if(response?.errors?.length){
           const errors = response.errors[0]?.fields_validation
@@ -67,8 +81,8 @@ const App = {
           }
           return Swal.fire({
             icon: "warning",
-            title: "Proceso incompleto",
-            html: "No se ha podido procesar esta acción. Por favor vuelve a intentarlo. <br/>"+response.errors[0],
+            title: texts.tr03,
+            html: texts.tr04.concat(response.errors[0]),
           })
         }
         window.location = URL_REDIRECT
@@ -76,13 +90,13 @@ const App = {
       .catch(error => {
         Swal.fire({
           icon: "error",
-          title: "Vaya! Algo ha ido mal (c)",
-          html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias.",
+          title: texts.tr05,
+          html: texts.tr06,
         })
       })
       .finally(()=>{
         this.issending = false
-        this.btnsend = "Enviar"
+        this.btnsend = texts.tr02
       })
 
     }//onSubmit
