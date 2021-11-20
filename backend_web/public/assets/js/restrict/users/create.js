@@ -9,6 +9,7 @@ const App = {
     return {
       email: "eaf@eaf.com",
       password: "1234",
+      password2: "1234",
       fullname: "",
       address: "",
       birthdate: "",
@@ -34,6 +35,7 @@ const App = {
           _csrf: CSRF,
           email: this.email,
           password: this.password,
+          password2: this.password2,
           fullname: this.fullname,
           address: this.address,
           birthdate: this.birthdate,
