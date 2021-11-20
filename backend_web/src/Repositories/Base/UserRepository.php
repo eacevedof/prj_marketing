@@ -9,10 +9,8 @@
  */
 namespace App\Repositories\Base;
 
-use App\Models\Base\UserModel;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
-use App\Factories\ModelFactory as MF;
 use TheFramework\Components\Db\ComponentCrud;
 
 final class UserRepository extends AppRepository
@@ -39,9 +37,22 @@ final class UserRepository extends AppRepository
                 ->add_and("m.email='$email'")
                 ->get_selectfrom()
         ;
-        $ar = $this->db->query($sql);
-        if(count($ar)>1 || !$ar) return [];
-        return $ar[0];
+        $r = $this->db->query($sql);
+        if(count($r)>1 || !$r) return [];
+        return $r[0];
+    }
+
+    public function email_exists(string $email): bool
+    {
+        $email = $this->_get_sanitized($email);
+        $sql = $this->_get_crud()
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.email='$email'")
+            ->get_selectfrom()
+        ;
+        $r = $this->db->query($sql);
+        return count($r)>0;
     }
 
     private function _add_search(ComponentCrud $crud, array $search): void

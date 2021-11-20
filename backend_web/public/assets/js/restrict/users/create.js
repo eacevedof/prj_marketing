@@ -2,7 +2,7 @@ const ID_WRAPPER = "#vue-users-create"
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
-const CSRF = document.getElementById("_csrf")?.value ?? ""
+const CSRF = document.querySelector(ID_WRAPPER).querySelector("#_csrf")?.value ?? ""
 
 const App = {
   data() {
