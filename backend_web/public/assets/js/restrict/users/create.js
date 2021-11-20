@@ -17,7 +17,7 @@ let texts = {
   tr06: "Some unexpected error occurred",
 }
 
-const fields = {
+let fields = {
   email: "eaf@eaf.com",
   password: "1234",
   password2: "1234",
@@ -105,7 +105,9 @@ const App = {
 // en las siguientes no carga el form con vue. Por eso es mejor usar export
 //Vue.createApp(App).mount(ID_WRAPPER)
 
-export default () => {
+export default options => {
+  texts = options.texts
+  fields = options.fields
   $wrapper = document.querySelector(ID_WRAPPER)
   CSRF = $wrapper.querySelector("#_csrf")?.value ?? ""
   Vue.createApp(App).mount(ID_WRAPPER)
