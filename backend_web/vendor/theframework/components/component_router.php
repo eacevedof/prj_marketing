@@ -85,7 +85,7 @@ final class ComponentRouter
         $null = array_filter(
             array_values($route),
             function ($string) {
-                return strstr($string, "?:");
+                return (strstr($string, "?:") || strstr($string, "?int:"));
             }
         );
         return (bool) count($null);
@@ -113,7 +113,7 @@ final class ComponentRouter
             if ($this->_is_tag($sPiece)) {
                 $tag = $this->_get_taginfo($sPiece);
                 $value = $arRequest[$i] ?? null;
-                if(!$this->_match_type($value, $type = $tag["type"]))
+                if(!$this->_match_type($value, $tag["types"]))
                     return false;
 
                 $this->arArgs[$tag["key"]] = $value;
@@ -146,10 +146,13 @@ final class ComponentRouter
         );
     }
 
-    private function _match_type($mxvalue, string $type):bool
+    private function _match_type($mxvalue, array $types):bool
     {
-        if($type==="int" && is_numeric($mxvalue)) return true;
-        if($type==="string" && is_string($mxvalue)) return true;
+        foreach ($types as $type) {
+            if($type==="int" && is_numeric($mxvalue)) return true;
+            if($type==="string" && is_string($mxvalue)) return true;
+            if($type==="null" && $mxvalue===null) return true;
+        }
         return false;
     }
 
@@ -162,18 +165,21 @@ final class ComponentRouter
 
         $parts = explode(":",$sPiece);
         $r = [
-            "type" => "string",
+            "types" => ["string"],
             "key" => $parts[1]
         ];
         $before = $parts[0];
         switch ($before)
         {
-            case "":
-            case "?": return $r;
-
+            case "": return $r;
+            case "?":
+                $r["types"][] = "null";
+            break;
             case "?int":
+                $r["types"] = ["null","int"];
+            break;
             case "int":
-                $r["type"] = "int";
+                $r["types"] = ["int"];
         }
         return $r;
     }
