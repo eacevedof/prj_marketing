@@ -150,10 +150,7 @@ const get_init_conf = () => (
   {
     // l:length changing input control,
     // f: filtering, t: table, i:information sumary, p:pagination, r:processing
-    dom: "".concat(`<'row'<l><f>>
-<'row'<tr>>
-<'row'<i><p>>,`).concat("Blftipr")
-    ,
+    dom: "".concat(`<'row'<B>><'row'<l><f><i><p>>`),
     searchDelay: 2000,
     buttons: {
       buttons: get_buttons()
