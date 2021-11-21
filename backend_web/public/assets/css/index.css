@@ -3,3 +3,11 @@
   visibility: hidden;
   display: none;
 }
+
+.d {
+  border: 1px solid red !important;
+}
+
+.d-blue {
+  border: 1px solid blue !important;
+}

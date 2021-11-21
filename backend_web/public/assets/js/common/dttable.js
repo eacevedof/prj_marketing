@@ -41,7 +41,8 @@ const add_filter_events = () => {
   )
 }
 
-const add_col_idx = () => {
+const on_drawcallback = () => {
+  console.log("on_drawcallback se ejecuta despues de cada renderizado")
   dttable
     .column(0, {search:"applied", order:"applied"})
     .nodes()
@@ -150,7 +151,8 @@ const get_init_conf = () => (
   {
     // l:length changing input control,
     // f: filtering, t: table, i:information sumary, p:pagination, r:processing
-    dom: "".concat(`<'row'<B>><'row'<l><f><i><p>>`),
+    //dom: "".concat(`<'row'<'dred'B>><'row'<'dblue'l><f><i><p>>`),
+    dom: "Blfip",
     searchDelay: 2000,
     buttons: {
       buttons: get_buttons()
@@ -225,15 +227,20 @@ const dt_render = (options) => {
     },//ajax
 
     initComplete: function() {
-      //console.log("initComplete start")
+      console.log("initComplete start")
       add_filter_events()
       is_rendered = true
+      //esto es único por idtable
       $search = document
         .getElementById(`${idtable}_filter`)
         .querySelector(`[type="search"]`)
-      //console.log("initComplete end")
+      const $buttonsdiv = document.getElementById("table-datatable_wrapper")?.querySelector(".dt-buttons")
+      const $outsidediv = document.getElementById("div-table-datatable")?.querySelector(`[approle="table-buttons"]`)
+      $outsidediv.innerHTML = $buttonsdiv.innerHTML
+      $buttonsdiv.parentNode.removeChild($buttonsdiv)
+      console.log("initComplete end")
     },
-    drawCallback: add_col_idx
+    drawCallback: on_drawcallback
   }
 
   //console.log("CONFIG", dtconfig)
