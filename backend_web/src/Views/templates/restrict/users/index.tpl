@@ -23,7 +23,8 @@ $dt->add_column("id")
 $now = date("YmdHis");
 ?>
 <h1><?=$h1?></h1>
-<div id="div-datatable">
+<div id="div-table-datatable">
+    <div style="margin:0; padding:0; display:flex; justify-content:flex-end;" class="d" approle="table-buttons"></div>
     <table id="table-datatable" class="display" style="width:95%">
         <thead>
             <tr>
