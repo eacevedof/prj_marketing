@@ -2,12 +2,12 @@
 /**
  * @var \App\Views\AppView $this
  * @var string $h1
- * @var string $uuid
+ * @var ?string $uuid
  * @var array $userinfo
  */
 ?>
 <h1><?=$h1?></h1>
-<h2><?=($uuid ?? "")?></h2>
+<h2><?=$uuid ?? ""?></h2>
 <ul>
 <?php
 //prd($userinfo);
