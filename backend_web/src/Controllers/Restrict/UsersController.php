@@ -101,6 +101,7 @@ final class UsersController extends RestrictController
 
         $this
             ->add_var("h1",__("User info"))
+            ->add_var("uuid",$uuid)
             ->render_nl();
     }
 
