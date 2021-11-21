@@ -57,3 +57,14 @@ export const run_js = $jswrapper => {
     doc.head.appendChild($docscript).parentNode.removeChild($docscript)
   })
 }
+
+export const load_asset_css = paths => {
+  if (!paths) return
+
+  paths.forEach(path => {
+    const $link = document.createElement( "link" )
+    $link.href = `/assets/css/${path}.css`
+    $link.rel = "stylesheet"
+    document.head.appendChild($link).parentNode.removeChild($link)
+  })
+}
