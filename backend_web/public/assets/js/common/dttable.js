@@ -47,6 +47,7 @@ const on_drawcallback = () => {
     .column(0, {search:"applied", order:"applied"})
     .nodes()
     .each(($cell, i) => $cell.innerHTML = i+1)
+  load_rowbuttons_listeners()
 }
 
 const reset_filters = () => {
@@ -101,9 +102,9 @@ const get_columns = () => {
       //row: objeto
       //console.log("row:",row,"type:",type)
       const links = [
-        `<button type="button" uuid="${row.uuid}" approle="rowbtn-show">show</button>`,
-        `<button type="button" uuid="${row.uuid}" approle="rowbtn-edit">edit</button>`,
-        `<button type="button" uuid="${row.uuid}" approle="rowbtn-del">del</button>`,
+        `<button type="button" uuid="${row.uuid ?? ""}" approle="rowbtn-show">show</button>`,
+        `<button type="button" uuid="${row.uuid ?? ""}" approle="rowbtn-edit">edit</button>`,
+        `<button type="button" uuid="${row.uuid ?? ""}" approle="rowbtn-del">del</button>`,
       ]
 
       return links.join("&nbsp;");
@@ -255,7 +256,8 @@ const dt_render = (options) => {
       $search = document
         .getElementById(`${idtable}_filter`)
         .querySelector(`[type="search"]`)
-      load_rowbuttons_listeners()
+      //load_rowbuttons_listeners() no me vale aqui pq solo se carga para la prim pagina
+
       //const $buttonsdiv = document.getElementById("table-datatable_wrapper")?.querySelector(".dt-buttons")
       //const $outsidediv = document.getElementById("div-table-datatable")?.querySelector(`[approle="table-buttons"]`)
       //$outsidediv.innerHTML = $buttonsdiv.innerHTML
