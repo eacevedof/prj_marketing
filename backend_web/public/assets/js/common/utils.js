@@ -65,6 +65,7 @@ export const load_asset_css = paths => {
     const $link = document.createElement("link")
     $link.href = `/assets/css/${paths}.css`
     $link.rel = "stylesheet"
+    //si lo quito deja de funcionar
     return document.head.appendChild($link)//.parentNode.removeChild($link)
   }
 
