@@ -118,7 +118,7 @@ const load_rowbuttons_listeners = ()=> {
   let rowbuttons = $table.querySelectorAll(`[approle='rowbtn-show']`)
   //console.log("rowbuttons", rowbuttons)
   Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
-    console.log("btn",$btn)
+    //console.log("btn",$btn)
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/info/${uuid}`
     try {

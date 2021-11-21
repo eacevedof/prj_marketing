@@ -20,7 +20,7 @@ return [
     ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert", "allowed"=>["post"]],
     ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
     ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["post"]],
-    ["url"=>"/restrict/users/?:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
+    ["url"=>"/restrict/users/?int:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],

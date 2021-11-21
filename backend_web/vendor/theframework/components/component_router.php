@@ -111,9 +111,9 @@ final class ComponentRouter
         foreach($arRoute as $i=>$sPiece)
         {
             if ($this->_is_tag($sPiece)) {
-                $arg = $this->get_tagkey($sPiece);
+                $tag = $this->_get_taginfo($sPiece);
                 $value = $arRequest[$i] ?? null;
-                $this->arArgs[$arg] = $value;
+                $this->arArgs[$tag["key"]] = $value;
                 continue;
             }
             $sReqval = $arRequest[$i];
@@ -129,8 +129,8 @@ final class ComponentRouter
         {
             if(!$this->_is_tag($sPiece))
                 continue;
-            $sKey = $this->get_tagkey($sPiece);
-            $_GET[$sKey] = $arRequest[$i] ?? "";
+            $tag = $this->_get_taginfo($sPiece);
+            $_GET[$tag["key"]] = $arRequest[$i] ?? "";
         }
     }
     
@@ -143,7 +143,28 @@ final class ComponentRouter
         );
     }
     
-    private function get_tagkey($sPiece){return str_replace(["{","}","?:",":"],"",$sPiece);}
+    private function _get_taginfo($sPiece): array
+    {
+        //restrict/users/:page
+        //restrict/users/int:page
+        //restrict/users/?:page
+        //restrict/users/?int:page
+
+        $parts = explode(":",$sPiece);
+        $r = [
+            "type" => "string",
+            "key" => $parts[1]
+        ];
+        $before = $parts[0];
+        switch ($before)
+        {
+            case "":
+            case "?": return $r;
+            case "?int":
+            case "int": return $r["type"] = "int";
+        }
+        return $r;
+    }
     
     private function _explode_and(string $sAndstring): array
     {
