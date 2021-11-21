@@ -42,7 +42,7 @@ const add_filter_events = () => {
 }
 
 const on_drawcallback = () => {
-  console.log("on_drawcallback se ejecuta despues de cada renderizado")
+  //console.log("on_drawcallback se ejecuta despues de cada renderizado")
   dttable
     .column(0, {search:"applied", order:"applied"})
     .nodes()
@@ -96,18 +96,40 @@ const get_columns = () => {
   final.push({
     targets: -1,
     data: null,
-    render: function(data, type, row) {
+    render: function(row, type) {
+      //type: display
+      //row: objeto
+      //console.log("row:",row,"type:",type)
       const links = [
-        `<button type="button">show</button>`,
-        `<button type="button">edit</button>`,
-        `<button type="button">del</button>`,
-      ];
+        `<button type="button" uuid="${row.uuid}" approle="rowbtn-show">show</button>`,
+        `<button type="button" uuid="${row.uuid}" approle="rowbtn-edit">edit</button>`,
+        `<button type="button" uuid="${row.uuid}" approle="rowbtn-del">del</button>`,
+      ]
 
       return links.join("&nbsp;");
     },
   })
-  //console.log(final)
+
   return final
+}
+
+const load_rowbuttons_listeners = ()=> {
+  let rowbuttons = $table.querySelectorAll(`[approle='rowbtn-show']`)
+  //console.log("rowbuttons", rowbuttons)
+  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
+    console.log("btn",$btn)
+    const uuid = e.target.getAttribute("uuid")
+    const url = `/restrict/users/info/${uuid}`
+    try {
+      const r = await fetch(url)
+      const html = await r.text()
+      console.log("html",html)
+      window.modalraw.set_title("user info").set_body(html).show()
+    }
+    catch (error) {
+      console.log("info listener")
+    }
+  }))
 }
 
 const toggle_filters = () => {
@@ -226,18 +248,19 @@ const dt_render = (options) => {
     },//ajax
 
     initComplete: function() {
-      console.log("initComplete start")
+      //console.log("initComplete start")
       add_filter_events()
       is_rendered = true
       //esto es único por idtable
       $search = document
         .getElementById(`${idtable}_filter`)
         .querySelector(`[type="search"]`)
+      load_rowbuttons_listeners()
       //const $buttonsdiv = document.getElementById("table-datatable_wrapper")?.querySelector(".dt-buttons")
       //const $outsidediv = document.getElementById("div-table-datatable")?.querySelector(`[approle="table-buttons"]`)
       //$outsidediv.innerHTML = $buttonsdiv.innerHTML
       //$buttonsdiv.parentNode.removeChild($buttonsdiv)
-      console.log("initComplete end")
+      console.log("initComplete end table-ready")
     },
     drawCallback: on_drawcallback
   }
