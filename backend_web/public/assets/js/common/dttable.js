@@ -101,10 +101,11 @@ const get_columns = () => {
       //type: display
       //row: objeto
       //console.log("row:",row,"type:",type)
+      const uuid = row.uuid ?? "-1"
       const links = [
-        `<button type="button" uuid="${row.uuid ?? ""}" approle="rowbtn-show">show</button>`,
-        `<button type="button" uuid="${row.uuid ?? ""}" approle="rowbtn-edit">edit</button>`,
-        `<button type="button" uuid="${row.uuid ?? ""}" approle="rowbtn-del">del</button>`,
+        `<button type="button" uuid="${uuid}" approle="rowbtn-show">show</button>`,
+        `<button type="button" uuid="${uuid}" approle="rowbtn-edit">edit</button>`,
+        `<button type="button" uuid="${uuid}" approle="rowbtn-del">del</button>`,
       ]
 
       return links.join("&nbsp;");
@@ -125,7 +126,7 @@ const load_rowbuttons_listeners = ()=> {
       const r = await fetch(url)
       const html = await r.text()
       //console.log("html",html)
-      window.modalraw.set_body(html).show()
+      window.modalraw.disable_bgclick(false).set_body(html).show()
     }
     catch (error) {
       console.log("info listener")

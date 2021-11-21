@@ -148,7 +148,7 @@ final class ComponentRouter
 
     private function _match_type($mxvalue, string $type):bool
     {
-        if($type==="int" && is_int($mxvalue)) return true;
+        if($type==="int" && is_numeric($mxvalue)) return true;
         if($type==="string" && is_string($mxvalue)) return true;
         return false;
     }

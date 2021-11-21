@@ -113,8 +113,7 @@ final class UsersController extends RestrictController
         }
         catch (\Exception $e)
         {
-            $this->add_var("h1",__("User error"))
-                ->add_var("uuid", $uuid)
+            $this->add_var("h1", $e->getMessage())
                 ->render_nl();
         }
 
