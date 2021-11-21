@@ -1,5 +1,5 @@
 import {debounce} from "./utils.js"
-import render_spinner from "/assets/js/common/spinner.js"
+import render_spinner, {remove_spinner} from "/assets/js/common/spinner.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "./url.js"
@@ -164,7 +164,11 @@ const get_init_conf = () => (
 )
 
 const get_data = (data, fnrender) => {
+  const $body = $table.querySelector(`[approle="tbody"]`)
+  render_spinner($body)
+
   const url = get_url_with_params(OPTIONS.URL_SEARCH, data)
+
   fetch(url, {
     method: "GET",
     headers: new Headers({
@@ -175,7 +179,6 @@ const get_data = (data, fnrender) => {
   })
   .then(response => response.json())
   .then(response => {
-    //console.log("response:", response)
     fnrender({
       recordsTotal: response.data.recordsTotal,
       recordsFiltered: response.data.recordsFiltered,
@@ -186,7 +189,7 @@ const get_data = (data, fnrender) => {
     console.error("grid.error",error)
   })
   .finally(()=>{
-
+    remove_spinner()
   })
 }
 
@@ -210,8 +213,6 @@ const dt_render = (options) => {
 
     ajax: function(data, fnrender, settings) {
       //console.log("ajax start")
-      const $body = $table.querySelector(`[approle="tbody"]`)
-      render_spinner($body)
       get_data(data, fnrender)
       //console.log("ajax end")
     },//ajax
