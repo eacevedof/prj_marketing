@@ -58,7 +58,7 @@ window.addEventListener("load", () => dt_render({
         fetch(url)
           .then(response => response.text())
           .then(html => {
-            window.modalraw.no_background_click().set_body(html).show()
+            window.modalraw.disable_bgclick().set_body(html).show()
           })
           .catch(error => {
             console.log("users.create.tpl",error)
