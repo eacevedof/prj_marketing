@@ -1,4 +1,4 @@
-import {run_js} from "./utils.js"
+import {run_js} from "/assets/js/common/utils.js"
 
 export default function ModalRaw(idModal, idOpener=null) {
 
