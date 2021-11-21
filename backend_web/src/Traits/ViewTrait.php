@@ -43,17 +43,6 @@ trait ViewTrait
         $this->view->render();
     }
 
-    /*
-    protected function render_nl($vars=[], string $pathtemplate=""): void
-    {
-        $this->_viewinit();
-        foreach ($vars as $k => $v)
-            $this->view->add_var($k,$v);
-        if($pathtemplate) $this->view->set_template($pathtemplate);
-        $this->view->render_nl();
-    }
-    */
-
     protected function render_error($vars=[], string $pathtemplate=""): void
     {
         $this->_viewinit();
@@ -61,7 +50,6 @@ trait ViewTrait
             $this->view->add_var($k,$v);
         if($pathtemplate) $this->view->set_template($pathtemplate);
         $this->view->render();
-        exit();
     }
 
 }//ViewTrait
