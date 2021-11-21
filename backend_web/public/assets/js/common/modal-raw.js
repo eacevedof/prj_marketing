@@ -2,21 +2,25 @@ import {run_js} from "./utils.js"
 
 export default function ModalRaw(idModal, idOpener=null) {
 
+  let bgclick = true
   const $modal = document.getElementById(idModal)
   if(!$modal) return console.log("no modal found!",idModal)
 
-  const $dialog = $modal.querySelector(":scope > [role='modal-dialog']")
-  const $title = $dialog.querySelector(":scope > header > [role='title']")
-  const $btnClose = $dialog.querySelector(":scope > header > [role='btn-close']")
-  const $body = $dialog.querySelector(":scope > [role='body']")
+  const $dialog = $modal.querySelector("[role='modal-dialog']")
+  const $title = $dialog.querySelector("[role='title']")
+  const $btnClose = $dialog.querySelector("[role='btn-close']")
+  const $body = $dialog.querySelector("[role='body']")
   const $opener = idOpener ? document.getElementById(idOpener) : null
 
-  const show = () => {
+  const _show = () => {
     $modal.classList.remove("modal-hide")
     $modal.classList.add("modal-show")
   }
 
-  const hide = () => $modal.classList.add("modal-hide")
+  const _hide = ev => {
+    if(ev?.target?.id === idModal && !bgclick) return
+    $modal.classList.add("modal-hide")
+  }
 
   this.show = function (fnBefore, fnAfter) {
     if (fnBefore) {
@@ -24,7 +28,7 @@ export default function ModalRaw(idModal, idOpener=null) {
       if (abort) return this
     }
 
-    show()
+    _show()
     if(fnAfter) fnAfter()
     return this
   }
@@ -36,7 +40,7 @@ export default function ModalRaw(idModal, idOpener=null) {
     }
     $title.innerHTML = ""
     $body.innerHTML = ""
-    hide()
+    _hide()
     if(fnAfter) fnAfter()
     return this
   }
@@ -59,25 +63,25 @@ export default function ModalRaw(idModal, idOpener=null) {
   }
 
   this.destroy = () => {
-    if($modal) $modal.removeEventListener("click", hide)
-    if($opener) $opener.removeEventListener("click", show)
-    if($btnClose) $btnClose.removeEventListener("click", hide)
+    if($modal) $modal.removeEventListener("click", _hide)
+    if($opener) $opener.removeEventListener("click", _show)
+    if($btnClose) $btnClose.removeEventListener("click", _hide)
     if($title) $title.innerHTML = ""
     if($body) $body.innerHTML = ""
     return null
   }
 
-  this.no_background_click = () => {
-    if($modal) $modal.removeEventListener("click", hide)
+  this.disable_bgclick = (on=true) => {
+    bgclick = !on
     return this
   }
 
   (() => {
     //configuro los listeners
-    $modal.addEventListener("click", hide)
-    if ($dialog) $dialog.addEventListener("click", e => e.stopPropagation())
-    if ($opener) $opener.addEventListener("click", show)
-    if ($btnClose) $btnClose.addEventListener("click", hide)
+    $modal.addEventListener("click", _hide)
+    if ($dialog) $dialog.addEventListener("click", ev => ev.stopPropagation())
+    if ($opener) $opener.addEventListener("click", _show)
+    if ($btnClose) $btnClose.addEventListener("click", _hide)
   })()
 
 }//ModalRaw
