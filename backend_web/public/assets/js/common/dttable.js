@@ -123,8 +123,8 @@ const load_rowbuttons_listeners = ()=> {
     try {
       const r = await fetch(url)
       const html = await r.text()
-      console.log("html",html)
-      window.modalraw.set_title("user info").set_body(html).show()
+      //console.log("html",html)
+      window.modalraw.set_body(html).show()
     }
     catch (error) {
       console.log("info listener")
