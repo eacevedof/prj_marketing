@@ -1,4 +1,4 @@
-import {load_asset_css} from "/assets/common/utils.js"
+import {load_asset_css} from "/assets/js/common/utils.js"
 const PATH = "spinner"
 load_asset_css([PATH])
 
@@ -10,9 +10,9 @@ const spinner = `
 </div>
 `
 
-const remove_spinner = () => {
+export const remove_spinner = () => {
   const $spinner = $wrapper.querySelector(`[approle="spinner"]`)
-  $spinner.parentNode.removeChild($spinner)
+  if($spinner) $spinner.parentNode.removeChild($spinner)
 }
 
 const add_spinner = () => {
@@ -23,6 +23,7 @@ const add_spinner = () => {
 const render_spinner = $cont => {
   $wrapper = $cont
   if(!$wrapper) return
+  console.log("wrapper:",$wrapper)
   remove_spinner()
   add_spinner()
 }
