@@ -1,8 +1,10 @@
 import {debounce} from "./utils.js"
-import render_spinner, {remove_spinner} from "/assets/js/common/spinner.js"
+import {load_asset_css} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "./url.js"
+
+load_asset_css("spinner")
 
 let OPTIONS = {}
 let is_rendered = false
@@ -160,12 +162,15 @@ const get_init_conf = () => (
     fixedHeader: true,
     order: [[ 1, "desc" ]],
     //language: get_language(),
+    language: {
+      processing:"<div class=\"spinner\" approle=\"spinner\"><div class=\"spinner-loader\"></div></div>"
+    }
   }
 )
 
 const get_data = (data, fnrender) => {
   const $body = $table.querySelector(`[approle="tbody"]`)
-  render_spinner($body)
+  //render_spinner($body)
 
   const url = get_url_with_params(OPTIONS.URL_SEARCH, data)
 
@@ -189,7 +194,7 @@ const get_data = (data, fnrender) => {
     console.error("grid.error",error)
   })
   .finally(()=>{
-    remove_spinner()
+    //remove_spinner()
   })
 }
 
