@@ -1,4 +1,5 @@
 /*index.css (main)*/
 .hidden {
   visibility: hidden;
+  display: none;
 }

@@ -1,12 +1,12 @@
-//alert("hola")
 import {debounce} from "./utils.js"
+import render_spinner from "/assets/js/common/spinner.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "./url.js"
 
 let OPTIONS = {}
 let is_rendered = false
-let $dttable = null
+let dttable = null
 let $table = null
 let $search = null
 
@@ -21,7 +21,7 @@ const get_page = perpage => {
 }
 
 const add_filter_events = () => {
-  if (!$dttable) return
+  if (!dttable) return
   const debouncetime = 1000
 
   const on_event = e => {
@@ -30,7 +30,7 @@ const add_filter_events = () => {
     if (!colidx) return
     const value = $input.value
     //sin draw no busca
-    $dttable.columns(colidx).search(value).draw()
+    dttable.columns(colidx).search(value).draw()
   }
 
   const inputs = $table.querySelectorAll(`[approle="column-search"]`)
@@ -40,7 +40,7 @@ const add_filter_events = () => {
 }
 
 const add_col_idx = () => {
-  $dttable
+  dttable
     .column(0, {search:"applied", order:"applied"})
     .nodes()
     .each(($cell, i) => $cell.innerHTML = i+1)
@@ -50,7 +50,7 @@ const reset_filters = () => {
   const inputs = Array.from($table.querySelectorAll(`[approle="column-search"]`))
   inputs.push($search)
   inputs.forEach( $input => $input.value = "")
-  $dttable.search("").columns().search("").draw()
+  dttable.search("").columns().search("").draw()
 }
 
 const get_columns = () => {
@@ -65,6 +65,7 @@ const get_columns = () => {
     "id_language:string",
   ]
 
+  //columna con numeros
   const final = [{
     searchable: false,
     orderable: false,
@@ -94,9 +95,9 @@ const get_columns = () => {
     data: null,
     render: function(data, type, row) {
       const links = [
-        `<span>show</span>`,
-        `<span>edit</span>`,
-        `<span>del</span>`,
+        `<button type="button">show</button>`,
+        `<button type="button">edit</button>`,
+        `<button type="button">del</button>`,
       ];
 
       return links.join("&nbsp;");
@@ -122,7 +123,7 @@ const get_buttons = () => [
   },
   {
     text: OPTIONS.BUTTONS.REFRESH.LABEL,
-    action: () => $dttable.draw(),
+    action: () => dttable.draw(),
     attr: {
       "data-tooltip": OPTIONS.BUTTONS.REFRESH.TOOLTIP
     }
@@ -146,6 +147,7 @@ const get_buttons = () => [
 const get_init_conf = () => (
   {
     dom: "Blftipr",
+    searchDelay: 2000,
     buttons: {
       buttons: get_buttons()
     },
@@ -158,7 +160,6 @@ const get_init_conf = () => (
     fixedHeader: true,
     order: [[ 1, "desc" ]],
     //language: get_language(),
-    //searchDelay: 1500,
   }
 )
 
@@ -182,7 +183,7 @@ const get_data = (data, fnrender) => {
     })
   })
   .catch(error => {
-    //console.log("get_data.error",error)
+    console.error("grid.error",error)
   })
   .finally(()=>{
 
@@ -209,6 +210,8 @@ const dt_render = (options) => {
 
     ajax: function(data, fnrender, settings) {
       //console.log("ajax start")
+      const $body = $table.querySelector(`[approle="tbody"]`)
+      render_spinner($body)
       get_data(data, fnrender)
       //console.log("ajax end")
     },//ajax
@@ -226,17 +229,17 @@ const dt_render = (options) => {
   }
 
   //console.log("CONFIG", dtconfig)
-  $dttable = $(tablesel).DataTable(dtconfig)
+  dttable = $(tablesel).DataTable(dtconfig)
 
-  $dttable
+  dttable
     .on("page.dt", function() {
-      const pagemin = $dttable.page.info()?.page ?? 0
+      const pagemin = dttable.page.info()?.page ?? 0
       add_page_to_url(pagemin+1, 3)
     })
     .on("order.dt", function() {
       if (is_rendered) add_page_to_url(1, 3)
     })
-  //console.log("$dttable:",$dttable)
+  //console.log("dttable:",dttable)
 }//dt_render
 
 export default dt_render

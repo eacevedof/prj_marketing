@@ -33,6 +33,7 @@ $now = date("YmdHis");
                 <?= $dt->get_search_tds() ?>
             </tr>
         </thead>
+        <tbody approle="tbody"></tbody>
         <tfoot>
             <tr>
                 <?= $dt->get_tf() ?>
