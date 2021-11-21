@@ -13,6 +13,7 @@ use App\Enums\ExceptionType;
 use App\Enums\KeyType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
+use App\Services\Restrict\Users\UsersInfoService;
 use TheFramework\Helpers\HelperJson;
 use App\Traits\JsonTrait;
 
@@ -99,10 +100,24 @@ final class UsersController extends RestrictController
             ],"/error/403");
         }
 
-        $this
-            ->add_var("h1",__("User info"))
-            ->add_var("uuid",$uuid)
-            ->render_nl();
+        /**
+         * @var UsersInfoService
+         */
+        $service = SF::get_callable("Restrict\Users\UsersInfo", [$uuid]);
+        try {
+            $result = $service();
+            $this->add_var("h1",__("User info"))
+                ->add_var("uuid",$uuid)
+                ->add_var("userinfo", $result)
+                ->render_nl();
+        }
+        catch (\Exception $e)
+        {
+            $this->add_var("h1",__("User error"))
+                ->add_var("uuid", $uuid)
+                ->render_nl();
+        }
+
     }
 
     public function detail(string $uuid): void

@@ -126,4 +126,17 @@ final class UserRepository extends AppRepository
         ];
     }
 
+    public function get_info(string $uuid): array
+    {
+        $uuid = $this->_get_sanitized($uuid);
+        $sql = $this->_get_crud()->set_table("$this->table as m")
+            ->set_getfields([
+                "m.id, m.email, m.secret, m.insert_date, m.inser_user, m.fullname, m.address, m.birthdate"
+            ])
+            ->add_and("m.uuid='$uuid'")
+            ->get_selectfrom()
+        ;
+        $r = $this->db->query($sql);
+        return $r[0] ?? [];
+    }
 }//UserRepository

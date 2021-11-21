@@ -51,8 +51,8 @@ window.addEventListener("load", () => dt_render({
   URL_ADD: "/restrict/users/create",
   BUTTONS: {
     INSERT: {
-      LABEL: <?$this->echo_js(__("Add"));?>,
-      TOOLTIP: <?$this->echo_js(__("Add"));?>,
+      LABEL: <?$this->_echo_js(__("Add"));?>,
+      TOOLTIP: <?$this->_echo_js(__("Add"));?>,
       ACTION: function (){
         const url = "/restrict/users/create"
         fetch(url)
@@ -69,16 +69,16 @@ window.addEventListener("load", () => dt_render({
       }
     },
     REFRESH: {
-      LABEL: <?$this->echo_js(__("Refresh"));?>,
-      TOOLTIP: <?$this->echo_js(__("Refresh"));?>,
+      LABEL: <?$this->_echo_js(__("Refresh"));?>,
+      TOOLTIP: <?$this->_echo_js(__("Refresh"));?>,
     },
     FILTER_SHOW: {
-      LABEL: <?$this->echo_js(__("Show filters"));?>,
-      TOOLTIP: <?$this->echo_js(__("Show filters"));?>,
+      LABEL: <?$this->_echo_js(__("Show filters"));?>,
+      TOOLTIP: <?$this->_echo_js(__("Show filters"));?>,
     },
     FILTER_RESET: {
-      LABEL: <?$this->echo_js(__("Reset filters"));?>,
-      TOOLTIP: <?$this->echo_js(__("Reset filters"));?>,
+      LABEL: <?$this->_echo_js(__("Reset filters"));?>,
+      TOOLTIP: <?$this->_echo_js(__("Reset filters"));?>,
     },
   }
 }))
