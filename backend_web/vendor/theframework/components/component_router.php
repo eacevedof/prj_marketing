@@ -113,6 +113,9 @@ final class ComponentRouter
             if ($this->_is_tag($sPiece)) {
                 $tag = $this->_get_taginfo($sPiece);
                 $value = $arRequest[$i] ?? null;
+                if(!$this->_match_type($value, $type = $tag["type"]))
+                    return false;
+
                 $this->arArgs[$tag["key"]] = $value;
                 continue;
             }
@@ -142,8 +145,15 @@ final class ComponentRouter
             strstr($sPiece,"?:")
         );
     }
-    
-    private function _get_taginfo($sPiece): array
+
+    private function _match_type($mxvalue, string $type):bool
+    {
+        if($type==="int" && is_int($mxvalue)) return true;
+        if($type==="string" && is_string($mxvalue)) return true;
+        return false;
+    }
+
+    private function _get_taginfo(string $sPiece): array
     {
         //restrict/users/:page
         //restrict/users/int:page
@@ -160,8 +170,10 @@ final class ComponentRouter
         {
             case "":
             case "?": return $r;
+
             case "?int":
-            case "int": return $r["type"] = "int";
+            case "int":
+                $r["type"] = "int";
         }
         return $r;
     }
