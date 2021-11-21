@@ -101,7 +101,8 @@ const get_columns = () => {
       //type: display
       //row: objeto
       //console.log("row:",row,"type:",type)
-      const uuid = row.uuid ?? "-1"
+      const uuid = row.uuid ?? ""
+      if(!uuid) return ""
       const links = [
         `<button type="button" uuid="${uuid}" approle="rowbtn-show">show</button>`,
         `<button type="button" uuid="${uuid}" approle="rowbtn-edit">edit</button>`,
@@ -176,7 +177,7 @@ const get_init_conf = () => (
     // l:length changing input control,
     // f: filtering, t: table, i:information sumary, p:pagination, r:processing (la r es necesria para la personalizacion de language.prcessiong)
     dom: "<'table-buttons'B>lfipr<bottam>p",
-    searchDelay: 2000,
+    searchDelay: 1500,
     buttons: {
       buttons: get_buttons()
     },
@@ -263,6 +264,7 @@ const dt_render = (options) => {
       //const $outsidediv = document.getElementById("div-table-datatable")?.querySelector(`[approle="table-buttons"]`)
       //$outsidediv.innerHTML = $buttonsdiv.innerHTML
       //$buttonsdiv.parentNode.removeChild($buttonsdiv)
+      $search.focus()
       console.log("initComplete end table-ready")
     },
     drawCallback: on_drawcallback
