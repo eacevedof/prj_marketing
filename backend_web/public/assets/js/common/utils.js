@@ -65,13 +65,13 @@ export const load_asset_css = paths => {
     const $link = document.createElement("link")
     $link.href = `/assets/css/${paths}.css`
     $link.rel = "stylesheet"
-    return document.head.appendChild($link).parentNode.removeChild($link)
+    return document.head.appendChild($link)//.parentNode.removeChild($link)
   }
 
   paths.forEach(path => {
     const $link = document.createElement( "link" )
     $link.href = `/assets/css/${path}.css`
     $link.rel = "stylesheet"
-    document.head.appendChild($link).parentNode.removeChild($link)
+    document.head.appendChild($link)//.parentNode.removeChild($link)
   })
 }
