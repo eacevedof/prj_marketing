@@ -32,6 +32,7 @@ final class UsersController extends RestrictController
             ]);
     }
 
+    //@modal
     public function create(): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
@@ -85,6 +86,7 @@ final class UsersController extends RestrictController
         }
     }
 
+    //@modal
     public function info(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
@@ -97,6 +99,9 @@ final class UsersController extends RestrictController
             ],"/error/403");
         }
 
+        $this
+            ->add_var("h1",__("User info"))
+            ->render_nl();
     }
 
     public function detail(string $uuid): void
