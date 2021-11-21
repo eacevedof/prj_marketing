@@ -152,7 +152,7 @@ const get_init_conf = () => (
     // l:length changing input control,
     // f: filtering, t: table, i:information sumary, p:pagination, r:processing
     //dom: "".concat(`<'row'<'dred'B>><'row'<'dblue'l><f><i><p>>`),
-    dom: "Blfip",
+    dom: "<'table-buttons'B></B>lfip",
     searchDelay: 2000,
     buttons: {
       buttons: get_buttons()
@@ -234,10 +234,10 @@ const dt_render = (options) => {
       $search = document
         .getElementById(`${idtable}_filter`)
         .querySelector(`[type="search"]`)
-      const $buttonsdiv = document.getElementById("table-datatable_wrapper")?.querySelector(".dt-buttons")
-      const $outsidediv = document.getElementById("div-table-datatable")?.querySelector(`[approle="table-buttons"]`)
-      $outsidediv.innerHTML = $buttonsdiv.innerHTML
-      $buttonsdiv.parentNode.removeChild($buttonsdiv)
+      //const $buttonsdiv = document.getElementById("table-datatable_wrapper")?.querySelector(".dt-buttons")
+      //const $outsidediv = document.getElementById("div-table-datatable")?.querySelector(`[approle="table-buttons"]`)
+      //$outsidediv.innerHTML = $buttonsdiv.innerHTML
+      //$buttonsdiv.parentNode.removeChild($buttonsdiv)
       console.log("initComplete end")
     },
     drawCallback: on_drawcallback

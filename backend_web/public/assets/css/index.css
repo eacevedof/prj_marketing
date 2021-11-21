@@ -11,3 +11,11 @@
 .d-blue {
   border: 1px solid blue !important;
 }
+
+.table-buttons {
+  margin:0;
+  padding:0;
+  width: 100%;
+  display:flex;
+  justify-content:flex-end;
+}
