@@ -61,6 +61,13 @@ export const run_js = $jswrapper => {
 export const load_asset_css = paths => {
   if (!paths) return
 
+  if (typeof paths === "string" || paths instanceof String) {
+    const $link = document.createElement("link")
+    $link.href = `/assets/css/${paths}.css`
+    $link.rel = "stylesheet"
+    return document.head.appendChild($link).parentNode.removeChild($link)
+  }
+
   paths.forEach(path => {
     const $link = document.createElement( "link" )
     $link.href = `/assets/css/${path}.css`
