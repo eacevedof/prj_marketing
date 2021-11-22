@@ -133,6 +133,20 @@ const load_rowbuttons_listeners = ()=> {
       console.log("info listener")
     }
   }))
+
+  rowbuttons = $table.querySelectorAll(`[approle='rowbtn-edit']`)
+  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
+    const uuid = e.target.getAttribute("uuid")
+    const url = `/restrict/users/edit/${uuid}`
+    try {
+      const r = await fetch(url)
+      const html = await r.text()
+      window.modalraw.disable_bgclick(false).set_body(html).show()
+    }
+    catch (error) {
+      console.log("info listener")
+    }
+  }))
 }
 
 const toggle_filters = () => {

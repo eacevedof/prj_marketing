@@ -44,7 +44,7 @@ final class UsersController extends RestrictController
         }
 
         $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
-            ->add_var("h1",__("User create ^^"))
+            ->add_var("h1",__("New user"))
             ->render_nl();
     }
 
@@ -119,18 +119,25 @@ final class UsersController extends RestrictController
 
     }
 
-    public function detail(string $uuid): void
+    //@modal
+    public function edit(string $uuid): void
     {
-        $this->add_var(KeyType::PAGE_TITLE, __("USERS - detail"));
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
-            $this->render_error([
-                "h1"=>__("Unauthorized")
-            ],"/error/403");
+            $this->add_var(
+                "h1",__("Unauthorized"))
+                ->set_template("/error/403")
+                ->render_nl();
         }
 
-        $this->render([
-            "h1" => __("User detail {0}", $uuid)
-        ]);
+        $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
+            ->add_var("h1",__("Edit user {0}", $uuid))
+            ->render_nl();
+    }
+
+    //@post
+    public function update(string $uuid): void
+    {
+
     }
 
     //@get
@@ -157,13 +164,6 @@ final class UsersController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }
-
-    
-    //@post
-    public function update(string $uuid): void
-    {
-
     }
 
     //@get
