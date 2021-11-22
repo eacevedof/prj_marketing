@@ -53,6 +53,7 @@ final class UsersInfoService extends AppService
                 __("User with code {0} not found",$this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
+        if($birthdate = $user["birthdate"]) $user["birthdate"] = substr($birthdate, 0,10);
         return $user;
     }
 }
