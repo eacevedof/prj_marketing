@@ -5,9 +5,10 @@
  */
 ?>
 <h1><?=$h1?></h1>
-<div id="vue-users-create">
+<div id="vue-users-edit">
     <form @submit.prevent="onSubmit">
         <input type="hidden" id="_csrf" value="<?=$csrf??""?>" />
+        <input type="hidden" v-model="uuid"/>
         <div>
             <label for="email"><?=__("Email")?> *</label>
             <div id="field-email">
@@ -65,9 +66,10 @@ vue({
         tr06: <?$this->_echo_js(__("Some unexpected error occurred"));?>,
     },
     fields:{
+        uuid: <?$this->_echo_js($uuid);?>,
         email: <?$this->_echo_js($item["email"] ?? "");?>,
-        password: "",
-        password2: "",
+        password: "    ",
+        password2: "    ",
         fullname: <?$this->_echo_js($item["fullname"] ?? "");?>,
         address: <?$this->_echo_js($item["address"] ?? "");?>,
         birthdate: <?$this->_echo_js($item["birthdate"] ?? "");?>,
