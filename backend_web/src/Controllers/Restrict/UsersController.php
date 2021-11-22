@@ -14,6 +14,7 @@ use App\Enums\KeyType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Restrict\Users\UsersInfoService;
+use App\Services\Restrict\Users\UsersUpdateService;
 use TheFramework\Helpers\HelperJson;
 use App\Traits\JsonTrait;
 
@@ -150,7 +151,7 @@ final class UsersController extends RestrictController
     //@post
     public function update(string $uuid): void
     {
-        if(!trim($uuid))
+        if(!($uuid = trim($uuid)))
             $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
             ->set_error([__("No code provided")])
             ->show();
@@ -168,9 +169,10 @@ final class UsersController extends RestrictController
                 ->show();
 
         /**
-         * @var UsersInsertService
+         * @var UsersUpdateService
          */
-        $service = SF::get_callable("Restrict\Users\UsersUpdate", $this->get_post());
+        $request = array_merge(["uuid"=>$uuid], $this->get_post());
+        $service = SF::get_callable("Restrict\Users\UsersUpdate", $request);
         try {
             $result = $service();
             $this->_get_json()->set_payload([

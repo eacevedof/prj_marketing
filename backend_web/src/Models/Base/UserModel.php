@@ -132,10 +132,10 @@ final class UserModel extends AppModel
 
             "uuid" => [
                 "label" => __("Code"),
+                ModelType::REQUEST_KEY => "uuid",
                 "config" => [
                     "type" => ModelType::STRING,
-                    "length" => 50,
-                    "default" => "uuid()"
+                    "length" => 50
                 ]
             ],
 
