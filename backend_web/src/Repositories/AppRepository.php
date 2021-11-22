@@ -132,7 +132,9 @@ abstract class AppRepository
         if(!$mutables)
             $this->_exeption(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
-        $crud = $this->_get_crud()->set_table($this->table);
+        $crud = $this->_get_crud()
+            ->set_dbobj($this->db)
+            ->set_table($this->table);
 
         //valores del "SET"
         foreach($mutables as $fieldname=>$sValue)
