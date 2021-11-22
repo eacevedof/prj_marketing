@@ -8,6 +8,7 @@
  * @observations
  */
 namespace App\Repositories;
+use App\Enums\ExceptionType;
 use App\Models\AppModel;
 use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\ComponentMysql;
@@ -65,12 +66,12 @@ abstract class AppRepository
         return $this->db->get_lastid();
     }
 
-    //$post = $_POST
+    //$request = $_POST
     //busca los campos de form en el post y guarda sus valores
     //en los campos de bd
-    private function _get_keyvals($post)
+    private function _get_keyvals($request)
     {
-        $fieldsUi = array_keys($post);
+        $fieldsUi = array_keys($request);
         $arReturn = [];
         $fields = $this->model->get_fields();
         foreach($fields as $mapfields)
@@ -78,7 +79,7 @@ abstract class AppRepository
             $fieldnameDb = $mapfields["db"];
             $fieldnameUi = $mapfields["ui"];
             if(in_array($fieldnameUi,$fieldsUi))
-                $arReturn[$fieldnameDb] = $post[$fieldnameUi];
+                $arReturn[$fieldnameDb] = $request[$fieldnameUi];
         }
         return $arReturn;
     }
@@ -102,59 +103,59 @@ abstract class AppRepository
     }
 
     //hace un insert automatico a partir de lo que viene en $_POST
-    public function insert(array $post): int
+    public function insert(array $request): int
     {
         $crud = $this->_get_crud()
             ->set_dbobj($this->db)
             ->set_table($this->table);
 
-        foreach($post as $field => $value)
+        foreach($request as $field => $value)
             $crud->add_insert_fv($field, $value);
 
         $crud->autoinsert();
         $this->log($crud->get_sql());
 
         if($crud->is_error()) {
-            $this->logerr($post,"insert");
+            $this->logerr($request,"insert");
             $this->_exeption(__("Error saving data"));
         }
 
         return $this->db->get_lastid();
     }//insert
         
-    public function update($post, $isUi=1)
+    public function update(array $request): int
     {
-        $arData = $post;
-        if($isUi)
-            $arData = $this->_get_keyvals($post);
+        $pks = $this->_get_pks($request);
+        if(!$pks) $this->_exeption(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        
+        $mutables = $this->_get_no_pks($request);
+        if(!$mutables)
+            $this->_exeption(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
-        $arNoPks = $this->_get_no_pks($arData);
-        $pks = $this->_get_pks($arData);
+        $crud = $this->_get_crud()->set_table($this->table);
 
-        if ($arData) {
-            //habría que comprobar count(pks)==count($this->model->get_pks())
-            //$crud = new ComponentCrud($this->db);
-            $crud = $this->_get_crud()->set_table($this->table);
+        //valores del "SET"
+        foreach($mutables as $fieldname=>$sValue)
+            $crud->add_update_fv($fieldname, $sValue);
 
-            //valores del "SET"
-            foreach($arNoPks as $fieldname=>$sValue)
-                $crud->add_update_fv($fieldname,$sValue);
+        //valores del WHERE
+        foreach($pks as $fieldname=>$sValue)
+            $crud->add_pk_fv($fieldname, $sValue);
 
-            //valores del WHERE
-            foreach($pks as $fieldname=>$sValue)
-                $crud->add_pk_fv($fieldname,$sValue);
+        $crud->autoupdate();
+        $this->log($crud->get_sql());
 
-            $crud->autoupdate();
-            if($crud->is_error())
-                $this->add_error("An error occurred while trying to delete");
-
-            $this->log($crud->get_sql(),($crud->is_error()?"ERROR":NULL));
+        if($crud->is_error()) {
+            $this->logerr($request,"update");
+            $this->_exeption(__("Error saving data"));
         }
+
+        return $this->db->get_affected();
     }//update
 
-    public function delete($post)
+    public function delete($request)
     {
-        $arData = $this->_get_keyvals($post);
+        $arData = $this->_get_keyvals($request);
         $pks = $this->_get_pks($arData);
         if($pks)
         {

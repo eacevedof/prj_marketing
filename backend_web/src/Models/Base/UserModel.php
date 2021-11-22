@@ -142,7 +142,7 @@ final class UserModel extends AppModel
         ];//fileds
 
         $this->pks = [
-            "id"
+            "id", "uuid"
         ];
 
     }// construct

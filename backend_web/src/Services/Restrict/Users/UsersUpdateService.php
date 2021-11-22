@@ -13,7 +13,7 @@ use App\Traits\RequestTrait;
 use App\Enums\ExceptionType;
 use App\Models\FieldsValidator;
 
-final class UsersInsertService extends AppService
+final class UsersUpdateService extends AppService
 {
     use SessionTrait;
     use RequestTrait;
@@ -47,7 +47,13 @@ final class UsersInsertService extends AppService
         $repository = $this->repository;
         $this->validator
             ->add_rule("email", "email", function ($data) use ($repository){
-                return $repository->email_exists($data["value"]) ? __("This email already exists"): false;
+                $email = trim($data["value"]);
+                $uuid = $data["data"]["uuid"] ?? "";
+                $id = $repository->get_id_by($uuid);
+                if (!$id) return __("User with code {0} not found",$uuid);
+                $idemail = $repository->email_exists($email);
+                if (!$idemail || ($id !== $idemail)) return false;
+                return __("This email already exists");
             })
             ->add_rule("email", "email", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
@@ -76,8 +82,8 @@ final class UsersInsertService extends AppService
 
     public function __invoke(): array
     {
-        $insert = $this->_get_without_operations();
-        if (!$insert)
+        $update = $this->_get_without_operations();
+        if (!$update)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
@@ -85,15 +91,15 @@ final class UsersInsertService extends AppService
             $this->_exeption(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
         }
 
-        $insert = $this->model->map_request($insert);
-        $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
-        $insert["uuid"] = uniqid();
-        $this->model->add_sysinsert($insert,$this->user["id"]);
+        $update = $this->model->map_request($update);
+        $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
+        $update["uuid"] = uniqid();
+        $this->model->add_sysinsert($update,$this->user["id"]);
 
-        $id = $this->repository->insert($insert);
+        $id = $this->repository->insert($update);
         return [
             "id" => $id,
-            "uuid" => $insert["uuid"]
+            "uuid" => $update["uuid"]
         ];
     }
 }
