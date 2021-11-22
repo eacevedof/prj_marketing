@@ -135,6 +135,7 @@ final class UsersController extends RestrictController
             $service = SF::get("Restrict\Users\UsersInfo", [$uuid]);
             $item = $service->get_edit();
             $this->add_var("h1",__("Edit user {0}", $uuid))
+                ->add_var("uuid", $uuid)
                 ->add_var("item", $item)
                 ->render_nl();
         }

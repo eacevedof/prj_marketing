@@ -1,6 +1,6 @@
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
-const ID_WRAPPER = "#vue-users-create"
+const ID_WRAPPER = "#vue-users-edit"
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
@@ -8,16 +8,7 @@ let CSRF = ""
 let $wrapper = null
 
 let texts = {}
-
-let fields = {
-  email: "eaf@eaf.com",
-  password: "1234",
-  password2: "1234",
-  fullname: "",
-  address: "",
-  birthdate: "",
-  phone: "888999777",
-}
+let fields = {}
 
 const App = {
   data() {
