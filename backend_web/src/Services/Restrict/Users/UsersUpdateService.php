@@ -52,7 +52,7 @@ final class UsersUpdateService extends AppService
                 $id = $repository->get_id_by($uuid);
                 if (!$id) return __("User with code {0} not found",$uuid);
                 $idemail = $repository->email_exists($email);
-                if (!$idemail || ($id !== $idemail)) return false;
+                if (!$idemail || ($id == $idemail)) return false;
                 return __("This email already exists");
             })
             ->add_rule("email", "email", function ($data) {
@@ -71,10 +71,9 @@ final class UsersUpdateService extends AppService
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
             ->add_rule("password", "not-equal", function ($data){
-                return ($data["value"] === ($data["data"]["password2"] ?? "")) ? false : __("Bad password confirmation");
-            })
-            ->add_rule("password", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                if(!($password = trim($data["value"]))) return false;
+                $password2 = trim($data["data"]["password2"] ?? "");
+                return ($password === $password2) ? false : __("Bad password confirmation");
             })
         ;
         return $this->validator;
@@ -92,13 +91,14 @@ final class UsersUpdateService extends AppService
         }
 
         $update = $this->model->map_request($update);
-        $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
-        $update["uuid"] = uniqid();
-        $this->model->add_sysinsert($update,$this->user["id"]);
+        if(!$update["secret"]) unset($update["secret"]);
+        else
+            $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
+        $this->model->add_sysupdate($update, $this->user["id"]);
 
-        $id = $this->repository->insert($update);
+        $affected = $this->repository->insert($update);
         return [
-            "id" => $id,
+            "affected" => $affected,
             "uuid" => $update["uuid"]
         ];
     }
