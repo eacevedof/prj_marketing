@@ -1,3 +1,4 @@
+//probar lit: https://stackoverflow.com/questions/68614776/using-lit-with-javascript-and-no-build-tools
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
 const ID_WRAPPER = "#vue-users-create"
