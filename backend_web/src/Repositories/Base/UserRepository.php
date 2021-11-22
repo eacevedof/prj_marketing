@@ -42,7 +42,7 @@ final class UserRepository extends AppRepository
         return $r[0];
     }
 
-    public function email_exists(string $email): bool
+    public function email_exists(string $email): int
     {
         $email = $this->_get_sanitized($email);
         $sql = $this->_get_crud()
@@ -52,7 +52,20 @@ final class UserRepository extends AppRepository
             ->get_selectfrom()
         ;
         $r = $this->db->query($sql);
-        return count($r)>0;
+        return intval($r[0]["id"] ?? 0);
+    }
+
+    public function get_id_by(string $uuid): int
+    {
+        $uuid = $this->_get_sanitized($uuid);
+        $sql = $this->_get_crud()
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.uuid='$uuid'")
+            ->get_selectfrom()
+        ;
+        $r = $this->db->query($sql);
+        return intval($r[0]["id"] ?? 0);
     }
 
     private function _add_search(ComponentCrud $crud, array $search): void

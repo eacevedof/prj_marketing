@@ -150,6 +150,11 @@ final class UsersController extends RestrictController
     //@post
     public function update(string $uuid): void
     {
+        if(!trim($uuid))
+            $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
+            ->set_error([__("No code provided")])
+            ->show();
+
         if (!$this->csrf->is_valid($this->_get_csrf())) {
             $this->_get_json()
                 ->set_code(ExceptionType::CODE_UNAUTHORIZED)
