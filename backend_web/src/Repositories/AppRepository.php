@@ -177,4 +177,10 @@ abstract class AppRepository
         $this->logerr($message,"app-service.exception");
         throw new Exception($message, $code);
     }
+
+    public function set_model(AppModel $model): self
+    {
+        $this->model = $model;
+        return $this;
+    }
 }//AppRepository
