@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\Views\AppView $this
+ * @var array $item
  */
 ?>
 <h1><?=$h1?></h1>
@@ -64,13 +65,13 @@ vue({
         tr06: <?$this->_echo_js(__("Some unexpected error occurred"));?>,
     },
     fields:{
-        email: "mmm@ooo.com",
-        password: "uu",
-        password2: "uu",
-        fullname: "fff ulll",
-        address: "sss oo mmee aadd",
-        birthdate: "",
-        phone: "444 333 222",
+        email: <?$this->_echo_js($item["email"] ?? "");?>,
+        password: "",
+        password2: "",
+        fullname: <?$this->_echo_js($item["fullname"] ?? "");?>,
+        address: <?$this->_echo_js($item["address"] ?? "");?>,
+        birthdate: <?$this->_echo_js($item["birthdate"] ?? "");?>,
+        phone: <?$this->_echo_js($item["phone"] ?? "");?>,
     }
 })
 </script>

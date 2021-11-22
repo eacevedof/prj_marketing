@@ -3,6 +3,5 @@
  * @var \App\Views\AppView $this
  */
 ?>
-<!--403 forbidden-->
+<!--404 not found-->
 <h1><?=$h1?></h1>
-
