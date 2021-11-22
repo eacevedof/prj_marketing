@@ -65,8 +65,8 @@ vue({
   },
   fields:{
     email: "",
-    password: "",
-    password2: ",
+    password: " ",
+    password2: " ",
     fullname: "",
     address: "",
     birthdate: "",
