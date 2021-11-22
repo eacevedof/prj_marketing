@@ -122,8 +122,7 @@ final class UsersController extends RestrictController
     public function edit(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
-            $this->add_var(
-                "h1",__("Unauthorized"))
+            $this->add_var("h1",__("Unauthorized"))
                 ->set_template("/error/403")
                 ->render_nl();
         }
@@ -134,7 +133,8 @@ final class UsersController extends RestrictController
              */
             $service = SF::get("Restrict\Users\UsersInfo", [$uuid]);
             $item = $service->get_edit();
-            $this->add_var("h1",__("Edit user {0}", $uuid))
+            $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
+                ->add_var("h1",__("Edit user {0}", $uuid))
                 ->add_var("uuid", $uuid)
                 ->add_var("item", $item)
                 ->render_nl();
