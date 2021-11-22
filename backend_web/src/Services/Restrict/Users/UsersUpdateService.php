@@ -29,6 +29,7 @@ final class UsersUpdateService extends AppService
         $this->model = ModelFactory::get("Base/User");
         $this->validator = VF::get($input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
+        $this->repository->set_model($this->model);
         $this->_load_request($input);
         $this->user = $this->_sessioninit()->get(KeyType::AUTH_USER);
         $this->encdec = $this->_get_encdec();
@@ -96,7 +97,7 @@ final class UsersUpdateService extends AppService
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $this->model->add_sysupdate($update, $this->user["id"]);
 
-        $affected = $this->repository->insert($update);
+        $affected = $this->repository->update($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]

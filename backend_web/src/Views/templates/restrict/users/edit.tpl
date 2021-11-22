@@ -40,6 +40,12 @@
             </div>
         </div>
         <div>
+            <label for="phone"><?=__("Phone")?> *</label>
+            <div id="field-phone">
+                <input type="text" id="phone" v-model="phone">
+            </div>
+        </div>
+        <div>
             <label for="birthdate"><?=__("Birthdate")?> *</label>
             <div id="field-birthdate">
                 <input type="date" id="birthdate" v-model="birthdate">

@@ -145,7 +145,7 @@ final class UserRepository extends AppRepository
         $sql = $this->_get_crud()->set_table("$this->table as m")
             ->set_getfields([
                 "m.id, m.email, m.secret, m.insert_date, m.insert_user, m.fullname, m.address, m.birthdate",
-                "m.uuid", "m.id_profile", "m.id_language","m.id_parent"
+                "m.uuid", "m.id_profile", "m.id_language","m.id_parent", "m.update_date", "m.update_user"
             ])
             ->add_and("m.uuid='$uuid'")
             ->get_selectfrom()
