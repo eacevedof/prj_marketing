@@ -44,4 +44,15 @@ final class UsersInfoService extends AppService
             "permissions" => $permissions
         ];
     }
+
+    public function get_edit(): array
+    {
+        $user = $this->repository->get_info($this->input);
+        if(!$user)
+            $this->_exeption(
+                __("User with code {0} not found",$this->input),
+                ExceptionType::CODE_NOT_FOUND
+            );
+        return $user;
+    }
 }
