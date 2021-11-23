@@ -12,7 +12,6 @@ use App\Enums\ExceptionType;
 use App\Models\AppModel;
 use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\ComponentMysql;
-use App\Factories\ModelFactory as MF;
 use App\Traits\LogTrait;
 use \Exception;
 
@@ -66,24 +65,6 @@ abstract class AppRepository
         return $this->db->get_lastid();
     }
 
-    //$request = $_POST
-    //busca los campos de form en el post y guarda sus valores
-    //en los campos de bd
-    private function _get_keyvals($request)
-    {
-        $fieldsUi = array_keys($request);
-        $arReturn = [];
-        $fields = $this->model->get_fields();
-        foreach($fields as $mapfields)
-        {
-            $fieldnameDb = $mapfields["db"];
-            $fieldnameUi = $mapfields["ui"];
-            if(in_array($fieldnameUi,$fieldsUi))
-                $arReturn[$fieldnameDb] = $request[$fieldnameUi];
-        }
-        return $arReturn;
-    }
-
     private function _get_pks($arData)
     {
         $pks = [];
@@ -102,7 +83,6 @@ abstract class AppRepository
         return $pks;
     }
 
-    //hace un insert automatico a partir de lo que viene en $_POST
     public function insert(array $request): int
     {
         $crud = $this->_get_crud()
@@ -117,7 +97,7 @@ abstract class AppRepository
 
         if($crud->is_error()) {
             $this->logerr($request,"insert");
-            $this->_exeption(__("Error saving data"));
+            $this->_exeption(__("Error inserting data"));
         }
 
         return $this->db->get_lastid();
@@ -149,30 +129,53 @@ abstract class AppRepository
 
         if($crud->is_error()) {
             $this->logerr($request,"update");
-            $this->_exeption(__("Error saving data"));
+            $this->_exeption(__("Error updating data"));
         }
 
         return $this->db->get_affected();
     }//update
 
-    public function delete($request)
+    public function delete(array $request): int
     {
-        $arData = $this->_get_keyvals($request);
-        $pks = $this->_get_pks($arData);
-        if($pks)
-        {
-            //$crud = new ComponentCrud($this->db);
-            $crud = $this->_get_crud()->set_table($this->table);
-            foreach($pks as $fieldname=>$sValue)
-                $crud->add_pk_fv($fieldname,$sValue);
-            $crud->autodelete();
+        $pks = $this->_get_pks($request);
+        if(!$pks) $this->_exeption(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
-            if($crud->is_error())
-                $this->add_error("An error occurred while trying to delete");
+        $crud = $this->_get_crud()
+            ->set_dbobj($this->db)
+            ->set_table($this->table);
 
-            $this->log($crud->get_sql(),($crud->is_error()?"ERROR":NULL));
+        //valores del WHERE
+        foreach($pks as $fieldname=>$sValue)
+            $crud->add_pk_fv($fieldname, $sValue);
+
+        $crud->autodelete();
+        $this->log($crud->get_sql());
+
+        if($crud->is_error()) {
+            $this->logerr($request,"delete");
+            $this->_exeption(__("Error deleting data"));
         }
+
+        return $this->db->get_affected();
     }//delete
+
+    public function _get_sysupdate(array $pks): string
+    {
+        if(!$pks) return "";
+
+        $crud = $this->_get_crud()
+            ->set_dbobj($this->db)
+            ->set_table("$this->table as m")
+            ->set_getfields("m.update_date")
+        ;
+
+        foreach($pks as $fieldname=>$sValue)
+            $crud->add_pk_fv($fieldname, $sValue);
+
+        $sql = $crud->get_selectfrom();
+        $r = $this->db->query($sql);
+        return $r[0]["update_date"] ?? "";
+    }
 
     protected function _exeption(string $message, int $code=500): void
     {
