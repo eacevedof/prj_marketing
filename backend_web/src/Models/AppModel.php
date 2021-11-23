@@ -71,8 +71,9 @@ abstract class AppModel
     public function do_match_keys(array $pkvals): bool
     {
         if(!$pkvals) return false;
+        $keys = array_keys($pkvals);
         foreach ($this->pks as $pkfield) {
-            if (!in_array($pkfield, $pkvals))
+            if (!in_array($pkfield, $keys))
                 return false;
             $value = $pkvals[$pkfield];
             if (!$value)

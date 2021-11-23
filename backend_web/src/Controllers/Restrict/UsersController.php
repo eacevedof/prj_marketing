@@ -227,13 +227,6 @@ final class UsersController extends RestrictController
                 ->set_error([__("No code provided")])
                 ->show();
 
-        if (!$this->csrf->is_valid($this->_get_csrf())) {
-            $this->_get_json()
-                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
-                ->set_error([__("Invalid CSRF token")])
-                ->show();
-        }
-
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([__("Not allowed to perform this operation")])

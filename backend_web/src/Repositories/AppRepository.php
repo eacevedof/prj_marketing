@@ -165,8 +165,8 @@ abstract class AppRepository
 
         $crud = $this->_get_crud()
             ->set_dbobj($this->db)
+            ->set_getfields(["m.update_date"])
             ->set_table("$this->table as m")
-            ->set_getfields("m.update_date")
         ;
 
         foreach($pks as $fieldname=>$sValue)
