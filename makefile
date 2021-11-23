@@ -16,6 +16,9 @@ ps:
 save-db: ## copia el dump a la carpeta db
 	cp ${HOME}/dockercfg/db_dumps/db_marketing.sql ./backend_web/db
 
+restore-db: ## copia el dump a la carpeta db
+	cp ./backend_web/db/db_marketing.sql ${HOME}/dockercfg/db_dumps
+
 rebuild: ## rebuild containers
 	docker-compose --env-file ./docker/.env -f docker-compose.yml down
 	docker-compose --env-file ./docker/.env -f docker-compose.yml up -d --build --remove-orphans
