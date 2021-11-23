@@ -10,15 +10,7 @@ let $wrapper = null
 
 let texts = {}
 
-let fields = {
-  email: "eaf@eaf.com",
-  password: "1234",
-  password2: "1234",
-  fullname: "",
-  address: "",
-  birthdate: "",
-  phone: "888999777",
-}
+let fields = {}
 
 const App = {
   data() {

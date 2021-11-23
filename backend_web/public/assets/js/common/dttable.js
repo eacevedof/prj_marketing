@@ -117,7 +117,7 @@ const get_columns = () => {
 }
 
 const load_rowbuttons_listeners = ()=> {
-  let rowbuttons = $table.querySelectorAll(`[approle='rowbtn-show']`)
+  let rowbuttons = $table.querySelectorAll(`[approle="rowbtn-show"]`)
   //console.log("rowbuttons", rowbuttons)
   Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
     //console.log("btn",$btn)
@@ -134,7 +134,7 @@ const load_rowbuttons_listeners = ()=> {
     }
   }))
 
-  rowbuttons = $table.querySelectorAll(`[approle='rowbtn-edit']`)
+  rowbuttons = $table.querySelectorAll(`[approle="rowbtn-edit"]`)
   Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/edit/${uuid}`
@@ -145,6 +145,35 @@ const load_rowbuttons_listeners = ()=> {
     }
     catch (error) {
       console.log("info listener")
+    }
+  }))
+
+  rowbuttons = $table.querySelectorAll(`[approle="rowbtn-del"]`)
+  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", (e) => {
+    const uuid = e.target.getAttribute("uuid")
+    const url = `/restrict/users/delete/${uuid}`
+    try {
+      new window.Swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this imaginary file!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'Yes, I am sure!',
+          cancelButtonText: "No, cancel it!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        async (isConfirm) => {
+          if (isConfirm) {
+            const r = await fetch(url)
+            const html = await r.text()
+          }
+        }
+      )//swal
+    }
+    catch (error) {
+      console.log("delete.errro",error)
     }
   }))
 }
