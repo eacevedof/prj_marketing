@@ -21,8 +21,6 @@ abstract class AppModel
     public function get_fields(): array {return $this->fields;}
     public function get_pks(): array {return $this->pks;}
 
-    public function get_fieldnames(): array {return array_keys($this->fields);}
-
     public function get_label(string $field): string
     {
         return $this->fields[$field]["label"] ?? "";
@@ -41,18 +39,6 @@ abstract class AppModel
     public function get_length(string $field): ?int
     {
         return $this->fields[$field]["config"]["length"] ?? null;
-    }
-
-    public function is_field(string $field): bool
-    {
-         if(in_array($field, $this->get_fieldnames()))
-             return true;
-
-         $fields = array_map(function ($array){
-             return $array[ModelType::REQUEST_KEY] ?? "";
-         }, $this->fields);
-
-         return in_array($field, $fields);
     }
 
     public function get_field(string $requestkey): string
@@ -82,6 +68,18 @@ abstract class AppModel
         return $mapped;
     }
 
+    public function do_match_keys(array $pkvals): bool
+    {
+        if(!$pkvals) return false;
+        foreach ($this->pks as $pkfield) {
+            if (!in_array($pkfield, $pkvals))
+                return false;
+            $value = $pkvals[$pkfield];
+            if (!$value)
+                return false;
+        }
+        return true;
+    }
     public function add_sysinsert(array &$request, string $user, string $platform=PlatformType::WEB): self
     {
         $request[ModelType::INSERT_DATE] = date("Y-m-d H:i:s");
@@ -98,11 +96,12 @@ abstract class AppModel
         return $this;
     }
 
-    public function add_sysdelete(array &$request, string $user, string $platform=PlatformType::WEB): self
+    public function add_sysdelete(array &$request, string $updatedate, string $user, string $platform=PlatformType::WEB): self
     {
         $request[ModelType::DELETE_DATE] = date("Y-m-d H:i:s");
         $request[ModelType::DELETE_USER] = $user;
         $request[ModelType::DELETE_PLATFORM] = $platform;
+        $request[ModelType::UPDATE_DATE] = $updatedate;
         return $this;
     }
 }//AppModel

@@ -153,24 +153,23 @@ const load_rowbuttons_listeners = ()=> {
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/delete/${uuid}`
     try {
-      new window.Swal({
-          title: "Are you sure?",
-          text: "You will not be able to recover this imaginary file!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: '#DD6B55',
-          confirmButtonText: 'Yes, I am sure!',
-          cancelButtonText: "No, cancel it!",
-          closeOnConfirm: false,
-          closeOnCancel: false
-        },
-        async (isConfirm) => {
-          if (isConfirm) {
-            const r = await fetch(url)
-            const html = await r.text()
-          }
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes, I am sure!',
+        cancelButtonText: "No, cancel it!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      })
+      .then(result => {
+        console.log(result)
+        if (result.isConfirmed) {
+          fetch(url,{method:"delete"}).then(r => r.text()).then(r => console.log("R",r))
         }
-      )//swal
+      })
     }
     catch (error) {
       console.log("delete.errro",error)
