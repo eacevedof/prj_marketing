@@ -152,28 +152,44 @@ const load_rowbuttons_listeners = ()=> {
   Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", (e) => {
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/delete/${uuid}`
-    try {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You will not be able to recover this imaginary file!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'Yes, I am sure!',
-        cancelButtonText: "No, cancel it!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      })
-      .then(result => {
-        console.log(result)
-        if (result.isConfirmed) {
-          fetch(url,{method:"delete"}).then(r => r.text()).then(r => console.log("R",r))
-        }
-      })
-    }
-    catch (error) {
-      console.log("delete.errro",error)
-    }
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this information!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, I am sure!",
+      cancelButtonText: "No, cancel it!",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    })
+    .then(result => {
+      if (!result.isConfirmed) return
+      fetch(url,{method:"delete"})
+        .then(response => response.json())
+        .then(json => {
+          if (json.errors.length>0)
+            return Swal.fire({
+              icon: "error",
+              title: "Some error occured trying to delete",
+            })
+
+          Swal.fire({
+            icon: "success",
+            title: "Data successfully deleted",
+          })
+          dttable.ajax.reload()
+
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Some error occured trying to delete",
+          })
+        })
+    })//swal.action
+
   }))
 }
 

@@ -39,7 +39,7 @@ final class UsersDeleteService extends AppService
 
         $update["id"] = $id;
         if (!$this->model->do_match_keys($update))
-            $this->_exeption(__("No keys provided"),ExceptionType::CODE_BAD_REQUEST);
+            $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $updatedate = $this->repository->_get_sysupdate($update);
         $this->model->add_sysdelete($update, $updatedate, $this->user["id"]);
