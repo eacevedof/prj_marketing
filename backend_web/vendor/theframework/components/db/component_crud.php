@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.8.1
- * @date 01-11-2021 12:54 SPAIN
+ * @file component_crud.php 2.9.0
+ * @date 23-11-2021 20:55 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -616,27 +616,27 @@ class ComponentCrud
         return $sFields;
     }
         
-    public function set_table($sTable=null):self{$this->sTable=$sTable; return $this;}
-    public function set_comment($sComment):self{$this->querycomment = $sComment; return $this;}
+    public function set_table(?string $sTable=null):self{$this->sTable=$sTable; return $this;}
+    public function set_comment(string $sComment):self{$this->querycomment = $sComment; return $this;}
     
-    public function set_insert_fv($arFieldVal=[]):self{$this->arInsertFV = []; if(is_array($arFieldVal)) $this->arInsertFV=$arFieldVal; return $this;}
+    public function set_insert_fv(array $arFieldVal=[]):self{$this->arInsertFV = []; if(is_array($arFieldVal)) $this->arInsertFV=$arFieldVal; return $this;}
     public function add_insert_fv($sFieldName,$sValue,$isSanit=1):self{$this->arInsertFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
 
-    public function set_pks_fv($arFieldVal=[]):self{$this->arPksFV = []; if(is_array($arFieldVal)) $this->arPksFV=$arFieldVal; return $this;}
+    public function set_pks_fv(array $arFieldVal=[]):self{$this->arPksFV = []; if(is_array($arFieldVal)) $this->arPksFV=$arFieldVal; return $this;}
     public function add_pk_fv($sFieldName,$sValue,$isSanit=1):self{$this->arPksFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
     
-    public function set_update_fv($arFieldVal=[]):self{$this->arUpdateFV = []; if(is_array($arFieldVal)) $this->arUpdateFV=$arFieldVal; return $this;}
+    public function set_update_fv(array $arFieldVal=[]):self{$this->arUpdateFV = []; if(is_array($arFieldVal)) $this->arUpdateFV=$arFieldVal; return $this;}
     public function add_update_fv($sFieldName,$sValue,$isSanit=1):self{$this->arUpdateFV[$sFieldName]=($isSanit)?$this->get_sanitized($sValue):$sValue; return $this;}
     
-    public function set_getfields($arFields=[]):self{$this->arGetFields = []; if(is_array($arFields)) $this->arGetFields=$arFields; return $this;}
-    public function add_getfield($sFieldName):self{$this->arGetFields[]=$sFieldName; return $this;}
+    public function set_getfields(array $arFields=[]):self{$this->arGetFields = []; if(is_array($arFields)) $this->arGetFields=$arFields; return $this;}
+    public function add_getfield(string $sFieldName):self{$this->arGetFields[]=$sFieldName; return $this;}
 
-    public function set_joins($arJoins=[]):self{$this->arJoins = []; if(is_array($arJoins)) $this->arJoins=$arJoins; return $this;}
-    public function set_orderby($arOrderBy=[]):self{$this->arOrderBy = []; if(is_array($arOrderBy)) $this->arOrderBy=$arOrderBy; return $this;}
-    public function set_groupby($arGroupBy=[]):self{$this->arGroupBy = []; if(is_array($arGroupBy)) $this->arGroupBy=$arGroupBy; return $this;}
-    public function set_having($arHaving=[]):self{$this->arHaving = []; if(is_array($arHaving)) $this->arHaving=$arHaving; return $this;}
+    public function set_joins(array $arJoins=[]):self{$this->arJoins = []; if(is_array($arJoins)) $this->arJoins=$arJoins; return $this;}
+    public function set_orderby(array $arOrderBy=[]):self{$this->arOrderBy = []; if(is_array($arOrderBy)) $this->arOrderBy=$arOrderBy; return $this;}
+    public function set_groupby(array $arGroupBy=[]):self{$this->arGroupBy = []; if(is_array($arGroupBy)) $this->arGroupBy=$arGroupBy; return $this;}
+    public function set_having(array $arHaving=[]):self{$this->arHaving = []; if(is_array($arHaving)) $this->arHaving=$arHaving; return $this;}
     
-    public function set_end($arEnd=[]):self{$this->arEnd = []; if(is_array($arEnd)) $this->arEnd=$arEnd; return $this;}
+    public function set_end(array $arEnd=[]):self{$this->arEnd = []; if(is_array($arEnd)) $this->arEnd=$arEnd; return $this;}
     public function set_limit($iPPage=1000, $iRegfrom=0):self{
         $this->arLimit=["regfrom"=>$iRegfrom, "perpage"=>$iPPage];
         if($iPPage==null) $this->arLimit = [];
