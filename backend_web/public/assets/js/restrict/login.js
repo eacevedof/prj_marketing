@@ -1,14 +1,15 @@
 import set_cookie from "../common/cookie.js"
 
 const URL = "/login/access"
+const URL_ON_ACCESS = "/restrict/users"
 
 const App = {
   data() {
     return {
-      email: "eaf@eaf.com",
-      password: "1234",
+      email: "",
+      password: " ",
       issending: false,
-      btnsend: "enviar"
+      btnsend: "Enviar"
     }
   },
 
@@ -38,28 +39,29 @@ const App = {
           console.error(response.errors)
           return Swal.fire({
             icon: "warning",
-            title: "Proceso incompleto",
-            html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias. <br/>"+response.errors[0],
+            title: "Errores",
+            html: response.errors.join("<br/>"),
           })
         }
 
         console.log("reponse ok",response)
         set_cookie("lang", response.data.lang)
-        window.location = "/restrict"
 
         Swal.fire({
           icon: "success",
-          title: "Gracias por contactar conmigo!",
-          html: "En breves momentos recibirás una copia del mensaje en tu email.",
+          title: "Acceso concedido",
+          showConfirmButton: false,
+          html: "...redirigiendo al panel de control",
         })
+
+        setTimeout(() => window.location = URL_ON_ACCESS, 1000)
 
       })
       .catch(error => {
-        console.error("catch.error", error)
         Swal.fire({
           icon: "error",
-          title: "Vaya! Algo ha ido mal (c)",
-          html: "No se ha podido procesar tu mensaje. Por favor inténtalo más tarde. Disculpa las molestias.",
+          title: "Vaya! Algo ha ido mal",
+          html: `<b>${error}</b>`,
         })
       })
       .finally(()=>{
