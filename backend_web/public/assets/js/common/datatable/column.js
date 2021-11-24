@@ -1,7 +1,9 @@
 let $objtable = null
 let ths = []
 
-const get_colums = () => ths.map($th => $th.getAttribute("column"))
+const get_colums = () => ths
+  .map($th => $th.getAttribute("column"))
+  .filter(col => col!=="")
 
 const is_visible = column => ths.filter(
   $th => $th.getAttribute("column") === column
@@ -15,6 +17,9 @@ const is_searchable = column => ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("searchable")==="1").length > 0
 
+const get_type = column => ths.filter(
+  $th => $th.getAttribute("column") === column
+).map($th => $th.getAttribute("type"))
 
 export default ($table) => {
   $objtable = $table
@@ -22,5 +27,9 @@ export default ($table) => {
 
   return {
     get_colums,
+    is_visible,
+    is_ordenable,
+    is_searchable,
+    get_type,
   }
 }

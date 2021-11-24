@@ -61,51 +61,34 @@ const reset_filters = () => {
 
 
 const get_columns = () => {
-  const ths = Array.from($table.querySelectorAll(`[column]`))
-  ths.forEach($th => console.log($th.getAttribute("visible")))
-  const cols = [
-    "id:int",
-    "uuid:string",
-    "fullname:string",
-    "email:string",
-    "phone:string",
-    "id_profile:string",
-    "id_nationality:string",
-    "id_language:string",
-  ]
-
-  //columna con numeros
-  const final = [{
+  const cols = column($table).get_colums()
+  //col con numero
+  const allcols = [{
     searchable: false,
     orderable: false,
     targets: 0,
     data: null,
   }]
 
-  cols.forEach((colconfig, i )=> {
-    const [colname, type] = colconfig.split(":")
-    //console.log("colanme",colname, "type:", type)
+  cols.forEach((colname, i )=> {
     const obj = {
       targets: i+1,
       data: colname,
       //searchable: false, no afecta en nada
-      visible: colname!=="id" ? true: false,
-      //visible: true,
+      visible: column($table).is_visible(colname),
       render: function (data, type, row) {
         return data
       }
     }
 
-    final.push(obj)
+    allcols.push(obj)
   })
 
-  final.push({
+  allcols.push({
     targets: -1,
     data: null,
-    render: function(row, type) {
+    render: function(row) {
       //type: display
-      //row: objeto
-      //console.log("row:",row,"type:",type)
       const uuid = row.uuid ?? ""
       if(!uuid) return ""
       const links = [
@@ -113,12 +96,11 @@ const get_columns = () => {
         `<button type="button" uuid="${uuid}" approle="rowbtn-edit">edit</button>`,
         `<button type="button" uuid="${uuid}" approle="rowbtn-del">del</button>`,
       ]
-
       return links.join("&nbsp;");
     },
   })
 
-  return final
+  return allcols
 }
 
 const load_rowbuttons_listeners = ()=> {
@@ -160,7 +142,7 @@ const load_rowbuttons_listeners = ()=> {
 
     Swal.fire({
       title: "Are you sure?",
-      text: "You will not be able to recover this information!",
+      text: "You will not be able to recover this information! ".concat(uuid),
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
