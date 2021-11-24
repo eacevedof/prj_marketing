@@ -138,10 +138,11 @@ final class DatatableHelper extends AppHelper implements IHelper
         $attribs = [
             ($coldata["css"] ?? "") ? "class=\"{$coldata["css"]}\"": "",
             ($coldata["is_visible"] ?? "") ? "visible=\"{$coldata["is_visible"]}\"": "",
-            ($coldata["name"] ?? "") ? "column=\"{$coldata["name"]}:{$type}\"": "",
+            ($coldata["name"] ?? "") ? "column=\"{$coldata["name"]}\"": "",
             ($coldata["path_schema"] ?? "") ? "path=\"{$coldata["path_schema"]}\"" : "",
             $orderable ? "orderable=\"$orderable\"" : "",
             $searchable ? "searchable=\"$searchable\"" : "",
+            "type=\"$type\"",
         ];
         $attribs = trim(implode(" ", $attribs));
         return $attribs ? " $attribs": "";
@@ -210,7 +211,7 @@ final class DatatableHelper extends AppHelper implements IHelper
             if($select) $input = $select;
             $issearch = ($coldata["is_searchable"] && !$coldata["is_virtual"]);
             if(!$issearch) $input = "";
-            $tds[] = "<td>$input</td>";
+            $tds[] = "<td search=\"$colname\">$input</td>";
         }
         if($this->actions) {
             $tds[] = "<th></th>";
