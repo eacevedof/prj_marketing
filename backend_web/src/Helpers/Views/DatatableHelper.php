@@ -108,6 +108,12 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
 
+    public function add_type(string $type): self
+    {
+        $this->columns[$this->colname]["type"] = $type;
+        return $this;
+    }
+
     public function path_schema(string $path): self
     {
         $this->columns[$this->colname]["path_schema"] = $path;
@@ -127,11 +133,12 @@ final class DatatableHelper extends AppHelper implements IHelper
 
         $searchable = ($coldata["is_searchable"] ?? "");
         $searchable = $isvirtual ? false: $searchable;
+        $type = ($coldata["type"] ?? "string");
 
         $attribs = [
             ($coldata["css"] ?? "") ? "class=\"{$coldata["css"]}\"": "",
             ($coldata["is_visible"] ?? "") ? "visible=\"{$coldata["is_visible"]}\"": "",
-            ($coldata["name"] ?? "") ? "column=\"{$coldata["name"]}\"": "",
+            ($coldata["name"] ?? "") ? "column=\"{$coldata["name"]}:{$type}\"": "",
             ($coldata["path_schema"] ?? "") ? "path=\"{$coldata["path_schema"]}\"" : "",
             $orderable ? "orderable=\"$orderable\"" : "",
             $searchable ? "searchable=\"$searchable\"" : "",

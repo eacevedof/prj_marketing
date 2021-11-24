@@ -1,8 +1,8 @@
-import {debounce} from "./utils.js"
+import {debounce} from "/assets/js/common/utils.js"
 import {load_asset_css} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
-} from "./url.js"
+} from "/assets/js/common/url.js"
 
 load_asset_css("spinner")
 
@@ -57,7 +57,10 @@ const reset_filters = () => {
   dttable.search("").columns().search("").draw()
 }
 
+
 const get_columns = () => {
+  const ths = Array.from($table.querySelectorAll(`[column]`))
+  ths.forEach($th => console.log($th.getAttribute("visible")))
   const cols = [
     "id:int",
     "uuid:string",

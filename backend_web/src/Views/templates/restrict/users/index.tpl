@@ -6,6 +6,7 @@
 use App\Factories\HelperFactory as HF;
 $dt = HF::get("Views/Datatable");
 $dt->add_column("id")
+    ->is_visible()
     ->add_column("uuid")
     ->add_label("uuid")
     ->add_tooltip(__("uuid"))
@@ -42,7 +43,33 @@ $now = date("YmdHis");
     </table>
 </div>
 <script type="module">
-import dt_render from "/assets/js/common/dttable.js?<?=$now?>"
+import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
+
+const buttons = [
+
+]
+
+const rowbuttons = [
+
+]
+
+const columns = [
+  {
+    searchable: false,
+    orderable: false,
+    targets: 0,
+    data: null,
+  },
+  "id:int",
+  "uuid:string",
+  "fullname:string",
+  "email:string",
+  "phone:string",
+  "id_profile:string",
+  "id_nationality:string",
+  "id_language:string",
+
+]
 
 window.addEventListener("load", () => dt_render({
   ID_TABLE: "table-datatable",
