@@ -4,6 +4,8 @@ import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "/assets/js/common/url.js"
 
+import column from "./column.js"
+
 load_asset_css("spinner")
 
 let OPTIONS = {}
