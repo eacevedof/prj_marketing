@@ -7,7 +7,7 @@ const get_colums = () => ths
 
 const is_visible = column => ths.filter(
   $th => $th.getAttribute("column") === column
-).filter($th => $th.getAttribute("isvisible")==="1").length > 0
+).filter($th => $th.getAttribute("visible")==="1").length > 0
 
 const is_ordenable = column => ths.filter(
   $th => $th.getAttribute("column") === column
