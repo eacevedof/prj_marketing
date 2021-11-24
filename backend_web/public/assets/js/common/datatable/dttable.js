@@ -59,7 +59,6 @@ const reset_filters = () => {
   dttable.search("").columns().search("").draw()
 }
 
-
 const get_columns = () => {
   const cols = column($table).get_colums()
   //col con numero
