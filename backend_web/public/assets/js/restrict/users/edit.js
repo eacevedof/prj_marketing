@@ -56,13 +56,15 @@ const App = {
           if(errors) {
             return field_errors(errors)
           }
-          return Swal.fire({
+          Swal.fire({
             icon: "warning",
             title: texts.tr03,
             html: texts.tr04.concat(response.errors[0]),
           })
         }
-        window.location = URL_REDIRECT
+        //window.location = URL_REDIRECT
+        const t = $("#table-datatable").DataTable()
+        t.ajax.reload()
       })
       .catch(error => {
         Swal.fire({
