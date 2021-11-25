@@ -16,13 +16,16 @@ const on_input = e => {
 
 const add_input_events = () => inputs.forEach($input => $input.addEventListener("input", debounce(e => on_input(e), debouncetime)))
 
-const focus_global = $table =>   {
-  const idtable = $table.id
-  const $search = document
-    .getElementById(`${idtable}_filter`) //div
-    .querySelector(`[type="search"]`)
+const get_global_input= ($table) => document
+  .getElementById(`${$table.id}_filter`) //div
+  .querySelector(`[type="search"]`)
 
-  $search.focus()
+const focus_global = $table => get_global_input($table).focus()
+
+const reset_all = ($table, dttable) => {
+  inputs.forEach( $input => $input.value = "")
+  get_global_input($table).value = ""
+  dttable.search("").columns().search("").draw()
 }
 
 export default ($table, dttable) => {
@@ -34,6 +37,6 @@ export default ($table, dttable) => {
   return {
     add_input_events,
     focus_global,
-
+    reset_all,
   }
 }
