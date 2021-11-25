@@ -1,10 +1,11 @@
-import {debounce} from "/assets/js/common/utils.js"
+
 import {load_asset_css} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "/assets/js/common/url.js"
 
 import column from "./column.js"
+import search from "./search.js";
 
 load_asset_css("spinner")
 
@@ -22,25 +23,6 @@ const get_page = perpage => {
   }
   const pagemin = page - 1
   return pagemin * perpage
-}
-
-const add_filter_events = () => {
-  if (!dttable) return
-  const debouncetime = 1000
-
-  const on_event = e => {
-    const $input = e.target
-    const colidx = $input.getAttribute("appcolidx")
-    if (!colidx) return
-    const value = $input.value
-    //sin draw no busca
-    dttable.columns(colidx).search(value).draw()
-  }
-
-  const inputs = $table.querySelectorAll(`[approle="column-search"]`)
-  inputs.forEach(
-    $input => $input.addEventListener("input", debounce(e => on_event(e), debouncetime))
-  )
 }
 
 const on_drawcallback = () => {
@@ -239,7 +221,6 @@ const get_init_conf = () => (
 )
 
 const get_data = (data, fnrender) => {
-  const $body = $table.querySelector(`[approle="tbody"]`)
   const url = get_url_with_params(OPTIONS.URL_SEARCH, data)
 
   fetch(url, {
@@ -284,29 +265,18 @@ const dt_render = (options) => {
       displayStart: get_page(OPTIONS.ITEMS_PER_PAGE),
     },
 
-    ajax: function(data, fnrender, settings) {
-      //console.log("ajax start")
+    ajax: function(data, fnrender) {
       get_data(data, fnrender)
-      //console.log("ajax end")
     },//ajax
 
     initComplete: function() {
-      //console.log("initComplete start")
-      add_filter_events()
-      is_rendered = true
       //esto es único por idtable
-      $search = document
-        .getElementById(`${idtable}_filter`)
-        .querySelector(`[type="search"]`)
-      //load_rowbuttons_listeners() no me vale aqui pq solo se carga para la prim pagina
-
-      //const $buttonsdiv = document.getElementById("table-datatable_wrapper")?.querySelector(".dt-buttons")
-      //const $outsidediv = document.getElementById("div-table-datatable")?.querySelector(`[approle="table-buttons"]`)
-      //$outsidediv.innerHTML = $buttonsdiv.innerHTML
-      //$buttonsdiv.parentNode.removeChild($buttonsdiv)
-      $search.focus()
+      search($table, dttable).add_input_events()
+      search().focus_global($table)
+      is_rendered = true
       console.log("initComplete end table-ready")
     },
+
     drawCallback: on_drawcallback
   }
 
