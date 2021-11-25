@@ -31,11 +31,6 @@ final class UsersSearchService extends AppService
     {
         $search = CF::get_datatable($this->input)->get_search();
         $rows = $this->repository->search($search);
-
-        return [
-            "recordsFiltered" => ($i=$rows["total"]),
-            "recordsTotal" => $i,
-            "data"=> $rows["result"]
-        ];
+        return $rows;
     }
 }

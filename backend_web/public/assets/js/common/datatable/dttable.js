@@ -75,8 +75,8 @@ const get_columns = () => {
       data: colname,
       //searchable: false, no afecta en nada
       visible: column($table).is_visible(colname),
-      render: function (data, type, row) {
-        return data
+      render: function (row) {
+        return row
       }
     }
 
@@ -104,9 +104,7 @@ const get_columns = () => {
 
 const load_rowbuttons_listeners = ()=> {
   let rowbuttons = $table.querySelectorAll(`[approle="rowbtn-show"]`)
-  //console.log("rowbuttons", rowbuttons)
   Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
-    //console.log("btn",$btn)
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/info/${uuid}`
     try {
@@ -242,8 +240,6 @@ const get_init_conf = () => (
 
 const get_data = (data, fnrender) => {
   const $body = $table.querySelector(`[approle="tbody"]`)
-  //render_spinner($body)
-
   const url = get_url_with_params(OPTIONS.URL_SEARCH, data)
 
   fetch(url, {
@@ -257,8 +253,8 @@ const get_data = (data, fnrender) => {
   .then(response => response.json())
   .then(response => {
     fnrender({
-      recordsTotal: response.data.recordsTotal,
-      recordsFiltered: response.data.recordsFiltered,
+      recordsTotal: response.data.total,
+      recordsFiltered: response.data.total,
       data: response.data.result,
     })
   })
