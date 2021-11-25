@@ -203,11 +203,10 @@ final class UsersController extends RestrictController
         try {
             $result = $search();
             $this->_get_json()->set_payload([
-                "message"=>__("auth ok"),
-                "result" => $result["data"],
-                "recordsFiltered" => $result["recordsFiltered"],
-                "recordsTotal" => $result["recordsTotal"],
-                "draw" => 3
+                "message"  => __("auth ok"),
+                "result"   => $result["result"],
+                "filtered" => $result["total"],
+                "total"    => $result["total"],
             ])->show();
         }
         catch (\Exception $e)

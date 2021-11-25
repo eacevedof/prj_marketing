@@ -1,4 +1,3 @@
-let $objtable = null
 let ths = []
 
 const get_colums = () => ths
@@ -22,8 +21,8 @@ const get_type = column => ths.filter(
 ).map($th => $th.getAttribute("type"))
 
 export default ($table) => {
-  $objtable = $table
-  ths = Array.from($table.querySelectorAll(`[column]`))
+  if(ths.length === 0)
+    ths = Array.from($table.querySelectorAll(`[column]`))
 
   return {
     get_colums,
