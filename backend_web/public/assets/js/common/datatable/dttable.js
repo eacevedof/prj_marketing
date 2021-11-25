@@ -5,7 +5,7 @@ import {
 } from "/assets/js/common/url.js"
 
 import column from "./column.js"
-import search from "./search.js";
+import search from "./search.js"
 
 load_asset_css("spinner")
 
@@ -13,7 +13,6 @@ let OPTIONS = {}
 let is_rendered = false
 let dttable = null
 let $table = null
-let $search = null
 
 const get_page = perpage => {
   let page = get_page_from_url(3)
@@ -32,13 +31,6 @@ const on_drawcallback = () => {
     .nodes()
     .each(($cell, i) => $cell.innerHTML = i+1)
   load_rowbuttons_listeners()
-}
-
-const reset_filters = () => {
-  const inputs = Array.from($table.querySelectorAll(`[approle="column-search"]`))
-  inputs.push($search)
-  inputs.forEach( $input => $input.value = "")
-  dttable.search("").columns().search("").draw()
 }
 
 const get_columns = () => {
@@ -189,7 +181,7 @@ const get_buttons = () => [
   },
   {
     text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
-    action: reset_filters,
+    action: () => search().reset_all($table, dttable),
     attr: {
       "data-tooltip": OPTIONS.BUTTONS.FILTER_RESET.TOOLTIP
     }
