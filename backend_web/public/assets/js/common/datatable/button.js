@@ -103,7 +103,7 @@ const get_buttons = (OPTIONS) => [
   },
   {
     text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
-    action: () => search().reset_all($eltable, jqdttable),
+    action: () => search($eltable, jqdttable).reset_all(),
     attr: {
       "data-tooltip": OPTIONS.BUTTONS.FILTER_RESET.TOOLTIP
     }

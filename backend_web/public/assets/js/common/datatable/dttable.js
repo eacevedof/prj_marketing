@@ -3,16 +3,21 @@ import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "/assets/js/common/url.js"
 
-import column from "./column.js"
-import search from "./search.js"
-import button from "./button.js"
+import dtcolumn from "./column.js"
+import dtsearch from "./search.js"
+import dtbutton from "./button.js"
 
 load_asset_css("spinner")
 
-let OPTIONS = {}
-let is_rendered = false
-let dttable = null
-let $table = null
+let OPTIONS = {},
+  is_rendered = false,
+  $table = null,
+  dttable = null,
+
+  column = null,
+  search = null,
+  button = null
+
 
 const get_page = perpage => {
   let page = get_page_from_url(3)
@@ -30,7 +35,7 @@ const on_everydraw = () => {
     .nodes()
     .each(($cell, i) => $cell.innerHTML = i+1)
 
-  button($table, dttable).rowbuttons_listeners()
+  dtbutton($table, dttable).rowbuttons_listeners()
 }
 
 const get_init_conf = () => (
@@ -40,9 +45,9 @@ const get_init_conf = () => (
     dom: "<'table-buttons'B>lfipr<bottam>p",
     searchDelay: 1500,
     buttons: {
-      buttons: button($table,dttable).get_buttons(OPTIONS)
+      buttons: dtbutton($table, dttable).get_buttons(OPTIONS)
     },
-    columnDefs: column($table).get_columns(),
+    columnDefs: dtcolumn($table).get_columns(),
     responsive: true,
     serverSide: true,
     processing: true,
@@ -90,8 +95,8 @@ const dt_render = (options) => {
 
   $table = document.getElementById(idtable)
   if(!$table) return console.error(`table with id ${idtable} not found`)
+  //dttable = $(tablesel).DataTable()
 
-  //console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
     ...OPTIONS,
@@ -104,14 +109,20 @@ const dt_render = (options) => {
 
     initComplete: function() {
       //esto es único por idtable
-      search($table, dttable).add_input_events()
-      search().focus_global($table)
+      //alert("table")
+      dtsearch($table, dttable).add_input_events()
+      dtsearch($table, dttable).focus_global()
       is_rendered = true
       console.log("initComplete end table-ready")
     },
 
     drawCallback: on_everydraw
   }
+
+
+  //button = dtbutton($table, dttable)
+  //column = dtcolumn($table)
+  //search = dtsearch($table, dttable)
 
   dttable = $(tablesel).DataTable(dtconfig)
   dttable
