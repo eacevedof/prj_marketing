@@ -93,7 +93,7 @@ const get_buttons = () => {
       text: "Add",
       className: "",
       visible: true,
-      action: () => add_modal(_$table.getAttribute("urlmodule").concat("/create")),
+      action: () => in_modal(_$table.getAttribute("urlmodule").concat("/create")),
       attr: {
         approle: "add-item"
       }
@@ -148,14 +148,15 @@ const set_topbuttons = buttons => _topbtns = buttons
 const add_topbutton = button => _topbtns.push(button)
 
 const set_rowbuttons = buttons => _rowbtns = buttons
+const add_rowbutton = button => _rowbtns.push(button)
 
-const add_modal = url => fetch(url)
+const in_modal = url => fetch(url)
   .then(response => response.text())
   .then(html => {
     window.modalraw.disable_bgclick().set_body(html).show()
   })
   .catch(error => {
-    console.log("users.create.tpl",error)
+    console.log("in_modal",error)
   })
   .finally(()=>{
 
@@ -171,6 +172,7 @@ export default ($table, dttable) => {
     set_topbuttons,
     add_topbutton,
     set_rowbuttons,
-    add_modal,
+    add_rowbutton,
+    //in_modal, permite pasar una url custom a pintar en un modal
   }
 }
