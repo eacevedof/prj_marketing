@@ -63,7 +63,8 @@ const get_init_conf = () => (
 )
 
 const on_ajax = (data, fnrender) => {
-  const URL_SEARCH = get_url_with_params(OPTIONS.URL_SEARCH, data)
+  const urlsearch = $table.getAttribute("urlmodule").concat("/search")
+  const URL_SEARCH = get_url_with_params(urlsearch, data)
   fetch(URL_SEARCH, {
     method: "GET",
     headers: new Headers({

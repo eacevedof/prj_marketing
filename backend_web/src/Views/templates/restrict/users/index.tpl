@@ -50,9 +50,6 @@ button().set_topbuttons([
   {
     approle: "add-item",
     text: <?$this->_echo_js(__("Add"));?>,
-    visible: true,
-    className: "debug",
-    //action: () => button().add_modal("/restrict/users/create")
   }
 ])
 
@@ -60,8 +57,6 @@ window.addEventListener("load", () => dt_render({
   URL_MODULE: "/restrict/users",
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
-  URL_SEARCH: "/restrict/users/search",
-  URL_ADD: "/restrict/users/create",
   BUTTONS: {
     INSERT: {
       LABEL: <?$this->_echo_js(__("Add"));?>,
