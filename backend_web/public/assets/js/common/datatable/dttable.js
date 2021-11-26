@@ -1,4 +1,3 @@
-
 import {load_asset_css} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
@@ -7,7 +6,6 @@ import {
 import column from "./column.js"
 import search from "./search.js"
 import button from "./button.js"
-
 
 load_asset_css("spinner")
 
@@ -26,11 +24,12 @@ const get_page = perpage => {
   return pagemin * perpage
 }
 
-const on_drawcallback = () => {
+const on_everydraw = () => {
   dttable
     .column(0, {search:"applied", order:"applied"})
     .nodes()
     .each(($cell, i) => $cell.innerHTML = i+1)
+
   button($table, dttable).rowbuttons_listeners()
 }
 
@@ -86,7 +85,6 @@ const on_ajax = (data, fnrender) => {
 
 const dt_render = (options) => {
   OPTIONS = {...options}
-  //console.log("OPTIONS:", OPTIONS)
   let idtable = OPTIONS.ID_TABLE
   const tablesel = `#${idtable}`
 
@@ -112,7 +110,7 @@ const dt_render = (options) => {
       console.log("initComplete end table-ready")
     },
 
-    drawCallback: on_drawcallback
+    drawCallback: on_everydraw
   }
 
   dttable = $(tablesel).DataTable(dtconfig)
