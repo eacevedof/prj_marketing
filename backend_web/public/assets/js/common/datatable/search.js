@@ -1,6 +1,6 @@
 import {debounce} from "/assets/js/common/utils.js"
 
-const debouncetime = 1000
+const DEBOUNCE_TIME = 1000
 let _inputs = []
 let _dttable = null
 let _$table = null
@@ -15,7 +15,7 @@ const _get_inputs = _$table => Array.from(_$table.querySelectorAll(`[approle="co
 
 const focus_global = () => _get_global_search().focus()
 
-const on_input = e => {
+const _on_input = e => {
   const $input = e.target
   const colidx = $input.getAttribute("appcolidx")
   if (!colidx) return
@@ -23,7 +23,7 @@ const on_input = e => {
   _search(colidx, value)
 }
 
-const add_input_events = () => _inputs.forEach($input => $input.addEventListener("input", debounce(e => on_input(e), debouncetime)))
+const add_input_events = () => _inputs.forEach($input => $input.addEventListener("input", debounce(e => _on_input(e), DEBOUNCE_TIME)))
 
 const reset_all = () => {
   _inputs.forEach( $input => $input.value = "")
