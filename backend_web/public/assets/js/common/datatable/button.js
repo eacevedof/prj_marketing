@@ -2,17 +2,17 @@ import search from "./search.js"
 
 let _$table = null,
     _dttable = null,
-    rowbuttons = [],
-    topbuttons = []
+    _topbtns = [],
+    _rowbtns = []
 
 const _toggle_filters = () => {
   const $row = _$table.querySelector(`tr[row="search"]`)
   if ($row) $row.classList.toggle("hidden")
 }
 
-const rowbuttons_listeners = ()=> {
-  let rowbuttons = _$table.querySelectorAll(`[approle="rowbtn-show"]`)
-  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
+const _rowbtns_listeners = ()=> {
+  let _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-show"]`)
+  Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/info/${uuid}`
     try {
@@ -25,8 +25,8 @@ const rowbuttons_listeners = ()=> {
     }
   }))//end foreach
 
-  rowbuttons = _$table.querySelectorAll(`[approle="rowbtn-edit"]`)
-  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
+  _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-edit"]`)
+  Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/edit/${uuid}`
     try {
@@ -39,8 +39,8 @@ const rowbuttons_listeners = ()=> {
     }
   }))//end foreach
 
-  rowbuttons = _$table.querySelectorAll(`[approle="rowbtn-del"]`)
-  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", (e) => {
+  _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-del"]`)
+  Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
     const uuid = e.target.getAttribute("uuid")
     const url = `/restrict/users/delete/${uuid}`
 
@@ -83,7 +83,7 @@ const rowbuttons_listeners = ()=> {
 
   }))//end foreach
 
-}//rowbuttons listeners
+}//_rowbtns listeners
 
 const get_buttons = () => {
 
@@ -132,7 +132,7 @@ const get_buttons = () => {
 
   defbtns = defbtns
                   .map(def => {
-                    const btn = topbuttons.filter(top => top.approle === def.approle)[0] ?? null
+                    const btn = _topbtns.filter(top => top.approle === def.approle)[0] ?? null
                     if (!btn) return def
 
                     return {
@@ -144,18 +144,18 @@ const get_buttons = () => {
   return defbtns
 }
 
-const set_topbuttons = buttons => topbuttons = buttons
+const set__topbtns = buttons => _topbtns = buttons
 
-const set_rowbuttons = buttons => rowbuttons = buttons
+const set__rowbtns = buttons => _rowbtns = buttons
 
 export default ($table, dttable) => {
   _$table = $table
   _dttable = dttable
 
   return {
-    rowbuttons_listeners,
+    _rowbtns_listeners,
     get_buttons,
-    set_topbuttons,
-    set_rowbuttons,
+    set__topbtns,
+    set__rowbtns,
   }
 }
