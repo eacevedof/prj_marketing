@@ -3,6 +3,11 @@ import search from "./search.js"
 let _$table = null,
     _dttable = null
 
+const _toggle_filters = () => {
+  const $row = _$table.querySelector(`tr[row="search"]`)
+  if ($row) $row.classList.toggle("hidden")
+}
+
 const rowbuttons_listeners = ()=> {
   let rowbuttons = _$table.querySelectorAll(`[approle="rowbtn-show"]`)
   Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
@@ -49,40 +54,35 @@ const rowbuttons_listeners = ()=> {
       closeOnConfirm: false,
       closeOnCancel: false
     })
-    .then(result => {
-      if (!result.isConfirmed) return
-      fetch(url,{method:"delete"})
-        .then(response => response.json())
-        .then(json => {
-          if (json.errors.length>0)
-            return Swal.fire({
+      .then(result => {
+        if (!result.isConfirmed) return
+        fetch(url,{method:"delete"})
+          .then(response => response.json())
+          .then(json => {
+            if (json.errors.length>0)
+              return Swal.fire({
+                icon: "error",
+                title: "Some error occured trying to delete",
+              })
+
+            Swal.fire({
+              icon: "success",
+              title: "Data successfully deleted",
+            })
+            _dttable.ajax.reload()
+
+          })
+          .catch(error => {
+            Swal.fire({
               icon: "error",
               title: "Some error occured trying to delete",
             })
-
-          Swal.fire({
-            icon: "success",
-            title: "Data successfully deleted",
           })
-          _dttable.ajax.reload()
-
-        })
-        .catch(error => {
-          Swal.fire({
-            icon: "error",
-            title: "Some error occured trying to delete",
-          })
-        })
-    })//end then
+      })//end then
 
   }))//end foreach
-  
-}//rowbuttons listeners
 
-const _toggle_filters = () => {
-  const $row = _$table.querySelector(`tr[row="search"]`)
-  if ($row) $row.classList.toggle("hidden")
-}
+}//rowbuttons listeners
 
 const get_buttons = (OPTIONS) => [
   {
