@@ -1,7 +1,9 @@
 import search from "./search.js"
 
 let _$table = null,
-    _dttable = null
+    _dttable = null,
+    rowbuttons = [],
+    topbuttons = []
 
 const _toggle_filters = () => {
   const $row = _$table.querySelector(`tr[row="search"]`)
@@ -115,12 +117,18 @@ const get_buttons = (OPTIONS) => [
   },
 ]
 
+const set_topbuttons = buttons => topbuttons = buttons
+
+const set_rowbuttons = buttons => rowbuttons = buttons
+
 export default ($table, dttable) => {
   _$table = $table
   _dttable = dttable
 
   return {
     rowbuttons_listeners,
-    get_buttons
+    get_buttons,
+    set_topbuttons,
+    set_rowbuttons,
   }
 }
