@@ -13,8 +13,6 @@ const _get_global_search= () => document
 
 const _get_inputs = _$table => Array.from(_$table.querySelectorAll(`[approle="column-search"]`))
 
-const focus_global = () => _get_global_search().focus()
-
 const _on_input = e => {
   const $input = e.target
   const colidx = $input.getAttribute("appcolidx")
@@ -22,6 +20,8 @@ const _on_input = e => {
   const value = $input.value
   _search(colidx, value)
 }
+
+const focus_global = () => _get_global_search().focus()
 
 const add_input_events = () => _inputs.forEach($input => $input.addEventListener("input", debounce(e => _on_input(e), DEBOUNCE_TIME)))
 
