@@ -10,7 +10,7 @@ const _toggle_filters = () => {
   if ($row) $row.classList.toggle("hidden")
 }
 
-const _rowbtns_listeners = ()=> {
+const rowbuttons_listeners = ()=> {
   let _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-show"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
@@ -93,7 +93,7 @@ const get_buttons = () => {
       text: "Add",
       className: "",
       visible: true,
-      action: () => console.log("add clicked"),
+      action: () => add_modal(_$table.getAttribute("urlmodule").concat("/create")),
       attr: {
         approle: "add-item"
       }
@@ -144,18 +144,31 @@ const get_buttons = () => {
   return defbtns
 }
 
-const set__topbtns = buttons => _topbtns = buttons
+const set_topbuttons = buttons => _topbtns = buttons
 
-const set__rowbtns = buttons => _rowbtns = buttons
+const set_rowbuttons = buttons => _rowbtns = buttons
+
+const add_modal = url => fetch(url)
+  .then(response => response.text())
+  .then(html => {
+    window.modalraw.disable_bgclick().set_body(html).show()
+  })
+  .catch(error => {
+    console.log("users.create.tpl",error)
+  })
+  .finally(()=>{
+
+  })
 
 export default ($table, dttable) => {
   _$table = $table
   _dttable = dttable
 
   return {
-    _rowbtns_listeners,
+    rowbuttons_listeners,
     get_buttons,
-    set__topbtns,
-    set__rowbtns,
+    set_topbuttons,
+    set_rowbuttons,
+    add_modal,
   }
 }

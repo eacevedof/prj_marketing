@@ -95,7 +95,7 @@ const dt_render = (options) => {
 
   $table = document.getElementById(idtable)
   if(!$table) return console.error(`table with id ${idtable} not found`)
-  //dttable = $(tablesel).DataTable()
+  $table.setAttribute("urlmodule",OPTIONS.URL_MODULE)
 
   const dtconfig = {
     ...get_init_conf(),
