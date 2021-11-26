@@ -52,11 +52,12 @@ button().set_topbuttons([
     text: <?$this->_echo_js(__("Add"));?>,
     visible: true,
     className: "debug",
-    action: () => alert("add")
+    //action: () => button().add_modal("/restrict/users/create")
   }
 ])
 
 window.addEventListener("load", () => dt_render({
+  URL_MODULE: "/restrict/users",
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
   URL_SEARCH: "/restrict/users/search",
