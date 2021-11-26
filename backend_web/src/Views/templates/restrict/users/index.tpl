@@ -49,9 +49,9 @@ import button from "/assets/js/common/datatable/button.js"
 button().set_topbuttons([
   {
     approle: "add-item",
-    innerhtml: <?$this->_echo_js(__("Add"));?>,
+    text: <?$this->_echo_js(__("Add"));?>,
     visible: true,
-    css: "debug",
+    className: "debug",
     action: () => alert("add")
   }
 ])
