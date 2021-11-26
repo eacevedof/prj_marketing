@@ -92,9 +92,9 @@ const get_buttons = (OPTIONS) => {
     {
       approle: "add-item",
       text: "Add",
-      action: () => console.log("add clicked"),
       className: "",
       visible: true,
+      action: () => console.log("add clicked"),
       attr: {
         approle: "add-item"
       }
@@ -102,8 +102,8 @@ const get_buttons = (OPTIONS) => {
     {
       approle: "refresh-grid",
       text: "Refresh",
-      visible: true,
       className: "",
+      visible: true,
       action: () => _dttable.draw(),
       attr: {
         approle: "refresh-grid"
@@ -112,8 +112,8 @@ const get_buttons = (OPTIONS) => {
     {
       approle: "show-filters",
       text: "Show filters",
-      visible: true,
       className: "",
+      visible: true,
       action: _toggle_filters,
       attr: {
         approle: "show-filters"
@@ -122,6 +122,8 @@ const get_buttons = (OPTIONS) => {
     {
       approle: "reset-filters",
       text: "Reset filters",
+      className: "",
+      visible: true,
       action: () => search(_$table, _dttable).reset_all(),
       attr: {
         approle: "reset-filters"
