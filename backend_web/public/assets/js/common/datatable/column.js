@@ -5,19 +5,19 @@ const _get_columns = () => _ths
   .map($th => $th.getAttribute("column"))
   .filter(col => col!=="")
 
-const is_visible = column => _ths.filter(
+const _is_visible = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("visible")==="1").length > 0
 
-const is_ordenable = column => _ths.filter(
+const _is_ordenable = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("orderable")==="1").length > 0
 
-const is_searchable = column => _ths.filter(
+const _is_searchable = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("searchable")==="1").length > 0
 
-const get_type = column => _ths.filter(
+const _get_type = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).map($th => $th.getAttribute("type"))
 
@@ -36,7 +36,7 @@ const get_columns = () => {
       targets: i+1,
       data: colname,
       //searchable: false, no afecta en nada
-      visible: is_visible(colname),
+      visible: _is_visible(colname),
       render: function (row) {
         return row
       }
