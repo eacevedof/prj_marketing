@@ -90,6 +90,7 @@ const get_buttons = (OPTIONS) => {
   console.log("topbuttons", topbuttons)
   return [
     {
+      approle: "add-item",
       text: OPTIONS.BUTTONS.INSERT.LABEL,
       action:  OPTIONS.BUTTONS.INSERT.ACTION,
       className: "button small button-action add",
@@ -98,6 +99,7 @@ const get_buttons = (OPTIONS) => {
       }
     },
     {
+      approle: "refresh-grid",
       text: OPTIONS.BUTTONS.REFRESH.LABEL,
       action: () => _dttable.draw(),
       attr: {
@@ -105,6 +107,7 @@ const get_buttons = (OPTIONS) => {
       }
     },
     {
+      approle: "col-filters",
       text: OPTIONS.BUTTONS.FILTER_SHOW.LABEL,
       action: _toggle_filters,
       attr: {
@@ -112,6 +115,7 @@ const get_buttons = (OPTIONS) => {
       }
     },
     {
+      approle: "reset-filters",
       text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
       action: () => search(_$table, _dttable).reset_all(),
       attr: {

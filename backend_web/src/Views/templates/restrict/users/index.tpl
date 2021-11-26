@@ -47,9 +47,13 @@ import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
 import button from "/assets/js/common/datatable/button.js"
 
 button().set_topbuttons([
-  "button a",
-  "button b",
-  "button c"
+  {
+    approle: "add-item",
+    label: <?$this->_echo_js(__("Add"));?>,
+    visible: true,
+    css: "debug",
+    onclick: () => alert("add")
+  }
 ])
 
 window.addEventListener("load", () => dt_render({
