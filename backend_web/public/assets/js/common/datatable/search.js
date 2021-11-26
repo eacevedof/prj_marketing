@@ -1,17 +1,17 @@
 import {debounce} from "/assets/js/common/utils.js"
 
 const debouncetime = 1000
-let inputs = []
-let jqdttable = null
-let $eltable = null
+let _inputs = []
+let _dttable = null
+let _$table = null
 
-const _search = (idx, value) => jqdttable.columns(idx).search(value).draw()
+const _search = (idx, value) => _dttable.columns(idx).search(value).draw()
 
 const _get_global_search= () => document
-  .getElementById(`${$eltable.id}_filter`) //div
+  .getElementById(`${_$table.id}_filter`) //div
   .querySelector(`[type="search"]`)
 
-const _get_inputs = $eltable => Array.from($eltable.querySelectorAll(`[approle="column-search"]`))
+const _get_inputs = _$table => Array.from(_$table.querySelectorAll(`[approle="column-search"]`))
 
 const focus_global = () => _get_global_search().focus()
 
@@ -23,20 +23,18 @@ const on_input = e => {
   _search(colidx, value)
 }
 
-const add_input_events = () => inputs.forEach($input => $input.addEventListener("input", debounce(e => on_input(e), debouncetime)))
+const add_input_events = () => _inputs.forEach($input => $input.addEventListener("input", debounce(e => on_input(e), debouncetime)))
 
 const reset_all = () => {
-  inputs.forEach( $input => $input.value = "")
+  _inputs.forEach( $input => $input.value = "")
   _get_global_search().value = ""
-  jqdttable.search("").columns().search("").draw()
+  _dttable.search("").columns().search("").draw()
 }
 
 export default ($table, dttable) => {
-  console.log("TABLE",$table)
-  $eltable = $table
-  jqdttable = dttable
-  inputs = _get_inputs($eltable)
-  console.log("inputs",inputs)
+  _$table = $table
+  _dttable = dttable
+  _inputs = _get_inputs(_$table)
 
   return {
     add_input_events,
