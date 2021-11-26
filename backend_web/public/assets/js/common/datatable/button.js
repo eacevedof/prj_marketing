@@ -91,35 +91,40 @@ const get_buttons = (OPTIONS) => {
   return [
     {
       approle: "add-item",
-      text: OPTIONS.BUTTONS.INSERT.LABEL,
-      action:  OPTIONS.BUTTONS.INSERT.ACTION,
-      className: "button small button-action add",
+      text: "Add",
+      action:  () => console.log("add clicked"),
+      className: "",
+      visible: true,
       attr: {
-        "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
+        approle: "add-item"
       }
     },
     {
       approle: "refresh-grid",
-      text: OPTIONS.BUTTONS.REFRESH.LABEL,
+      text: "Refresh",
+      visible: true,
+      className: "",
       action: () => _dttable.draw(),
       attr: {
-        "data-tooltip": OPTIONS.BUTTONS.REFRESH.TOOLTIP
+        approle: "refresh-grid"
       }
     },
     {
-      approle: "col-filters",
-      text: OPTIONS.BUTTONS.FILTER_SHOW.LABEL,
+      approle: "show-filters",
+      text: "Show filters",
+      visible: true,
+      className: "",
       action: _toggle_filters,
       attr: {
-        "data-tooltip": OPTIONS.BUTTONS.FILTER_SHOW.TOOLTIP
+        approle: "show-filters"
       }
     },
     {
       approle: "reset-filters",
-      text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
+      text: "Reset filters",
       action: () => search(_$table, _dttable).reset_all(),
       attr: {
-        "data-tooltip": OPTIONS.BUTTONS.FILTER_RESET.TOOLTIP
+        approle: "reset-filters"
       }
     },
   ]
