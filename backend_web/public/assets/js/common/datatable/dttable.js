@@ -27,7 +27,6 @@ const get_page = perpage => {
 }
 
 const on_drawcallback = () => {
-  //console.log("on_drawcallback se ejecuta despues de cada renderizado")
   dttable
     .column(0, {search:"applied", order:"applied"})
     .nodes()
@@ -102,10 +101,11 @@ const get_init_conf = () => (
   }
 )
 
-const get_data = (data, fnrender) => {
-  const url = get_url_with_params(OPTIONS.URL_SEARCH, data)
 
-  fetch(url, {
+
+const on_ajax = (data, fnrender) => {
+  const URL_SEARCH = get_url_with_params(OPTIONS.URL_SEARCH, data)
+  fetch(URL_SEARCH, {
     method: "GET",
     headers: new Headers({
       "Accept": "application/json",
@@ -138,8 +138,6 @@ const dt_render = (options) => {
   $table = document.getElementById(idtable)
   if(!$table) return console.error(`table with id ${idtable} not found`)
 
-
-
   //console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
@@ -149,9 +147,7 @@ const dt_render = (options) => {
       displayStart: get_page(OPTIONS.ITEMS_PER_PAGE),
     },
 
-    ajax: function(data, fnrender) {
-      get_data(data, fnrender)
-    },//ajax
+    ajax: on_ajax,
 
     initComplete: function() {
       //esto es único por idtable
@@ -164,9 +160,7 @@ const dt_render = (options) => {
     drawCallback: on_drawcallback
   }
 
-  //console.log("CONFIG", dtconfig)
   dttable = $(tablesel).DataTable(dtconfig)
-
   dttable
     .on("page.dt", function() {
       const pagemin = dttable.page.info()?.page ?? 0
@@ -175,8 +169,6 @@ const dt_render = (options) => {
     .on("order.dt", function() {
       if (is_rendered) add_page_to_url(1, 3)
     })
-  //console.log("dttable:",dttable)
-
 
 }//dt_render
 
