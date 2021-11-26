@@ -85,10 +85,9 @@ const rowbuttons_listeners = ()=> {
 
 }//rowbuttons listeners
 
-const get_buttons = (OPTIONS) => {
+const get_buttons = () => {
 
-  console.log("topbuttons", topbuttons)
-  return [
+  let defbtns = [
     {
       approle: "add-item",
       text: "Add",
@@ -130,6 +129,19 @@ const get_buttons = (OPTIONS) => {
       }
     },
   ]
+
+  defbtns = defbtns
+                  .map(def => {
+                    const btn = topbuttons.filter(top => top.approle === def.approle)[0] ?? null
+                    if (!btn) return def
+
+                    return {
+                      ...def,
+                      ...btn
+                    }
+                  })
+                  .filter(btn => btn.visible)
+  return defbtns
 }
 
 const set_topbuttons = buttons => topbuttons = buttons
