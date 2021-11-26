@@ -34,49 +34,6 @@ const on_drawcallback = () => {
   button($table, dttable).rowbuttons_listeners()
 }
 
-const get_columns = () => {
-  const cols = column($table).get_colums()
-  //col con numero
-  const allcols = [{
-    searchable: false,
-    orderable: false,
-    targets: 0,
-    data: null,
-  }]
-
-  cols.forEach((colname, i )=> {
-    const obj = {
-      targets: i+1,
-      data: colname,
-      //searchable: false, no afecta en nada
-      visible: column($table).is_visible(colname),
-      render: function (row) {
-        return row
-      }
-    }
-
-    allcols.push(obj)
-  })
-
-  allcols.push({
-    targets: -1,
-    data: null,
-    render: function(row) {
-      //type: display
-      const uuid = row.uuid ?? ""
-      if(!uuid) return ""
-      const links = [
-        `<button type="button" uuid="${uuid}" approle="rowbtn-show">show</button>`,
-        `<button type="button" uuid="${uuid}" approle="rowbtn-edit">edit</button>`,
-        `<button type="button" uuid="${uuid}" approle="rowbtn-del">del</button>`,
-      ]
-      return links.join("&nbsp;");
-    },
-  })
-
-  return allcols
-}
-
 const get_init_conf = () => (
   {
     // l:length changing input control,
@@ -86,7 +43,7 @@ const get_init_conf = () => (
     buttons: {
       buttons: button($table,dttable).get_buttons(OPTIONS)
     },
-    columnDefs: get_columns(),
+    columnDefs: column($table).get_columns(),
     responsive: true,
     serverSide: true,
     processing: true,
@@ -100,8 +57,6 @@ const get_init_conf = () => (
     }
   }
 )
-
-
 
 const on_ajax = (data, fnrender) => {
   const URL_SEARCH = get_url_with_params(OPTIONS.URL_SEARCH, data)
