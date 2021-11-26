@@ -44,32 +44,13 @@ $now = date("YmdHis");
 </div>
 <script type="module">
 import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
+import button from "/assets/js/common/datatable/button.js"
 
-const buttons = [
-
-]
-
-const rowbuttons = [
-
-]
-
-const columns = [
-  {
-    searchable: false,
-    orderable: false,
-    targets: 0,
-    data: null,
-  },
-  "id:int",
-  "uuid:string",
-  "fullname:string",
-  "email:string",
-  "phone:string",
-  "id_profile:string",
-  "id_nationality:string",
-  "id_language:string",
-
-]
+button().set_topbuttons([
+  "button a",
+  "button b",
+  "button c"
+])
 
 window.addEventListener("load", () => dt_render({
   ID_TABLE: "table-datatable",
