@@ -145,6 +145,7 @@ const get_buttons = () => {
 }
 
 const set_topbuttons = buttons => _topbtns = buttons
+const add_topbutton = button => _topbtns.push(button)
 
 const set_rowbuttons = buttons => _rowbtns = buttons
 
@@ -168,6 +169,7 @@ export default ($table, dttable) => {
     rowbuttons_listeners,
     get_buttons,
     set_topbuttons,
+    add_topbutton,
     set_rowbuttons,
     add_modal,
   }

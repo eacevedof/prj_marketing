@@ -46,12 +46,11 @@ $now = date("YmdHis");
 import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
 import button from "/assets/js/common/datatable/button.js"
 
-button().set_topbuttons([
-  {
-    approle: "add-item",
-    text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
-  }
-])
+button().add_topbutton({
+  approle: "add-item",
+  text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
+})
+
 
 window.addEventListener("load", () => dt_render({
   URL_MODULE: "/restrict/users",
