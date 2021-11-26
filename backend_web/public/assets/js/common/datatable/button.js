@@ -92,7 +92,7 @@ const get_buttons = (OPTIONS) => {
     {
       approle: "add-item",
       text: "Add",
-      action:  () => console.log("add clicked"),
+      action: () => console.log("add clicked"),
       className: "",
       visible: true,
       attr: {
