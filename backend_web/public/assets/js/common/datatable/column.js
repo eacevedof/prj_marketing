@@ -1,22 +1,23 @@
-let ths = []
+let _ths = []
+let _$table = null
 
-const _get_columns = () => ths
+const _get_columns = () => _ths
   .map($th => $th.getAttribute("column"))
   .filter(col => col!=="")
 
-const is_visible = column => ths.filter(
+const is_visible = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("visible")==="1").length > 0
 
-const is_ordenable = column => ths.filter(
+const is_ordenable = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("orderable")==="1").length > 0
 
-const is_searchable = column => ths.filter(
+const is_searchable = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("searchable")==="1").length > 0
 
-const get_type = column => ths.filter(
+const get_type = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).map($th => $th.getAttribute("type"))
 
@@ -63,9 +64,9 @@ const get_columns = () => {
   return allcols
 }
 
-export default ($table) => {
-  if(ths.length === 0)
-    ths = Array.from($table.querySelectorAll(`[column]`))
+export default $table => {
+  _$table = $table
+  _ths = Array.from(_$table.querySelectorAll(`[column]`))
 
   return {
     get_columns,
