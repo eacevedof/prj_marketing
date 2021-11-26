@@ -6,6 +6,8 @@ import {
 
 import column from "./column.js"
 import search from "./search.js"
+import button from "./button.js"
+
 
 load_asset_css("spinner")
 
@@ -30,7 +32,7 @@ const on_drawcallback = () => {
     .column(0, {search:"applied", order:"applied"})
     .nodes()
     .each(($cell, i) => $cell.innerHTML = i+1)
-  load_rowbuttons_listeners()
+  button($table, dttable).rowbuttons_listeners()
 }
 
 const get_columns = () => {
@@ -76,118 +78,6 @@ const get_columns = () => {
   return allcols
 }
 
-const load_rowbuttons_listeners = ()=> {
-  let rowbuttons = $table.querySelectorAll(`[approle="rowbtn-show"]`)
-  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
-    const uuid = e.target.getAttribute("uuid")
-    const url = `/restrict/users/info/${uuid}`
-    try {
-      const r = await fetch(url)
-      const html = await r.text()
-      //console.log("html",html)
-      window.modalraw.disable_bgclick(false).set_body(html).show()
-    }
-    catch (error) {
-      console.log("info listener")
-    }
-  }))
-
-  rowbuttons = $table.querySelectorAll(`[approle="rowbtn-edit"]`)
-  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", async (e) => {
-    const uuid = e.target.getAttribute("uuid")
-    const url = `/restrict/users/edit/${uuid}`
-    try {
-      const r = await fetch(url)
-      const html = await r.text()
-      window.modalraw.disable_bgclick(true).set_body(html).show()
-    }
-    catch (error) {
-      console.log("info listener")
-    }
-  }))
-
-  rowbuttons = $table.querySelectorAll(`[approle="rowbtn-del"]`)
-  Array.from(rowbuttons).forEach($btn => $btn.addEventListener("click", (e) => {
-    const uuid = e.target.getAttribute("uuid")
-    const url = `/restrict/users/delete/${uuid}`
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will not be able to recover this information! ".concat(uuid),
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Yes, I am sure!",
-      cancelButtonText: "No, cancel it!",
-      closeOnConfirm: false,
-      closeOnCancel: false
-    })
-    .then(result => {
-      if (!result.isConfirmed) return
-      fetch(url,{method:"delete"})
-        .then(response => response.json())
-        .then(json => {
-          if (json.errors.length>0)
-            return Swal.fire({
-              icon: "error",
-              title: "Some error occured trying to delete",
-            })
-
-          Swal.fire({
-            icon: "success",
-            title: "Data successfully deleted",
-          })
-          dttable.ajax.reload()
-
-        })
-        .catch(error => {
-          Swal.fire({
-            icon: "error",
-            title: "Some error occured trying to delete",
-          })
-        })
-    })//swal.action
-
-  }))
-}
-
-const toggle_filters = () => {
-  const $row = $table.querySelector(`tr[row="search"]`)
-  if ($row) $row.classList.toggle("hidden")
-}
-
-const get_buttons = () => [
-  {
-    text: OPTIONS.BUTTONS.INSERT.LABEL,
-    action:  OPTIONS.BUTTONS.INSERT.ACTION,
-    className: "button small button-action add",
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
-    }
-  },
-  {
-    text: OPTIONS.BUTTONS.REFRESH.LABEL,
-    action: () => dttable.draw(),
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.REFRESH.TOOLTIP
-    }
-  },
-  {
-    text: OPTIONS.BUTTONS.FILTER_SHOW.LABEL,
-    action: toggle_filters,
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.FILTER_SHOW.TOOLTIP
-    }
-  },
-  {
-    text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
-    action: () => search().reset_all($table, dttable),
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.FILTER_RESET.TOOLTIP
-    }
-  },
-]
-
 const get_init_conf = () => (
   {
     // l:length changing input control,
@@ -195,7 +85,7 @@ const get_init_conf = () => (
     dom: "<'table-buttons'B>lfipr<bottam>p",
     searchDelay: 1500,
     buttons: {
-      buttons: get_buttons()
+      buttons: button($table,dttable).get_buttons(OPTIONS)
     },
     columnDefs: get_columns(),
     responsive: true,
@@ -248,6 +138,8 @@ const dt_render = (options) => {
   $table = document.getElementById(idtable)
   if(!$table) return console.error(`table with id ${idtable} not found`)
 
+
+
   //console.log("dom.$table",$table)
   const dtconfig = {
     ...get_init_conf(),
@@ -284,6 +176,8 @@ const dt_render = (options) => {
       if (is_rendered) add_page_to_url(1, 3)
     })
   //console.log("dttable:",dttable)
+
+
 }//dt_render
 
 export default dt_render
