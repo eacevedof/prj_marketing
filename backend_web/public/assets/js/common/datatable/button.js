@@ -85,37 +85,41 @@ const rowbuttons_listeners = ()=> {
 
 }//rowbuttons listeners
 
-const get_buttons = (OPTIONS) => [
-  {
-    text: OPTIONS.BUTTONS.INSERT.LABEL,
-    action:  OPTIONS.BUTTONS.INSERT.ACTION,
-    className: "button small button-action add",
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
-    }
-  },
-  {
-    text: OPTIONS.BUTTONS.REFRESH.LABEL,
-    action: () => _dttable.draw(),
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.REFRESH.TOOLTIP
-    }
-  },
-  {
-    text: OPTIONS.BUTTONS.FILTER_SHOW.LABEL,
-    action: _toggle_filters,
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.FILTER_SHOW.TOOLTIP
-    }
-  },
-  {
-    text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
-    action: () => search(_$table, _dttable).reset_all(),
-    attr: {
-      "data-tooltip": OPTIONS.BUTTONS.FILTER_RESET.TOOLTIP
-    }
-  },
-]
+const get_buttons = (OPTIONS) => {
+
+  console.log("topbuttons", topbuttons)
+  return [
+    {
+      text: OPTIONS.BUTTONS.INSERT.LABEL,
+      action:  OPTIONS.BUTTONS.INSERT.ACTION,
+      className: "button small button-action add",
+      attr: {
+        "data-tooltip": OPTIONS.BUTTONS.INSERT.TOOLTIP
+      }
+    },
+    {
+      text: OPTIONS.BUTTONS.REFRESH.LABEL,
+      action: () => _dttable.draw(),
+      attr: {
+        "data-tooltip": OPTIONS.BUTTONS.REFRESH.TOOLTIP
+      }
+    },
+    {
+      text: OPTIONS.BUTTONS.FILTER_SHOW.LABEL,
+      action: _toggle_filters,
+      attr: {
+        "data-tooltip": OPTIONS.BUTTONS.FILTER_SHOW.TOOLTIP
+      }
+    },
+    {
+      text: OPTIONS.BUTTONS.FILTER_RESET.LABEL,
+      action: () => search(_$table, _dttable).reset_all(),
+      attr: {
+        "data-tooltip": OPTIONS.BUTTONS.FILTER_RESET.TOOLTIP
+      }
+    },
+  ]
+}
 
 const set_topbuttons = buttons => topbuttons = buttons
 
