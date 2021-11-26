@@ -49,7 +49,7 @@ import button from "/assets/js/common/datatable/button.js"
 button().set_topbuttons([
   {
     approle: "add-item",
-    text: <?$this->_echo_js(__("Add"));?>,
+    text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
   }
 ])
 
@@ -57,37 +57,5 @@ window.addEventListener("load", () => dt_render({
   URL_MODULE: "/restrict/users",
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
-  BUTTONS: {
-    INSERT: {
-      LABEL: <?$this->_echo_js(__("Add"));?>,
-      TOOLTIP: <?$this->_echo_js(__("Add"));?>,
-      ACTION: function (){
-        const url = "/restrict/users/create"
-        fetch(url)
-          .then(response => response.text())
-          .then(html => {
-            window.modalraw.disable_bgclick().set_body(html).show()
-          })
-          .catch(error => {
-            console.log("users.create.tpl",error)
-          })
-          .finally(()=>{
-
-          })
-      }
-    },
-    REFRESH: {
-      LABEL: <?$this->_echo_js(__("Refresh"));?>,
-      TOOLTIP: <?$this->_echo_js(__("Refresh"));?>,
-    },
-    FILTER_SHOW: {
-      LABEL: <?$this->_echo_js(__("Show filters"));?>,
-      TOOLTIP: <?$this->_echo_js(__("Show filters"));?>,
-    },
-    FILTER_RESET: {
-      LABEL: <?$this->_echo_js(__("Reset filters"));?>,
-      TOOLTIP: <?$this->_echo_js(__("Reset filters"));?>,
-    },
-  }
 }))
 </script>
