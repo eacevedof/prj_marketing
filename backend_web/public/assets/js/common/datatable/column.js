@@ -69,9 +69,6 @@ export default $table => {
   _ths = Array.from(_$table.querySelectorAll(`[column]`))
 
   return {
-    get_columns,
-    is_ordenable,
-    is_searchable,
-    get_type,
+    get_columns
   }
 }
