@@ -17,13 +17,13 @@ function Snackbar(id) {
     return this
   }
 
-  this.set_animation = (time, out) => {
-    if (!time) time = "0.5"
-    if (!out) out = "2.5"
+  const _set_animation = (hold, time) => {
+    if (!time) time = 0.5
+    const _hold = hold ? hold - (time * 2): 2.5
     //-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     //animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    console.log("time:",time,"out:",out)
-    const animation = `fadein ${time}s, fadeout ${time}s ${out}s`
+    console.log("time:",time,"_hold:",_hold)
+    const animation = `snack-fadein ${time}s, snack-fadeout ${time}s ${_hold}s`
     _$div.style.webkitAnimationName = animation
     _$div.style.animation = animation
     return this
@@ -37,13 +37,11 @@ function Snackbar(id) {
 
   this.show = () => {
     _$div.classList.add("snackbar-show")
-    const time = _time
-    console.log("time show", time,"_time",_time)
-    setTimeout(() => {
-        _$div.classList.remove("snackbar-show")
-        _$div.innerHTML = ""
-      }, time * 1000)
+    const tremove = _time * 900
+    setTimeout(() => _$div.classList.remove("snackbar-show"), tremove)
+    _set_animation(_time)
   }
+
 }
 
 export default Snackbar

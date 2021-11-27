@@ -65,8 +65,6 @@ const App = {
         const t = $("#table-datatable").DataTable()
 
         window.snack.set_time(8)
-          .set_animation(8)
-          .set_color("blue")
           .set_inner(`<b>Data updated</b>`)
           .show()
 

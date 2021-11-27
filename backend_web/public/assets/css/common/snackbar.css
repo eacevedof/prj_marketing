@@ -19,27 +19,26 @@
     visibility: visible; /* Show the snackbar */
     /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
     However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+
 }
 
 /* Animations to fade the snackbar in and out */
-@-webkit-keyframes fadein {
+@-webkit-keyframes snack-fadein {
     from {top: 0; opacity: 0;}
     to {top: 30px; opacity: 1;}
 }
 
-@keyframes fadein {
+@keyframes snack-fadein {
     from {top: 0; opacity: 0;}
     to {top: 30px; opacity: 1;}
 }
 
-@-webkit-keyframes fadeout {
+@-webkit-keyframes snack-fadeout {
     from {top: 30px; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
 
-@keyframes fadeout {
+@keyframes snack-fadeout {
     from {top: 30px; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
