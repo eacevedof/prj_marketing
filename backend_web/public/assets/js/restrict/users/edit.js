@@ -53,27 +53,24 @@ const App = {
         if(response?.errors?.length){
           const errors = response.errors[0]?.fields_validation
           if(errors) {
+            window.snack.set_time(4).set_inner("error").set_color("red").show()
             return field_errors(errors)
           }
-          Swal.fire({
-            icon: "warning",
-            title: texts.tr03,
-            html: texts.tr04.concat(response.errors[0]),
-          })
+          return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color("red").show()
         }
-        const t = $("#table-datatable").DataTable()
 
         window.snack.set_time(4)
+          .set_color("green")
           .set_inner(`<b>Data updated</b>`)
           .show()
 
-        t.ajax.reload()
+        $("#table-datatable").DataTable().ajax.reload()
       })
       .catch(error => {
         Swal.fire({
           icon: "error",
           title: texts.tr05,
-          html: texts.tr06,
+          html: texts.tr06.concat(" ").concat(error),
         })
       })
       .finally(()=>{
