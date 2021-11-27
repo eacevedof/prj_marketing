@@ -1,4 +1,5 @@
 import search from "./search.js"
+import swal from "./swal.js"
 
 let _$table = null,
     _dttable = null,
@@ -42,45 +43,7 @@ const rowbuttons_listeners = ()=> {
   _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-del"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
     const uuid = e.target.getAttribute("uuid")
-    const url = `/restrict/users/delete/${uuid}`
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will not be able to recover this information! ".concat(uuid),
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Yes, I am sure!",
-      cancelButtonText: "No, cancel it!",
-      closeOnConfirm: false,
-      closeOnCancel: false
-    })
-    .then(result => {
-      if (!result.isConfirmed) return
-      fetch(url,{method:"delete"})
-        .then(response => response.json())
-        .then(json => {
-          if (json.errors.length>0)
-            return Swal.fire({
-              icon: "error",
-              title: "Some error occured trying to delete",
-            })
-
-          Swal.fire({
-            icon: "success",
-            title: "Data successfully deleted",
-          })
-          _dttable.ajax.reload()
-
-        })
-        .catch(error => {
-          Swal.fire({
-            icon: "error",
-            title: "Some error occured trying to delete",
-          })
-        })
-    })//end then
-
+    swal(_$table, _dttable).on_delete(uuid)
   }))//end foreach
 
 }//_rowbtns listeners
