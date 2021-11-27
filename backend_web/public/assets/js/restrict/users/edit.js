@@ -2,7 +2,6 @@ import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderr
 
 const ID_WRAPPER = "#vue-users-edit"
 const URL_POST = "/restrict/users/update/"
-const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.update"
 let CSRF = ""
 let $wrapper = null
@@ -64,7 +63,7 @@ const App = {
         }
         const t = $("#table-datatable").DataTable()
 
-        window.snack.set_time(8)
+        window.snack.set_time(4)
           .set_inner(`<b>Data updated</b>`)
           .show()
 

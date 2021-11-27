@@ -3,7 +3,7 @@
     visibility: hidden; /* Hidden by default. Visible on click */
     min-width: 250px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #5ea80a; /* Black background color */
+    background-color: #5ea80a;
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
     border-radius: 2px; /* Rounded borders */
@@ -24,21 +24,21 @@
 
 /* Animations to fade the snackbar in and out */
 @-webkit-keyframes snackframe-fadein {
-    from {top: 0; opacity: 0;}
-    to {top: 30px; opacity: 1;}
+    from {top: 0; opacity: 0; visibility: hidden;}
+    to {top: 25px; opacity: 1; visibility: visible;}
 }
 
 @keyframes snackframe-fadein {
-    from {top: 0; opacity: 0;}
-    to {top: 30px; opacity: 1;}
+    from {top: 0; opacity: 0; visibility: hidden;}
+    to {top: 25px; opacity: 1; visibility: visible;}
 }
 
 @-webkit-keyframes snackframe-fadeout {
-    from {top: 30px; opacity: 1;}
-    to {top: 0; opacity: 0;}
+    from {top: 25px; opacity: 1; visibility: visible}
+    to {top: 0; opacity: 0; visibility: hidden}
 }
 
 @keyframes snackframe-fadeout {
-    from {top: 30px; opacity: 1;}
-    to {top: 0; opacity: 0;}
+    from {top: 25px; opacity: 1; visibility: visible}
+    to {top: 0; opacity: 0; visibility: hidden}
 }

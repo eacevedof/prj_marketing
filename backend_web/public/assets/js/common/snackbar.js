@@ -43,6 +43,7 @@ function Snackbar(id) {
       _$div.classList.remove("snackbar-show")
       _$div.style.webkitAnimationName = ""
       _$div.style.animation = ""
+      //console.log("remove")
     }, tremove)
   }
 
