@@ -1,6 +1,6 @@
 function Snackbar(id) {
   const _id = id
-  let _time = 3000
+  let _time = 3
 
   const _$div = document.getElementById(_id)
   if(!_$div) return console.log("no snackbar found with id",_id)
@@ -11,18 +11,26 @@ function Snackbar(id) {
     return this
   }
 
+  this.set_color = (back, front) => {
+    if (back) _$div.style.backgroundColor = back
+    if (front) _$div.style.color = front
+    return this
+  }
+
   this.set_time = time => {
     _time = time
+    console.log("_time set_time", _time)
     return this
   }
 
   this.show = () => {
     _$div.classList.add("snackbar-show")
+    const time = _time
+    console.log("time show", time,"_time",_time)
     setTimeout(() => {
         _$div.classList.remove("snackbar-show")
         _$div.innerHTML = ""
-      },
-      3000)
+      }, time * 1000)
   }
 }
 

@@ -62,9 +62,8 @@ const App = {
             html: texts.tr04.concat(response.errors[0]),
           })
         }
-        //window.location = URL_REDIRECT
         const t = $("#table-datatable").DataTable()
-        window.snack.set_inner(`<b>Data updated</b>`).show()
+        window.snack.set_time(8).set_color("lemon","white").set_inner(`<b>Data updated</b>`).show()
         t.ajax.reload()
       })
       .catch(error => {
