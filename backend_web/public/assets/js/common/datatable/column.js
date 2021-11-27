@@ -1,5 +1,8 @@
-let _ths = []
-let _$table = null
+
+let _ths = [],
+  _$table = null
+
+
 
 const _get_columns = () => _ths
   .map($th => $th.getAttribute("column"))
