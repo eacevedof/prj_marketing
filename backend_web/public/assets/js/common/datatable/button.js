@@ -12,31 +12,32 @@ const _toggle_filters = () => {
 }
 
 const rowbuttons_listeners = ()=> {
+  const urlmodule = _$table.getAttribute("urlmodule")
   let _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-show"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
-    const url = `/restrict/users/info/${uuid}`
+    const url = urlmodule.concat(`/info/${uuid}`)
     try {
       const r = await fetch(url)
       const html = await r.text()
       window.modalraw.disable_bgclick(false).set_body(html).show()
     }
     catch (error) {
-      console.log("info listener")
+      window.snack.set_color("red").set_time(5).set_inner(error).show()
     }
   }))//end foreach
 
   _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-edit"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
-    const url = `/restrict/users/edit/${uuid}`
+    const url = urlmodule.concat(`/edit/${uuid}`)
     try {
       const r = await fetch(url)
       const html = await r.text()
       window.modalraw.disable_bgclick(true).set_body(html).show()
     }
     catch (error) {
-      console.error(error)
+      window.snack.set_color("red").set_time(5).set_inner(error).show()
     }
   }))//end foreach
 
