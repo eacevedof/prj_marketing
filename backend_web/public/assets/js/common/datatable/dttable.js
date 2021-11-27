@@ -7,7 +7,7 @@ import dtcolumn from "./column.js"
 import dtsearch from "./search.js"
 import dtbutton from "./button.js"
 
-load_asset_css("spinner")
+load_asset_css("common/spinner")
 
 let OPTIONS = {},
   is_rendered = false,
