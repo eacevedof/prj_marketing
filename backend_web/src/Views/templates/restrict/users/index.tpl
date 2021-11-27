@@ -45,12 +45,21 @@ $now = date("YmdHis");
 <script type="module">
 import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
 import button from "/assets/js/common/datatable/button.js"
+import rowswal from "/assets/js/common/datatable/rowswal.js"
+
+rowswal().set_texts({
+  success: {
+    title: <?$this->_echo_js(__("All right"));?>
+  },
+  error: {
+    title: <?$this->_echo_js(__("Some error occured trying to delete"));?>
+  }
+})
 
 button().add_topbutton({
   approle: "add-item",
   text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
 })
-
 
 window.addEventListener("load", () => dt_render({
   URL_MODULE: "/restrict/users",

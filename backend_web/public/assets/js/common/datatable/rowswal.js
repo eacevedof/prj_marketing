@@ -1,9 +1,9 @@
-const Swal = window.Swal
+const Rowswal = window.Swal
 
 let _dttable = null
 let _$table = null
 
-const _texts = {
+let _texts = {
   error:{
     title: "Some error occured trying to delete"
   },
@@ -18,23 +18,30 @@ const _texts = {
   }
 }
 
-const _show_error_handled = () => Swal.fire({
+const set_texts = obj => {
+  _texts = {
+    ..._texts,
+    ...obj
+  }
+}
+
+const _show_error_handled = () => Rowswal.fire({
   icon: "error",
   title: _texts.error.title,
 })
 
-const _show_error_catched = error => Swal.fire({
+const _show_error_catched = error => Rowswal.fire({
   icon: "error",
   title: _texts.error.title.concat(`<br/>${error}`),
 })
 
-const _show_success = () => Swal.fire({
+const _show_success = () => Rowswal.fire({
   icon: "success",
   title: _texts.success.title,
 })
 
 const on_delete = uuid =>
-  Swal.fire({
+  Rowswal.fire({
     title: _texts.delswal.title,
     html: _texts.delswal.text.concat(uuid).concat("</b>"),
     confirmButtonText: _texts.delswal.confirm,
@@ -63,7 +70,9 @@ const on_delete = uuid =>
 export default ($table, dttable) => {
   _$table = $table
   _dttable = dttable
+
   return {
+    set_texts,
     on_delete
   }
 }
