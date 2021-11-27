@@ -1,5 +1,5 @@
 import search from "./search.js"
-import swal from "./swal.js"
+import rowswal from "./rowswal.js"
 
 let _$table = null,
     _dttable = null,
@@ -43,7 +43,7 @@ const rowbuttons_listeners = ()=> {
   _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-del"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
     const uuid = e.target.getAttribute("uuid")
-    swal(_$table, _dttable).on_delete(uuid)
+    rowswal(_$table, _dttable).on_delete(uuid)
   }))//end foreach
 
 }//_rowbtns listeners
