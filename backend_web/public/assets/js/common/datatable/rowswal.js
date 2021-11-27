@@ -1,7 +1,7 @@
 const Rowswal = window.Swal
 
-let _dttable = null
-let _$table = null
+let _dttable = null,
+  _$table = null
 
 let _texts = {
   error:{
@@ -35,10 +35,17 @@ const _show_error_catched = error => Rowswal.fire({
   title: _texts.error.title.concat(`<br/>${error}`),
 })
 
+/*
 const _show_success = () => Rowswal.fire({
   icon: "success",
   title: _texts.success.title,
 })
+*/
+const _show_success = uuid => window.snack
+                              .set_time(5)
+                              .set_color("green")
+                              .set_inner(_texts.success.title.concat(` ${uuid}`))
+                              .show()
 
 const on_delete = uuid =>
   Rowswal.fire({
@@ -55,13 +62,13 @@ const on_delete = uuid =>
   .then(result => {
     if (!result.isConfirmed) return
     //const url = `/restrict/users/delete/${uuid}`
-    const url = _$table.getAttribute("urlmodule").concat("/delete/").concat(uuid)
+    const url = _$table.getAttribute("urlmodule").concat(`/delete/${uuid}`)
     fetch(url,{method:"delete"})
       .then(response => response.json())
       .then(json => {
         if (json.errors.length>0)
           return _show_error_handled()
-        _show_success()
+        _show_success(uuid)
         _dttable.ajax.reload()
       })
       .catch(error => _show_error_catched(error))
