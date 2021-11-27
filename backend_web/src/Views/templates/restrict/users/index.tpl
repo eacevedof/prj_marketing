@@ -49,7 +49,7 @@ import rowswal from "/assets/js/common/datatable/rowswal.js"
 
 rowswal().set_texts({
   success: {
-    title: <?$this->_echo_js(__("All right"));?>
+    title: <?$this->_echo_js(__("Delete success:"));?>
   },
   error: {
     title: <?$this->_echo_js(__("Some error occured trying to delete"));?>
