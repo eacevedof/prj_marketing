@@ -38,8 +38,12 @@ function Snackbar(id) {
   this.show = () => {
     _$div.classList.add("snackbar-show")
     const tremove = _time * 900
-    setTimeout(() => _$div.classList.remove("snackbar-show"), tremove)
     _set_animation(_time)
+    setTimeout(() => {
+      _$div.classList.remove("snackbar-show")
+      _$div.style.webkitAnimationName = ""
+      _$div.style.animation = ""
+    }, tremove)
   }
 
 }
