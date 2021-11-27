@@ -23,22 +23,22 @@
 }
 
 /* Animations to fade the snackbar in and out */
-@-webkit-keyframes snack-fadein {
+@-webkit-keyframes snackframe-fadein {
     from {top: 0; opacity: 0;}
     to {top: 30px; opacity: 1;}
 }
 
-@keyframes snack-fadein {
+@keyframes snackframe-fadein {
     from {top: 0; opacity: 0;}
     to {top: 30px; opacity: 1;}
 }
 
-@-webkit-keyframes snack-fadeout {
+@-webkit-keyframes snackframe-fadeout {
     from {top: 30px; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
 
-@keyframes snack-fadeout {
+@keyframes snackframe-fadeout {
     from {top: 30px; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
