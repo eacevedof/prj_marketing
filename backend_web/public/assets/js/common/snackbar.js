@@ -23,7 +23,7 @@ function Snackbar(id) {
     //-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     //animation: fadein 0.5s, fadeout 0.5s 2.5s;
     console.log("time:",time,"_hold:",_hold)
-    const animation = `snack-fadein ${time}s, snack-fadeout ${time}s ${_hold}s`
+    const animation = `snackframe-fadein ${time}s, snackframe-fadeout ${time}s ${_hold}s`
     _$div.style.webkitAnimationName = animation
     _$div.style.animation = animation
     return this
