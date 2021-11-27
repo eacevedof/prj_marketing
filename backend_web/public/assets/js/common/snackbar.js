@@ -17,6 +17,18 @@ function Snackbar(id) {
     return this
   }
 
+  this.set_animation = (time, out) => {
+    if (!time) time = "0.5"
+    if (!out) out = "2.5"
+    //-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    //animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    console.log("time:",time,"out:",out)
+    const animation = `fadein ${time}s, fadeout ${time}s ${out}s`
+    _$div.style.webkitAnimationName = animation
+    _$div.style.animation = animation
+    return this
+  }
+
   this.set_time = time => {
     _time = time
     console.log("_time set_time", _time)
