@@ -18,7 +18,10 @@ function Snackbar(id) {
 
   this.show = () => {
     _$div.classList.add("snackbar-show")
-    setTimeout(() => _$div.classList.remove("snackbar-show"),
+    setTimeout(() => {
+        _$div.classList.remove("snackbar-show")
+        _$div.innerHTML = ""
+      },
       3000)
   }
 }
