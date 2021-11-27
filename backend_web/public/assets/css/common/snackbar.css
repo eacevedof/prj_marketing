@@ -12,6 +12,7 @@
     z-index: 10; /* Add a z-index if needed */
     left: 87%; /* Center the snackbar */
     top: 10px; /* 30px from the top */
+    border-radius: 10px;
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
