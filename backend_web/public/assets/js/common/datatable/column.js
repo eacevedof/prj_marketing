@@ -62,7 +62,7 @@ export const add_rowbtn = obj => _rowbtns.push(obj)
 
 const _get_mapped_rowbtns = row => {
   let objbtns = _defrowbtns.map(defbtn => {
-    const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === rowbtn.approle)[0] ?? null
+    const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === defbtn.approle)[0] ?? null
     if (confbtn)
       return {
         ...defbtn,
@@ -73,7 +73,20 @@ const _get_mapped_rowbtns = row => {
 
   objbtns = objbtns.filter(objbtn => objbtn.visible)
   console.log(objbtns)
-  return ""
+
+  objbtns = objbtns.map(objbtn => {
+    const attr = objbtn?.attr
+    let strattr = ""
+    if (attr) {
+      const keys = Object.keys(attr)
+      strattr = keys.map(key => `${key}="${attr[key]}"`).join(" ")
+    }
+    const html = objbtn?.html
+                  .replace("%attr%", strattr)
+                  .replace("%text%", objbtn?.text ?? "")
+    return html
+  })
+  return objbtns.join("&nbsp;")
 }
 
 const get_columns = () => {
