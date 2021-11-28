@@ -79,7 +79,17 @@ const _get_mapped_rowbtns = row => {
     let strattr = ""
     if (attr) {
       const keys = Object.keys(attr)
-      strattr = keys.map(key => `${key}="${attr[key]}"`).join(" ")
+      strattr = keys.map(key => {
+                  const tag = attr[key]
+                  const kv = `${key}="${tag}"`
+
+                  if (tag.match(/%[\w]+%/ig)) {
+                    const rowkey = tag.replaceAll("%","")
+                    const rowvalue = row[rowkey] ?? ""
+                    return kv.replace(tag,rowvalue)
+                  }
+                  return kv
+                }).join(" ")
     }
     const html = objbtn?.html
                   .replace("%attr%", strattr)
