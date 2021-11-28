@@ -10,16 +10,19 @@
 </div>
 <script type="module">
 import {html, css, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js";
-
 export class FormLogin extends LitElement {
+
+  $(sel) {
+    return this.shadowRoot.querySelector(sel)
+  }
+
   submitForm(e) {
     e.preventDefault();
-    const form = this.shadowRoot.querySelector("form");
-    console.log(e.target, form); // successfully logs <form> element
-    window.setTimeout(() => {
-      console.log(form); // successfully logs <form> element
-      form.reset(); // resets form
-    }, 2000);
+    //const email = $("#email")
+    const email = this.shadowRoot.querySelector("#email")?.value
+    //const password = $("#password")
+    const password = this.shadowRoot.querySelector("#password")?.value
+    console.log("email:",email,"password:",password)
   }
 
   render() {
@@ -27,12 +30,12 @@ export class FormLogin extends LitElement {
     <form @submit=${this.submitForm}>
       <div class="form-controls">
         <div>
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" />
+          <label for="email">Email</label>
+          <input type="email" id="email"/>
         </div>
         <div>
-          <label for="address">Address</label>
-          <input type="text" id="address" name="address" />
+          <label for="password">Password</label>
+          <input type="password" id="password"/>
         </div>
         <button type="submit">submit</button>
       </div>
