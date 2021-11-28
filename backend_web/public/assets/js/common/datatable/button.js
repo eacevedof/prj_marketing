@@ -3,8 +3,7 @@ import rowswal from "./rowswal.js"
 
 let _$table = null,
     _dttable = null,
-    _topbtns = [],
-    _rowbtns = []
+    _topbtns = []
 
 const _toggle_filters = () => {
   const $row = _$table.querySelector(`tr[row="search"]`)
@@ -113,9 +112,6 @@ export const button = {
   set_topbtns: buttons => _topbtns = buttons
 }
 
-const set_rowbuttons = buttons => _rowbtns = buttons
-const add_rowbutton = button => _rowbtns.push(button)
-
 const in_modal = url => fetch(url)
   .then(response => response.text())
   .then(html => {
@@ -134,11 +130,7 @@ export default ($table, dttable) => {
 
   return {
     rowbuttons_listeners,
-    get_buttons,
-    set_topbuttons,
-    add_topbutton,
-    set_rowbuttons,
-    add_rowbutton,
+    get_buttons
     //in_modal, permite pasar una url custom a pintar en un modal
   }
 }
