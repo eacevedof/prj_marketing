@@ -46,6 +46,13 @@ $now = date("YmdHis");
 import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
 import button from "/assets/js/common/datatable/button.js"
 import rowswal from "/assets/js/common/datatable/rowswal.js"
+import {add_rowbtn} from "/assets/js/common/datatable/column.js"
+
+add_rowbtn({
+  approle: "rowbtn-show",
+  visible: true,
+  html: `<button type="button" %uuid% %approle%>%text%</button>`,
+})
 
 rowswal().set_texts({
   success: {

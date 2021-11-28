@@ -1,7 +1,8 @@
 const Rowswal = window.Swal
 
 let _dttable = null,
-  _$table = null
+  _$table = null,
+  _rowbtn = null
 
 let _texts = {
   error:{
