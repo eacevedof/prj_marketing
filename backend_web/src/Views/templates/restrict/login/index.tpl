@@ -6,56 +6,42 @@
 ?>
 <h1><?= __("Login") ?></h1>
 <div id="app">
-    <form @submit.prevent="onSubmit">
-        <input type="hidden" id="_csrf" value="<?=$csrf?>" />
-        <div>
-            <label for="email"><?=__("Email")?> *</label>
-            <input type="email" id="email" v-model="email" placeholder="<?=__("your email")?>" required="required">
-        </div>
-        <div>
-            <label for="password"><?=__("Password")?> *</label>
-            <input id="password" type="password" v-model="password" placeholder="<?=__("your secret password")?>" required="required">
-        </div>
-
-        <div>
-            <button id="btn-contact" class="btn btn-dark" :disabled="issending" >
-                {{btnsend}}
-                <img v-if="issending" src="/assets/images/common/loading.png" width="25" height="25"/>
-            </button>
-        </div>
-    </form>
+  <form-login />
 </div>
-<simple-greeting name="World"></simple-greeting>
-
 <script type="module">
 import {html, css, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js";
 
-export class SimpleGreeting extends LitElement {
-  static get styles() {
-    return css`p { color: blue }`;
-  }
-
-  static get properties() {
-    return {
-      name: {type: String}
-    }
-  }
-
-  constructor() {
-    super();
-    this.name = "Somebody";
+export class FormLogin extends LitElement {
+  submitForm(e) {
+    e.preventDefault();
+    const form = this.shadowRoot.querySelector("form");
+    console.log(e.target, form); // successfully logs <form> element
+    window.setTimeout(() => {
+      console.log(form); // successfully logs <form> element
+      form.reset(); // resets form
+    }, 2000);
   }
 
   render() {
-    return html`<p>Hello, ${this.name}!</p>`;
+    return html`
+    <form @submit=${this.submitForm}>
+      <div class="form-controls">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" />
+        </div>
+        <div>
+          <label for="address">Address</label>
+          <input type="text" id="address" name="address" />
+        </div>
+        <button type="submit">submit</button>
+      </div>
+    </form>
+    `;
   }
-}
 
-customElements.define("simple-greeting", SimpleGreeting);
-</script>
-<script>
-const trs = {
+}//FormLogin
 
-}
+customElements.define("form-login", FormLogin);
 </script>
-<?= $this->_asset_js_module("restrict/login") ?>
+

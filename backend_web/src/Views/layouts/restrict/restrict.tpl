@@ -19,7 +19,6 @@
     <script src="https://unpkg.com/vue@next"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <?= $this->_asset_js("vendor/lit.dev/lit-bundle") ?>
     <?= $this->_asset_js("vendor/jquery/jquery-3.6.0") ?>
     <?= $this->_asset_js_module("index") ?>
     <?= $this->_asset_js_module("common/snackbar") ?>
