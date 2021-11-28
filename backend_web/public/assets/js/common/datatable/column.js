@@ -56,9 +56,10 @@ const _get_type = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).map($th => $th.getAttribute("type"))
 
-export const set_rowbtns = ar => _rowbtns = ar
-
-export const add_rowbtn = obj => _rowbtns.push(obj)
+export const column = {
+  set_btns: ar => _rowbtns = ar,
+  add_btn: obj => _rowbtns.push(obj)
+}
 
 const _get_mapped_rowbtns = () => {
   const objbtns = _defrowbtns.map(defbtn => {
