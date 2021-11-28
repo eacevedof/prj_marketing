@@ -12,16 +12,12 @@
 import {html, css, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js";
 export class FormLogin extends LitElement {
 
-  $(sel) {
-    return this.shadowRoot.querySelector(sel)
-  }
+  $get = sel => this.shadowRoot.querySelector(sel)
 
   submitForm(e) {
     e.preventDefault();
-    //const email = $("#email")
-    const email = this.shadowRoot.querySelector("#email")?.value
-    //const password = $("#password")
-    const password = this.shadowRoot.querySelector("#password")?.value
+    const email = this.$get("#email").value
+    const password = this.$get("#password").value
     console.log("email:",email,"password:",password)
   }
 
