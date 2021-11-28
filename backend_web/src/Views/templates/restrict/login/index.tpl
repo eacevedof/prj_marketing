@@ -6,8 +6,7 @@
 ?>
 <h1><?= __("Login") ?></h1>
 <div id="app">
-  <input type="hidden" id="_csrf" value="<?=$csrf?>" />
-  <form-login />
+  <form-login csrf="<?=$csrf?>" />
 </div>
 <script type="module">
 import {html, css, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
@@ -18,13 +17,10 @@ const URL_ON_ACCESS = "/restrict/users"
 
 export class FormLogin extends LitElement {
 
-  static get properties() {
-    return {
-      email: {type: String},
-      password: {type: String},
+  static properties = {
+      csrf: {type: String},
       issending: {type: Boolean},
-      btnsend: {type: String}
-    }
+      btnsend: {type: String},
   }
 
   constructor() {
@@ -49,7 +45,7 @@ export class FormLogin extends LitElement {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        _csrf: document.getElementById("_csrf")?.value ?? "",
+        _csrf: this.csrf,
         email: this.$get("#email").value,
         password: this.$get("#password").value,
       })
@@ -99,13 +95,16 @@ export class FormLogin extends LitElement {
       <div class="form-controls">
         <div>
           <label for="email">Email</label>
-          <input type="email" id="email"/>
+          <input type="email" id="email" .value=${this.email} />
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="password" id="password"/>
+          <input type="password" id="password" .value=${this.password} />
         </div>
-        <button type="submit">submit</button>
+        <button type="submit" ?disabled=${this.issending}>
+          ${this.btnsend}
+          ${this.issending ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`: html``}
+        </button>
       </div>
     </form>
     `;
