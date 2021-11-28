@@ -18,4 +18,4 @@ export {default} from './lit.js';
 import "./reactive-element/reactive-element.js";
 import "./lit-html.js";
 import "./lit-element/lit-element.js";
-import "/reactive-element/css-tag.js";
+import "./reactive-element/css-tag.js";
