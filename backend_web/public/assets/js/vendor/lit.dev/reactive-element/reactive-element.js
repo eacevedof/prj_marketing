@@ -1,5 +1,5 @@
-import{getCompatibleStyle as m,adoptStyles as U}from"./reactive-element/css-tag.js";
-export{CSSResult,adoptStyles,css,getCompatibleStyle,supportsAdoptingStyleSheets,unsafeCSS}from"./reactive-element/css-tag.js";
+import{getCompatibleStyle as m,adoptStyles as U}from "./css-tag.js";
+export{CSSResult,adoptStyles,css,getCompatibleStyle,supportsAdoptingStyleSheets,unsafeCSS}from "./css-tag.js";
 /**
  * @license
  * Copyright 2017 Google LLC
