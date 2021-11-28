@@ -1,7 +1,7 @@
-import{ReactiveElement as d}from"/-/@lit/reactive-element@v1.0.0-rc.2-810hxb6J93lP2Fvpv3EZ/dist=es2020,mode=imports,min/optimized/@lit/reactive-element.js";
-export*from"/-/@lit/reactive-element@v1.0.0-rc.2-810hxb6J93lP2Fvpv3EZ/dist=es2020,mode=imports,min/optimized/@lit/reactive-element.js";
-import{render as p,noChange as h}from"/-/lit-html@v2.0.0-rc.3-U0mgczQMV615aaRpIg4r/dist=es2020,mode=imports,min/optimized/lit-html.js";
-export*from"/-/lit-html@v2.0.0-rc.3-U0mgczQMV615aaRpIg4r/dist=es2020,mode=imports,min/optimized/lit-html.js";
+import{ReactiveElement as d}from"../reactive-element/reactive-element.js";
+export*from"../reactive-element/reactive-element.js";
+import{render as p,noChange as h}from"../lit-html.js";
+export*from"../lit-html.js";
 /**
  * @license
  * Copyright 2017 Google LLC
