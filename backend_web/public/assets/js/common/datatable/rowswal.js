@@ -1,8 +1,7 @@
 const Rowswal = window.Swal
 
 let _dttable = null,
-  _$table = null,
-  _rowbtn = null
+  _$table = null
 
 let _texts = {
   error:{
@@ -19,10 +18,12 @@ let _texts = {
   }
 }
 
-const set_texts = obj => {
-  _texts = {
-    ..._texts,
-    ...obj
+export const rowswal = {
+  set_texts: obj => {
+    _texts = {
+      ..._texts,
+      ...obj
+    }
   }
 }
 
@@ -80,7 +81,6 @@ export default ($table, dttable) => {
   _dttable = dttable
 
   return {
-    set_texts,
     on_delete
   }
 }

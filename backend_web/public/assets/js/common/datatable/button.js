@@ -108,8 +108,10 @@ const get_buttons = () => {
   return defbtns
 }
 
-const set_topbuttons = buttons => _topbtns = buttons
-const add_topbutton = button => _topbtns.push(button)
+export const button = {
+  add_topbtn: button => _topbtns.push(button),
+  set_topbtns: buttons => _topbtns = buttons
+}
 
 const set_rowbuttons = buttons => _rowbtns = buttons
 const add_rowbutton = button => _rowbtns.push(button)

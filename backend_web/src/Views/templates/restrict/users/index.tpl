@@ -44,28 +44,22 @@ $now = date("YmdHis");
 </div>
 <script type="module">
 import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
-import button from "/assets/js/common/datatable/button.js"
-import rowswal from "/assets/js/common/datatable/rowswal.js"
-import {add_rowbtn} from "/assets/js/common/datatable/column.js"
+import {button} from "/assets/js/common/datatable/button.js"
+import {rowswal} from "/assets/js/common/datatable/rowswal.js"
+import {column} from "/assets/js/common/datatable/column.js"
 
-add_rowbtn({
+column.add_btn({
   approle: "rowbtn-show",
   text: "Show xxx",
-  visible: false,
   html: `<button type="button" %attr%>%text%</button>`,
   attr: {
     approle: "rowbtn-show",
     uuid: "%uuid%",
-    aaa: "xxx",
     style: "color:red",
   }
 })
-add_rowbtn({
-  approle: "rowbtn-del",
-  visible: false
-})
 
-rowswal().set_texts({
+rowswal.set_texts({
   success: {
     title: <?$this->_echo_js(__("Delete success:"));?>
   },
@@ -74,7 +68,7 @@ rowswal().set_texts({
   }
 })
 
-button().add_topbutton({
+button.add_topbtn({
   approle: "add-item",
   text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
 })
