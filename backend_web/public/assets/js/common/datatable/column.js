@@ -61,7 +61,18 @@ export const set_rowbtns = ar => _rowbtns = ar
 export const add_rowbtn = obj => _rowbtns.push(obj)
 
 const _get_mapped_rowbtns = row => {
+  let objbtns = _defrowbtns.map(defbtn => {
+    const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === rowbtn.approle)[0] ?? null
+    if (confbtn)
+      return {
+        ...defbtn,
+        ...confbtn
+      }
+    return defbtn
+  })
 
+  objbtns = objbtns.filter(objbtn => objbtn.visible)
+  console.log(objbtns)
   return ""
 }
 
