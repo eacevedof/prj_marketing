@@ -60,8 +60,8 @@ export const set_rowbtns = ar => _rowbtns = ar
 
 export const add_rowbtn = obj => _rowbtns.push(obj)
 
-const _get_mapped_rowbtns = row => {
-  let objbtns = _defrowbtns.map(defbtn => {
+const _get_mapped_rowbtns = () => {
+  const objbtns = _defrowbtns.map(defbtn => {
     const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === defbtn.approle)[0] ?? null
     if (confbtn)
       return {
@@ -71,28 +71,30 @@ const _get_mapped_rowbtns = row => {
     return defbtn
   })
 
-  objbtns = objbtns.filter(objbtn => objbtn.visible)
+  return objbtns.filter(objbtn => objbtn.visible)
+}
 
+const _get_rowhtml_btns = (objbtns, row) => {
   objbtns = objbtns.map(objbtn => {
     const attr = objbtn?.attr
     let strattr = ""
     if (attr) {
       const keys = Object.keys(attr)
       strattr = keys.map(key => {
-                  const tag = attr[key]
-                  const kv = `${key}="${tag}"`
+        const tag = attr[key]
+        const kv = `${key}="${tag}"`
 
-                  if (tag.match(/%[\w]+%/ig)) {
-                    const rowkey = tag.replaceAll("%","")
-                    const rowvalue = row[rowkey] ?? ""
-                    return kv.replace(tag,rowvalue)
-                  }
-                  return kv
-                }).join(" ")
+        if (tag.match(/%[\w]+%/ig)) {
+          const rowkey = tag.replaceAll("%","")
+          const rowvalue = row[rowkey] ?? ""
+          return kv.replace(tag,rowvalue)
+        }
+        return kv
+      }).join(" ")
     }
     const html = objbtn?.html
-                  .replace("%attr%", strattr)
-                  .replace("%text%", objbtn?.text ?? "")
+      .replace("%attr%", strattr)
+      .replace("%text%", objbtn?.text ?? "")
     return html
   })
 
@@ -124,10 +126,12 @@ const get_columns = () => {
     allcols.push(obj)
   })
 
+  const mappedbtns = _get_mapped_rowbtns()
+  console.log("mappedbtns", mappedbtns)
   allcols.push({
     targets: -1,
     data: null,
-    render: row => _get_mapped_rowbtns(row),
+    render: row => _get_rowhtml_btns(mappedbtns, row),
   })
 
   return allcols

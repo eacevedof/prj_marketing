@@ -56,7 +56,8 @@ add_rowbtn({
   attr: {
     approle: "rowbtn-show",
     uuid: "%uuid%",
-    aaa: "xxx"
+    aaa: "xxx",
+    style: "color:red",
   }
 })
 
