@@ -23,7 +23,7 @@ export class FormLogin extends LitElement {
   $get = sel => this.shadowRoot.querySelector(sel)
 
   submitForm(e) {
-    e.preventDefault();
+    e.preventDefault()
     this.issending = true
     this.btnsend = "...enviando"
 
@@ -96,10 +96,8 @@ export class FormLogin extends LitElement {
         </button>
       </div>
     </form>
-    `;
+    `
   }
 
 }//FormLogin
-
-customElements.define("form-login", FormLogin);
-
+customElements.define("form-login", FormLogin)
