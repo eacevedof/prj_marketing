@@ -1,7 +1,39 @@
 
 let _ths = [],
-  _$table = null
-
+  _$table = null,
+  _rowbtns = [],
+  _defrowbtns = [
+    {
+      approle: "rowbtn-show",
+      text: "Show",
+      visible: true,
+      html: `<button type="button" %attr%>%text%</button>`,
+      attr: {
+        approle: "rowbtn-show",
+        uuid: "%uuid%"
+      }
+    },
+    {
+      approle: "rowbtn-edit",
+      text: "Edit",
+      visible: true,
+      html: `<button type="button" %attr%>%text%</button>`,
+      attr: {
+        approle: "rowbtn-edit",
+        uuid: "%uuid%"
+      }
+    },
+    {
+      approle: "rowbtn-del",
+      text: "Remove",
+      visible: true,
+      html: `<button type="button" %attr%>%text%</button>`,
+      attr: {
+        approle: "rowbtn-del",
+        uuid: "%uuid%"
+      }
+    },
+  ]
 
 
 const _get_columns = () => _ths
@@ -24,6 +56,15 @@ const _get_type = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).map($th => $th.getAttribute("type"))
 
+export const set_rowbtns = ar => _rowbtns = ar
+
+export const add_rowbtn = obj => _rowbtns.push(obj)
+
+const _get_mapped_rowbtns = row => {
+
+  return ""
+}
+
 const get_columns = () => {
   const cols = _get_columns()
   //col con numero
@@ -41,6 +82,7 @@ const get_columns = () => {
       //searchable: false, no afecta en nada
       visible: _is_visible(colname),
       render: function (row) {
+        //to-do: tratar el tipo para aplicar un customHtml
         return row
       }
     }
@@ -51,21 +93,13 @@ const get_columns = () => {
   allcols.push({
     targets: -1,
     data: null,
-    render: function(row) {
-      //type: display
-      const uuid = row.uuid ?? ""
-      if(!uuid) return ""
-      const links = [
-        `<button type="button" uuid="${uuid}" approle="rowbtn-show">show</button>`,
-        `<button type="button" uuid="${uuid}" approle="rowbtn-edit">edit</button>`,
-        `<button type="button" uuid="${uuid}" approle="rowbtn-del">del</button>`,
-      ]
-      return links.join("&nbsp;");
-    },
+    render: row => _get_mapped_rowbtns(row),
   })
 
   return allcols
 }
+
+
 
 export default $table => {
   _$table = $table
