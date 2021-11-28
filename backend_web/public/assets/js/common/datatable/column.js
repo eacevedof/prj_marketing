@@ -72,7 +72,6 @@ const _get_mapped_rowbtns = row => {
   })
 
   objbtns = objbtns.filter(objbtn => objbtn.visible)
-  console.log(objbtns)
 
   objbtns = objbtns.map(objbtn => {
     const attr = objbtn?.attr
@@ -96,6 +95,7 @@ const _get_mapped_rowbtns = row => {
                   .replace("%text%", objbtn?.text ?? "")
     return html
   })
+
   return objbtns.join("&nbsp;")
 }
 
