@@ -51,7 +51,7 @@ import {add_rowbtn} from "/assets/js/common/datatable/column.js"
 add_rowbtn({
   approle: "rowbtn-show",
   text: "Show xxx",
-  visible: true,
+  visible: false,
   html: `<button type="button" %attr%>%text%</button>`,
   attr: {
     approle: "rowbtn-show",
@@ -59,6 +59,10 @@ add_rowbtn({
     aaa: "xxx",
     style: "color:red",
   }
+})
+add_rowbtn({
+  approle: "rowbtn-del",
+  visible: false
 })
 
 rowswal().set_texts({
