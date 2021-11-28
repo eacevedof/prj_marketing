@@ -6,6 +6,7 @@
 ?>
 <h1><?= __("Login") ?></h1>
 <div id="app">
+  <input type="hidden" id="_csrf" value="<?=$csrf?>" />
   <form-login />
 </div>
 <script type="module">
