@@ -1,4 +1,13 @@
-const get_error = error => ({error:error.data})
+const get_error = error => ({
+  error: error
+})
+
+export const is_2xx = resp => {
+  let r = resp?.code ?? null
+  if (!r) return true
+  r = parseInt(r)
+  return (r>199 && r<300)
+}
 
 const req = {
   async get(url) {
@@ -14,6 +23,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
+      console.log("ERROR:",error)
       return get_error(error)
     }
   },
@@ -32,6 +42,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
+      console.log("ERROR:",error)
       return get_error(error)
     }
   },
@@ -50,6 +61,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
+      console.log("ERROR:",error)
       return get_error(error)
     }
   },
@@ -68,6 +80,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
+      console.log("ERROR:",error)
       return get_error(error)
     }
   },
@@ -86,6 +99,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
+      console.log("ERROR:",error)
       return get_error(error)
     }
   }

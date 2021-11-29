@@ -1,5 +1,5 @@
 import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
-import req from "/assets/js/common/req.js"
+import req, {is_2xx} from "/assets/js/common/req.js"
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
 const URL_POST = "/restrict/users/insertx"
@@ -57,11 +57,17 @@ export class FormCreate extends LitElement {
       phone: this.phone,
     })
 
-    console.log("YYYYY ",response)
     this.issending = false
     this.btnsend = "tr01"//texts.tr01
 
-    if(response?.message){
+    if (!is_2xx(response))
+      return Swal.fire({
+        icon: "warning",
+        title: "t03",//texts.tr03,
+        html: response?.message ?? "Error"
+      })
+
+    if(response?.errors.length){
       const errors = response.errors[0]?.fields_validation
       if(errors) {
         return field_errors(errors)
@@ -72,17 +78,9 @@ export class FormCreate extends LitElement {
         html: errors[0], //texts.tr04.concat(response.errors[0]),
       })
 
-      return window.location = URL_REDIRECT
     }
 
-    Swal.fire({
-      icon: "error",
-      title: "tr05", //texts.tr05,
-      html: "tr06",//texts.tr06,
-    })
-
-    this.issending = false
-    this.btnsend = "finish" //texts.tr02
+    return window.location = URL_REDIRECT
 
   }//onSubmit
 
