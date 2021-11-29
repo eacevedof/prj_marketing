@@ -1,3 +1,5 @@
+const get_error = error => ({error:error.data})
+
 const req = {
   async get(url) {
     let resp = null
@@ -12,7 +14,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
-      return error
+      return get_error(error)
     }
   },
   
@@ -30,7 +32,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
-      return error
+      return get_error(error)
     }
   },
 
@@ -48,7 +50,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
-      return error
+      return get_error(error)
     }
   },
 
@@ -66,7 +68,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
-      return error
+      return get_error(error)
     }
   },
 
@@ -84,7 +86,7 @@ const req = {
       resp = await resp?.json()
       return resp
     } catch (error) {
-      return error
+      return get_error(error)
     }
   }
 }
