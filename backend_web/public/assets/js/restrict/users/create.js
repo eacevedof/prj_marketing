@@ -38,9 +38,8 @@ export class FormCreate extends LitElement {
     e.preventDefault()
     set_config({
       fields: ["email","password"],
-      wrapper: this.shadowRoot
+      wrapper: this.shadowRoot.querySelector("form")
     })
-    console.log("XXXX THIS. SHADOW XXX", this.shadowRoot)
 
     this.issending = true
     this.btnsend = "send"//texts.tr01
@@ -58,6 +57,7 @@ export class FormCreate extends LitElement {
       phone: this.phone,
     })
 
+    console.log("YYYYY ",response)
     this.issending = false
     this.btnsend = texts.tr01
 
@@ -71,6 +71,8 @@ export class FormCreate extends LitElement {
         title: "t03",//texts.tr03,
         html: errors[0], //texts.tr04.concat(response.errors[0]),
       })
+
+      return window.location = URL_REDIRECT
     }
 
     Swal.fire({
