@@ -32,16 +32,15 @@ export class FormCreate extends LitElement {
     this.issending = false
     this.btnsend = "Enviar"
 
+  }
+
+  async onSubmit(e) {
+    e.preventDefault()
     set_config({
       fields: ["email","password"],
       wrapper: this.shadowRoot
     })
-  }
-
-  $get = sel => this.shadowRoot.querySelector(sel)
-
-  async onSubmit(e) {
-    e.preventDefault()
+    console.log("XXXX THIS. SHADOW XXX", this.shadowRoot)
 
     this.issending = true
     this.btnsend = "send"//texts.tr01
@@ -59,9 +58,6 @@ export class FormCreate extends LitElement {
       phone: this.phone,
     })
 
-    console.log("response",response)
-    return "xxxx"
-
     this.issending = false
     this.btnsend = texts.tr01
 
@@ -72,15 +68,15 @@ export class FormCreate extends LitElement {
       }
       return Swal.fire({
         icon: "warning",
-        title: texts.tr03,
-        html: texts.tr04.concat(response.errors[0]),
+        title: "t03",//texts.tr03,
+        html: errors[0], //texts.tr04.concat(response.errors[0]),
       })
     }
 
     Swal.fire({
       icon: "error",
-      title: texts.tr05,
-      html: texts.tr06,
+      title: "tr05", //texts.tr05,
+      html: "tr06",//texts.tr06,
     })
 
     this.issending = false
