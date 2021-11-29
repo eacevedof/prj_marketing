@@ -81,20 +81,18 @@ export class FormLogin extends LitElement {
   render() {
     return html`
     <form @submit=${this.submitForm}>
-      <div class="form-controls">
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" .value=${this.email} />
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" .value=${this.password} />
-        </div>
-        <button type="submit" ?disabled=${this.issending}>
-          ${this.btnsend}
-          ${this.issending ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`: html``}
-        </button>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" .value=${this.email} />
       </div>
+      <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" .value=${this.password} />
+      </div>
+      <button type="submit" ?disabled=${this.issending}>
+        ${this.btnsend}
+        ${this.issending ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`: html``}
+      </button>
     </form>
     `
   }
