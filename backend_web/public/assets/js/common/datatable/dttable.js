@@ -12,11 +12,7 @@ load_asset_css("common/spinner")
 let OPTIONS = {},
   is_rendered = false,
   $table = null,
-  dttable = null,
-
-  column = null,
-  search = null,
-  button = null
+  dttable = null
 
 
 const get_page = perpage => {
@@ -119,11 +115,6 @@ const dt_render = (options) => {
 
     drawCallback: on_everydraw
   }
-
-
-  //button = dtbutton($table, dttable)
-  //column = dtcolumn($table)
-  //search = dtsearch($table, dttable)
 
   dttable = $(tablesel).DataTable(dtconfig)
   dttable
