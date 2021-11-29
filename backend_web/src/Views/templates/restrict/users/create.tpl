@@ -5,10 +5,14 @@
 ?>
 <h1><?=$h1?></h1>
 <div id="app">
-
+<form-create csrf="<?=$csrf?>" />
 </div>
+<script type="module" src="/assets/js/restrict/users/create.js"></script>
+
 <script type="module">
+/*
 import vue from "/assets/js/restrict/users/create.js"
+
 vue({
   texts: {
     tr00: <?$this->_echo_js(__("send"));?>,
@@ -29,4 +33,5 @@ vue({
     phone: "",
   }
 })
+*/
 </script>

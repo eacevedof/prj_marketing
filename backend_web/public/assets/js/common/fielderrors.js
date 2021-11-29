@@ -7,12 +7,14 @@ let fieldsid = []
 let $wrapper = null
 
 export const clear_errors = () => {
-  const errors = Array.from($wrapper.querySelectorAll(`[approle="field-error"]`))
+  if (!$wrapper) return
+  const errors = Array.from($wrapper?.querySelectorAll(`[approle="field-error"]`))
   errors.forEach($div => $div.parentNode.removeChild($div))
 }
 
 export const field_errors = (errors) => {
-  clear_errors()
+  if (!$wrapper) return
+
   const nonfieldsid = errors
                         .filter(objerr => !fieldsid.includes(objerr.field))
                         .map(objerr => objerr.field)
