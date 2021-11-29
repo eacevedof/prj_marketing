@@ -3,7 +3,7 @@ const get_error = error => ({
 })
 
 export const is_2xx = resp => {
-  let r = resp?.code ?? null
+  let r = resp?.data?.code ?? null
   if (!r) return true
   r = parseInt(r)
   return (r>199 && r<300)

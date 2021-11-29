@@ -60,11 +60,12 @@ export class FormCreate extends LitElement {
     this.issending = false
     this.btnsend = "tr01"//texts.tr01
 
+    console.log("RRRR",response)
     if (!is_2xx(response))
       return Swal.fire({
         icon: "warning",
         title: "t03",//texts.tr03,
-        html: response?.message ?? "Error"
+        html: response?.data?.message ?? "Error"
       })
 
     if(response?.errors.length){
