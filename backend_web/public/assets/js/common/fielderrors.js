@@ -52,7 +52,7 @@ export const field_errors = (errors) => {
     const html = tpl
       .replace("%lis%",`<li class="li-label">${objfield.label}</li>${lis}`)
       .replace("%css%"," error-top")
-    $wrapper.querySelector("form")?.insertAdjacentHTML("afterbegin", html)
+    $wrapper.insertAdjacentHTML("afterbegin", html)
   })
 
   if (fielderrors[0]) $wrapper.querySelector(`#${fielderrors[0].id}`).focus()
