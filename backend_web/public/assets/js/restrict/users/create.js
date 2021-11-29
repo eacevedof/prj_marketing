@@ -1,86 +1,15 @@
-//probar lit: https://stackoverflow.com/questions/68614776/using-lit-with-javascript-and-no-build-tools
+import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
+import req from "/assets/js/common/req.js"
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
-const ID_WRAPPER = "#vue-users-create"
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 let CSRF = ""
-let $wrapper = null
 
 let texts = {}
-
 let fields = {}
 
-const App = {
-  data() {
-    return {
-      ...fields,
-      issending: false,
-      btnsend: texts.tr00,
-    }
-  },
-
-  methods: {
-    onSubmit() {
-      this.issending = true
-      this.btnsend = texts.tr01
-      clear_errors()
-
-      fetch(URL_POST, {
-        method: "post",
-        headers: {
-          "Accept": "application/json, text/plain, */*",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          _action: ACTION,
-          _csrf: CSRF,
-          email: this.email,
-          password: this.password,
-          password2: this.password2,
-          fullname: this.fullname,
-          address: this.address,
-          birthdate: this.birthdate,
-          phone: this.phone,
-        })
-      })
-      .then(response => response.json())
-      .then(response => {
-        console.log("response",response)
-        this.issending = false
-        this.btnsend = texts.tr01
-
-        if(response?.errors?.length){
-          const errors = response.errors[0]?.fields_validation
-          if(errors) {
-            return field_errors(errors)
-          }
-          return Swal.fire({
-            icon: "warning",
-            title: texts.tr03,
-            html: texts.tr04.concat(response.errors[0]),
-          })
-        }
-        window.location = URL_REDIRECT
-      })
-      .catch(error => {
-        Swal.fire({
-          icon: "error",
-          title: texts.tr05,
-          html: texts.tr06,
-        })
-      })
-      .finally(()=>{
-        this.issending = false
-        this.btnsend = texts.tr02
-      })
-
-    }//onSubmit
-
-  }//methods
-
-}// App
 
 export class FormCreate extends LitElement {
 
@@ -94,111 +23,114 @@ export class FormCreate extends LitElement {
     super()
     this.email = ""
     this.password = ""
+    this.password2 = ""
+    this.fullname = ""
+    this.address = ""
+    this.birthdate = ""
+    this.phone = ""
+
     this.issending = false
     this.btnsend = "Enviar"
+
+    set_config({
+      fields: ["email","password"],
+      wrapper: this.shadowRoot
+    })
   }
 
   $get = sel => this.shadowRoot.querySelector(sel)
 
-  submitForm(e) {
+  async onSubmit(e) {
     e.preventDefault()
+
     this.issending = true
-    this.btnsend = "...enviando"
+    this.btnsend = "send"//texts.tr01
+    clear_errors()
 
-    fetch(URL, {
-      method: "post",
-      headers: {
-        "Accept": "application/json, text/plain, */*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        _csrf: this.csrf,
-        email: this.$get("#email").value,
-        password: this.$get("#password").value,
-      })
+    const response = await req.post(URL_POST, {
+      _action: ACTION,
+      _csrf: this.csrf,
+      email: this.email,
+      password: this.password,
+      password2: this.password2,
+      fullname: this.fullname,
+      address: this.address,
+      birthdate: this.birthdate,
+      phone: this.phone,
     })
-    .then(response => response.json())
-    .then(response => {
-      this.issending = false
-      this.btnsend = "Enviar"
 
-      if(response?.errors?.length){
-        console.error(response.errors)
-        return Swal.fire({
-          icon: "warning",
-          title: "Errores",
-          html: response.errors.join("<br/>"),
-        })
+    console.log("response",response)
+    return "xxxx"
+
+    this.issending = false
+    this.btnsend = texts.tr01
+
+    if(response?.errors?.length){
+      const errors = response.errors[0]?.fields_validation
+      if(errors) {
+        return field_errors(errors)
       }
-
-      console.log("reponse ok",response)
-      set_cookie("lang", response.data.lang)
-
-      Swal.fire({
-        icon: "success",
-        title: "Acceso concedido",
-        showConfirmButton: false,
-        html: "...redirigiendo al panel de control",
+      return Swal.fire({
+        icon: "warning",
+        title: texts.tr03,
+        html: texts.tr04.concat(response.errors[0]),
       })
+    }
 
-      setTimeout(() => window.location = URL_ON_ACCESS, 1000)
+    Swal.fire({
+      icon: "error",
+      title: texts.tr05,
+      html: texts.tr06,
     })
-    .catch(error => {
-      Swal.fire({
-        icon: "error",
-        title: "Vaya! Algo ha ido mal",
-        html: `<b>${error}</b>`,
-      })
-    })
-    .finally(()=>{
-      this.issending = false
-      this.btnsend = "Enviar"
-    })
-  }//submit
+
+    this.issending = false
+    this.btnsend = "finish" //texts.tr02
+
+  }//onSubmit
 
   render() {
     return html`
-    <form @submit.prevent="onSubmit">
+    <form @submit=${this.onSubmit}>
       <div>
-        <label for="email"><?=__("Email")?> *</label>
+        <label for="email">Email *</label>
         <div id="field-email">
-          <input type="email" .value="${this.email}" required="required">
+          <input type="email" id="email" .value=${this.email}>
         </div>
       </div>
       <div>
-        <label for="password"><?=__("Password")?> *</label>
+        <label for="password">Password *</label>
         <div id="field-password">
-          <input type="password" id="password"  v-model="password" required>
+          <input type="password" id="password" .value=${this.password}>
         </div>
       </div>
       <div>
-        <label for="password2"><?=__("Password confirm")?> *</label>
+        <label for="password2">Password confirm *</label>
         <div id="field-password2">
-          <input type="password" id="password2" v-model="password2" required>
+          <input type="password" id="password2" .value=${this.password2}>
         </div>
       </div>
       <div>
-        <label for="fullname"><?=__("Full name")?> *</label>
+        <label for="fullname">Full name *</label>
         <div id="field-fullname">
-          <input type="text" id="fullname" v-model="fullname" required>
+          <input type="text" id="fullname" .value=${this.fullname}>
         </div>
       </div>
       <div>
-        <label for="address"><?=__("Address")?> *</label>
+        <label for="address">Address *</label>
         <div id="field-address">
-          <input type="text" id="address" v-model="address">
+          <input type="text" id="address" .value=${this.address}>
         </div>
       </div>
       <div>
-        <label for="birthdate"><?=__("Birthdate")?> *</label>
+        <label for="birthdate">Birthdate *</label>
         <div id="field-birthdate">
-          <input type="date" id="birthdate" v-model="birthdate">
+          <input type="date" id="birthdate" .value=${this.birthdate}>
         </div>
       </div>
       <div>
-        <button id="btn-submit" :disabled="issending" >
-          {{btnsend}}
-          <img v-if="issending" src="/assets/images/common/loading.png" width="25" height="25"/>
+        <button id="btn-submit" ?disabled=${this.issending}>
+          ${this.btnsend}
+          ${this.issending ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`: html``}
         </button>
       </div>
     </form>
@@ -207,7 +139,3 @@ export class FormCreate extends LitElement {
 
 }//FormCreate
 customElements.define("form-create", FormCreate)
-
-export default options => {
-
-}
