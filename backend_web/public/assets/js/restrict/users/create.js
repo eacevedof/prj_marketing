@@ -82,18 +82,132 @@ const App = {
 
 }// App
 
-//si esto se ejecuta desde aqui solo se ve bien en la primera llamada
-// en las siguientes no carga el form con vue. Por eso es mejor usar export
-//Vue.createApp(App).mount(ID_WRAPPER)
+export class FormCreate extends LitElement {
+
+  static properties = {
+    csrf: {type: String},
+    issending: {type: Boolean},
+    btnsend: {type: String},
+  }
+
+  constructor() {
+    super()
+    this.email = ""
+    this.password = ""
+    this.issending = false
+    this.btnsend = "Enviar"
+  }
+
+  $get = sel => this.shadowRoot.querySelector(sel)
+
+  submitForm(e) {
+    e.preventDefault()
+    this.issending = true
+    this.btnsend = "...enviando"
+
+    fetch(URL, {
+      method: "post",
+      headers: {
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        _csrf: this.csrf,
+        email: this.$get("#email").value,
+        password: this.$get("#password").value,
+      })
+    })
+    .then(response => response.json())
+    .then(response => {
+      this.issending = false
+      this.btnsend = "Enviar"
+
+      if(response?.errors?.length){
+        console.error(response.errors)
+        return Swal.fire({
+          icon: "warning",
+          title: "Errores",
+          html: response.errors.join("<br/>"),
+        })
+      }
+
+      console.log("reponse ok",response)
+      set_cookie("lang", response.data.lang)
+
+      Swal.fire({
+        icon: "success",
+        title: "Acceso concedido",
+        showConfirmButton: false,
+        html: "...redirigiendo al panel de control",
+      })
+
+      setTimeout(() => window.location = URL_ON_ACCESS, 1000)
+    })
+    .catch(error => {
+      Swal.fire({
+        icon: "error",
+        title: "Vaya! Algo ha ido mal",
+        html: `<b>${error}</b>`,
+      })
+    })
+    .finally(()=>{
+      this.issending = false
+      this.btnsend = "Enviar"
+    })
+  }//submit
+
+  render() {
+    return html`
+    <form @submit.prevent="onSubmit">
+      <div>
+        <label for="email"><?=__("Email")?> *</label>
+        <div id="field-email">
+          <input type="email" .value="${this.email}" required="required">
+        </div>
+      </div>
+      <div>
+        <label for="password"><?=__("Password")?> *</label>
+        <div id="field-password">
+          <input type="password" id="password"  v-model="password" required>
+        </div>
+      </div>
+      <div>
+        <label for="password2"><?=__("Password confirm")?> *</label>
+        <div id="field-password2">
+          <input type="password" id="password2" v-model="password2" required>
+        </div>
+      </div>
+      <div>
+        <label for="fullname"><?=__("Full name")?> *</label>
+        <div id="field-fullname">
+          <input type="text" id="fullname" v-model="fullname" required>
+        </div>
+      </div>
+      <div>
+        <label for="address"><?=__("Address")?> *</label>
+        <div id="field-address">
+          <input type="text" id="address" v-model="address">
+        </div>
+      </div>
+      <div>
+        <label for="birthdate"><?=__("Birthdate")?> *</label>
+        <div id="field-birthdate">
+          <input type="date" id="birthdate" v-model="birthdate">
+        </div>
+      </div>
+      <div>
+        <button id="btn-submit" :disabled="issending" >
+          {{btnsend}}
+          <img v-if="issending" src="/assets/images/common/loading.png" width="25" height="25"/>
+        </button>
+      </div>
+    </form>
+    `
+  }
+
+}//FormCreate
+customElements.define("form-create", FormCreate)
 
 export default options => {
-  texts = options.texts
-  fields = options.fields
-  $wrapper = document.querySelector(ID_WRAPPER)
-  CSRF = $wrapper.querySelector("#_csrf")?.value ?? ""
-  set_config({
-    fields: Object.keys(fields),
-    wrapper: $wrapper,
-  })
-  Vue.createApp(App).mount(ID_WRAPPER)
+
 }
