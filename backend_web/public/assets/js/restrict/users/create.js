@@ -2,7 +2,7 @@ import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import req from "/assets/js/common/req.js"
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
-const URL_POST = "/restrict/users/insert"
+const URL_POST = "/restrict/users/insertx"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 let CSRF = ""
@@ -59,9 +59,9 @@ export class FormCreate extends LitElement {
 
     console.log("YYYYY ",response)
     this.issending = false
-    this.btnsend = texts.tr01
+    this.btnsend = "tr01"//texts.tr01
 
-    if(response?.errors?.length){
+    if(response?.message){
       const errors = response.errors[0]?.fields_validation
       if(errors) {
         return field_errors(errors)
