@@ -1,8 +1,8 @@
 import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
-import req, {is_2xx} from "/assets/js/common/req.js"
+import injson, {is_2xx} from "/assets/js/common/req.js"
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
-const URL_POST = "/restrict/users/insertx"
+const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 let CSRF = ""
@@ -45,7 +45,7 @@ export class FormCreate extends LitElement {
     this.btnsend = "send"//texts.tr01
     clear_errors()
 
-    const response = await req.post(URL_POST, {
+    const response = await injson.post(URL_POST, {
       _action: ACTION,
       _csrf: this.csrf,
       email: this.email,
@@ -57,10 +57,18 @@ export class FormCreate extends LitElement {
       phone: this.phone,
     })
 
+    console.log("REEEESSSPOONNSEE",response, "typeof:", typeof response)
+
     this.issending = false
     this.btnsend = "tr01"//texts.tr01
 
-    console.log("RRRR",response)
+    if (response?.error)
+      return Swal.fire({
+        icon: "warning",
+        title: "t03",//texts.tr03,
+        html: response.error?.message ?? "Error"
+      })
+
     if (!is_2xx(response))
       return Swal.fire({
         icon: "warning",
