@@ -45,7 +45,6 @@ include_once "../vendor/autoload.php";
 include_once "../vendor/theframework/bootstrap.php";
 //rutas, mapeo de url => controlador.metodo()
 $arRoutes = include_once "../src/routes/routes.php";
-
 use TheFramework\Components\ComponentRouter;
 try {
     $oR = new ComponentRouter($arRoutes);
@@ -81,8 +80,10 @@ catch (\Exception $ex)
     lg(debug_backtrace());
     lg($ex->getMessage(), "main-exception", "error");
 
-    http_response_code(500);
+    $code = $ex->getCode()!==0 ? $ex->getCode():500;
+    http_response_code($code);
     $response = [
+        "code" => $code,
         "status" => false,
         "errors" => [
             $ex->getMessage()
@@ -101,8 +102,10 @@ catch (\Throwable $ex)
     if($_ENV) lg($_ENV,"fatal-error ENV", "error");
     lg($ex->getMessage(), "fatal-error", "error");
 
-    http_response_code(500);
+    $code = $ex->getCode()!==0 ? $ex->getCode():500;
+    http_response_code($code);
     $response = [
+        "code" => $code,
         "status" => false,
         "errors" => [
             "Server throwable error"
