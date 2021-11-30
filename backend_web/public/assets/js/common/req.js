@@ -1,11 +1,6 @@
-const get_error = error => ({error:error})
+const _get_error = error => ({error:error})
 
-export const is_2xx = resp => {
-  let r = resp?.data?.code ?? null
-  if (!r) return true
-  r = parseInt(r)
-  return (r>199 && r<300)
-}
+const _get_response = response => response
 
 /*
 * Excepciones controladas por el back (controlador):
@@ -37,6 +32,8 @@ status-code:200
 error: SyntaxError: Unexpected token < in JSON at position 0
   message: "Unexpected token < in JSON at position 0"
   stack: "SyntaxError: Unexpected token < in JSON at position 0"
+  *
+  * 
 * */
 
 const injson = {
@@ -51,10 +48,10 @@ const injson = {
         }
       })
       resp = await resp?.json()
-      return resp
+      return _get_response(resp)
     } catch (error) {
       //este error sería del tipo: error.message "Unexpected token < in JSON at position 0"
-      return get_error(error)
+      return _get_error(error)
     }
   },
   
@@ -70,10 +67,10 @@ const injson = {
         body: JSON.stringify(data)
       })
       resp = await resp?.json()
-      return resp
+      return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return get_error(error)
+      return _get_error(error)
     }
   },
 
@@ -89,10 +86,10 @@ const injson = {
         body: JSON.stringify(data)
       })
       resp = await resp?.json()
-      return resp
+      return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return get_error(error)
+      return _get_error(error)
     }
   },
 
@@ -108,10 +105,10 @@ const injson = {
         body: JSON.stringify(data)
       })
       resp = await resp?.json()
-      return resp
+      return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return get_error(error)
+      return _get_error(error)
     }
   },
 
@@ -127,10 +124,10 @@ const injson = {
         body: JSON.stringify(data)
       })
       resp = await resp?.json()
-      return resp
+      return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return get_error(error)
+      return _get_error(error)
     }
   }
 }
