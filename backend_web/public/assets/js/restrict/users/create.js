@@ -65,7 +65,7 @@ export class FormCreate extends LitElement {
      */
   }
 
-  $get = sel => this.shadowRoot?.querySelector("form")?.getElementById(sel) ?? null
+  $get = sel => this.shadowRoot?.querySelector("form")?.querySelector(`#${sel}`) ?? null
 
   async onSubmit(e) {
     e.preventDefault()
