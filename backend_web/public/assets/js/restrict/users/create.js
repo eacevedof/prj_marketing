@@ -94,13 +94,13 @@ export class FormCreate extends LitElement {
     const response = await injson.post(URL_POST, {
       _action: ACTION,
       _csrf: this.csrf,
-      email: this.$get("email")?.value,
-      password: this.$get("password")?.value,
-      password2: this.$get("password2")?.value,
+      email: this.$get("email").value,
+      password: this.$get("password").value,
+      password2: this.$get("password2").value,
       fullname: this.$get("fullname")?.value,
-      address: this.$get("address")?.value,
-      birthdate: this.$get("birthdate")?.value,
-      phone: this.$get("phone")?.value,
+      address: this.$get("address").value,
+      birthdate: this.$get("birthdate").value,
+      phone: this.$get("phone").value,
     })
     this.issending = false
     this.btnsend = texts.tr00
