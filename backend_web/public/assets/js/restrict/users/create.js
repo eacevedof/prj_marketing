@@ -1,5 +1,5 @@
 import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
-import injson, {is_2xx} from "/assets/js/common/req.js"
+import injson from "/assets/js/common/req.js"
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
 const URL_POST = "/restrict/users/insert"
@@ -37,7 +37,7 @@ export class FormCreate extends LitElement {
   async onSubmit(e) {
     e.preventDefault()
     set_config({
-      fields: ["email","password"],
+      fields: ["email","password","birthdate","fullname","phone"],
       wrapper: this.shadowRoot.querySelector("form")
     })
 
@@ -62,21 +62,7 @@ export class FormCreate extends LitElement {
     this.issending = false
     this.btnsend = "tr01"//texts.tr01
 
-    if (response?.error)
-      return Swal.fire({
-        icon: "warning",
-        title: "t03",//texts.tr03,
-        html: response.error?.message ?? "Error"
-      })
-
-    if (!is_2xx(response))
-      return Swal.fire({
-        icon: "warning",
-        title: "t03",//texts.tr03,
-        html: response?.data?.message ?? "Error"
-      })
-
-    if(response?.errors.length){
+    if(response?.errors){
       const errors = response.errors[0]?.fields_validation
       if(errors) {
         return field_errors(errors)
@@ -84,9 +70,8 @@ export class FormCreate extends LitElement {
       return Swal.fire({
         icon: "warning",
         title: "t03",//texts.tr03,
-        html: errors[0], //texts.tr04.concat(response.errors[0]),
+        html: response.errors[0], //texts.tr04.concat(response.errors[0]),
       })
-
     }
 
     return window.location = URL_REDIRECT
