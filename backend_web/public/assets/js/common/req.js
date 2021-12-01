@@ -1,40 +1,14 @@
-const _get_error = error => ({error:error})
+const _get_error = error => ({errors:[error]})
 
-const _get_response = response => response
-
-/*
-* Excepciones controladas por el back (controlador):
-status-code:404
-data:
-  code: 404
-  message: "Resource not found"
-
-* Excepciones globales
-status-code: 500 por lo general o xxx si existe
-code: 500
-  data: []
-  errors: ["request method POST not allowed"]
-  0: "request method POST not allowed"
-  status: false
-
-Errores de validacion
-status-code: xxx
-* data: []
-errors: [{…}]
-included: []
-links: []
-message: ""
-status: false
-*
-* Errores de compilacion back
-status-code:200
-
-error: SyntaxError: Unexpected token < in JSON at position 0
-  message: "Unexpected token < in JSON at position 0"
-  stack: "SyntaxError: Unexpected token < in JSON at position 0"
-  *
-  * 
-* */
+const _get_response = response => {
+  let msg = response?.message
+  if(msg)
+    return {errors:[msg]}
+  msg = response?.errors
+  if(msg)
+    return {errors: response?.errors}
+  return response
+}
 
 const injson = {
   async get(url) {
@@ -51,7 +25,7 @@ const injson = {
       return _get_response(resp)
     } catch (error) {
       //este error sería del tipo: error.message "Unexpected token < in JSON at position 0"
-      return _get_error(error)
+      return _get_error(error.message)
     }
   },
   
@@ -70,7 +44,7 @@ const injson = {
       return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return _get_error(error)
+      return _get_error(error.message)
     }
   },
 
@@ -89,7 +63,7 @@ const injson = {
       return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return _get_error(error)
+      return _get_error(error.message)
     }
   },
 
@@ -108,7 +82,7 @@ const injson = {
       return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return _get_error(error)
+      return _get_error(error.message)
     }
   },
 
@@ -127,7 +101,7 @@ const injson = {
       return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return _get_error(error)
+      return _get_error(error.message)
     }
   }
 }
