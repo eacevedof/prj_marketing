@@ -7,31 +7,19 @@
 <div id="app">
 <form-create csrf="<?=$csrf?>" />
 </div>
-<script type="module" src="/assets/js/restrict/users/create.js"></script>
-
 <script type="module">
-/*
-import vue from "/assets/js/restrict/users/create.js"
+import init from "/assets/js/restrict/users/create.js"
+init({
+  tr00: <?$this->_echo_js(__("send"));?>,
+  tr01: <?$this->_echo_js(__("Sending..."));?>,
+  tr02: <?$this->_echo_js(__("Error"));?>,
+  tr03: <?$this->_echo_js(__("Some unexpected error occurred"));?>,
 
-vue({
-  texts: {
-    tr00: <?$this->_echo_js(__("send"));?>,
-    tr01: <?$this->_echo_js(__("Sending..."));?>,
-    tr02: <?$this->_echo_js(__("Send"));?>,
-    tr03: <?$this->_echo_js(__("Incomplete process"));?>,
-    tr04: <?$this->_echo_js(__("It was not possible to process your request. Please try again<br/>"));?>,
-    tr05: <?$this->_echo_js(__("Something went wrong!"));?>,
-    tr06: <?$this->_echo_js(__("Some unexpected error occurred"));?>,
-  },
-  fields:{
-    email: "",
-    password: " ",
-    password2: " ",
-    fullname: "",
-    address: "",
-    birthdate: "",
-    phone: "",
-  }
+  f00: <?$this->_echo_js(__("Email"));?>,
+  f01: <?$this->_echo_js(__("Password"));?>,
+  f02: <?$this->_echo_js(__("Password confirm"));?>,
+  f03: <?$this->_echo_js(__("Full name"));?>,
+  f04: <?$this->_echo_js(__("Address"));?>,
+  f05: <?$this->_echo_js(__("Birthdate"));?>
 })
-*/
 </script>
