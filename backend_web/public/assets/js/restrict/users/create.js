@@ -65,7 +65,7 @@ export class FormCreate extends LitElement {
      */
   }
 
-  $get = sel => this.shadowRoot?.querySelector("form")?.querySelector(`#${sel}`) ?? null
+  $get = sel => this.shadowRoot.querySelector(`#${sel}`)
 
   async onSubmit(e) {
     e.preventDefault()
@@ -94,13 +94,13 @@ export class FormCreate extends LitElement {
     const response = await injson.post(URL_POST, {
       _action: ACTION,
       _csrf: this.csrf,
-      email: this.$get("email").value,
-      password: this.$get("password").value,
-      password2: this.$get("password2").value,
-      fullname: this.$get("fullname").value,
-      address: this.$get("address").value,
-      birthdate: this.$get("birthdate").value,
-      phone: this.$get("phone").value,
+      email: this.$get("email")?.value,
+      password: this.$get("password")?.value,
+      password2: this.$get("password2")?.value,
+      fullname: this.$get("fullname")?.value,
+      address: this.$get("address")?.value,
+      birthdate: this.$get("birthdate")?.value,
+      phone: this.$get("phone")?.value,
     })
     this.issending = false
     this.btnsend = texts.tr00
@@ -158,6 +158,12 @@ export class FormCreate extends LitElement {
         <label for="birthdate">${texts.f05}</label>
         <div id="field-birthdate">
           <input type="date" id="birthdate" .value="${this.birthdate}">
+        </div>
+      </div>
+      <div>
+        <label for="phone">${texts.f03}</label>
+        <div id="field-phone">
+          <input type="text" id="phone" .value="${this.phone}">
         </div>
       </div>
       <div>
