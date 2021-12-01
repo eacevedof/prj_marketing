@@ -10,7 +10,7 @@ let _texts = {
   tr00: "Send",
   tr01: "Sending",
   tr02: "Error",
-  tr03: "Some unexpected error occurred: ",
+  tr03: "Some unexpected error occurred:",
 
   f00: "Email",
   f01: "Password",
@@ -113,7 +113,7 @@ export class FormCreate extends LitElement {
       return Swal.fire({
         icon: "warning",
         title: _texts.tr02,
-        html: _texts.tr03.concat(response.errors[0]),
+        html: _texts.tr03.concat("<br/>").concat(response.errors[0]),
       })
     }
 
