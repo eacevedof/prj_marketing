@@ -36,6 +36,14 @@ export class FormCreate extends LitElement {
     csrf: {type: String},
     issending: {type: Boolean},
     btnsend: {type: String},
+
+    email: {type: String},
+    password: {type: String},
+    password2: {type: String},
+    fullname: {type: String},
+    address: {type: String},
+    birthdate: {type: String},
+    phone: {type: String},
   }
 
   constructor() {
@@ -43,9 +51,21 @@ export class FormCreate extends LitElement {
     this.issending = false
     this.btnsend = texts.tr00
 
-    for(let p in fields)
-      this[p] = fields[p]
+    for(let p in fields) this[p] = fields[p]
+
+    /*
+    this.email = ""
+    this.password = ""
+    this.password2 = ""
+    this.fullname = ""
+    this.address = ""
+    this.birthdate = ""
+    this.phone = ""
+    
+     */
   }
+
+  $get = sel => this.shadowRoot?.querySelector("form")?.getElementById(sel) ?? null
 
   async onSubmit(e) {
     e.preventDefault()
@@ -58,6 +78,7 @@ export class FormCreate extends LitElement {
     this.btnsend = texts.tr01
     clear_errors()
 
+    /*
     const response = await injson.post(URL_POST, {
       _action: ACTION,
       _csrf: this.csrf,
@@ -69,7 +90,18 @@ export class FormCreate extends LitElement {
       birthdate: this.birthdate,
       phone: this.phone,
     })
-
+     */
+    const response = await injson.post(URL_POST, {
+      _action: ACTION,
+      _csrf: this.csrf,
+      email: this.$get("email").value,
+      password: this.$get("password").value,
+      password2: this.$get("password2").value,
+      fullname: this.$get("fullname").value,
+      address: this.$get("address").value,
+      birthdate: this.$get("birthdate").value,
+      phone: this.$get("phone").value,
+    })
     this.issending = false
     this.btnsend = texts.tr00
 
@@ -91,45 +123,45 @@ export class FormCreate extends LitElement {
 
   render() {
     return html`
-    <form @submit=${this.onSubmit}>
+    <form @submit="${this.onSubmit}">
       <div>
         <label for="email">${texts.f00}</label>
         <div id="field-email">
-          <input type="email" id="email" .value=${this.email}>
+          <input type="email" id="email" .value="${this.email}">
         </div>
       </div>
       <div>
         <label for="password">${texts.f01}</label>
         <div id="field-password">
-          <input type="password" id="password" .value=${this.password}>
+          <input type="password" id="password" .value="${this.password}">
         </div>
       </div>
       <div>
         <label for="password2">${texts.f02}</label>
         <div id="field-password2">
-          <input type="password" id="password2" .value=${this.password2}>
+          <input type="password" id="password2" .value="${this.password2}">
         </div>
       </div>
       <div>
         <label for="fullname">${texts.f03}</label>
         <div id="field-fullname">
-          <input type="text" id="fullname" .value=${this.fullname}>
+          <input type="text" id="fullname" .value="${this.fullname}">
         </div>
       </div>
       <div>
         <label for="address">${texts.f04}</label>
         <div id="field-address">
-          <input type="text" id="address" .value=${this.address}>
+          <input type="text" id="address" .value="${this.address}">
         </div>
       </div>
       <div>
         <label for="birthdate">${texts.f05}</label>
         <div id="field-birthdate">
-          <input type="date" id="birthdate" .value=${this.birthdate}>
+          <input type="date" id="birthdate" .value="${this.birthdate}">
         </div>
       </div>
       <div>
-        <button id="btn-submit" ?disabled=${this.issending}>
+        <button id="btn-submit" ?disabled="${this.issending}">
           ${this.btnsend}
           ${
             this.issending 
