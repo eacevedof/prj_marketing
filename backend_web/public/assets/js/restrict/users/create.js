@@ -5,11 +5,17 @@ import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderr
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
-let CSRF = ""
 
 let texts = {}
-let fields = {}
-
+let fields = {
+  email: "",
+  password: "",
+  password2: "",
+  fullname: "",
+  address: "",
+  birthdate: "",
+  phone: ""
+}
 
 export class FormCreate extends LitElement {
 
@@ -21,22 +27,17 @@ export class FormCreate extends LitElement {
 
   constructor() {
     super()
-    this.email = ""
-    this.password = ""
-    this.password2 = ""
-    this.fullname = ""
-    this.address = ""
-    this.birthdate = ""
-    this.phone = ""
-
     this.issending = false
     this.btnsend = "Enviar"
+
+    for(let p in fields)
+      this[p] = fields[p]
   }
 
   async onSubmit(e) {
     e.preventDefault()
     set_config({
-      fields: ["email","password","birthdate","fullname","phone"],
+      fields: ["email","password","fullname","address","birthdate","phone"],
       wrapper: this.shadowRoot.querySelector("form")
     })
 
