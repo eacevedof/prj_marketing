@@ -1,6 +1,14 @@
-const _get_error = error => ({errors:[error]})
+const _get_error = error => {
+  console.error("from-server:",error)
+  return {
+    errors: ["Bad response from server"]
+  }
+}
 
 const _get_response = response => {
+  if (Object.keys(response.data).length>0)
+    return response.data
+
   let msg = response?.message
   if(msg)
     return {errors:[msg]}
