@@ -6,7 +6,7 @@ const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 
-let texts = {
+let _texts = {
   tr00: "Send",
   tr01: "Sending",
   tr02: "Error",
@@ -20,7 +20,7 @@ let texts = {
   f05: "Birthdate",
 }
 
-let fields = {
+let _fields = {
   email: "",
   password: "",
   password2: "",
@@ -49,9 +49,9 @@ export class FormCreate extends LitElement {
   constructor() {
     super()
     this.issending = false
-    this.btnsend = texts.tr00
+    this.btnsend = _texts.tr00
 
-    for(let p in fields) this[p] = fields[p]
+    for(let p in _fields) this[p] = _fields[p]
 
     /*
     this.email = ""
@@ -75,7 +75,7 @@ export class FormCreate extends LitElement {
     })
 
     this.issending = true
-    this.btnsend = texts.tr01
+    this.btnsend = _texts.tr01
     clear_errors()
 
     /*
@@ -103,7 +103,7 @@ export class FormCreate extends LitElement {
       phone: this.$get("phone").value,
     })
     this.issending = false
-    this.btnsend = texts.tr00
+    this.btnsend = _texts.tr00
 
     if(response?.errors){
       const errors = response.errors[0]?.fields_validation
@@ -112,8 +112,8 @@ export class FormCreate extends LitElement {
       }
       return Swal.fire({
         icon: "warning",
-        title: texts.tr02,
-        html: texts.tr03.concat(response.errors[0]),
+        title: _texts.tr02,
+        html: _texts.tr03.concat(response.errors[0]),
       })
     }
 
@@ -125,43 +125,43 @@ export class FormCreate extends LitElement {
     return html`
     <form @submit="${this.onSubmit}">
       <div>
-        <label for="email">${texts.f00}</label>
+        <label for="email">${_texts.f00}</label>
         <div id="field-email">
           <input type="email" id="email" .value="${this.email}">
         </div>
       </div>
       <div>
-        <label for="password">${texts.f01}</label>
+        <label for="password">${_texts.f01}</label>
         <div id="field-password">
           <input type="password" id="password" .value="${this.password}">
         </div>
       </div>
       <div>
-        <label for="password2">${texts.f02}</label>
+        <label for="password2">${_texts.f02}</label>
         <div id="field-password2">
           <input type="password" id="password2" .value="${this.password2}">
         </div>
       </div>
       <div>
-        <label for="fullname">${texts.f03}</label>
+        <label for="fullname">${_texts.f03}</label>
         <div id="field-fullname">
           <input type="text" id="fullname" .value="${this.fullname}">
         </div>
       </div>
       <div>
-        <label for="address">${texts.f04}</label>
+        <label for="address">${_texts.f04}</label>
         <div id="field-address">
           <input type="text" id="address" .value="${this.address}">
         </div>
       </div>
       <div>
-        <label for="birthdate">${texts.f05}</label>
+        <label for="birthdate">${_texts.f05}</label>
         <div id="field-birthdate">
           <input type="date" id="birthdate" .value="${this.birthdate}">
         </div>
       </div>
       <div>
-        <label for="phone">${texts.f03}</label>
+        <label for="phone">${_texts.f03}</label>
         <div id="field-phone">
           <input type="text" id="phone" .value="${this.phone}">
         </div>
@@ -182,7 +182,7 @@ export class FormCreate extends LitElement {
 
 }//FormCreate
 
-export default text => {
-  texts = text
+export default texts => {
+  _texts = texts
   customElements.define("form-create", FormCreate)
 }
