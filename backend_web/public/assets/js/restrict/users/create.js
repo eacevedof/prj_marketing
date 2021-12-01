@@ -7,12 +7,10 @@ const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 
 let texts = {
-  tr00: "",
-  tr01: "",
-  tr02: "",
-  tr03: "",
-  tr04: "",
-  tr05: "",
+  tr00: "Send",
+  tr01: "Sending",
+  tr02: "Error",
+  tr03: "Some unexpected error occurred: ",
 
   f00: "Email",
   f01: "Password",
@@ -43,7 +41,7 @@ export class FormCreate extends LitElement {
   constructor() {
     super()
     this.issending = false
-    this.btnsend = "Enviar"
+    this.btnsend = texts.tr00
 
     for(let p in fields)
       this[p] = fields[p]
@@ -57,7 +55,7 @@ export class FormCreate extends LitElement {
     })
 
     this.issending = true
-    this.btnsend = "send"//texts.tr01
+    this.btnsend = texts.tr01
     clear_errors()
 
     const response = await injson.post(URL_POST, {
@@ -73,7 +71,7 @@ export class FormCreate extends LitElement {
     })
 
     this.issending = false
-    this.btnsend = "tr01"//texts.tr01
+    this.btnsend = texts.tr00
 
     if(response?.errors){
       const errors = response.errors[0]?.fields_validation
@@ -82,8 +80,8 @@ export class FormCreate extends LitElement {
       }
       return Swal.fire({
         icon: "warning",
-        title: "t03",//texts.tr03,
-        html: response.errors[0], //texts.tr04.concat(response.errors[0]),
+        title: texts.tr02,
+        html: texts.tr03.concat(response.errors[0]),
       })
     }
 
