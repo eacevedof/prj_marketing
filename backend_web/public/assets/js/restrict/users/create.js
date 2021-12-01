@@ -6,7 +6,22 @@ const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 
-let texts = {}
+let texts = {
+  tr00: "",
+  tr01: "",
+  tr02: "",
+  tr03: "",
+  tr04: "",
+  tr05: "",
+
+  f00: "Email",
+  f01: "Password",
+  f02: "Password confirm",
+  f03: "Full name",
+  f04: "Address",
+  f05: "Birthdate",
+}
+
 let fields = {
   email: "",
   password: "",
@@ -80,37 +95,37 @@ export class FormCreate extends LitElement {
     return html`
     <form @submit=${this.onSubmit}>
       <div>
-        <label for="email">Email *</label>
+        <label for="email">${texts.f00}</label>
         <div id="field-email">
           <input type="email" id="email" .value=${this.email}>
         </div>
       </div>
       <div>
-        <label for="password">Password *</label>
+        <label for="password">${texts.f01}</label>
         <div id="field-password">
           <input type="password" id="password" .value=${this.password}>
         </div>
       </div>
       <div>
-        <label for="password2">Password confirm *</label>
+        <label for="password2">${texts.f02}</label>
         <div id="field-password2">
           <input type="password" id="password2" .value=${this.password2}>
         </div>
       </div>
       <div>
-        <label for="fullname">Full name *</label>
+        <label for="fullname">${texts.f03}</label>
         <div id="field-fullname">
           <input type="text" id="fullname" .value=${this.fullname}>
         </div>
       </div>
       <div>
-        <label for="address">Address *</label>
+        <label for="address">${texts.f04}</label>
         <div id="field-address">
           <input type="text" id="address" .value=${this.address}>
         </div>
       </div>
       <div>
-        <label for="birthdate">Birthdate *</label>
+        <label for="birthdate">${texts.f05}</label>
         <div id="field-birthdate">
           <input type="date" id="birthdate" .value=${this.birthdate}>
         </div>
@@ -118,7 +133,11 @@ export class FormCreate extends LitElement {
       <div>
         <button id="btn-submit" ?disabled=${this.issending}>
           ${this.btnsend}
-          ${this.issending ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`: html``}
+          ${
+            this.issending 
+              ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+              : html``
+          }
         </button>
       </div>
     </form>
