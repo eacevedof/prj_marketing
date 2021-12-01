@@ -106,4 +106,17 @@ const injson = {
   }
 }
 
+const text = {
+  async get(url) {
+    let resp = null
+    try {
+      resp = await fetch(url)
+      resp = await resp?.text()
+      return _get_response(resp)
+    } catch (error) {
+      return _get_error(error.message)
+    }
+  },
+}
+
 export default injson
