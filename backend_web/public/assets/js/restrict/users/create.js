@@ -31,7 +31,6 @@ export class FormCreate extends LitElement {
 
     this.issending = false
     this.btnsend = "Enviar"
-
   }
 
   async onSubmit(e) {
@@ -56,8 +55,6 @@ export class FormCreate extends LitElement {
       birthdate: this.birthdate,
       phone: this.phone,
     })
-
-    console.log("REEEESSSPOONNSEE",response, "typeof:", typeof response)
 
     this.issending = false
     this.btnsend = "tr01"//texts.tr01
