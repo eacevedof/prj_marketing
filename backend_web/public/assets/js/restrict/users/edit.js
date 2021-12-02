@@ -4,7 +4,7 @@ import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderr
 
 const URL_POST = "/restrict/users/insert"
 const URL_REDIRECT = "/restrict/users"
-const ACTION = "users.insert"
+const ACTION = "users.update"
 
 let _texts = {
   tr00: "Send",
@@ -18,6 +18,7 @@ let _texts = {
   f03: "Full name",
   f04: "Address",
   f05: "Birthdate",
+  f06: "Phone",
 }
 
 let _fields = {
@@ -52,17 +53,6 @@ export class FormEdit extends LitElement {
     this.btnsend = _texts.tr00
 
     for(let p in _fields) this[p] = _fields[p]
-
-    /*
-    this.email = ""
-    this.password = ""
-    this.password2 = ""
-    this.fullname = ""
-    this.address = ""
-    this.birthdate = ""
-    this.phone = ""
-    
-     */
   }
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
@@ -70,7 +60,8 @@ export class FormEdit extends LitElement {
     const data = Object.keys(_fields)
       .map(field => {
         const ob = {}
-        ob[field] = this.$get(field).value
+        console.log("field",field, "value", this.$get(field)?.value ?? "")
+        ob[field] = this.$get(field)?.value ?? ""
         return ob
       })
       .reduce((old, cur) => ({
@@ -101,23 +92,26 @@ export class FormEdit extends LitElement {
       _csrf: this.csrf,
       ...this.get_data()
     })
+
     this.issending = false
     this.btnsend = _texts.tr00
 
     if(response?.errors){
-      const errors = response.errors[0]?.fields_validation
+      let errors = response.errors[0]?.fields_validation
       if(errors) {
+        window.snack.set_time(4).set_inner("error").set_color("red").show()
         return field_errors(errors)
       }
-      return Swal.fire({
-        icon: "warning",
-        title: _texts.tr02,
-        html: _texts.tr03.concat("<br/>").concat(response.errors[0]),
-      })
+
+      errors = response?.errors
+      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color("red").show()
     }
 
-    return window.location = URL_REDIRECT
+    window.snack.set_time(4)
+      .set_inner(`<b>Data updated</b>`)
+      .show()
 
+    $("#table-datatable").DataTable().ajax.reload()
   }//onSubmit
 
   render() {
@@ -160,19 +154,19 @@ export class FormEdit extends LitElement {
         </div>
       </div>
       <div>
-        <label for="phone">${_texts.f03}</label>
+        <label for="phone">${_texts.f06}</label>
         <div id="field-phone">
           <input type="text" id="phone" .value="${this.phone}">
         </div>
       </div>
       <div>
         <button id="btn-submit" ?disabled="${this.issending}">
-          ${this.btnsend}
-          ${
-      this.issending
-        ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-        : html``
-    }
+        ${this.btnsend}
+        ${
+          this.issending
+          ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+          : html``
+        }
         </button>
       </div>
     </form>
@@ -181,7 +175,8 @@ export class FormEdit extends LitElement {
 
 }//FormEdit
 
-export default texts => {
+export default (texts, fields) => {
   _texts = texts
+  _fields = fields
   customElements.define("form-edit", FormEdit)
 }

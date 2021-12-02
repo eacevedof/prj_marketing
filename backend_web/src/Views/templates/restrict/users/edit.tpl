@@ -23,5 +23,14 @@ init({
   f04: <?$this->_echo_js(__("Address"));?>,
   f05: <?$this->_echo_js(__("Birthdate"));?>,
   f06: <?$this->_echo_js(__("Phone"));?>
+},{
+  uuid: <?$this->_echo_js($uuid);?>,
+  email: <?$this->_echo_js($item["email"] ?? "");?>,
+  password: "    ",
+  password2: "    ",
+  fullname: <?$this->_echo_js($item["fullname"] ?? "");?>,
+  address: <?$this->_echo_js($item["address"] ?? "");?>,
+  birthdate: <?$this->_echo_js($item["birthdate"] ?? "");?>,
+  phone: <?$this->_echo_js($item["phone"] ?? "");?>,
 })
 </script>
