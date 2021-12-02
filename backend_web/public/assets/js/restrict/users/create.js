@@ -18,6 +18,7 @@ let _texts = {
   f03: "Full name",
   f04: "Address",
   f05: "Birthdate",
+  f06: "Phone",
 }
 
 let _fields = {
@@ -160,7 +161,7 @@ export class FormCreate extends LitElement {
         </div>
       </div>
       <div>
-        <label for="phone">${_texts.f03}</label>
+        <label for="phone">${_texts.f06}</label>
         <div id="field-phone">
           <input type="text" id="phone" .value="${this.phone}">
         </div>
