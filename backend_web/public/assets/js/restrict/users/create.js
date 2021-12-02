@@ -66,11 +66,29 @@ export class FormCreate extends LitElement {
   }
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
+  get_data() {
+    const data = Object.keys(_fields)
+      .map(field => {
+        const ob = {}
+        ob[field] = this.$get(field).value
+        return ob
+      })
+      .reduce((old, cur) => ({
+        ...old,
+        ...cur
+      }), {})
+
+    return data
+  }
+
+  firstUpdated(changedProperties) {
+    this.$get("email").focus()
+  }
 
   async onSubmit(e) {
     e.preventDefault()
     set_config({
-      fields: ["email","password","fullname","address","birthdate","phone"],
+      fields: Object.keys(_fields),
       wrapper: this.shadowRoot.querySelector("form")
     })
 
@@ -94,13 +112,7 @@ export class FormCreate extends LitElement {
     const response = await injson.post(URL_POST, {
       _action: ACTION,
       _csrf: this.csrf,
-      email: this.$get("email").value,
-      password: this.$get("password").value,
-      password2: this.$get("password2").value,
-      fullname: this.$get("fullname")?.value,
-      address: this.$get("address").value,
-      birthdate: this.$get("birthdate").value,
-      phone: this.$get("phone").value,
+      ...this.get_data()
     })
     this.issending = false
     this.btnsend = _texts.tr00
