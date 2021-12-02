@@ -96,19 +96,6 @@ export class FormCreate extends LitElement {
     this.btnsend = _texts.tr01
     clear_errors()
 
-    /*
-    const response = await injson.post(URL_POST, {
-      _action: ACTION,
-      _csrf: this.csrf,
-      email: this.email,
-      password: this.password,
-      password2: this.password2,
-      fullname: this.fullname,
-      address: this.address,
-      birthdate: this.birthdate,
-      phone: this.phone,
-    })
-     */
     const response = await injson.post(URL_POST, {
       _action: ACTION,
       _csrf: this.csrf,
