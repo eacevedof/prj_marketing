@@ -18,7 +18,7 @@ return [
     ["url"=>"/restrict/users/create","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"create"],
     ["url"=>"/restrict/users/edit/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"edit"],
     ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"insert", "allowed"=>["post"]],
-    ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["post"]],
+    ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"update", "allowed"=>["put"]],
     ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"remove", "allowed"=>["delete"]],
     ["url"=>"/restrict/users/?int:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],

@@ -2,8 +2,7 @@ import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import injson from "/assets/js/common/req.js"
 import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
 
-const URL_POST = "/restrict/users/insert"
-const URL_REDIRECT = "/restrict/users"
+const URL_UPDATE = "/restrict/users/update"
 const ACTION = "users.update"
 
 let _texts = {
@@ -22,6 +21,7 @@ let _texts = {
 }
 
 let _fields = {
+  uuid: "",
   email: "",
   password: "",
   password2: "",
@@ -60,7 +60,7 @@ export class FormEdit extends LitElement {
     const data = Object.keys(_fields)
       .map(field => {
         const ob = {}
-        console.log("field",field, "value", this.$get(field)?.value ?? "")
+        if (field==="uuid") return {}
         ob[field] = this.$get(field)?.value ?? ""
         return ob
       })
@@ -87,9 +87,11 @@ export class FormEdit extends LitElement {
     this.btnsend = _texts.tr01
     clear_errors()
 
-    const response = await injson.post(URL_POST, {
+    const response = await injson.put(
+      URL_UPDATE.concat(`/${_fields.uuid}`), {
       _action: ACTION,
       _csrf: this.csrf,
+      uuid: _fields.uuid,
       ...this.get_data()
     })
 
@@ -108,6 +110,7 @@ export class FormEdit extends LitElement {
     }
 
     window.snack.set_time(4)
+      .set_color("green")
       .set_inner(`<b>Data updated</b>`)
       .show()
 

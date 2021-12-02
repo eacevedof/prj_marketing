@@ -6,12 +6,18 @@ const _get_error = error => {
 }
 
 const _get_response = response => {
+  let msg = response?.data?.message
+  let code = response?.data?.code
+  if(msg && code)
+    return {errors:[msg]}
+
   if (Object.keys(response.data).length>0)
     return response.data
 
-  let msg = response?.message
+  msg = response?.message
   if(msg)
     return {errors:[msg]}
+
   msg = response?.errors
   if(msg)
     return {errors: response?.errors}
@@ -23,7 +29,6 @@ const injson = {
     let resp = null
     try {
       resp = await fetch(url, {
-        method: "POST",
         headers: {
           "Accept": "application/json, text/plain, */*",
           "Content-Type": "application/json"
