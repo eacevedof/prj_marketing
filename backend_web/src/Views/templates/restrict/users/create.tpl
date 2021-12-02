@@ -20,6 +20,7 @@ init({
   f02: <?$this->_echo_js(__("Password confirm"));?>,
   f03: <?$this->_echo_js(__("Full name"));?>,
   f04: <?$this->_echo_js(__("Address"));?>,
-  f05: <?$this->_echo_js(__("Birthdate"));?>
+  f05: <?$this->_echo_js(__("Birthdate"));?>,
+  f06: <?$this->_echo_js(__("Phone"));?>,
 })
 </script>
