@@ -33,6 +33,7 @@ const rowbuttons_listeners = ()=> {
     try {
       const r = await fetch(url)
       const html = await r.text()
+      console.log("edit-html",html)
       window.modalraw.disable_bgclick(true).set_body(html).show()
     }
     catch (error) {
