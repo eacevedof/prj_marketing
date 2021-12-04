@@ -76,6 +76,11 @@ export class FormEdit extends LitElement {
     this.$get("email").focus()
   }
 
+  connectedCallback() {
+    super.connectedCallback()
+    console.log("CONNECTED-CALLBACK",_fields)
+  }
+
   async onSubmit(e) {
     e.preventDefault()
     set_config({
