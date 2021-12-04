@@ -18,6 +18,16 @@ $texts = [
   "f05" => __("Birthdate"),
   "f06" => __("Phone")
 ];
+$item = [
+  "uuid" => $uuid,
+  "email" => $item["email"] ?? "",
+  "password" => "    ",
+  "password2" => "    ",
+  "fullname" => $item["fullname"] ?? "",
+  "address" => $item["address"] ?? "",
+  "birthdate" => $item["birthdate"] ?? "",
+  "phone" => $item["phone"] ?? ""
+];
 ?>
 
 <h1><?=$h1?></h1>
