@@ -61,8 +61,6 @@ export class FormEdit extends LitElement {
     phone: {type: String},
   }
 
-
-
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
   get_data() {
     const data = Object.keys(_fields)
@@ -83,13 +81,12 @@ export class FormEdit extends LitElement {
   //1
   constructor() {
     super()
-    this.issending = false
-    this.btnsend = _texts.tr00
+
 
     //this.texts = {}
     //this.fields = {}
-    console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
-    for(let p in _fields) this[p] = _fields[p]
+    //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
+    //for(let p in _fields) this[p] = _fields[p]
   }
 
   //2
@@ -98,9 +95,11 @@ export class FormEdit extends LitElement {
     console.log("requestUpdate","texts",this.texts,"fields:",this.fields)
   }
 
-  //3
+  //3 (aqui siempre hay datos)
   connectedCallback() {
     super.connectedCallback()
+    this.issending = false
+    this.btnsend = this.texts.tr00
     console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
   }
 
@@ -110,43 +109,43 @@ export class FormEdit extends LitElement {
     return html`
     <form @submit="${this.onSubmit}">
       <div>
-        <label for="email">${_texts.f00}</label>
+        <label for="email">${this.texts.f00}</label>
         <div id="field-email">
           <input type="email" id="email" .value="${this.email}">
         </div>
       </div>
       <div>
-        <label for="password">${_texts.f01}</label>
+        <label for="password">${this.texts.f01}</label>
         <div id="field-password">
           <input type="password" id="password" .value="${this.password}">
         </div>
       </div>
       <div>
-        <label for="password2">${_texts.f02}</label>
+        <label for="password2">${this.texts.f02}</label>
         <div id="field-password2">
           <input type="password" id="password2" .value="${this.password2}">
         </div>
       </div>
       <div>
-        <label for="fullname">${_texts.f03}</label>
+        <label for="fullname">${this.texts.f03}</label>
         <div id="field-fullname">
           <input type="text" id="fullname" .value="${this.fullname}">
         </div>
       </div>
       <div>
-        <label for="address">${_texts.f04}</label>
+        <label for="address">${this.texts.f04}</label>
         <div id="field-address">
           <input type="text" id="address" .value="${this.address}">
         </div>
       </div>
       <div>
-        <label for="birthdate">${_texts.f05}</label>
+        <label for="birthdate">${this.texts.f05}</label>
         <div id="field-birthdate">
           <input type="date" id="birthdate" .value="${this.birthdate}">
         </div>
       </div>
       <div>
-        <label for="phone">${_texts.f06}</label>
+        <label for="phone">${this.texts.f06}</label>
         <div id="field-phone">
           <input type="text" id="phone" .value="${this.phone}">
         </div>
@@ -180,7 +179,7 @@ export class FormEdit extends LitElement {
     })
 
     this.issending = true
-    this.btnsend = _texts.tr01
+    this.btnsend = this.texts.tr01
     clear_errors()
 
     const response = await injson.put(
@@ -192,7 +191,7 @@ export class FormEdit extends LitElement {
     })
 
     this.issending = false
-    this.btnsend = _texts.tr00
+    this.btnsend = this.texts.tr00
 
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation

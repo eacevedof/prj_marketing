@@ -8,10 +8,8 @@ $texts = [
   "tr00" => __("send"),
   "tr01" => __("Sending..."),
   "tr02" => __("Error"),
-  "tr03" => __("Some unexpected error occurred")
-];
+  "tr03" => __("Some unexpected error occurred"),
 
-$fields = [
   "f00" => __("Email"),
   "f01" => __("Password"),
   "f02" => __("Password confirm"),
@@ -19,6 +17,10 @@ $fields = [
   "f04" => __("Address"),
   "f05" => __("Birthdate"),
   "f06" => __("Phone")
+];
+
+$fields = [
+
 ];
 //var_dump($texts, json_encode($texts));die;
 ?>
