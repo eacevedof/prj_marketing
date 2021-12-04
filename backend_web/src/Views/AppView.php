@@ -187,7 +187,7 @@ final class AppView
     private function _echo_js($any, bool $scape=false): void
     {
         $json = json_encode($any);
-        $json = $scape ? str_replace("\""," &quot;", $json): $json;
+        $json = $scape ? str_replace("\"","&quot;", $json): $json;
         echo $json;
     }
 

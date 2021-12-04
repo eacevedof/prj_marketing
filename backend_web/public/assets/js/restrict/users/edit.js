@@ -33,34 +33,6 @@ let _fields = {
 
 export class FormEdit extends LitElement {
 
-  static properties = {
-    csrf: {type: String},
-    texts: {
-      converter: (strjson) => {
-        if (strjson) return JSON.parse(strjson)
-        return {}
-      },
-    },
-
-    fields: {
-      converter: (strjson) => {
-        if (strjson) return JSON.parse(strjson)
-        return {}
-      },
-    },
-
-    issending: {type: Boolean},
-    btnsend: {type: String},
-
-    email: {type: String},
-    password: {type: String},
-    password2: {type: String},
-    fullname: {type: String},
-    address: {type: String},
-    birthdate: {type: String},
-    phone: {type: String},
-  }
-
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
   get_data() {
     const data = Object.keys(_fields)
@@ -81,12 +53,47 @@ export class FormEdit extends LitElement {
   //1
   constructor() {
     super()
-
-
     //this.texts = {}
     //this.fields = {}
     //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
     //for(let p in _fields) this[p] = _fields[p]
+  }
+
+  static properties = {
+    csrf: {type: String},
+    texts: {
+      converter: (strjson) => {
+        //strjson: String.raw(`${strjson}`)
+        console.log("setting texts converter", strjson)
+        if (strjson) return JSON.parse(strjson)
+        return {}
+      },
+    },
+
+    fields: {
+      converter: (strjson) => {
+        console.log("setting fields converter")
+        if (strjson) return JSON.parse(strjson)
+        return {}
+      },
+    },
+
+    issending: {type: Boolean},
+    btnsend: {type: String},
+
+    email: {type: String},
+    password: {type: String},
+    password2: {type: String},
+    fullname: {type: String},
+    address: {type: String},
+    birthdate: {type: String},
+    phone: {type: String},
+  }
+
+  static get properties() {
+    return {
+      texts: {type: Object}
+    }
   }
 
   //2
