@@ -35,6 +35,14 @@ export class FormEdit extends LitElement {
 
   static properties = {
     csrf: {type: String},
+    texts: {
+      converter: (attrValue) => {
+        console.log("CONVERTER TEXTS",attrValue, JSON.parse(attrValue))
+        //if (attrValue) return JSON.parse(attrValue)
+        //return null
+      },
+    },
+    fields: {},
     issending: {type: Boolean},
     btnsend: {type: String},
 
@@ -52,6 +60,9 @@ export class FormEdit extends LitElement {
     this.issending = false
     this.btnsend = _texts.tr00
 
+    //this.texts = {}
+    //this.fields = {}
+    console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
     for(let p in _fields) this[p] = _fields[p]
   }
 
@@ -73,16 +84,23 @@ export class FormEdit extends LitElement {
   }
 
   firstUpdated(changedProperties) {
+    console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
     this.$get("email").focus()
   }
 
   connectedCallback() {
     super.connectedCallback()
-    console.log("CONNECTED-CALLBACK",_fields)
+    console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
+  }
+
+  requestUpdate() {
+    super.requestUpdate()
+    console.log("requestUpdate","texts",this.texts,"fields:",this.fields)
   }
 
   async onSubmit(e) {
     e.preventDefault()
+    console.log("onSubmit","texts",this.texts,"fields:",this.fields)
     set_config({
       fields: Object.keys(_fields),
       wrapper: this.shadowRoot.querySelector("form")
@@ -123,6 +141,7 @@ export class FormEdit extends LitElement {
   }//onSubmit
 
   render() {
+    console.log("render","texts",this.texts,"fields:",this.fields)
     return html`
     <form @submit="${this.onSubmit}">
       <div>
@@ -186,6 +205,6 @@ export class FormEdit extends LitElement {
 export default (texts, fields) => {
   _texts = texts
   _fields = fields
-  console.log("EDIT.FIELDS",_fields)
+  //console.log("EDIT.FIELDS",_fields)
   if (!customElements.get("form-edit")) customElements.define("form-edit", FormEdit)
 }
