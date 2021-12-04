@@ -37,7 +37,6 @@ export class FormEdit extends LitElement {
     csrf: {type: String},
     texts: {
       converter: (strjson) => {
-        //strjson = String.raw`${strjson}`
         if (strjson) return JSON.parse(strjson)
         return {}
       },
@@ -62,16 +61,7 @@ export class FormEdit extends LitElement {
     phone: {type: String},
   }
 
-  constructor() {
-    super()
-    this.issending = false
-    this.btnsend = _texts.tr00
 
-    //this.texts = {}
-    //this.fields = {}
-    console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
-    for(let p in _fields) this[p] = _fields[p]
-  }
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
   get_data() {
@@ -90,63 +80,31 @@ export class FormEdit extends LitElement {
     return data
   }
 
-  firstUpdated(changedProperties) {
-    console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
-    this.$get("email").focus()
+  //1
+  constructor() {
+    super()
+    this.issending = false
+    this.btnsend = _texts.tr00
+
+    //this.texts = {}
+    //this.fields = {}
+    console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
+    for(let p in _fields) this[p] = _fields[p]
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
-  }
-
+  //2
   requestUpdate() {
     super.requestUpdate()
     console.log("requestUpdate","texts",this.texts,"fields:",this.fields)
   }
 
-  async onSubmit(e) {
-    e.preventDefault()
-    console.log("onSubmit","texts",this.texts,"fields:",this.fields)
-    set_config({
-      fields: Object.keys(_fields),
-      wrapper: this.shadowRoot.querySelector("form")
-    })
+  //3
+  connectedCallback() {
+    super.connectedCallback()
+    console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
+  }
 
-    this.issending = true
-    this.btnsend = _texts.tr01
-    clear_errors()
-
-    const response = await injson.put(
-      URL_UPDATE.concat(`/${_fields.uuid}`), {
-      _action: ACTION,
-      _csrf: this.csrf,
-      uuid: _fields.uuid,
-      ...this.get_data()
-    })
-
-    this.issending = false
-    this.btnsend = _texts.tr00
-
-    if(response?.errors){
-      let errors = response.errors[0]?.fields_validation
-      if(errors) {
-        window.snack.set_time(4).set_inner("error").set_color("red").show()
-        return field_errors(errors)
-      }
-
-      errors = response?.errors
-      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color("red").show()
-    }
-
-    window.snack.set_time(4)
-      .set_color("green")
-      .set_inner(`<b>Data updated</b>`)
-      .show()
-
-    $("#table-datatable").DataTable().ajax.reload()
-  }//onSubmit
-
+  //4
   render() {
     console.log("render","texts",this.texts,"fields:",this.fields)
     return html`
@@ -197,15 +155,64 @@ export class FormEdit extends LitElement {
         <button id="btn-submit" ?disabled="${this.issending}">
         ${this.btnsend}
         ${
-          this.issending
-          ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-          : html``
-        }
+      this.issending
+        ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+        : html``
+    }
         </button>
       </div>
     </form>
     `
+  }//render
+
+  //5
+  firstUpdated(changedProperties) {
+    console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
+    this.$get("email").focus()
   }
+
+  async onSubmit(e) {
+    e.preventDefault()
+    console.log("onSubmit","texts",this.texts,"fields:",this.fields)
+    set_config({
+      fields: Object.keys(_fields),
+      wrapper: this.shadowRoot.querySelector("form")
+    })
+
+    this.issending = true
+    this.btnsend = _texts.tr01
+    clear_errors()
+
+    const response = await injson.put(
+      URL_UPDATE.concat(`/${_fields.uuid}`), {
+      _action: ACTION,
+      _csrf: this.csrf,
+      uuid: _fields.uuid,
+      ...this.get_data()
+    })
+
+    this.issending = false
+    this.btnsend = _texts.tr00
+
+    if(response?.errors){
+      let errors = response.errors[0]?.fields_validation
+      if(errors) {
+        window.snack.set_time(4).set_inner("error").set_color("red").show()
+        return field_errors(errors)
+      }
+
+      errors = response?.errors
+      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color("red").show()
+    }
+
+    window.snack.set_time(4)
+      .set_color("green")
+      .set_inner(`<b>Data updated</b>`)
+      .show()
+
+    $("#table-datatable").DataTable().ajax.reload()
+  }//onSubmit
+
 
 }//FormEdit
 
