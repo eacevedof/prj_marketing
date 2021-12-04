@@ -5,26 +5,32 @@
  */
 
 $texts = [
-  "tr001" => __("send")
-]
+  "tr00" => __("send"),
+  "tr01" => __("Sending..."),
+  "tr02" => __("Error"),
+  "tr03" => __("Some unexpected error occurred")
+];
+
+$fields = [
+  "f00" => __("Email"),
+  "f01" => __("Password"),
+  "f02" => __("Password confirm"),
+  "f03" => __("Full name"),
+  "f04" => __("Address"),
+  "f05" => __("Birthdate"),
+  "f06" => __("Phone")
+];
+//var_dump($texts, json_encode($texts));die;
 ?>
+
 <h1><?=$h1?></h1>
 <div id="app">
   <form-edit
-    csrf="<?=$csrf?>"
+    csrf=<?$this->_echo_js($csrf);?>
 
-    texts=<?$this->_echo_js($texts);?>
+    texts="<?$this->_echo_js($texts, true);?>"
 
-    fields=`{
-      uuid: <?$this->_echo_js($uuid);?>,
-      email: <?$this->_echo_js($item["email"] ?? "");?>,
-      password: "    ",
-      password2: "    ",
-      fullname: <?$this->_echo_js($item["fullname"] ?? "");?>,
-      address: <?$this->_echo_js($item["address"] ?? "");?>,
-      birthdate: <?$this->_echo_js($item["birthdate"] ?? "");?>,
-      phone: <?$this->_echo_js($item["phone"] ?? "");?>,
-    }`
+    fields="<?$this->_echo_js($fields, true);?>"
   />
 </div>
 <script type="module">

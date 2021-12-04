@@ -9,7 +9,7 @@ let _texts = {
   tr00: "Send",
   tr01: "Sending",
   tr02: "Error",
-  tr03: "Some unexpected error occurred:",
+  tr03: "Some unexpected error occurred: ",
 
   f00: "Email",
   f01: "Password",
@@ -36,13 +36,20 @@ export class FormEdit extends LitElement {
   static properties = {
     csrf: {type: String},
     texts: {
-      converter: (attrValue) => {
-        console.log("CONVERTER TEXTS",attrValue, JSON.parse(attrValue))
-        //if (attrValue) return JSON.parse(attrValue)
-        //return null
+      converter: (strjson) => {
+        //strjson = String.raw`${strjson}`
+        if (strjson) return JSON.parse(strjson)
+        return {}
       },
     },
-    fields: {},
+
+    fields: {
+      converter: (strjson) => {
+        if (strjson) return JSON.parse(strjson)
+        return {}
+      },
+    },
+
     issending: {type: Boolean},
     btnsend: {type: String},
 

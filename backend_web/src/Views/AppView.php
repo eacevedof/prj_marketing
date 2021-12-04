@@ -184,9 +184,11 @@ final class AppView
         return $this;
     }
 
-    private function _echo_js($any): void
+    private function _echo_js($any, bool $scape=false): void
     {
-        echo json_encode($any);
+        $json = json_encode($any);
+        $json = $scape ? str_replace("\""," &quot;", $json): $json;
+        echo $json;
     }
 
     private function _echo(?string $any, bool $raw=true): void
