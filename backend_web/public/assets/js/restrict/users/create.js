@@ -184,5 +184,6 @@ export class FormCreate extends LitElement {
 
 export default texts => {
   _texts = texts
-  customElements.define("form-create", FormCreate)
+  if (!customElements.get("form-create"))
+    customElements.define("form-create", FormCreate)
 }
