@@ -20,7 +20,14 @@ $texts = [
 ];
 
 $fields = [
-
+  "uuid" => $uuid,
+  "email" => $item["email"] ?? "",
+  "password" => "    ",
+  "password2" => "    ",
+  "fullname" => $item["fullname"] ?? "",
+  "address" => $item["address"] ?? "",
+  "birthdate" => $item["birthdate"] ?? "",
+  "phone" => $item["phone"] ?? ""
 ];
 //var_dump($texts, json_encode($texts));die;
 ?>

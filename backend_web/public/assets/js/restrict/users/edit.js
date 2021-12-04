@@ -55,7 +55,7 @@ export class FormEdit extends LitElement {
     super()
     //this.texts = {}
     //this.fields = {}
-    //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
+    console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
     //for(let p in _fields) this[p] = _fields[p]
   }
 
@@ -90,7 +90,9 @@ export class FormEdit extends LitElement {
     phone: {type: String},
   }
 
+
   static get properties() {
+    console.log("GETTING PROPERTIES")
     return {
       texts: {type: Object}
     }
@@ -107,6 +109,9 @@ export class FormEdit extends LitElement {
     super.connectedCallback()
     this.issending = false
     this.btnsend = this.texts.tr00
+
+    //this.email = this.fields.email
+    for(let p in this.fields) this[p] = this.fields[p]
     console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
   }
 
