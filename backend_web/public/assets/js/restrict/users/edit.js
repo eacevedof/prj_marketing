@@ -5,37 +5,12 @@ import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderr
 const URL_UPDATE = "/restrict/users/update"
 const ACTION = "users.update"
 
-let _texts = {
-  tr00: "Send",
-  tr01: "Sending",
-  tr02: "Error",
-  tr03: "Some unexpected error occurred: ",
-
-  f00: "Email",
-  f01: "Password",
-  f02: "Password confirm",
-  f03: "Full name",
-  f04: "Address",
-  f05: "Birthdate",
-  f06: "Phone",
-}
-
-let _fields = {
-  uuid: "",
-  email: "",
-  password: "",
-  password2: "",
-  fullname: "",
-  address: "",
-  birthdate: "",
-  phone: ""
-}
 
 export class FormEdit extends LitElement {
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
   get_data() {
-    const data = Object.keys(_fields)
+    const data = Object.keys(this.fields)
       .map(field => {
         const ob = {}
         if (field==="uuid") return {}
@@ -56,7 +31,7 @@ export class FormEdit extends LitElement {
     //this.texts = {}
     //this.fields = {}
     console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
-    //for(let p in _fields) this[p] = _fields[p]
+    //for(let p in this.fields) this[p] = this.fields[p]
   }
 
   static properties = {
@@ -166,10 +141,10 @@ export class FormEdit extends LitElement {
         <button id="btn-submit" ?disabled="${this.issending}">
         ${this.btnsend}
         ${
-      this.issending
-        ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-        : html``
-    }
+        this.issending
+          ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+          : html``
+        }
         </button>
       </div>
     </form>
@@ -186,7 +161,7 @@ export class FormEdit extends LitElement {
     e.preventDefault()
     console.log("onSubmit","texts",this.texts,"fields:",this.fields)
     set_config({
-      fields: Object.keys(_fields),
+      fields: Object.keys(this.fields),
       wrapper: this.shadowRoot.querySelector("form")
     })
 
@@ -195,10 +170,10 @@ export class FormEdit extends LitElement {
     clear_errors()
 
     const response = await injson.put(
-      URL_UPDATE.concat(`/${_fields.uuid}`), {
+      URL_UPDATE.concat(`/${this.fields.uuid}`), {
       _action: ACTION,
       _csrf: this.csrf,
-      uuid: _fields.uuid,
+      uuid: this.fields.uuid,
       ...this.get_data()
     })
 
@@ -227,9 +202,7 @@ export class FormEdit extends LitElement {
 
 }//FormEdit
 
-export default (texts, fields) => {
-  _texts = texts
-  _fields = fields
-  //console.log("EDIT.FIELDS",_fields)
-  if (!customElements.get("form-edit")) customElements.define("form-edit", FormEdit)
+export default () => {
+  if (!customElements.get("form-edit"))
+    customElements.define("form-edit", FormEdit)
 }
