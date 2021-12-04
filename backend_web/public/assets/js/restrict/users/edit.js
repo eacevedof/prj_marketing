@@ -28,18 +28,15 @@ export class FormEdit extends LitElement {
   //1
   constructor() {
     super()
-    //this.texts = {}
-    //this.fields = {}
+    this.texts = {}
+    this.fields = {}
     console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
-    //for(let p in this.fields) this[p] = this.fields[p]
   }
 
   static properties = {
     csrf: {type: String},
     texts: {
       converter: (strjson) => {
-        //strjson: String.raw(`${strjson}`)
-        console.log("setting texts converter", strjson)
         if (strjson) return JSON.parse(strjson)
         return {}
       },
@@ -47,7 +44,6 @@ export class FormEdit extends LitElement {
 
     fields: {
       converter: (strjson) => {
-        console.log("setting fields converter")
         if (strjson) return JSON.parse(strjson)
         return {}
       },
@@ -65,13 +61,15 @@ export class FormEdit extends LitElement {
     phone: {type: String},
   }
 
-
+  /*
   static get properties() {
+    //no se ejecuta en ningun lado
     console.log("GETTING PROPERTIES")
     return {
       texts: {type: Object}
     }
   }
+  */
 
   //2
   requestUpdate() {
@@ -199,10 +197,7 @@ export class FormEdit extends LitElement {
     $("#table-datatable").DataTable().ajax.reload()
   }//onSubmit
 
-
 }//FormEdit
 
-export default () => {
-  if (!customElements.get("form-edit"))
-    customElements.define("form-edit", FormEdit)
-}
+if (!customElements.get("form-edit"))
+  customElements.define("form-edit", FormEdit)
