@@ -18,18 +18,6 @@ $texts = [
   "f05" => __("Birthdate"),
   "f06" => __("Phone")
 ];
-
-$fields = [
-  "uuid" => $uuid,
-  "email" => $item["email"] ?? "",
-  "password" => "    ",
-  "password2" => "    ",
-  "fullname" => $item["fullname"] ?? "",
-  "address" => $item["address"] ?? "",
-  "birthdate" => $item["birthdate"] ?? "",
-  "phone" => $item["phone"] ?? ""
-];
-//var_dump($texts, json_encode($texts));die;
 ?>
 
 <h1><?=$h1?></h1>
@@ -37,9 +25,9 @@ $fields = [
   <form-edit
     csrf=<?$this->_echo_js($csrf);?>
 
-    texts="<?$this->_echo_js($texts, true);?>"
+    texts="<?$this->_echo_jslit($texts);?>"
 
-    fields="<?$this->_echo_js($fields, true);?>"
+    fields="<?$this->_echo_jslit($item);?>"
   />
 </div>
 <script type="module" src="/assets/js/restrict/users/edit.js"></script>
