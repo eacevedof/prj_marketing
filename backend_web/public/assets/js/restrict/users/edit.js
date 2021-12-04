@@ -1,6 +1,6 @@
 import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import injson from "/assets/js/common/req.js"
-import set_config, {field_errors, clear_errors} from "/assets/js/common/fielderrors.js"
+import error from "/assets/js/common/fielderrors.js"
 
 const URL_UPDATE = "/restrict/users/update"
 const ACTION = "users.update"
@@ -158,14 +158,14 @@ export class FormEdit extends LitElement {
   async onSubmit(e) {
     e.preventDefault()
     console.log("onSubmit","texts",this.texts,"fields:",this.fields)
-    set_config({
-      fields: Object.keys(this.fields),
-      wrapper: this.shadowRoot.querySelector("form")
+    error.config({
+      wrapper: this.shadowRoot.querySelector("form"),
+      fields: Object.keys(this.fields)
     })
 
     this.issending = true
     this.btnsend = this.texts.tr01
-    clear_errors()
+    error.clear()
 
     const response = await injson.put(
       URL_UPDATE.concat(`/${this.fields.uuid}`), {
@@ -182,7 +182,7 @@ export class FormEdit extends LitElement {
       let errors = response.errors[0]?.fields_validation
       if(errors) {
         window.snack.set_time(4).set_inner("error").set_color("red").show()
-        return field_errors(errors)
+        return error.append(errors)
       }
 
       errors = response?.errors
