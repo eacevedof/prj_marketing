@@ -181,5 +181,6 @@ export class FormEdit extends LitElement {
 export default (texts, fields) => {
   _texts = texts
   _fields = fields
-  customElements.define("form-edit", FormEdit)
+  console.log("EDIT.FIELDS",_fields)
+  if (!customElements.get("form-edit")) customElements.define("form-edit", FormEdit)
 }
