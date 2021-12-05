@@ -32,7 +32,7 @@ $item = [
 ?>
 <h1><?=$h1?></h1>
 <div id="app">
-  <form-edit
+  <form-user-edit
     csrf=<?$this->_echo_js($csrf);?>
 
     texts="<?$this->_echo_jslit($texts);?>"
