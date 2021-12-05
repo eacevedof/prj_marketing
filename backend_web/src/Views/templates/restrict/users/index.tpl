@@ -73,9 +73,9 @@ button.add_topbtn({
   text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
 })
 
-window.addEventListener("load", () => dt_render({
+dt_render({
   URL_MODULE: "/restrict/users",
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
-}))
+})
 </script>
