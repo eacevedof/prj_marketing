@@ -27,11 +27,38 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
+        $picklist = SF::get("Common\Picklist");
         $this
             ->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
+            ->add_var("languages", $picklist->get_languages())
             ->render([
                 "h1" => __("Users")
             ]);
+    }
+
+    //@get
+    public function search(): void
+    {
+        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
+            $this->location(UrlType::FORBIDDEN);
+
+        $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
+        try {
+            $result = $search();
+            $this->_get_json()->set_payload([
+                "message"  => __("auth ok"),
+                "result"   => $result["result"],
+                "filtered" => $result["total"],
+                "total"    => $result["total"],
+            ])->show();
+        }
+        catch (\Exception $e)
+        {
+            $this->logerr($e->getMessage(),"UsersController.search");
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show();
+        }
     }
 
     //@modal
@@ -188,31 +215,6 @@ final class UsersController extends RestrictController
                     ->show();
             }
             $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
-                ->show();
-        }
-    }
-
-    //@get
-    public function search(): void
-    {
-        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
-            $this->location(UrlType::FORBIDDEN);
-
-        $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
-        try {
-            $result = $search();
-            $this->_get_json()->set_payload([
-                "message"  => __("auth ok"),
-                "result"   => $result["result"],
-                "filtered" => $result["total"],
-                "total"    => $result["total"],
-            ])->show();
-        }
-        catch (\Exception $e)
-        {
-            $this->logerr($e->getMessage(),"UsersController.search");
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
                 ->show();
         }

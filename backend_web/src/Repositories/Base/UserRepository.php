@@ -121,9 +121,9 @@ final class UserRepository extends AppRepository
                 "m.secret",
                 "m.phone",
 
-                "ar.description as language",
+                "ar1.description as e_language",
             ])
-            ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
+            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->set_limit(25, 0)

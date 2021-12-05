@@ -10,7 +10,7 @@
 namespace App\Controllers\Restrict;
 use App\Enums\KeyType;
 use App\Enums\ExceptionType;
-use App\Services\Restrict\LoginService;
+use App\Services\Restrict\PicklistService;
 use App\Factories\ServiceFactory as SF;
 use App\Traits\JsonTrait;
 
