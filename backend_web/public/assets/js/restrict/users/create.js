@@ -30,7 +30,7 @@ export class FormUserCreate extends LitElement {
     super()
     this.texts = {}
     this.fields = {}
-    console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
+    //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
   }
 
   static properties = {
@@ -64,7 +64,7 @@ export class FormUserCreate extends LitElement {
   //2
   requestUpdate() {
     super.requestUpdate()
-    console.log("requestUpdate","texts",this.texts,"fields:",this.fields)
+    //console.log("requestUpdate","texts",this.texts,"fields:",this.fields)
   }
 
   //3 (aqui siempre hay datos)
@@ -75,12 +75,12 @@ export class FormUserCreate extends LitElement {
 
     //this.email = this.fields.email
     for(let p in this.fields) this[p] = this.fields[p]
-    console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
+    //console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
   }
 
   //4
   render() {
-    console.log("render","texts",this.texts,"fields:",this.fields)
+    //console.log("render","texts",this.texts,"fields:",this.fields)
     return html`
     <form @submit="${this.onSubmit}">
       <div>
@@ -141,13 +141,13 @@ export class FormUserCreate extends LitElement {
 
   //5
   firstUpdated(changedProperties) {
-    console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
+    //console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
     this.$get("email").focus()
   }
 
   async onSubmit(e) {
     e.preventDefault()
-    console.log("onSubmit","texts",this.texts,"fields:",this.fields)
+    //console.log("onSubmit","texts",this.texts,"fields:",this.fields)
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
       fields: Object.keys(this.fields)
