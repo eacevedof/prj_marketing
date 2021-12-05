@@ -5,8 +5,7 @@ import error from "/assets/js/common/fielderrors.js"
 const URL_UPDATE = "/restrict/users/update"
 const ACTION = "users.update"
 
-
-export class FormEdit extends LitElement {
+export class FormUserEdit extends LitElement {
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
   get_data() {
@@ -199,5 +198,5 @@ export class FormEdit extends LitElement {
 
 }//FormEdit
 
-if (!customElements.get("form-edit"))
-  customElements.define("form-edit", FormEdit)
+if (!customElements.get("form-user-edit"))
+  customElements.define("form-user-edit", FormUserEdit)
