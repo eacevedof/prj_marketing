@@ -30,7 +30,6 @@ $item = [
   "phone" => $item["phone"] ?? ""
 ];
 ?>
-
 <h1><?=$h1?></h1>
 <div id="app">
   <form-edit
