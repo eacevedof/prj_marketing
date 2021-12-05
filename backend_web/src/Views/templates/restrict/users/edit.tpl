@@ -18,7 +18,8 @@ $texts = [
   "f05" => __("Birthdate"),
   "f06" => __("Phone")
 ];
-$itemx = [
+
+$item = [
   "uuid" => $uuid,
   "email" => $item["email"] ?? "",
   "password" => "    ",
