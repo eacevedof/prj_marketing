@@ -27,19 +27,17 @@ const _append = errors => {
   console.log("_append.errors", errors)
   if (!_$wrapper) return
   //si los ids agregados en la config son menos a los que requiere el servidor
-  const idsnotinform = _get_not_declared_fields(errors)
+  let notinform = _get_not_declared_fields(errors)
   //recupera los mensajes con el fieldid
-  let fielderrors = _get_errors_by_fieldid(errors).filter(obj => obj.messages.length>0)
+  let onlymsgs = _get_errors_by_fieldid(errors).filter(obj => obj.messages.length>0)
 
-  const existinform = []
-  const notinform = []
-
-  fielderrors.forEach(objfield => {
+  const inform = []
+  onlymsgs.forEach(objfield => {
     const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
     const html = tpl.replace("%lis%",lis).replace("%css%","")
     const $input = _$wrapper.querySelector(`#${objfield.fieldid}`)
     if ($input) {
-      existinform.push(objfield.fieldid)
+      inform.push(objfield.fieldid)
       $input.insertAdjacentHTML("afterend", html)
       $input.classList.add("form-error")
       return
@@ -47,27 +45,20 @@ const _append = errors => {
     notinform.push(objfield.fieldid)
   })
 
-  const nonerrors = []
-  idsnotinform.forEach(id => {
-    nonerrors.push({
-      id,
-      label: errors.filter(objerr => objerr.field === id).map(objerr => objerr.label).join(""),
-      messages : errors.filter(objerr => objerr.field === id).map(objerr => objerr.message)
-    })
-  })
+  notinform = [...new Set(notinform)]
+  notinform.map(fieldid => {
+    const label = errors.filter(objerr => objerr.field === fieldid).map(objerr => objerr.label)[0]
+    const messages = errors.filter(objerr => objerr.field === fieldid).map(objerr => objerr.message)
+    const lis = messages.map(message => `<li>${message}</li>`).join("")
 
-  nonerrors.forEach(objfield => {
-    const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
     const html = tpl
-      .replace("%lis%",`<li class="li-label">${objfield.label}</li>${lis}`)
+      .replace("%lis%",`<li class="li-label">${!label?fieldid:label}</li>${lis}`)
       .replace("%css%"," error-top")
     _$wrapper.insertAdjacentHTML("afterbegin", html)
   })
 
-  //console.log("nonerrors:", nonerrors)
-  if (existinform[0])
-    _$wrapper.querySelector(`#${existinform[0].id}`).focus()
-
+  if (inform[0])
+    _$wrapper.querySelector(`#${inform[0].id}`).focus()
 }
 
 const _set_config = options => {
