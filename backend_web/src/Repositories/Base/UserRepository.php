@@ -15,10 +15,14 @@ use TheFramework\Components\Db\ComponentCrud;
 
 final class UserRepository extends AppRepository
 {
+    private array $joins;
     public function __construct()
     {
         $this->db = DbF::get_by_default();
         $this->table = "base_user";
+        $this->joins = [
+            "ar1.description"=>"e_language"
+        ];
     }
 
     public function get_by_email(string $email): array
@@ -68,13 +72,23 @@ final class UserRepository extends AppRepository
         return intval($r[0]["id"] ?? 0);
     }
 
+    private function _get_condition(string $field, string $value): string
+    {
+        $condition = "m.$field LIKE '%$value%'";
+        $jfield = array_search($field, $this->joins);
+        if ($jfield===false)
+            return $condition;
+
+        return "$jfield LIKE '%$value%'";
+    }
+
     private function _add_search(ComponentCrud $crud, array $search): void
     {
         if(!$search) return;
 
         if($fields = $search["fields"])
             foreach ($fields as $field => $value )
-                $crud->add_and("m.$field LIKE '%$value%'");
+                $crud->add_and($this->_get_condition($field, $value));
 
         if($limit = $search["limit"])
             $crud->set_limit($limit["length"], $limit["from"]);
@@ -89,6 +103,14 @@ final class UserRepository extends AppRepository
             $or = implode(" OR ",$or);
             $crud->add_and("($or)");
         }
+    }
+
+    private function _add_joins(ComponentCrud $crud): void
+    {
+        foreach ($this->joins as $field => $alias)
+            $crud->add_getfield("$field as $alias");
+
+        $crud->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'");
     }
 
     public function search(array $search): array
@@ -120,16 +142,13 @@ final class UserRepository extends AppRepository
                 "m.is_notificable",
                 "m.secret",
                 "m.phone",
-
-                "ar1.description as e_language",
             ])
-            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->set_limit(25, 0)
             ->set_orderby(["m.id"=>"DESC"])
         ;
-
+        $this->_add_joins($crud);
         $this->_add_search($crud, $search);
 
         $sql = $crud->get_selectfrom();
