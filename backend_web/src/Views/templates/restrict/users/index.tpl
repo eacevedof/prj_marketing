@@ -20,8 +20,6 @@ $dt->add_column("id")
     ->add_action("edit")
     ->add_action("show")
     ->add_action("delete");
-
-$now = date("YmdHis");
 ?>
 <h1><?=$h1?></h1>
 <div id="div-table-datatable">
@@ -43,7 +41,7 @@ $now = date("YmdHis");
     </table>
 </div>
 <script type="module">
-import dt_render from "/assets/js/common/datatable/dttable.js?<?=$now?>"
+import dt_render from "/assets/js/common/datatable/dttable.js"
 import {button} from "/assets/js/common/datatable/button.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {column} from "/assets/js/common/datatable/column.js"
