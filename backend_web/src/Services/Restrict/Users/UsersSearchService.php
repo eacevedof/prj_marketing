@@ -3,7 +3,6 @@ namespace App\Services\Restrict\Users;
 use App\Factories\ComponentFactory as CF;
 use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
-use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;

@@ -1,7 +1,7 @@
 <?php
-namespace App\Services\Restrict;
-use App\Repositories\Base\PicklistRepository;
+namespace App\Services\Common;
 use App\Services\AppService;
+use App\Repositories\App\PicklistRepository;
 use App\Factories\RepositoryFactory as RF;
 
 
