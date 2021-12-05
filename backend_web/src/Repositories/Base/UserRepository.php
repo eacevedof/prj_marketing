@@ -74,10 +74,9 @@ final class UserRepository extends AppRepository
 
     private function _get_condition(string $field, string $value): string
     {
-        $condition = "m.$field LIKE '%$value%'";
         $jfield = array_search($field, $this->joins);
         if ($jfield===false)
-            return $condition;
+            return "m.$field LIKE '%$value%'";
 
         return "$jfield LIKE '%$value%'";
     }
