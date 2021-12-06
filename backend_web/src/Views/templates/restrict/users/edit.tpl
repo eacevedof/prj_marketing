@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\Views\AppView $this
- * @var array $item
+ * @var array $result
  */
 
 $texts = [
@@ -19,15 +19,15 @@ $texts = [
   "f06" => __("Phone")
 ];
 
-$item = [
+$result = [
   "uuid" => $uuid,
-  "email" => $item["email"] ?? "",
+  "email" => $result["email"] ?? "",
   "password" => "    ",
   "password2" => "    ",
-  "fullname" => $item["fullname"] ?? "",
-  "address" => $item["address"] ?? "",
-  "birthdate" => $item["birthdate"] ?? "",
-  "phone" => $item["phone"] ?? ""
+  "fullname" => $result["fullname"] ?? "",
+  "address" => $result["address"] ?? "",
+  "birthdate" => $result["birthdate"] ?? "",
+  "phone" => $result["phone"] ?? ""
 ];
 ?>
 <h1><?=$h1?></h1>
@@ -37,7 +37,7 @@ $item = [
 
     texts="<?$this->_echo_jslit($texts);?>"
 
-    fields="<?$this->_echo_jslit($item);?>"
+    fields="<?$this->_echo_jslit($result);?>"
   />
 </div>
 <script type="module" src="/assets/js/restrict/users/edit.js"></script>

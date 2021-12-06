@@ -17,7 +17,7 @@ $texts = [
   "f06" => __("Phone")
 ];
 
-$item = [
+$result = [
   "email"     => "",
   "password"  => "",
   "password2" => "",
@@ -34,7 +34,7 @@ $item = [
 
     texts="<?$this->_echo_jslit($texts);?>"
 
-    fields="<?$this->_echo_jslit($item);?>"
+    fields="<?$this->_echo_jslit($result);?>"
   />
 </div>
 <script type="module" src="/assets/js/restrict/users/create.js"></script>
