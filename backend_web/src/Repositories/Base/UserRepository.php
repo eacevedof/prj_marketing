@@ -74,6 +74,19 @@ final class UserRepository extends AppRepository
         return intval($r[0]["id"] ?? 0);
     }
 
+    public function get_by_id(string $id): int
+    {
+        $id = (int) $id;
+        $sql = $this->_get_crud()
+            ->set_table("$this->table as m")
+            ->set_getfields(["*"])
+            ->add_and("m.id=$id")
+            ->get_selectfrom()
+        ;
+        $r = $this->db->query($sql);
+        return $r[0] ?? [];
+    }
+
     private function _get_condition(string $field, string $value): string
     {
         $jfield = array_search($field, $this->joins);
@@ -165,7 +178,8 @@ final class UserRepository extends AppRepository
     public function get_info(string $uuid): array
     {
         $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_crud()->set_table("$this->table as m")
+        $sql = $this->_get_crud()
+            ->set_table("$this->table as m")
             ->set_getfields([
                 "m.update_date", "m.update_user", "m.insert_date", "m.insert_user",
                 "m.uuid","m.id, m.email, m.secret, m.fullname, m.address, m.birthdate",
@@ -184,7 +198,9 @@ final class UserRepository extends AppRepository
             ->get_selectfrom()
         ;
         $r = $this->db->query($sql);
+
         return $r[0] ?? [];
     }
+
 
 }//UserRepository
