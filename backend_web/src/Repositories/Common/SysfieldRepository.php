@@ -36,11 +36,10 @@ final class SysfieldRepository extends AppRepository
     private function _get_platform(string $platformid): string
     {
         if (!$platformid) return "";
-        $id = (int) $platformid;
         $sql = $this->_get_crud()
             ->set_table("base_array as m")
             ->set_getfields(["m.description"])
-            ->add_and("m.id=$id")
+            ->add_and("m.code_erp=$platformid")
             ->add_and("m.type='platform'")
             ->get_selectfrom()
         ;
