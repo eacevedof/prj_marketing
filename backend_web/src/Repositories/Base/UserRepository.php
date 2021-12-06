@@ -9,6 +9,7 @@
  */
 namespace App\Repositories\Base;
 
+use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use TheFramework\Components\Db\ComponentCrud;
@@ -198,8 +199,11 @@ final class UserRepository extends AppRepository
             ->get_selectfrom()
         ;
         $r = $this->db->query($sql);
+        if (!$r) return [];
 
-        return $r[0] ?? [];
+        $sysdata = RF::get("Common\Sysfield")->get_sysdata($r = $r[0]);
+
+        return array_merge($r, $sysdata);
     }
 
 
