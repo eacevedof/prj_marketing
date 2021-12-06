@@ -177,4 +177,5 @@ final class UserRepository extends AppRepository
         $r = $this->db->query($sql);
         return $r[0] ?? [];
     }
+
 }//UserRepository

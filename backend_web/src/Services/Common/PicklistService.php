@@ -28,4 +28,14 @@ final class PicklistService extends AppService
     {
         return $this->repository->get_countries();
     }
+
+    public function get_users(?string $notid=null): array
+    {
+        $users = $this->repository->get_users();
+        if (!$notid)
+            return $users;
+        $idsuer = array_search($notid,$users);
+        if($idsuer) unset($users[$idsuer]);
+        return $users;
+    }
 }

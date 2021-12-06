@@ -22,24 +22,25 @@ use App\Traits\JsonTrait;
 final class UsersController extends RestrictController
 {
     use JsonTrait;
+    private PicklistService $picklist;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->picklist = SF::get("Common\Picklist");
+    }
 
     public function index(?string $page=null): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
-        /**
-         * @var PicklistService $picklist
-         */
-        $picklist = SF::get("Common\Picklist");
-        $this
-            ->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
-            ->add_var("languages", $picklist->get_languages())
-            ->add_var("profiles", $picklist->get_profiles())
-            ->add_var("countries", $picklist->get_countries())
-            ->render([
-                "h1" => __("Users")
-            ]);
+        $this->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
+            ->add_var("h1", __("USERS"))
+            ->add_var("languages", $this->picklist->get_languages())
+            ->add_var("profiles", $this->picklist->get_profiles())
+            ->add_var("countries", $this->picklist->get_countries())
+            ->render();
     }
 
     //@get
@@ -71,14 +72,17 @@ final class UsersController extends RestrictController
     public function create(): void
     {
         if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
-            $this->add_var(
-                "h1",__("Unauthorized"))
+            $this->add_var("h1",__("Unauthorized"))
                 ->set_template("/error/403")
                 ->render_nl();
         }
 
         $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
             ->add_var("h1",__("New user"))
+            ->add_var("languages", $this->picklist->get_languages())
+            ->add_var("profiles", $this->picklist->get_profiles())
+            ->add_var("countries", $this->picklist->get_countries())
+            ->add_var("users", $this->picklist->get_users())
             ->render_nl();
     }
 
@@ -135,14 +139,14 @@ final class UsersController extends RestrictController
         }
 
         /**
-         * @var UsersInfoService
+         * @var UsersInfoService $service
          */
         $service = SF::get_callable("Restrict\Users\UsersInfo", [$uuid]);
         try {
             $result = $service();
             $this->add_var("h1",__("User info"))
                 ->add_var("uuid",$uuid)
-                ->add_var("userinfo", $result)
+                ->add_var("result", $result)
                 ->render_nl();
         }
         catch (\Exception $e)
@@ -166,11 +170,15 @@ final class UsersController extends RestrictController
              * @var UsersInfoService
              */
             $service = SF::get("Restrict\Users\UsersInfo", [$uuid]);
-            $item = $service->get_edit();
+            $result = $service->get_edit();
             $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
                 ->add_var("h1",__("Edit user {0}", $uuid))
                 ->add_var("uuid", $uuid)
-                ->add_var("item", $item)
+                ->add_var("result", $result)
+                ->add_var("languages", $this->picklist->get_languages())
+                ->add_var("profiles", $this->picklist->get_profiles())
+                ->add_var("countries", $this->picklist->get_countries())
+                ->add_var("users", $this->picklist->get_users())
                 ->render_nl();
         }
         catch (\Exception $e)
@@ -240,9 +248,8 @@ final class UsersController extends RestrictController
                 ->show();
 
         /**
-         * @var UsersUpdateService
+         * @var UsersUpdateService $service
          */
-
         $service = SF::get_callable("Restrict\Users\UsersDelete", ["uuid"=>$uuid]);
         try {
             $result = $service();

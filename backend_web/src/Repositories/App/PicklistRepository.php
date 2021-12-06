@@ -80,4 +80,18 @@ final class PicklistRepository extends AppRepository
         return $this->_get_associative(["id","description"]);
     }
 
+    public function get_users(): array
+    {
+        $sql = $this->_get_crud()
+            ->set_table("base_user as m")
+            ->set_getfields(["m.id","m.description"])
+            ->add_and("m.is_enabled=1")
+            ->add_and("m.delete_date IS NULL")
+            ->add_orderby("m.order_by")
+            ->add_orderby("m.description")
+            ->get_selectfrom()
+        ;
+        $this->result = $this->db->query($sql);
+        return $this->_get_associative(["id","description"]);
+    }
 }//ExampleRepository
