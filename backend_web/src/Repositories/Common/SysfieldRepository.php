@@ -50,21 +50,23 @@ final class SysfieldRepository extends AppRepository
     
     public function get_sysdata(array $row): array
     {
-        if (!$row) return [
-            "insert_user"=>"", "insert_platform"=>"",
-            "update_user"=>"", "update_platform"=>"",
-            "delete_user"=>"", "delete_platform"=>"",
-            ];
+        $sys = [];
+        if (isset($row["insert_user"])) $sys["insert_user"] = "";
+        if (isset($row["insert_platform"])) $sys["insert_platform"] = "";
+        if (isset($row["update_user"])) $sys["update_user"] = "";
+        if (isset($row["update_platform"])) $sys["update_platform"] = "";
+        if (isset($row["delete_user"])) $sys["delete_user"] = "";
+        if (isset($row["delete_platform"])) $sys["delete_platform"] = "";
 
-        return [
-            "insert_user" => $this->_get_user($row["insert_user"] ?? ""),
-            "insert_platform" => $this->_get_platform($row["insert_user"] ?? ""),
+        if (!$sys) return [];
 
-            "update_user" => $this->_get_user($row["update_user"] ?? ""),
-            "update_platform" => $this->_get_platform($row["update_user"] ?? ""),
+        foreach ($sys as $key=>$v) {
+            if(strstr($key,"_user"))
+                $sys[$key] = $this->_get_user($row[$key]);
+            else
+                $sys[$key] = $this->_get_platform($row[$key]);
+        }
 
-            "delete_user" => $this->_get_user($row["delete_user"] ?? ""),
-            "delete_platform" => $this->_get_platform($row["delete_platform"] ?? ""),
-        ];
+        return $sys;
     }
 }//ExampleRepository
