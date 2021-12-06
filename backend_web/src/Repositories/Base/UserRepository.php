@@ -167,10 +167,19 @@ final class UserRepository extends AppRepository
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_crud()->set_table("$this->table as m")
             ->set_getfields([
-                "m.id, m.email, m.secret, m.insert_date, m.insert_user, m.fullname, m.address, m.birthdate",
-                "m.uuid", "m.id_profile", "m.id_language","m.id_parent", "m.update_date", "m.update_user",
-                "m.phone"
+                "m.update_date", "m.update_user", "m.insert_date", "m.insert_user",
+                "m.uuid","m.id, m.email, m.secret, m.fullname, m.address, m.birthdate",
+                "m.phone",
+                //"m.id_profile", "m.id_language","m.id_parent",
+                "u.description as e_parent",
+                "ar1.description as e_language",
+                "ar2.description as e_profile",
+                "ar3.description as e_country",
             ])
+            ->add_join("LEFT JOIN base_user u ON m.id_parent = u.id")
+            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
+            ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'")
+            ->add_join("LEFT JOIN base_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
             ->add_and("m.uuid='$uuid'")
             ->get_selectfrom()
         ;
