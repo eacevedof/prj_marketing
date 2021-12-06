@@ -36,6 +36,7 @@ final class UsersController extends RestrictController
             ->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
             ->add_var("languages", $picklist->get_languages())
             ->add_var("profiles", $picklist->get_profiles())
+            ->add_var("countries", $picklist->get_countries())
             ->render([
                 "h1" => __("Users")
             ]);
