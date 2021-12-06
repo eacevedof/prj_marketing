@@ -21,7 +21,8 @@ final class UserRepository extends AppRepository
         $this->db = DbF::get_by_default();
         $this->table = "base_user";
         $this->joins = [
-            "ar1.description"=>"e_language"
+            "ar1.description"=>"e_language",
+            "ar2.description"=>"e_profile"
         ];
     }
 
@@ -109,7 +110,9 @@ final class UserRepository extends AppRepository
         foreach ($this->joins as $field => $alias)
             $crud->add_getfield("$field as $alias");
 
-        $crud->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'");
+        $crud
+            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
+            ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'");
     }
 
     public function search(array $search): array

@@ -18,4 +18,9 @@ final class PicklistService extends AppService
     {
         return $this->repository->get_languages();
     }
+
+    public function get_profiles(): array
+    {
+        return $this->repository->get_profiles();
+    }
 }

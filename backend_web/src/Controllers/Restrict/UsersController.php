@@ -13,6 +13,7 @@ use App\Enums\ExceptionType;
 use App\Enums\KeyType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
+use App\Services\Common\PicklistService;
 use App\Services\Restrict\Users\UsersInfoService;
 use App\Services\Restrict\Users\UsersUpdateService;
 use TheFramework\Helpers\HelperJson;
@@ -27,10 +28,14 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
+        /**
+         * @var PicklistService $picklist
+         */
         $picklist = SF::get("Common\Picklist");
         $this
             ->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
             ->add_var("languages", $picklist->get_languages())
+            ->add_var("profiles", $picklist->get_profiles())
             ->render([
                 "h1" => __("Users")
             ]);
