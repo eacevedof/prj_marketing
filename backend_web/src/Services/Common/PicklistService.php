@@ -23,4 +23,9 @@ final class PicklistService extends AppService
     {
         return $this->repository->get_profiles();
     }
+
+    public function get_countries(): array
+    {
+        return $this->repository->get_countries();
+    }
 }

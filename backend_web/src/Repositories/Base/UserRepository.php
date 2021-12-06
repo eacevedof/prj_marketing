@@ -22,7 +22,8 @@ final class UserRepository extends AppRepository
         $this->table = "base_user";
         $this->joins = [
             "ar1.description"=>"e_language",
-            "ar2.description"=>"e_profile"
+            "ar2.description"=>"e_profile",
+            "ar3.description"=>"e_country"
         ];
     }
 
@@ -112,7 +113,8 @@ final class UserRepository extends AppRepository
 
         $crud
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
-            ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'");
+            ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'")
+            ->add_join("LEFT JOIN base_array ar3 ON m.id_country = ar3.id AND ar3.type='country'");
     }
 
     public function search(array $search): array
