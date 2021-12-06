@@ -22,7 +22,7 @@ abstract class AppRepository
     protected ComponentMysql $db;
     protected string $table;
 
-    protected function _get_sanitized(string $value)
+    protected function _get_sanitized(string $value): string
     {
         return str_replace("'","\\'", $value);
     }
