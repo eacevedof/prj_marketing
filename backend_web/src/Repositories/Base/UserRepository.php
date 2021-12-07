@@ -128,7 +128,7 @@ final class UserRepository extends AppRepository
         $crud
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'")
-            ->add_join("LEFT JOIN base_array ar3 ON m.id_country = ar3.id AND ar3.type='country'");
+            ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'");
     }
 
     public function search(array $search): array
@@ -194,7 +194,7 @@ final class UserRepository extends AppRepository
             ->add_join("LEFT JOIN base_user u ON m.id_parent = u.id")
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'")
-            ->add_join("LEFT JOIN base_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
+            ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
             ->add_and("m.uuid='$uuid'")
             ->get_selectfrom()
         ;
