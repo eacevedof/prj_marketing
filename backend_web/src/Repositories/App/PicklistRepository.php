@@ -87,7 +87,7 @@ final class PicklistRepository extends AppRepository
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
-            ->add_orderby("m.order_by")
+            //->add_orderby("m.order_by")
             ->add_orderby("m.description")
             ->get_selectfrom()
         ;
