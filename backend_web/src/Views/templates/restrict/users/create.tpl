@@ -2,8 +2,6 @@
 /**
  * @var \App\Views\AppView $this
  */
-dd($users, "users");
-dd($countries,"countries");
 $texts = [
   "tr00" => __("send"),
   "tr01" => __("Sending..."),
@@ -16,7 +14,11 @@ $texts = [
   "f03" => __("Full name"),
   "f04" => __("Address"),
   "f05" => __("Birthdate"),
-  "f06" => __("Phone")
+  "f06" => __("Phone"),
+  "f07" => __("Parent"),
+  "f08" => __("Profile"),
+  "f09" => __("Language"),
+  "f10" => __("Country"),
 ];
 
 $result = [
@@ -26,7 +28,17 @@ $result = [
   "fullname"  => "",
   "address"   => "",
   "birthdate" => "",
-  "phone"     => ""
+  "phone"     => "",
+  
+  "id_parent" => "",
+  "id_country" => "",
+  "id_language" => "",
+  "id_profile" => "",
+
+  "parents" => $users,
+  "countries" => $countries,
+  "languages" => $languages,
+  "profiles" => $profiles,
 ];
 ?>
 <h1><?=$h1?></h1>

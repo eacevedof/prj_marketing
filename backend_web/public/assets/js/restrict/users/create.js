@@ -14,6 +14,7 @@ export class FormUserCreate extends LitElement {
       .map(field => {
         const ob = {}
         if (field==="uuid") return {}
+        if (["parents","profiles","countries","languages"].includes(field)) return {}
         ob[field] = this.$get(field)?.value ?? ""
         return ob
       })
@@ -59,6 +60,16 @@ export class FormUserCreate extends LitElement {
     address: {type: String},
     birthdate: {type: String},
     phone: {type: String},
+
+    id_parent: {type: String},
+    id_country: {type: String},
+    id_language: {type: String},
+    id_profile: {type: String},
+
+    parents: {type: Array},
+    countries: {type: Array},
+    languages: {type: Array},
+    profiles: {type: Array},
   }
 
   //2
@@ -75,7 +86,7 @@ export class FormUserCreate extends LitElement {
 
     //this.email = this.fields.email
     for(let p in this.fields) this[p] = this.fields[p]
-    //console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
+    console.log("connectedCallback","parents:",this.parents)
   }
 
   //4
@@ -123,6 +134,16 @@ export class FormUserCreate extends LitElement {
         <label for="phone">${this.texts.f06}</label>
         <div id="field-phone">
           <input type="text" id="phone" .value="${this.phone}">
+        </div>
+      </div>
+      <div>
+        <label for="id_parent">${this.texts.f07}</label>
+        <div id="field-id_parent">
+          <select id="id_parent">
+            ${this.parents.map((item) =>
+              html`<option value="${item.key}">${item.value}</option>`
+            )}
+          </select>
         </div>
       </div>
       <div>
