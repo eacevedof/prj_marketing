@@ -1,5 +1,14 @@
 <?php
 //functions.php 20200721
+function dd($var,$title=""){
+    $sContent= var_export($var,1);
+    if($title) echo "<b style=\"font-size: small; font-family: 'Roboto', 'sans-serif'\">$title</b>";
+    echo "<pre style=\"background:greenyellow;border:1px solid;\">"
+        .$sContent
+        ."</pre>";
+    exit;
+}
+
 function appboot_loadenv(): void
 {
     $arpaths = [
