@@ -13,6 +13,7 @@ export class FormUserEdit extends LitElement {
       .map(field => {
         const ob = {}
         if (field==="uuid") return {}
+        if (["parents","profiles","countries","languages"].includes(field)) return {}
         ob[field] = this.$get(field)?.value ?? ""
         return ob
       })
@@ -22,6 +23,14 @@ export class FormUserEdit extends LitElement {
       }), {})
 
     return data
+  }
+
+  on_profile(e) {
+    //console.log("E",e.target.value)
+    this.is_parent = false
+    if (e.target.value === "4")
+      this.is_parent = true
+    this.requestUpdate()
   }
 
   //1
@@ -58,17 +67,18 @@ export class FormUserEdit extends LitElement {
     address: {type: String},
     birthdate: {type: String},
     phone: {type: String},
-  }
 
-  /*
-  static get properties() {
-    //no se ejecuta en ningun lado
-    //console.log("GETTING PROPERTIES")
-    return {
-      texts: {type: Object}
-    }
+    is_parent: {type: Boolean},
+    id_parent: {type: String},
+    id_country: {type: String},
+    id_language: {type: String},
+    id_profile: {type: String},
+
+    parents: {type: Array},
+    countries: {type: Array},
+    languages: {type: Array},
+    profiles: {type: Array},
   }
-  */
 
   //2
   requestUpdate() {
@@ -134,11 +144,59 @@ export class FormUserEdit extends LitElement {
           <input type="text" id="phone" .value="${this.phone}">
         </div>
       </div>
+
+      <div>
+        <label for="id_profile">${this.texts.f08}</label>
+        <div id="field-id_profile">
+          <select id="id_profile" @change=${this.on_profile}>
+            ${this.profiles.map((item) =>
+              html`<option value="${item.key}">${item.value}</option>`
+            )}
+          </select>
+        </div>
+      </div>
+      
+      ${this.is_parent
+        ? html`<div>
+            <label for="id_parent">${this.texts.f07}</label>
+            <div id="field-id_parent">
+              <select id="id_parent">
+              ${this.parents.map((item) =>
+                html`<option value="${item.key}">${item.value}</option>`
+              )}
+              </select>
+            </div>
+          </div>`
+        : html ``
+      }
+      
+      <div>
+        <label for="id_country">${this.texts.f10}</label>
+        <div id="field-id_country">
+          <select id="id_country">
+          ${this.countries.map((item) =>
+            html`<option value="${item.key}">${item.value}</option>`
+          )}
+          </select>
+        </div>
+      </div>
+      
+      <div>
+        <label for="id_language">${this.texts.f09}</label>
+        <div id="field-id_language">
+          <select id="id_language">
+          ${this.languages.map((item) =>
+            html`<option value="${item.key}">${item.value}</option>`
+          )}
+          </select>
+        </div>
+      </div>
+      
       <div>
         <button id="btn-submit" ?disabled="${this.issending}">
         ${this.btnsend}
         ${
-        this.issending
+          this.issending
           ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
           : html``
         }
@@ -152,6 +210,12 @@ export class FormUserEdit extends LitElement {
   firstUpdated(changedProperties) {
     //console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
     this.$get("email").focus()
+  }
+
+  //6
+  updated(){
+    //aqui se deberia des setear la prpiedad despues de una llamada async
+    //console.log("updated", this.fields)
   }
 
   async onSubmit(e) {
