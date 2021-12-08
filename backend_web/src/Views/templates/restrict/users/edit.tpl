@@ -33,16 +33,18 @@ $result = [
   "birthdate" => $result["birthdate"] ?? "",
   "phone" => $result["phone"] ?? "",
 
+  "id_profile" => $result["id_profile"] ?? "",
   "id_parent" => $result["id_parent"] ?? "",
   "id_country" => $result["id_country"] ?? "",
   "id_language" => $result["id_language"] ?? "",
-  "id_profile" => $result["id_profile"] ?? "",
 
+  "profiles" => $profiles,
   "parents" => $users,
   "countries" => $countries,
   "languages" => $languages,
-  "profiles" => $profiles,
 ];
+
+//dd($result,"result-edit")
 ?>
 <h1><?=$h1?></h1>
 <div id="app">

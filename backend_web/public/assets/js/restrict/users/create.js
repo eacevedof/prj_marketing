@@ -152,7 +152,7 @@ export class FormUserCreate extends LitElement {
         <div id="field-id_profile">
           <select id="id_profile" @change=${this.on_profile}>
             ${this.profiles.map((item) =>
-              html`<option value="${item.key}">${item.value}</option>`
+              html`<option value="${item.key}" ?selected="${item.key===this.id_profile}">${item.value}</option>`
             )}
           </select>
         </div>
@@ -206,7 +206,8 @@ export class FormUserCreate extends LitElement {
       </div>
     </form>
     `
-  }//render
+  }
+  //render
 
   //5
   firstUpdated(changedProperties) {
