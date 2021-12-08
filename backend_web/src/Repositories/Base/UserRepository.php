@@ -136,6 +136,7 @@ final class UserRepository extends AppRepository
     public function search(array $search): array
     {
         $crud = $this->_get_crud()
+            ->set_comment("user.search")
             ->set_table("$this->table as m")
             ->is_foundrows()
             ->set_getfields([
@@ -182,6 +183,7 @@ final class UserRepository extends AppRepository
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_crud()
+            ->set_comment("user.get_info")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.update_date", "m.update_user", "m.insert_date", "m.insert_user",
