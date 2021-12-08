@@ -187,11 +187,12 @@ final class UserRepository extends AppRepository
                 "m.update_date", "m.update_user", "m.insert_date", "m.insert_user",
                 "m.uuid","m.id, m.email, m.secret, m.fullname, m.address, m.birthdate",
                 "m.phone",
-                //"m.id_profile", "m.id_language","m.id_parent",
-                "u.description as e_parent",
-                "ar1.description as e_language",
+                "m.id_profile","m.id_parent", "m.id_country", "m.id_language",
+
                 "ar2.description as e_profile",
+                "u.description as e_parent",
                 "ar3.description as e_country",
+                "ar1.description as e_language",
             ])
             ->add_join("LEFT JOIN base_user u ON m.id_parent = u.id")
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")

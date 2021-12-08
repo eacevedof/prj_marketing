@@ -94,12 +94,13 @@ export class FormUserEdit extends LitElement {
 
     //this.email = this.fields.email
     for(let p in this.fields) this[p] = this.fields[p]
-    //console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
+    console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
   }
 
   //4
   render() {
     //console.log("render","texts",this.texts,"fields:",this.fields)
+    console.log("id-profile",this.id_profile, "this.fields", this.fields)
     return html`
     <form @submit="${this.onSubmit}">
       <div>
@@ -150,7 +151,7 @@ export class FormUserEdit extends LitElement {
         <div id="field-id_profile">
           <select id="id_profile" @change=${this.on_profile}>
             ${this.profiles.map((item) =>
-              html`<option value="${item.key}">${item.value}</option>`
+              html`<option value="${item.key}" ?selected="${item.key===this.id_profile}">${item.value}</option>`
             )}
           </select>
         </div>
@@ -204,7 +205,8 @@ export class FormUserEdit extends LitElement {
       </div>
     </form>
     `
-  }//render
+  }
+  //render
 
   //5
   firstUpdated(changedProperties) {

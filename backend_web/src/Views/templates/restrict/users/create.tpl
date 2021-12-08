@@ -29,16 +29,16 @@ $result = [
   "address"   => "",
   "birthdate" => "",
   "phone"     => "",
-  
+
+  "id_profile" => "",
   "id_parent" => "",
   "id_country" => "",
   "id_language" => "",
-  "id_profile" => "",
 
+  "profiles" => $profiles,
   "parents" => $users,
   "countries" => $countries,
   "languages" => $languages,
-  "profiles" => $profiles,
 ];
 ?>
 <h1><?=$h1?></h1>
