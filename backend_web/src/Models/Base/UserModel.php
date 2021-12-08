@@ -77,7 +77,7 @@ final class UserModel extends AppModel
             ],
 
             "id_parent" => [
-                "label" => __("User admin"),
+                "label" => __("Superior"),
                 ModelType::REQUEST_KEY => "id_parent",
                 "config" => [
                     "type" => ModelType::INT,

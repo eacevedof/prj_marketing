@@ -70,6 +70,20 @@ final class UsersInsertService extends AppService
             ->add_rule("password", "empty", function ($data){
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
+            ->add_rule("id_profile", "empty", function ($data){
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
+            ->add_rule("id_parent", "by-profile", function ($data){
+                if (($data["data"]["id_profile"] ?? "") === "4" && !trim($data["value"]))
+                    return __("Empty field is not allowed");
+                return false;
+            })
+            ->add_rule("id_country", "empty", function ($data){
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
+            ->add_rule("id_language", "empty", function ($data){
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
         ;
         return $this->validator;
     }

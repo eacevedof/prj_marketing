@@ -48,19 +48,19 @@ final class FieldsValidator
         $type = $this->model->get_type($field);
         $value = $this->request[$reqkey] ?? null;
 
-        switch ($type) {
-            case ModelType::INT: return is_integer($value) || is_null($value);
-            case ModelType::DECIMAL: return is_float($value) || is_null($value);
-            case ModelType::DATE:
-                return strtotime($value) || is_null($value) || $value==="";
-            case ModelType::DATETIME:
-                return $this->_is_datetime_ok($value) || is_null($value) || $value==="";
-            case ModelType::STRING:
-                return is_string($field) || is_null($value) || is_integer($value) || is_float($value);
-        }
+        if ($this->_is_empty($value)) return true;
 
+        switch ($type) {
+            case ModelType::INT: return is_numeric($value);
+            case ModelType::DECIMAL: return is_float($value);
+            case ModelType::DATE: return strtotime($value);
+            case ModelType::DATETIME: return $this->_is_datetime_ok($value);
+            case ModelType::STRING: return is_string($field) || is_numeric($value) || is_float($value);
+        }
         return false;
     }
+
+    private function _is_empty(?string $val): bool { return $val==="" || is_null($val);}
 
     private function _get_reqkeys(): array
     {
