@@ -9,10 +9,12 @@
  */
 namespace App\Repositories\Base;
 
+use App\Components\Hierarchy\HierarchyComponent;
 use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
 use TheFramework\Components\Db\ComponentCrud;
+use App\Factories\ComponentFactory as CF;
 
 final class UserRepository extends AppRepository
 {
@@ -206,5 +208,33 @@ final class UserRepository extends AppRepository
         return array_merge($r, $sysdata);
     }
 
+    public function get_all_hierarchy(): array
+    {
+        $sql = $this->_get_crud()
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id", "m.id_parent"])
+            ->get_selectfrom()
+        ;
+        $r = $this->db->query($sql);
+        return $r;
+    }
+
+    public function get_owner(string $userid): array
+    {
+        /**
+         * @var HierarchyComponent $hier
+         */
+        $hier = CF::get("Hierarchy\Hierarchy");
+        return $hier->get_topparent($userid, $this->get_all_hierarchy());
+    }
+
+    public function get_childs(string $userid): array
+    {
+        /**
+         * @var HierarchyComponent $hier
+         */
+        $hier = CF::get("Hierarchy\Hierarchy");
+        return $hier->get_childs($userid, $this->get_all_hierarchy());
+    }
 
 }//UserRepository
