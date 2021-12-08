@@ -2,6 +2,8 @@
 /**
  * @var \App\Views\AppView $this
  */
+dd($users, "users");
+dd($countries,"countries");
 $texts = [
   "tr00" => __("send"),
   "tr01" => __("Sending..."),

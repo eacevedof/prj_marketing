@@ -35,6 +35,7 @@ final class PicklistRepository extends AppRepository
     public function get_languages(): array
     {
         $sql = $this->_get_crud()
+            ->set_comment("get_languages")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -51,6 +52,7 @@ final class PicklistRepository extends AppRepository
     public function get_countries(): array
     {
         $sql = $this->_get_crud()
+            ->set_comment("get_countries")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -67,6 +69,7 @@ final class PicklistRepository extends AppRepository
     public function get_profiles(): array
     {
         $sql = $this->_get_crud()
+            ->set_comment("get_profiles")
             ->set_table("base_array as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -83,6 +86,7 @@ final class PicklistRepository extends AppRepository
     public function get_users(): array
     {
         $sql = $this->_get_crud()
+            ->set_comment("get_users")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -94,4 +98,21 @@ final class PicklistRepository extends AppRepository
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
     }
-}//ExampleRepository
+
+    public function get_users_by_profile(string $profileid): array
+    {
+        $sql = $this->_get_crud()
+            ->set_comment("get_users_by_profile")
+            ->set_table("base_user as m")
+            ->set_getfields(["m.id","m.description"])
+            ->add_and("m.is_enabled=1")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_profile=$profileid")
+            ->add_orderby("m.description")
+            ->get_selectfrom()
+        ;
+        $this->result = $this->db->query($sql);
+        return $this->_get_associative(["id","description"]);
+    }
+
+}//PicklistRepository

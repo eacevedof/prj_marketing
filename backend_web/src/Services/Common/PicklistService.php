@@ -38,4 +38,10 @@ final class PicklistService extends AppService
         if($idsuer) unset($users[$idsuer]);
         return $users;
     }
+
+    public function get_users_by_profile(string $profileid): array
+    {
+        $users = $this->repository->get_users_by_profile($profileid);
+        return $users;
+    }
 }

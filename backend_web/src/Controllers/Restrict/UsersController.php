@@ -11,6 +11,7 @@ namespace App\Controllers\Restrict;
 use App\Enums\ActionType;
 use App\Enums\ExceptionType;
 use App\Enums\KeyType;
+use App\Enums\ProfileType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
@@ -82,7 +83,7 @@ final class UsersController extends RestrictController
             ->add_var("languages", $this->picklist->get_languages())
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("countries", $this->picklist->get_countries())
-            ->add_var("users", $this->picklist->get_users())
+            ->add_var("users", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_MANAGER))
             ->render_nl();
     }
 
