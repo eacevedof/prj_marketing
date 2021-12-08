@@ -26,11 +26,20 @@ export class FormUserCreate extends LitElement {
     return data
   }
 
+  on_profile(e) {
+    console.log("E",e.target.value)
+    this.is_parent = false
+    if (e.target.value === "4")
+      this.is_parent = true
+    this.requestUpdate()
+  }
+
   //1
   constructor() {
     super()
     this.texts = {}
     this.fields = {}
+    this.is_parent = false
     //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
   }
 
@@ -61,6 +70,7 @@ export class FormUserCreate extends LitElement {
     birthdate: {type: String},
     phone: {type: String},
 
+    is_parent: {type: Boolean},
     id_parent: {type: String},
     id_country: {type: String},
     id_language: {type: String},
@@ -140,7 +150,7 @@ export class FormUserCreate extends LitElement {
       <div>
         <label for="id_profile">${this.texts.f08}</label>
         <div id="field-id_profile">
-          <select id="id_profile">
+          <select id="id_profile" @change=${this.on_profile}>
             ${this.profiles.map((item) =>
               html`<option value="${item.key}">${item.value}</option>`
             )}
@@ -148,16 +158,19 @@ export class FormUserCreate extends LitElement {
         </div>
       </div>
       
-      <div>
-        <label for="id_parent">${this.texts.f07}</label>
-        <div id="field-id_parent">
-          <select id="id_parent">
-            ${this.parents.map((item) =>
-              html`<option value="${item.key}">${item.value}</option>`
-            )}
-          </select>
-        </div>
-      </div>
+      ${this.is_parent
+        ? html`<div>
+            <label for="id_parent">${this.texts.f07}</label>
+            <div id="field-id_parent">
+              <select id="id_parent">
+                ${this.parents.map((item) =>
+                  html`<option value="${item.key}">${item.value}</option>`
+                )}
+              </select>
+            </div>
+          </div>`
+        : html ``
+      }
       
       <div>
         <label for="id_language">${this.texts.f09}</label>
