@@ -54,6 +54,12 @@ abstract class AppModel
     {
         $reqkeys = array_keys($request);
         $mapped = [];
+        $nullables = [
+            ModelType::DATE,
+            ModelType::DATETIME,
+            ModelType::INT,
+            ModelType::DECIMAL
+        ];
         foreach ($reqkeys as $requestkey) {
             $dbfield = $this->get_field($requestkey);
             $dbtype = $this->get_type($dbfield);
@@ -61,9 +67,8 @@ abstract class AppModel
                 $mapped[$dbfield] = ($value = trim($request[$requestkey]));
             }
             
-            if(in_array($dbtype,[ModelType::DATE,ModelType::DATETIME]) && !$value) {
+            if(in_array($dbtype, $nullables) && !$value)
                 $mapped[$dbfield] = null;
-            }
         }
         return $mapped;
     }
