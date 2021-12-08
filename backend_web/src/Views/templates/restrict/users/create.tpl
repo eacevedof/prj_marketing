@@ -15,7 +15,7 @@ $texts = [
   "f04" => __("Address"),
   "f05" => __("Birthdate"),
   "f06" => __("Phone"),
-  "f07" => __("Parent"),
+  "f07" => __("Superior"),
   "f08" => __("Profile"),
   "f09" => __("Language"),
   "f10" => __("Country"),
@@ -36,7 +36,7 @@ $result = [
   "id_language" => "",
 
   "profiles" => $profiles,
-  "parents" => $users,
+  "parents" => $parents,
   "countries" => $countries,
   "languages" => $languages,
 ];
