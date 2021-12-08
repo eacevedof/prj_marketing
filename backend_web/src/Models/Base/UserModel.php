@@ -122,7 +122,7 @@ final class UserModel extends AppModel
             ],
 
             "id_profile" => [
-                "label" => __("Role"),
+                "label" => __("Profile"),
                 ModelType::REQUEST_KEY => "id_profile",
                 "config" => [
                     "type" => ModelType::INT,
