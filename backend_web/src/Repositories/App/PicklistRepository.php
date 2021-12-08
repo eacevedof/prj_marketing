@@ -25,9 +25,9 @@ final class PicklistRepository extends AppRepository
     {
         list($key,$value) = $kv;
         $picklist = [];
-        if ($blank) $picklist[""] = __("Select an option");
+        if ($blank) $picklist[] = ["key" => "", "value"=>__("Select an option")];
         foreach ($this->result as $row)
-            $picklist[$row[$key]] = $row[$value];
+            $picklist[] = ["key"=>$row[$key],"value"=>$row[$value]];
 
         return $picklist;
     }
