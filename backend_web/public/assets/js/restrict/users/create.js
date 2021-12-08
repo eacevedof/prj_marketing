@@ -9,6 +9,7 @@ const ACTION = "users.insert"
 export class FormUserCreate extends LitElement {
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
+
   get_data() {
     const data = Object.keys(this.fields)
       .map(field => {
@@ -27,7 +28,7 @@ export class FormUserCreate extends LitElement {
   }
 
   on_profile(e) {
-    console.log("E",e.target.value)
+    //console.log("E",e.target.value)
     this.is_parent = false
     if (e.target.value === "4")
       this.is_parent = true
@@ -96,12 +97,11 @@ export class FormUserCreate extends LitElement {
 
     //this.email = this.fields.email
     for(let p in this.fields) this[p] = this.fields[p]
-    console.log("connectedCallback","parents:",this.parents)
+    //console.log("connectedCallback","parents:",this.parents)
   }
 
   //4
   render() {
-    //console.log("render","texts",this.texts,"fields:",this.fields)
     return html`
     <form @submit="${this.onSubmit}">
       <div>
@@ -173,10 +173,10 @@ export class FormUserCreate extends LitElement {
       }
       
       <div>
-        <label for="id_language">${this.texts.f09}</label>
-        <div id="field-id_language">
-          <select id="id_language">
-            ${this.languages.map((item) =>
+        <label for="id_country">${this.texts.f10}</label>
+        <div id="field-id_country">
+          <select id="id_country">
+            ${this.countries.map((item) =>
               html`<option value="${item.key}">${item.value}</option>`
             )}
           </select>
@@ -184,10 +184,10 @@ export class FormUserCreate extends LitElement {
       </div>
       
       <div>
-        <label for="id_country">${this.texts.f10}</label>
-        <div id="field-id_country">
-          <select id="id_country">
-            ${this.countries.map((item) =>
+        <label for="id_language">${this.texts.f09}</label>
+        <div id="field-id_language">
+          <select id="id_language">
+            ${this.languages.map((item) =>
               html`<option value="${item.key}">${item.value}</option>`
             )}
           </select>
@@ -210,13 +210,19 @@ export class FormUserCreate extends LitElement {
 
   //5
   firstUpdated(changedProperties) {
-    //console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
     this.$get("email").focus()
+    //console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
+  }
+
+  //6
+  updated(){
+    //aqui se deberia des setear la prpiedad despues de una llamada async
+    //console.log("updated", this.fields)
   }
 
   async onSubmit(e) {
     e.preventDefault()
-    //console.log("onSubmit","texts",this.texts,"fields:",this.fields)
+    ////console.log("onSubmit","texts",this.texts,"fields:",this.fields)
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
       fields: Object.keys(this.fields)
