@@ -109,6 +109,7 @@ final class UsersUpdateService extends AppService
         if(!$update["secret"]) unset($update["secret"]);
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
+        $update["description"] = $update["fullname"];
         $this->model->add_sysupdate($update, $this->user["id"]);
 
         $affected = $this->repository->update($update);

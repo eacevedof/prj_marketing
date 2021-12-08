@@ -26,11 +26,11 @@ export class FormUserEdit extends LitElement {
   }
 
   on_profile(e) {
-    //console.log("E",e.target.value)
     this.is_parent = false
     if (e.target.value === "4")
       this.is_parent = true
-    //this.requestUpdate()
+    else
+      this.id_parent = ""
   }
 
   //1
