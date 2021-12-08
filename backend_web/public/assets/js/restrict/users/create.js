@@ -28,11 +28,11 @@ export class FormUserCreate extends LitElement {
   }
 
   on_profile(e) {
-    //console.log("E",e.target.value)
     this.is_parent = false
     if (e.target.value === "4")
       this.is_parent = true
-    //this.requestUpdate()
+    else
+      this.id_parent = ""
   }
 
   //1
@@ -152,7 +152,7 @@ export class FormUserCreate extends LitElement {
         <div id="field-id_profile">
           <select id="id_profile" @change=${this.on_profile}>
             ${this.profiles.map((item) =>
-              html`<option value="${item.key}" ?selected="${item.key===this.id_profile}">${item.value}</option>`
+              html`<option value="${item.key}">${item.value}</option>`
             )}
           </select>
         </div>
@@ -164,7 +164,7 @@ export class FormUserCreate extends LitElement {
             <div id="field-id_parent">
               <select id="id_parent">
                 ${this.parents.map((item) =>
-                  html`<option value="${item.key}">${item.value}</option>`
+                  html`<option value="${item.key}" ?selected="${item.key===this.id_parent}">${item.value}</option>`
                 )}
               </select>
             </div>
