@@ -16,7 +16,11 @@ $texts = [
   "f03" => __("Full name"),
   "f04" => __("Address"),
   "f05" => __("Birthdate"),
-  "f06" => __("Phone")
+  "f06" => __("Phone"),
+  "f07" => __("Parent"),
+  "f08" => __("Profile"),
+  "f09" => __("Language"),
+  "f10" => __("Country"),
 ];
 
 $result = [
@@ -27,7 +31,17 @@ $result = [
   "fullname" => $result["fullname"] ?? "",
   "address" => $result["address"] ?? "",
   "birthdate" => $result["birthdate"] ?? "",
-  "phone" => $result["phone"] ?? ""
+  "phone" => $result["phone"] ?? "",
+
+  "id_parent" => $result["id_parent"] ?? "",
+  "id_country" => $result["id_country"] ?? "",
+  "id_language" => $result["id_language"] ?? "",
+  "id_profile" => $result["id_profile"] ?? "",
+
+  "parents" => $users,
+  "countries" => $countries,
+  "languages" => $languages,
+  "profiles" => $profiles,
 ];
 ?>
 <h1><?=$h1?></h1>
