@@ -12,7 +12,7 @@ final class CsrfService extends AppService
     use SessionTrait;
 
     private ComponentEncdecrypt $encdec;
-    private const VALID_TIME_IN_MINS = 20;
+    private const VALID_TIME_IN_MINS = 45;
 
     public function __construct()
     {
