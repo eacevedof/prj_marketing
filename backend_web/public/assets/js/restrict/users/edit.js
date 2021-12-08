@@ -94,13 +94,12 @@ export class FormUserEdit extends LitElement {
 
     //this.email = this.fields.email
     for(let p in this.fields) this[p] = this.fields[p]
-    console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
+    //console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
   }
 
   //4
   render() {
     //console.log("render","texts",this.texts,"fields:",this.fields)
-    console.log("id-profile",this.id_profile, "this.fields", this.fields)
     return html`
     <form @submit="${this.onSubmit}">
       <div>
@@ -163,7 +162,7 @@ export class FormUserEdit extends LitElement {
             <div id="field-id_parent">
               <select id="id_parent">
               ${this.parents.map((item) =>
-                html`<option value="${item.key}">${item.value}</option>`
+                html`<option value="${item.key}" ?selected=${item.key===this.id_parent}>${item.value}</option>`
               )}
               </select>
             </div>
@@ -176,7 +175,7 @@ export class FormUserEdit extends LitElement {
         <div id="field-id_country">
           <select id="id_country">
           ${this.countries.map((item) =>
-            html`<option value="${item.key}">${item.value}</option>`
+            html`<option value="${item.key}" ?selected=${item.key===this.id_country}>${item.value}</option>`
           )}
           </select>
         </div>
@@ -187,7 +186,7 @@ export class FormUserEdit extends LitElement {
         <div id="field-id_language">
           <select id="id_language">
           ${this.languages.map((item) =>
-            html`<option value="${item.key}">${item.value}</option>`
+            html`<option value="${item.key}" ?selected=${item.key===this.id_language}>${item.value}</option>`
           )}
           </select>
         </div>
