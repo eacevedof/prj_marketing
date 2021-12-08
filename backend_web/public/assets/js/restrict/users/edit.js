@@ -30,7 +30,7 @@ export class FormUserEdit extends LitElement {
     this.is_parent = false
     if (e.target.value === "4")
       this.is_parent = true
-    this.requestUpdate()
+    //this.requestUpdate()
   }
 
   //1
@@ -95,6 +95,7 @@ export class FormUserEdit extends LitElement {
     //this.email = this.fields.email
     for(let p in this.fields) this[p] = this.fields[p]
     //console.log("connectedCallback","texts",this.texts,"fields:",this.fields)
+    if(this.id_profile === "4") this.is_parent = true
   }
 
   //4

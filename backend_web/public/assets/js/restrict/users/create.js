@@ -32,7 +32,7 @@ export class FormUserCreate extends LitElement {
     this.is_parent = false
     if (e.target.value === "4")
       this.is_parent = true
-    this.requestUpdate()
+    //this.requestUpdate()
   }
 
   //1

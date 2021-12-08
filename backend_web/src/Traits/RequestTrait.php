@@ -33,7 +33,8 @@ trait RequestTrait
         $without = [];
         foreach ($request as $key=>$value)
             if(substr($key,0,1)!="_")
-                $without[$key] = $value;
+                $without[$key] = $value==="" ? null :$value;
+
         return $without;
     }
 
