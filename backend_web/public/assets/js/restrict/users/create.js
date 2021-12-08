@@ -136,6 +136,18 @@ export class FormUserCreate extends LitElement {
           <input type="text" id="phone" .value="${this.phone}">
         </div>
       </div>
+      
+      <div>
+        <label for="id_profile">${this.texts.f08}</label>
+        <div id="field-id_profile">
+          <select id="id_profile">
+            ${this.profiles.map((item) =>
+              html`<option value="${item.key}">${item.value}</option>`
+            )}
+          </select>
+        </div>
+      </div>
+      
       <div>
         <label for="id_parent">${this.texts.f07}</label>
         <div id="field-id_parent">
@@ -146,6 +158,29 @@ export class FormUserCreate extends LitElement {
           </select>
         </div>
       </div>
+      
+      <div>
+        <label for="id_language">${this.texts.f09}</label>
+        <div id="field-id_language">
+          <select id="id_language">
+            ${this.languages.map((item) =>
+              html`<option value="${item.key}">${item.value}</option>`
+            )}
+          </select>
+        </div>
+      </div>
+      
+      <div>
+        <label for="id_country">${this.texts.f10}</label>
+        <div id="field-id_country">
+          <select id="id_country">
+            ${this.countries.map((item) =>
+              html`<option value="${item.key}">${item.value}</option>`
+            )}
+          </select>
+        </div>
+      </div>
+
       <div>
         <button id="btn-submit" ?disabled="${this.issending}">
         ${this.btnsend}
