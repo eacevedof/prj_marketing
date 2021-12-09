@@ -36,6 +36,10 @@ let _ths = [],
   ]
 
 
+const _get_actions = () => ["show","edit","del"]
+                              .filter(str => _$table.querySelector(`[approle='actions']`)?.getAttribute(str)==="1")
+                              .map(str => `rowbtn-${str}`)
+
 const _get_columns = () => _ths
   .map($th => $th.getAttribute("column"))
   .filter(col => col!=="")
@@ -62,15 +66,18 @@ export const column = {
 }
 
 const _get_mapped_rowbtns = () => {
-  const objbtns = _defrowbtns.map(defbtn => {
-    const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === defbtn.approle)[0] ?? null
-    if (confbtn)
-      return {
-        ...defbtn,
-        ...confbtn
-      }
-    return defbtn
-  })
+  const thactions = _get_actions()
+  const objbtns = _defrowbtns
+                    .filter(objbtn => thactions.includes(objbtn.approle))
+                    .map(defbtn => {
+                      const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === defbtn.approle)[0] ?? null
+                      if (confbtn)
+                        return {
+                          ...defbtn,
+                          ...confbtn
+                        }
+                      return defbtn
+                    })
 
   return objbtns.filter(objbtn => objbtn.visible)
 }
@@ -88,7 +95,7 @@ const _get_rowhtml_btns = (objbtns, row) => {
         if (tag.match(/%[\w]+%/ig)) {
           const rowkey = tag.replaceAll("%","")
           const rowvalue = row[rowkey] ?? ""
-          return kv.replace(tag,rowvalue)
+          return kv.replace(tag, rowvalue)
         }
         return kv
       }).join(" ")
@@ -128,7 +135,7 @@ const get_columns = () => {
   })
 
   const mappedbtns = _get_mapped_rowbtns()
-  console.log("mappedbtns", mappedbtns)
+  //console.log("mappedbtns", mappedbtns)
   allcols.push({
     targets: -1,
     data: null,
@@ -137,8 +144,6 @@ const get_columns = () => {
 
   return allcols
 }
-
-
 
 export default $table => {
   _$table = $table
