@@ -24,6 +24,7 @@ final class SysfieldRepository extends AppRepository
         if (!$userid) return "";
         $id = (int) $userid;
         $sql = $this->_get_crud()
+            ->set_comment("sysfield._get_user(userid)")
             ->set_table("base_user as m")
             ->set_getfields(["m.description"])
             ->add_and("m.id=$id")
@@ -37,6 +38,7 @@ final class SysfieldRepository extends AppRepository
     {
         if (!$platformid) return "";
         $sql = $this->_get_crud()
+            ->set_comment("sysfield._get_platform(platformid)")
             ->set_table("base_array as m")
             ->set_getfields(["m.description"])
             ->add_and("m.code_erp=$platformid")

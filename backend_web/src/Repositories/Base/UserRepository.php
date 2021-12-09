@@ -34,6 +34,7 @@ final class UserRepository extends AppRepository
     {
         $email = $this->_get_sanitized($email);
         $sql = $this->_get_crud()
+                ->set_comment("user.get_by_email")
                 ->set_table("$this->table as m")
                 ->set_getfields([
                     "m.id","m.email","m.secret","m.id_language", "m.id_profile",
@@ -55,6 +56,7 @@ final class UserRepository extends AppRepository
     {
         $email = $this->_get_sanitized($email);
         $sql = $this->_get_crud()
+            ->set_comment("user.email_exists")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.email='$email'")
@@ -68,6 +70,7 @@ final class UserRepository extends AppRepository
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_crud()
+            ->set_comment("user.get_id_by(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.uuid='$uuid'")
@@ -183,7 +186,7 @@ final class UserRepository extends AppRepository
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_crud()
-            ->set_comment("user.get_info")
+            ->set_comment("user.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.update_date", "m.update_user", "m.insert_date", "m.insert_user",
@@ -214,6 +217,7 @@ final class UserRepository extends AppRepository
     public function get_all_hierarchy(): array
     {
         $sql = $this->_get_crud()
+            ->set_comment("get_all_hierarchy")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id", "m.id_parent"])
             ->get_selectfrom()
