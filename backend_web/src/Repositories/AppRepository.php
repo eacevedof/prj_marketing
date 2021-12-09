@@ -86,7 +86,7 @@ abstract class AppRepository
     public function insert(array $request): int
     {
         $crud = $this->_get_crud()
-            ->set_comment("apprepository.insert(request)")
+            ->set_comment("app.insert(request)")
             ->set_dbobj($this->db)
             ->set_table($this->table);
 
@@ -114,7 +114,7 @@ abstract class AppRepository
             $this->_exeption(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $crud = $this->_get_crud()
-            ->set_comment("apprepository.update(request)")
+            ->set_comment("app.update(request)")
             ->set_dbobj($this->db)
             ->set_table($this->table);
 
@@ -143,7 +143,7 @@ abstract class AppRepository
         if(!$pks) $this->_exeption(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $crud = $this->_get_crud()
-            ->set_comment("apprepository.delete(request)")
+            ->set_comment("app.delete(request)")
             ->set_dbobj($this->db)
             ->set_table($this->table);
 
@@ -167,7 +167,7 @@ abstract class AppRepository
         if(!$pks) return "";
 
         $crud = $this->_get_crud()
-            ->set_comment("apprepository.sysupdate")
+            ->set_comment("app.sysupdate")
             ->set_dbobj($this->db)
             ->set_getfields(["m.update_date"])
             ->set_table("$this->table as m")
