@@ -148,6 +148,16 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $attribs ? " $attribs": "";
     }
 
+    private function _get_actions_attr(): string
+    {
+        $attribs = [];
+        foreach ($this->actions as $action) {
+            $action = trim($action);
+            $attribs[] = "$action=\"1\"";
+        }
+        return implode(" ", $attribs);
+    }
+
     public function get_ths(): string
     {
         if(!$this->columns) return "";
@@ -193,7 +203,8 @@ final class DatatableHelper extends AppHelper implements IHelper
         if($this->actions) {
             $actions = __("Actions");
             $actions = htmlentities($actions);
-            $ths[] = "<th>$actions</th>";
+            $attrs = $this->_get_actions_attr();
+            $ths[] = "<th $attrs>$actions</th>";
         }
         return implode("\n", $ths);
     }

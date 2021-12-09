@@ -1,11 +1,11 @@
 <?php
 /**
  * @var \App\Views\AppView $this
- * @var \App\Helpers\Views\DatatableHelper $dt
+ * @var \App\Helpers\Views\DatatableHelper $dthelp
  */
 use App\Factories\HelperFactory as HF;
-$dt = HF::get("Views/Datatable");
-$dt->add_column("id")
+$dthelp = HF::get("Views/Datatable")
+    ->add_column("id")
     ->is_visible()
     ->add_column("uuid")
     ->add_label("uuid")
@@ -13,9 +13,9 @@ $dt->add_column("id")
     ->add_column("fullname")
     ->add_column("email")
     ->add_column("phone")
-    ->add_column("e_profile")
-    ->add_column("e_country")
-    ->add_column("e_language")
+    ->add_column("e_profile")->add_label(__("Profile"))
+    ->add_column("e_country")->add_label(__("Country"))
+    ->add_column("e_language")->add_label(__("Language"))
     ->add_action("edit")
     ->add_action("show")
     ->add_action("delete");
@@ -25,16 +25,16 @@ $dt->add_column("id")
     <table id="table-datatable" class="display" style="width:95%">
         <thead>
             <tr>
-                <?= $dt->get_ths() ?>
+                <?= $dthelp->get_ths() ?>
             </tr>
             <tr row="search" class="hidden">
-                <?= $dt->get_search_tds() ?>
+                <?= $dthelp->get_search_tds() ?>
             </tr>
         </thead>
         <tbody approle="tbody"></tbody>
         <tfoot>
             <tr>
-                <?= $dt->get_tf() ?>
+                <?= $dthelp->get_tf() ?>
             </tr>
         </tfoot>
     </table>
@@ -73,6 +73,6 @@ button.add_topbtn({
 dt_render({
   URL_MODULE: "/restrict/users",
   ID_TABLE: "table-datatable",
-  ITEMS_PER_PAGE: <?$dt->show_perpage();?>,
+  ITEMS_PER_PAGE: <?$dthelp->show_perpage();?>,
 })
 </script>
