@@ -119,7 +119,7 @@ final class UserRepository extends AppRepository
         if($global = $search["global"]) {
             $or = [];
             foreach ($search["all"] as $field)
-                $or[] = "m.$field LIKE '%$global%'";
+                $or[] = $this->_get_condition($field, $global);
             $or = implode(" OR ",$or);
             $crud->add_and("($or)");
         }
