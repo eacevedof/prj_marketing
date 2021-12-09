@@ -35,7 +35,7 @@ final class PicklistRepository extends AppRepository
     public function get_languages(): array
     {
         $sql = $this->_get_crud()
-            ->set_comment("get_languages")
+            ->set_comment("picklist.get_languages")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -52,7 +52,7 @@ final class PicklistRepository extends AppRepository
     public function get_countries(): array
     {
         $sql = $this->_get_crud()
-            ->set_comment("get_countries")
+            ->set_comment("picklist.get_countries")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -69,7 +69,7 @@ final class PicklistRepository extends AppRepository
     public function get_profiles(): array
     {
         $sql = $this->_get_crud()
-            ->set_comment("get_profiles")
+            ->set_comment("picklist.get_profiles")
             ->set_table("base_array as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -86,7 +86,7 @@ final class PicklistRepository extends AppRepository
     public function get_users(): array
     {
         $sql = $this->_get_crud()
-            ->set_comment("get_users")
+            ->set_comment("picklist.get_users")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")
@@ -102,7 +102,7 @@ final class PicklistRepository extends AppRepository
     public function get_users_by_profile(string $profileid): array
     {
         $sql = $this->_get_crud()
-            ->set_comment("get_users_by_profile")
+            ->set_comment("picklist.get_users_by_profile(profileid)")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")

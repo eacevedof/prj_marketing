@@ -26,6 +26,7 @@ final class UserPermissionsRepository extends AppRepository
     public function get_by_user(int $userid): array
     {
         $sql = $this->_get_crud()
+            ->set_comment("userpermission.get_by_user(userid)")
             ->set_table("$this->table as m")
             ->set_getfields(["m.json_rw"])
             ->add_and("m.delete_date IS NULL")
