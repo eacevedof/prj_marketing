@@ -5,20 +5,18 @@
  */
 use App\Factories\HelperFactory as HF;
 $dthelp = HF::get("Views/Datatable")
-    ->add_column("id")
-    ->is_visible()
-    ->add_column("uuid")
-    ->add_label("uuid")
-    ->add_tooltip(__("uuid"))
-    ->add_column("fullname")
-    ->add_column("email")
-    ->add_column("phone")
+    ->add_column("id")->is_visible()
+    ->add_column("uuid")->add_label("uuid")->add_tooltip(__("uuid"))
+    ->add_column("fullname")->add_label(__("Fullname"))
+    ->add_column("email")->add_label(__("Email"))
+    ->add_column("phone")->add_label(__("Phone"))
     ->add_column("e_profile")->add_label(__("Profile"))
     ->add_column("e_country")->add_label(__("Country"))
     ->add_column("e_language")->add_label(__("Language"))
-    ->add_action("edit")
-    ->add_action("show")
-    ->add_action("delete");
+//    ->add_action("edit")
+//    ->add_action("show")
+//    ->add_action("del")
+;
 ?>
 <h1><?=$h1?></h1>
 <div id="div-table-datatable">

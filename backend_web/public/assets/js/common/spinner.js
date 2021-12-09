@@ -10,7 +10,7 @@ const spinner = `
 </div>
 `
 
-export const remove_spinner = () => {
+const remove_spinner = () => {
   const $spinner = $wrapper.querySelector(`[approle="spinner"]`)
   if($spinner) $spinner.parentNode.removeChild($spinner)
 }
@@ -28,6 +28,9 @@ const render_spinner = $cont => {
   add_spinner()
 }
 
-export default render_spinner
+export default {
+  render: render_spinner,
+  remove: remove_spinner,
+}
 
 
