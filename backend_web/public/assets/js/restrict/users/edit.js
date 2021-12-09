@@ -102,7 +102,7 @@ export class FormUserEdit extends LitElement {
   render() {
     //console.log("render","texts",this.texts,"fields:",this.fields)
     return html`
-    <form @submit="${this.onSubmit}">
+    <form @submit="${this.on_submit}">
       <div>
         <label for="email">${this.texts.f00}</label>
         <div id="field-email">
@@ -220,9 +220,9 @@ export class FormUserEdit extends LitElement {
     //console.log("updated", this.fields)
   }
 
-  async onSubmit(e) {
+  async on_submit(e) {
     e.preventDefault()
-    //console.log("onSubmit","texts",this.texts,"fields:",this.fields)
+    //console.log("on_submit","texts",this.texts,"fields:",this.fields)
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
       fields: Object.keys(this.fields)
@@ -260,7 +260,7 @@ export class FormUserEdit extends LitElement {
       .show()
 
     $("#table-datatable").DataTable().ajax.reload()
-  }//onSubmit
+  }//on_submit
 
 }//FormEdit
 

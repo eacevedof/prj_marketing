@@ -24,7 +24,7 @@ const _get_errors_by_fieldid = errors => _fieldsid.map(fieldid => (
 ))
 
 const _append = errors => {
-  console.log("_append.errors", errors)
+  //console.log("_append.errors", errors)
   if (!_$wrapper) return
   //si los ids agregados en la config son menos a los que requiere el servidor
   let notinform = _get_not_declared_fields(errors)
@@ -57,8 +57,9 @@ const _append = errors => {
     _$wrapper.insertAdjacentHTML("afterbegin", html)
   })
 
+  //console.log("error.inform",inform)
   if (inform[0])
-    _$wrapper.querySelector(`#${inform[0].id}`).focus()
+    _$wrapper.querySelector(`#${inform[0]}`).focus()
 }
 
 const _set_config = options => {

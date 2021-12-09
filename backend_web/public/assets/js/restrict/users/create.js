@@ -3,7 +3,6 @@ import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 
 const URL_POST = "/restrict/users/insert"
-const URL_REDIRECT = "/restrict/users"
 const ACTION = "users.insert"
 
 export class FormUserCreate extends LitElement {
@@ -28,11 +27,11 @@ export class FormUserCreate extends LitElement {
   }
 
   on_profile(e) {
-    this.is_parent = false
+    this._is_parent = false
     if (e.target.value === "4")
-      this.is_parent = true
+      this._is_parent = true
     else
-      this.id_parent = ""
+      this._id_parent = ""
   }
 
   //1
@@ -40,11 +39,12 @@ export class FormUserCreate extends LitElement {
     super()
     this.texts = {}
     this.fields = {}
-    this.is_parent = false
+    this._is_parent = false
     //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
   }
 
   static properties = {
+    //https://lit.dev/docs/components/properties/#property-options
     csrf: {type: String},
     texts: {
       converter: (strjson) => {
@@ -60,27 +60,27 @@ export class FormUserCreate extends LitElement {
       },
     },
 
-    issending: {type: Boolean},
-    btnsend: {type: String},
+    _issending: {type: Boolean, state:true},
+    _btnsend: {type: String, state:true},
 
-    email: {type: String},
-    password: {type: String},
-    password2: {type: String},
-    fullname: {type: String},
-    address: {type: String},
-    birthdate: {type: String},
-    phone: {type: String},
+    _email: {type: String, state:true},
+    _password: {type: String, state:true},
+    _password2: {type: String, state:true},
+    _fullname: {type: String, state:true},
+    _address: {type: String, state:true},
+    _birthdate: {type: String, state:true},
+    _phone: {type: String, state:true},
 
-    is_parent: {type: Boolean},
-    id_parent: {type: String},
-    id_country: {type: String},
-    id_language: {type: String},
-    id_profile: {type: String},
+    _is_parent: {type: Boolean, state:true},
+    _id_parent: {type: String, state:true},
+    _id_country: {type: String, state:true},
+    _id_language: {type: String, state:true},
+    _id_profile: {type: String, state:true},
 
-    parents: {type: Array},
-    countries: {type: Array},
-    languages: {type: Array},
-    profiles: {type: Array},
+    _parents: {type: Array, state:true},
+    _countries: {type: Array, state:true},
+    _languages: {type: Array, state:true},
+    _profiles: {type: Array, state:true},
   }
 
   //2
@@ -92,58 +92,58 @@ export class FormUserCreate extends LitElement {
   //3 (aqui siempre hay datos)
   connectedCallback() {
     super.connectedCallback()
-    this.issending = false
-    this.btnsend = this.texts.tr00
+    this._issending = false
+    this._btnsend = this.texts.tr00
 
-    //this.email = this.fields.email
-    for(let p in this.fields) this[p] = this.fields[p]
-    //console.log("connectedCallback","parents:",this.parents)
+    //this._email = this.fields.email
+    for(let p in this.fields) this["_".concat(p)] = this.fields[p]
+    //console.log("connectedCallback","parents:",this._parents)
   }
 
   //4
   render() {
     return html`
-    <form @submit="${this.onSubmit}">
+    <form @submit="${this.on_submit}">
       <div>
         <label for="email">${this.texts.f00}</label>
         <div id="field-email">
-          <input type="email" id="email" .value="${this.email}">
+          <input type="email" id="email" .value="${this._email}">
         </div>
       </div>
       <div>
         <label for="password">${this.texts.f01}</label>
         <div id="field-password">
-          <input type="password" id="password" .value="${this.password}">
+          <input type="password" id="password" .value="${this._password}">
         </div>
       </div>
       <div>
         <label for="password2">${this.texts.f02}</label>
         <div id="field-password2">
-          <input type="password" id="password2" .value="${this.password2}">
+          <input type="password" id="password2" .value="${this._password2}">
         </div>
       </div>
       <div>
         <label for="fullname">${this.texts.f03}</label>
         <div id="field-fullname">
-          <input type="text" id="fullname" .value="${this.fullname}">
+          <input type="text" id="fullname" .value="${this._fullname}">
         </div>
       </div>
       <div>
         <label for="address">${this.texts.f04}</label>
         <div id="field-address">
-          <input type="text" id="address" .value="${this.address}">
+          <input type="text" id="address" .value="${this._address}">
         </div>
       </div>
       <div>
         <label for="birthdate">${this.texts.f05}</label>
         <div id="field-birthdate">
-          <input type="date" id="birthdate" .value="${this.birthdate}">
+          <input type="date" id="birthdate" .value="${this._birthdate}">
         </div>
       </div>
       <div>
         <label for="phone">${this.texts.f06}</label>
         <div id="field-phone">
-          <input type="text" id="phone" .value="${this.phone}">
+          <input type="text" id="phone" .value="${this._phone}">
         </div>
       </div>
       
@@ -151,20 +151,20 @@ export class FormUserCreate extends LitElement {
         <label for="id_profile">${this.texts.f08}</label>
         <div id="field-id_profile">
           <select id="id_profile" @change=${this.on_profile}>
-            ${this.profiles.map((item) =>
+            ${this._profiles.map((item) =>
               html`<option value="${item.key}">${item.value}</option>`
             )}
           </select>
         </div>
       </div>
       
-      ${this.is_parent
+      ${this._is_parent
         ? html`<div>
             <label for="id_parent">${this.texts.f07}</label>
             <div id="field-id_parent">
               <select id="id_parent">
-                ${this.parents.map((item) =>
-                  html`<option value="${item.key}" ?selected="${item.key===this.id_parent}">${item.value}</option>`
+                ${this._parents.map((item) =>
+                  html`<option value="${item.key}" ?selected="${item.key===this._id_parent}">${item.value}</option>`
                 )}
               </select>
             </div>
@@ -176,7 +176,7 @@ export class FormUserCreate extends LitElement {
         <label for="id_country">${this.texts.f10}</label>
         <div id="field-id_country">
           <select id="id_country">
-            ${this.countries.map((item) =>
+            ${this._countries.map((item) =>
               html`<option value="${item.key}">${item.value}</option>`
             )}
           </select>
@@ -187,7 +187,7 @@ export class FormUserCreate extends LitElement {
         <label for="id_language">${this.texts.f09}</label>
         <div id="field-id_language">
           <select id="id_language">
-            ${this.languages.map((item) =>
+            ${this._languages.map((item) =>
               html`<option value="${item.key}">${item.value}</option>`
             )}
           </select>
@@ -195,10 +195,10 @@ export class FormUserCreate extends LitElement {
       </div>
 
       <div>
-        <button id="btn-submit" ?disabled="${this.issending}">
-        ${this.btnsend}
+        <button id="btn-submit" ?disabled="${this._issending}">
+        ${this._btnsend}
         ${
-          this.issending
+          this._issending
           ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
           : html``
         }
@@ -221,16 +221,16 @@ export class FormUserCreate extends LitElement {
     //console.log("updated", this.fields)
   }
 
-  async onSubmit(e) {
+  async on_submit(e) {
     e.preventDefault()
-    ////console.log("onSubmit","texts",this.texts,"fields:",this.fields)
+    //console.log("on_submit","texts",this.texts,"fields:",this.fields)
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
       fields: Object.keys(this.fields)
     })
 
-    this.issending = true
-    this.btnsend = this.texts.tr01
+    this._issending = true
+    this._btnsend = this.texts.tr01
     error.clear()
 
     const response = await injson.post(
@@ -241,8 +241,8 @@ export class FormUserCreate extends LitElement {
         ...this.get_data()
       })
 
-    this.issending = false
-    this.btnsend = this.texts.tr00
+    this._issending = false
+    this._btnsend = this.texts.tr00
 
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
@@ -262,7 +262,7 @@ export class FormUserCreate extends LitElement {
       .set_inner(`<b>Data created</b>`)
       .show()
 
-  }//onSubmit
+  }//on_submit
 
 }//FormEdit
 
