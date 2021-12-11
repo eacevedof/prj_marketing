@@ -111,6 +111,7 @@ final class UserRepository extends AppRepository
         if($this->auth->is_business_manager()) {
             $idparent = $user["id_parent"];
             $childs = $this->get_childs($idparent);
+            $childs = array_column($childs,"id");
             $crud->add_and_in("m.id", $childs);
         }
 
