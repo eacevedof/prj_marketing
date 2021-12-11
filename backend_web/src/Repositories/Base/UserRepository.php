@@ -11,7 +11,6 @@ namespace App\Repositories\Base;
 
 use App\Components\Auth\AuthComponent;
 use App\Components\Hierarchy\HierarchyComponent;
-use App\Enums\ExceptionType;
 use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
@@ -21,7 +20,7 @@ use App\Factories\ComponentFactory as CF;
 final class UserRepository extends AppRepository
 {
     private array $joins;
-    private AuthComponent $auth;
+    private ?AuthComponent $auth = null;
 
     public function __construct()
     {
@@ -88,9 +87,8 @@ final class UserRepository extends AppRepository
 
     private function _add_auth_condition(ComponentCrud $crud): void
     {
-        if(!$this->auth) {
+        if (!$this->auth) {
             $crud->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
-            return;
         }
 
         if($this->auth->is_root()) {
@@ -102,6 +100,19 @@ final class UserRepository extends AppRepository
         }
 
         $user = $this->auth->get_user();
+
+        if($this->auth->is_business_owner()) {
+            $childs = $this->get_childs($user["id"]);
+            $childs = array_column($childs,"id");
+            $childs[] = $user["id"];
+            $crud->add_and_in("m.id", $childs);
+        }
+
+        if($this->auth->is_business_manager()) {
+            $idparent = $user["id_parent"];
+            $childs = $this->get_childs($idparent);
+            $crud->add_and_in("m.id", $childs);
+        }
 
     }
 
@@ -125,7 +136,7 @@ final class UserRepository extends AppRepository
                 "m.id_language",
                 "m.id_parent",
                 "m.id_profile",
-                "m.is_notificable",
+                "m.is_notifiable",
                 "m.secret",
                 "m.phone",
             ])
@@ -154,7 +165,7 @@ final class UserRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.id", "m.fullname","m.description", "m.email", "m.secret", "m.id_language", "m.id_profile",
-                "m.uuid",
+                "m.uuid", "m.id_parent",
                 "ar1.code_erp as e_language"
             ])
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")

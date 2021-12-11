@@ -45,18 +45,19 @@ final class HierarchyComponent
 
     public function get_childs(string $id, array $data): array
     {
-        $childs = [];
-        $this->_load_childs($id, $data, $childs);
-        $childs = array_map(function ($child) use ($data) {
-            $found = array_filter($data, function ($d) use($child) {
-                return $d["id"] === $child["id"];
+        $childids = [];
+        $this->_load_childs($id, $data, $childids);
+
+        $childids = array_map(function ($childid) use ($data) {
+            $found = array_filter($data, function ($d) use($childid) {
+                return $d["id"] === $childid;
             });
             $found = array_values($found);
             return $found[0];
-        }, $childs);
+        }, $childids);
 
-        $childs = array_values($childs);
-        return $childs;
+        $childids = array_values($childids);
+        return $childids;
     }
 
     public function get_topparent(string $id, array $data): array
