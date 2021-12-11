@@ -94,8 +94,9 @@ const get_buttons = () => {
     },
   ]
 
-  defbtns = defbtns
-                  .map(def => {
+  const is_addbtn = _$table.querySelector(`[approle='actions']`)?.getAttribute("add")==="1";
+  if (!is_addbtn) defbtns = defbtns.filter(btn => btn.approle !== "add-item")
+  defbtns = defbtns.map(def => {
                     const btn = _topbtns.filter(top => top.approle === def.approle)[0] ?? null
                     if (!btn) return def
 

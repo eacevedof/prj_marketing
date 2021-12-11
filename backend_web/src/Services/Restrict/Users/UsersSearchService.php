@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Restrict\Users;
 use App\Components\Auth\AuthComponent;
+use App\Enums\PolicyType;
 use App\Factories\ComponentFactory as CF;
 use App\Helpers\Views\DatatableHelper;
 use App\Repositories\Base\UserPermissionsRepository;
@@ -56,11 +57,19 @@ final class UsersSearchService extends AppService
             ->add_column("e_country")->add_label(__("Country"))
             ->add_column("e_language")->add_label(__("Language"));
 
-        if($this->auth->is_root() || $this->auth->is_sysadmin())
-            $dthelp->add_action("edit")
-                ->add_action("show")
+        if($this->auth->is_root())
+            $dthelp->add_action("show")
+                ->add_action("add")
+                ->add_action("edit")
                 ->add_action("del");
 
+        if($this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+            $dthelp->add_action("add")
+                ->add_action("edit")
+                ->add_action("del");
+
+        if($this->auth->is_user_allowed(PolicyType::USERS_READ))
+            $dthelp->add_action("show");
 
         return $dthelp;
     }

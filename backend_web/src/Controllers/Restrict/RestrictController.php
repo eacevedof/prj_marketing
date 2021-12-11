@@ -18,7 +18,6 @@ use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
 use App\Enums\UrlType;
 use App\Components\Auth\AuthComponent;
-use App\Enums\KeyType;
 
 abstract class RestrictController extends AppController
 {
@@ -47,7 +46,7 @@ abstract class RestrictController extends AppController
 
     public function logout(): void
     {
-        $this->session->destroy();
+        $this->_sessioninit()->destroy();
         $this->location(UrlType::ON_LOGOUT);
     }
 }//RestrictController
