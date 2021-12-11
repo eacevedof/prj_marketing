@@ -45,6 +45,11 @@ final class UsersSearchService extends AppService
             ->add_column("phone")->add_label(__("Phone"))
             ->add_column("e_profile")->add_label(__("Profile"))
             ->add_column("e_country")->add_label(__("Country"))
-            ->add_column("e_language")->add_label(__("Language"));
+            ->add_column("e_language")->add_label(__("Language"))
+            //rowbuttons
+            ->add_action("edit")
+            ->add_action("show")
+            ->add_action("del")
+            ;
     }
 }
