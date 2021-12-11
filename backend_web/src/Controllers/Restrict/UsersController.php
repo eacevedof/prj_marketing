@@ -41,6 +41,7 @@ final class UsersController extends RestrictController
             ->add_var("languages", $this->picklist->get_languages())
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("countries", $this->picklist->get_countries())
+            ->add_var("dthelp", SF::get_callable("Restrict\Users\UsersSearch", [])->get_datatable())
             ->render();
     }
 
