@@ -11,8 +11,10 @@ SN Marketing
 ### Profiles
 - root
   - Ve todo sin ninguna restricción incluso soft-deletes
+  - no se filtra por jerarquia vertical
 - sys admin
   - Tiene todas las acciones CRUD pero se filtra el acceso por permisos
+  - no se filtra por jerarquia vertical
 - business owner
   - Ve ciertos módulos (acceso por permisos) tiene acceso CRUD en estos si el es propietario o en caso de usuarios a 
     aquellos que esten debajo de él
