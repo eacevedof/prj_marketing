@@ -82,7 +82,7 @@ final class UsersController extends RestrictController
         $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
             ->add_var("h1",__("New user"))
             ->add_var("profiles", $this->picklist->get_profiles())
-            ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_MANAGER))
+            ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
             ->add_var("countries", $this->picklist->get_countries())
             ->add_var("languages", $this->picklist->get_languages())
             ->render_nl();
@@ -178,7 +178,7 @@ final class UsersController extends RestrictController
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
                 ->add_var("profiles", $this->picklist->get_profiles())
-                ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_MANAGER))
+                ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
                 ->add_var("countries", $this->picklist->get_countries())
                 ->add_var("languages", $this->picklist->get_languages())
                 ->render_nl();
