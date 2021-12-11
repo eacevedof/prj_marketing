@@ -151,7 +151,8 @@ final class DatatableHelper extends AppHelper implements IHelper
     private function _get_actions_attrs(): string
     {
         $attribs = ["approle=\"actions\""];
-        foreach ($this->actions as $action) {
+        $actions = array_unique($this->actions);
+        foreach ($actions as $action) {
             $action = trim($action);
             $attribs[] = "$action=\"1\"";
         }
