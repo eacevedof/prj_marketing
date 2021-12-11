@@ -32,37 +32,29 @@ abstract class AppRepository
         return new ComponentCrud();
     }
 
-    public function query($sSQL,$iCol=NULL,$iRow=NULL)
+    protected function _exeption(string $message, int $code=500): void
     {
-        $mxRet = $this->db->query($sSQL,$iCol=NULL,$iRow=NULL);
-        if($this->db->is_error())
-            $this->add_error($this->db->get_errors());
-        return $mxRet;
+        $this->logerr($message,"app-service.exception");
+        throw new Exception($message, $code);
     }
 
-    public function execute($sSQL)
+    public function _get_sysupdate(array $pks): string
     {
-        $mxRet = $this->db->exec($sSQL);
-        if($this->db->is_error())
-            $this->add_error($this->db->get_errors());
-        return $mxRet;
-    }
+        if(!$pks) return "";
 
-    public function get_max($fieldname)
-    {
-        if($fieldname)
-        {
-            $sSQL = "SELECT MAX($fieldname) AS maxed FROM $this->table";
-            $mxMaxed = $this->db->query($sSQL);
-            $mxMaxed = (isset($mxMaxed[0]["maxed"])?$mxMaxed[0]["maxed"]:NULL);
-            return $mxMaxed;
-        }
-        return NULL;
-    }
+        $crud = $this->_get_crud()
+            ->set_comment("app.sysupdate")
+            ->set_dbobj($this->db)
+            ->set_getfields(["m.update_date"])
+            ->set_table("$this->table as m")
+        ;
 
-    public function get_lastinsert_id()
-    {
-        return $this->db->get_lastid();
+        foreach($pks as $fieldname=>$sValue)
+            $crud->add_pk_fv($fieldname, $sValue);
+
+        $sql = $crud->get_selectfrom();
+        $r = $this->db->query($sql);
+        return $r[0]["update_date"] ?? "";
     }
 
     private function _get_pks($arData)
@@ -81,6 +73,28 @@ abstract class AppRepository
             if(!in_array($fieldname, $this->model->get_pks()))
                 $pks[$fieldname] = $sValue;
         return $pks;
+    }
+
+    public function set_model(AppModel $model): self
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+    public function query($sSQL,$iCol=NULL,$iRow=NULL)
+    {
+        $mxRet = $this->db->query($sSQL,$iCol=NULL,$iRow=NULL);
+        if($this->db->is_error())
+            $this->add_error($this->db->get_errors());
+        return $mxRet;
+    }
+
+    public function execute($sSQL)
+    {
+        $mxRet = $this->db->exec($sSQL);
+        if($this->db->is_error())
+            $this->add_error($this->db->get_errors());
+        return $mxRet;
     }
 
     public function insert(array $request): int
@@ -103,12 +117,12 @@ abstract class AppRepository
 
         return $this->db->get_lastid();
     }//insert
-        
+
     public function update(array $request): int
     {
         $pks = $this->_get_pks($request);
         if(!$pks) $this->_exeption(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
-        
+
         $mutables = $this->_get_no_pks($request);
         if(!$mutables)
             $this->_exeption(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
@@ -162,34 +176,20 @@ abstract class AppRepository
         return $this->db->get_affected();
     }//delete
 
-    public function _get_sysupdate(array $pks): string
+    public function get_max($fieldname)
     {
-        if(!$pks) return "";
-
-        $crud = $this->_get_crud()
-            ->set_comment("app.sysupdate")
-            ->set_dbobj($this->db)
-            ->set_getfields(["m.update_date"])
-            ->set_table("$this->table as m")
-        ;
-
-        foreach($pks as $fieldname=>$sValue)
-            $crud->add_pk_fv($fieldname, $sValue);
-
-        $sql = $crud->get_selectfrom();
-        $r = $this->db->query($sql);
-        return $r[0]["update_date"] ?? "";
+        if($fieldname)
+        {
+            $sSQL = "SELECT MAX($fieldname) AS maxed FROM $this->table";
+            $mxMaxed = $this->db->query($sSQL);
+            $mxMaxed = (isset($mxMaxed[0]["maxed"])?$mxMaxed[0]["maxed"]:NULL);
+            return $mxMaxed;
+        }
+        return NULL;
     }
 
-    protected function _exeption(string $message, int $code=500): void
+    public function get_lastinsert_id()
     {
-        $this->logerr($message,"app-service.exception");
-        throw new Exception($message, $code);
-    }
-
-    public function set_model(AppModel $model): self
-    {
-        $this->model = $model;
-        return $this;
+        return $this->db->get_lastid();
     }
 }//AppRepository
