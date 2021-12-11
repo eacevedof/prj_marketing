@@ -29,6 +29,7 @@ final class AuthComponent
 
     public function is_user_allowed(string $action): bool
     {
+        if(!$this->user) return false;
         if($this->is_root()) return true;
         
         $permissions = SF::get()->get(KeyType::AUTH_USER_PERMISSIONS);
