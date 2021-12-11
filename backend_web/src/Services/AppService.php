@@ -10,6 +10,8 @@
  */
 namespace App\Services;
 
+use App\Components\Auth\AuthComponent;
+use App\Factories\ComponentFactory as CF;
 use App\Factories\DbFactory;
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
@@ -26,12 +28,12 @@ abstract class AppService
     use LogTrait;
     use EnvTrait;
 
-    public function __construct(){;}
- 
-    public function trim(&$arPost)
+    private static ?AuthComponent $auth;
+
+    protected function _get_auth(): ?AuthComponent
     {
-        foreach($arPost as $sKey=>$sValue)
-            $arPost[$sKey] = trim($sValue);
+        if (!self::$auth) self::$auth = CF::get("Auth/Auth");
+        return self::$auth;
     }
 
     protected function _exeption(string $message, int $code=500): void
@@ -61,4 +63,11 @@ abstract class AppService
         $encdec->set_sslsalt($config["sslsalt"]??"");
         return $encdec;
     }
+
+    public function trim(&$arPost)
+    {
+        foreach($arPost as $sKey=>$sValue)
+            $arPost[$sKey] = trim($sValue);
+    }
+
 }//AppService

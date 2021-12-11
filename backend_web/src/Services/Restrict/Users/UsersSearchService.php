@@ -21,15 +21,12 @@ final class UsersSearchService extends AppService
     private array $input;
     private UserRepository $repository;
     private UserPermissionsRepository $permissionrepo;
-    private AuthComponent $auth;
 
     public function __construct(array $input)
     {
         $this->input = $input;
-        $this->_sessioninit();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
-        $this->auth = CF::get("Auth/Auth");
     }
 
     public function __invoke(): array
@@ -43,7 +40,7 @@ final class UsersSearchService extends AppService
     {
         $dthelp = HF::get("Views/Datatable")->add_column("id")->is_visible(false);
 
-        if($this->auth->is_root())
+        if($this->_get_auth()->is_root())
             $dthelp
                 ->add_column("delete_date")->add_label(__("Deleted at"))
                 ->add_column("e_deletedby")->add_label(__("Deleted by"));
@@ -57,18 +54,18 @@ final class UsersSearchService extends AppService
             ->add_column("e_country")->add_label(__("Country"))
             ->add_column("e_language")->add_label(__("Language"));
 
-        if($this->auth->is_root())
+        if($this->_get_auth()->is_root())
             $dthelp->add_action("show")
                 ->add_action("add")
                 ->add_action("edit")
                 ->add_action("del");
 
-        if($this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+        if($this->_get_auth()->is_user_allowed(PolicyType::USERS_WRITE))
             $dthelp->add_action("add")
                 ->add_action("edit")
                 ->add_action("del");
 
-        if($this->auth->is_user_allowed(PolicyType::USERS_READ))
+        if($this->_get_auth()->is_user_allowed(PolicyType::USERS_READ))
             $dthelp->add_action("show");
 
         return $dthelp;
