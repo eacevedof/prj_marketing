@@ -35,7 +35,7 @@ abstract class RestrictController extends AppController
         $this->_load_request();
         $this->auth = CF::get("Auth\Auth");
         $this->csrf = SF::get("Auth\Csrf");
-        $this->authuser = $this->_sessioninit()->get(KeyType::AUTH_USER);
+        $this->authuser = $this->auth->get_user();
         $this->set_layout("restrict/restrict");
     }
 
