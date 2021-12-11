@@ -100,6 +100,13 @@ final class UserRepository extends AppRepository
         }
 
         $user = $this->auth->get_user();
+        if($this->auth->is_business_manager()) {
+            $idparent = $user["id_parent"];
+            $childs = $this->get_childs($idparent);
+            $childs = array_column($childs,"id");
+            $crud->add_and_in("m.id", $childs);
+            return;
+        }
 
         if($this->auth->is_business_owner()) {
             $childs = $this->get_childs($user["id"]);
@@ -107,14 +114,6 @@ final class UserRepository extends AppRepository
             $childs[] = $user["id"];
             $crud->add_and_in("m.id", $childs);
         }
-
-        if($this->auth->is_business_manager()) {
-            $idparent = $user["id_parent"];
-            $childs = $this->get_childs($idparent);
-            $childs = array_column($childs,"id");
-            $crud->add_and_in("m.id", $childs);
-        }
-
     }
 
     public function search(array $search): array
