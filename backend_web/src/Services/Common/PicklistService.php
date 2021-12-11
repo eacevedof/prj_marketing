@@ -1,5 +1,6 @@
 <?php
 namespace App\Services\Common;
+use App\Enums\ProfileType;
 use App\Services\AppService;
 use App\Repositories\App\PicklistRepository;
 use App\Factories\RepositoryFactory as RF;
@@ -21,7 +22,14 @@ final class PicklistService extends AppService
 
     public function get_profiles(): array
     {
-        return $this->repository->get_profiles();
+        $profiles = $this->repository->get_profiles();
+
+        if ($this->_get_auth()->is_business_owner() || $this->_get_auth()->is_business_manager())
+            $profiles = array_filter($profiles, function ($profile){
+               return !in_array($profile["key"], [ProfileType::ROOT, ProfileType::SYS_ADMIN, ProfileType::BUSINESS_OWNER]) ;
+            });
+
+        return $profiles;
     }
 
     public function get_countries(): array
@@ -42,6 +50,25 @@ final class PicklistService extends AppService
     public function get_users_by_profile(string $profileid): array
     {
         $users = $this->repository->get_users_by_profile($profileid);
+
+        if ($this->_get_auth()->is_business_owner()) {
+            $idparent = $this->_get_auth()->get_user()["id"];
+            $users = array_filter($users, function ($user) use($idparent) {
+                return in_array($user["key"], [$idparent,""]) ;
+            });
+            $users = array_values($users);
+            return $users;
+        }
+
+        if ($this->_get_auth()->is_business_manager()) {
+            $idparent = $this->_get_auth()->get_user()["id_parent"];
+            $users = array_filter($users, function ($user) use($idparent) {
+                return in_array($user["key"], [$idparent,""]) ;
+            });
+            $users = array_values($users);
+            return $users;
+        }
+
         return $users;
     }
 }
