@@ -39,8 +39,8 @@ final class UsersSearchService extends AppService
     {
         return HF::get("Views/Datatable")
             ->add_column("id")->is_visible(false)
-            ->add_column("delete_date")->add_label("Deleted at")
-            ->add_column("e_deletedby")->add_label("Deleted by")
+            ->add_column("delete_date")->add_label(__("Deleted at"))
+            ->add_column("e_deletedby")->add_label(__("Deleted by"))
             ->add_column("uuid")->add_label(__("Code"))->add_tooltip(__("uuid"))
             ->add_column("fullname")->add_label(__("Fullname"))
             ->add_column("email")->add_label(__("Email"))

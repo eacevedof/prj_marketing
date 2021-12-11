@@ -45,7 +45,7 @@ final class LoginService extends AppService
             $this->_exeption(__("Unauthorized"));
 
         $this->session->add(KeyType::AUTH_USER, $aruser);
-        $this->session->add(KeyType::LANG, $lang = ($aruser["language"] ?? "en"));
+        $this->session->add(KeyType::LANG, $lang = ($aruser["e_language"] ?? "en"));
 
         $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
         $this->session->add(KeyType::AUTH_USER_PERMISSIONS, $permissions);
