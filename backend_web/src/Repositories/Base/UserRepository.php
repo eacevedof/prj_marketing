@@ -10,6 +10,7 @@
 namespace App\Repositories\Base;
 
 use App\Components\Hierarchy\HierarchyComponent;
+use App\Enums\ExceptionType;
 use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
@@ -24,9 +25,18 @@ final class UserRepository extends AppRepository
         $this->db = DbF::get_by_default();
         $this->table = "base_user";
         $this->joins = [
-            "ar1.description"=>"e_language",
-            "ar2.description"=>"e_profile",
-            "ar3.description"=>"e_country"
+            "fields" => [
+                "u1.description"=>"e_parent",
+                "ar1.description"=>"e_language",
+                "ar2.description"=>"e_profile",
+                "ar3.description"=>"e_country"
+            ],
+            "on" => [
+                "LEFT JOIN base_user u1 ON m.id_parent = u1.id",
+                "LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
+                "LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'",
+                "LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'",
+            ]
         ];
     }
 
@@ -95,7 +105,7 @@ final class UserRepository extends AppRepository
 
     private function _get_condition(string $field, string $value): string
     {
-        $jfield = array_search($field, $this->joins);
+        $jfield = array_search($field, $this->joins["fields"]);
         if ($jfield===false)
             return "m.$field LIKE '%$value%'";
 
@@ -127,13 +137,11 @@ final class UserRepository extends AppRepository
 
     private function _add_joins(ComponentCrud $crud): void
     {
-        foreach ($this->joins as $field => $alias)
+        foreach ($this->joins["fields"] as $field => $alias)
             $crud->add_getfield("$field as $alias");
 
-        $crud
-            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
-            ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'")
-            ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'");
+        foreach ($this->joins["on"] as $join)
+            $crud->add_join($join);
     }
 
     public function search(array $search): array
@@ -143,21 +151,20 @@ final class UserRepository extends AppRepository
             ->set_table("$this->table as m")
             ->is_foundrows()
             ->set_getfields([
+                "m.delete_date",
+                "m.delete_platform",
+                "m.delete_user",
                 "m.id",
                 "m.uuid",
                 "m.address",
                 "m.birthdate",
                 "m.date_validated",
-                "m.delete_date",
-                "m.delete_platform",
-                "m.delete_user",
                 "m.description",
                 "m.email",
                 "m.fullname",
                 "m.id_country",
                 "m.id_gender",
                 "m.id_language",
-                "m.id_nationality",
                 "m.id_parent",
                 "m.id_profile",
                 "m.insert_date",
@@ -167,8 +174,7 @@ final class UserRepository extends AppRepository
                 "m.secret",
                 "m.phone",
             ])
-            ->add_and("m.is_enabled=1")
-            ->add_and("m.delete_date IS NULL")
+            //->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL")
             ->set_limit(25, 0)
             ->set_orderby(["m.id"=>"DESC"])
         ;
@@ -176,8 +182,11 @@ final class UserRepository extends AppRepository
         $this->_add_search($crud, $search);
 
         $sql = $crud->get_selectfrom();
+        $r = $this->db->query($sql);
+        if ($this->db->is_error()) $this->_exeption(__("Data source error"));
+
         return [
-            "result" => $this->db->query($sql),
+            "result" => $r,
             "total" => $this->db->get_foundrows()
         ];
     }
