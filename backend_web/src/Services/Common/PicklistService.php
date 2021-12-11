@@ -31,15 +31,19 @@ final class PicklistService extends AppService
 
         if ($this->_get_auth()->is_root()) return $profiles;
 
-        if ($this->_get_auth()->is_business_owner() || $this->_get_auth()->is_business_manager())
-            return array_filter($profiles, function ($profile){
-               return !in_array($profile["key"], [ProfileType::ROOT, ProfileType::SYS_ADMIN, ProfileType::BUSINESS_OWNER]) ;
+        if ($this->_get_auth()->is_business_owner() || $this->_get_auth()->is_business_manager()) {
+            $profiles = array_filter($profiles, function ($profile) {
+                return !in_array($profile["key"], [ProfileType::ROOT, ProfileType::SYS_ADMIN, ProfileType::BUSINESS_OWNER]);
             });
+            return array_values($profiles);
+        }
 
         if ($this->_get_auth()->is_sysadmin())
-            return array_filter($profiles, function ($profile){
-                return !in_array($profile["key"], [ProfileType::BUSINESS_OWNER]) ;
+            $profiles = array_filter($profiles, function ($profile){
+                return !in_array($profile["key"], [ProfileType::ROOT, ProfileType::SYS_ADMIN]) ;
             });
+
+        return array_values($profiles);
     }
 
     public function get_users_by_profile(string $profileid): array
