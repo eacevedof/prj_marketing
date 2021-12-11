@@ -16,12 +16,19 @@ final class AuthComponent
         $this->session = SF::get();
         $this->user = $this->session->get(KeyType::AUTH_USER);
     }
-    
+
+    public function get_user(): ?array
+    {
+        return $this->user;
+    }
+
+    public function is_user_logged(): bool
+    {
+        return (bool)($this->user["id"] ?? "");
+    }
+
     public function is_user_allowed(string $action): bool
     {
-        if(!$this->user) return false;
-        if(!$this->user["id"]) return false;
-
         if($this->is_root()) return true;
         
         $permissions = SF::get()->get(KeyType::AUTH_USER_PERMISSIONS);

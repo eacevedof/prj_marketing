@@ -16,12 +16,12 @@ final class DashboardController extends RestrictController
 {
     public function index(): void
     {
-        if (!$this->auth->is_user_allowed(ActionType::DASHBOARD_READ))
+        if(!$user = $this->auth->get_user())
             $this->location(UrlType::FORBIDDEN);
 
         $this->add_var(KeyType::PAGE_TITLE, __("DASHBOARD"));
         $this->render([
-            "h1" => __("Dashboard")
+            "h1" => __("Dashboard for user {0}", $user["description"])
         ]);
     }
 
