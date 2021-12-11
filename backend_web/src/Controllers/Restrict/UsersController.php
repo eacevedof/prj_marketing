@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\ActionType;
+use App\Enums\PolicyType;
 use App\Enums\ExceptionType;
 use App\Enums\KeyType;
 use App\Enums\ProfileType;
@@ -33,7 +33,7 @@ final class UsersController extends RestrictController
 
     public function index(?string $page=null): void
     {
-        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
         $this->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
@@ -48,7 +48,7 @@ final class UsersController extends RestrictController
     //@get
     public function search(): void
     {
-        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
@@ -73,7 +73,7 @@ final class UsersController extends RestrictController
     //@modal
     public function create(): void
     {
-        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
             $this->add_var("h1",__("Unauthorized"))
                 ->set_template("/error/403")
                 ->render_nl();
@@ -98,7 +98,7 @@ final class UsersController extends RestrictController
                 ->show();
         }
 
-        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([__("Not allowed to perform this operation")])
                 ->show();
@@ -130,11 +130,11 @@ final class UsersController extends RestrictController
     //@modal
     public function info(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(ActionType::USERS_READ))
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
         $this->add_var(KeyType::PAGE_TITLE, __("USERS - info"));
-        if (!$this->auth->is_user_allowed(ActionType::USERS_READ)) {
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ)) {
             $this->render_error([
                 "h1"=>__("Unauthorized")
             ],"/error/403");
@@ -161,7 +161,7 @@ final class UsersController extends RestrictController
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
             $this->add_var("h1",__("Unauthorized"))
                 ->set_template("/error/403")
                 ->render_nl();
@@ -206,7 +206,7 @@ final class UsersController extends RestrictController
                 ->show();
         }
 
-        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([__("Not allowed to perform this operation")])
                 ->show();
@@ -244,7 +244,7 @@ final class UsersController extends RestrictController
                 ->set_error([__("No code provided")])
                 ->show();
 
-        if (!$this->auth->is_user_allowed(ActionType::USERS_WRITE))
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([__("Not allowed to perform this operation")])
                 ->show();
