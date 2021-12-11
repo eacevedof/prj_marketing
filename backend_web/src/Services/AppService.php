@@ -28,7 +28,7 @@ abstract class AppService
     use LogTrait;
     use EnvTrait;
 
-    private static ?AuthComponent $auth;
+    private static ?AuthComponent $auth = null;
 
     protected function _get_auth(): ?AuthComponent
     {
