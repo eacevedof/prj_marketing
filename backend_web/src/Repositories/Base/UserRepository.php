@@ -49,7 +49,7 @@ final class UserRepository extends AppRepository
                 ->set_comment("user.get_by_email")
                 ->set_table("$this->table as m")
                 ->set_getfields([
-                    "m.id","m.email","m.secret", "m.id_language", "m.id_profile",
+                    "m.id", "m.email", "m.secret", "m.id_language", "m.id_profile",
                     "m.uuid",
                     "ar1.code_erp as e_language"
                 ])
