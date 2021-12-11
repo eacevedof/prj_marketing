@@ -38,8 +38,8 @@ final class UsersSearchService extends AppService
     public function get_datatable(): DatatableHelper
     {
         return HF::get("Views/Datatable")
-            ->add_column("id")->is_visible()
-            ->add_column("uuid")->add_label("uuid")->add_tooltip(__("uuid"))
+            ->add_column("id")->is_visible(false)
+            ->add_column("uuid")->add_label(__("Code"))->add_tooltip(__("uuid"))
             ->add_column("fullname")->add_label(__("Fullname"))
             ->add_column("email")->add_label(__("Email"))
             ->add_column("phone")->add_label(__("Phone"))
