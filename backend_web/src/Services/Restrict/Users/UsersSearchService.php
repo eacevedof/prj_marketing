@@ -1,12 +1,14 @@
 <?php
 namespace App\Services\Restrict\Users;
 use App\Factories\ComponentFactory as CF;
+use App\Helpers\Views\DatatableHelper;
 use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
+use App\Factories\HelperFactory as HF;
 
 final class UsersSearchService extends AppService
 {
@@ -31,5 +33,18 @@ final class UsersSearchService extends AppService
         $search = CF::get_datatable($this->input)->get_search();
         $rows = $this->repository->search($search);
         return $rows;
+    }
+
+    public function get_datatable(): DatatableHelper
+    {
+        return HF::get("Views/Datatable")
+            ->add_column("id")->is_visible()
+            ->add_column("uuid")->add_label("uuid")->add_tooltip(__("uuid"))
+            ->add_column("fullname")->add_label(__("Fullname"))
+            ->add_column("email")->add_label(__("Email"))
+            ->add_column("phone")->add_label(__("Phone"))
+            ->add_column("e_profile")->add_label(__("Profile"))
+            ->add_column("e_country")->add_label(__("Country"))
+            ->add_column("e_language")->add_label(__("Language"));
     }
 }
