@@ -93,10 +93,11 @@ export class FormUserEdit extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
-
     //this._email = this.fields.email
     for(let p in this.fields) this["_".concat(p)] = this.fields[p]
     //console.log("connectedCallback","parents:",this._parents)
+    this._is_parent = false
+    if (this._id_profile === "4") this._is_parent = true
   }
 
   //4
