@@ -9,6 +9,7 @@
  */
 namespace App\Repositories\Base;
 
+use App\Components\Auth\AuthComponent;
 use App\Components\Hierarchy\HierarchyComponent;
 use App\Enums\ExceptionType;
 use App\Factories\RepositoryFactory as RF;
@@ -20,6 +21,7 @@ use App\Factories\ComponentFactory as CF;
 final class UserRepository extends AppRepository
 {
     private array $joins;
+    private AuthComponent $auth;
 
     public function __construct()
     {
@@ -52,7 +54,16 @@ final class UserRepository extends AppRepository
         return "$jfield LIKE '%$value%'";
     }
 
-    private function _add_search(ComponentCrud $crud, array $search): void
+    private function _add_joins(ComponentCrud $crud): void
+    {
+        foreach ($this->joins["fields"] as $field => $alias)
+            $crud->add_getfield("$field as $alias");
+
+        foreach ($this->joins["on"] as $join)
+            $crud->add_join($join);
+    }
+    
+    private function _add_search_filter(ComponentCrud $crud, array $search): void
     {
         if(!$search) return;
 
@@ -75,13 +86,23 @@ final class UserRepository extends AppRepository
         }
     }
 
-    private function _add_joins(ComponentCrud $crud): void
+    private function _add_auth_condition(ComponentCrud $crud): void
     {
-        foreach ($this->joins["fields"] as $field => $alias)
-            $crud->add_getfield("$field as $alias");
+        if(!$this->auth) {
+            $crud->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
+            return;
+        }
 
-        foreach ($this->joins["on"] as $join)
-            $crud->add_join($join);
+        if($this->auth->is_root()) {
+            $crud->add_getfield("m.delete_date")
+                ->add_getfield("m.delete_user")
+                ->add_getfield("m.insert_date")
+                ->add_getfield("m.insert_user");
+            return;
+        }
+
+        $user = $this->auth->get_user();
+
     }
 
     public function search(array $search): array
@@ -91,9 +112,6 @@ final class UserRepository extends AppRepository
             ->set_table("$this->table as m")
             ->is_foundrows()
             ->set_getfields([
-                "m.delete_date",
-                "m.delete_platform",
-                "m.delete_user",
                 "m.id",
                 "m.uuid",
                 "m.address",
@@ -107,19 +125,16 @@ final class UserRepository extends AppRepository
                 "m.id_language",
                 "m.id_parent",
                 "m.id_profile",
-                "m.insert_date",
-                "m.insert_platform",
-                "m.insert_user",
                 "m.is_notificable",
                 "m.secret",
                 "m.phone",
             ])
-            //->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL")
             ->set_limit(25, 0)
             ->set_orderby(["m.id"=>"DESC"])
         ;
         $this->_add_joins($crud);
-        $this->_add_search($crud, $search);
+        $this->_add_search_filter($crud, $search);
+        $this->_add_auth_condition($crud);
 
         $sql = $crud->get_selectfrom();
         $r = $this->db->query($sql);
@@ -223,6 +238,12 @@ final class UserRepository extends AppRepository
         ;
         $r = $this->db->query($sql);
         return $r;
+    }
+
+    public function set_auth(AuthComponent $auth): self
+    {
+        $this->auth = $auth;
+        return $this;
     }
 
     public function get_by_id(string $id): int
