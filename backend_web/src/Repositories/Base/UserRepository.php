@@ -49,11 +49,11 @@ final class UserRepository extends AppRepository
                 ->set_comment("user.get_by_email")
                 ->set_table("$this->table as m")
                 ->set_getfields([
-                    "m.id","m.email","m.secret","m.id_language", "m.id_profile",
+                    "m.id","m.email","m.secret", "m.id_language", "m.id_profile",
                     "m.uuid",
-                    "ar.code_erp as language"
+                    "ar1.code_erp as e_language"
                 ])
-                ->add_join("LEFT JOIN app_array ar ON m.id_language = ar.id AND ar.type='language'")
+                ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
                 ->add_and("m.is_enabled=1")
                 ->add_and("m.delete_date IS NULL")
                 ->add_and("m.email='$email'")

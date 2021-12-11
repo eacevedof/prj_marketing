@@ -11,6 +11,8 @@ final class AuthComponent
         $session = SF::get();
         if(!($user = $session->get(KeyType::AUTH_USER))) return false;
         if(!$user["id"]) return false;
+
+
         $permissions = SF::get()->get(KeyType::AUTH_USER_PERMISSIONS);
         return in_array($action, $permissions);
     }

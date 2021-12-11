@@ -12,3 +12,9 @@ msgstr "Cuadro de mandos"
 
 msgid "Promotions"
 msgstr "Promociones"
+
+msgid "Deleted at"
+msgstr "Borrado el"
+
+msgid "Deleted by"
+msgstr "Borrado por"
