@@ -84,6 +84,53 @@ final class UserRepository extends AppRepository
             $crud->add_join($join);
     }
 
+    public function search(array $search): array
+    {
+        $crud = $this->_get_crud()
+            ->set_comment("user.search")
+            ->set_table("$this->table as m")
+            ->is_foundrows()
+            ->set_getfields([
+                "m.delete_date",
+                "m.delete_platform",
+                "m.delete_user",
+                "m.id",
+                "m.uuid",
+                "m.address",
+                "m.birthdate",
+                "m.date_validated",
+                "m.description",
+                "m.email",
+                "m.fullname",
+                "m.id_country",
+                "m.id_gender",
+                "m.id_language",
+                "m.id_parent",
+                "m.id_profile",
+                "m.insert_date",
+                "m.insert_platform",
+                "m.insert_user",
+                "m.is_notificable",
+                "m.secret",
+                "m.phone",
+            ])
+            //->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL")
+            ->set_limit(25, 0)
+            ->set_orderby(["m.id"=>"DESC"])
+        ;
+        $this->_add_joins($crud);
+        $this->_add_search($crud, $search);
+
+        $sql = $crud->get_selectfrom();
+        $r = $this->db->query($sql);
+        if ($this->db->is_error()) $this->_exeption(__("Data source error"));
+
+        return [
+            "result" => $r,
+            "total" => $this->db->get_foundrows()
+        ];
+    }
+
     public function get_by_email(string $email): array
     {
         $email = $this->_get_sanitized($email);
@@ -134,66 +181,6 @@ final class UserRepository extends AppRepository
         return intval($r[0]["id"] ?? 0);
     }
 
-    public function get_by_id(string $id): int
-    {
-        $id = (int) $id;
-        $sql = $this->_get_crud()
-            ->set_table("$this->table as m")
-            ->set_getfields(["*"])
-            ->add_and("m.id=$id")
-            ->get_selectfrom()
-        ;
-        $r = $this->db->query($sql);
-        return $r[0] ?? [];
-    }
-
-    public function search(array $search): array
-    {
-        $crud = $this->_get_crud()
-            ->set_comment("user.search")
-            ->set_table("$this->table as m")
-            ->is_foundrows()
-            ->set_getfields([
-                "m.delete_date",
-                "m.delete_platform",
-                "m.delete_user",
-                "m.id",
-                "m.uuid",
-                "m.address",
-                "m.birthdate",
-                "m.date_validated",
-                "m.description",
-                "m.email",
-                "m.fullname",
-                "m.id_country",
-                "m.id_gender",
-                "m.id_language",
-                "m.id_parent",
-                "m.id_profile",
-                "m.insert_date",
-                "m.insert_platform",
-                "m.insert_user",
-                "m.is_notificable",
-                "m.secret",
-                "m.phone",
-            ])
-            //->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL")
-            ->set_limit(25, 0)
-            ->set_orderby(["m.id"=>"DESC"])
-        ;
-        $this->_add_joins($crud);
-        $this->_add_search($crud, $search);
-
-        $sql = $crud->get_selectfrom();
-        $r = $this->db->query($sql);
-        if ($this->db->is_error()) $this->_exeption(__("Data source error"));
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
-    }
-
     public function get_info(string $uuid): array
     {
         $uuid = $this->_get_sanitized($uuid);
@@ -236,6 +223,19 @@ final class UserRepository extends AppRepository
         ;
         $r = $this->db->query($sql);
         return $r;
+    }
+
+    public function get_by_id(string $id): int
+    {
+        $id = (int) $id;
+        $sql = $this->_get_crud()
+            ->set_table("$this->table as m")
+            ->set_getfields(["*"])
+            ->add_and("m.id=$id")
+            ->get_selectfrom()
+        ;
+        $r = $this->db->query($sql);
+        return $r[0] ?? [];
     }
 
     public function get_owner(string $userid): array
