@@ -72,7 +72,7 @@ final class DatatableHelper extends AppHelper implements IHelper
         return $this;
     }
     
-    public function is_visible(bool $isvisible=false): self
+    public function is_visible(bool $isvisible=true): self
     {
         $this->columns[$this->colname]["is_visible"] = $isvisible;
         return $this;
