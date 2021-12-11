@@ -27,12 +27,14 @@ final class UserRepository extends AppRepository
         $this->joins = [
             "fields" => [
                 "u1.description"=>"e_parent",
+                "u2.description" => "e_deletedby",
                 "ar1.description"=>"e_language",
                 "ar2.description"=>"e_profile",
-                "ar3.description"=>"e_country"
+                "ar3.description"=>"e_country",
             ],
             "on" => [
                 "LEFT JOIN base_user u1 ON m.id_parent = u1.id",
+                "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
                 "LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
                 "LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'",
                 "LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'",
