@@ -20,6 +20,7 @@ use App\Factories\ComponentFactory as CF;
 final class UserRepository extends AppRepository
 {
     private array $joins;
+
     public function __construct()
     {
         $this->db = DbF::get_by_default();
@@ -42,22 +43,63 @@ final class UserRepository extends AppRepository
         ];
     }
 
+    private function _get_condition(string $field, string $value): string
+    {
+        $jfield = array_search($field, $this->joins["fields"]);
+        if ($jfield===false)
+            return "m.$field LIKE '%$value%'";
+
+        return "$jfield LIKE '%$value%'";
+    }
+
+    private function _add_search(ComponentCrud $crud, array $search): void
+    {
+        if(!$search) return;
+
+        if($fields = $search["fields"])
+            foreach ($fields as $field => $value )
+                $crud->add_and($this->_get_condition($field, $value));
+
+        if($limit = $search["limit"])
+            $crud->set_limit($limit["length"], $limit["from"]);
+
+        if($order = $search["order"])
+            $crud->set_orderby(["m.{$order["field"]}"=>"{$order["dir"]}"]);
+
+        if($global = $search["global"]) {
+            $or = [];
+            foreach ($search["all"] as $field)
+                $or[] = $this->_get_condition($field, $global);
+            $or = implode(" OR ",$or);
+            $crud->add_and("($or)");
+        }
+    }
+
+    private function _add_joins(ComponentCrud $crud): void
+    {
+        foreach ($this->joins["fields"] as $field => $alias)
+            $crud->add_getfield("$field as $alias");
+
+        foreach ($this->joins["on"] as $join)
+            $crud->add_join($join);
+    }
+
     public function get_by_email(string $email): array
     {
         $email = $this->_get_sanitized($email);
         $sql = $this->_get_crud()
-                ->set_comment("user.get_by_email")
-                ->set_table("$this->table as m")
-                ->set_getfields([
-                    "m.id", "m.fullname","m.description", "m.email", "m.secret", "m.id_language", "m.id_profile",
-                    "m.uuid",
-                    "ar1.code_erp as e_language"
-                ])
-                ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
-                ->add_and("m.is_enabled=1")
-                ->add_and("m.delete_date IS NULL")
-                ->add_and("m.email='$email'")
-                ->get_selectfrom()
+            ->set_comment("user.get_by_email")
+            ->set_table("$this->table as m")
+            ->set_getfields([
+                "m.id", "m.fullname","m.description", "m.email", "m.secret", "m.id_language", "m.id_profile",
+                "m.uuid",
+                "ar1.code_erp as e_language"
+            ])
+            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
+            ->add_and("m.is_enabled=1")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.email='$email'")
+            ->get_selectfrom()
         ;
         $r = $this->db->query($sql);
         if(count($r)>1 || !$r) return [];
@@ -103,47 +145,6 @@ final class UserRepository extends AppRepository
         ;
         $r = $this->db->query($sql);
         return $r[0] ?? [];
-    }
-
-    private function _get_condition(string $field, string $value): string
-    {
-        $jfield = array_search($field, $this->joins["fields"]);
-        if ($jfield===false)
-            return "m.$field LIKE '%$value%'";
-
-        return "$jfield LIKE '%$value%'";
-    }
-
-    private function _add_search(ComponentCrud $crud, array $search): void
-    {
-        if(!$search) return;
-
-        if($fields = $search["fields"])
-            foreach ($fields as $field => $value )
-                $crud->add_and($this->_get_condition($field, $value));
-
-        if($limit = $search["limit"])
-            $crud->set_limit($limit["length"], $limit["from"]);
-
-        if($order = $search["order"])
-            $crud->set_orderby(["m.{$order["field"]}"=>"{$order["dir"]}"]);
-
-        if($global = $search["global"]) {
-            $or = [];
-            foreach ($search["all"] as $field)
-                $or[] = $this->_get_condition($field, $global);
-            $or = implode(" OR ",$or);
-            $crud->add_and("($or)");
-        }
-    }
-
-    private function _add_joins(ComponentCrud $crud): void
-    {
-        foreach ($this->joins["fields"] as $field => $alias)
-            $crud->add_getfield("$field as $alias");
-
-        foreach ($this->joins["on"] as $join)
-            $crud->add_join($join);
     }
 
     public function search(array $search): array
