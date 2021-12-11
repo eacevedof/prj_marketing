@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.9.0
- * @date 23-11-2021 20:55 SPAIN
+ * @file component_crud.php 2.10.0
+ * @date 11-12-2021 18:08 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -753,24 +753,35 @@ class ComponentCrud
         }
     }//query
 
-    public function is_distinct($isOn=TRUE):self{$this->isDistinct=$isOn; return $this;}
-    public function is_foundrows($isOn=TRUE):self {$this->isFoundrows=$isOn; return $this;}
-    public function add_orderby($sFieldName,$sOrder="ASC"):self{$this->arOrderBy[$sFieldName]=$sOrder; return $this;}
-    public function add_groupby($sFieldName):self{$this->arGroupBy[]=$sFieldName; return $this;}
-    public function add_having($sHavecond):self{$this->arHaving[]=$sHavecond; return $this;}
+    private function add_error($sMessage):self{$this->isError = true;$this->arErrors[]=$sMessage; return $this; return $this;}
+
+    public function is_distinct($isOn=true):self{$this->isDistinct=$isOn; return $this;}
+    public function is_foundrows($isOn=true):self {$this->isFoundrows=$isOn; return $this;}
     public function add_numeric($sFieldName):self{$this->arNumeric[]=$sFieldName; return $this;}
     public function set_and($arAnds=[]):self{$this->arAnds = []; if(is_array($arAnds)) $this->arAnds=$arAnds; return $this;}
     public function add_and($sAnd):self{$this->arAnds[]=$sAnd; return $this;}
     public function add_and1($sFieldName,$sValue,$sOper="="):self{$this->arAnds[]="$sFieldName $sOper $sValue"; return $this;}
+    public function add_and_in(string $sFieldName, array $values, bool $isnum=true):self
+    {
+        $values = array_unique($values);
+        $glue = $isnum ? "," : "','";
+        $in = implode($glue, $values);
+        $in = $isnum ? "($in)" : "('$in')";
+        $this->arAnds[] = "$sFieldName IN $in";
+        return $this;
+    }
+
     public function add_join($sJoin,$sKey=null):self{if($sKey)$this->arJoins[$sKey]=$sJoin;else$this->arJoins[]=$sJoin; return $this;}
+    public function add_orderby($sFieldName,$sOrder="ASC"):self{$this->arOrderBy[$sFieldName]=$sOrder; return $this;}
+    public function add_groupby($sFieldName):self{$this->arGroupBy[]=$sFieldName; return $this;}
+    public function add_having($sHavecond):self{$this->arHaving[]=$sHavecond; return $this;}
+
     public function add_end($sEnd,$sKey=null):self{if($sKey)$this->arEnd[$sKey]=$sEnd;else$this->arEnd[]=$sEnd; return $this;}
-    private function add_error($sMessage):self{$this->isError = TRUE;$this->arErrors[]=$sMessage; return $this; return $this;}
     public function set_dbobj($oDb=null):self{$this->oDB=$oDb; return $this;}
 
     public function is_error(){return $this->isError;}
     public function get_result(){$this->query(); return $this->arResult;}
     public function get_errors($inJson=0){if($inJson) return json_encode($this->arErrors); return $this->arErrors;}
     public function get_error($i=0){return isset($this->arErrors[$i])?$this->arErrors[$i]:null;}
-    public function show_errors(){echo "<pre>".var_export($this->arErrors,1);}
-    
-}//Crud 2.8.1
+
+}//Crud 2.10.0
