@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\ActionType;
+use App\Enums\PolicyType;
 use App\Enums\KeyType;
 use App\Enums\UrlType;
 
