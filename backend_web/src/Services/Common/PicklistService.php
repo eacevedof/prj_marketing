@@ -15,6 +15,11 @@ final class PicklistService extends AppService
         $this->repository = RF::get("App/Picklist");
     }
 
+    public function get_countries(): array
+    {
+        return $this->repository->get_countries();
+    }
+
     public function get_languages(): array
     {
         return $this->repository->get_languages();
@@ -24,27 +29,17 @@ final class PicklistService extends AppService
     {
         $profiles = $this->repository->get_profiles();
 
+        if ($this->_get_auth()->is_root()) return $profiles;
+
         if ($this->_get_auth()->is_business_owner() || $this->_get_auth()->is_business_manager())
-            $profiles = array_filter($profiles, function ($profile){
+            return array_filter($profiles, function ($profile){
                return !in_array($profile["key"], [ProfileType::ROOT, ProfileType::SYS_ADMIN, ProfileType::BUSINESS_OWNER]) ;
             });
 
-        return $profiles;
-    }
-
-    public function get_countries(): array
-    {
-        return $this->repository->get_countries();
-    }
-
-    public function get_users(?string $notid=null): array
-    {
-        $users = $this->repository->get_users();
-        if (!$notid)
-            return $users;
-        $idsuer = array_search($notid,$users);
-        if($idsuer) unset($users[$idsuer]);
-        return $users;
+        if ($this->_get_auth()->is_sysadmin())
+            return array_filter($profiles, function ($profile){
+                return !in_array($profile["key"], [ProfileType::BUSINESS_OWNER]) ;
+            });
     }
 
     public function get_users_by_profile(string $profileid): array
@@ -69,6 +64,16 @@ final class PicklistService extends AppService
             return $users;
         }
 
+        return $users;
+    }
+
+    public function get_users(?string $notid=null): array
+    {
+        $users = $this->repository->get_users();
+        if (!$notid)
+            return $users;
+        $idsuer = array_search($notid,$users);
+        if($idsuer) unset($users[$idsuer]);
         return $users;
     }
 }
