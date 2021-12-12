@@ -41,7 +41,8 @@ column.add_column({
 
 column.add_rowbtn({
   btnid: "rowbtn-show",
-  render: (v,t,row) => `<span style="color:darkblue">Show ${row.uuid}</span>`
+  text: "Hola"
+  //render: (v,t,row) => `<span style="color:darkblue">Show ${row.uuid}</span>`
 })
 
 column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: yellow">Extra ${row.id}</span>`)
@@ -51,7 +52,7 @@ rowswal.set_texts({
     title: <?$this->_echo_js(__("Delete success:"));?>
   },
   error: {
-    title: <?$this->_echo_js(__("Some error occured trying to delete"));?>
+    title: <?$this->_echo_js(__("Some error occurred trying to delete"));?>
   }
 })
 

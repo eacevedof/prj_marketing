@@ -5,25 +5,31 @@ let _ths = [],
   _defrowbtns = [
     {
       btnid: "rowbtn-show",
-      render: (v,t,row) => `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}">Show</button>`
+      text: "Show",
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}">%text%</button>`
     },
     {
       btnid: "rowbtn-edit",
-      render: (v,t,row) => `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}">Edit</button>`
+      text: "Edit",
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}">%text%</button>`
     },
     {
       btnid: "rowbtn-del",
-      render: (v,t,row) => `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}">Remove</button>`
+      text: "Remove",
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}">%text%</button>`
     },
     {
       btnid: "rowbtn-undel",
-      render: (v,t,row) => `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}">Restore</button>`
+      text: "Restore",
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}">%text%</button>`
     },
     {
       btnid: "rowbtn-clone",
-      render: (v,t,row) => `<button type="button" btnid="rowbtn-clone" uuid="${row?.uuid ?? ""}">Clone</button>`
+      text: "Clone",
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-clone" uuid="${row?.uuid ?? ""}">%text%</button>`
     },
   ],
+  _override = [],
   _extrowbtns = [],
   _columns = []
 
@@ -38,7 +44,7 @@ const _get_colnames_from_ths = () => _ths
 const _is_visible = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("visible")==="1").length > 0
-
+/*
 const _is_ordenable = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).filter($th => $th.getAttribute("orderable")==="1").length > 0
@@ -50,12 +56,29 @@ const _is_searchable = column => _ths.filter(
 const _get_type = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).map($th => $th.getAttribute("type"))
-
-//to-do, tengo que crear metodo render por cada boton para que alcance la
-// row
+*/
 const _get_rowbtns_value = (v, t, row) => {
   const visibleids = _get_rowbtn_ids()
-  const rowbtns = _defrowbtns.filter(objbtn => visibleids.includes(objbtn.btnid))
+  let rowbtns = _defrowbtns.filter(objbtn => visibleids.includes(objbtn.btnid))
+
+  //aplico override
+  rowbtns = rowbtns.map(objbtn => {
+    const overbtn = _override.filter(overbtn => overbtn.btnid === objbtn.btnid)[0] ?? {}
+    return {
+      ...objbtn,
+      ...overbtn
+    }
+  })
+
+  //aplico traducciones
+  rowbtns = rowbtns.map(objbtn => {
+    const text = objbtn?.text ?? ""
+    const fnrender = (v,t,row) => objbtn.render(v, t, row).replace("%text%",text)
+    return {
+      ...objbtn,
+      render: fnrender
+    }
+  })
   let final = rowbtns.map(objbtn => objbtn.render(v, t, row))
   return final.concat(_extrowbtns.map(render => render(v, t, row))).join("&nbsp;")
 }
@@ -104,7 +127,7 @@ const get_columns = () => {
 
 export const column = {
   add_column: obj => _columns.push(obj),
-  add_rowbtn: obj => _rowbtns.push(obj),
+  add_rowbtn: obj => _override.push(obj),
   add_extrowbtn: obj => _extrowbtns.push(obj),
 }
 
