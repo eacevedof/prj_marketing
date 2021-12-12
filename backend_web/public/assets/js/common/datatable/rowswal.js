@@ -38,12 +38,14 @@ const _show_error_handled = (type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.f
 
 const _show_error_catched = (error,type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fire({
     icon: "error",
-    title: _texts.delswal.error.concat(`<br/>${error}`),
+    title: _texts.delswal.error,
+    text: error,
   })
   :
   Rowswal.fire({
     icon: "error",
-    title: _texts.undelswal.error.concat(`<br/>${error}`),
+    title: _texts.undelswal.error,
+    text: error,
   })
 
 const _show_success = (uuid, type=TYPE.DELETE) => type===TYPE.DELETE ? window.snack
@@ -79,7 +81,7 @@ const on_delete = uuid =>
     if (!result.isConfirmed) return
 
     const URL_DELETE = _$table.getAttribute("urlmodule").concat(`/delete/${uuid}`)
-    const response = await injson.patch(
+    const response = await injson.del(
       URL_DELETE, {
         _action: "row.delete",
       })
