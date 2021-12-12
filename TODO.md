@@ -6,3 +6,4 @@
 - accion clone
 - generador de módulo .py
 - queries de _array con or de id_owner=-1
+- limpieza de código (por ejemplo $this->auth)

@@ -262,7 +262,7 @@ final class UserRepository extends AppRepository
         $id = (int) $id;
         $sql = $this->_get_crud()
             ->set_table("$this->table as m")
-            ->set_getfields(["*"])
+            ->set_getfields(["m.*"])
             ->add_and("m.id=$id")
             ->get_selectfrom()
         ;

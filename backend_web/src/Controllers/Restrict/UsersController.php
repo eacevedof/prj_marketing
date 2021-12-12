@@ -15,6 +15,7 @@ use App\Enums\ProfileType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
+use App\Services\Restrict\Users\UsersDeleteService;
 use App\Services\Restrict\Users\UsersInfoService;
 use App\Services\Restrict\Users\UsersUpdateService;
 use TheFramework\Helpers\HelperJson;
@@ -251,7 +252,7 @@ final class UsersController extends RestrictController
                 ->show();
 
         /**
-         * @var UsersUpdateService $service
+         * @var UsersDeleteService $service
          */
         $service = SF::get_callable("Restrict\Users\UsersDelete", ["uuid"=>$uuid]);
         try {
@@ -263,11 +264,6 @@ final class UsersController extends RestrictController
         }
         catch (\Exception $e)
         {
-            if ($service->is_error()) {
-                $this->_get_json()->set_code($e->getCode())
-                    ->set_error([["fields_validation" =>$service->get_errors()]])
-                    ->show();
-            }
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
                 ->show();
@@ -288,23 +284,18 @@ final class UsersController extends RestrictController
                 ->show();
 
         /**
-         * @var UsersUpdateService $service
+         * @var UsersDeleteService $service
          */
         $service = SF::get_callable("Restrict\Users\UsersDelete", ["uuid"=>$uuid]);
         try {
-            $result = $service();
+            $result = $service->undelete();
             $this->_get_json()->set_payload([
-                "message"=>__("User successfully created"),
+                "message"=>__("User successfully restored"),
                 "result" => $result,
             ])->show();
         }
         catch (\Exception $e)
         {
-            if ($service->is_error()) {
-                $this->_get_json()->set_code($e->getCode())
-                    ->set_error([["fields_validation" =>$service->get_errors()]])
-                    ->show();
-            }
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
                 ->show();
