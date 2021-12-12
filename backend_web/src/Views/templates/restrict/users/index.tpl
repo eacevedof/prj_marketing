@@ -29,10 +29,10 @@ import {button} from "/assets/js/common/datatable/button.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {column} from "/assets/js/common/datatable/column.js"
 
-column.add_btn({
+column.add_action_btn({
   approle: "rowbtn-show",
   text: "Show xxx",
-  html: `<button type="button" %attr%>%text%</button>`,
+   : `<button type="button" %attr%>%text%</button>`,
   attr: {
     approle: "rowbtn-show",
     uuid: "%uuid%",
