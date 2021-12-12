@@ -1,3 +1,4 @@
+import reqjs from "/assets/js/common/req.js"
 import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import set_cookie from "/assets/js/common/cookie.js"
 
@@ -22,65 +23,42 @@ export class FormLogin extends LitElement {
 
   $get = sel => this.shadowRoot.querySelector(sel)
 
-  submitForm(e) {
+  async on_submit(e) {
     e.preventDefault()
     this.issending = true
     this.btnsend = "...enviando"
 
-    fetch(URL, {
-      method: "post",
-      headers: {
-        "Accept": "application/json, text/plain, */*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        _csrf: this.csrf,
-        email: this.$get("#email").value,
-        password: this.$get("#password").value,
-      })
+    const response = await reqjs.post(URL,{
+      _csrf: this.csrf,
+      email: this.$get("#email").value,
+      password: this.$get("#password").value,
     })
-      .then(response => response.json())
-      .then(response => {
-        this.issending = false
-        this.btnsend = "Enviar"
 
-        if(response?.errors?.length){
-          console.error(response.errors)
-          return Swal.fire({
-            icon: "warning",
-            title: "Errores",
-            html: response.errors.join("<br/>"),
-          })
-        }
+    this.issending = false
+    this.btnsend = "Enviar"
 
-        console.log("reponse ok",response)
-        set_cookie("lang", response.data.lang)
-
-        Swal.fire({
-          icon: "success",
-          title: "Acceso concedido",
-          showConfirmButton: false,
-          html: "...redirigiendo al panel de control",
-        })
-
-        setTimeout(() => window.location = URL_ON_ACCESS, 1000)
+    if(response?.errors){
+      return Swal.fire({
+        icon: "warning",
+        title: "Errores",
+        html: response.errors.join("<br/>"),
       })
-      .catch(error => {
-        Swal.fire({
-          icon: "error",
-          title: "Vaya! Algo ha ido mal",
-          html: `<b>${error}</b>`,
-        })
-      })
-      .finally(()=>{
-        this.issending = false
-        this.btnsend = "Enviar"
-      })
+    }
+
+    set_cookie("lang", response.lang)
+    Swal.fire({
+      icon: "success",
+      title: "Acceso concedido",
+      showConfirmButton: false,
+      html: "...redirigiendo al panel de control",
+    })
+
+    setTimeout(() => window.location = URL_ON_ACCESS, 1000)
   }//submit
 
   render() {
     return html`
-    <form @submit=${this.submitForm}>
+    <form @submit=${this.on_submit}>
       <div>
         <label for="email">Email</label>
         <input type="email" id="email" .value=${this.email} />
