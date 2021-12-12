@@ -118,7 +118,9 @@ export const button = {
 }
 
 const _in_modal = async url => {
+  spinner.render()
   const r = await reqtxt.get(url)
+  spinner.remove()
   if (r.errors)
     return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
   window.modalraw.disable_bgclick().set_body(r).show()
