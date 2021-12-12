@@ -111,8 +111,7 @@ const on_undelete = uuid =>
         "Accept": "application/json",
         "Content-Type": "application/json",
         "Authorization": ""
-      },
-      data: "xxxxx"
+      }
     })
     .then(response => response.json())
     .then(json => {
