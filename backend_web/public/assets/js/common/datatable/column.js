@@ -15,7 +15,7 @@ let _ths = [],
     {
       btnid: "rowbtn-del",
       text: "Remove",
-      render: (v,t,row) => `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}">%text%</button>`
+      render: (v,t,row) => row?.delete_date ? "" : `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}">%text%</button>`
     },
     {
       btnid: "rowbtn-undel",

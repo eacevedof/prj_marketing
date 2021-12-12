@@ -55,18 +55,22 @@ const is_editable = row => {
   const usrprof = row.id_profile
   const usrid = row.id
   return (
-    (sesprofile===PROFILES.ROOT || sessusrid===usrid) ||
-    (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
-    (sesprofile===PROFILES.BUSINESS_OWNER)
+    !row?.delete_date && (
+      (sesprofile===PROFILES.ROOT || sessusrid===usrid) ||
+      (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
+      (sesprofile===PROFILES.BUSINESS_OWNER)
+    )
   )
 }
 
 const is_deletable = row => {
   const usrprof = row.id_profile
   return (
-    (sesprofile===PROFILES.ROOT) ||
-    (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
-    (sesprofile===PROFILES.BUSINESS_OWNER && usrprof===PROFILES.BUSINESS_MANAGER)
+    !row?.delete_date && (
+      (sesprofile===PROFILES.ROOT) ||
+      (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
+      (sesprofile===PROFILES.BUSINESS_OWNER && usrprof===PROFILES.BUSINESS_MANAGER)
+    )
   )
 }
 
@@ -88,12 +92,14 @@ column.add_rowbtn({
 })
 
 rowswal.set_texts({
-  success: {
-    title: <?$this->_echo_js(__("Delete success:"));?>
+  delswal: {
+    error: <?$this->_echo_js(__("Some error occurred trying to delete"));?>,
+    success: <?$this->_echo_js(__("Data successfully deleted"));?>
   },
-  error: {
-    title: <?$this->_echo_js(__("Some error occurred trying to delete"));?>
-  }
+  undelswal: {
+    error: <?$this->_echo_js(__("Some error occurred trying to restore"));?>,
+    success: <?$this->_echo_js(__("Data successfully restored"));?>
+  },
 })
 
 dt_render({
