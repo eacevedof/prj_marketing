@@ -110,7 +110,6 @@ const on_undelete = uuid =>
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "_method": "PATCH",
         "Authorization": ""
       },
       data: "xxxxx"
