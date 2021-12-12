@@ -1,4 +1,4 @@
-import {rqtext} from "/assets/js/common/req.js"
+import {reqtxt} from "/assets/js/common/req.js"
 import search from "./search.js"
 import rowswal from "./rowswal.js"
 
@@ -17,27 +17,20 @@ const rowbuttons_listeners = ()=> {
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
     const URL_INFO = urlmodule.concat(`/info/${uuid}`)
-
-    const r = await rqtext.get(URL_INFO)
+    const r = await reqtxt.get(URL_INFO)
     if (r.errors)
       return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
-
     window.modalraw.disable_bgclick(false).set_body(r).show()
   }))//end foreach
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-edit"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
-    const url = urlmodule.concat(`/edit/${uuid}`)
-    try {
-      const r = await fetch(url)
-      const html = await r.text()
-      console.log("edit-html",html)
-      window.modalraw.disable_bgclick(true).set_body(html).show()
-    }
-    catch (error) {
-      window.snack.set_color("red").set_time(5).set_inner(error).show()
-    }
+    const URL_EDIT = urlmodule.concat(`/edit/${uuid}`)
+    const r = await reqtxt.get(URL_EDIT)
+    if (r.errors)
+      return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
+    window.modalraw.disable_bgclick(false).set_body(r).show()
   }))//end foreach
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-del"]`)
