@@ -1,36 +1,35 @@
 import {load_asset_css} from "/assets/js/common/utils.js"
-const PATH = "spinner"
+const PATH = "common/spinner"
 load_asset_css([PATH])
-
 let $wrapper = null
 
-const spinner = `    
+const spinnertpl = `    
 <div class="spinner" approle="spinner">
     <div class="spinner-loader"></div>
 </div>
 `
 
-const remove_spinner = () => {
+const _remove_spinner = () => {
   const $spinner = $wrapper.querySelector(`[approle="spinner"]`)
   if($spinner) $spinner.parentNode.removeChild($spinner)
 }
 
-const add_spinner = () => {
-  $wrapper.innerHtml = ""
-  $wrapper.innerHtml = spinner
+const _add_spinner = () => {
+  $wrapper.innerHTML = ""
+  $wrapper.innerHTML = spinnertpl
 }
 
-const render_spinner = $cont => {
+const _render_spinner = $cont => {
+  if(!$cont) $cont = document.getElementById("spinner-global")
+  if(!$cont) return
   $wrapper = $cont
-  if(!$wrapper) return
-  console.log("wrapper:",$wrapper)
-  remove_spinner()
-  add_spinner()
+  _remove_spinner()
+  _add_spinner()
 }
 
 export default {
-  render: render_spinner,
-  remove: remove_spinner,
+  render: _render_spinner,
+  remove: _remove_spinner,
 }
 
 
