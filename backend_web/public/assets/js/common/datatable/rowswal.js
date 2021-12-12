@@ -102,24 +102,16 @@ const on_undelete = uuid =>
     closeOnConfirm: false,
     closeOnCancel: false
   })
-  .then(result => {
+  .then(async result => {
     if (!result.isConfirmed) return
-    const url = _$table.getAttribute("urlmodule").concat(`/undelete/${uuid}`)
-    fetch(url,{
-      method: "PATCH",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      }
-    })
-    .then(response => response.json())
-    .then(json => {
-      if (json.errors.length>0)
-        return _show_error_handled(TYPE.UNDELETE)
-      _show_success(uuid, TYPE.UNDELETE)
-      _dttable.ajax.reload()
-    })
-    .catch(error => _show_error_catched(error, TYPE.UNDELETE))
+    const URL_PATCH = _$table.getAttribute("urlmodule").concat(`/undelete/${uuid}`)
+    const response = await injson.patch(
+      URL_PATCH, {
+        _action: "row.undelete",
+      })
+    if(response?.errors) return _show_error_catched(response.errors[0], TYPE.UNDELETE)
+    _show_success(uuid, TYPE.UNDELETE)
+    _dttable.ajax.reload()
   })//end then
 
 export const rowswal = {
