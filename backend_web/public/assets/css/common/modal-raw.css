@@ -12,6 +12,7 @@ body {
   para tener una referencia y poder trabajar con em y rem (ver el breakpoint)
   */
   font-size: 16px;
+  min-height: 100vh;
 }
 
 /*
@@ -72,15 +73,18 @@ modal-dialog es la caja blanca donde va el contenido. El modal en sí.
 */
 .modal-dialog {
   background: #fff;
-  padding: 10px;
+  padding: 0.50em;
   width: 37.5em;
-  min-height: 25em;
+  height: 98vh;
+  overflow: auto;
   border-radius: 1%;
+  border: 1px solid purple;
+  margin-top: 1em;
+  margin-bottom: 2em;
 }
 
 .modal-dialog-grid {
   display: grid;
-  grid-template-rows: 3.44em calc(90vh - 3.44em);
   grid-template-areas:
     "area-header"
     "area-body"
@@ -90,6 +94,7 @@ modal-dialog es la caja blanca donde va el contenido. El modal en sí.
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 1em;
 }
 
 .area-header button {
