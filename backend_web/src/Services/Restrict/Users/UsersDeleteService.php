@@ -64,6 +64,8 @@ final class UsersDeleteService extends AppService
         if (!$this->model->do_match_keys($update))
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
+        $row = $this->repository->get_by_id($id);
+
         //obtener fecha de borrado, csv
         $updatedate = $this->repository->get_sysupdate($update);
         $this->model->add_sysdelete($update, $updatedate, $this->user["id"]);
