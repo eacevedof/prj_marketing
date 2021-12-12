@@ -38,25 +38,6 @@ abstract class AppRepository
         throw new Exception($message, $code);
     }
 
-    public function _get_sysupdate(array $pks): string
-    {
-        if(!$pks) return "";
-
-        $crud = $this->_get_crud()
-            ->set_comment("app.sysupdate")
-            ->set_dbobj($this->db)
-            ->set_getfields(["m.update_date"])
-            ->set_table("$this->table as m")
-        ;
-
-        foreach($pks as $fieldname=>$sValue)
-            $crud->add_pk_fv($fieldname, $sValue);
-
-        $sql = $crud->get_selectfrom();
-        $r = $this->db->query($sql);
-        return $r[0]["update_date"] ?? "";
-    }
-
     private function _get_pks($arData)
     {
         $pks = [];
@@ -176,6 +157,25 @@ abstract class AppRepository
         return $this->db->get_affected();
     }//delete
 
+    public function get_sysupdate(array $pks): string
+    {
+        if(!$pks) return "";
+
+        $crud = $this->_get_crud()
+            ->set_comment("app.sysupdate")
+            ->set_dbobj($this->db)
+            ->set_getfields(["m.update_date"])
+            ->set_table("$this->table as m")
+        ;
+
+        foreach($pks as $fieldname=>$sValue)
+            $crud->add_pk_fv($fieldname, $sValue);
+
+        $sql = $crud->get_selectfrom();
+        $r = $this->db->query($sql);
+        return $r[0]["update_date"] ?? "";
+    }
+    
     public function get_max($fieldname)
     {
         if($fieldname)

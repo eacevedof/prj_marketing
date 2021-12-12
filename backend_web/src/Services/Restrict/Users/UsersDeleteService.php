@@ -41,7 +41,7 @@ final class UsersDeleteService extends AppService
         if (!$this->model->do_match_keys($update))
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        $updatedate = $this->repository->_get_sysupdate($update);
+        $updatedate = $this->repository->get_sysupdate($update);
         $this->model->add_sysdelete($update, $updatedate, $this->user["id"]);
         $affected = $this->repository->update($update);
         //$this->repository->delete($update);
@@ -49,5 +49,28 @@ final class UsersDeleteService extends AppService
             "affected" => $affected,
             "uuid" => $update["uuid"]
         ];
+    }
+    
+    public function undelete(): array
+    {
+        $update = $this->_get_without_operations();
+        if (!$update)
+            $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
+        if (!$id = $this->repository->get_id_by($update["uuid"] ?? ""))
+            $this->_exeption(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
+
+        $update["id"] = $id;
+        if (!$this->model->do_match_keys($update))
+            $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
+
+        $updatedate = $this->repository->get_sysupdate($update);
+        $this->model->add_sysdelete($update, $updatedate, $this->user["id"]);
+        $affected = $this->repository->update($update);
+        //$this->repository->delete($update);
+        return [
+            "affected" => $affected,
+            "uuid" => $update["uuid"]
+        ];                
     }
 }
