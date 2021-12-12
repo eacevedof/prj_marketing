@@ -31,7 +31,7 @@ import {button} from "/assets/js/common/datatable/button.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {column} from "/assets/js/common/datatable/column.js"
 
-const iduser = <?$this->_echo_js($auth["id"]);?>;
+const sessusrid = <?$this->_echo_js($auth["id"]);?>;
 const sesprofile = <?$this->_echo_js($auth["id_profile"]);?>;
 
 const PROFILES = {
@@ -51,22 +51,29 @@ column.add_rowbtn({
   text: <?$this->_echo_js(__("Show"));?>
 })
 
+const is_editable = row => {
+  const usrprof = row.id_profile
+  const usrid = row.id
+  return (
+    (sesprofile===PROFILES.ROOT || sessusrid===usrid) ||
+    (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
+    (sesprofile===PROFILES.BUSINESS_OWNER)
+  )
+}
+
+const is_deletable = row => {
+  const usrprof = row.id_profile
+  return (
+    (sesprofile===PROFILES.ROOT) ||
+    (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
+    (sesprofile===PROFILES.BUSINESS_OWNER && usrprof===PROFILES.BUSINESS_MANAGER)
+  )
+}
+
 column.add_rowbtn({
   btnid: "rowbtn-edit",
   render: (v,t,row) => {
-    const usrprof = row.id_profile
-    const usrid = row.id
-    
-    if(sesprofile===PROFILES.ROOT || iduser===usrid) 
-      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Edit"));?></button>`
-    
-    if(sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) {
-      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Edit"));?></button>`
-    }
-
-    if(sesprofile===PROFILES.BUSINESS_OWNER) {
-      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Edit"));?></button>`
-    }
+    if (is_editable(row)) return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Edit"));?></button>`
     return ""
   }
 })
@@ -74,8 +81,9 @@ column.add_rowbtn({
 column.add_rowbtn({
   btnid: "rowbtn-del",
   render: (v,t,row) => {
-    if(sesprofile==="2" && row.id_profile==="1") return ""
-    return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Remove"));?></button>`
+    if (is_deletable(row))
+      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Remove"));?></button>`
+    return ""
   }
 })
 
