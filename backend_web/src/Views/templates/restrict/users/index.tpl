@@ -93,11 +93,11 @@ column.add_rowbtn({
 
 rowswal.set_texts({
   delswal: {
-    error: <?$this->_echo_js(__("Some error occurred trying to delete"));?>,
+    error: <?$this->_echo_js(__("<b>Error on delete</b>"));?>,
     success: <?$this->_echo_js(__("Data successfully deleted"));?>
   },
   undelswal: {
-    error: <?$this->_echo_js(__("Some error occurred trying to restore"));?>,
+    error: <?$this->_echo_js(__("<b>Error on restore</b>"));?>,
     success: <?$this->_echo_js(__("Data successfully restored"));?>
   },
 })

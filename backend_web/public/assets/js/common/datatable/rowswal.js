@@ -10,7 +10,7 @@ let _texts = {
     text: "You will not be able to recover this information! <b>",
     confirm: "Yes, I am sure!",
     cancel: "No, cancel it!",
-    error: "Some error occurred trying to delete",
+    error: `<b>Error on remove</b>`,
     success: "Data successfully deleted",
   },
   undelswal: {
@@ -18,7 +18,7 @@ let _texts = {
     text: "",
     confirm: "Yes, I am sure!",
     cancel: "No, cancel it!",
-    error: "Some error occurred trying to restore",
+    error: `<b>Error on restore</b>`,
     success: "Data successfully restored",
   }
 }
@@ -38,7 +38,7 @@ const _show_error_handled = (type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.f
 
 const _show_error_catched = (error,type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fire({
     icon: "error",
-    title: _texts.delswal.concat(`<br/>${error}`),
+    title: _texts.delswal.error.concat(`<br/>${error}`),
   })
   :
   Rowswal.fire({
@@ -79,11 +79,11 @@ const on_delete = uuid =>
     if (!result.isConfirmed) return
 
     const URL_DELETE = _$table.getAttribute("urlmodule").concat(`/delete/${uuid}`)
-    const response = await injson.del(
+    const response = await injson.patch(
       URL_DELETE, {
         _action: "row.delete",
       })
-    if(response?.errors) return _show_error_handled()
+    if(response?.errors) return _show_error_catched(response.errors[0])
     _show_success(uuid)
     _dttable.ajax.reload()
   })//end then
