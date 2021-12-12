@@ -36,7 +36,6 @@ let _ths = [],
   ],
   _columns = []
 
-
 const _get_actions = () => ["show","edit","del"]
                               .filter(str => _$table.querySelector(`[approle='actions']`)?.getAttribute(str)==="1")
                               .map(str => `rowbtn-${str}`)
@@ -113,6 +112,7 @@ const _get_rowhtml_btns = (objbtns, row) => {
   return objbtns.join("&nbsp;")
 }
 
+//en dttable.js => columnDefs: dtcolumn($table).get_columns(),
 const get_columns = () => {
   const colnames = _get_colnames_from_ths()
 
@@ -126,15 +126,22 @@ const get_columns = () => {
 
   //data columns
   colnames.forEach((colname, i )=> {
-    const obj = {
+    //columna basica que entiende dttable
+    let obj = {
       targets: i+1,
       data: colname,
       //searchable: false, no afecta en nada
       visible: _is_visible(colname),
-      render: function (row) {
-        //to-do: tratar el tipo para aplicar un customHtml
-        return row
-      }
+      //https://datatables.net/manual/data/renderers
+      //( data, type, row )
+      render: value => value
+    }
+
+    const col = _columns.filter(obj => obj.data === colname)[0] ?? {}
+
+    obj = {
+      ...obj,
+      ...col
     }
 
     allcols.push(obj)

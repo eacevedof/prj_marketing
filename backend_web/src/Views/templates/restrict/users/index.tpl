@@ -32,12 +32,17 @@ import {column} from "/assets/js/common/datatable/column.js"
 column.add_action_btn({
   approle: "rowbtn-show",
   text: "Show xxx",
-   : `<button type="button" %attr%>%text%</button>`,
+  html: `<button type="button" %attr%>%text%</button>`,
   attr: {
     approle: "rowbtn-show",
     uuid: "%uuid%",
     style: "color:red",
   }
+})
+
+column.add_column({
+  data: "phone",
+  render: (v,type,row) => `<span style="color:dodgerblue">${v}</span>`
 })
 
 rowswal.set_texts({
