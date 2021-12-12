@@ -106,11 +106,9 @@ const on_undelete = uuid =>
     const url = _$table.getAttribute("urlmodule").concat(`/undelete/${uuid}`)
     fetch(url,{
       method: "PATCH",
-
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": ""
       }
     })
     .then(response => response.json())
