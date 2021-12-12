@@ -73,7 +73,7 @@ const on_delete = uuid =>
       })
     if(response?.errors) return _show_error(response.errors[0])
     _show_success(uuid)
-    _dttable.ajax.reload()
+    _dttable.ajax.reload(null, false)
   })//end then
 
 const on_undelete = uuid =>
@@ -97,7 +97,7 @@ const on_undelete = uuid =>
       })
     if(response?.errors) return _show_error(response.errors[0], TYPE.UNDELETE)
     _show_success(uuid, TYPE.UNDELETE)
-    _dttable.ajax.reload()
+    _dttable.ajax.reload(null, false)
   })//end then
 
 export const rowswal = {
@@ -115,7 +115,6 @@ export const rowswal = {
       delswal,
       undelswal,
     }
-    //console.log("_texts",_texts)
   }
 }
 
