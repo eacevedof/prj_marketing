@@ -44,3 +44,4 @@ column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: ye
 - pestaña permisos en usuarios
 - accion restore
 - accion clone
+- generador de módulo .py
