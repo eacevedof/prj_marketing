@@ -257,7 +257,7 @@ final class UserRepository extends AppRepository
         return $this;
     }
 
-    public function get_by_id(string $id): int
+    public function get_by_id(string $id): array
     {
         $id = (int) $id;
         $sql = $this->_get_crud()
