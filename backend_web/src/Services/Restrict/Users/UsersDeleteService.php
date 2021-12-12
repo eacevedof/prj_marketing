@@ -65,12 +65,21 @@ final class UsersDeleteService extends AppService
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $row = $this->repository->get_by_id($id);
+        $crucsv = $row["cru_csvnote"] ?? "";
+        $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},".$crucsv;
+        $crucsv = substr($crucsv,0,499);
 
-        //obtener fecha de borrado, csv
-        $updatedate = $this->repository->get_sysupdate($update);
-        $this->model->add_sysdelete($update, $updatedate, $this->user["id"]);
+        $update = [
+            "uuid" => $update["uuid"],
+            "id" => $id,
+            "delete_date" => null,
+            "delete_user" => null,
+            "delete_platform" => null,
+            "update_user" => $this->user["id"],
+            "cru_csvnote" => $crucsv,
+        ];
         $affected = $this->repository->update($update);
-        //$this->repository->delete($update);
+
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]
