@@ -55,7 +55,7 @@ const get_topbuttons = () => {
       text: "Add",
       className: "",
       visible: true,
-      action: () => in_modal(_$table.getAttribute("urlmodule").concat("/create")),
+      action: () => _in_modal(_$table.getAttribute("urlmodule").concat("/create")),
       attr: {
         approle: "add-item"
       }
@@ -97,7 +97,6 @@ const get_topbuttons = () => {
   topbtns = topbtns.map(def => {
                     const btn = _topbtns.filter(top => top.approle === def.approle)[0] ?? null
                     if (!btn) return def
-
                     return {
                       ...def,
                       ...btn
@@ -112,17 +111,12 @@ export const button = {
   set_topbtns: buttons => _topbtns = buttons
 }
 
-const in_modal = url => fetch(url)
-  .then(response => response.text())
-  .then(html => {
-    window.modalraw.disable_bgclick().set_body(html).show()
-  })
-  .catch(error => {
-    console.log("in_modal",error)
-  })
-  .finally(()=>{
-
-  })
+const _in_modal = async url => {
+  const r = await reqtxt.get(url)
+  if (r.errors)
+    return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
+  window.modalraw.disable_bgclick().set_body(r).show()
+}
 
 export default ($table, dttable) => {
   _$table = $table
@@ -131,6 +125,6 @@ export default ($table, dttable) => {
   return {
     rowbuttons_listeners,
     get_topbuttons
-    //in_modal, permite pasar una url custom a pintar en un modal
+    //_in_modal, permite pasar una url custom a pintar en un modal
   }
 }
