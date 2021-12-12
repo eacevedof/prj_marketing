@@ -1,3 +1,4 @@
+import injson from "/assets/js/common/req.js"
 const Rowswal = window.Swal
 
 let _dttable = null,
@@ -74,19 +75,17 @@ const on_delete = uuid =>
     closeOnConfirm: false,
     closeOnCancel: false
   })
-  .then(result => {
+  .then(async result => {
     if (!result.isConfirmed) return
-    //const url = `/restrict/users/delete/${uuid}`
-    const url = _$table.getAttribute("urlmodule").concat(`/delete/${uuid}`)
-    fetch(url,{method:"delete"})
-      .then(response => response.json())
-      .then(json => {
-        if (json.errors.length>0)
-          return _show_error_handled()
-        _show_success(uuid)
-        _dttable.ajax.reload()
+
+    const URL_DELETE = _$table.getAttribute("urlmodule").concat(`/delete/${uuid}`)
+    const response = await injson.del(
+      URL_DELETE, {
+        _action: "row.delete",
       })
-      .catch(error => _show_error_catched(error))
+    if(response?.errors) return _show_error_handled()
+    _show_success(uuid)
+    _dttable.ajax.reload()
   })//end then
 
 const on_undelete = uuid =>
