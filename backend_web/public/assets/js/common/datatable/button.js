@@ -1,4 +1,6 @@
 import {reqtxt} from "/assets/js/common/req.js"
+import spinner from "/assets/js/common/spinner.js"
+
 import search from "./search.js"
 import rowswal from "./rowswal.js"
 
@@ -15,9 +17,11 @@ const rowbuttons_listeners = ()=> {
   const urlmodule = _$table.getAttribute("urlmodule")
   let _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-show"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
+    spinner.render()
     const uuid = e.target.getAttribute("uuid")
     const URL_INFO = urlmodule.concat(`/info/${uuid}`)
     const r = await reqtxt.get(URL_INFO)
+    spinner.remove()
     if (r.errors)
       return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
     window.modalraw.disable_bgclick(false).set_body(r).show()
@@ -25,9 +29,11 @@ const rowbuttons_listeners = ()=> {
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-edit"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
+    spinner.render()
     const uuid = e.target.getAttribute("uuid")
     const URL_EDIT = urlmodule.concat(`/edit/${uuid}`)
     const r = await reqtxt.get(URL_EDIT)
+    spinner.remove()
     if (r.errors)
       return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
     window.modalraw.disable_bgclick(false).set_body(r).show()

@@ -32,5 +32,6 @@ $this->_template();
 </main>
 <?=$this->_element("common/elem-modal-raw")?>
 <?=$this->_element("common/elem-snackbar")?>
+<?=$this->_element("common/elem-spinner")?>
 </body>
 </html>
