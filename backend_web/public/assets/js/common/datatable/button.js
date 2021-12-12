@@ -12,7 +12,7 @@ const _toggle_filters = () => {
 
 const rowbuttons_listeners = ()=> {
   const urlmodule = _$table.getAttribute("urlmodule")
-  let _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-show"]`)
+  let _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-show"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
     const url = urlmodule.concat(`/info/${uuid}`)
@@ -26,7 +26,7 @@ const rowbuttons_listeners = ()=> {
     }
   }))//end foreach
 
-  _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-edit"]`)
+  _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-edit"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     const uuid = e.target.getAttribute("uuid")
     const url = urlmodule.concat(`/edit/${uuid}`)
@@ -41,7 +41,7 @@ const rowbuttons_listeners = ()=> {
     }
   }))//end foreach
 
-  _rowbtns = _$table.querySelectorAll(`[approle="rowbtn-del"]`)
+  _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-del"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
     const uuid = e.target.getAttribute("uuid")
     rowswal(_$table, _dttable).on_delete(uuid)

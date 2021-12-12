@@ -5,33 +5,29 @@ let _ths = [],
   _defrowbtns = [
     {
       btnid: "rowbtn-show",
-      visible: true,
-      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Show</button>`
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}">Show</button>`
     },
     {
       btnid: "rowbtn-edit",
-      visible: true,
-      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Edit</button>`
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}">Edit</button>`
     },
     {
       btnid: "rowbtn-del",
-      visible: true,
-      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Remove</button>`
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}">Remove</button>`
     },
     {
       btnid: "rowbtn-undel",
-      visible: false,
-      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Restore</button>`
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}">Restore</button>`
     },
     {
       btnid: "rowbtn-clone",
-      visible: false,
-      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Clone</button>`
+      render: (v,t,row) => `<button type="button" btnid="rowbtn-clone" uuid="${row?.uuid ?? ""}">Clone</button>`
     },
   ],
+  _extrowbtns = [],
   _columns = []
 
-const _get_actions = () => ["show","edit","del"]
+const _get_rowbtn_ids = () => ["show","edit","del","undel","clone"]
                               .filter(str => _$table.querySelector(`[approle='actions']`)?.getAttribute(str)==="1")
                               .map(str => `rowbtn-${str}`)
 
@@ -55,48 +51,13 @@ const _get_type = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).map($th => $th.getAttribute("type"))
 
-const _get_mapped_rowbtns = () => {
-  const thactions = _get_actions()
-  const objbtns = _defrowbtns
-                    .filter(objbtn => thactions.includes(objbtn.approle))
-                    .map(defbtn => {
-                      const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === defbtn.approle)[0] ?? {}
-                      return {
-                        ...defbtn,
-                        ...confbtn
-                      }
-                    })
-
-  return objbtns.filter(objbtn => objbtn.visible)
-}
-
 //to-do, tengo que crear metodo render por cada boton para que alcance la
 // row
-const _get_rowhtml_btns = (objbtns, row) => {
-  objbtns = objbtns.map(objbtn => {
-    const attr = objbtn?.attr
-    let strattr = ""
-    if (attr) {
-      const keys = Object.keys(attr)
-      strattr = keys.map(key => {
-        const tag = attr[key]
-        const kv = `${key}="${tag}"`
-
-        if (tag.match(/%[\w]+%/ig)) {
-          const rowkey = tag.replaceAll("%","")
-          const rowvalue = row[rowkey] ?? ""
-          return kv.replace(tag, rowvalue)
-        }
-        return kv
-      }).join(" ")
-    }
-    const html = objbtn?.html
-      .replace("%attr%", strattr)
-      .replace("%text%", objbtn?.text ?? "")
-    return html
-  })
-
-  return objbtns.join("&nbsp;")
+const _get_rowbtns_value = (v, t, row) => {
+  const visibleids = _get_rowbtn_ids()
+  const rowbtns = _defrowbtns.filter(objbtn => visibleids.includes(objbtn.btnid))
+  let final = rowbtns.map(objbtn => objbtn.render(v, t, row))
+  return final.concat(_extrowbtns.map(render => render(v, t, row))).join("&nbsp;")
 }
 
 //en dttable.js => columnDefs: dtcolumn($table).get_columns(),
@@ -123,23 +84,19 @@ const get_columns = () => {
       //( data, type, row )
       render: value => value
     }
-
     const col = _columns.filter(obj => obj.data === colname)[0] ?? {}
-
     obj = {
       ...obj,
       ...col
     }
-
     allcols.push(obj)
   })
 
   //row buttons
-  const rowbtns = _get_mapped_rowbtns()
   allcols.push({
     targets: -1,
     data: null,
-    render: (v,t,row) => _get_rowhtml_btns(rowbtns, row),
+    render: (v,t,row) => _get_rowbtns_value(v,t,row),
   })
 
   return allcols
@@ -147,7 +104,8 @@ const get_columns = () => {
 
 export const column = {
   add_column: obj => _columns.push(obj),
-  add_rowbtn: obj => _rowbtns.push(obj)
+  add_rowbtn: obj => _rowbtns.push(obj),
+  add_extrowbtn: obj => _extrowbtns.push(obj),
 }
 
 export default $table => {
