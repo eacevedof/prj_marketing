@@ -41,7 +41,8 @@ const get_init_conf = () => (
     dom: "<'table-buttons'B>lfipr<bottam>p",
     searchDelay: 1500,
     buttons: {
-      buttons: dtbutton($table, dttable).get_buttons(OPTIONS)
+      //top buttons
+      buttons: dtbutton($table, dttable).get_buttons()
     },
     columnDefs: dtcolumn($table).get_columns(),
     responsive: true,

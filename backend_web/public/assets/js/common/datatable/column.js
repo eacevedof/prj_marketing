@@ -33,14 +33,15 @@ let _ths = [],
         uuid: "%uuid%"
       }
     },
-  ]
+  ],
+  _columns = []
 
 
 const _get_actions = () => ["show","edit","del"]
                               .filter(str => _$table.querySelector(`[approle='actions']`)?.getAttribute(str)==="1")
                               .map(str => `rowbtn-${str}`)
 
-const _get_columns = () => _ths
+const _get_colnames_from_ths = () => _ths
   .map($th => $th.getAttribute("column"))
   .filter(col => col!=="")
 
@@ -62,7 +63,8 @@ const _get_type = column => _ths.filter(
 
 export const column = {
   set_btns: ar => _rowbtns = ar,
-  add_btn: obj => _rowbtns.push(obj)
+  add_action_btn: obj => _rowbtns.push(obj),
+  add_column: obj => _columns.push(obj)
 }
 
 const _get_mapped_rowbtns = () => {
@@ -82,6 +84,8 @@ const _get_mapped_rowbtns = () => {
   return objbtns.filter(objbtn => objbtn.visible)
 }
 
+//to-do, tengo que crear metodo render por cada boton para que alcance la
+// row
 const _get_rowhtml_btns = (objbtns, row) => {
   objbtns = objbtns.map(objbtn => {
     const attr = objbtn?.attr
@@ -110,8 +114,9 @@ const _get_rowhtml_btns = (objbtns, row) => {
 }
 
 const get_columns = () => {
-  const cols = _get_columns()
-  //col con numero
+  const colnames = _get_colnames_from_ths()
+
+  //row numbers
   const allcols = [{
     searchable: false,
     orderable: false,
@@ -119,7 +124,8 @@ const get_columns = () => {
     data: null,
   }]
 
-  cols.forEach((colname, i )=> {
+  //data columns
+  colnames.forEach((colname, i )=> {
     const obj = {
       targets: i+1,
       data: colname,
@@ -134,12 +140,12 @@ const get_columns = () => {
     allcols.push(obj)
   })
 
-  const mappedbtns = _get_mapped_rowbtns()
-  //console.log("mappedbtns", mappedbtns)
+  //row buttons
+  const rowbtns = _get_mapped_rowbtns()
   allcols.push({
     targets: -1,
     data: null,
-    render: row => _get_rowhtml_btns(mappedbtns, row),
+    render: row => _get_rowhtml_btns(rowbtns, row),
   })
 
   return allcols
