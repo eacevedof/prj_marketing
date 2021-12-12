@@ -104,17 +104,28 @@ const on_undelete = uuid =>
   .then(result => {
     if (!result.isConfirmed) return
     const url = _$table.getAttribute("urlmodule").concat(`/undelete/${uuid}`)
-    fetch(url,{method:"post", headers: {
-      "_method": "PATCH",
-      }})
-      .then(response => response.json())
-      .then(json => {
-        if (json.errors.length>0)
-          return _show_error_handled(TYPE.UNDELETE)
-        _show_success(uuid, TYPE.UNDELETE)
-        _dttable.ajax.reload()
-      })
-      .catch(error => _show_error_catched(error, TYPE.UNDELETE))
+    fetch(url,{
+      method: "PATCH",
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "_method": "PATCH",
+        "Authorization": ""
+      },
+      data: "xxxxx"
+    })
+    .then(response => response.json())
+    .then(json => {
+      if (json.errors.length>0)
+        return _show_error_handled(TYPE.UNDELETE)
+      _show_success(uuid, TYPE.UNDELETE)
+      _dttable.ajax.reload()
+    })
+    .catch(error => _show_error_catched(error, TYPE.UNDELETE))
   })//end then
 
 export const rowswal = {
