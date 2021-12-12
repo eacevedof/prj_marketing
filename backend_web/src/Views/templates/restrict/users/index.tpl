@@ -2,6 +2,7 @@
 /**
  * @var \App\Views\AppView $this
  * @var \App\Helpers\Views\DatatableHelper $dthelp
+ * @var array $auth
  */
 ?>
 <h1><?=$h1?></h1>
@@ -29,23 +30,33 @@ import {button} from "/assets/js/common/datatable/button.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {column} from "/assets/js/common/datatable/column.js"
 
+const idprofile = <?$this->_echo_js($auth["id_profile"]);?>
+
 button.add_topbtn({
   approle: "add-item",
   text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
 })
 
-column.add_column({
-  data: "phone",
-  render: (v,t,row) => `<span style="color:dodgerblue">${v}</span>`
+column.add_rowbtn({
+  btnid: "rowbtn-show",
+  text: <?$this->_echo_js(__("Show"));?>
 })
 
 column.add_rowbtn({
-  btnid: "rowbtn-show",
-  text: "Hola",
-  //render: (v,t,row) => `<span style="color:darkblue">Show ${row.uuid}</span>`
+  btnid: "rowbtn-edit",
+  render: (v,t,row) => {
+    if(idprofile==="2" && row.id_profile==="1") return ""
+    return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Edit"));?></button>`
+  }
 })
 
-column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: yellow">Extra ${row.id}</span>`)
+column.add_rowbtn({
+  btnid: "rowbtn-del",
+  render: (v,t,row) => {
+    if(idprofile==="2" && row.id_profile==="1") return ""
+    return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}"><?$this->_echo(__("Remove"));?></button>`
+  }
+})
 
 rowswal.set_texts({
   success: {
