@@ -65,8 +65,9 @@ final class UsersDeleteService extends AppService
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $row = $this->repository->get_by_id($id);
+        $iduser = $this->user["id"]; $now = date("Y-m-d H:i:s");
         $crucsv = $row["cru_csvnote"] ?? "";
-        $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},".$crucsv;
+        $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($iduser:$now)|".$crucsv;
         $crucsv = substr($crucsv,0,499);
 
         $update = [
@@ -75,9 +76,9 @@ final class UsersDeleteService extends AppService
             "delete_date" => null,
             "delete_user" => null,
             "delete_platform" => null,
-            "update_user" => $this->user["id"],
             "cru_csvnote" => $crucsv,
         ];
+        $this->model->add_sysupdate($update, $iduser);
         $affected = $this->repository->update($update);
 
         return [
