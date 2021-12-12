@@ -1,4 +1,4 @@
-import injson from "/assets/js/common/req.js"
+import req from "/assets/js/common/req.js"
 const Rowswal = window.Swal
 
 let _dttable = null,
@@ -67,7 +67,7 @@ const on_delete = uuid =>
     if (!result.isConfirmed) return
 
     const URL_DELETE = _$table.getAttribute("urlmodule").concat(`/delete/${uuid}`)
-    const response = await injson.del(
+    const response = await req.del(
       URL_DELETE, {
         _action: "row.delete",
       })
@@ -91,7 +91,7 @@ const on_undelete = uuid =>
   .then(async result => {
     if (!result.isConfirmed) return
     const URL_PATCH = _$table.getAttribute("urlmodule").concat(`/undelete/${uuid}`)
-    const response = await injson.patch(
+    const response = await req.patch(
       URL_PATCH, {
         _action: "row.undelete",
       })
