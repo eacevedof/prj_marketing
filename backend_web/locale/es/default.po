@@ -18,3 +18,12 @@ msgstr "Borrado el"
 
 msgid "Deleted by"
 msgstr "Borrado por"
+
+msgid "Show"
+msgstr "Ver"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Remove"
+msgstr "Eliminar"
