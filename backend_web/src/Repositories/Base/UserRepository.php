@@ -28,11 +28,11 @@ final class UserRepository extends AppRepository
         $this->table = "base_user";
         $this->joins = [
             "fields" => [
-                "u1.description"=>"e_parent",
-                "u2.description" => "e_deletedby",
-                "ar1.description"=>"e_language",
-                "ar2.description"=>"e_profile",
-                "ar3.description"=>"e_country",
+                "u1.description"  => "e_parent",
+                "u2.description"  => "e_deletedby",
+                "ar1.description" => "e_language",
+                "ar2.description" => "e_profile",
+                "ar3.description" => "e_country",
             ],
             "on" => [
                 "LEFT JOIN base_user u1 ON m.id_parent = u1.id",
@@ -44,13 +44,18 @@ final class UserRepository extends AppRepository
         ];
     }
 
+    private function _get_join_field(string $field): string
+    {
+        //key: u1.description | false si no encuentra
+        $key = array_search($field, $this->joins["fields"]);
+        if ($key===false) return "m.$field";
+        return $key;
+    }
+
     private function _get_condition(string $field, string $value): string
     {
-        $jfield = array_search($field, $this->joins["fields"]);
-        if ($jfield===false)
-            return "m.$field LIKE '%$value%'";
-
-        return "$jfield LIKE '%$value%'";
+        $field = $this->_get_join_field($field);
+        return "$field LIKE '%$value%'";
     }
 
     private function _add_joins(ComponentCrud $crud): void
@@ -73,8 +78,10 @@ final class UserRepository extends AppRepository
         if($limit = $search["limit"])
             $crud->set_limit($limit["length"], $limit["from"]);
 
-        if($order = $search["order"])
-            $crud->set_orderby(["m.{$order["field"]}"=>"{$order["dir"]}"]);
+        if($order = $search["order"]) {
+            $field = $this->_get_join_field($order["field"]);
+            $crud->set_orderby([$field => "{$order["dir"]}"]);
+        }
 
         if($global = $search["global"]) {
             $or = [];
