@@ -4,44 +4,57 @@ let _dttable = null,
   _$table = null
 
 let _texts = {
-  error:{
-    title: "Some error occured trying to delete"
-  },
-  success: {
-    title: "Data successfully deleted",
-  },
   delswal: {
     title: "Delete operation",
     text: "You will not be able to recover this information! <b>",
     confirm: "Yes, I am sure!",
     cancel: "No, cancel it!",
+    error: "Some error occurred trying to delete",
+    success: "Data successfully deleted",
   },
   undelswal: {
     title: "Restore operation",
     text: "",
     confirm: "Yes, I am sure!",
     cancel: "No, cancel it!",
+    error: "Some error occurred trying to restore",
+    success: "Data successfully restored",
   }
 }
 
-export const rowswal = {
-  set_texts: obj => {
-    _texts = {
-      ..._texts,
-      ...obj
-    }
-  }
+const TYPE = {
+  DELETE: "delete",
+  UNDELETE: "restore"
 }
 
-const _show_error_handled = () => Rowswal.fire({
+const _show_error_handled = (type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fire({
   icon: "error",
-  title: _texts.error.title,
+  title: _texts.delswal.error,
+}) : Rowswal.fire({
+  icon: "error",
+  title: _texts.undelswal.error,
 })
 
-const _show_error_catched = error => Rowswal.fire({
-  icon: "error",
-  title: _texts.error.title.concat(`<br/>${error}`),
-})
+const _show_error_catched = (error,type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fire({
+    icon: "error",
+    title: _texts.delswal.concat(`<br/>${error}`),
+  })
+  :
+  Rowswal.fire({
+    icon: "error",
+    title: _texts.undelswal.error.concat(`<br/>${error}`),
+  })
+
+const _show_success = (uuid, type=TYPE.DELETE) => type===TYPE.DELETE ? window.snack
+  .set_time(5)
+  .set_color("green")
+  .set_inner(_texts.delswal.success.concat(` ${uuid}`))
+  .show()
+  : window.snack
+    .set_time(5)
+    .set_color("green")
+    .set_inner(_texts.undelswal.success.concat(` ${uuid}`))
+    .show()
 
 /*
 const _show_success = () => Rowswal.fire({
@@ -49,12 +62,6 @@ const _show_success = () => Rowswal.fire({
   title: _texts.success.title,
 })
 */
-const _show_success = uuid => window.snack
-                              .set_time(5)
-                              .set_color("green")
-                              .set_inner(_texts.success.title.concat(` ${uuid}`))
-                              .show()
-
 const on_delete = uuid =>
   Rowswal.fire({
     title: _texts.delswal.title,
@@ -97,16 +104,37 @@ const on_undelete = uuid =>
   .then(result => {
     if (!result.isConfirmed) return
     const url = _$table.getAttribute("urlmodule").concat(`/undelete/${uuid}`)
-    fetch(url,{method:"patch"})
+    fetch(url,{method:"post", headers: {
+      "_method": "PATCH",
+      }})
       .then(response => response.json())
       .then(json => {
         if (json.errors.length>0)
-          return _show_error_handled()
-        _show_success(uuid)
+          return _show_error_handled(TYPE.UNDELETE)
+        _show_success(uuid, TYPE.UNDELETE)
         _dttable.ajax.reload()
       })
-      .catch(error => _show_error_catched(error))
+      .catch(error => _show_error_catched(error, TYPE.UNDELETE))
   })//end then
+
+export const rowswal = {
+  set_texts: obj => {
+    const delswal =  {
+      ..._texts.delswal,
+      ...obj.delswal ?? {}
+    }
+    const undelswal = {
+      ..._texts.undelswal,
+      ...obj.undelswal ?? {}
+    }
+
+    _texts = {
+      delswal,
+      undelswal,
+    }
+    //console.log("_texts",_texts)
+  }
+}
 
 export default ($table, dttable) => {
   _$table = $table
