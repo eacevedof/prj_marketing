@@ -10,4 +10,5 @@
   - en servicios mejor un private user o solo mantener auth? 
 - dttable refresh current page
   - https://stackoverflow.com/questions/42905454/datatables-ajax-reload-loses-page
+    - `dttable.ajax.reload( null, false )`
   - https://datatables.net/reference/api/ajax.reload()
