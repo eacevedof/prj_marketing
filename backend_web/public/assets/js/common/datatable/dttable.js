@@ -73,7 +73,7 @@ const _hide_spinner = () => {
 }
 
 const on_ajax = async (data, fnrender) => {
-  const urlsearch = $table.getAttribute("urlmodule").concat("/searchx")
+  const urlsearch = $table.getAttribute("urlmodule").concat("/search")
   const URL_SEARCH = get_url_with_params(urlsearch, data)
 
   const response = await req.get(URL_SEARCH)
