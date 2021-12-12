@@ -10,6 +10,7 @@
             <button type="button" role="btn-close">x</button>
         </header>
         <div class="area-body" role="body"></div>
+        <br/>
     </div>
 </div>
 <script type="module">

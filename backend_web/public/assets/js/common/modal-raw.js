@@ -11,15 +11,18 @@ export default function ModalRaw(idModal, idOpener=null) {
   const $btnClose = $dialog.querySelector("[role='btn-close']")
   const $body = $dialog.querySelector("[role='body']")
   const $opener = idOpener ? document.getElementById(idOpener) : null
+  const $mainbody = document.querySelector("body")
 
   const _show = () => {
     $modal.classList.remove("modal-hide")
     $modal.classList.add("modal-show")
+    $mainbody.style.overflow = "hidden";
   }
 
   const _hide = ev => {
     if(ev?.target?.id === idModal && !bgclick) return
     $modal.classList.add("modal-hide")
+    $mainbody.style.overflow = "auto";
   }
 
   this.show = function (fnBefore, fnAfter) {
