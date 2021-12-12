@@ -4,34 +4,29 @@ let _ths = [],
   _rowbtns = [],
   _defrowbtns = [
     {
-      approle: "rowbtn-show",
-      text: "Show",
+      btnid: "rowbtn-show",
       visible: true,
-      html: `<button type="button" %attr%>%text%</button>`,
-      attr: {
-        approle: "rowbtn-show",
-        uuid: "%uuid%"
-      }
+      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Show</button>`
     },
     {
-      approle: "rowbtn-edit",
-      text: "Edit",
+      btnid: "rowbtn-edit",
       visible: true,
-      html: `<button type="button" %attr%>%text%</button>`,
-      attr: {
-        approle: "rowbtn-edit",
-        uuid: "%uuid%"
-      }
+      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Edit</button>`
     },
     {
-      approle: "rowbtn-del",
-      text: "Remove",
+      btnid: "rowbtn-del",
       visible: true,
-      html: `<button type="button" %attr%>%text%</button>`,
-      attr: {
-        approle: "rowbtn-del",
-        uuid: "%uuid%"
-      }
+      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Remove</button>`
+    },
+    {
+      btnid: "rowbtn-undel",
+      visible: false,
+      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Restore</button>`
+    },
+    {
+      btnid: "rowbtn-clone",
+      visible: false,
+      render: (v,t,row) => `<button type="button" uuid="${row?.uuid ?? ""}">Clone</button>`
     },
   ],
   _columns = []
@@ -60,24 +55,16 @@ const _get_type = column => _ths.filter(
   $th => $th.getAttribute("column") === column
 ).map($th => $th.getAttribute("type"))
 
-export const column = {
-  set_btns: ar => _rowbtns = ar,
-  add_action_btn: obj => _rowbtns.push(obj),
-  add_column: obj => _columns.push(obj)
-}
-
 const _get_mapped_rowbtns = () => {
   const thactions = _get_actions()
   const objbtns = _defrowbtns
                     .filter(objbtn => thactions.includes(objbtn.approle))
                     .map(defbtn => {
-                      const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === defbtn.approle)[0] ?? null
-                      if (confbtn)
-                        return {
-                          ...defbtn,
-                          ...confbtn
-                        }
-                      return defbtn
+                      const confbtn = _rowbtns.filter(rowbtn => rowbtn.approle === defbtn.approle)[0] ?? {}
+                      return {
+                        ...defbtn,
+                        ...confbtn
+                      }
                     })
 
   return objbtns.filter(objbtn => objbtn.visible)
@@ -152,10 +139,15 @@ const get_columns = () => {
   allcols.push({
     targets: -1,
     data: null,
-    render: row => _get_rowhtml_btns(rowbtns, row),
+    render: (v,t,row) => _get_rowhtml_btns(rowbtns, row),
   })
 
   return allcols
+}
+
+export const column = {
+  add_column: obj => _columns.push(obj),
+  add_rowbtn: obj => _rowbtns.push(obj)
 }
 
 export default $table => {

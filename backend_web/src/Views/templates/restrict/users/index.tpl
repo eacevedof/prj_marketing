@@ -29,20 +29,19 @@ import {button} from "/assets/js/common/datatable/button.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {column} from "/assets/js/common/datatable/column.js"
 
-column.add_action_btn({
-  approle: "rowbtn-show",
-  text: "Show xxx",
-  html: `<button type="button" %attr%>%text%</button>`,
-  attr: {
-    approle: "rowbtn-show",
-    uuid: "%uuid%",
-    style: "color:red",
-  }
+button.add_topbtn({
+  approle: "add-item",
+  text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
 })
 
 column.add_column({
   data: "phone",
   render: (v,type,row) => `<span style="color:dodgerblue">${v}</span>`
+})
+
+column.add_rowbtn({
+  btnid: "rowbtn-show",
+  render: (v,t,row) => `<span style="color:darkblue">Show ${row.uuid}</span>`
 })
 
 rowswal.set_texts({
@@ -52,11 +51,6 @@ rowswal.set_texts({
   error: {
     title: <?$this->_echo_js(__("Some error occured trying to delete"));?>
   }
-})
-
-button.add_topbtn({
-  approle: "add-item",
-  text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
 })
 
 dt_render({
