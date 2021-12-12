@@ -106,7 +106,6 @@ const on_undelete = uuid =>
     const url = _$table.getAttribute("urlmodule").concat(`/undelete/${uuid}`)
     fetch(url,{
       method: "PATCH",
-      crossDomain: true,
       xhrFields: {
         withCredentials: true
       },
