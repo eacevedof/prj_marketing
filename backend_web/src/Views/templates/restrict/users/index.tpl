@@ -41,7 +41,7 @@ column.add_column({
 
 column.add_rowbtn({
   btnid: "rowbtn-show",
-  text: "Hola"
+  text: "Hola",
   //render: (v,t,row) => `<span style="color:darkblue">Show ${row.uuid}</span>`
 })
 

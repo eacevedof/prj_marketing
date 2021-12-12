@@ -20,3 +20,21 @@ SN Marketing
     aquellos que esten debajo de él
 - business manager
   - Ve ciertos módulos y CRUD dependiendo de permisos.
+  
+### Ejemplo dttable
+```js
+button.add_topbtn({
+  approle: "add-item",
+  text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
+})
+column.add_column({
+  data: "phone",
+  render: (v,t,row) => `<span style="color:dodgerblue">${v}</span>`
+})
+column.add_rowbtn({
+  btnid: "rowbtn-show",
+  text: "Hola",
+  //render: (v,t,row) => `<span style="color:darkblue">Show ${row.uuid}</span>`
+})
+column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: yellow">Extra ${row.id}</span>`)
+```
