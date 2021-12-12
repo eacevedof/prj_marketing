@@ -58,7 +58,9 @@ final class UsersSearchService extends AppService
             $dthelp->add_action("show")
                 ->add_action("add")
                 ->add_action("edit")
-                ->add_action("del");
+                ->add_action("del")
+                ->add_action("undel")
+            ;
 
         if($this->_get_auth()->is_user_allowed(PolicyType::USERS_WRITE))
             $dthelp->add_action("add")

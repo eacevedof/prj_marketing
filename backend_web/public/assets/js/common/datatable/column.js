@@ -1,7 +1,6 @@
 
 let _ths = [],
   _$table = null,
-  _rowbtns = [],
   _defrowbtns = [
     {
       btnid: "rowbtn-show",
@@ -21,7 +20,7 @@ let _ths = [],
     {
       btnid: "rowbtn-undel",
       text: "Restore",
-      render: (v,t,row) => `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}">%text%</button>`
+      render: (v,t,row) => row?.delete_date ? `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}">%text%</button>` : ""
     },
     {
       btnid: "rowbtn-clone",

@@ -47,6 +47,12 @@ const rowbuttons_listeners = ()=> {
     rowswal(_$table, _dttable).on_delete(uuid)
   }))//end foreach
 
+  _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-undel"]`)
+  Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
+    const uuid = e.target.getAttribute("uuid")
+    rowswal(_$table, _dttable).on_undelete(uuid)
+  }))//end foreach
+
 }//_rowbtns listeners
 
 const get_buttons = () => {
