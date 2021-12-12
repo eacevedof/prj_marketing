@@ -42,4 +42,5 @@ column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: ye
 - loading en ajax
 - responsive modal
 - pestaña permisos en usuarios
-- 
+- accion restore
+- accion clone
