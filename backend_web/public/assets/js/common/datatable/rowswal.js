@@ -28,15 +28,7 @@ const TYPE = {
   UNDELETE: "restore"
 }
 
-const _show_error_handled = (type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fire({
-  icon: "error",
-  title: _texts.delswal.error,
-}) : Rowswal.fire({
-  icon: "error",
-  title: _texts.undelswal.error,
-})
-
-const _show_error_catched = (error,type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fire({
+const _show_error = (error,type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fire({
     icon: "error",
     title: _texts.delswal.error,
     text: error,
@@ -59,12 +51,6 @@ const _show_success = (uuid, type=TYPE.DELETE) => type===TYPE.DELETE ? window.sn
     .set_inner(_texts.undelswal.success.concat(` ${uuid}`))
     .show()
 
-/*
-const _show_success = () => Rowswal.fire({
-  icon: "success",
-  title: _texts.success.title,
-})
-*/
 const on_delete = uuid =>
   Rowswal.fire({
     title: _texts.delswal.title,
@@ -85,7 +71,7 @@ const on_delete = uuid =>
       URL_DELETE, {
         _action: "row.delete",
       })
-    if(response?.errors) return _show_error_catched(response.errors[0])
+    if(response?.errors) return _show_error(response.errors[0])
     _show_success(uuid)
     _dttable.ajax.reload()
   })//end then
@@ -109,7 +95,7 @@ const on_undelete = uuid =>
       URL_PATCH, {
         _action: "row.undelete",
       })
-    if(response?.errors) return _show_error_catched(response.errors[0], TYPE.UNDELETE)
+    if(response?.errors) return _show_error(response.errors[0], TYPE.UNDELETE)
     _show_success(uuid, TYPE.UNDELETE)
     _dttable.ajax.reload()
   })//end then
