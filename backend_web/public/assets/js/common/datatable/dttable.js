@@ -44,7 +44,7 @@ const get_init_conf = () => (
     searchDelay: 1500,
     buttons: {
       //top buttons
-      buttons: dtbutton($table, dttable).get_buttons()
+      buttons: dtbutton($table, dttable).get_topbuttons()
     },
     columnDefs: dtcolumn($table).get_columns(),
     responsive: true,
