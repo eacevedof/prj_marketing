@@ -24,7 +24,7 @@ const _get_response = response => {
   return response
 }
 
-const rqjson = {
+const reqjs = {
   async get(url) {
     let resp = null
     try {
@@ -159,7 +159,7 @@ const _get_response_txt = response => {
   return resp
 }
 
-export const rqtext = {
+export const reqtxt = {
   async get(url) {
     let resp = null
     try {
@@ -173,4 +173,4 @@ export const rqtext = {
   },
 }
 
-export default rqjson
+export default reqjs
