@@ -47,9 +47,9 @@ const rowbuttons_listeners = ()=> {
 
 }//_rowbtns listeners
 
-const get_buttons = () => {
+const get_topbuttons = () => {
 
-  let defbtns = [
+  let topbtns = [
     {
       approle: "add-item",
       text: "Add",
@@ -93,8 +93,8 @@ const get_buttons = () => {
   ]
 
   const is_addbtn = _$table.querySelector(`[approle='actions']`)?.getAttribute("add")==="1";
-  if (!is_addbtn) defbtns = defbtns.filter(btn => btn.approle !== "add-item")
-  defbtns = defbtns.map(def => {
+  if (!is_addbtn) topbtns = topbtns.filter(btn => btn.approle !== "add-item")
+  topbtns = topbtns.map(def => {
                     const btn = _topbtns.filter(top => top.approle === def.approle)[0] ?? null
                     if (!btn) return def
 
@@ -104,7 +104,7 @@ const get_buttons = () => {
                     }
                   })
                   .filter(btn => btn.visible)
-  return defbtns
+  return topbtns
 }
 
 export const button = {
@@ -130,7 +130,7 @@ export default ($table, dttable) => {
 
   return {
     rowbuttons_listeners,
-    get_buttons
+    get_topbuttons
     //in_modal, permite pasar una url custom a pintar en un modal
   }
 }
