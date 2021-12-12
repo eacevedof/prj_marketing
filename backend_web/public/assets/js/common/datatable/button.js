@@ -133,6 +133,5 @@ export default ($table, dttable) => {
   return {
     rowbuttons_listeners,
     get_topbuttons
-    //_in_modal, permite pasar una url custom a pintar en un modal
   }
 }
