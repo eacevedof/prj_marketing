@@ -38,3 +38,8 @@ column.add_rowbtn({
 })
 column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: yellow">Extra ${row.id}</span>`)
 ```
+### To-Do
+- loading en ajax
+- responsive modal
+- pestaña permisos en usuarios
+- 
