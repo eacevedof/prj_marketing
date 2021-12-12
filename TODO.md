@@ -7,3 +7,6 @@
 - generador de módulo .py
 - queries de _array con or de id_owner=-1
 - limpieza de código (por ejemplo $this->auth)
+- dttable refresh current page
+    - https://stackoverflow.com/questions/42905454/datatables-ajax-reload-loses-page
+    - https://datatables.net/reference/api/ajax.reload()

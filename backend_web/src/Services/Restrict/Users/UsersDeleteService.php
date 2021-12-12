@@ -25,7 +25,7 @@ final class UsersDeleteService extends AppService
         $this->model = ModelFactory::get("Base/User");
         $this->repository = RepositoryFactory::get("Base/UserRepository")->set_model($this->model);
         $this->_load_request($input);
-        $this->user = $this->_sessioninit()->get(KeyType::AUTH_USER);
+        $this->user = $this->_get_auth()->get_user();
     }
 
     public function __invoke(): array
