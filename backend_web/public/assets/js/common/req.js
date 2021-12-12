@@ -24,7 +24,7 @@ const _get_response = response => {
   return response
 }
 
-const injson = {
+const rqjson = {
   async get(url) {
     let resp = null
     try {
@@ -119,17 +119,58 @@ const injson = {
   }
 }
 
-const text = {
+const _get_json = str => {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    ;
+  }
+  return null
+}
+
+const _get_response_txt = response => {
+  //si hay algún error llega en texto plano con lo cual
+  //no se puede parsear a response.error
+  /*
+  * Parse error: syntax error, unexpected token "." in /.../index.php on line 51
+  * */
+  console.log("TXT_RESPONSE",response, typeof response)
+  if (!response) return ""
+  const resp = response.trim()
+
+  //error de compilación
+  if (resp.includes("Parse error"))
+    return {errors: [resp]}
+
+  //en caso de excepción
+  if (resp.includes("{\"")) {
+    const json = _get_json(resp)
+    if (json!==null && json?.errors) {
+      return {errors: json.errors}
+    }
+  }
+
+  /*
+  * si se lanza una exceptcion llega lago como
+  * _txt_RESPONSE {"code":500,"status":false,"errors":["eeeeeeerrrror"],"data":[]}
+  *
+  * {"code":500,"status":false,"errors":["Server throwable error"],"data":[]} string
+  * */
+  return resp
+}
+
+export const rqtext = {
   async get(url) {
     let resp = null
     try {
       resp = await fetch(url)
-      resp = await resp?.text()
-      return _get_response(resp)
+      resp = await resp.text()
+      return _get_response_txt(resp)
     } catch (error) {
+      console.log("TXT_ERROR",error,typeof error)
       return _get_error(error.message)
     }
   },
 }
 
-export default injson
+export default rqjson

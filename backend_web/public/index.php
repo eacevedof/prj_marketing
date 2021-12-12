@@ -49,7 +49,7 @@ try {
     $oR = new ComponentRouter($arRoutes);
     $arRun = $oR->get_rundata();
     unset($arRoutes);
-
+//throw new Exception("eeeeeeerrrror");
     if($methods = $arRun["allowed"] ?? []) {
         if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods))
             throw new \Exception("request method {$_SERVER["REQUEST_METHOD"]} not allowed");
