@@ -1,3 +1,4 @@
+import req from "/assets/js/common/req.js"
 import {load_asset_css} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
@@ -11,6 +12,7 @@ load_asset_css("common/spinner")
 
 let OPTIONS = {},
   is_rendered = false,
+  idtable = "",
   $table = null,
   dttable = null
 
@@ -59,36 +61,37 @@ const get_init_conf = () => (
   }
 )
 
-const on_ajax = (data, fnrender) => {
-  const urlsearch = $table.getAttribute("urlmodule").concat("/search")
+const _show_error = error => window.snack
+    .set_time(5)
+    .set_color("red")
+    .set_inner("Error: ".concat(error.toString()))
+    .show()
+
+const _hide_spinner = () => {
+  const $div = document.getElementById(`${idtable}_processing`)
+  if($div) $div.style.display = "none"
+}
+
+const on_ajax = async (data, fnrender) => {
+  const urlsearch = $table.getAttribute("urlmodule").concat("/searchx")
   const URL_SEARCH = get_url_with_params(urlsearch, data)
-  fetch(URL_SEARCH, {
-    method: "GET",
-    headers: new Headers({
-      "Accept": "application/json",
-      "Content-Type":"application/json",
-      "Cache-Control":"max-age=640000"
-    })
-  })
-  .then(response => response.json())
-  .then(response => {
-    fnrender({
-      recordsTotal: response.data.total,
-      recordsFiltered: response.data.total,
-      data: response.data.result,
-    })
-  })
-  .catch(error => {
-    console.error("grid.error",error)
-  })
-  .finally(()=>{
-    //remove_spinner()
+
+  const response = await req.get(URL_SEARCH)
+  if(response?.errors) {
+    _hide_spinner()
+    return _show_error(response.errors[0])
+  }
+
+  fnrender({
+    recordsTotal: response.total,
+    recordsFiltered: response.total,
+    data: response.result,
   })
 }
 
 const dt_render = (options) => {
   OPTIONS = {...options}
-  let idtable = OPTIONS.ID_TABLE
+  idtable = OPTIONS.ID_TABLE
   const tablesel = `#${idtable}`
 
   $table = document.getElementById(idtable)
