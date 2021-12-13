@@ -58,6 +58,15 @@ export const run_js = $jswrapper => {
   })
 }
 
+const _append_css = href => {
+  const $link = document.createElement("link")
+  $link.type = "text/css"
+  $link.rel = "stylesheet"
+  $link.href = href
+  $link.media = "all"
+  document.head.appendChild($link).parentNode.removeChild($link)
+}
+
 export const load_css = $wrapper => {
   const links = $wrapper.querySelectorAll("link")
   //console.log("load_css.links",links,"type",typeof links)
@@ -91,6 +100,7 @@ export const load_asset_css = paths => {
     $link.href = url
     $link.rel = "stylesheet"
     //si lo quito deja de funcionar
+    //con el remove el spinner no se ve
     document.head.appendChild($link)//.parentNode.removeChild($link)
     return
   }
@@ -103,6 +113,7 @@ export const load_asset_css = paths => {
     const $link = document.createElement( "link" )
     $link.href = url
     $link.rel = "stylesheet"
+    //con el remove el spinner no se ve
     document.head.appendChild($link)//.parentNode.removeChild($link)
   })
 }
