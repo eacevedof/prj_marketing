@@ -12,14 +12,11 @@ namespace App\Services;
 
 use App\Components\Auth\AuthComponent;
 use App\Factories\ComponentFactory as CF;
-use App\Factories\DbFactory;
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use \Exception;
 use TheFramework\Components\Config\ComponentConfig;
-use TheFramework\Components\Db\ComponentMysql;
-use TheFramework\Components\Db\Context\ComponentContext;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 
 abstract class AppService
@@ -42,15 +39,6 @@ abstract class AppService
         throw new Exception($message, $code);
     }
 
-    protected function _get_db(): ?ComponentMysql
-    {
-        $context = new ComponentContext($this->get_env("APP_CONTEXTS"), $this->get_env("APP_ID_CONTEXT"));
-        $dbname = $context->get_dbname($this->get_env("APP_DB_ALIAS_1"));
-        $db = DbFactory::get_dbobject_by_ctx($context, $dbname);
-        if($db->is_error()) return $this->add_error($db->get_errors());
-        return $db;
-    }
-
     protected function _get_encdec(): ComponentEncdecrypt
     {
         $pathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
@@ -62,12 +50,6 @@ abstract class AppService
         $encdec->set_sslkey($config["sslenc_key"]??"");
         $encdec->set_sslsalt($config["sslsalt"]??"");
         return $encdec;
-    }
-
-    public function trim(&$arPost)
-    {
-        foreach($arPost as $sKey=>$sValue)
-            $arPost[$sKey] = trim($sValue);
     }
 
 }//AppService
