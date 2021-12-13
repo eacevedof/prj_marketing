@@ -58,20 +58,50 @@ export const run_js = $jswrapper => {
   })
 }
 
+export const load_css = $wrapper => {
+  const links = $wrapper.querySelectorAll("link")
+  //console.log("load_css.links",links,"type",typeof links)
+  if (!links) return
+
+  const doc = document;
+  const atrribs = ["type","rel","href","media"]
+
+  links.forEach($link => {
+    //console.log("load_css.link", $link)
+    const $doclink = doc.createElement("link")
+    atrribs.forEach(attr => {
+      const val = $link.getAttribute(attr)
+      if(val) $doclink.setAttribute(attr, val)
+    })
+    doc.head.appendChild($doclink).parentNode.removeChild($doclink)
+  })
+}
+
 export const load_asset_css = paths => {
   if (!paths) return
-
+  let links = document.head.querySelectorAll("link")
+  links = Array.from(links).map(link => link.href)
+  //console.log("links",links)
   if (typeof paths === "string" || paths instanceof String) {
+    const url = `/assets/css/${paths}.css`
+    if (links.filter(href => href.includes(url)).length>0)
+      return
+
     const $link = document.createElement("link")
-    $link.href = `/assets/css/${paths}.css`
+    $link.href = url
     $link.rel = "stylesheet"
     //si lo quito deja de funcionar
-    return document.head.appendChild($link)//.parentNode.removeChild($link)
+    document.head.appendChild($link)//.parentNode.removeChild($link)
+    return
   }
 
   paths.forEach(path => {
+    const url = `/assets/css/${path}.css`
+    if (links.filter(href => href.includes(url)).length>0)
+      return
+
     const $link = document.createElement( "link" )
-    $link.href = `/assets/css/${path}.css`
+    $link.href = url
     $link.rel = "stylesheet"
     document.head.appendChild($link)//.parentNode.removeChild($link)
   })

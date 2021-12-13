@@ -1,0 +1,9 @@
+input[type="email"] {
+    border: 1px solid dodgerblue;
+    color: #0d6efd;
+}
+
+label {
+    color: red;
+    font-weight: bold;
+}

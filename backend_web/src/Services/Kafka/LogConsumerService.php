@@ -12,8 +12,8 @@ namespace App\Services\Kafka;
 use App\Factories\DbFactory;
 use App\Factories\KafkaFactory;
 use App\Traits\LogTrait;
-use TheFramework\Components\Db\ComponentCrud;
 use PDO;
+use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\Context\ComponentContext;
 use RdKafka\Message;
 
@@ -58,7 +58,6 @@ final class LogConsumerService
             $sqls[] = $sql;
         }
         $sql = implode(";",$sqls).";";
-        //$this->logkafka($sql,"to save in db");
         $pdo->exec($sql);
     }
 
