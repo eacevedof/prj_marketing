@@ -55,7 +55,7 @@ export default function ModalRaw(idModal, idOpener=null) {
     $eltmp.innerHTML = html
     $body.innerHTML = html
     run_js($eltmp)
-    load_css($eltmp)
+    //load_css($eltmp)
     return this
   }
 
