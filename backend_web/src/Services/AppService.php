@@ -16,6 +16,7 @@ use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use \Exception;
+
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 

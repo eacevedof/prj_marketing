@@ -1,4 +1,4 @@
-import {run_js} from "/assets/js/common/utils.js"
+import {run_js, load_css} from "/assets/js/common/utils.js"
 
 export default function ModalRaw(idModal, idOpener=null) {
 
@@ -55,6 +55,7 @@ export default function ModalRaw(idModal, idOpener=null) {
     $eltmp.innerHTML = html
     $body.innerHTML = html
     run_js($eltmp)
+    load_css($eltmp)
     return this
   }
 

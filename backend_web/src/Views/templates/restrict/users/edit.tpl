@@ -45,6 +45,7 @@ $result = [
 ];
 
 //dd($result,"result-edit")
+echo $this->_asset_css("restrict/users");
 ?>
 <h1><?=$h1?></h1>
 <div id="app">
