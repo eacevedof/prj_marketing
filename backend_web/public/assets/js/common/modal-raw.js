@@ -7,7 +7,6 @@ export default function ModalRaw(idModal, idOpener=null) {
   if(!$modal) return console.log("no modal found!",idModal)
 
   const $dialog = $modal.querySelector("[role='modal-dialog']")
-  const $title = $dialog.querySelector("[role='title']")
   const $btnClose = $dialog.querySelector("[role='btn-close']")
   const $body = $dialog.querySelector("[role='body']")
   const $opener = idOpener ? document.getElementById(idOpener) : null
@@ -15,7 +14,6 @@ export default function ModalRaw(idModal, idOpener=null) {
 
   const _show = () => {
     $modal.classList.remove("modal-hide")
-    $modal.classList.add("modal-show")
     $mainbody.style.overflow = "hidden";
   }
 
@@ -41,7 +39,6 @@ export default function ModalRaw(idModal, idOpener=null) {
       const abort = fnBefore()
       if (abort) return this
     }
-    $title.innerHTML = ""
     $body.innerHTML = ""
     _hide()
     if(fnAfter) fnAfter()
@@ -53,24 +50,17 @@ export default function ModalRaw(idModal, idOpener=null) {
     $body.innerHTML = ""
     const $eltmp = document.createElement("div")
     $eltmp.innerHTML = html
+
     $body.innerHTML = html
     run_js($eltmp)
-    //load_css($eltmp)
     return this
   }
 
-  this.set_title = function (html) {
-    if(!html || !$title) return this
-    $title.innerHTML = ""
-    $title.innerHTML = html
-    return this
-  }
 
   this.destroy = () => {
     if($modal) $modal.removeEventListener("click", _hide)
     if($opener) $opener.removeEventListener("click", _show)
     if($btnClose) $btnClose.removeEventListener("click", _hide)
-    if($title) $title.innerHTML = ""
     if($body) $body.innerHTML = ""
     return null
   }
