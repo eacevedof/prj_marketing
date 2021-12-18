@@ -13,13 +13,13 @@ export default function ModalRaw(idModal, idOpener=null) {
   const $mainbody = document.querySelector("body")
 
   const _show = () => {
-    $modal.classList.remove("modal-hide")
+    $modal.classList.remove("mod-hide")
     $mainbody.style.overflow = "hidden";
   }
 
   const _hide = ev => {
     if(ev?.target?.id === idModal && !bgclick) return
-    $modal.classList.add("modal-hide")
+    $modal.classList.add("mod-hide")
     $mainbody.style.overflow = "auto";
   }
 
