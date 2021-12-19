@@ -1,5 +1,9 @@
 import {run_js} from "/assets/js/common/utils.js"
 
+const CSS = {
+  HIDE: "mod-hide",
+}
+
 export default function ModalRaw(opts={}) {
 
   let modal = {
@@ -26,13 +30,13 @@ export default function ModalRaw(opts={}) {
   let $docbody = document.querySelector("body")
 
   const _show = () => {
-    $modal.classList.remove("mod-hide")
+    $modal.classList.remove(CSS.HIDE)
     $docbody.style.overflow = "hidden";
   }
 
   const _hide = ev => {
     if(ev?.target?.id === modal.id_modal && !modal.bgclick) return
-    $modal.classList.add("mod-hide")
+    $modal.classList.add(CSS.HIDE)
     $docbody.style.overflow = "auto"
   }
 
