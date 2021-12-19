@@ -15,5 +15,7 @@
 </div>
 <script type="module">
 import ModalRaw from "/assets/js/common/modal-raw.js"
-window.modalraw = new ModalRaw("modal-global")
+window.modalraw = new ModalRaw({
+  id_modal: "modal-global"
+})
 </script>

@@ -1,15 +1,28 @@
-import {run_js, load_css} from "/assets/js/common/utils.js"
+import {run_js} from "/assets/js/common/utils.js"
 
-export default function ModalRaw(idModal, idOpener=null) {
+export default function ModalRaw(opts={}) {
 
-  let bgclick = true
-  const $modal = document.getElementById(idModal)
-  if(!$modal) return console.log("no modal found!",idModal)
+  let modal = {
+    id_modal: "",
+    $modal: null,
+    $dialog: null,
+    $btnclose: null,
+    $body: null,
+    bgclick: true,
+    id_opener: "",
+    $opener: null,
+  }
 
-  const $dialog = $modal.querySelector("[role='modal-dialog']")
-  const $btnClose = $dialog.querySelector("[role='btn-close']")
-  const $body = $dialog.querySelector("[role='body']")
-  const $opener = idOpener ? document.getElementById(idOpener) : null
+  modal = {...modal, ...opts}
+
+  const $modal = document.getElementById(modal.id_modal)
+  if(!$modal) return console.log("no modal found!",modal.id_modal)
+
+  modal.$modal = $modal
+  modal.$dialog = modal.$modal.querySelector("[role='modal-dialog']")
+  modal.$btnclose = modal.$dialog.querySelector("[role='btn-close']")
+  modal.$body = modal.$dialog.querySelector("[role='body']")
+  modal.$opener = modal.id_opener ? document.getElementById(modal.id_opener) : null
   const $mainbody = document.querySelector("body")
 
   const _show = () => {
@@ -18,7 +31,7 @@ export default function ModalRaw(idModal, idOpener=null) {
   }
 
   const _hide = ev => {
-    if(ev?.target?.id === idModal && !bgclick) return
+    if(ev?.target?.id === modal.id_modal && !modal.bgclick) return
     $modal.classList.add("mod-hide")
     $mainbody.style.overflow = "auto";
   }
@@ -39,43 +52,42 @@ export default function ModalRaw(idModal, idOpener=null) {
       const abort = fnBefore()
       if (abort) return this
     }
-    $body.innerHTML = ""
+    modal.$body.innerHTML = ""
     _hide()
     if(fnAfter) fnAfter()
     return this
   }
 
   this.set_body = function (html) {
-    if(!html || !$body) return this
-    $body.innerHTML = ""
+    if(!html || !modal.$body) return this
+    modal.$body.innerHTML = ""
     const $eltmp = document.createElement("div")
     $eltmp.innerHTML = html
 
-    $body.innerHTML = html
+    modal.$body.innerHTML = html
     run_js($eltmp)
     return this
   }
 
-
   this.destroy = () => {
-    if($modal) $modal.removeEventListener("click", _hide)
-    if($opener) $opener.removeEventListener("click", _show)
-    if($btnClose) $btnClose.removeEventListener("click", _hide)
-    if($body) $body.innerHTML = ""
+    if(modal.$modal) modal.$modal.removeEventListener("click", _hide)
+    if(modal.$opener) modal.$opener.removeEventListener("click", _show)
+    if(modal.$btnclose) modal.$btnclose.removeEventListener("click", _hide)
+    if(modal.$body) modal.$body.innerHTML = ""
     return null
   }
 
-  this.disable_bgclick = (on=true) => {
-    bgclick = !on
+  this.no_bgclick = (on=true) => {
+    modal.bgclick = !on
     return this
   }
 
   (() => {
     //configuro los listeners
-    $modal.addEventListener("click", _hide)
-    if ($dialog) $dialog.addEventListener("click", ev => ev.stopPropagation())
-    if ($opener) $opener.addEventListener("click", _show)
-    if ($btnClose) $btnClose.addEventListener("click", _hide)
+    modal.$modal.addEventListener("click", _hide)
+    if (modal.$dialog) modal.$dialog.addEventListener("click", ev => ev.stopPropagation())
+    if (modal.$opener) modal.$opener.addEventListener("click", _show)
+    if (modal.$btnclose) modal.$btnclose.addEventListener("click", _hide)
   })()
 
 }//ModalRaw
