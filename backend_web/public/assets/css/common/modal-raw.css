@@ -1,9 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 :root{
     --main-blue:#1766DC;
     --main-blue-2:#2366C9;
