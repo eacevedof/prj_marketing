@@ -17,7 +17,10 @@ const tplmodal = {
 
 const _get_mapped_modal = (modal = {}) => {
   const $modal = document.getElementById(modal.id_modal)
-  if(!$modal) return console.log("no modal found!",modal.id_modal)
+  if(!$modal) {
+    console.log("no modal found!",modal.id_modal)
+    return null
+  }
 
   modal.$modal = $modal
   modal.$dialog = modal.$modal.querySelector("[role='modal-dialog']")
@@ -30,6 +33,8 @@ const _get_mapped_modal = (modal = {}) => {
 export default function ModalRaw(opts={}) {
 
   let modal = _get_mapped_modal({...tplmodal, ...opts})
+  if (!modal) return
+
   let $docbody = document.querySelector("body")
 
   const _show = () => {
@@ -41,6 +46,11 @@ export default function ModalRaw(opts={}) {
     if(ev?.target?.id === modal.id_modal && !modal.bgclick) return
     modal.$modal.classList.add(CSS.HIDE)
     $docbody.style.overflow = "auto"
+  }
+
+  this.opts = function (opts = {}) {
+    modal = _get_mapped_modal({...tplmodal, ...opts})
+    return this
   }
 
   this.show = function (fnBefore, fnAfter) {
