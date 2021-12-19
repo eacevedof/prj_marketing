@@ -23,17 +23,17 @@ export default function ModalRaw(opts={}) {
   modal.$btnclose = modal.$dialog.querySelector("[role='btn-close']")
   modal.$body = modal.$dialog.querySelector("[role='body']")
   modal.$opener = modal.id_opener ? document.getElementById(modal.id_opener) : null
-  const $mainbody = document.querySelector("body")
+  let $docbody = document.querySelector("body")
 
   const _show = () => {
     $modal.classList.remove("mod-hide")
-    $mainbody.style.overflow = "hidden";
+    $docbody.style.overflow = "hidden";
   }
 
   const _hide = ev => {
     if(ev?.target?.id === modal.id_modal && !modal.bgclick) return
     $modal.classList.add("mod-hide")
-    $mainbody.style.overflow = "auto";
+    $docbody.style.overflow = "auto";
   }
 
   this.show = function (fnBefore, fnAfter) {
@@ -58,7 +58,7 @@ export default function ModalRaw(opts={}) {
     return this
   }
 
-  this.set_body = function (html) {
+  this.body = function (html) {
     if(!html || !modal.$body) return this
     modal.$body.innerHTML = ""
     const $eltmp = document.createElement("div")
@@ -70,6 +70,7 @@ export default function ModalRaw(opts={}) {
   }
 
   this.destroy = () => {
+    if($docbody) $docbody = null
     if(modal.$modal) modal.$modal.removeEventListener("click", _hide)
     if(modal.$opener) modal.$opener.removeEventListener("click", _show)
     if(modal.$btnclose) modal.$btnclose.removeEventListener("click", _hide)
