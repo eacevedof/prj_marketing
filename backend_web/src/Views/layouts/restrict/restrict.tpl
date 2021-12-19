@@ -33,6 +33,7 @@
 <div class="horizontalMenucontainer">
 <?
 $this->_element("common/elem-nav-menu");
+$this->_element("restrict/elem-breadscrumb");
 $this->_template();
 ?>
   <div class="main-footer ht-40">
