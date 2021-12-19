@@ -30,10 +30,19 @@
 </head>
 <body>
 <main>
+<div class="horizontalMenucontainer">
 <?
 $this->_element("common/elem-nav-menu");
 $this->_template();
 ?>
+  <div class="main-footer ht-40">
+    <div class="container-fluid pd-t-0-f ht-100p">
+      <span>Copyright © 2021 <a href="#">Valex</a>. Designed by <a href="https://www.spruko.com/">Spruko</a> All rights reserved.</span>
+    </div>
+  </div>
+  <a href="#top" id="back-to-top" style="display: block;"><i class="las la-angle-double-up"></i></a>
+</div>
+<div class="main-navbar-backdrop"></div>
 </main>
 <?=$this->_element("common/elem-modal-raw")?>
 <?=$this->_element("common/elem-snackbar")?>
