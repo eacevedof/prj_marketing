@@ -13,6 +13,8 @@
     <title><?=$pagetitle?></title>
 <!-- css -->
     <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
+    <link href="/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/valex/assets/css/style.css" rel="stylesheet">
     <?= $this->_asset_css("index") ?>
     <?= $this->_asset_css("restrict/restrict") ?>
     <?= $this->_asset_css("vendor/datatable/datatable-1.11.3") ?>

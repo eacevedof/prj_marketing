@@ -3,3 +3,5 @@
 *.log
 io
 docker/nginx/certs
+backend_web/public/themes/valex/assets/_plugins
+backend_web/public/themes/valex/assets/_js
