@@ -9,6 +9,7 @@ body {
 :root{
     --main-blue:#1766DC;
     --main-blue-2:#2366C9;
+    --main-blue-3:#6496db;
     --main-white:#f2f2f2;
 }
 
@@ -37,7 +38,7 @@ body {
     position: relative;
     border-radius: 0.32rem;
     box-shadow: rgba(100,100,111, 0.2) 0px 7px 29px 0px;
-    padding: 0.938rem;
+    padding: 0.25rem;
 }
 
 .mo-container img {
@@ -51,8 +52,8 @@ body {
 
 .mcr-button-x {
     position: absolute;
-    top: 0.6rem;
-    right: 0.40rem;
+    top: 0.25rem;
+    right: 0.25rem;
     width: 1.50rem;
     height: 1.50rem;
     border: none;
@@ -82,8 +83,6 @@ body {
     min-width: 21.875rem;
     overflow-y: auto;
     overflow-x: hidden;
-    border:1px solid var(--main-white);
-    padding: 0.625rem;
 }
 
 .mcr-content.mc-no-scroll {
@@ -131,17 +130,17 @@ body {
 }
 
 .mcr-content::-webkit-scrollbar {
-    width: 0.438rem;
+    width: 0.25rem;
 }
 
 .mcr-content::-webkit-scrollbar-track {
-    width: 0.25rem;
+    width: 0.20rem;
     background: var(--main-white);
 }
 
 .mcr-content::-webkit-scrollbar-thumb {
-    background-color: var(--main-blue);
-    border-radius: 0.313rem;
+    background-color: var(--main-blue-3);
+    border-radius: 0.25rem;
 }
 
 /*monitor laptop*/
