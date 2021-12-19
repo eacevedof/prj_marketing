@@ -33,7 +33,7 @@ export default function ModalRaw(opts={}) {
   const _hide = ev => {
     if(ev?.target?.id === modal.id_modal && !modal.bgclick) return
     $modal.classList.add("mod-hide")
-    $docbody.style.overflow = "auto";
+    $docbody.style.overflow = "auto"
   }
 
   this.show = function (fnBefore, fnAfter) {
