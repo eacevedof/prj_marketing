@@ -13,6 +13,7 @@ const tplmodal = {
   bgclick: true,
   id_opener: "",
   $opener: null,
+  body: "",
 }
 
 const _get_mapped_modal = (modal = {}) => {
@@ -49,7 +50,8 @@ export default function ModalRaw(opts={}) {
   }
 
   this.opts = function (opts = {}) {
-    modal = _get_mapped_modal({...tplmodal, ...opts})
+    modal = _get_mapped_modal({...modal, ...opts})
+    modal.$body.innerHTML = modal.body
     return this
   }
 
