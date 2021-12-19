@@ -1,5 +1,5 @@
 import reqjs from "/assets/js/common/req.js"
-import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
+import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import set_cookie from "/assets/js/common/cookie.js"
 
 const URL = "/login/access"
@@ -11,6 +11,22 @@ export class FormLogin extends LitElement {
     csrf: {type: String},
     issending: {type: Boolean},
     btnsend: {type: String},
+  }
+
+  static get styles() {
+    const styleSheets = Array.from(document.styleSheets).filter(obj => {
+      const href = obj?.href ?? ""
+        return href.includes("/themes/valex/")
+    }).map(style => {
+      //console.log("style",style,"style-values:",Object.values(style.cssRules), "csstext:",Object.values(style.cssRules).map(rule => rule.cssText))
+      return Object.values(style.cssRules).map(rule => rule.cssText).join("\n")
+    })
+
+    //console.log("stylesheets",styleSheets)
+    const globalStyle = css([Object.values(styleSheets).join("\n")])
+    return [
+      globalStyle
+    ];
   }
 
   constructor() {
