@@ -4,21 +4,18 @@ const CSS = {
   HIDE: "mod-hide",
 }
 
-export default function ModalRaw(opts={}) {
+const tplmodal = {
+  id_modal: "",
+  $modal: null,
+  $dialog: null,
+  $btnclose: null,
+  $body: null,
+  bgclick: true,
+  id_opener: "",
+  $opener: null,
+}
 
-  let modal = {
-    id_modal: "",
-    $modal: null,
-    $dialog: null,
-    $btnclose: null,
-    $body: null,
-    bgclick: true,
-    id_opener: "",
-    $opener: null,
-  }
-
-  modal = {...modal, ...opts}
-
+const _get_mapped_modal = (modal = {}) => {
   const $modal = document.getElementById(modal.id_modal)
   if(!$modal) return console.log("no modal found!",modal.id_modal)
 
@@ -27,16 +24,22 @@ export default function ModalRaw(opts={}) {
   modal.$btnclose = modal.$dialog.querySelector("[role='btn-close']")
   modal.$body = modal.$dialog.querySelector("[role='body']")
   modal.$opener = modal.id_opener ? document.getElementById(modal.id_opener) : null
+  return modal
+}
+
+export default function ModalRaw(opts={}) {
+
+  let modal = _get_mapped_modal({...tplmodal, ...opts})
   let $docbody = document.querySelector("body")
 
   const _show = () => {
-    $modal.classList.remove(CSS.HIDE)
+    modal.$modal.classList.remove(CSS.HIDE)
     $docbody.style.overflow = "hidden";
   }
 
   const _hide = ev => {
     if(ev?.target?.id === modal.id_modal && !modal.bgclick) return
-    $modal.classList.add(CSS.HIDE)
+    modal.$modal.classList.add(CSS.HIDE)
     $docbody.style.overflow = "auto"
   }
 
