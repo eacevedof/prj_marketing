@@ -24,8 +24,11 @@ const rowbuttons_listeners = ()=> {
     spinner.remove()
     if (r.errors)
       return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
-    window.modalraw.no_bgclick(false).body(r).show()
-  }))//end foreach
+    window.modalraw.opts({
+      bgclick: false,
+      body: r,
+    }).show()
+  }))//end info
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-edit"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
