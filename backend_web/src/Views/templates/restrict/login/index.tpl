@@ -25,9 +25,10 @@
             </div>
           </div>
         </form>
+
+        <form-login csrf="<?=$csrf?>" />
       </div>
     </div>
   </div>
-  <form-login csrf="<?=$csrf?>" />
 </div>
 <?= $this->_asset_js_module("restrict/login") ?>
