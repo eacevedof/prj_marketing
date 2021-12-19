@@ -5,8 +5,6 @@
  * @var array $auth
  */
 ?>
-<h1><?=$h1?></h1>
-<h4><?$this->_echo($auth["description"]);?> (<?$this->_echo($auth["uuid"]);?>)</h4>
 <div id="div-table-datatable">
     <table id="table-datatable" class="display">
         <thead>
