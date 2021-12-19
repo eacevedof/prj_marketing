@@ -24,7 +24,7 @@ const rowbuttons_listeners = ()=> {
     spinner.remove()
     if (r.errors)
       return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
-    window.modalraw.disable_bgclick(false).set_body(r).show()
+    window.modalraw.no_bgclick(false).set_body(r).show()
   }))//end foreach
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-edit"]`)
@@ -36,7 +36,7 @@ const rowbuttons_listeners = ()=> {
     spinner.remove()
     if (r.errors)
       return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
-    window.modalraw.disable_bgclick(false).set_body(r).show()
+    window.modalraw.no_bgclick(false).set_body(r).show()
   }))//end foreach
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-del"]`)
@@ -123,7 +123,7 @@ const _in_modal = async url => {
   spinner.remove()
   if (r.errors)
     return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
-  window.modalraw.disable_bgclick().set_body(r).show()
+  window.modalraw.no_bgclick().set_body(r).show()
 }
 
 export default ($table, dttable) => {
