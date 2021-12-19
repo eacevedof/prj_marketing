@@ -39,7 +39,10 @@ const rowbuttons_listeners = ()=> {
     spinner.remove()
     if (r.errors)
       return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
-    window.modalraw.no_bgclick(false).body(r).show()
+    window.modalraw.opts({
+      bgclick: true,
+      body: r,
+    }).show()
   }))//end foreach
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-del"]`)
@@ -120,13 +123,17 @@ export const button = {
   set_topbtns: buttons => _topbtns = buttons
 }
 
+//para el boton add
 const _in_modal = async url => {
   spinner.render()
   const r = await reqtxt.get(url)
   spinner.remove()
   if (r.errors)
     return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
-  window.modalraw.no_bgclick().body(r).show()
+  window.modalraw.opts({
+    bgclick: true,
+    body: r,
+  }).show()
 }
 
 export default ($table, dttable) => {
