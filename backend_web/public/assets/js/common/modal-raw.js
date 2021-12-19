@@ -51,7 +51,8 @@ export default function ModalRaw(opts={}) {
 
   this.opts = function (opts = {}) {
     modal = _get_mapped_modal({...modal, ...opts})
-    modal.$body.innerHTML = modal.body
+    //console.log("opts.modal",modal)
+    this.body(modal.body)
     return this
   }
 
@@ -95,11 +96,6 @@ export default function ModalRaw(opts={}) {
     if(modal.$btnclose) modal.$btnclose.removeEventListener("click", _hide)
     if(modal.$body) modal.$body.innerHTML = ""
     return null
-  }
-
-  this.no_bgclick = (on=true) => {
-    modal.bgclick = !on
-    return this
   }
 
   (() => {

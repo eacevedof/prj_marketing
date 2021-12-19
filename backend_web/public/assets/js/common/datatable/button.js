@@ -43,7 +43,7 @@ const rowbuttons_listeners = ()=> {
       bgclick: true,
       body: r,
     }).show()
-  }))//end foreach
+  }))//end edit foreach
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-del"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
@@ -134,7 +134,7 @@ const _in_modal = async url => {
     bgclick: true,
     body: r,
   }).show()
-}
+}// add. _in_modal
 
 export default ($table, dttable) => {
   _$table = $table
