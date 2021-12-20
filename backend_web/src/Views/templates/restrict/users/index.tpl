@@ -5,36 +5,53 @@
  * @var array $auth
  */
 ?>
+<link href="/themes/valex/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<link href="/themes/valex/assets/plugins/datatable/css/buttons.bootstrap5.min.css" rel="stylesheet">
+<link href="/themes/valex/assets/plugins/datatable/responsive.bootstrap5.css" rel="stylesheet" />
+<link href="/themes/valex/assets/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="/themes/valex/assets/plugins/datatable/responsive.dataTables.min.css" rel="stylesheet">
+<link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
+
+<script src="/themes/valex/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/datatables.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/js/dataTables.bootstrap5.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/js/buttons.bootstrap5.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/js/jszip.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/js/buttons.html5.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/js/buttons.print.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/js/buttons.colVis.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="/themes/valex/assets/plugins/datatable/pdfmake/vfs_fonts.js"></script>
+
 <div class="row row-sm">
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header pb-0">
         <div class="d-flex justify-content-between">
-          <h4 class="card-title mg-b-0">SIMPLE TABLE</h4>
+          <h4 class="card-title mg-b-0"><?=$h1?></h4>
           <i class="mdi mdi-dots-horizontal text-gray"></i>
         </div>
-        <p class="tx-12 tx-gray-500 mb-2">Example of Valex Simple Table. <a href="">Learn
-            more</a></p>
       </div>
       <div class="card-body">
-<div class="table-responsive" id="div-table-datatable">
-    <table id="table-datatable" class="table text-md-nowrap">
-        <thead>
-            <tr>
-                <?= $dthelp->get_ths() ?>
-            </tr>
-            <tr row="search" class="hidden">
-                <?= $dthelp->get_search_tds() ?>
-            </tr>
-        </thead>
-        <tbody approle="tbody"></tbody>
-        <tfoot>
-            <tr>
-                <?= $dthelp->get_tf() ?>
-            </tr>
-        </tfoot>
-    </table>
-</div>
+        <div class="table-responsive" id="div-table-datatable">
+            <table id="table-datatable" class="table text-md-nowrap table-striped">
+                <thead>
+                    <tr>
+                        <?= $dthelp->get_ths() ?>
+                    </tr>
+                    <tr row="search" class="hidden">
+                        <?= $dthelp->get_search_tds() ?>
+                    </tr>
+                </thead>
+                <tbody approle="tbody"></tbody>
+                <tfoot>
+                    <tr>
+                        <?= $dthelp->get_tf() ?>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
       </div>
     </div>
   </div>
@@ -55,10 +72,6 @@ const PROFILES = {
   BUSINESS_MANAGER:"4",
 }
 
-button.add_topbtn({
-  approle: "add-item",
-  text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
-})
 
 column.add_rowbtn({
   btnid: "rowbtn-show",

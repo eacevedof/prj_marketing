@@ -13,19 +13,20 @@
     <title><?=$pagetitle?></title>
 <!-- css -->
     <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
+    <link href="/themes/valex/assets/css/icons.css" theme="valex" rel="stylesheet">
+    <link href="/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css" theme="valex" rel="stylesheet">
     <link href="/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css" theme="valex" rel="stylesheet">
     <link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
-    <link href="/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css" theme="valex" rel="stylesheet">
+
     <?= $this->_asset_css("index") ?>
     <?= $this->_asset_css("restrict/restrict") ?>
-    <?= $this->_asset_css("vendor/datatable/datatable-1.11.3") ?>
     <?= $this->_asset_css("common/modal-raw")?>
     <?= $this->_asset_css("common/snackbar")?>
 
 <!-- js -->
+   <?= $this->_asset_js("vendor/jquery/jquery-3.6.0") ?>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <?= $this->_asset_js("vendor/jquery/jquery-3.6.0") ?>
-    <?= $this->_asset_js("vendor/datatable/datatable-1.11.3") ?>
+    <script src="/themes/valex/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <?= $this->_asset_js_module("index") ?>
     <?= $this->_asset_js_module("common/snackbar") ?>
 </head>
@@ -45,7 +46,7 @@ $this->_template();
 </div>
   <div class="main-footer ht-40">
     <div class="container-fluid pd-t-0-f ht-100p">
-      <span>Copyright © 2021 <a href="#">Valex</a>. Designed by <a href="https://www.spruko.com/">Spruko</a> All rights reserved.</span>
+      <span>Copyright © 2021 <a href="#">Eduardo A. F.</a>. Designed by <a href="http://test.eduardoaf.com/" target="_blank">eduardoaf.com</a> All rights reserved.</span>
     </div>
   </div>
   <a href="#top" id="back-to-top" style="display: block;"><i class="las la-angle-double-up"></i></a>
