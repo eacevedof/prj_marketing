@@ -15,6 +15,7 @@
     <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
     <link href="/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css" theme="valex" rel="stylesheet">
     <link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
+    <link href="/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css" theme="valex" rel="stylesheet">
     <?= $this->_asset_css("index") ?>
     <?= $this->_asset_css("restrict/restrict") ?>
     <?= $this->_asset_css("vendor/datatable/datatable-1.11.3") ?>
@@ -33,9 +34,15 @@
 <div class="horizontalMenucontainer">
 <?
 $this->_element("common/elem-nav-menu");
+?>
+<div class="main-content horizontal-content">
+  <div class="container">
+<?
 $this->_element("restrict/elem-breadscrumb");
 $this->_template();
 ?>
+  </div>
+</div>
   <div class="main-footer ht-40">
     <div class="container-fluid pd-t-0-f ht-100p">
       <span>Copyright © 2021 <a href="#">Valex</a>. Designed by <a href="https://www.spruko.com/">Spruko</a> All rights reserved.</span>
