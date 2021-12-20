@@ -18,7 +18,8 @@ const rowbuttons_listeners = ()=> {
   let _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-show"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     spinner.render()
-    const uuid = e.target.getAttribute("uuid")
+    const btn = e.currentTarget
+    const uuid = btn.getAttribute("uuid")
     const URL_INFO = urlmodule.concat(`/info/${uuid}`)
     const r = await reqtxt.get(URL_INFO)
     spinner.remove()
@@ -33,7 +34,8 @@ const rowbuttons_listeners = ()=> {
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-edit"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
     spinner.render()
-    const uuid = e.target.getAttribute("uuid")
+    const btn = e.currentTarget
+    const uuid = btn.getAttribute("uuid")
     const URL_EDIT = urlmodule.concat(`/edit/${uuid}`)
     const r = await reqtxt.get(URL_EDIT)
     spinner.remove()
@@ -47,13 +49,15 @@ const rowbuttons_listeners = ()=> {
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-del"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
-    const uuid = e.target.getAttribute("uuid")
+    const btn = e.currentTarget
+    const uuid = btn.getAttribute("uuid")
     rowswal(_$table, _dttable).on_delete(uuid)
   }))//end foreach
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-undel"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
-    const uuid = e.target.getAttribute("uuid")
+    const btn = e.currentTarget
+    const uuid = btn.getAttribute("uuid")
     rowswal(_$table, _dttable).on_undelete(uuid)
   }))//end foreach
 

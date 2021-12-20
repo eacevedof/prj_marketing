@@ -2,6 +2,7 @@
 /**
  * @var \App\Views\AppView $this
  */
+if (!isset($h1)) return;
 ?>
 <div class="breadcrumb-header justify-content-between">
   <div class="my-auto">
