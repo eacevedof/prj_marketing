@@ -10,12 +10,8 @@ body {
   display: none;
 }
 
-.d .debug{
+.debug{
   border: 1px solid red !important;
-}
-
-.d-blue {
-  border: 1px solid blue !important;
 }
 
 .table-buttons {
@@ -24,4 +20,5 @@ body {
   width: 100%;
   display:flex;
   justify-content:flex-end;
+  margin-bottom: 10px;
 }

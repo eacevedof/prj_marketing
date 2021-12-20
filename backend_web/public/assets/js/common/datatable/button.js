@@ -64,8 +64,8 @@ const get_topbuttons = () => {
   let topbtns = [
     {
       approle: "add-item",
-      text: "Add",
-      className: "",
+      text: `<i class="mdi mdi-plus-box"></i>`,
+      className: "btn btn-success btn-icon me-2",
       visible: true,
       action: () => _in_modal(_$table.getAttribute("urlmodule").concat("/create")),
       attr: {
@@ -74,8 +74,8 @@ const get_topbuttons = () => {
     },
     {
       approle: "refresh-grid",
-      text: "Refresh",
-      className: "",
+      text: `<i class="mdi mdi-refresh"></i>`,
+      className: "btn btn-warning  btn-icon me-2",
       visible: true,
       action: () => _dttable.draw(),
       attr: {
@@ -84,8 +84,8 @@ const get_topbuttons = () => {
     },
     {
       approle: "show-filters",
-      text: "Show filters",
-      className: "",
+      text: `<i class="mdi mdi-filter-variant"></i>`,
+      className: "btn btn-info btn-icon me-2 btn-b",
       visible: true,
       action: _toggle_filters,
       attr: {
@@ -94,8 +94,8 @@ const get_topbuttons = () => {
     },
     {
       approle: "reset-filters",
-      text: "Reset filters",
-      className: "",
+      text: `<i class="mdi mdi-auto-fix"></i>`,
+      className: "btn btn-dark btn-icon me-2",
       visible: true,
       action: () => search(_$table, _dttable).reset_all(),
       attr: {
