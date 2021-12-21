@@ -6,6 +6,11 @@ const tpl = `
 let _fieldsid = []
 let _$wrapper = null
 
+const CSS = {
+  ON_ERROR: "form-error",
+  ERROR_TOP: "error-top",
+}
+
 const _clear = () => {
   if (!_$wrapper) return
   const errors = Array.from(_$wrapper?.querySelectorAll(`[approle="field-error"]`))
@@ -39,7 +44,7 @@ const _append = errors => {
     if ($input) {
       inform.push(objfield.fieldid)
       $input.insertAdjacentHTML("afterend", html)
-      $input.classList.add("form-error")
+      $input.classList.add(CSS.ON_ERROR)
       return
     }
     notinform.push(objfield.fieldid)
@@ -52,8 +57,8 @@ const _append = errors => {
     const lis = messages.map(message => `<li>${message}</li>`).join("")
 
     const html = tpl
-      .replace("%lis%",`<li class="li-label">${!label?fieldid:label}</li>${lis}`)
-      .replace("%css%"," error-top")
+      .replace("%lis%",`<li class="li-label">${!label ? fieldid : label}</li>${lis}`)
+      .replace("%css%",` ${CSS.ERROR_TOP}`)
     _$wrapper.insertAdjacentHTML("afterbegin", html)
   })
 
