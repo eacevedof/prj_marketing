@@ -1,6 +1,6 @@
 import reqjs from "/assets/js/common/req.js"
 import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
-import get_rules from "/assets/js/common/cssrules.js"
+import get_cssrules from "/assets/js/common/cssrules.js"
 import set_cookie from "/assets/js/common/cookie.js"
 
 const URL = "/login/access"
@@ -15,7 +15,7 @@ export class FormLogin extends LitElement {
   }
 
   static get styles() {
-    const globalStyle = css([get_rules(["/themes/valex/"])])
+    const globalStyle = css([get_cssrules(["/themes/valex/"])])
     return [
       globalStyle
     ];

@@ -1,4 +1,4 @@
-const get_rules = hrefs => {
+const get_cssrules = hrefs => {
   const styleSheets = Array.from(document.styleSheets).filter(obj => {
     const href = obj?.href ?? ""
     //return href.includes("/themes/valex/")
@@ -10,4 +10,4 @@ const get_rules = hrefs => {
   return Object.values(styleSheets).join("\n")
 }
 
-export default get_rules
+export default get_cssrules
