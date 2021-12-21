@@ -121,7 +121,7 @@ export class FormUserCreate extends LitElement {
         <div class="form-group">
           <label for="email">${this.texts.f00}</label>
           <div id="field-email">
-            <input type="email" id="email" .value=${this._email} class="form-control parsley-error">
+            <input type="email" id="email" .value=${this._email} class="form-control">
           </div>
         </div>
         
