@@ -86,25 +86,47 @@ final class AppView
         include($path);
     }
 
-    private function _asset_js_module(string $pathjs):string
+    private function _asset_js_module($pathjs):string
     {
-        $path = self::PATH_ASSETS_JS.$pathjs.".js";
-        $html = "<script type=\"module\" src=\"$path\"></script>";
-        return $html;
+        return $this->_asset_js($pathjs, "module");
     }
 
-    private function _asset_js(string $pathjs):string
+    private function _asset_js($pathjs, $type=""):string
     {
-        $path = self::PATH_ASSETS_JS.$pathjs.".js";
-        $html = "<script src=\"$path\"></script>";
-        return $html;
+        $type = $type ? " type=\"$type\"" : " ";
+
+        if (is_string($pathjs)) {
+            $path = self::PATH_ASSETS_JS.$pathjs.".js";
+            return "<script{$type}src=\"$path\"></script>";
+        }
+
+        if (is_array($pathjs)) {
+            $html = [];
+            foreach ($pathjs as $path) {
+                $path = self::PATH_ASSETS_JS.$path.".js";
+                $html[] = "<script{$type}src=\"$path\"></script>";
+            }
+            return implode("\n",$html);
+        }
+        return "";
     }
 
-    private function _asset_css(string $pathcss):string
+    private function _asset_css($pathcss):string
     {
-        $path = self::PATH_ASSETS_CSS.$pathcss.".css";
-        $html = "<link href=\"$path\" rel=\"stylesheet\">";
-        return $html;
+        if (is_string($pathcss)) {
+            $path = self::PATH_ASSETS_CSS . $pathcss . ".css";
+            return "<link href=\"$path\" rel=\"stylesheet\">";
+        }
+
+        if (is_array($pathcss)) {
+            $html = [];
+            foreach ($pathcss as $path) {
+                $path = self::PATH_ASSETS_CSS . $path . ".css";
+                $html[] = "<link href=\"$path\" rel=\"stylesheet\">";
+            }
+            return implode("\n",$html);
+        }
+        return "";
     }
 
     private function _asset_img(string $pathimg):string
