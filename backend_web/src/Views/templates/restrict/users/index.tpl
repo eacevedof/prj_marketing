@@ -75,7 +75,7 @@ const PROFILES = {
 column.add_rowbtn({
   btnid: "rowbtn-show",
   render: (v,t,row) => {
-    return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-info btn-icon me-2">
+    return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-sm btn-dark">
       <i class="mdi mdi-account-card-details"></i>
     </button>`
   }
@@ -108,8 +108,8 @@ column.add_rowbtn({
   btnid: "rowbtn-edit",
   render: (v,t,row) => {
     if (is_editable(row))
-      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}" class="btn btn-primary btn-icon me-2">
-        <i class="mdi mdi-grease-pencil"></i>
+      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}" class="btn btn-sm btn-info btn-b2">
+        <i class="las la-pen"></i>
       </button>`
     return ""
   }
@@ -119,8 +119,8 @@ column.add_rowbtn({
   btnid: "rowbtn-del",
   render: (v,t,row) => {
     if (is_deletable(row))
-      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}" class="btn btn-danger btn-icon me-2">
-        <i class="mdi mdi-account-remove"></i>
+      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}" class="btn btn-sm btn-danger">
+        <i class="las la-trash"></i>
       </button>`
     return ""
   }
