@@ -41,14 +41,18 @@ $result = [
   "languages" => $languages,
 ];
 ?>
-<h1><?=$h1?></h1>
 <div id="app">
-  <form-user-create
-    csrf=<?$this->_echo_js($csrf);?>
+  <div class="card-header">
+    <h4 class="card-title mb-1"><?=$h1?></h4>
+  </div>
+  <div class="card-body pt-0">
+    <form-user-create
+      csrf=<?$this->_echo_js($csrf);?>
 
-    texts="<?$this->_echo_jslit($texts);?>"
+      texts="<?$this->_echo_jslit($texts);?>"
 
-    fields="<?$this->_echo_jslit($result);?>"
-  />
+      fields="<?$this->_echo_jslit($result);?>"
+    />
+  </div>
 </div>
 <script type="module" src="/assets/js/restrict/users/create.js"></script>
