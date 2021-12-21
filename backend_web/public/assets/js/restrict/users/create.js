@@ -7,9 +7,13 @@ const URL_POST = "/restrict/users/insert"
 const ACTION = "users.insert"
 
 export class FormUserCreate extends LitElement {
-
   static get styles() {
-    const globalStyle = css([get_cssrules(["/themes/valex/"])])
+    const globalStyle = css([get_cssrules([
+      "/themes/valex/assets/css/icons.css",
+      "/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css",
+      "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
+      "/themes/valex/assets/css/style.css"
+    ])])
     console.log(globalStyle)
     return [
       globalStyle
@@ -116,9 +120,10 @@ export class FormUserCreate extends LitElement {
         <div class="form-group">
           <label for="email">${this.texts.f00}</label>
           <div id="field-email">
-            <input type="email" id="email" .value=${this._email} class="form-control">
+            <input type="email" id="email" .value=${this._email} class="form-control parsley-error">
           </div>
         </div>
+        
         <div class="form-group">
           <label for="password">${this.texts.f01}</label>
           <div id="field-password">
