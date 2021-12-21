@@ -16,8 +16,6 @@
     <link href="/themes/valex/assets/css/icons.css" theme="valex" rel="stylesheet">
     <link href="/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css" theme="valex" rel="stylesheet">
     <link href="/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css" theme="valex" rel="stylesheet">
-
-
     <?= $this->_asset_css([
       "index",
       "restrict/restrict",
