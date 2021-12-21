@@ -7,14 +7,18 @@ let _fieldsid = []
 let _$wrapper = null
 
 const CSS = {
-  ON_ERROR: "form-error",
+  INPUT_ERROR: "form-error",
   ERROR_TOP: "error-top",
 }
 
 const _clear = () => {
   if (!_$wrapper) return
-  const errors = Array.from(_$wrapper?.querySelectorAll(`[approle="field-error"]`))
+  let errors = Array.from(_$wrapper?.querySelectorAll(`[approle="field-error"]`))
+  //limpia los li
   errors.forEach($div => $div.parentNode.removeChild($div))
+  //limpia las x y los marcos rojos
+  errors = Array.from(_$wrapper?.querySelectorAll(`.${CSS.INPUT_ERROR}`))
+  errors.forEach($input => $input.classList.remove(CSS.INPUT_ERROR))
 }
 
 const _get_not_declared_fields = errors => errors
@@ -44,7 +48,7 @@ const _append = errors => {
     if ($input) {
       inform.push(objfield.fieldid)
       $input.insertAdjacentHTML("afterend", html)
-      $input.classList.add(CSS.ON_ERROR)
+      $input.classList.add(CSS.INPUT_ERROR)
       return
     }
     notinform.push(objfield.fieldid)
