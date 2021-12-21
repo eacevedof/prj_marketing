@@ -67,6 +67,7 @@ const get_topbuttons = () => {
 
   let topbtns = [
     {
+      //add-button
       approle: "add-item",
       text: `<i class="mdi mdi-plus-box"></i>`,
       className: "btn btn-success btn-icon me-2",
