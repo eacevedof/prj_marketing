@@ -22,7 +22,7 @@
       "restrict/restrict",
       "common/modal-raw",
       "common/snackbar",
-      "common/form-validate"
+      "common/fielderrors"
     ]) ?>
 
 <!-- js -->

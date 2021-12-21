@@ -12,7 +12,8 @@ export class FormUserCreate extends LitElement {
       "/themes/valex/assets/css/icons.css",
       "/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css",
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
-      "/themes/valex/assets/css/style.css"
+      "/themes/valex/assets/css/style.css",
+      "/assets/css/common/fielderrors.css"
     ])])
     console.log(globalStyle)
     return [
