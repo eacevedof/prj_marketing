@@ -1,4 +1,5 @@
-import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
+import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
+import get_cssrules from "/assets/js/common/cssrules.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 
@@ -6,6 +7,14 @@ const URL_POST = "/restrict/users/insert"
 const ACTION = "users.insert"
 
 export class FormUserCreate extends LitElement {
+
+  static get styles() {
+    const globalStyle = css([get_cssrules(["/themes/valex/"])])
+    console.log(globalStyle)
+    return [
+      globalStyle
+    ];
+  }
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
 
