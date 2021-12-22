@@ -18,11 +18,12 @@
     <link href="/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css" theme="valex" rel="stylesheet">
     <link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
     <?= $this->_asset_css([
-      "index",
-      "restrict/restrict",
-      "common/modal-raw",
-      "common/snackbar",
-      "common/fielderrors"
+        "index",
+        "restrict/restrict",
+        "common/modal-raw",
+        "common/snackbar",
+        "common/fielderrors",
+        "common/form-lit"
     ]) ?>
 
 <!-- js -->
