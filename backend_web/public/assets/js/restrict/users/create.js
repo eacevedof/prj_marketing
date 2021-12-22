@@ -50,6 +50,10 @@ export class FormUserCreate extends LitElement {
       this._id_parent = ""
   }
 
+  on_cancel() {
+    window.modalraw.hide()
+  }
+
   //1
   constructor() {
     super()
@@ -78,6 +82,7 @@ export class FormUserCreate extends LitElement {
 
     _issending: {type: Boolean, state:true},
     _btnsend: {type: String, state:true},
+    _btncancel: {type: String, state:true},
 
     _email: {type: String, state:true},
     _password: {type: String, state:true},
@@ -110,6 +115,7 @@ export class FormUserCreate extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
+    this._btncancel = "Cancel"
 
     //this._email = this.fields.email
     for(let p in this.fields) this["_".concat(p)] = this.fields[p]
@@ -230,6 +236,14 @@ export class FormUserCreate extends LitElement {
                 : html``
             }
           </button>
+          <button type="button" ?disabled=${this._issending} @click=${this.on_cancel} class="btn btn-secondary mt-3 mb-0">
+            ${this._btncancel}
+            ${
+                this._issending
+                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                  : html``
+            }
+          </button>          
         </div>
       </form>
     `
@@ -274,7 +288,7 @@ export class FormUserCreate extends LitElement {
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
       if(errors) {
-        window.snack.set_time(4).set_inner("error").set_color(SNACK.ERROR).show()
+        window.snack.set_time(4).set_inner("Error").set_color(SNACK.ERROR).show()
         return error.append(errors)
       }
 
