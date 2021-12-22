@@ -1,4 +1,5 @@
 import req from "/assets/js/common/req.js"
+import {SNACK} from "/assets/js/common/snackbar.js"
 const Rowswal = window.Swal
 
 let _dttable = null,
@@ -42,12 +43,12 @@ const _show_error = (error,type=TYPE.DELETE) => type===TYPE.DELETE ? Rowswal.fir
 
 const _show_success = (uuid, type=TYPE.DELETE) => type===TYPE.DELETE ? window.snack
   .set_time(5)
-  .set_color("green")
+  .set_color(SNACK.SUCCESS)
   .set_inner(_texts.delswal.success.concat(` ${uuid}`))
   .show()
   : window.snack
     .set_time(5)
-    .set_color("green")
+    .set_color(SNACK.SUCCESS)
     .set_inner(_texts.undelswal.success.concat(` ${uuid}`))
     .show()
 
@@ -59,7 +60,7 @@ const on_delete = uuid =>
     cancelButtonText: _texts.delswal.cancel,
     type: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#DD6B55",
+    confirmButtonColor: "#ee335e",
     closeOnConfirm: false,
     closeOnCancel: false
   })

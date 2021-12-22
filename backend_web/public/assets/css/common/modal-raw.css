@@ -55,6 +55,7 @@
     transition: .3s ease all;
     border-radius: 0.31rem;
     color: var(--main-white);
+    z-index: 1;
 }
 
 .mcr-button-x:hover {

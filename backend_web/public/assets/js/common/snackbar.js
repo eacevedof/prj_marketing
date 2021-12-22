@@ -1,3 +1,8 @@
+export const SNACK = {
+  ERROR: "#ee335e",
+  SUCCESS: "#22c03c",
+}
+
 function Snackbar(id) {
   const _id = id
   let _time = 3

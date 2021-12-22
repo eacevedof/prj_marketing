@@ -1,5 +1,6 @@
 import {reqtxt} from "/assets/js/common/req.js"
 import spinner from "/assets/js/common/spinner.js"
+import {SNACK} from "/assets/js/common/snackbar.js"
 
 import search from "./search.js"
 import rowswal from "./rowswal.js"
@@ -24,7 +25,7 @@ const rowbuttons_listeners = ()=> {
     const r = await reqtxt.get(URL_INFO)
     spinner.remove()
     if (r.errors)
-      return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
+      return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
     window.modalraw.opts({
       bgclick: false,
       body: r,
@@ -40,7 +41,7 @@ const rowbuttons_listeners = ()=> {
     const r = await reqtxt.get(URL_EDIT)
     spinner.remove()
     if (r.errors)
-      return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
+      return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
     window.modalraw.opts({
       bgclick: true,
       body: r,
@@ -134,7 +135,7 @@ const _in_modal = async url => {
   const r = await reqtxt.get(url)
   spinner.remove()
   if (r.errors)
-    return window.snack.set_color("red").set_time(5).set_inner(r.errors[0]).show()
+    return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
   window.modalraw.opts({
     bgclick: true,
     body: r,

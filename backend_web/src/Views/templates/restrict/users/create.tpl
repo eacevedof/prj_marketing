@@ -41,7 +41,7 @@ $result = [
   "languages" => $languages,
 ];
 ?>
-<div id="app">
+<div class="modal-form">
   <div class="card-header">
     <h4 class="card-title mb-1"><?=$h1?></h4>
   </div>

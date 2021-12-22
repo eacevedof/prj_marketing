@@ -1,6 +1,7 @@
 import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
+import {SNACK} from "/assets/js/common/snackbar.js"
 
 const URL_UPDATE = "/restrict/users/update"
 const ACTION = "users.update"
@@ -248,17 +249,17 @@ export class FormUserEdit extends LitElement {
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
       if(errors) {
-        window.snack.set_time(4).set_inner("error").set_color("red").show()
+        window.snack.set_time(4).set_inner("error").set_color(SNACK.ERROR).show()
         return error.append(errors)
       }
 
       errors = response?.errors
-      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color("red").show()
+      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
     $("#table-datatable").DataTable().ajax.reload()
     window.snack.set_time(4)
-      .set_color("green")
+      .set_color(SNACK.SUCCESS)
       .set_inner(`<b>Data updated</b>`)
       .show()
 

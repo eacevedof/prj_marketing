@@ -3,6 +3,7 @@ import {load_asset_css} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "/assets/js/common/url.js"
+import {SNACK} from "/assets/js/common/snackbar.js"
 
 import dtcolumn from "./column.js"
 import dtsearch from "./search.js"
@@ -63,7 +64,7 @@ const get_init_conf = () => (
 
 const _show_error = error => window.snack
     .set_time(5)
-    .set_color("red")
+    .set_color(SNACK.ERROR)
     .set_inner("Error: ".concat(error.toString()))
     .show()
 
