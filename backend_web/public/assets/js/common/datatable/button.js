@@ -43,7 +43,7 @@ const rowbuttons_listeners = ()=> {
     if (r.errors)
       return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
     window.modalraw.opts({
-      bgclick: true,
+      bgclick: false,
       body: r,
     }).show()
   }))//end edit foreach
@@ -137,7 +137,7 @@ const _in_modal = async url => {
   if (r.errors)
     return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
   window.modalraw.opts({
-    bgclick: true,
+    bgclick: false,
     body: r,
   }).show()
 }// add. _in_modal
