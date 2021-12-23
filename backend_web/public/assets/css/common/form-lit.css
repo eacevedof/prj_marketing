@@ -11,6 +11,8 @@ form label {
 .flex-row {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .flex-column-n1 {
@@ -25,5 +27,4 @@ form label {
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
-  margin-left: 15px;
 }
