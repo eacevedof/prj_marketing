@@ -45,17 +45,49 @@ $result = [
 ];
 ?>
 <div class="modal-form">
-    <div class="card-header">
-      <h4 class="card-title mb-1"><?=$h1?></h4>
-    </div>
-    <div class="card-body pt-0">
-      <form-user-edit
-        csrf=<?$this->_echo_js($csrf);?>
+  <div class="card-header">
+    <h4 class="card-title mb-1">
+      <?=$h1?>
+    </h4>
+  </div>
 
-        texts="<?$this->_echo_jslit($texts);?>"
+  <div class="card-body pt-0">
 
-        fields="<?$this->_echo_jslit($result);?>"
-      />
-    </div>
+    <div class="tabs-menu ">
+      <ul class="nav nav-tabs profile navtab-custom panel-tabs">
+        <li>
+          <a href="#profile" data-bs-toggle="tab" class="active" aria-expanded="true">
+            <span class="visible-xs">
+              <i class="las la-user-circle tx-16 me-1"></i>
+            </span>
+            <span class="hidden-xs">Profile</span>
+          </a>
+        </li>
+          <li>
+              <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
+                  <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
+                  <span class="hidden-xs"><?=__("Permissions")?></span>
+              </a>
+          </li>
+      </ul>
+    </div><!--nav-->
+
+    <div class="tab-content border-start border-bottom border-right border-top-0 p-4 br-dark">
+      <div class="tab-pane active" id="profile">
+        <form-user-edit
+          csrf=<?$this->_echo_js($csrf);?>
+
+          texts="<?$this->_echo_jslit($texts);?>"
+
+          fields="<?$this->_echo_jslit($result);?>"
+          />
+      </div>
+
+      <div class="tab-pane" id="permissions">
+
+      </div>
+    </div><!--tab-content-->
+
+  </div><!--card-body-->
 </div>
 <script type="module" src="/assets/js/restrict/users/edit.js"></script>
