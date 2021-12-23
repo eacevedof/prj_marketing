@@ -132,7 +132,7 @@ export class FormUserEdit extends LitElement {
           <div class="form-group">
             <label for="email">${this.texts.f00}</label>
             <div id="field-email">
-              <input type="email" id="email" .value=${this._email}>
+              <input type="email" id="email" .value=${this._email} class="form-control">
             </div>
           </div>
     
@@ -186,25 +186,25 @@ export class FormUserEdit extends LitElement {
             <div id="field-id_profile">
               <select id="id_profile" @change=${this.on_profile} class="form-control">
                 ${this._profiles.map((item) =>
-        html`<option value=${item.key} ?selected=${item.key===this._id_profile}>${item.value}</option>`
-    )}
+                  html`<option value=${item.key} ?selected=${item.key===this._id_profile}>${item.value}</option>`
+                )}
               </select>
             </div>
           </div>
     
           ${this._is_parent
-        ? html`
-          <div class="form-group">
-            <label for="id_parent">${this.texts.f07}</label>
-            <div id="field-id_parent">
-              <select id="id_parent" class="form-control">
-                ${this._parents.map((item) =>
-            html`<option value=${item.key} ?selected=${item.key===this._id_parent}>${item.value}</option>`
-        )}
-              </select>
-            </div>
-          </div>`
-        : html``
+          ? html`
+            <div class="form-group">
+              <label for="id_parent">${this.texts.f07}</label>
+              <div id="field-id_parent">
+                <select id="id_parent" class="form-control">
+                  ${this._parents.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._id_parent}>${item.value}</option>`
+                  )}
+                </select>
+              </div>
+            </div>`
+          : html``
     }
     
           <div class="form-group">
