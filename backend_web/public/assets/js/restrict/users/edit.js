@@ -205,15 +205,15 @@ export class FormUserEdit extends LitElement {
               </div>
             </div>`
           : html``
-    }
+          }
     
           <div class="form-group">
             <label for="id_country">${this.texts.f10}</label>
             <div id="field-id_country">
               <select id="id_country" class="form-control">
                 ${this._countries.map((item) =>
-        html`<option value=${item.key} ?selected=${item.key===this._id_country}>${item.value}</option>`
-    )}
+                  html`<option value=${item.key} ?selected=${item.key===this._id_country}>${item.value}</option>`
+                )}
               </select>
             </div>
           </div>
@@ -222,9 +222,9 @@ export class FormUserEdit extends LitElement {
             <label for="id_language">${this.texts.f09}</label>
             <div id="field-id_language">
               <select id="id_language" class="form-control">
-                ${this._languages.map((item) =>
-        html`<option value=${item.key} ?selected=${item.key===this._id_language}>${item.value}</option>`
-    )}
+              ${this._languages.map((item) =>
+                html`<option value=${item.key} ?selected=${item.key===this._id_language}>${item.value}</option>`
+              )}
               </select>
             </div>
           </div>
@@ -232,20 +232,20 @@ export class FormUserEdit extends LitElement {
         </div>
       </div>
     
-      <div class="form-group">
+      <div class="form-group mb-0">
         <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
           ${this._btnsend}
-            ${this._issending
-        ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-        : html``
-    }
+          ${this._issending
+            ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
+            : html``
+          }
         </button>
         <button type="button" ?disabled=${this._issending} @click=${this.on_cancel} class="btn btn-secondary mt-3 mb-0">
-          ${this._btncancel}
-            ${this._issending
-        ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-        : html``
-    }
+        ${this._btncancel}
+        ${this._issending
+          ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
+          : html``
+        }
         </button>
       </div>
     </form>
