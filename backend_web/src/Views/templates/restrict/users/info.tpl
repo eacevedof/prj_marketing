@@ -12,7 +12,7 @@
       <?=$h1?>
     </h4>
   </div>
-  <div class="card-body pt-0">
+  <div class="card-body p-2 pt-0">
     <div class="tabs-menu ">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
@@ -54,6 +54,17 @@
           <li><b><?=__("Profile")?>:</b>&ensp;<span><?=$profile["e_profile"] ?? ""?></span></li>
           <li><b><?=__("Superior")?>:</b>&ensp;<span><?=$profile["e_parent"] ?? ""?></span></li>
         </ol>
+        <br/>
+        <ul>
+          <li><b><?=__("Created by")?>:</b>&ensp;<span><?=$profile["insert_user"] ?? ""?></span></li>
+          <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$profile["insert_date"] ?? ""?></span></li>
+          <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$profile["update_user"] ?? ""?></span></li>
+          <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$profile["update_date"] ?? ""?></span></li>
+
+          <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$profile["delete_user"] ?? ""?></span></li>
+          <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$profile["delete_date"] ?? ""?></span></li>
+        </ul>
+
       </div>
 
       <div class="tab-pane" id="permissions">
