@@ -56,13 +56,17 @@ $result = [
             <span class="visible-xs">
               <i class="las la-user-circle tx-16 me-1"></i>
             </span>
-            <span class="hidden-xs"><?=__("Profile")?></span>
+            <span class="hidden-xs">
+              <?=__("Profile")?>
+            </span>
           </a>
         </li>
           <li>
               <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
                   <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-                  <span class="hidden-xs"><?=__("Permissions")?></span>
+                  <span class="hidden-xs">
+                    <?=__("Permissions")?>
+                  </span>
               </a>
           </li>
       </ul>
