@@ -46,13 +46,9 @@ $result = [
 ?>
 <div class="modal-form">
   <div class="card-header">
-    <h4 class="card-title mb-1">
-      <?=$h1?>
-    </h4>
+    <h4 class="card-title mb-1"><?=$h1?></h4>
   </div>
-
   <div class="card-body pt-0">
-
     <div class="tabs-menu ">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
@@ -60,7 +56,7 @@ $result = [
             <span class="visible-xs">
               <i class="las la-user-circle tx-16 me-1"></i>
             </span>
-            <span class="hidden-xs">Profile</span>
+            <span class="hidden-xs"><?=__("Profile")?></span>
           </a>
         </li>
           <li>
@@ -72,7 +68,7 @@ $result = [
       </ul>
     </div><!--nav-->
 
-    <div class="tab-content border-start border-bottom border-right border-top-0 p-4 br-dark">
+    <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <div class="tab-pane active" id="profile">
         <form-user-edit
           csrf=<?$this->_echo_js($csrf);?>

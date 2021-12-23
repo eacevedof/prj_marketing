@@ -18,7 +18,7 @@
                         <span class="visible-xs">
                             <i class="las la-user-circle tx-16 me-1"></i>
                         </span>
-                        <span class="hidden-xs">Profile</span>
+                        <span class="hidden-xs"><?=__("Profile")?></span>
                     </a>
                 </li>
                 <li>
