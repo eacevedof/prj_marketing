@@ -80,7 +80,7 @@ $result = [
           texts="<?$this->_echo_jslit($texts);?>"
 
           fields="<?$this->_echo_jslit($result);?>"
-          />
+        />
       </div>
 
       <div class="tab-pane" id="permissions">
