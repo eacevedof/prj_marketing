@@ -8,9 +8,10 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\PolicyType;
+
 use App\Enums\KeyType;
 use App\Enums\UrlType;
+use App\Factories\ServiceFactory as SF;
 
 final class DashboardController extends RestrictController
 {
@@ -19,9 +20,14 @@ final class DashboardController extends RestrictController
         if(!$this->authuser)
             $this->location(UrlType::FORBIDDEN);
 
-        $this->add_var(KeyType::PAGE_TITLE, __("DASHBOARD"));
+        $service = SF::get_callable("Restrict\\Dashboard");
+        $this
+            ->add_var(KeyType::PAGE_TITLE, __("Dashboard"))
+            ->add_var("modules", $service())
+        ;
+
         $this->render([
-            "h1" => __("Dashboard for user {0}", $this->authuser["description"])
+            "h1" => $this->authuser["description"]
         ]);
     }
 
