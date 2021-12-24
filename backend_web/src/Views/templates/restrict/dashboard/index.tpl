@@ -41,7 +41,11 @@ import spinner from "/assets/js/common/spinner.js"
 import {reqtxt} from "/assets/js/common/req.js"
 
 const btn = document.getElementById("btn-users-add")
-btn.addEventListener("click", ()=>_in_modal("/restrict/users/create"))
+btn.addEventListener("click", (e) => {
+  e.preventDefault()
+  e.stopPropagation()
+  _in_modal("/restrict/users/create")
+})
 
 const _in_modal = async url => {
   spinner.render()
