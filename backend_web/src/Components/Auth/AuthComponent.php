@@ -28,7 +28,8 @@ final class AuthComponent
         if(!self::$user) return false;
         if($this->is_root()) return true;
         
-        $permissions = $this->session->get(KeyType::AUTH_USER_PERMISSIONS);
+        //$permissions = $this->session->get(KeyType::AUTH_USER_PERMISSIONS);
+        $permissions = self::$user[KeyType::AUTH_USER_PERMISSIONS];
         return in_array($action, $permissions);
     }
 

@@ -7,8 +7,8 @@ msgstr "clave"
 msgid "Unauthorized"
 msgstr "No autorizado"
 
-msgid "Dashboard"
-msgstr "Cuadro de mandos"
+msgid "Home"
+msgstr "Inicio"
 
 msgid "Promotions"
 msgstr "Promociones"

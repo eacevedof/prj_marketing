@@ -44,11 +44,10 @@ final class LoginService extends AppService
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exeption(__("Unauthorized"));
 
+        $aruser[KeyType::AUTH_USER_PERMISSIONS] = $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
         $this->session->add(KeyType::AUTH_USER, $aruser);
         $this->session->add(KeyType::LANG, $lang = ($aruser["e_language"] ?? "en"));
-
-        $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
-        $this->session->add(KeyType::AUTH_USER_PERMISSIONS, $permissions);
+        //$this->session->add(KeyType::AUTH_USER_PERMISSIONS, $permissions);
 
         return [
             "lang" => $lang
