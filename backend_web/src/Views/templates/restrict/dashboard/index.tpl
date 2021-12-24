@@ -19,7 +19,7 @@
       <div class="card-body iconfont text-start">
         <div class="d-flex justify-content-between pb-1">
           <h4 class="card-title mg-b-0"><?="$i. $title"?></h4>
-          <i class="las la-user-circle tx-16 me-1"></i>
+          <i class="las <?=$icon?> tx-16 me-1"></i>
         </div>
         <div class="card-footer p-1">
           <?if ($search):?>
