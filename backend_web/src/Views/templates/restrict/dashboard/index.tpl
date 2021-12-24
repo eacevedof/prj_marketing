@@ -4,7 +4,7 @@
  */
 
 ?>
-<div class="row row-sm">
+<div id="dashboard" class="row row-sm">
   <?
   $i=0;
   foreach ($modules as $module => $config):
@@ -26,7 +26,7 @@
           <a href="<?=$search?>" class="btn btn-primary btn-block"><?=__("Search")?></a>
           <?endif;?>
           <?if ($create):?>
-          <a id="btn-users-add" href="<?=$create?>" class="btn btn-success btn-block"><?=__("Add")?></a>
+          <a href="<?=$create?>" class="btn btn-success btn-block" approle="add-item"><?=__("Add")?></a>
           <?endif;?>
         </div>
       </div>
@@ -40,11 +40,16 @@
 import spinner from "/assets/js/common/spinner.js"
 import {reqtxt} from "/assets/js/common/req.js"
 
-const btn = document.getElementById("btn-users-add")
-btn.addEventListener("click", (e) => {
-  e.preventDefault()
-  e.stopPropagation()
-  _in_modal("/restrict/users/create")
+const dashboard = document.getElementById("dashboard")
+dashboard.addEventListener("click", (e) => {
+  const $el = e.target
+  if ($el.target && $el.tagName==="A") {
+    if (!$el.approle) return
+
+    e.preventDefault()
+    e.stopPropagation()
+    //_in_modal($el.href)
+  }
 })
 
 const _in_modal = async url => {
@@ -53,6 +58,7 @@ const _in_modal = async url => {
   spinner.remove()
   if (r.errors)
       return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
+
   window.modalraw.opts({
       bgclick: false,
       body: r,
