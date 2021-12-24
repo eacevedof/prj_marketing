@@ -32,26 +32,49 @@ final class DashboardService extends AppService
         ];;
     }
 
-    private function _exclude_write(array &$modules): void
+    private function _has_policy(string $policy): bool
     {
-
+        return in_array($policy, $this->permissions);
+    }
+    
+    private function _exclude_nowrite(array &$modules): void
+    {
+        $tmp = $modules;
+        foreach ($tmp as $module => $config) {
+            $policy = "$module:write";
+            if (!$this->_has_policy($policy))
+                unset($tmp[$module]["actions"]["create"]);
+        }
+        $modules = $tmp;
     }
 
-    private function _exclude_read(array &$modules): void
+    private function _exclude_noread(array &$modules): void
     {
-
+        $tmp = $modules;
+        foreach ($tmp as $module => $config) {
+            $policyr = "$module:read";
+            $policyw = "$module:write";
+            if (!($this->_has_policy($policyr) || $this->_has_policy($policyw)))
+                unset($tmp[$module]["actions"]["search"]);
+        }
+        $modules = $tmp;
     }
 
     private function _exclude_empty(array &$modules): void
     {
-
+        $tmp = $modules;
+        foreach ($tmp as $module => $config) {
+            if (!$tmp[$module]["actions"])
+                unset($tmp[$module]);
+        }
+        $modules = $tmp;
     }
         
     public function __invoke(): array
     {
         $modules = $this->modules;
-        $this->_exclude_write($modules);
-        $this->_exclude_read($modules);
+        $this->_exclude_nowrite($modules);
+        $this->_exclude_noread($modules);
         $this->_exclude_empty($modules);
         return $modules;
     }
