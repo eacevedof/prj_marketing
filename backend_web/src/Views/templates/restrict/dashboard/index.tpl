@@ -5,20 +5,36 @@
 
 ?>
 <div class="row row-sm">
-  <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12" module="users">
+  <?
+  $i=0;
+  foreach ($modules as $module => $config):
+    $i++;
+    $title = $config["title"];
+    $icon = $config["icon"];
+    $search = $config["actions"]["search"]["url"] ?? "";
+    $create = $config["actions"]["create"]["url"] ?? "";
+  ?>
+  <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12" module="<?=$module?>">
     <div class="card">
       <div class="card-body iconfont text-start">
         <div class="d-flex justify-content-between pb-1">
-          <h4 class="card-title mg-b-0">1. <?=__("Users")?></h4>
+          <h4 class="card-title mg-b-0"><?="$i. $title"?></h4>
           <i class="las la-user-circle tx-16 me-1"></i>
         </div>
         <div class="card-footer p-1">
-          <a href="/restrict/users" class="btn btn-primary btn-block"><?=__("Search")?></a>
-          <a id="btn-users-add" href="/restrict/create" class="btn btn-success btn-block"><?=__("Add")?></a>
+          <?if ($search):?>
+          <a href="<?=$search?>" class="btn btn-primary btn-block"><?=__("Search")?></a>
+          <?endif;?>
+          <?if ($create):?>
+          <a id="btn-users-add" href="<?=$create?>" class="btn btn-success btn-block"><?=__("Add")?></a>
+          <?endif;?>
         </div>
       </div>
     </div>
   </div>
+  <?
+  endforeach;
+  ?>
 </div>
 <script type="module">
 import spinner from "/assets/js/common/spinner.js"
