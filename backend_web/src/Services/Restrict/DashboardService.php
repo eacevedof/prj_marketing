@@ -32,8 +32,27 @@ final class DashboardService extends AppService
         ];;
     }
 
+    private function _exclude_write(array &$modules): void
+    {
+
+    }
+
+    private function _exclude_read(array &$modules): void
+    {
+
+    }
+
+    private function _exclude_empty(array &$modules): void
+    {
+
+    }
+        
     public function __invoke(): array
     {
-        return $this->modules;
+        $modules = $this->modules;
+        $this->_exclude_write($modules);
+        $this->_exclude_read($modules);
+        $this->_exclude_empty($modules);
+        return $modules;
     }
 }
