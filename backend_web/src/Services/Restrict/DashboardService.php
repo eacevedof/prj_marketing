@@ -19,13 +19,25 @@ final class DashboardService extends AppService
         $this->modules = [
             "users" => [
                 "title" => __("Users"),
-                "icon" => "",
+                "icon" => "la-user-circle",
                 "actions" => [
                     "search" => [
                         "url" => "/restrict/users",
                     ],
                     "create" => [
                         "url" => "/restrict/users/create",
+                    ],
+                ]
+            ],
+            "promotions" => [
+                "title" => __("Promotions"),
+                "icon" => "la-gift",
+                "actions" => [
+                    "search" => [
+                        "url" => "/restrict/promotions",
+                    ],
+                    "create" => [
+                        "url" => "/restrict/promotions/create",
                     ],
                 ]
             ],
