@@ -18,6 +18,7 @@ use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
 use App\Enums\UrlType;
 use App\Components\Auth\AuthComponent;
+use App\Views\AppView;
 
 abstract class RestrictController extends AppController
 {
@@ -36,6 +37,7 @@ abstract class RestrictController extends AppController
         $this->csrf = SF::get("Auth\Csrf");
         $this->authuser = $this->auth->get_user();
         $this->set_layout("restrict/restrict");
+        $this->_add_topmenu();
     }
 
     protected function location(string $url): void
@@ -49,4 +51,11 @@ abstract class RestrictController extends AppController
         $this->_sessioninit()->destroy();
         $this->location(UrlType::ON_LOGOUT);
     }
+
+    protected function _add_topmenu(): void
+    {
+        $service = SF::get_callable("Restrict\Modules");
+        $this->add_var("topmenu", $service->get_menu());
+    }
+
 }//RestrictController

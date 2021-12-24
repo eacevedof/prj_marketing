@@ -37,8 +37,8 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
-        $this->add_var(KeyType::PAGE_TITLE, __("USERS - list"))
-            ->add_var("h1", __("USERS"))
+        $this->add_var(KeyType::PAGE_TITLE, __("Users"))
+            ->add_var("h1", __("Users"))
             ->add_var("languages", $this->picklist->get_languages())
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("countries", $this->picklist->get_countries())
