@@ -26,7 +26,7 @@
           <a href="<?=$search?>" class="btn btn-primary btn-block"><?=__("Search")?></a>
           <?endif;?>
           <?if ($create):?>
-          <a href="<?=$create?>" class="btn btn-success btn-block" approle="add-item"><?=__("Add")?></a>
+          <button href="<?=$create?>" class="btn btn-success btn-block" approle="add-item"><?=__("Add")?></button>
           <?endif;?>
         </div>
       </div>
@@ -43,12 +43,9 @@ import {reqtxt} from "/assets/js/common/req.js"
 const dashboard = document.getElementById("dashboard")
 dashboard.addEventListener("click", (e) => {
   const $el = e.target
-  if ($el.target && $el.tagName==="A") {
-    if (!$el.approle) return
-
-    $el.preventDefault()
-
-    //_in_modal($el.href)
+  let url = ""
+  if ($el && $el.tagName==="BUTTON" && (url=$el.getAttribute("href"))) {
+    _in_modal(url)
   }
 })
 

@@ -296,7 +296,8 @@ export class FormUserCreate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
-    $("#table-datatable").DataTable().ajax.reload()
+    const $dt = document.getElementById("table-datatable")
+    if ($dt) $($dt).DataTable().ajax.reload()
     window.modalraw.hide()
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
