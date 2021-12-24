@@ -46,8 +46,8 @@ dashboard.addEventListener("click", (e) => {
   if ($el.target && $el.tagName==="A") {
     if (!$el.approle) return
 
-    e.preventDefault()
-    e.stopPropagation()
+    $el.preventDefault()
+
     //_in_modal($el.href)
   }
 })
