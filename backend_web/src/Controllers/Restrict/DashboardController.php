@@ -20,7 +20,7 @@ final class DashboardController extends RestrictController
         if(!$this->authuser)
             $this->location(UrlType::FORBIDDEN);
 
-        $service = SF::get_callable("Restrict\\Dashboard");
+        $service = SF::get_callable("Restrict\Modules");
         $this
             ->add_var(KeyType::PAGE_TITLE, __("Dashboard"))
             ->add_var("modules", $service())

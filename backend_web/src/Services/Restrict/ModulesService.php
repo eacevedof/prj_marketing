@@ -2,9 +2,11 @@
 namespace App\Services\Restrict;
 use App\Services\AppService;
 use App\Enums\KeyType;
+use App\Traits\SessionTrait;
 
-final class DashboardService extends AppService
+final class ModulesService extends AppService
 {
+    use SessionTrait;
     private array $permissions;
     private array $modules;
 
@@ -12,6 +14,7 @@ final class DashboardService extends AppService
     {
         $this->permissions = $this->_get_auth()->get_user()[KeyType::AUTH_USER_PERMISSIONS];
         $this->_load_modules();
+        $this->_sessioninit();
     }
 
     private function _load_modules(): void
@@ -81,13 +84,31 @@ final class DashboardService extends AppService
         }
         $modules = $tmp;
     }
-        
-    public function __invoke(): array
+
+    private function _get_filtered_modules(): array
     {
         $modules = $this->modules;
         $this->_exclude_nowrite($modules);
         $this->_exclude_noread($modules);
         $this->_exclude_empty($modules);
         return $modules;
+    }
+        
+    public function __invoke(): array
+    {
+        return $this->_get_filtered_modules();
+    }
+
+    public function get_menu(): array
+    {
+        $modules = $this->_get_filtered_modules();
+        $tmp = [];
+        foreach ($modules as $module => $config) {
+            $tmp[$module] = [
+                "title" => $config["title"],
+                "search" => $config["actions"]["search"]["url"] ?? ""
+            ];
+        }
+        return $tmp;
     }
 }
