@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.11.0
- * @date 26-12-2021 20:00 SPAIN
+ * @file component_crud.php 2.12.0
+ * @date 26-12-2021 20:31 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -512,40 +512,6 @@ class ComponentCrud
     }
 
     public function get_sql(){return $this->sSQL;}
-    
-    /**
-     * @param string $sTable Tabla sobre la que se va a comprobar. Por defecto this.sTable
-     * 1: Delete_Date IS NOT null (con borrado logico)<br/>
-     * 0: Delete_Date IS null (sin borrado logico)<br/>
-     * null: No aplica filtro por fecha solo claves<br/>
-     * @param int $isDeleted
-     * @return boolean
-     */
-    public function is_intable($sTable=null,$isDeleted=1)
-    {
-        if(!$sTable) $sTable = $this->sTable;
-        
-        $sSQL = "-- is_intable
-                SELECT id FROM $sTable WHERE ";
-
-        $arAnd = [];
-        foreach($this->arPksFV as $sFieldName=>$sFieldValue)
-            $arAnd[] = "$this->sTable.$sFieldName='$sFieldValue'";
-
-        if($isDeleted===1)
-            $arAnd[] = "$this->sTable.Delete_Date IS NOT null";
-        elseif($isDeleted===0)
-            $arAnd[] = "$this->sTable.Delete_Date IS null";
-        
-        $sSQL .= implode(" AND ",$arAnd);
-        $this->sSQL = $sSQL;
-        
-        $arRow = [];
-        if(is_object($this->oDB))
-            $arRow = $this->oDB->query($this->sSQL);
-        
-        return (boolean)$arRow[0];
-    }
 
     public function get_sanitized($sValue)
     {
