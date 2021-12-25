@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.10.0
- * @date 11-12-2021 18:08 SPAIN
+ * @file component_crud.php 2.11.0
+ * @date 26-12-2021 20:00 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -56,7 +56,6 @@ class ComponentCrud
         $this->arOrderBy = [];
         $this->arGroupBy = [];
         $this->arNumeric = [];
-        $this->arAnds = [];
         $this->oDB = $oDB;
     }
     
@@ -484,138 +483,7 @@ class ComponentCrud
 
         return $this->sSQL;
     }//get_selectfrom
-    
-    private function extract_top_sql($sSQL)
-    {
-        $sTop = null;
-        $sSQL = strtolower($sSQL);
-        //puede ser select top x select distinct top 
-        $sTopPatern = "/select[\s]+top[\s]+[\d]+[\s]/";
-        preg_match($sTopPatern,$sSQL,$arMatch);
-        //si no hay coincidencias es probable que haya un distinct asi que se extrae con distinct
-        if(!$arMatch[0])
-        {
-            $sTopPatern = "/select[\s]+distinct[\s]+top[\s]+[\d]+[\s]/";
-            preg_match($sTopPatern,$sSQL,$arMatch);
-        }
 
-        if($arMatch[0])
-        {
-            $sTop = explode("top",$arMatch[0]);
-            $sTop = trim($sTop[1]);
-        }
-        return $sTop;
-    }
-
-    public function explode_sql($sSQL)
-    {
-        $arExploded = [];
-
-        $sDistinct = strstr($sSQL,"select distinct ");
-        $sTop = strstr($sSQL," top ");
-        $sWhere = strstr($sSQL,"where ");
-        $sGroupBy = strstr($sSQL,"group by ");
-        $sOrderBy = strstr($sSQL,"order by ");
-
-        if($sDistinct) $sDistinct = "distinct";
-        else $sDistinct = null;
-
-        if($sTop) $sTop = $this->extract_top_sql($sSQL);
-        else $sTop = null;
-
-        //SELECT y FROM siempre existen en una sentencia SQL
-        $sFields = explode("from ",$sSQL);
-        //var_dump($sFields);
-        $sFields = explode("select ",$sFields[0]);
-        //quito la sentencia top
-        $sFields = str_replace("top $sTop ","",$sFields[1]);
-        //si existiera distinct se elimina
-        $sFields = str_replace("distinct","",$sFields);
-        $sFields = trim($sFields);
-
-        //Recuperacion de relaciones INNER LEFT ...
-        $sHierarchy = explode("from ",$sSQL);
-        if($sWhere)
-            $sHierarchy = explode("where ",$sHierarchy[1]);
-        //No hay clausula where busco proxima marca "group by"
-        else
-        {
-            if($sGroupBy)
-                $sHierarchy = explode("group by ",$sHierarchy[1]);
-            else//no hay group by
-                if($sOrderBy) 
-                    $sHierarchy = explode("order by ",$sHierarchy[1]);
-        }
-        $sHierarchy = $sHierarchy[0];
-
-        //Recuperacion de condiciones AND , OR despues de WHERE y antes de GROUP BY Y ORDER BY
-        if($sWhere) 
-        {    
-            $sWhere = explode("where ",$sSQL);
-            if($sGroupBy)
-                $sWhere = explode("group by ",$sWhere[1]);
-            elseif($sOrderBy)//no hay group by
-                $sWhere = explode("order by ",$sWhere[1]);
-            else
-                $sWhere[0]=$sWhere[1];
-        }
-
-        $sWhere = $sWhere[0];
-
-        //Recuperacion de agrupaciones
-        if($sGroupBy)
-        {
-            $sGroupBy = explode("group by ",$sSQL);
-            if($sOrderBy) 
-                $sGroupBy = explode("order by ",$sGroupBy[1]);
-        }
-        $sGroupBy = $sGroupBy[0];
-
-        //Recuperacion de agrupaciones
-        if($sOrderBy)
-            $sOrderBy = explode("order by ",$sSQL);
-        $sOrderBy = $sOrderBy[1];
-
-        $arExploded["distinct"] = $sDistinct;
-        $arExploded["top"] = $sTop;
-        $arExploded["fields"] = $sFields;
-        $arExploded["joins"] = $sHierarchy;
-        $arExploded["where"] = $sWhere;
-        $arExploded["group by"] = $sGroupBy;
-        $arExploded["order by"] = $sOrderBy;
-
-        return $arExploded;
-    }
-
-    public function implode_sql($arSQL)
-    {
-        $sDistinct = $arSQL["distinct"];
-        $sTop = $arSQL["top"];
-        $sFields = trim($arSQL["fields"]);
-        $sJoins = trim($arSQL["joins"]);
-        $sWhere = trim($arSQL["where"]);
-        $sGroupBy = trim($arSQL["group by"]);
-        $sOrderBy = trim($arSQL["order by"]);
-
-        $sSQL = "select ";
-        if($sDistinct) $sSQL .= "$sDistinct ";
-        if($sTop) $sSQL .= "top $sTop ";
-        $sSQL .= "$sFields ";
-        $sSQL .= "from ";
-        $sSQL .= "$sJoins ";
-        if($sWhere) $sSQL .= "where $sWhere ";
-        if($sGroupBy) $sSQL .= "group by $sGroupBy ";
-        if($sOrderBy) $sSQL .= "order by $sOrderBy";
-        return $sSQL;
-    }
-
-    public function replace_fields($arReplace,$sFields)
-    {
-        foreach($arReplace as $sSearch=>$sReplace)
-            $sFields = str_replace($sSearch,$sReplace,$sFields);
-        return $sFields;
-    }
-        
     public function set_table(?string $sTable=null):self{$this->sTable=$sTable; return $this;}
     public function set_comment(string $sComment):self{$this->querycomment = $sComment; return $this;}
     
@@ -678,47 +546,7 @@ class ComponentCrud
         
         return (boolean)$arRow[0];
     }
-    
-    /**
-     * Obtiene el ultimo entero + 1 de un campo tipo contador
-     * @param type $sFieldName
-     */
-    public function get_nextcode($sFieldName="Num_Line")
-    {
-        if($this->sTable && $sFieldName)
-        {
-            $sSQL = "/*crud.get_nextcode*/
-            SELECT MAX($sFieldName) AS imax
-            FROM $this->sTable 
-            WHERE 1=1 
-            AND ISNUMERIC($sFieldName)=1
-            ";
-            
-            $arAux = [];
-            foreach($this->arPksFV as $sField=>$sValue)
-            {    
-                if($sValue===null)
-                    $arAux[] = "$sField IS null";
-                elseif($this->is_numeric($sField))
-                    $arAux[] = "$sField=$sValue";
-                else    
-                    $arAux[] = "$sField='$sValue'";
-            }
-            
-            if($arAux)
-                $sSQL .= " AND ".implode(" AND ",$arAux);
-            
-            $iMax = null;
-            $this->sSQL = $sSQL;
-            if(is_object($this->oDB))
-                $iMax = $this->oDB->query($this->sSQL);            
-            if(!$iMax) $iMax = 0;
-            $iMax++;
-            return $iMax;
-        }
-        return null;
-    }//get_nextcode()
-    
+
     public function get_sanitized($sValue)
     {
         if($sValue===null) return null;
