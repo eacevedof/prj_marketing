@@ -4,6 +4,7 @@
  * @var array $authuser
  * @var array $topmenu
  */
+$authuser = $authuser ?? [];
 if ($authuser):
 ?>
 <!--Horizontal-main auth-->

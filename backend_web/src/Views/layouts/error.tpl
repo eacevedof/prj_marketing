@@ -17,27 +17,17 @@
     <link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
     <?= $this->_asset_css([
         "index",
-        "common/modal-raw",
-        "common/snackbar",
-        "common/fielderrors",
-        "common/form-lit"
-    ]) ?>
-    <!-- js -->
-    <script src="/themes/valex/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <?= $this->_asset_js([
-        "vendor/jquery/jquery-3.6.0"
-    ]) ?>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <?= $this->_asset_js_module([
-        "index",
-        "common/snackbar"
     ]) ?>
 </head>
-<body>
-<main>
-<?
-$this->_template();
-?>
-</main>
+<body class="main-body bg-primary-transparent">
+<!-- error.tpl -->
+<div class="page">
+  <div class="main-error-wrapper  page page-h ">
+    <img src="/themes/valex/assets/img/media/404.png" class="error-page" alt="error">
+    <h2>Oopps. The page you were looking for doesn't exist.</h2>
+    <h6>You may have mistyped the address or the page may have moved.</h6>
+    <a class="btn btn-outline-danger" href="/">Back to Home</a>
+  </div>
+</div>
 </body>
 </html>
