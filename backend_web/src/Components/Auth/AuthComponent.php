@@ -15,7 +15,7 @@ final class AuthComponent
     {
         $this->session = SF::get();
         if (!self::$user)
-            self::$user = $this->session->get(KeyType::AUTH_USER);
+            self::$user = $this->session->get(KeyType::AUTH_USER) ?? [];
     }
 
     public function get_user(): ?array
