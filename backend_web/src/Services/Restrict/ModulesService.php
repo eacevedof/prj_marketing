@@ -12,7 +12,7 @@ final class ModulesService extends AppService
 
     public function __construct()
     {
-        $this->permissions = $this->_get_auth()->get_user()[KeyType::AUTH_USER_PERMISSIONS];
+        $this->permissions = $this->_get_auth()->get_user()[KeyType::AUTH_USER_PERMISSIONS] ?? [];
         $this->_load_modules();
         $this->_sessioninit();
     }

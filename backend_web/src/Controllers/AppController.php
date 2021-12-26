@@ -175,6 +175,12 @@ abstract class AppController
         if(!$sKey) return $_GET ?? [];
         return (isset($_GET[$sKey])?$_GET[$sKey]:"");
     }
+
+    protected function get_session($sKey=NULL)
+    {
+        if(!$sKey) return $_SESSION ?? [];
+        return (isset($_SESSION[$sKey]) ? $_SESSION[$sKey] : "");
+    }
     
     protected function is_get($sKey=NULL){if($sKey) return isset($_GET[$sKey]); return count($_GET)>0;}
     
@@ -187,9 +193,10 @@ abstract class AppController
         $this->logreq($_SERVER["HTTP_HOST"] ?? "","HTTP_HOST");
         //$this->logd($_SERVER["REMOTE_USER"] ?? "","REMOTE_USER");
 
+        $this->logreq($this->get_files(),"$sReqUri FILES");
+        $this->logreq($this->get_session(), "$sReqUri SESSION");
         $this->logreq($this->get_get(),"$sReqUri GET");
         $this->logreq($this->get_post(),"$sReqUri POST");
-        $this->logreq($this->get_files(),"$sReqUri FILES");
     }
     
     protected function response_json($arData)
