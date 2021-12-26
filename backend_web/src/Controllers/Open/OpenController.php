@@ -20,20 +20,18 @@ final class OpenController extends AppController
 
     public function index(): void
     {
-        //$this->set_layout("restrict/default");
-        $this->add_var("a","prrito");
-        $this->add_var("b", "dddd");
-        $this->add_var("c", "rrr");
+        $this->set_layout("default");
         $this->render([
             "a" => "hooolllaaa",
             "b" => "bbbbbbbbbb",
             "c" => "ccccccc"
-        ], "restrict/xxx");
+        ], "open/xxx");
     }
 
     public function forbidden(): void
     {
-        $this->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"));
+        $this->set_layout("error")
+            ->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"));
         $this->render_error([
             "h1"=>__("Unauthorized")
         ],"error/403");
