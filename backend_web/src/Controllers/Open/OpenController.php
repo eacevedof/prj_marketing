@@ -20,7 +20,7 @@ final class OpenController extends AppController
 
     public function index(): void
     {
-        $this->set_layout("default");
+        $this->set_layout("open/open");
         $this->render([
             "a" => "hooolllaaa",
             "b" => "bbbbbbbbbb",
@@ -30,11 +30,11 @@ final class OpenController extends AppController
 
     public function forbidden(): void
     {
-        $this->set_layout("error")
-            ->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"));
-        $this->render_error([
-            "h1"=>__("Unauthorized")
-        ],"error/403");
+        $this->set_layout("error/error")
+            ->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"))
+            ->add_var("h1",__("Unauthorized"))
+        ;
+        $this->render([],"error/403");
     }
 
 }//OpenController
