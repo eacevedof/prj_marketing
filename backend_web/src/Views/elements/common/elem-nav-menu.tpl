@@ -69,7 +69,6 @@ else:
       <!--Nav-->
       <nav class="horizontalMenu clearfix">
         <ul class="horizontalMenu-list">
-
           <li aria-haspopup="true">
             <a href="/">
               <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24" >
