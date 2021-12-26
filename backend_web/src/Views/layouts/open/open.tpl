@@ -34,11 +34,11 @@
       "common/snackbar"
   ]) ?>
 </head>
-<body>
-<main>
+<body class="main-body">
+  <div class="page">
 <?
 $this->_template();
 ?>
-</main>
+  </div>
 </body>
 </html>

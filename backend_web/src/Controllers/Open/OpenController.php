@@ -10,7 +10,6 @@
 namespace App\Controllers\Open;
 
 use App\Controllers\AppController;
-use App\Enums\PolicyType;
 use App\Enums\KeyType;
 use App\Traits\ViewTrait;
 
@@ -21,11 +20,7 @@ final class OpenController extends AppController
     public function index(): void
     {
         $this->set_layout("open/open");
-        $this->render([
-            "a" => "hooolllaaa",
-            "b" => "bbbbbbbbbb",
-            "c" => "ccccccc"
-        ], "open/xxx");
+        $this->render([], "open/index");
     }
 
     public function forbidden(): void
