@@ -10,14 +10,14 @@
 namespace App\Controllers\Restrict;
 
 use App\Controllers\AppController;
-use App\Factories\ComponentFactory as CF;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Auth\CsrfService;
 use App\Traits\RequestTrait;
 use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
+use App\Factories\ComponentFactory as CF;
+use App\Factories\ServiceFactory as SF;
 use App\Enums\UrlType;
 use App\Components\Auth\AuthComponent;
+use App\Services\Auth\CsrfService;
 
 abstract class RestrictController extends AppController
 {
