@@ -943,7 +943,7 @@
                   <td><code>.wd-100v</code></td>
                   <td>Set a width to an element based on viewport width.</td>
                 </tr>
-                <tr>
+                <tr>ov
                   <td><code>.wd-auto</code></td>
                   <td>Set an auto width to an element.</td>
                 </tr>
