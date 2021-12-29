@@ -9,13 +9,12 @@
  */
 namespace App\Controllers;
 
-use App\Services\Apify\Security\LoginService;
-use TheFramework\Helpers\HelperJson;
-use App\Services\Apify\Security\SignatureService;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use App\Traits\ErrorTrait;
-
+use TheFramework\Helpers\HelperJson;
+use App\Services\Apify\Security\LoginService;
+use App\Services\Apify\Security\SignatureService;
 
 abstract class AppController
 {
