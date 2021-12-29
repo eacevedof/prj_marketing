@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Services\Auth;
-use App\Enums\KeyType;
 use App\Services\AppService;
+use App\Traits\SessionTrait;
 use TheFramework\Components\Formatter\ComponentMoment;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Traits\SessionTrait;
+use App\Enums\KeyType;
 
 final class CsrfService extends AppService
 {

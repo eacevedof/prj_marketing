@@ -10,15 +10,14 @@
  */
 namespace App\Services;
 
-use App\Components\Auth\AuthComponent;
-use App\Factories\ComponentFactory as CF;
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
-use \Exception;
-
+use App\Factories\ComponentFactory as CF;
+use App\Components\Auth\AuthComponent;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
+use \Exception;
 
 abstract class AppService
 {
