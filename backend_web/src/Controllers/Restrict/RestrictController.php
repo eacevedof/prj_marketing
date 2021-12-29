@@ -18,7 +18,6 @@ use App\Traits\ViewTrait;
 use App\Traits\SessionTrait;
 use App\Enums\UrlType;
 use App\Components\Auth\AuthComponent;
-use App\Views\AppView;
 
 abstract class RestrictController extends AppController
 {
