@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Components\Auth;
+
 use App\Components\Session\SessionComponent;
-use App\Enums\ProfileType;
 use App\Factories\SessionFactory as SF;
+use App\Enums\ProfileType;
 use App\Enums\KeyType;
 
 final class AuthComponent

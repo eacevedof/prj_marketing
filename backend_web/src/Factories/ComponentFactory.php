@@ -3,7 +3,6 @@
 namespace App\Factories;
 
 use App\Components\Datatable\DatatableComponent;
-use App\Repositories\AppRepository;
 
 final class ComponentFactory
 {
