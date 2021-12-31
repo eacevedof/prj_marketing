@@ -13,12 +13,14 @@ use App\Controllers\AppController;
 use App\Enums\KeyType;
 use App\Traits\ViewTrait;
 
+
 final class OpenController extends AppController
 {
     use ViewTrait;
 
     public function index(): void
     {
+        $f = new Foo();
         $svan = "_" . substr(md5($_SERVER['HTTP_HOST']), 0, 3);
 
         if(isset($_REQUEST['_mg']))
