@@ -9,7 +9,7 @@
  */
 namespace App\Repositories\Base;
 
-use App\Components\Auth\AuthComponent;
+use App\Services\Auth\AuthService;
 use App\Components\Hierarchy\HierarchyComponent;
 use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
@@ -20,7 +20,7 @@ use App\Factories\ComponentFactory as CF;
 final class UserRepository extends AppRepository
 {
     private array $joins;
-    private ?AuthComponent $auth = null;
+    private ?AuthService $auth = null;
 
     public function __construct()
     {
@@ -258,7 +258,7 @@ final class UserRepository extends AppRepository
         return $r;
     }
 
-    public function set_auth(AuthComponent $auth): self
+    public function set_auth(AuthService $auth): self
     {
         $this->auth = $auth;
         return $this;

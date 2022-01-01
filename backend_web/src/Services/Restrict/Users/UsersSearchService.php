@@ -1,6 +1,5 @@
 <?php
 namespace App\Services\Restrict\Users;
-use App\Components\Auth\AuthComponent;
 use App\Enums\PolicyType;
 use App\Factories\ComponentFactory as CF;
 use App\Helpers\Views\DatatableHelper;

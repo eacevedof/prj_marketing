@@ -10,12 +10,11 @@
 namespace App\Controllers\Restrict;
 
 use App\Controllers\AppController;
+use App\Services\Auth\AuthService;
 use App\Traits\SessionTrait;
 use App\Traits\RequestTrait;
 use App\Traits\ViewTrait;
-use App\Factories\ComponentFactory as CF;
 use App\Factories\ServiceFactory as SF;
-use App\Components\Auth\AuthComponent;
 use App\Enums\UrlType;
 use App\Services\Auth\CsrfService;
 
@@ -26,13 +25,13 @@ abstract class RestrictController extends AppController
     use ViewTrait;
 
     protected CsrfService $csrf;
-    protected AuthComponent $auth;
+    protected AuthService $auth;
     protected ?array $authuser;
 
     public function __construct()
     {
         $this->_load_request();
-        $this->auth = CF::get("Auth\Auth");
+        $this->auth = SF::get("Auth\Auth");
         $this->csrf = SF::get("Auth\Csrf");
         $this->authuser = $this->auth->get_user();
         $this->add_var("authuser", $this->authuser);

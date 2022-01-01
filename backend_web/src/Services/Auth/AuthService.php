@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Components\Auth;
-
-use App\Components\Session\SessionComponent;
+namespace App\Services\Auth;
+use App\Services\AppService;
 use App\Factories\SessionFactory as SF;
+use App\Components\Session\SessionComponent;
 use App\Enums\ProfileType;
 use App\Enums\KeyType;
 
-final class AuthComponent
+
+final class AuthService extends AppService
 {
     private SessionComponent $session;
     private static ?array $user = null;
-    
+
     public function __construct()
     {
         $this->session = SF::get();
@@ -28,7 +29,7 @@ final class AuthComponent
     {
         if(!self::$user) return false;
         if($this->is_root()) return true;
-        
+
         //$permissions = $this->session->get(KeyType::AUTH_USER_PERMISSIONS);
         $permissions = self::$user[KeyType::AUTH_USER_PERMISSIONS];
         return in_array($action, $permissions);

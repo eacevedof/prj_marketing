@@ -13,8 +13,8 @@ namespace App\Services;
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
-use App\Factories\ComponentFactory as CF;
-use App\Components\Auth\AuthComponent;
+use App\Factories\ServiceFactory as SF;
+use App\Components\Auth\AuthService;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use \Exception;
@@ -25,11 +25,11 @@ abstract class AppService
     use LogTrait;
     use EnvTrait;
 
-    private static ?AuthComponent $auth = null;
+    private static ?AuthService $auth = null;
 
-    protected function _get_auth(): ?AuthComponent
+    protected function _get_auth(): ?AuthService
     {
-        if (!self::$auth) self::$auth = CF::get("Auth/Auth");
+        if (!self::$auth) self::$auth = SF::get("Auth/Auth");
         return self::$auth;
     }
 
