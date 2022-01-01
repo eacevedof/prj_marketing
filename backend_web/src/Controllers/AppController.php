@@ -35,6 +35,4 @@ abstract class AppController
         $this->logreq($_POST,"$sReqUri POST");
     }
 
-
-
 }//AppController
