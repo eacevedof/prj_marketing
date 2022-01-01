@@ -7,6 +7,4 @@ abstract class RequestType
     const LANG = "lang";
     const CSRF = "_csrf";
     const ACTION = "_action";
-    const GET = "get";
-    const POST = "post";
 }
