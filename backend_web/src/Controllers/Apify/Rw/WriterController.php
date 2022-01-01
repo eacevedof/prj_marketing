@@ -21,7 +21,7 @@ final class WriterController extends ApifyController
     {
         //captura trazas de la petición en los logs
         parent::__construct();
-        $this->check_usertoken();
+        $this->_check_usertoken();
     }
     
     /**

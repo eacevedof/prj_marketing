@@ -13,7 +13,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Security\SignatureService;
 
-class SignatureController extends ApifyController
+final class SignatureController extends ApifyController
 {
 
     /**
@@ -22,19 +22,18 @@ class SignatureController extends ApifyController
      */
     public function index()
     {
-        $oJson = new HelperJson();
         try{
             $domain = $this->get_domain(); //excepcion
             $oServ = new SignatureService($domain,$this->request->get_post());
             $token = $oServ->get_token();
-            $oJson->set_payload(["result"=>$token])->show();
+            $this->_get_json()->set_payload(["result"=>$token])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"SignatureController.index");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)->
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)->
             set_error([$e->getMessage()])->
-            show(1);
+            show();
         }
 
     }//index
@@ -43,10 +42,10 @@ class SignatureController extends ApifyController
      * ruta:
      *  <dominio>/apifiy/security/is-valid-signature
      */
-    public function is_valid_signature()
+    public function is_valid_signature(): void
     {
-        $this->check_signature();
-        (new HelperJson())->set_payload(["result"=>true])->show();
+        $this->_check_signature();
+        $this->_get_json()->set_payload(["result"=>true])->show();
     }//index
     
 }//SignatureController

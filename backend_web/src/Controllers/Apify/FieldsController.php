@@ -21,13 +21,13 @@ final class FieldsController extends ApifyController
     {
         //captura trazas de la petición en los logs
         parent::__construct();
-        $this->check_usertoken();
+        $this->_check_usertoken();
     }
 
     private function _get_database()
     {
         $oServ = new ContextService();
-        $oJson = new HelperJson();
+        $oJson = $this->_get_json();
 
         $idContext = $this->request->get_get("id_context");
         if(!$oServ->is_context($idContext))
@@ -71,7 +71,7 @@ final class FieldsController extends ApifyController
         else
             $arJson = $oServ->get_all($sTableName);
 
-        $oJson = new HelperJson();
+        $oJson = $this->_get_json();
         if($oServ->is_error()) 
             $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->

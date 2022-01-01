@@ -16,20 +16,12 @@ use App\Factories\EncryptFactory;
 
 final class ReaderController extends ApifyController
 {
-    
-    public function __construct()
-    {
-        //captura trazas de la petición en los logs
-        parent::__construct();
-        //excepcion en caso de error
-        $this->check_usertoken();
-    }
-
     /**
      * /apify/read?context=c&dbname=d
      */
     public function index(): void
     {
+        $this->_check_usertoken();
         $idContext = $this->request->get_get("context");
         $sDbalias = $this->request->get_get("schemainfo");
         //$arParts = $this->request->get_post("queryparts");
@@ -39,15 +31,14 @@ final class ReaderController extends ApifyController
         $arJson = $oServ->get_read($arParts);
         $iNumrows = $oServ->get_foundrows($arParts);
         $this->logd($iNumrows,"NUM_ROWS");
-        
-        $oJson = new HelperJson();
+
         if($oServ->is_error()) 
-            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
+            $this->_get_json()->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
                     set_message("database error")->
                     show(1);
 
-        $oJson->set_payload(["result"=>$arJson,"foundrows"=>$oServ->get_foundrows()])->show();
+        $this->_get_json()->set_payload(["result"=>$arJson,"foundrows"=>$oServ->get_foundrows()])->show();
 
     }//index
 
@@ -56,21 +47,21 @@ final class ReaderController extends ApifyController
      */
     public function raw(): void
     {
+        $this->_check_usertoken();
         $idContext = $this->request->get_get("context");
         $sDb = $this->request->get_get("dbname");
 
         $sSQL = $this->request->get_post("query");
         $oServ = new ReaderService($idContext,$sDb);
-        $oJson = new HelperJson();
 
         $arJson = $oServ->read_raw($sSQL);
         if($oServ->is_error()) 
-            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
+            $this->_get_json()->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
                     set_message("database error")->
                     show(1);
 
-        $oJson->set_payload(["rows"=>$arJson,"numrows"=>$oServ->get_foundrows()])->show();
+        $this->_get_json()->set_payload(["rows"=>$arJson,"numrows"=>$oServ->get_foundrows()])->show();
     }//raw
    
 
