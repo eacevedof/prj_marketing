@@ -28,13 +28,15 @@ final class RequestComponent
 
     public function is_file($sKey=null){ return $sKey ? isset($_FILES[$sKey]) : count($_FILES)>0;}
 
-    public function get_method(){ return $_SERVER["REQUEST_METHOD"] ?? "";}
+    public function get_method(){ return strtolower($_SERVER["REQUEST_METHOD"]) ?? "";}
 
     public function is_put() { return $this->get_method()==="put";}
 
     public function is_patch() { return $this->get_method()==="patch";}
 
     public function is_delete() { return $this->get_method()==="delete";}
+
+    public function is_postm() { return $this->get_method()==="post";}
 
     public function get_header($key=null)
     {
