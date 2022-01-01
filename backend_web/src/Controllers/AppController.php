@@ -22,16 +22,17 @@ abstract class AppController
     protected function _request_log(): void
     {
         $sReqUri = $_SERVER["REQUEST_URI"];
+        $this->logreq("appcontroller._request_log");
         $this->logreq($_SERVER["HTTP_USER_AGENT"] ?? "","HTTP_USER_AGENT");
         $this->logreq($_SERVER["REMOTE_ADDR"] ?? "","REMOTE_ADDR");
         $this->logreq($_SERVER["REMOTE_HOST"] ?? "","REMOTE_HOST");
         $this->logreq($_SERVER["HTTP_HOST"] ?? "","HTTP_HOST");
         //$this->logd($_SERVER["REMOTE_USER"] ?? "","REMOTE_USER");
 
-        $this->logreq($this->request->get_files(),"$sReqUri FILES");
-        $this->logreq($this->get_session(), "$sReqUri SESSION");
-        $this->logreq($this->request->get_get(),"$sReqUri GET");
-        $this->logreq($this->request->get_post(),"$sReqUri POST");
+        $this->logreq($_FILES,"$sReqUri FILES");
+        $this->logreq($_SESSION, "$sReqUri SESSION");
+        $this->logreq($_GET,"$sReqUri GET");
+        $this->logreq($_POST,"$sReqUri POST");
     }
 
 

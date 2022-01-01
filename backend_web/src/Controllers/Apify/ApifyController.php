@@ -9,23 +9,29 @@
  */
 namespace App\Controllers;
 
+use App\Traits\RequestTrait;
+use App\Traits\ResponseTrait;
 use TheFramework\Helpers\HelperJson;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\SignatureService;
 
 abstract class ApifyController extends AppController
 {
+    use RequestTrait;
+    use ResponseTrait;
+
     protected const KEY_APIFYUSERTOKEN = "apify-usertoken";
     protected const KEY_API_SIGNATURE = "API_SIGNATURE";
     //protected const KEY_APIFYDOMAIN= "apify-origindomain";
 
     public function __construct() 
     {
-        //guardo trazas del $_GET y $_POST
-        $this->request_log();
+        $this->_request_log();
+        $this->_load_request();
+        $this->_load_response();
     }
 
-    protected function _check_signature()
+    protected function _check_signature(): bool
     {
         try{
             $post = $this->request->get_post();
@@ -38,16 +44,16 @@ abstract class ApifyController extends AppController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"ApifyController.check_signature");
-            (new HelperJson())->set_code(HelperJson::CODE_UNAUTHORIZED)->
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)->
             set_error([$e->getMessage()])->
             show(1);
         }
     }
 
-    protected function _check_usertoken()
+    protected function _check_usertoken(): bool
     {
         try{
-            $domain = $this->get_domain(); //excepcion
+            $domain = $this->_get_domain(); //excepcion
             $token = $this->request->get_post(self::KEY_APIFYUSERTOKEN);
             $this->logd("domain:$domain,token:$token","check_usertoken");
             $oServ = new LoginService($domain);
@@ -57,84 +63,20 @@ abstract class ApifyController extends AppController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"ApifyController.check_usertoken");
-            $oJson = new HelperJson();
-            $oJson->set_code(HelperJson::CODE_FORBIDDEN)
+            $this->_get_json()->set_code(HelperJson::CODE_FORBIDDEN)
                 ->set_error([$e->getMessage()])
                 ->show(1);
         }
     }
 
-    public function send_http_status($iCode) 
-    {
-        $arCodes = array(
-            100 => "HTTP/1.1 100 Continue",
-            101 => "HTTP/1.1 101 Switching Protocols",
-            200 => "HTTP/1.1 200 OK",
-            201 => "HTTP/1.1 201 Created",
-            202 => "HTTP/1.1 202 Accepted",
-            203 => "HTTP/1.1 203 Non-Authoritative Information",
-            204 => "HTTP/1.1 204 No Content",
-            205 => "HTTP/1.1 205 Reset Content",
-            206 => "HTTP/1.1 206 Partial Content",
-            300 => "HTTP/1.1 300 Multiple Choices",
-            301 => "HTTP/1.1 301 Moved Permanently",
-            302 => "HTTP/1.1 302 Found",
-            303 => "HTTP/1.1 303 See Other",
-            304 => "HTTP/1.1 304 Not Modified",
-            305 => "HTTP/1.1 305 Use Proxy",
-            307 => "HTTP/1.1 307 Temporary Redirect",
-            400 => "HTTP/1.1 400 Bad Request",
-            401 => "HTTP/1.1 401 Unauthorized",
-            402 => "HTTP/1.1 402 Payment Required",
-            403 => "HTTP/1.1 403 Forbidden",
-            404 => "HTTP/1.1 404 Not Found",
-            405 => "HTTP/1.1 405 Method Not Allowed",
-            406 => "HTTP/1.1 406 Not Acceptable",
-            407 => "HTTP/1.1 407 Proxy Authentication Required",
-            408 => "HTTP/1.1 408 Request Time-out",
-            409 => "HTTP/1.1 409 Conflict",
-            410 => "HTTP/1.1 410 Gone",
-            411 => "HTTP/1.1 411 Length Required",
-            412 => "HTTP/1.1 412 Precondition Failed",
-            413 => "HTTP/1.1 413 Request Entity Too Large",
-            414 => "HTTP/1.1 414 Request-URI Too Large",
-            415 => "HTTP/1.1 415 Unsupported Media Type",
-            416 => "HTTP/1.1 416 Requested Range Not Satisfiable",
-            417 => "HTTP/1.1 417 Expectation Failed",
-            500 => "HTTP/1.1 500 Internal Server Error",
-            501 => "HTTP/1.1 501 Not Implemented",
-            502 => "HTTP/1.1 502 Bad Gateway",
-            503 => "HTTP/1.1 503 Service Unavailable",
-            504 => "HTTP/1.1 504 Gateway Time-out",
-            505 => "HTTP/1.1 505 HTTP Version Not Supported",
-        );
 
-        header($arCodes[$iCode]);
-        return ["code"=>$iCode,"error"=>$arCodes[$iCode]];
-    }//send_http_status
-
-    protected function request_log(): void
-    {
-        $sReqUri = $_SERVER["REQUEST_URI"];
-        $this->logreq($_SERVER["HTTP_USER_AGENT"] ?? "","HTTP_USER_AGENT");
-        $this->logreq($_SERVER["REMOTE_ADDR"] ?? "","REMOTE_ADDR");
-        $this->logreq($_SERVER["REMOTE_HOST"] ?? "","REMOTE_HOST");
-        $this->logreq($_SERVER["HTTP_HOST"] ?? "","HTTP_HOST");
-        //$this->logd($_SERVER["REMOTE_USER"] ?? "","REMOTE_USER");
-
-        $this->logreq($this->request->get_files(),"$sReqUri FILES");
-        $this->logreq($this->get_session(), "$sReqUri SESSION");
-        $this->logreq($this->request->get_get(),"$sReqUri GET");
-        $this->logreq($this->request->get_post(),"$sReqUri POST");
-    }
-
-    protected function get_domain()
+    protected function _get_domain()
     {
         //$this->get_header();
         $domain = $_SERVER["REMOTE_HOST"] ?? "";
         //host es a donde se hace la patición
         //if(!$domain) $domain = $this->get_header("host");
-        if(!$domain) $domain = $this->get_header("origin");
+        if(!$domain) $domain = $this->request->get_header("origin");
         //if(!$domain) $domain = $_POST[self::KEY_APIFYDOMAIN] ?? "";
         if(!$domain) throw new \Exception("No domain supplied");
         $domain = str_replace(["https://","http://"],"",$domain);
