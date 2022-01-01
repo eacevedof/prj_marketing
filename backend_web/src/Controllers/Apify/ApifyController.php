@@ -187,7 +187,7 @@ abstract class ApifyController extends AppController
 
         $this->logreq($this->get_files(),"$sReqUri FILES");
         $this->logreq($this->get_session(), "$sReqUri SESSION");
-        $this->logreq($this->get_get(),"$sReqUri GET");
+        $this->logreq($this->request->get_get(),"$sReqUri GET");
         $this->logreq($this->request->get_post(),"$sReqUri POST");
     }
     

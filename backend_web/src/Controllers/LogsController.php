@@ -15,7 +15,7 @@ final class LogsController extends AppController
     public function index()
     {
         $sType = "debug";
-        if($this->is_get("type")) $sType = $this->get_get("type");
+        if($this->is_get("type")) $sType = $this->request->get_get("type");
             
         //bug($sType);
         
@@ -36,7 +36,7 @@ final class LogsController extends AppController
             $sContent = file_get_contents($sPathFile);
             pr($sContent,$sLogfile);
             
-            if($this->get_get("delete")) unlink($sPathFile);
+            if($this->request->get_get("delete")) unlink($sPathFile);
         }
     }
 }//LogsController

@@ -31,7 +31,7 @@ final class ContextsController extends AppController
     {
         $oServ = new ContextService();
 
-        $idContext = $this->get_get("id");
+        $idContext = $this->request->get_get("id");
         $oJson = new HelperJson();
         if($idContext)
         {
@@ -42,7 +42,7 @@ final class ContextsController extends AppController
                         set_error("context does not exist")->
                         show(1);
 
-            $arJson = $oServ->get_pubconfig_by_id($this->get_get("id"));
+            $arJson = $oServ->get_pubconfig_by_id($this->request->get_get("id"));
         }
         else
         {
