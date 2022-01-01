@@ -15,7 +15,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\SignatureService;
 
-abstract class ApifyController extends AppController
+abstract class ApifyController extends ApifyController
 {
     use RequestTrait;
     use ResponseTrait;
@@ -68,7 +68,6 @@ abstract class ApifyController extends AppController
                 ->show(1);
         }
     }
-
 
     protected function _get_domain()
     {

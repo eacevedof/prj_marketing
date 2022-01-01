@@ -12,10 +12,10 @@ namespace App\Controllers\Apify;
 use App\Services\Apify\ContextService;
 use App\Services\Apify\DbsService;
 use TheFramework\Helpers\HelperJson;
-use App\Controllers\AppController;
+use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\TablesService;
 
-final class TablesController extends AppController
+final class TablesController extends ApifyController
 {
 
     private function _get_database()

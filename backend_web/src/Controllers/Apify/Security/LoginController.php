@@ -12,9 +12,9 @@ namespace App\Controllers\Apify\Security;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\LoginMiddleService;
 use TheFramework\Helpers\HelperJson;
-use App\Controllers\AppController;
+use App\Controllers\Apify\ApifyController;
 
-final class LoginController extends AppController
+final class LoginController extends ApifyController
 {
 
     /**

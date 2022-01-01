@@ -10,11 +10,11 @@
 namespace App\Controllers\Apify\Rw;
 
 use TheFramework\Helpers\HelperJson;
-use App\Controllers\AppController;
+use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Rw\WriterService;
 use App\Factories\EncryptFactory;
 
-final class WriterController extends AppController
+final class WriterController extends ApifyController
 {
     
     public function __construct()
