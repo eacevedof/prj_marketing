@@ -26,7 +26,7 @@ final class LoginController extends AppController
         $oJson = new HelperJson();
         try{
             $domain = $this->get_domain(); //exception
-            $oServ = new LoginService($domain, $this->get_post());
+            $oServ = new LoginService($domain, $this->request->get_post());
             $token = $oServ->get_token();
             $oJson->set_payload(["token"=>$token])->show();
         }
@@ -49,7 +49,7 @@ final class LoginController extends AppController
         $this->logd("middle start");
         $oJson = new HelperJson();
         try{
-            $oServ = new LoginMiddleService($this->get_post());
+            $oServ = new LoginMiddleService($this->request->get_post());
             $token = $oServ->get_token();
             $oJson->set_payload(["token"=>$token])->show();
         }
@@ -75,7 +75,7 @@ final class LoginController extends AppController
             //$token = $this->get_header("authorization");
             $domain = $this->get_domain(); //excepcion
             $this->logreq($domain,"pos-login.is_valid_token.domain");
-            $token = $this->get_post(self::KEY_APIFYUSERTOKEN);
+            $token = $this->request->get_post(self::KEY_APIFYUSERTOKEN);
             $this->logreq($token,"pos-login.is_valid_token.post");
             $this->logreq("domain: $domain, token: $token");
             if(!$token) throw new \Exception("No token provided");

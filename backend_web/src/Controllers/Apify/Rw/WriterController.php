@@ -31,12 +31,12 @@ final class WriterController extends AppController
     {
         $idcontext = $this->get_get("context");
         $dbalias = $this->get_get("schemainfo");
-        //$arParts = $this->get_post("queryparts");
-        $post = $this->get_post();
+        //$arParts = $this->request->get_post("queryparts");
+        $post = $this->request->get_post();
         $arParts = EncryptFactory::get()->get_decrypted($post);
 
-        $action = $this->get_post("action");
-        $arParts["useruuid"] = $this->get_post("useruuid");
+        $action = $this->request->get_post("action");
+        $arParts["useruuid"] = $this->request->get_post("useruuid");
         $table = $arParts["table"];
 
         $oJson = new HelperJson();
@@ -79,8 +79,8 @@ final class WriterController extends AppController
     {
         $idcontext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
-        $action = $this->get_post("action");
-        $sSQL = $this->get_post("query");
+        $action = $this->request->get_post("action");
+        $sSQL = $this->request->get_post("query");
         
         $oServ = new WriterService($idcontext,$sDb);
         $arJson = $oServ->write_raw($sSQL);

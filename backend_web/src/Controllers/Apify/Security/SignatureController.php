@@ -25,7 +25,7 @@ class SignatureController extends AppController
         $oJson = new HelperJson();
         try{
             $domain = $this->get_domain(); //excepcion
-            $oServ = new SignatureService($domain,$this->get_post());
+            $oServ = new SignatureService($domain,$this->request->get_post());
             $token = $oServ->get_token();
             $oJson->set_payload(["result"=>$token])->show();
         }

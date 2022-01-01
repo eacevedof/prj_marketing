@@ -32,8 +32,8 @@ final class ReaderController extends AppController
     {
         $idContext = $this->get_get("context");
         $sDbalias = $this->get_get("schemainfo");
-        //$arParts = $this->get_post("queryparts");
-        $arParts = EncryptFactory::get()->get_decrypted($this->get_post());
+        //$arParts = $this->request->get_post("queryparts");
+        $arParts = EncryptFactory::get()->get_decrypted($this->request->get_post());
         
         $oServ = new ReaderService($idContext, $sDbalias);
         $arJson = $oServ->get_read($arParts);
@@ -59,7 +59,7 @@ final class ReaderController extends AppController
         $idContext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
 
-        $sSQL = $this->get_post("query");
+        $sSQL = $this->request->get_post("query");
         $oServ = new ReaderService($idContext,$sDb);
         $oJson = new HelperJson();
 
