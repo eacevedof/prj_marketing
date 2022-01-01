@@ -11,10 +11,10 @@ namespace App\Controllers\Apify;
 
 use App\Services\Apify\ContextService;
 use TheFramework\Helpers\HelperJson;
-use App\Controllers\AppController;
+use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\DbsService;
 
-final class DbsController extends AppController
+final class DbsController extends ApifyController
 {
 
     public function __construct()

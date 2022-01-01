@@ -9,11 +9,11 @@
  */
 namespace App\Controllers\Apify;
 
+use App\Controllers\ApifyController;
 use TheFramework\Helpers\HelperJson;
-use App\Controllers\AppController;
 use App\Services\Apify\ContextService;
 
-final class ContextsController extends AppController
+final class ContextsController extends ApifyController
 {
     
     public function __construct()

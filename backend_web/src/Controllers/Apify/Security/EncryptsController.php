@@ -9,11 +9,11 @@
  */
 namespace App\Controllers\Apify\Security;
 
-use App\Controllers\AppController;
+use App\Controllers\Apify\ApifyController;
 use App\Factories\EncryptFactory;
 use TheFramework\Helpers\HelperJson;
 
-final class EncryptsController extends AppController
+final class EncryptsController extends ApifyController
 {
     public function __construct()
     {

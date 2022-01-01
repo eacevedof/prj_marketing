@@ -10,10 +10,10 @@
 namespace App\Controllers\Apify\Security;
 
 use TheFramework\Helpers\HelperJson;
-use App\Controllers\AppController;
+use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Security\SignatureService;
 
-class PasswordController extends AppController
+class PasswordController extends ApifyController
 {
 
     /**
