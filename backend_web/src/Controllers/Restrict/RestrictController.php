@@ -28,12 +28,16 @@ abstract class RestrictController extends AppController
     protected AuthService $auth;
     protected ?array $authuser;
 
+    /**
+     * Builds request, auth, csrf, authuser, config-layout and toppmenu
+     */
     public function __construct()
     {
         $this->_load_request();
         $this->auth = SF::get("Auth\Auth");
         $this->csrf = SF::get("Auth\Csrf");
         $this->authuser = $this->auth->get_user();
+
         $this->add_var("authuser", $this->authuser);
         $this->set_layout("restrict/restrict");
         $this->_add_topmenu();

@@ -19,7 +19,6 @@ abstract class AppController
     use ErrorTrait;
     use LogTrait;
     use EnvTrait;
-    use RequestTrait;
 
     public function request_log(): void
     {
