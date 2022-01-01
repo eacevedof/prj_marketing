@@ -22,19 +22,18 @@ final class UsersDeleteService extends AppService
 
     public function __construct(array $input)
     {
+        $this->input = $input;
+        if ($this->input["uuid"]) $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
         $this->model = ModelFactory::get("Base/User");
         $this->repository = RepositoryFactory::get("Base/UserRepository")->set_model($this->model);
-        $this->_load_request($input);
         $this->user = $this->_get_auth()->get_user();
     }
 
     public function __invoke(): array
     {
-        $update = $this->_get_req_without_ops();
-        if (!$update)
-            $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
-        if (!$id = $this->repository->get_id_by($update["uuid"] ?? ""))
+        $update = $this->input;
+        if (!$id = $this->repository->get_id_by($update["uuid"]))
             $this->_exeption(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
@@ -53,11 +52,8 @@ final class UsersDeleteService extends AppService
     
     public function undelete(): array
     {
-        $update = $this->_get_req_without_ops();
-        if (!$update)
-            $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
-        if (!$id = $this->repository->get_id_by($update["uuid"] ?? ""))
+        $update = $this->input;
+        if (!$id = $this->repository->get_id_by($update["uuid"]))
             $this->_exeption(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
