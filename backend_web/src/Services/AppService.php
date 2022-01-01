@@ -26,7 +26,7 @@ abstract class AppService
     use EnvTrait;
 
     private static ?AuthService $auth = null;
-    protected array $input;
+    protected $input;
 
     protected function _get_auth(): ?AuthService
     {
