@@ -29,7 +29,7 @@ abstract class AppController
         $this->logreq($_SERVER["HTTP_HOST"] ?? "","HTTP_HOST");
         //$this->logd($_SERVER["REMOTE_USER"] ?? "","REMOTE_USER");
 
-        $this->logreq($this->get_files(),"$sReqUri FILES");
+        $this->logreq($this->request->get_files(),"$sReqUri FILES");
         $this->logreq($this->get_session(), "$sReqUri SESSION");
         $this->logreq($this->request->get_get(),"$sReqUri GET");
         $this->logreq($this->request->get_post(),"$sReqUri POST");
