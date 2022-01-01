@@ -12,7 +12,6 @@ namespace App\Controllers;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use App\Traits\ErrorTrait;
-use App\Traits\RequestTrait;
 
 abstract class AppController
 {
@@ -20,7 +19,7 @@ abstract class AppController
     use LogTrait;
     use EnvTrait;
 
-    public function request_log(): void
+    protected function _request_log(): void
     {
         $sReqUri = $_SERVER["REQUEST_URI"];
         $this->logreq($_SERVER["HTTP_USER_AGENT"] ?? "","HTTP_USER_AGENT");
@@ -34,11 +33,7 @@ abstract class AppController
         $this->logreq($this->request->get_get(),"$sReqUri GET");
         $this->logreq($this->request->get_post(),"$sReqUri POST");
     }
-    
-    public function response_json($arData): string
-    {
-        header("Content-type: application/json");
-        echo json_encode($arData);        
-    }
+
+
 
 }//AppController
