@@ -2,8 +2,8 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Repositories\ExampleRepository 
- * @file ExampleRepository.php v1.0.0
+ * @name App\Repositories\UserRepository 
+ * @file UserRepository.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
