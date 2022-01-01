@@ -23,7 +23,7 @@ final class UsersDeleteService extends AppService
     public function __construct(array $input)
     {
         $this->input = $input;
-        if ($this->input["uuid"]) $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+        if(!$this->input["uuid"]) $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->model = ModelFactory::get("Base/User");
         $this->repository = RepositoryFactory::get("Base/UserRepository")->set_model($this->model);
