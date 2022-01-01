@@ -12,12 +12,9 @@ use App\Enums\KeyType;
 use App\Enums\ExceptionType;
 use App\Services\Restrict\PicklistService;
 use App\Factories\ServiceFactory as SF;
-use App\Traits\JsonTrait;
 
 final class LoginController extends RestrictController
 {
-    use JsonTrait;
-
     public function index(): void
     {
         $this

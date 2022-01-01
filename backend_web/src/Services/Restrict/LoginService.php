@@ -15,7 +15,6 @@ final class LoginService extends AppService
     use CookieTrait;
 
     private string $domain;
-    private array $input;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
     private UserPermissionsRepository $permissionrepo;
