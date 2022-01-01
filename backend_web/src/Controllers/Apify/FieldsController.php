@@ -14,7 +14,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\FieldsService;
 
-class FieldsController extends AppController
+final class FieldsController extends AppController
 {
     
     public function __construct()

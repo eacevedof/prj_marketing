@@ -14,7 +14,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\DbsService;
 
-class DbsController extends AppController
+final class DbsController extends AppController
 {
 
     public function __construct()

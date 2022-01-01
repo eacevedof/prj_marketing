@@ -45,7 +45,6 @@ final class SessionComponent
         return $_SESSION[$key] ?? null;
     }
 
-
     public function get_once(string $key)
     {
         $value =  $this->get($key);
