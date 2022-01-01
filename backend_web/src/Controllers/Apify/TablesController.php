@@ -23,14 +23,14 @@ final class TablesController extends AppController
         $oServ = new ContextService();
         $oJson = new HelperJson();
 
-        $idContext = $this->get_get("id_context");
+        $idContext = $this->request->get_get("id_context");
         if(!$oServ->is_context($idContext))
             $oJson->set_code(HelperJson::CODE_NOT_FOUND)->
             set_error("context does not exist")->
             show(1);
 
         //schemainfo puede ser un alias o un dbname
-        $sDb = $this->get_get("schemainfo");
+        $sDb = $this->request->get_get("schemainfo");
 
         //compruebo que sea una dbname
         $sDb2 = $oServ->is_db($idContext,$sDb);
@@ -54,7 +54,7 @@ final class TablesController extends AppController
     {
         //si no hay db lanza un exit
         $sDb = $this->_get_database();
-        $idContext = $this->get_get("id_context");
+        $idContext = $this->request->get_get("id_context");
 
         $oServ = new TablesService($idContext,$sDb);
         $arJson = $oServ->get_all();

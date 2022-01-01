@@ -29,14 +29,14 @@ final class FieldsController extends AppController
         $oServ = new ContextService();
         $oJson = new HelperJson();
 
-        $idContext = $this->get_get("id_context");
+        $idContext = $this->request->get_get("id_context");
         if(!$oServ->is_context($idContext))
             $oJson->set_code(HelperJson::CODE_NOT_FOUND)->
             set_error("context does not exist")->
             show(1);
 
         //schemainfo puede ser un alias o un dbname
-        $sDb = $this->get_get("schemainfo");
+        $sDb = $this->request->get_get("schemainfo");
 
         //compruebo que sea una dbname
         $sDb2 = $oServ->is_db($idContext,$sDb);
@@ -61,9 +61,9 @@ final class FieldsController extends AppController
         //si no hay db lanza un exit
         $sDb = $this->_get_database();
 
-        $idContext = $this->get_get("id_context");
-        $sTableName = $this->get_get("tablename");
-        $sFieldName = $this->get_get("fieldname");
+        $idContext = $this->request->get_get("id_context");
+        $sTableName = $this->request->get_get("tablename");
+        $sFieldName = $this->request->get_get("fieldname");
 
         $oServ = new FieldsService($idContext,$sDb,$sTableName,$sFieldName);
         if($sFieldName)

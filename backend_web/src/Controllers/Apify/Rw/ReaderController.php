@@ -30,8 +30,8 @@ final class ReaderController extends AppController
      */
     public function index(): void
     {
-        $idContext = $this->get_get("context");
-        $sDbalias = $this->get_get("schemainfo");
+        $idContext = $this->request->get_get("context");
+        $sDbalias = $this->request->get_get("schemainfo");
         //$arParts = $this->request->get_post("queryparts");
         $arParts = EncryptFactory::get()->get_decrypted($this->request->get_post());
         
@@ -56,8 +56,8 @@ final class ReaderController extends AppController
      */
     public function raw(): void
     {
-        $idContext = $this->get_get("context");
-        $sDb = $this->get_get("dbname");
+        $idContext = $this->request->get_get("context");
+        $sDb = $this->request->get_get("dbname");
 
         $sSQL = $this->request->get_post("query");
         $oServ = new ReaderService($idContext,$sDb);

@@ -53,7 +53,7 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->location(UrlType::FORBIDDEN);
 
-        $search = SF::get_callable("Restrict\Users\UsersSearch", $this->get_get());
+        $search = SF::get_callable("Restrict\Users\UsersSearch", $this->request->get_get());
         try {
             $result = $search();
             $this->_get_json()->set_payload([

@@ -30,7 +30,7 @@ final class DbsController extends AppController
     public function index()
     {
         $oJson = new HelperJson();
-        $idContext = $this->get_get("id_context");
+        $idContext = $this->request->get_get("id_context");
 
         $oServ = new ContextService();
         if(!$oServ->is_context($idContext))

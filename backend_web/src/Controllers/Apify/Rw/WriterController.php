@@ -29,8 +29,8 @@ final class WriterController extends AppController
      */
     public function index()
     {
-        $idcontext = $this->get_get("context");
-        $dbalias = $this->get_get("schemainfo");
+        $idcontext = $this->request->get_get("context");
+        $dbalias = $this->request->get_get("schemainfo");
         //$arParts = $this->request->get_post("queryparts");
         $post = $this->request->get_post();
         $arParts = EncryptFactory::get()->get_decrypted($post);
@@ -77,8 +77,8 @@ final class WriterController extends AppController
      */
     public function raw()
     {
-        $idcontext = $this->get_get("context");
-        $sDb = $this->get_get("dbname");
+        $idcontext = $this->request->get_get("context");
+        $sDb = $this->request->get_get("dbname");
         $action = $this->request->get_post("action");
         $sSQL = $this->request->get_post("query");
         
