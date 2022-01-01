@@ -8,27 +8,22 @@
  * @observations
  */
 namespace App\Traits;
+use App\Components\Request\RequestComponent;
 use App\Enums\RequestType;
+use App\Factories\ComponentFactory;
 
 trait RequestTrait
 {
-    protected array $request = [];
+    protected RequestComponent $request;
 
-    private function _load_request(array $request=[]): self
+    protected function _load_request(): void
     {
-        if($request) {
-            $this->request = $request;
-            return $this;
-        }
-        if($_GET) $this->request[RequestType::GET] = $_GET;
-        if($_POST) $this->request[RequestType::POST] = $_POST;
-        return $this;
+        $this->request = ComponentFactory::get("Request/Request");
     }
 
     private function _get_without_operations(array $request=[]): array
     {
-        if(!$request) $request = $this->request[RequestType::POST] ?? $this->request;
-        if(!$request) return [];
+        if (!$request) $request = $this->request->get_post();
         
         $without = [];
         foreach ($request as $key=>$value)
@@ -40,13 +35,13 @@ trait RequestTrait
 
     protected function _get_csrf(array $request=[]): string
     {
-        if(!$request) $request =  $this->request[RequestType::POST] ?? $this->request;
+        if(!$request) $request = $this->request->get_post();
         return $request[RequestType::CSRF] ?? "";
     }
 
     private function _get_action(array $request=[]): string
     {
-        if(!$request) $request =  $this->request[RequestType::POST] ?? $this->request;
+        if(!$request) $request =  $this->request->get_post();
         return $request[RequestType::ACTION] ?? "";
     }
 

@@ -12,21 +12,14 @@ namespace App\Controllers;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use App\Traits\ErrorTrait;
-use App\Factories\ComponentFactory;
-use App\Components\Request\RequestComponent;
+use App\Traits\RequestTrait;
 
 abstract class AppController
 {
     use ErrorTrait;
     use LogTrait;
     use EnvTrait;
-
-    protected RequestComponent $request;
-
-    public function __construct()
-    {
-        $this->request = ComponentFactory::get("Request/Request");
-    }
+    use RequestTrait;
 
     public function request_log(): void
     {
@@ -43,7 +36,7 @@ abstract class AppController
         $this->logreq($this->get_post(),"$sReqUri POST");
     }
     
-    public function response_json($arData)
+    public function response_json($arData): string
     {
         header("Content-type: application/json");
         echo json_encode($arData);        
