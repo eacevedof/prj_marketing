@@ -19,11 +19,9 @@ use App\Services\Restrict\Users\UsersDeleteService;
 use App\Services\Restrict\Users\UsersInfoService;
 use App\Services\Restrict\Users\UsersUpdateService;
 use TheFramework\Helpers\HelperJson;
-use App\Traits\JsonTrait;
 
 final class UsersController extends RestrictController
 {
-    use JsonTrait;
     private PicklistService $picklist;
     
     public function __construct()
@@ -66,6 +64,7 @@ final class UsersController extends RestrictController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"UsersController.search");
+
             $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
                 ->show();
