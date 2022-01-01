@@ -12,6 +12,8 @@ namespace App\Controllers;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use App\Traits\ErrorTrait;
+use App\Factories\ComponentFactory;
+use App\Components\Request\RequestComponent;
 
 abstract class AppController
 {
@@ -19,10 +21,11 @@ abstract class AppController
     use LogTrait;
     use EnvTrait;
 
-    public function get_session($sKey=null)
+    protected RequestComponent $request;
+
+    public function __construct()
     {
-        if(!$sKey) return $_SESSION ?? [];
-        return (isset($_SESSION[$sKey]) ? $_SESSION[$sKey] : "");
+        $this->request = ComponentFactory::get("Request/Request");
     }
 
     public function request_log(): void
