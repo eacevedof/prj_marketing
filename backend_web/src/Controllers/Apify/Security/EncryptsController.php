@@ -18,7 +18,7 @@ final class EncryptsController extends ApifyController
     public function __construct()
     {
         parent::__construct();
-        $this->check_usertoken();
+        $this->_check_usertoken();
     }
     
     /**

@@ -7,7 +7,7 @@
  * @date 01-07-2021 20:14 SPAIN
  * @observations
  */
-namespace App\Controllers;
+namespace App\Controllers\Apify;
 
 use App\Traits\RequestTrait;
 use App\Traits\ResponseTrait;
@@ -15,7 +15,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\SignatureService;
 
-abstract class ApifyController extends ApifyController
+abstract class ApifyController extends AppController
 {
     use RequestTrait;
     use ResponseTrait;
@@ -24,6 +24,9 @@ abstract class ApifyController extends ApifyController
     protected const KEY_API_SIGNATURE = "API_SIGNATURE";
     //protected const KEY_APIFYDOMAIN= "apify-origindomain";
 
+    /**
+     * Builds: request, response
+     */
     public function __construct() 
     {
         $this->_request_log();
