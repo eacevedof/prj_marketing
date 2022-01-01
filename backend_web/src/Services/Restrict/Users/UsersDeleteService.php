@@ -30,7 +30,7 @@ final class UsersDeleteService extends AppService
 
     public function __invoke(): array
     {
-        $update = $this->_get_without_operations();
+        $update = $this->_get_req_without_ops();
         if (!$update)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
@@ -53,7 +53,7 @@ final class UsersDeleteService extends AppService
     
     public function undelete(): array
     {
-        $update = $this->_get_without_operations();
+        $update = $this->_get_req_without_ops();
         if (!$update)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 

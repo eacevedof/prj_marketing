@@ -90,7 +90,7 @@ final class UsersInsertService extends AppService
 
     public function __invoke(): array
     {
-        $insert = $this->_get_without_operations();
+        $insert = $this->_get_req_without_ops();
         if (!$insert)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 

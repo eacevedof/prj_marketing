@@ -21,7 +21,7 @@ trait RequestTrait
         $this->request = ComponentFactory::get("Request/Request");
     }
 
-    private function _get_without_operations(array $request=[]): array
+    private function _get_req_without_ops(array $request=[]): array
     {
         if (!$request) $request = $this->request->get_post();
         
