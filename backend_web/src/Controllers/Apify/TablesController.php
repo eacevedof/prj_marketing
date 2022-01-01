@@ -15,7 +15,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\TablesService;
 
-class TablesController extends AppController
+final class TablesController extends AppController
 {
 
     private function _get_database()

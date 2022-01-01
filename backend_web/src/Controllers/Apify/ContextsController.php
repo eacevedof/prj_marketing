@@ -13,7 +13,7 @@ use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\ContextService;
 
-class ContextsController extends AppController
+final class ContextsController extends AppController
 {
     
     public function __construct()
