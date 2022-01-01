@@ -108,7 +108,7 @@ final class UsersController extends RestrictController
         /**
          * @var UsersInsertService
          */
-        $service = SF::get_callable("Restrict\Users\UsersInsert", $this->get_post());
+        $service = SF::get_callable("Restrict\Users\UsersInsert", $this->request->get_post());
         try {
             $result = $service();
             $this->_get_json()->set_payload([
@@ -216,7 +216,7 @@ final class UsersController extends RestrictController
         /**
          * @var UsersUpdateService
          */
-        $request = array_merge(["uuid"=>$uuid], $this->get_post());
+        $request = array_merge(["uuid"=>$uuid], $this->request->get_post());
         $service = SF::get_callable("Restrict\Users\UsersUpdate", $request);
         try {
             $result = $service();

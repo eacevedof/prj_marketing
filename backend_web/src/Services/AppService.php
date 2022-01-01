@@ -14,7 +14,7 @@ use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use App\Factories\ServiceFactory as SF;
-use App\Components\Auth\AuthService;
+use App\Services\Auth\AuthService;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use \Exception;

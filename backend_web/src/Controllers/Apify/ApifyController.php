@@ -28,7 +28,7 @@ abstract class ApifyController extends AppController
     protected function check_signature()
     {
         try{
-            $post = $this->get_post();
+            $post = $this->request->get_post();
             $domain = $this->get_domain(); //trata excepcion
             $token = $post[self::KEY_API_SIGNATURE] ?? "";
             unset($post[self::KEY_API_SIGNATURE]);
@@ -48,7 +48,7 @@ abstract class ApifyController extends AppController
     {
         try{
             $domain = $this->get_domain(); //excepcion
-            $token = $this->get_post(self::KEY_APIFYUSERTOKEN);
+            $token = $this->request->get_post(self::KEY_APIFYUSERTOKEN);
             $this->logd("domain:$domain,token:$token","check_usertoken");
             $oServ = new LoginService($domain);
             $oServ->is_valid($token);
@@ -188,7 +188,7 @@ abstract class ApifyController extends AppController
         $this->logreq($this->get_files(),"$sReqUri FILES");
         $this->logreq($this->get_session(), "$sReqUri SESSION");
         $this->logreq($this->get_get(),"$sReqUri GET");
-        $this->logreq($this->get_post(),"$sReqUri POST");
+        $this->logreq($this->request->get_post(),"$sReqUri POST");
     }
     
     protected function response_json($arData)

@@ -26,7 +26,7 @@ final class EncryptsController extends AppController
      */
     public function index(): void
     {
-        //$isvalid = (new LoginService($this->get_domain()))->is_valid($this->get_post(self::KEY_APIFYUSERTOKEN));
+        //$isvalid = (new LoginService($this->get_domain()))->is_valid($this->request->get_post(self::KEY_APIFYUSERTOKEN));
         $rule = EncryptFactory::get()->get_random_rule();
         (new HelperJson())->set_payload($rule)->show();
     }
