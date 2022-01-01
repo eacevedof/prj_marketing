@@ -39,10 +39,4 @@ trait RequestTrait
         return $request[RequestType::CSRF] ?? "";
     }
 
-    private function _get_action(array $request=[]): string
-    {
-        if(!$request) $request =  $this->request->get_post();
-        return $request[RequestType::ACTION] ?? "";
-    }
-
 }//RequestTrait
