@@ -13,7 +13,6 @@ final class UsersInfoService extends AppService
     use SessionTrait;
     use CookieTrait;
 
-    private string $input;
     private UserRepository $repository;
     private UserPermissionsRepository $permissionrepo;
 

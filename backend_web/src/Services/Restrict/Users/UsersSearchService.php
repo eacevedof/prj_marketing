@@ -17,7 +17,6 @@ final class UsersSearchService extends AppService
     use CookieTrait;
 
     private string $domain;
-    private array $input;
     private UserRepository $repository;
     private UserPermissionsRepository $permissionrepo;
 
