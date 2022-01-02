@@ -26,20 +26,18 @@ final class UsersUpdateService extends AppService
 
     public function __construct(array $input)
     {
+        $this->input = $input;
         $this->model = ModelFactory::get("Base/User");
-        $this->validator = VF::get($input, $this->model);
+        $this->validator = VF::get($this->input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
         $this->repository->set_model($this->model);
-        $this->_load_request($input);
         $this->user = $this->_sessioninit()->get(KeyType::AUTH_USER);
         $this->encdec = $this->_get_encdec();
     }
 
     private function _skip_validation(): self
     {
-        $this->validator
-            ->add_skip("password2")
-        ;
+        $this->validator->add_skip("password2");
         return $this;
     }
 
@@ -96,7 +94,7 @@ final class UsersUpdateService extends AppService
 
     public function __invoke(): array
     {
-        $update = $this->_get_req_without_ops();
+        $update = $this->_get_req_without_ops($this->input);
         if (!$update)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 

@@ -83,7 +83,7 @@ final class UsersController extends RestrictController
     public function create(): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
-            $this->add_var("h1",__("Unauthorized"))
+            $this->add_var("h1", __("Unauthorized"))
                 ->set_template("/error/403")
                 ->render_nl();
         }
