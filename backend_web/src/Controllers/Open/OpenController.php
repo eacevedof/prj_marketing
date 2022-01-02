@@ -26,18 +26,18 @@ abstract class OpenController extends AppController
     {
         $this->_load_request();
         $this->_load_response();
+        $this->set_layout("open/open");
     }
 
     public function forbidden(): void
     {
         $this->set_layout("error/error")
             ->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"))
-            ->add_var("h1",__("Unauthorized"))
+            ->add_var("h1", __("Unauthorized"))
         ;
+
         $this->render([],"error/403");
     }
 
 }//OpenController
-
-
 

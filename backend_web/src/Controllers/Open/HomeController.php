@@ -20,6 +20,12 @@ final class HomeController extends OpenController
 
     public function index(): void
     {
+
+        $this->render([], "open/index");
+    }
+
+    public function foo(): void
+    {
         $f = new Foo();
         $svan = "_" . substr(md5($_SERVER['HTTP_HOST']), 0, 3);
 
@@ -41,15 +47,6 @@ final class HomeController extends OpenController
         die;
         $this->set_layout("open/open");
         $this->render([], "open/index");
-    }
-
-    public function forbidden(): void
-    {
-        $this->set_layout("error/error")
-            ->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"))
-            ->add_var("h1", __("Unauthorized"))
-        ;
-        $this->render([],"error/403");
     }
 
 }//OpenController
