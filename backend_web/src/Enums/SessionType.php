@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-abstract class KeyType
+abstract class SessionType
 {
     const LANG = "lang";
 

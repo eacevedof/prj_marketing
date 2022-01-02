@@ -10,7 +10,7 @@
 namespace App\Controllers\Restrict;
 use App\Enums\PolicyType;
 use App\Enums\ExceptionType;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 use App\Enums\ProfileType;
 use App\Enums\ResponseType;
 use App\Enums\UrlType;
@@ -37,7 +37,7 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->response->location(UrlType::FORBIDDEN);
 
-        $this->add_var(KeyType::PAGE_TITLE, __("Users"))
+        $this->add_var(SessionType::PAGE_TITLE, __("Users"))
             ->add_var("h1", __("Users"))
             ->add_var("languages", $this->picklist->get_languages())
             ->add_var("profiles", $this->picklist->get_profiles())
@@ -88,7 +88,7 @@ final class UsersController extends RestrictController
                 ->render_nl();
         }
 
-        $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
+        $this->add_var(SessionType::KEY_CSRF, $this->csrf->get_token())
             ->add_var("h1",__("New user"))
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
@@ -148,7 +148,7 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->response->location(UrlType::FORBIDDEN);
 
-        $this->add_var(KeyType::PAGE_TITLE, __("USERS - info"));
+        $this->add_var(SessionType::PAGE_TITLE, __("USERS - info"));
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ)) {
             $this->render_error([
                 "h1"=>__("Unauthorized")
@@ -188,7 +188,7 @@ final class UsersController extends RestrictController
              */
             $service = SF::get("Restrict\Users\UsersInfo", [$uuid]);
             $result = $service->get_edit();
-            $this->add_var(KeyType::KEY_CSRF, $this->csrf->get_token())
+            $this->add_var(SessionType::KEY_CSRF, $this->csrf->get_token())
                 ->add_var("h1",__("Edit user {0}", $uuid))
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)

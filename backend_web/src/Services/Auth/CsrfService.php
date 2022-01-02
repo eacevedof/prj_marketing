@@ -5,7 +5,7 @@ use App\Services\AppService;
 use App\Traits\SessionTrait;
 use TheFramework\Components\Formatter\ComponentMoment;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 
 final class CsrfService extends AppService
 {
@@ -28,7 +28,7 @@ final class CsrfService extends AppService
 
     public function get_token(): string
     {
-        $user = $this->session->get(KeyType::AUTH_USER);
+        $user = $this->session->get(SessionType::AUTH_USER);
 
         $arpackage = [
             "salt0"    => date("Y-m-d H:i:s"),
@@ -65,7 +65,7 @@ final class CsrfService extends AppService
 
         if($useragent !== md5($this->_get_user_agent())) $this->_exeption(__("Invalid csrf {0}",4));
 
-        $user = $this->session->get(KeyType::AUTH_USER);
+        $user = $this->session->get(SessionType::AUTH_USER);
         $md5pass = $user["secret"] ?? "";
         $md5pass = md5($md5pass);
         if($md5pass!==$password) $this->_exeption(__("Invalid csrf {0}",5));

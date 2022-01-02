@@ -6,7 +6,7 @@ use App\Models\Base\UserModel;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Factories\ModelFactory;
 use App\Traits\RequestTrait;
@@ -30,7 +30,7 @@ final class UsersInsertService extends AppService
         $this->model = ModelFactory::get("Base/User");
         $this->validator = VF::get($this->input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
-        $this->user = $this->_sessioninit()->get(KeyType::AUTH_USER);
+        $this->user = $this->_sessioninit()->get(SessionType::AUTH_USER);
         $this->encdec = $this->_get_encdec();
     }
 

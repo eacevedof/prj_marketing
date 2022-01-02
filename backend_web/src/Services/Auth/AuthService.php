@@ -5,8 +5,7 @@ use App\Services\AppService;
 use App\Factories\Specific\SessionFactory as SF;
 use App\Components\Session\SessionComponent;
 use App\Enums\ProfileType;
-use App\Enums\KeyType;
-
+use App\Enums\SessionType;
 
 final class AuthService extends AppService
 {
@@ -17,7 +16,7 @@ final class AuthService extends AppService
     {
         $this->session = SF::get();
         if (!self::$user)
-            self::$user = $this->session->get(KeyType::AUTH_USER) ?? [];
+            self::$user = $this->session->get(SessionType::AUTH_USER) ?? [];
     }
 
     public function get_user(): ?array
@@ -30,8 +29,8 @@ final class AuthService extends AppService
         if(!self::$user) return false;
         if($this->is_root()) return true;
 
-        //$permissions = $this->session->get(KeyType::AUTH_USER_PERMISSIONS);
-        $permissions = self::$user[KeyType::AUTH_USER_PERMISSIONS];
+        //$permissions = $this->session->get(SessionType::AUTH_USER_PERMISSIONS);
+        $permissions = self::$user[SessionType::AUTH_USER_PERMISSIONS];
         return in_array($action, $permissions);
     }
 
