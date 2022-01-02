@@ -9,35 +9,35 @@
  */
 namespace App\Controllers\Apify\Security;
 
+use App\Enums\ResponseType;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\LoginMiddleService;
-use TheFramework\Helpers\HelperJson;
 use App\Controllers\Apify\ApifyController;
 
 final class LoginController extends ApifyController
 {
-
     /**
      * ruta:
      *  <dominio>/apifiy/security/pos-login
      */
     public function index()
     {
-        $oJson = new HelperJson();
+        $json = $this->_get_json();
         try{
             $domain = $this->get_domain(); //exception
             $oServ = new LoginService($domain, $this->request->get_post());
             $token = $oServ->get_token();
-            $oJson->set_payload(["token"=>$token])->show();
+            $json->set_payload(["token"=>$token])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.index");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+            $json->set_code(ResponseType::UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
                 ->show(1);
         }
     }
+
     /**
      * Para servidores intermediarios
      * El serv tiene que hacer un forward en POST de remoteip y remotehost
@@ -47,16 +47,16 @@ final class LoginController extends ApifyController
     public function middle()
     {
         $this->logd("middle start");
-        $oJson = new HelperJson();
+        $json = $this->_get_json();
         try{
             $oServ = new LoginMiddleService($this->request->get_post());
             $token = $oServ->get_token();
-            $oJson->set_payload(["token"=>$token])->show();
+            $json->set_payload(["token"=>$token])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.middle");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)
+            $json->set_code(ResponseType::UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
                 ->show(1);
         }
@@ -69,7 +69,7 @@ final class LoginController extends ApifyController
      */
     public function is_valid_token()
     {
-        $oJson = new HelperJson();
+        $json = new HelperJson();
         try{
             //$token = $this->get_header("apify-auth");
             //$token = $this->get_header("authorization");
@@ -81,12 +81,12 @@ final class LoginController extends ApifyController
             if(!$token) throw new \Exception("No token provided");
             $oServ = new LoginService($domain);
             $oServ->is_valid($token);
-            $oJson->set_payload(["isvalid"=>true])->show();
+            $json->set_payload(["isvalid"=>true])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.is_valid_token");
-            $oJson->set_code(HelperJson::CODE_FORBIDDEN)
+            $json->set_code(HelperJson::CODE_FORBIDDEN)
                 ->set_error([$e->getMessage()])
                 ->show(1);
         }

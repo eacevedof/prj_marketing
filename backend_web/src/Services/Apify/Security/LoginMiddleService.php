@@ -11,6 +11,7 @@ final class LoginMiddleService extends AppService
 
     private $origin = null;
     private $post = [];
+
     /**
      * @var ComponentEncdecrypt
      */

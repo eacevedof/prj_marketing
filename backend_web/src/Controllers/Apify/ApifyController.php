@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Apify;
 
+use App\Enums\ResponseType;
 use App\Traits\RequestTrait;
 use App\Traits\ResponseTrait;
 use TheFramework\Helpers\HelperJson;
@@ -47,9 +48,9 @@ abstract class ApifyController extends AppController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"ApifyController.check_signature");
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)->
-            set_error([$e->getMessage()])->
-            show(1);
+            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show();
         }
     }
 
@@ -66,13 +67,13 @@ abstract class ApifyController extends AppController
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"ApifyController.check_usertoken");
-            $this->_get_json()->set_code(HelperJson::CODE_FORBIDDEN)
+            $this->_get_json()->set_code(ResponseType::FORBIDDEN)
                 ->set_error([$e->getMessage()])
-                ->show(1);
+                ->show();
         }
     }
 
-    protected function _get_domain()
+    protected function _get_domain(): string
     {
         //$this->get_header();
         $domain = $_SERVER["REMOTE_HOST"] ?? "";

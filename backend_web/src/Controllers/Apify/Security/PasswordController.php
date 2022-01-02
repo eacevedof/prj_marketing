@@ -9,11 +9,11 @@
  */
 namespace App\Controllers\Apify\Security;
 
-use TheFramework\Helpers\HelperJson;
+use App\Enums\ResponseType;
 use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Security\SignatureService;
 
-class PasswordController extends ApifyController
+final class PasswordController extends ApifyController
 {
 
     /**
@@ -22,20 +22,20 @@ class PasswordController extends ApifyController
      */
     public function index()
     {
-        $oJson = new HelperJson();
+        $json = new HelperJson();
         try{
             $domain = $this->get_domain(); //excepcion
             //prd($domain);
-            $oServ = new SignatureService($domain,$this->request->get_post());
+            $oServ = new SignatureService($domain, $this->request->get_post());
             $token = $oServ->get_password();
-            $oJson->set_payload(["result"=>$token])->show();
+            $json->set_payload(["result"=>$token])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"PasswordController.index");
-            $oJson->set_code(HelperJson::CODE_UNAUTHORIZED)->
-            set_error([$e->getMessage()])->
-            show(1);
+            $json->set_code(ResponseType::UNAUTHORIZED)
+                ->set_error([$e->getMessage()])
+                ->show(1);
         }
 
     }//index

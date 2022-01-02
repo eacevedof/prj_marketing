@@ -12,7 +12,7 @@ namespace App\Controllers\Apify\Rw;
 use App\Enums\ResponseType;
 use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Rw\ReaderService;
-use App\Factories\EncryptFactory;
+use App\Factories\ServiceFactory;
 
 final class ReaderController extends ApifyController
 {
@@ -25,7 +25,7 @@ final class ReaderController extends ApifyController
         $idContext = $this->request->get_get("context");
         $sDbalias = $this->request->get_get("schemainfo");
         //$arParts = $this->request->get_post("queryparts");
-        $arParts = EncryptFactory::get()->get_decrypted($this->request->get_post());
+        $arParts = ServiceFactory::get("Apify/Encrypts")->get_decrypted($this->request->get_post());
         
         $oServ = new ReaderService($idContext, $sDbalias);
         $arJson = $oServ->get_read($arParts);
@@ -33,10 +33,10 @@ final class ReaderController extends ApifyController
         $this->logd($iNumrows,"NUM_ROWS");
 
         if($oServ->is_error()) 
-            $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)->
-                    set_error($oServ->get_errors())->
-                    set_message("database error")->
-                    show(1);
+            $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)
+                ->set_error($oServ->get_errors())
+                ->set_message("database error")
+                ->show(1);
 
         $this->_get_json()->set_payload(["result"=>$arJson,"foundrows"=>$oServ->get_foundrows()])->show();
 
