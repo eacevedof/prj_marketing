@@ -9,30 +9,29 @@
  */
 namespace App\Controllers;
 use App\Components\Kafka\ProducerComponent;
+use App\Controllers\Open\OpenController;
 
-final class LogsController extends AppController
+final class LogsController extends OpenController
 {
     public function index()
     {
-        $sType = "debug";
-        if($this->request->is_get("type")) $sType = $this->request->get_get("type");
+        $type = $this->request->get_get("type") ?? "debug";
 
-        $sPathLogsDS = PATH_LOGS.DS.$sType.DS;
-        if(!is_dir($sPathLogsDS))
-            return pr("No folder $sPathLogsDS");
+        $pathlogs = PATH_LOGS.DS.$type.DS;
+        if(!is_dir($pathlogs))
+            return pr("No folder $pathlogs");
         
-        $arLogs = scandir($sPathLogsDS);
-        //bug($arLogs);
-        unset($arLogs[0]);unset($arLogs[1]);
+        $files = scandir($pathlogs);
+        //bug($files);
+        unset($files[0]); unset($files[1]);
         
-        if(!$arLogs)
-            return pr("No log files in $sPathLogsDS");
+        if(!$files) return pr("No log files in $pathlogs");
         
-        foreach($arLogs as $sLogfile)
+        foreach($files as $logfile)
         {
-            $sPathFile = $sPathLogsDS.$sLogfile;
+            $sPathFile = $pathlogs.$logfile;
             $sContent = file_get_contents($sPathFile);
-            pr($sContent, $sLogfile);
+            pr($sContent, $logfile);
             
             if($this->request->get_get("delete")) unlink($sPathFile);
         }
