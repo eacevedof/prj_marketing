@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Controllers\Open;
 
-
-class Foo
+final class FooHack
 {
     function __construct()
     {
