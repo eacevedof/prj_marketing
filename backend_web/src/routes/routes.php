@@ -1,9 +1,8 @@
 <?php
 return [
+    ["url"=>"/forbidden","controller"=>"App\Controllers\Open\ErrorsController","method"=>"forbidden"],
     ["url"=>"/","controller"=>"App\Controllers\Open\HomeController","method"=>"index"],
-
-    ["url"=>"/forbidden","controller"=>"App\Controllers\Open\HomeController","method"=>"forbidden"],
-
+    
     ["url"=>"/login","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"access", "allowed"=>["post"]],
 
@@ -54,6 +53,6 @@ return [
     ["url"=>"/apify/security/is-valid-token","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"is_valid_token"],
 
 //resto de rutas    
-    ["url"=>"https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"],
-    ["url"=>"/404","controller"=>"App\Controllers\Open\NotFoundController","method"=>"error_404"]
+    ["url"=>"https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify","controller"=>"App\Controllers\Open\ErrorsController","method"=>"error_404"],
+    ["url"=>"/404","controller"=>"App\Controllers\Open\ErrorsController","method"=>"error_404"]
 ];
