@@ -30,7 +30,7 @@ const rowbuttons_listeners = ()=> {
       bgclick: false,
       body: r,
     }).show()
-  }))//end info
+  }))//end foreach show
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-edit"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
@@ -46,21 +46,21 @@ const rowbuttons_listeners = ()=> {
       bgclick: false,
       body: r,
     }).show()
-  }))//end edit foreach
+  }))//end foreach edit
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-del"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
     const btn = e.currentTarget
     const uuid = btn.getAttribute("uuid")
     rowswal(_$table, _dttable).on_delete(uuid)
-  }))//end foreach
+  }))//end foreach del
 
   _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-undel"]`)
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", (e) => {
     const btn = e.currentTarget
     const uuid = btn.getAttribute("uuid")
     rowswal(_$table, _dttable).on_undelete(uuid)
-  }))//end foreach
+  }))//end foreach undel
 
 }//_rowbtns listeners
 
