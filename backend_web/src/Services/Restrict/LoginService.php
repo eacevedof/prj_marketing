@@ -1,12 +1,16 @@
 <?php
 namespace App\Services\Restrict;
-use App\Repositories\Base\UserPermissionsRepository;
+
+use App\Enums\PreferenceType;
 use App\Services\AppService;
-use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
+use App\Factories\ServiceFactory as SF;
+use App\Repositories\Base\UserPermissionsRepository;
+
+use TheFramework\Components\Session\ComponentEncdecrypt;
+use App\Repositories\Base\UserRepository;
 use App\Enums\SessionType;
 
 final class LoginService extends AppService
@@ -23,10 +27,10 @@ final class LoginService extends AppService
     {
         $this->input = $input;
         $this->_sessioninit();
-
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
+        $this->preferencesrepo = RF::get("Base/UserPreferences");
     }
 
     public function in(): array
@@ -43,13 +47,20 @@ final class LoginService extends AppService
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exeption(__("Unauthorized"));
 
-        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
-        $this->session->add(SessionType::AUTH_USER, $aruser);
-        $this->session->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"));
+        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->permissionrepo->get_by_user($iduser = $aruser["id"]);
+
+        $this->session
+            ->add(SessionType::AUTH_USER, $aruser)
+            ->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"))
+        ;
+
+        $prefs = $this->preferencesrepo->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
+        $prefs = $prefs[0]["pref_value"] ?? "/restrict";
         //$this->session->add(SessionType::AUTH_USER_PERMISSIONS, $permissions);
 
         return [
-            "lang" => $lang
+            "lang" => $lang,
+            $prefkey => $prefs
         ];
         //esto no me vale pq la respuesta es ajax y el navegador no escribe
         //$this->cookie->add_value(key::LANG, $lang);

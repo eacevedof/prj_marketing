@@ -4,19 +4,19 @@ namespace App\Components\Session;
 
 final class SessionComponent
 {
-    public function add(string $key, $mxvalue): SessionComponent
+    public function add(string $key, $mxvalue): self
     {
         $_SESSION[$key] = $mxvalue;
-        return  $this;
+        return $this;
     }
 
-    public function remove(string $key): SessionComponent
+    public function remove(string $key): self
     {
         unset($_SESSION[$key]);
         return  $this;
     }
     
-    public function destroy(): SessionComponent
+    public function destroy(): self
     {
         $_SESSION = [];
         if (ini_get("session.use_cookies")) {
@@ -33,7 +33,7 @@ final class SessionComponent
         return $this;
     }
 
-    public function start(): SessionComponent
+    public function start(): self
     {
         session_start();
         return $this;

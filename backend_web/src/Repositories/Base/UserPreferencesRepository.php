@@ -20,4 +20,16 @@ final class UserPreferencesRepository extends AppRepository
         $this->table = "base_user_preferences";
     }
 
+    public function get_by_user(int $userid, string $prefkey=""): array
+    {
+        $crud = $this->_get_crud()
+            ->set_comment("userpreferences.get_by_user(userid)")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.pref_key","m.pref_value"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_user=$userid")
+        ;
+        if ($prefkey) $crud->add_and("m.pref_key='$prefkey'");
+        return $this->db->query($crud->get_selectfrom());
+    }
 }//UserPreferencesRepository
