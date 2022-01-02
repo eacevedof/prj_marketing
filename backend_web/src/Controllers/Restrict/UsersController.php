@@ -50,14 +50,14 @@ final class UsersController extends RestrictController
     //@get
     public function search(): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
-            $this->response->location(UrlType::FORBIDDEN);
-
         if (!$this->request->is_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("only accept json is allowed")])
                 ->show();
+
+        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
+            $this->response->location(UrlType::FORBIDDEN);
 
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->request->get_get());
         try {
@@ -100,6 +100,12 @@ final class UsersController extends RestrictController
     //@post
     public function insert(): void
     {
+        if (!$this->request->is_json())
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("only accept json is allowed")])
+                ->show();
+
         if (!$this->csrf->is_valid($this->_get_csrf())) {
             $this->_get_json()
                 ->set_code(ExceptionType::CODE_UNAUTHORIZED)
@@ -203,6 +209,12 @@ final class UsersController extends RestrictController
     //@post
     public function update(string $uuid): void
     {
+        if (!$this->request->is_json())
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("only accept json is allowed")])
+                ->show();
+
         if(!($uuid = trim($uuid)))
             $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
             ->set_error([__("No code provided")])
@@ -248,6 +260,12 @@ final class UsersController extends RestrictController
     //@delete
     public function remove(string $uuid): void
     {
+        if (!$this->request->is_json())
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("only accept json is allowed")])
+                ->show();
+
         if(!($uuid = trim($uuid)))
             $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
                 ->set_error([__("No code provided")])
@@ -280,6 +298,12 @@ final class UsersController extends RestrictController
     //@undelete
     public function undelete(string $uuid): void
     {
+        if (!$this->request->is_json())
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("only accept json is allowed")])
+                ->show();
+
         if(!($uuid = trim($uuid)))
             $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
                 ->set_error([__("No code provided")])
