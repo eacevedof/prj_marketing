@@ -4,15 +4,10 @@ use App\Enums\ExceptionType;
 use App\Repositories\Base\UserPermissionsRepository;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
-use App\Traits\SessionTrait;
-use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
 
 final class UsersInfoService extends AppService
 {
-    use SessionTrait;
-    use CookieTrait;
-
     private UserRepository $repository;
     private UserPermissionsRepository $permissionrepo;
 
@@ -22,8 +17,6 @@ final class UsersInfoService extends AppService
         if(!$this->input) {
             $this->_exeption(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
         }
-
-        $this->_sessioninit();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
     }

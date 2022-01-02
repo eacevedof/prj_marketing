@@ -26,10 +26,10 @@ final class UsersInsertService extends AppService
 
     public function __construct(array $input)
     {
+        $this->input = $input;
         $this->model = ModelFactory::get("Base/User");
-        $this->validator = VF::get($input, $this->model);
+        $this->validator = VF::get($this->input, $this->model);
         $this->repository = RepositoryFactory::get("Base/UserRepository");
-        $this->_load_request($input);
         $this->user = $this->_sessioninit()->get(KeyType::AUTH_USER);
         $this->encdec = $this->_get_encdec();
     }
@@ -90,7 +90,7 @@ final class UsersInsertService extends AppService
 
     public function __invoke(): array
     {
-        $insert = $this->_get_req_without_ops();
+        $insert = $this->_get_req_without_ops($this->input);
         if (!$insert)
             $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
