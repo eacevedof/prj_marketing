@@ -110,7 +110,9 @@ final class UsersInsertService extends AppService
 
         $id = $this->repository->insert($insert);
         $insert = [
-            PreferenceType::URL_DEFAULT_MODULE => "/restrict"
+            "id_user" => $id,
+            "key" => PreferenceType::URL_DEFAULT_MODULE,
+            "value" => "/restrict"
         ];
         $this->model->add_sysinsert($insert, $this->user["id"]);
         $this->preferences->insert($insert);
