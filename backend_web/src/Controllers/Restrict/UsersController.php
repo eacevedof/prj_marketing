@@ -33,7 +33,7 @@ final class UsersController extends RestrictController
     public function index(?string $page=null): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
-            $this->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::FORBIDDEN);
 
         $this->add_var(KeyType::PAGE_TITLE, __("Users"))
             ->add_var("h1", __("Users"))
@@ -49,7 +49,7 @@ final class UsersController extends RestrictController
     public function search(): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
-            $this->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::FORBIDDEN);
 
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->request->get_get());
         try {
@@ -132,7 +132,7 @@ final class UsersController extends RestrictController
     public function info(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
-            $this->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::FORBIDDEN);
 
         $this->add_var(KeyType::PAGE_TITLE, __("USERS - info"));
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ)) {

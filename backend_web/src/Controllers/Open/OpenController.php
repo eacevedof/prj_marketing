@@ -11,12 +11,22 @@ namespace App\Controllers\Open;
 
 use App\Controllers\AppController;
 use App\Enums\KeyType;
+use App\Traits\RequestTrait;
+use App\Traits\ResponseTrait;
 use App\Traits\ViewTrait;
 
 
 abstract class OpenController extends AppController
 {
     use ViewTrait;
+    use RequestTrait;
+    use ResponseTrait;
+
+    public function __construct()
+    {
+        $this->_load_request();
+        $this->_load_response();
+    }
 
     public function forbidden(): void
     {

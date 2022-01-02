@@ -47,16 +47,10 @@ abstract class RestrictController extends AppController
         $this->_add_topmenu();
     }
 
-    protected function location(string $url): void
-    {
-        header("Location: {$url}");
-        exit();
-    }
-
     public function logout(): void
     {
         $this->_sessioninit()->destroy();
-        $this->location(UrlType::ON_LOGOUT);
+        $this->response->location(UrlType::ON_LOGOUT);
     }
 
     protected function _add_topmenu(): void

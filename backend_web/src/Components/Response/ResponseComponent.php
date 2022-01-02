@@ -19,4 +19,9 @@ final class ResponseComponent
         return $this;
     }
 
+    public function location(string $url): void
+    {
+        header("Location: {$url}");
+        exit();
+    }
 }
