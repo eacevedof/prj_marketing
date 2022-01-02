@@ -10,7 +10,7 @@
 namespace App\Services\Kafka;
 
 use App\Factories\DbFactory;
-use App\Factories\KafkaFactory;
+use App\Factories\Specific\KafkaFactory;
 use App\Traits\LogTrait;
 use PDO;
 use TheFramework\Components\Db\ComponentCrud;

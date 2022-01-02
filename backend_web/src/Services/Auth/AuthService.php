@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth;
 use App\Services\AppService;
-use App\Factories\SessionFactory as SF;
+use App\Factories\Specific\SessionFactory as SF;
 use App\Components\Session\SessionComponent;
 use App\Enums\ProfileType;
 use App\Enums\KeyType;

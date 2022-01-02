@@ -9,7 +9,7 @@
  */
 namespace App\Traits;
 use App\Components\Session\SessionComponent;
-use App\Factories\SessionFactory as SsF;
+use App\Factories\Specific\SessionFactory as SsF;
 
 trait SessionTrait
 {

@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Restrict\Users;
 use App\Factories\RepositoryFactory;
-use App\Factories\ValidatorFactory as VF;
+use App\Factories\Specific\ValidatorFactory as VF;
 use App\Models\Base\UserModel;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
