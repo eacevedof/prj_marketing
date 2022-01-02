@@ -15,10 +15,8 @@ final class LogsController extends AppController
     public function index()
     {
         $sType = "debug";
-        if($this->is_get("type")) $sType = $this->request->get_get("type");
-            
-        //bug($sType);
-        
+        if($this->request->is_get("type")) $sType = $this->request->get_get("type");
+
         $sPathLogsDS = PATH_LOGS.DS.$sType.DS;
         if(!is_dir($sPathLogsDS))
             return pr("No folder $sPathLogsDS");
@@ -34,7 +32,7 @@ final class LogsController extends AppController
         {
             $sPathFile = $sPathLogsDS.$sLogfile;
             $sContent = file_get_contents($sPathFile);
-            pr($sContent,$sLogfile);
+            pr($sContent, $sLogfile);
             
             if($this->request->get_get("delete")) unlink($sPathFile);
         }

@@ -2,7 +2,7 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Services\Apify\Mysql
+ * @name App\Services\Apify\Rw\ReaderService
  * @file ReaderService.php 1.0.0
  * @date 27-06-2019 17:55 SPAIN
  * @observations

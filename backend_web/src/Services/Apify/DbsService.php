@@ -14,7 +14,7 @@ use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 
-class DbsService extends AppService
+final class DbsService extends AppService
 {
     private $idContext;
     private $oContext;

@@ -9,7 +9,7 @@
  */
 namespace App\Controllers\Apify\Security;
 
-use TheFramework\Helpers\HelperJson;
+use App\Enums\ResponseType;
 use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Security\SignatureService;
 
@@ -24,16 +24,17 @@ final class SignatureController extends ApifyController
     {
         try{
             $domain = $this->get_domain(); //excepcion
-            $oServ = new SignatureService($domain,$this->request->get_post());
+            $oServ = new SignatureService($domain, $this->request->get_post());
             $token = $oServ->get_token();
             $this->_get_json()->set_payload(["result"=>$token])->show();
         }
         catch (\Exception $e)
         {
             $this->logerr($e->getMessage(),"SignatureController.index");
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)->
-            set_error([$e->getMessage()])->
-            show();
+            $this->_get_json()
+                ->set_code(ResponseType::INTERNAL_SERVER_ERROR)
+                ->set_error([$e->getMessage()])
+                ->show();
         }
 
     }//index

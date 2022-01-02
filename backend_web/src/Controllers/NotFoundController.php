@@ -10,8 +10,8 @@
 namespace App\Controllers;
 
 use App\Components\Kafka\ProducerComponent;
+use App\Enums\ResponseType;
 use App\Traits\ResponseTrait;
-use TheFramework\Helpers\HelperJson;
 
 final class NotFoundController extends AppController
 {
@@ -30,7 +30,7 @@ final class NotFoundController extends AppController
     {
         (new ProducerComponent())->send(date("Y-m-d: H:i:s")." lalo","nada");
         $this->logerr($_SERVER["REQUEST_URI"],"error-404");
-        $this->_get_json()->set_code(HelperJson::CODE_NOT_FOUND)->set_error("Resource not found");
+        $this->_get_json()->set_code(ResponseType::NOT_FOUND)->set_error("Resource not found");
     }    
 
 }//NotFoundController

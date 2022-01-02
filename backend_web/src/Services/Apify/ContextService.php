@@ -12,7 +12,7 @@ namespace App\Services\Apify;
 use App\Services\AppService;
 use TheFramework\Components\Db\Context\ComponentContext;
 
-class ContextService extends AppService
+final class ContextService extends AppService
 {
     private $oContext;
 

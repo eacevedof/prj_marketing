@@ -14,7 +14,7 @@ use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 
-class FieldsService extends AppService
+final class FieldsService extends AppService
 {
     private $idContext;
     private $sDb;

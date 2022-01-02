@@ -13,6 +13,7 @@ final class LoginService extends AppService
 
     private $domain = null;
     private $arlogin = null;
+
     /**
      * @var ComponentEncdecrypt
      */
@@ -40,9 +41,9 @@ final class LoginService extends AppService
         if(!$config) throw new \Exception("Domain {$this->domain} is not authorized 2");
 
         $this->encdec = new ComponentEncdecrypt(1);
-        $this->encdec->set_sslmethod($config["sslenc_method"]??"");
-        $this->encdec->set_sslkey($config["sslenc_key"]??"");
-        $this->encdec->set_sslsalt($config["sslsalt"]??"");
+        $this->encdec->set_sslmethod($config["sslenc_method"] ?? "");
+        $this->encdec->set_sslkey($config["sslenc_key"] ?? "");
+        $this->encdec->set_sslsalt($config["sslsalt"] ?? "");
     }
 
     private function _get_login_config(string $domain=""): array

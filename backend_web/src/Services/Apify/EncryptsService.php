@@ -17,6 +17,7 @@ use \Exception;
 final class EncryptsService 
 {
     use LogTrait;
+
     private const APIFY_ENCKEY = "apify-enckey";
     private const APIFY_ENCKEY_TTL = 35; //segundos
 

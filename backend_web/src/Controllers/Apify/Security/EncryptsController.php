@@ -10,25 +10,19 @@
 namespace App\Controllers\Apify\Security;
 
 use App\Controllers\Apify\ApifyController;
-use App\Factories\EncryptFactory;
-use TheFramework\Helpers\HelperJson;
+use App\Factories\ServiceFactory;
 
 final class EncryptsController extends ApifyController
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->_check_usertoken();
-    }
-    
     /**
      * ruta: <dominio>/apify/encrypts
      */
     public function index(): void
     {
+        $this->_check_usertoken();
         //$isvalid = (new LoginService($this->get_domain()))->is_valid($this->request->get_post(self::KEY_APIFYUSERTOKEN));
-        $rule = EncryptFactory::get()->get_random_rule();
-        (new HelperJson())->set_payload($rule)->show();
+        $rule = ServiceFactory::get("Apify/Encrypts")->get_random_rule();
+        $this->_get_json()->set_payload($rule)->show();
     }
 
 }//Encrypt
