@@ -10,7 +10,7 @@
 namespace App\Controllers\Open;
 
 use App\Controllers\Open\OpenController;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 use App\Traits\ViewTrait;
 
 

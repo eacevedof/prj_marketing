@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Restrict;
 use App\Services\AppService;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 use App\Traits\SessionTrait;
 
 final class ModulesService extends AppService
@@ -12,7 +12,7 @@ final class ModulesService extends AppService
 
     public function __construct()
     {
-        $this->permissions = $this->_get_auth()->get_user()[KeyType::AUTH_USER_PERMISSIONS] ?? [];
+        $this->permissions = $this->_get_auth()->get_user()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
         $this->_load_modules();
         $this->_sessioninit();
     }

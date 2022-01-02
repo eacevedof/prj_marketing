@@ -7,7 +7,7 @@ use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 
 final class LoginService extends AppService
 {
@@ -43,10 +43,10 @@ final class LoginService extends AppService
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exeption(__("Unauthorized"));
 
-        $aruser[KeyType::AUTH_USER_PERMISSIONS] = $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
-        $this->session->add(KeyType::AUTH_USER, $aruser);
-        $this->session->add(KeyType::LANG, $lang = ($aruser["e_language"] ?? "en"));
-        //$this->session->add(KeyType::AUTH_USER_PERMISSIONS, $permissions);
+        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $permissions = $this->permissionrepo->get_by_user($aruser["id"]);
+        $this->session->add(SessionType::AUTH_USER, $aruser);
+        $this->session->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"));
+        //$this->session->add(SessionType::AUTH_USER_PERMISSIONS, $permissions);
 
         return [
             "lang" => $lang

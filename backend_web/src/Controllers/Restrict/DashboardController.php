@@ -9,7 +9,7 @@
  */
 namespace App\Controllers\Restrict;
 
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
 
@@ -22,7 +22,7 @@ final class DashboardController extends RestrictController
 
         $service = SF::get_callable("Restrict\Modules");
         $this
-            ->add_var(KeyType::PAGE_TITLE, __("Dashboard"))
+            ->add_var(SessionType::PAGE_TITLE, __("Dashboard"))
             ->add_var("modules", $service())
         ;
 

@@ -5,7 +5,7 @@ use App\Models\Base\UserModel;
 use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 use App\Factories\ModelFactory;
 use App\Traits\RequestTrait;
 use App\Enums\ExceptionType;

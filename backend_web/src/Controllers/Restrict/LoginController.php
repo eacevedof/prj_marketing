@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\KeyType;
+use App\Enums\SessionType;
 use App\Enums\ExceptionType;
 use App\Services\Restrict\PicklistService;
 use App\Factories\ServiceFactory as SF;
@@ -18,8 +18,8 @@ final class LoginController extends RestrictController
     public function index(): void
     {
         $this
-            ->add_var(KeyType::PAGE_TITLE, __("LOGIN"))
-            ->add_var(KeyType::KEY_CSRF, $this->csrf->get_token());
+            ->add_var(SessionType::PAGE_TITLE, __("LOGIN"))
+            ->add_var(SessionType::KEY_CSRF, $this->csrf->get_token());
 
         $this->render();
     }
