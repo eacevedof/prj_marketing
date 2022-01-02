@@ -6,7 +6,6 @@ use App\Services\AppService;
 use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
-use App\Factories\ServiceFactory as SF;
 use App\Repositories\Base\UserPermissionsRepository;
 
 use TheFramework\Components\Session\ComponentEncdecrypt;
@@ -30,7 +29,7 @@ final class LoginService extends AppService
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
-        $this->preferencesrepo = RF::get("Base/UserPreferences");
+        $this->prefrepo = RF::get("Base/UserPreferences");
     }
 
     public function in(): array
@@ -54,7 +53,7 @@ final class LoginService extends AppService
             ->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"))
         ;
 
-        $prefs = $this->preferencesrepo->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
+        $prefs = $this->prefrepo->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
         $prefs = $prefs[0]["pref_value"] ?? "/restrict";
         //$this->session->add(SessionType::AUTH_USER_PERMISSIONS, $permissions);
 
