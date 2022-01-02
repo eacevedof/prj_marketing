@@ -2,18 +2,15 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Repositories\ExampleRepository 
- * @file ExampleRepository.php v1.0.0
+ * @name App\Repositories\Base\UserPermissionsRepository
+ * @file UserPermissionsRepository.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
 namespace App\Repositories\Base;
 
-use App\Models\Base\UserModel;
-use App\Models\Base\UserPermissionsModel;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
-use App\Factories\ModelFactory as MF;
 
 final class UserPermissionsRepository extends AppRepository
 {
