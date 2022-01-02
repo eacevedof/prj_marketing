@@ -18,11 +18,11 @@ final class ErrorsController extends OpenController
 {
     public function index(): void
     {
-        $sPath = realpath(__DIR__."/../routes/routes.php");
-        $arRutas = include $sPath;
+        $pathroute = realpath(__DIR__."/../routes/routes.php");
+        $routes = include $pathroute;
         s("<pre>");
-        foreach($arRutas as $arRuta)
-            s("<a href=\"{$arRuta["url"]}\" target=\"_blank\">{$arRuta["url"]}</a><br/>");
+        foreach($routes as $route)
+            s("<a href=\"{$route["url"]}\" target=\"_blank\">{$route["url"]}</a><br/>");
     }
 
     public function error_404(): void
