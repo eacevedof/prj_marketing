@@ -103,7 +103,7 @@ final class UsersInsertService extends AppService
         $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
         $insert["description"] = $insert["fullname"];
         $insert["uuid"] = uniqid();
-        $this->model->add_sysinsert($insert,$this->user["id"]);
+        $this->model->add_sysinsert($insert, $this->user["id"]);
 
         $id = $this->repository->insert($insert);
         return [
