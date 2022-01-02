@@ -47,9 +47,9 @@ abstract class AppService
         if(!$config) $this->_exeption("Domain {$this->get_env("APP_DOMAIN")} is not authorized");
 
         $encdec = new ComponentEncdecrypt(1);
-        $encdec->set_sslmethod($config["sslenc_method"]??"");
-        $encdec->set_sslkey($config["sslenc_key"]??"");
-        $encdec->set_sslsalt($config["sslsalt"]??"");
+        $encdec->set_sslmethod($config["sslenc_method"] ?? "");
+        $encdec->set_sslkey($config["sslenc_key"] ?? "");
+        $encdec->set_sslsalt($config["sslsalt"] ?? "");
         return $encdec;
     }
 
