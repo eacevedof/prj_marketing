@@ -7,15 +7,14 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
-namespace App\Controllers;
+namespace App\Controllers\Open;
 
 use App\Components\Kafka\ProducerComponent;
 use App\Enums\ResponseType;
 use App\Traits\ResponseTrait;
 
-final class NotFoundController extends AppController
+final class NotFoundController extends OpenController
 {
-    use ResponseTrait;
 
     public function index()
     {

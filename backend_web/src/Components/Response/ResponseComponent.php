@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Components\Response;
-use App\Enums\ResponseType;
 use TheFramework\Helpers\HelperJson;
 
 final class ResponseComponent
@@ -12,6 +11,12 @@ final class ResponseComponent
     public function json(): HelperJson
     {
         return new HelperJson();
+    }
+
+    public function add_header(string $key, string $value=""): self
+    {
+        $this->headers[] = "$key: $value";
+        return $this;
     }
 
 }
