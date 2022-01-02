@@ -8,6 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
+use App\Enums\PreferenceType;
 use App\Enums\SessionType;
 use App\Enums\ExceptionType;
 use App\Services\Restrict\PicklistService;
@@ -40,7 +41,8 @@ final class LoginController extends RestrictController
             $this->_get_json()
                 ->set_payload([
                     "message"=>__("auth ok"),
-                    "lang" => $result["lang"]
+                    "lang" => $result["lang"],
+                    PreferenceType::URL_DEFAULT_MODULE => $result[PreferenceType::URL_DEFAULT_MODULE]
                 ])->show();
         }
         catch (\Exception $e)

@@ -4,7 +4,6 @@ import get_cssrules from "/assets/js/common/cssrules.js"
 import set_cookie from "/assets/js/common/cookie.js"
 
 const URL = "/login/access"
-const URL_ON_ACCESS = "/restrict/users"
 
 export class FormLogin extends LitElement {
 
@@ -23,8 +22,8 @@ export class FormLogin extends LitElement {
 
   constructor() {
     super()
-    this.email = "adm@adm.com"
-    this.password = "adm"
+    this.email = "eaf@eaf.com"
+    this.password = "eaf"
     this.issending = false
     this.btnsend = "Enviar"
   }
@@ -61,7 +60,7 @@ export class FormLogin extends LitElement {
       html: "...redirigiendo al panel de control",
     })
 
-    setTimeout(() => window.location = URL_ON_ACCESS, 1000)
+    setTimeout(() => window.location = response.url_default_module, 1000)
   }//submit
 
   render() {
