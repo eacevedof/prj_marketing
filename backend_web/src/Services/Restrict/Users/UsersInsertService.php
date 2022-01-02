@@ -1,21 +1,21 @@
 <?php
 namespace App\Services\Restrict\Users;
-use App\Factories\RepositoryFactory;
+
+use App\Services\AppService;
+use App\Traits\RequestTrait;
+use App\Factories\RepositoryFactory as RF;
+use App\Factories\ServiceFactory as  SF;
+use App\Factories\ModelFactory as MF;
 use App\Factories\Specific\ValidatorFactory as VF;
 use App\Models\Base\UserModel;
-use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
-use App\Traits\SessionTrait;
-use App\Enums\SessionType;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Factories\ModelFactory;
-use App\Traits\RequestTrait;
+
 use App\Enums\ExceptionType;
 use App\Models\FieldsValidator;
 
 final class UsersInsertService extends AppService
 {
-    use SessionTrait;
     use RequestTrait;
 
     private array $user;
@@ -27,10 +27,10 @@ final class UsersInsertService extends AppService
     public function __construct(array $input)
     {
         $this->input = $input;
-        $this->model = ModelFactory::get("Base/User");
+        $this->model = MF::get("Base/User");
         $this->validator = VF::get($this->input, $this->model);
-        $this->repository = RepositoryFactory::get("Base/UserRepository");
-        $this->user = $this->_sessioninit()->get(SessionType::AUTH_USER);
+        $this->repository = RF::get("Base/UserRepository");
+        $this->user = SF::get("Auth/Auth")->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
