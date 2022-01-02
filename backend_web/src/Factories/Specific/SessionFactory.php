@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\Factories;
+namespace App\Factories\Specific;
 
 use App\Components\Session\SessionComponent;
 

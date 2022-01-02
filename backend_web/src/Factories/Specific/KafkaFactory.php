@@ -7,7 +7,7 @@
  * @date 25-06-2021 19:50 SPAIN
  * @observations
  */
-namespace App\Factories;
+namespace App\Factories\Specific;
 
 use App\Components\Kafka\ConsumerComponent;
 use App\Components\Kafka\ProducerComponent;

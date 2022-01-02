@@ -2,12 +2,12 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Factories\ValidatorFactory 
+ * @name App\Factories\Specific\ValidatorFactory
  * @file ValidatorFactory.php v1.0.0
  * @date 20-11-2021 00:50 SPAIN
  * @observations
  */
-namespace App\Factories;
+namespace App\Factories\Specific;
 
 use App\Models\AppModel;
 use App\Models\FieldsValidator;
@@ -18,4 +18,5 @@ final class ValidatorFactory
     {
         return new FieldsValidator($request, $model);
     }
-}//ServiceFactory
+
+}//ValidatorFactory
