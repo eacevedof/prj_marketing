@@ -128,7 +128,7 @@ function __(string $msgid): string
     return $msgchanged;
 }
 
-use \App\Factories\KafkaFactory;
+use \App\Factories\Specific\KafkaFactory;
 
 function get_log_producer(): \App\Components\Kafka\ProducerComponent
 {
