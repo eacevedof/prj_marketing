@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Restrict\Users;
 
+use App\Enums\PreferenceType;
+use App\Enums\UrlType;
 use App\Services\AppService;
 use App\Traits\RequestTrait;
 use App\Factories\RepositoryFactory as RF;
@@ -29,7 +31,8 @@ final class UsersInsertService extends AppService
         $this->input = $input;
         $this->model = MF::get("Base/User");
         $this->validator = VF::get($this->input, $this->model);
-        $this->repository = RF::get("Base/UserRepository");
+        $this->repository = RF::get("Base/User");
+        $this->preferences = RF::get("Base/UserPreferences");
         $this->user = SF::get("Auth/Auth")->get_user();
         $this->encdec = $this->_get_encdec();
     }
@@ -106,6 +109,10 @@ final class UsersInsertService extends AppService
         $this->model->add_sysinsert($insert, $this->user["id"]);
 
         $id = $this->repository->insert($insert);
+        $this->preferences->insert([
+            PreferenceType::URL_DEFAULT_MODULE => "/restrict"
+        ]);
+
         return [
             "id" => $id,
             "uuid" => $insert["uuid"]
