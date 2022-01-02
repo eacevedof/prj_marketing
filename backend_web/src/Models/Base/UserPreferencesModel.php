@@ -18,8 +18,8 @@ final class UserPreferencesModel extends AppModel
         $this->fields = [
             "id" => "id",
             "id_user" => "id_user",
-            "key" => "key",
-            "value" => "value"
+            "pref_key" => "pref_key",
+            "pref_value" => "pref_value"
         ];
     }
 
