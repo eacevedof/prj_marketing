@@ -38,7 +38,7 @@ final class RequestComponent
 
     public function is_postm() { return $this->get_method()==="post";}
 
-    public function get_header($key=null)
+    public function get_header($key=null): ?string
     {
         $all = getallheaders();
         if(!$key) return $all;
@@ -46,5 +46,17 @@ final class RequestComponent
             if(strtolower($k) === strtolower($key))
                 return $v;
         return null;
+    }
+
+    public function get_referer(): ?string
+    {
+        return $_SERVER["HTTP_REFERER"] ?? null;
+    }
+
+    public function is_json(): bool
+    {
+        $accept = $this->get_header("accept");
+        $accept == strtolower($accept);
+        return strstr($accept,"application/json");
     }
 }
