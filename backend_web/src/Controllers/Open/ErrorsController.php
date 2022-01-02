@@ -32,8 +32,10 @@ final class ErrorsController extends OpenController
         $contenttype = $this->request->get_header("Accept");
         if (strstr($contenttype, "text/html"))
             $this->set_layout("error/error")
-                ->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"))
-                ->add_var("h1", __("Unauthorized"))
+                ->set_template("error/404")
+                ->add_var(KeyType::PAGE_TITLE, __("Content not found"))
+                ->add_var("h1", __("Content not found"))
+                ->add_var("urlback",$_SERVER["HTTP_REFERER"] ?? "/")
                 ->render();
         else
             $this->_get_json()->set_code(ResponseType::NOT_FOUND)->set_error("Resource not found");
