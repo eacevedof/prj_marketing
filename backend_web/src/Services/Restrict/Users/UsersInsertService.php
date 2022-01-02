@@ -2,7 +2,6 @@
 namespace App\Services\Restrict\Users;
 
 use App\Enums\PreferenceType;
-use App\Enums\UrlType;
 use App\Services\AppService;
 use App\Traits\RequestTrait;
 use App\Factories\RepositoryFactory as RF;
