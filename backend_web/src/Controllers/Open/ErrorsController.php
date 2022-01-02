@@ -27,8 +27,6 @@ final class ErrorsController extends OpenController
 
     public function error_404(): void
     {
-        //(new ProducerComponent())->send(date("Y-m-d: H:i:s")." lalo","nada");
-        $this->logerr($_SERVER["REQUEST_URI"],"error-404");
         $contenttype = $this->request->get_header("Accept");
         if (strstr($contenttype, "text/html"))
             $this->set_layout("error/error")
@@ -38,17 +36,21 @@ final class ErrorsController extends OpenController
                 ->add_var("urlback",$_SERVER["HTTP_REFERER"] ?? "/")
                 ->render();
         else
-            $this->_get_json()->set_code(ResponseType::NOT_FOUND)->set_error("Resource not found");
+            $this->_get_json()->set_code(ResponseType::NOT_FOUND)->set_error(__("Content not found"));
     }
 
     public function forbidden(): void
     {
-        $this->set_layout("error/error")
-            ->add_var(KeyType::PAGE_TITLE, __("Forbidden - 403"))
-            ->add_var("h1", __("Unauthorized"))
-        ;
-
-        $this->render([],"error/403");
+        $contenttype = $this->request->get_header("Accept");
+        if (strstr($contenttype, "text/html"))
+            $this->set_layout("error/error")
+                ->set_template("error/403")
+                ->add_var(KeyType::PAGE_TITLE, __("Forbidden"))
+                ->add_var("h1", __("Forbidden"))
+                ->add_var("urlback",$_SERVER["HTTP_REFERER"] ?? "/")
+                ->render();
+        else
+            $this->_get_json()->set_code(ResponseType::FORBIDDEN)->set_error(__("Forbidden"));
     }
 
 }//ErrorsController
