@@ -12,12 +12,14 @@ use App\Enums\PolicyType;
 use App\Enums\ExceptionType;
 use App\Enums\KeyType;
 use App\Enums\ProfileType;
+use App\Enums\ResponseType;
 use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
 use App\Services\Restrict\Users\UsersDeleteService;
 use App\Services\Restrict\Users\UsersInfoService;
 use App\Services\Restrict\Users\UsersUpdateService;
+use App\Traits\ResponseTrait;
 use TheFramework\Helpers\HelperJson;
 
 final class UsersController extends RestrictController
@@ -51,7 +53,12 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->response->location(UrlType::FORBIDDEN);
 
-        $accept = $this->request->get_header("accept");
+        if (!$this->request->is_json())
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("only accept json is allowed")])
+                ->show();
+
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->request->get_get());
         try {
             $result = $search();
