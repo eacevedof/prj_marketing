@@ -8,9 +8,9 @@
 <link href="/themes/valex/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 <link href="/themes/valex/assets/plugins/datatable/css/buttons.bootstrap5.min.css" rel="stylesheet">
 <link href="/themes/valex/assets/plugins/datatable/responsive.bootstrap5.css" rel="stylesheet" />
-<link href="/themes/valex/assets/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="/themes/valex/assets/plugins/datatable/responsive.dataTables.min.css" rel="stylesheet">
-<link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
+<link href="/themes/valex/assets/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/themes/valex/assets/plugins/datatable/responsive.dataTables.min.css" rel="stylesheet" />
+<link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet" />
 
 <script src="/themes/valex/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
 <script src="/themes/valex/assets/plugins/datatable/datatables.min.js"></script>
@@ -27,30 +27,32 @@
 <div class="row row-sm">
   <div class="col-xl-12">
     <div class="card">
+
       <div class="card-header pb-0">
         <div class="d-flex justify-content-between">
           <h4 class="card-title mg-b-0"><?=$h1?></h4>
           <i class="mdi mdi-dots-horizontal text-gray"></i>
         </div>
       </div>
+
       <div class="card-body">
         <div class="table-responsive" id="div-table-datatable">
-            <table id="table-datatable" class="table text-md-nowrap table-striped">
-                <thead>
-                    <tr>
-                        <?= $dthelp->get_ths() ?>
-                    </tr>
-                    <tr row="search" class="hidden">
-                        <?= $dthelp->get_search_tds() ?>
-                    </tr>
-                </thead>
-                <tbody approle="tbody"></tbody>
-                <tfoot>
-                    <tr>
-                        <?= $dthelp->get_tf() ?>
-                    </tr>
-                </tfoot>
-            </table>
+          <table id="table-datatable" class="table text-md-nowrap table-striped">
+            <thead>
+              <tr>
+                <?= $dthelp->get_ths() ?>
+              </tr>
+              <tr row="search" class="hidden">
+                <?= $dthelp->get_search_tds() ?>
+              </tr>
+            </thead>
+            <tbody approle="tbody"></tbody>
+            <tfoot>
+              <tr>
+                <?= $dthelp->get_tf() ?>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </div>
     </div>

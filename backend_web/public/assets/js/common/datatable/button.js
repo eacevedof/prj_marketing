@@ -15,11 +15,18 @@ const _toggle_filters = () => {
 }
 
 const rowbuttons_listeners = ()=> {
+  console.log("row-buttons-listeners")
   const urlmodule = _$table.getAttribute("urlmodule")
+
   let _rowbtns = _$table.querySelectorAll(`[btnid="rowbtn-show"]`)
+  console.log("BUTTONS",_rowbtns)
+
   Array.from(_rowbtns).forEach($btn => $btn.addEventListener("click", async (e) => {
+    alert("xx")
+    console.log("some-button", $btn)
     spinner.render()
     const btn = e.currentTarget
+    console.log("BTN", btn)
     const uuid = btn.getAttribute("uuid")
     const URL_INFO = urlmodule.concat(`/info/${uuid}`)
     const r = await reqtxt.get(URL_INFO)
