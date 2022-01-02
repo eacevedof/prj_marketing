@@ -114,8 +114,9 @@ final class UsersInsertService extends AppService
             "pref_key" => PreferenceType::URL_DEFAULT_MODULE,
             "pref_value" => "/restrict"
         ];
+
         $this->model->add_sysinsert($prefs, $this->user["id"]);
-        $this->preferences->insert($insert);
+        $this->preferences->insert($prefs);
 
         return [
             "id" => $id,
