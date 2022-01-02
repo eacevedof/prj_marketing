@@ -18,7 +18,7 @@ final class DashboardController extends RestrictController
     public function index(): void
     {
         if(!$this->authuser)
-            $this->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::FORBIDDEN);
 
         $service = SF::get_callable("Restrict\Modules");
         $this

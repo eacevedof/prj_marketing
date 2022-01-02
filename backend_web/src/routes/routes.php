@@ -55,5 +55,5 @@ return [
 
 //resto de rutas    
     ["url"=>"https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"],
-    ["url"=>"/404","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"]
+    ["url"=>"/404","controller"=>"App\Controllers\Open\NotFoundController","method"=>"error_404"]
 ];

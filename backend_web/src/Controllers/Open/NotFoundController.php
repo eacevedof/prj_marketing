@@ -11,7 +11,7 @@ namespace App\Controllers\Open;
 
 use App\Components\Kafka\ProducerComponent;
 use App\Enums\ResponseType;
-use App\Traits\ResponseTrait;
+
 
 final class NotFoundController extends OpenController
 {
