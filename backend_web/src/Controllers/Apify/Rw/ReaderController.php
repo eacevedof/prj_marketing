@@ -9,7 +9,7 @@
  */
 namespace App\Controllers\Apify\Rw;
 
-use TheFramework\Helpers\HelperJson;
+use App\Enums\ResponseType;
 use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Rw\ReaderService;
 use App\Factories\EncryptFactory;
@@ -33,7 +33,7 @@ final class ReaderController extends ApifyController
         $this->logd($iNumrows,"NUM_ROWS");
 
         if($oServ->is_error()) 
-            $this->_get_json()->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
+            $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
                     set_message("database error")->
                     show(1);
@@ -56,7 +56,7 @@ final class ReaderController extends ApifyController
 
         $arJson = $oServ->read_raw($sSQL);
         if($oServ->is_error()) 
-            $this->_get_json()->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
+            $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
                     set_message("database error")->
                     show(1);
