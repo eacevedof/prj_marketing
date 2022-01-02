@@ -20,6 +20,4 @@ final class UserPreferencesRepository extends AppRepository
         $this->table = "base_user_preferences";
     }
 
-
-
 }//UserPreferencesRepository
