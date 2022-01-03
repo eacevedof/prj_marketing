@@ -119,7 +119,8 @@ const dt_render = (options) => {
     },
 
     drawCallback: on_everydraw
-  }
+
+  }//dtconfig
 
   dttable = $(tablesel).DataTable(dtconfig)
   dttable
@@ -132,8 +133,15 @@ const dt_render = (options) => {
     })
     .on("responsive-resize", function (e, dttable, columns) {
       const count = columns.reduce( (a, b) => b === false ? a+1 : a, 0)
-      dtbutton($table, dttable).rowbuttons_listeners()
+      //console.log("dttable",dttable, "table",$table)
     })
+    .on("responsive-display", function ( e, datatable, row, showHide, update ) {
+      //alert("on hiddenbuttons")
+      console.log( 'Details for row '+row.index()+' '+(showHide ? 'shown' : 'hidden') );
+      //tengo que ser capaz de copiar los listeners de los botones originales
+      //dtbutton($table, dttable).rowbuttons_listeners()
+      setTimeout(()=>dtbutton($table, dttable).rowbuttons_listeners(),250)
+    });
 
 }//dt_render
 
