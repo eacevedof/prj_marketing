@@ -130,6 +130,10 @@ const dt_render = (options) => {
     .on("order.dt", function() {
       if (is_rendered) add_page_to_url(1, 3)
     })
+    .on("responsive-resize", function (e, dttable, columns) {
+      const count = columns.reduce( (a, b) => b === false ? a+1 : a, 0)
+      dtbutton($table, dttable).rowbuttons_listeners()
+    })
 
 }//dt_render
 
