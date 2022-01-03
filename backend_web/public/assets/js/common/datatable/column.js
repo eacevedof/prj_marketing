@@ -79,7 +79,7 @@ const _get_rowbtns_value = (v, t, row) => {
     }
   })
   let final = rowbtns.map(objbtn => objbtn.render(v, t, row))
-  return final.concat(_extrowbtns.map(render => render(v, t, row))).join("&nbsp;")
+  return "<div approle='btns'>"+final.concat(_extrowbtns.map(render => render(v, t, row))).join("&nbsp;")+"</div>"
 }
 
 //en dttable.js => columnDefs: dtcolumn($table).get_columns(),

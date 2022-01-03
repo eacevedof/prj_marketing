@@ -16,13 +16,74 @@ const _toggle_filters = () => {
 
 const _get_row_buttons = btntag => {
   let buttons = _$table.querySelectorAll(`[btnid="rowbtn-${btntag}"]`)
-  return Array.from(buttons).filter($btn => !$btn.getAttribute("clk")).map($btn => {
-    $btn.setAttribute("clk","1")
-    return $btn
-  })
+  return Array.from(buttons)
+}
+
+const _on_show = async function(btn, urlmodule){
+  spinner.render()
+  const uuid = btn.getAttribute("uuid")
+  const URL_INFO = urlmodule.concat(`/info/${uuid}`)
+  const r = await reqtxt.get(URL_INFO)
+  spinner.remove()
+  if (r.errors)
+    return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
+  window.modalraw.opts({
+    bgclick: false,
+    body: r,
+  }).show()
+}
+
+const _on_edit = async function(btn, urlmodule){
+  spinner.render()
+  const uuid = btn.getAttribute("uuid")
+  const URL_EDIT = urlmodule.concat(`/edit/${uuid}`)
+  const r = await reqtxt.get(URL_EDIT)
+  spinner.remove()
+  if (r.errors)
+    return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
+  window.modalraw.opts({
+    bgclick: false,
+    body: r,
+  }).show()
+}
+
+const _on_del = function (btn) {
+  const uuid = btn.getAttribute("uuid")
+  rowswal(_$table, _dttable).on_delete(uuid)
+}
+
+const _on_undel = function (btn) {
+  const uuid = btn.getAttribute("uuid")
+  rowswal(_$table, _dttable).on_undelete(uuid)
 }
 
 const rowbuttons_listeners = ()=> {
+  const urlmodule = _$table.getAttribute("urlmodule")
+  const wrapbtns = _$table.querySelectorAll(`[approle="btns"]`)
+  wrapbtns.forEach($div => $div.addEventListener("click", (e) => {
+    const $any = e.target
+    let $btn = null
+    if ($any.tagName.toLowerCase()==="i")
+      $btn = $any.parentNode
+
+    if ($any.tagName.toLowerCase()==="button")
+      $btn = $any
+
+    if (!$btn) return
+
+    const btnid = $btn.getAttribute("btnid")
+    switch (btnid) {
+      case "rowbtn-show": _on_show($btn, urlmodule); break;
+      case "rowbtn-edit": _on_edit($btn, urlmodule); break;
+      case "rowbtn-del": _on_del($btn); break;
+      case "rowbtn-undel": _on_undel($btn); break;
+    }
+
+  }))
+}
+
+
+const _rowbuttons_listeners = ()=> {
   const urlmodule = _$table.getAttribute("urlmodule")
 
   let _rowbtns = _get_row_buttons("show")
