@@ -16,24 +16,20 @@ const _toggle_filters = () => {
 
 const _get_row_buttons = btntag => {
   let buttons = _$table.querySelectorAll(`[btnid="rowbtn-${btntag}"]`)
-  return  Array.from(buttons).filter($btn => !$btn.getAttribute("clk"))
+  return Array.from(buttons).filter($btn => !$btn.getAttribute("clk")).map($btn => {
+    $btn.setAttribute("clk","1")
+    return $btn
+  })
 }
 
 const rowbuttons_listeners = ()=> {
-  console.log("row-buttons-listeners")
-  alert("1")
   const urlmodule = _$table.getAttribute("urlmodule")
 
   let _rowbtns = _get_row_buttons("show")
   console.log("_rowbutns", _rowbtns)
-  _rowbtns.map($btn => {
-    $btn.setAttribute("clk","1")
-    return $btn
-  })
-  .forEach($btn => $btn.addEventListener("click", async (e) => {
+  _rowbtns.forEach($btn => $btn.addEventListener("click", async (e) => {
     spinner.render()
     const btn = e.currentTarget
-    console.log("BTN", btn)
     const uuid = btn.getAttribute("uuid")
     const URL_INFO = urlmodule.concat(`/info/${uuid}`)
     const r = await reqtxt.get(URL_INFO)
@@ -47,11 +43,7 @@ const rowbuttons_listeners = ()=> {
   }))//end foreach show
 
   _rowbtns = _get_row_buttons("edit")
-  _rowbtns.map($btn => {
-    $btn.setAttribute("clk","1")
-    return $btn
-  })
-  .forEach($btn => $btn.addEventListener("click", async (e) => {
+  _rowbtns.forEach($btn => $btn.addEventListener("click", async (e) => {
     spinner.render()
     const btn = e.currentTarget
     const uuid = btn.getAttribute("uuid")
@@ -67,25 +59,14 @@ const rowbuttons_listeners = ()=> {
   }))//end foreach edit
 
   _rowbtns = _get_row_buttons("del")
-  _rowbtns.map($btn => {
-    $btn.setAttribute("clk","1")
-    return $btn
-  })
-  .map($btn => {
-    $btn.setAttribute("clk","1")
-    return $btn
-  }).forEach($btn => $btn.addEventListener("click", (e) => {
+  _rowbtns.forEach($btn => $btn.addEventListener("click", (e) => {
     const btn = e.currentTarget
     const uuid = btn.getAttribute("uuid")
     rowswal(_$table, _dttable).on_delete(uuid)
   }))//end foreach del
 
   _rowbtns = _get_row_buttons("undel")
-  _rowbtns.map($btn => {
-    $btn.setAttribute("clk","1")
-    return $btn
-  })
-  .forEach($btn => $btn.addEventListener("click", (e) => {
+  _rowbtns.forEach($btn => $btn.addEventListener("click", (e) => {
     const btn = e.currentTarget
     const uuid = btn.getAttribute("uuid")
     rowswal(_$table, _dttable).on_undelete(uuid)
