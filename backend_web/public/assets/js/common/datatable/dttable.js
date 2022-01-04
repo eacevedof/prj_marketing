@@ -135,7 +135,7 @@ const dt_render = (options) => {
       const count = columns.reduce( (a, b) => b === false ? a+1 : a, 0)
       //console.log("dttable",dttable, "table",$table)
     })
-    .on("responsive-display", function ( e, datatable, row, showHide, update ) {
+    .on("responsive-display", function ( e, dttable, row) {
       //cuando hay columnas ocultas se crea un boton de despliegue. Este al ser presionado genera una nueva
       //fila con la clase child y ahi copia le contenido oculto (en mi caso los botones)
       //alert("on hiddenbuttons")
