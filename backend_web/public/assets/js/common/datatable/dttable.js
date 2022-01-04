@@ -136,11 +136,18 @@ const dt_render = (options) => {
       //console.log("dttable",dttable, "table",$table)
     })
     .on("responsive-display", function ( e, datatable, row, showHide, update ) {
+      //cuando hay columnas ocultas se crea un boton de despliegue. Este al ser presionado genera una nueva
+      //fila con la clase child y ahi copia le contenido oculto (en mi caso los botones)
       //alert("on hiddenbuttons")
-      console.log( 'Details for row '+row.index()+' '+(showHide ? 'shown' : 'hidden') );
+      //e.target es <table ...> </table>
+      let tr = dttable.row(row.index()).node()
+      //console.log("row",tr)
+      tr = tr.nextSibling
+      //console.log("row",tr)
+      if (tr.classList.contains("child"))
+        dtbutton($table, dttable).rowbuttons_listeners(tr)
+      //console.log( 'Details for row '+row.index()+' '+(showHide ? 'shown' : 'hidden') );
       //tengo que ser capaz de copiar los listeners de los botones originales
-      //dtbutton($table, dttable).rowbuttons_listeners()
-      setTimeout(()=>dtbutton($table, dttable).rowbuttons_listeners(),250)
     });
 
 }//dt_render
