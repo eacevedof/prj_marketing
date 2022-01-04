@@ -1,5 +1,6 @@
 ### To-Do
 - al borrar que no cambie update-date
+- sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
 - pestaña permisos en usuarios
   - edicion
 - accion restore
