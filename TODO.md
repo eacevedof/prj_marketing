@@ -1,8 +1,9 @@
 ### To-Do
-- loading en ajax
-- responsive modal
+- al borrar que no cambie update-date
 - pestaña permisos en usuarios
+  - edicion
 - accion restore
+  - falta estilos en boton
 - accion clone
 - generador de módulo .py
 - queries de _array con or de id_owner=-1
