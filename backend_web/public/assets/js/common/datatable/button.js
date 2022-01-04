@@ -7,6 +7,7 @@ import rowswal from "./rowswal.js"
 
 let _$table = null,
     _dttable = null,
+    _urlmodule = "",
     _topbtns = []
 
 const _toggle_filters = () => {
@@ -14,15 +15,10 @@ const _toggle_filters = () => {
   if ($row) $row.classList.toggle("hidden")
 }
 
-const _get_row_buttons = btntag => {
-  let buttons = _$table.querySelectorAll(`[btnid="rowbtn-${btntag}"]`)
-  return Array.from(buttons)
-}
-
-const _on_show = async function(btn, urlmodule){
+const _on_show = async function(btn){
   spinner.render()
   const uuid = btn.getAttribute("uuid")
-  const URL_INFO = urlmodule.concat(`/info/${uuid}`)
+  const URL_INFO = _urlmodule.concat(`/info/${uuid}`)
   const r = await reqtxt.get(URL_INFO)
   spinner.remove()
   if (r.errors)
@@ -33,10 +29,10 @@ const _on_show = async function(btn, urlmodule){
   }).show()
 }
 
-const _on_edit = async function(btn, urlmodule){
+const _on_edit = async function(btn){
   spinner.render()
   const uuid = btn.getAttribute("uuid")
-  const URL_EDIT = urlmodule.concat(`/edit/${uuid}`)
+  const URL_EDIT = _urlmodule.concat(`/edit/${uuid}`)
   const r = await reqtxt.get(URL_EDIT)
   spinner.remove()
   if (r.errors)
@@ -57,83 +53,32 @@ const _on_undel = function (btn) {
   rowswal(_$table, _dttable).on_undelete(uuid)
 }
 
-const rowbuttons_listeners = ()=> {
-  const urlmodule = _$table.getAttribute("urlmodule")
-  const wrapbtns = _$table.querySelectorAll(`[approle="btns"]`)
-  wrapbtns.forEach($div => $div.addEventListener("click", (e) => {
-    const $any = e.target
-    let $btn = null
-    if ($any.tagName.toLowerCase()==="i")
-      $btn = $any.parentNode
+const on_wrapbtns_click = (e) => {
+  const $any = e.target
+  let $btn = null
+  if ($any.tagName.toLowerCase()==="i")
+    $btn = $any.parentNode
 
-    if ($any.tagName.toLowerCase()==="button")
-      $btn = $any
+  if ($any.tagName.toLowerCase()==="button")
+    $btn = $any
 
-    if (!$btn) return
+  if (!$btn) return
 
-    const btnid = $btn.getAttribute("btnid")
-    switch (btnid) {
-      case "rowbtn-show": _on_show($btn, urlmodule); break;
-      case "rowbtn-edit": _on_edit($btn, urlmodule); break;
-      case "rowbtn-del": _on_del($btn); break;
-      case "rowbtn-undel": _on_undel($btn); break;
-    }
-
-  }))
+  const btnid = $btn.getAttribute("btnid")
+  switch (btnid) {
+    case "rowbtn-show": _on_show($btn); break;
+    case "rowbtn-edit": _on_edit($btn); break;
+    case "rowbtn-del": _on_del($btn); break;
+    case "rowbtn-undel": _on_undel($btn); break;
+  }
 }
 
-
-const _rowbuttons_listeners = ()=> {
-  const urlmodule = _$table.getAttribute("urlmodule")
-
-  let _rowbtns = _get_row_buttons("show")
-  console.log("_rowbutns", _rowbtns)
-  _rowbtns.forEach($btn => $btn.addEventListener("click", async (e) => {
-    spinner.render()
-    const btn = e.currentTarget
-    const uuid = btn.getAttribute("uuid")
-    const URL_INFO = urlmodule.concat(`/info/${uuid}`)
-    const r = await reqtxt.get(URL_INFO)
-    spinner.remove()
-    if (r.errors)
-      return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
-    window.modalraw.opts({
-      bgclick: false,
-      body: r,
-    }).show()
-  }))//end foreach show
-
-  _rowbtns = _get_row_buttons("edit")
-  _rowbtns.forEach($btn => $btn.addEventListener("click", async (e) => {
-    spinner.render()
-    const btn = e.currentTarget
-    const uuid = btn.getAttribute("uuid")
-    const URL_EDIT = urlmodule.concat(`/edit/${uuid}`)
-    const r = await reqtxt.get(URL_EDIT)
-    spinner.remove()
-    if (r.errors)
-      return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
-    window.modalraw.opts({
-      bgclick: false,
-      body: r,
-    }).show()
-  }))//end foreach edit
-
-  _rowbtns = _get_row_buttons("del")
-  _rowbtns.forEach($btn => $btn.addEventListener("click", (e) => {
-    const btn = e.currentTarget
-    const uuid = btn.getAttribute("uuid")
-    rowswal(_$table, _dttable).on_delete(uuid)
-  }))//end foreach del
-
-  _rowbtns = _get_row_buttons("undel")
-  _rowbtns.forEach($btn => $btn.addEventListener("click", (e) => {
-    const btn = e.currentTarget
-    const uuid = btn.getAttribute("uuid")
-    rowswal(_$table, _dttable).on_undelete(uuid)
-  }))//end foreach undel
-
-}//_rowbtns listeners
+const rowbuttons_listeners = $row => {
+  const wrapbtns = $row
+                  ? $row.querySelectorAll(`[approle="btns"]`)
+                  : _$table.querySelectorAll(`[approle="btns"]`)
+  wrapbtns.forEach($div => $div.addEventListener("click", on_wrapbtns_click))
+}
 
 const get_topbuttons = () => {
 
@@ -216,6 +161,7 @@ const _in_modal = async url => {
 export default ($table, dttable) => {
   _$table = $table
   _dttable = dttable
+  _urlmodule = _$table.getAttribute("urlmodule") ?? ""
 
   return {
     rowbuttons_listeners,
