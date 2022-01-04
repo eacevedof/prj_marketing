@@ -22,21 +22,21 @@ final class RequestComponent
         return $_GET[$sKey] ?? null;
     }
 
-    public function is_post($sKey=null){ return $sKey ? isset($_POST[$sKey]) : count($_POST)>0;}
+    public function is_post($sKey=null): bool { return $sKey ? isset($_POST[$sKey]) : count($_POST)>0;}
 
-    public function is_get($sKey=null){ return $sKey ? isset($_GET[$sKey]) : count($_GET)>0;}
+    public function is_get($sKey=null): bool { return $sKey ? isset($_GET[$sKey]) : count($_GET)>0;}
 
-    public function is_file($sKey=null){ return $sKey ? isset($_FILES[$sKey]) : count($_FILES)>0;}
+    public function is_file($sKey=null): bool { return $sKey ? isset($_FILES[$sKey]) : count($_FILES)>0;}
 
     public function get_method(){ return strtolower($_SERVER["REQUEST_METHOD"]) ?? "";}
 
-    public function is_put() { return $this->get_method()==="put";}
+    public function is_put(): bool { return $this->get_method()==="put";}
 
-    public function is_patch() { return $this->get_method()==="patch";}
+    public function is_patch(): bool { return $this->get_method()==="patch";}
 
-    public function is_delete() { return $this->get_method()==="delete";}
+    public function is_delete(): bool { return $this->get_method()==="delete";}
 
-    public function is_postm() { return $this->get_method()==="post";}
+    public function is_postm(): bool { return $this->get_method()==="post";}
 
     public function get_header($key=null): ?string
     {
