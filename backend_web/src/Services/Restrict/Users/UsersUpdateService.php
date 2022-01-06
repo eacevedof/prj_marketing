@@ -17,7 +17,7 @@ final class UsersUpdateService extends AppService
 {
     use RequestTrait;
 
-    private array $user;
+    private array $authuser;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repository;
     private FieldsValidator $validator;
@@ -30,7 +30,7 @@ final class UsersUpdateService extends AppService
         $this->validator = VF::get($this->input, $this->model);
         $this->repository = RF::get("Base/UserRepository");
         $this->repository->set_model($this->model);
-        $this->user = SF::get_auth()->get_user();
+        $this->authuser = SF::get_auth()->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
@@ -107,7 +107,7 @@ final class UsersUpdateService extends AppService
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $update["description"] = $update["fullname"];
-        $this->model->add_sysupdate($update, $this->user["id"]);
+        $this->model->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repository->update($update);
         return [
