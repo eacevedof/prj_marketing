@@ -1,23 +1,21 @@
 <?php
-
 namespace App\Services\Auth;
+
 use App\Services\AppService;
-use App\Traits\SessionTrait;
+use App\Factories\ServiceFactory as SF;
 use TheFramework\Components\Formatter\ComponentMoment;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Enums\SessionType;
 
 final class CsrfService extends AppService
 {
-    use SessionTrait;
-
+    private ?array $autuser;
     private ComponentEncdecrypt $encdec;
     private const VALID_TIME_IN_MINS = 45;
 
     public function __construct()
     {
         $this->encdec = $this->_get_encdec();
-        $this->_load_session();
+        $this->autuser = SF::get_auth()->get_user();
     }
 
     private function _get_domain(): string {return $_SERVER["REMOTE_HOST"] ?? "";}
@@ -28,8 +26,6 @@ final class CsrfService extends AppService
 
     public function get_token(): string
     {
-        $user = $this->session->get(SessionType::AUTH_USER);
-
         $arpackage = [
             "salt0"    => date("Y-m-d H:i:s"),
             "domain"   => $this->_get_domain(),
@@ -40,7 +36,7 @@ final class CsrfService extends AppService
             "salt3"    => rand(7,11),
             "username" => $user["email"] ?? "",
             "salt4"    => rand(11,15),
-            "password" => md5($user["secret"] ?? ""),
+            "password" => md5($this->autuser["secret"] ?? ""),
             "salt5"    => rand(15,19),
             "today"    => date("Y-m-d H:i:s"),
         ];
@@ -65,7 +61,7 @@ final class CsrfService extends AppService
 
         if($useragent !== md5($this->_get_user_agent())) $this->_exception(__("Invalid csrf {0}",4));
 
-        $user = $this->session->get(SessionType::AUTH_USER);
+        $user = $this->autuser;
         $md5pass = $user["secret"] ?? "";
         $md5pass = md5($md5pass);
         if($md5pass!==$password) $this->_exception(__("Invalid csrf {0}",5));
