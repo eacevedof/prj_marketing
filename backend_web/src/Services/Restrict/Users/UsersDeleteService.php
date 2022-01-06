@@ -1,5 +1,6 @@
 <?php
 namespace App\Services\Restrict\Users;
+
 use App\Services\AppService;
 use App\Factories\ModelFactory as MF;
 use App\Factories\ServiceFactory as SF;

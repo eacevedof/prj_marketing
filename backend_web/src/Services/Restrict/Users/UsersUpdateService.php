@@ -1,5 +1,6 @@
 <?php
 namespace App\Services\Restrict\Users;
+
 use App\Services\AppService;
 use App\Traits\RequestTrait;
 use App\Factories\ModelFactory as MF;
@@ -18,17 +19,17 @@ final class UsersUpdateService extends AppService
 
     private array $authuser;
     private ComponentEncdecrypt $encdec;
-    private UserRepository $repository;
+    private UserRepository $repouser;
     private FieldsValidator $validator;
-    private UserModel $model;
+    private UserModel $modeluser;
 
     public function __construct(array $input)
     {
         $this->input = $input;
-        $this->model = MF::get("Base/User");
-        $this->validator = VF::get($this->input, $this->model);
-        $this->repository = RF::get("Base/UserRepository");
-        $this->repository->set_model($this->model);
+        $this->modeluser = MF::get("Base/User");
+        $this->validator = VF::get($this->input, $this->modeluser);
+        $this->repouser = RF::get("Base/UserRepository");
+        $this->repouser->set_model($this->modeluser);
         $this->authuser = SF::get_auth()->get_user();
         $this->encdec = $this->_get_encdec();
     }
@@ -41,14 +42,14 @@ final class UsersUpdateService extends AppService
 
     private function _add_rules(): FieldsValidator
     {
-        $repository = $this->repository;
+        $repouser = $this->repouser;
         $this->validator
-            ->add_rule("email", "email", function ($data) use ($repository){
+            ->add_rule("email", "email", function ($data) use ($repouser){
                 $email = trim($data["value"]);
                 $uuid = $data["data"]["uuid"] ?? "";
-                $id = $repository->get_id_by($uuid);
+                $id = $repouser->get_id_by($uuid);
                 if (!$id) return __("User with code {0} not found",$uuid);
-                $idemail = $repository->email_exists($email);
+                $idemail = $repouser->email_exists($email);
                 if (!$idemail || ($id == $idemail)) return false;
                 return __("This email already exists");
             })
@@ -101,14 +102,14 @@ final class UsersUpdateService extends AppService
             $this->_exception(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
         }
 
-        $update = $this->model->map_request($update);
+        $update = $this->modeluser->map_request($update);
         if(!$update["secret"]) unset($update["secret"]);
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $update["description"] = $update["fullname"];
-        $this->model->add_sysupdate($update, $this->authuser["id"]);
+        $this->modeluser->add_sysupdate($update, $this->authuser["id"]);
 
-        $affected = $this->repository->update($update);
+        $affected = $this->repouser->update($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]

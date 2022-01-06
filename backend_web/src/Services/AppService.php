@@ -6,15 +6,12 @@
  * @file AppService.php 1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
- * @tags: #apify
  */
 namespace App\Services;
 
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Auth\AuthService;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use \Exception;
@@ -43,7 +40,7 @@ abstract class AppService
     protected function _get_encdec(): ComponentEncdecrypt
     {
         $pathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
-        $config = (new ComponentConfig($pathfile))->get_node("domain",$this->get_env("APP_DOMAIN"));
+        $config = (new ComponentConfig($pathfile))->get_node("domain", $this->get_env("APP_DOMAIN"));
         if(!$config) $this->_exception("Domain {$this->get_env("APP_DOMAIN")} is not authorized");
 
         $encdec = new ComponentEncdecrypt(1);
