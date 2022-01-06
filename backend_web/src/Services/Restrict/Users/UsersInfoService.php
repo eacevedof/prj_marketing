@@ -15,7 +15,7 @@ final class UsersInfoService extends AppService
     {
         $this->input = $input[0] ?? "";
         if(!$this->input) {
-            $this->_exeption(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
         }
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
@@ -25,7 +25,7 @@ final class UsersInfoService extends AppService
     {
         $user = $this->repository->get_info($this->input);
         if(!$user)
-            $this->_exeption(
+            $this->_exception(
                 __("User with code {0} not found",$this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
@@ -41,7 +41,7 @@ final class UsersInfoService extends AppService
     {
         $user = $this->repository->get_info($this->input);
         if(!$user)
-            $this->_exeption(
+            $this->_exception(
                 __("User with code {0} not found",$this->input),
                 ExceptionType::CODE_NOT_FOUND
             );

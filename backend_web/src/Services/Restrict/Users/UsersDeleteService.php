@@ -18,9 +18,9 @@ final class UsersDeleteService extends AppService
     {
         $this->input = $input;
         if(!$this->input["uuid"])
-            $this->_exeption(__("Empty required data"),ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("Empty required data"),ExceptionType::CODE_BAD_REQUEST);
         $this->authuser = SF::get_auth()->get_user();
-        if(!$this->authuser) $this->_exeption(__("No authenticated user"), ExceptionType::CODE_FORBIDDEN);
+        if(!$this->authuser) $this->_exception(__("No authenticated user"), ExceptionType::CODE_FORBIDDEN);
         $this->modeluser = MF::get("Base/User");
         $this->repouser = RF::get("Base/UserRepository")->set_model($this->modeluser);
     }
@@ -29,11 +29,11 @@ final class UsersDeleteService extends AppService
     {
         $update = $this->input;
         if (!$id = $this->repouser->get_id_by($update["uuid"]))
-            $this->_exeption(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
+            $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
         if (!$this->modeluser->do_match_keys($update))
-            $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $updatedate = $this->repouser->get_sysupdate($update);
         $this->modeluser->add_sysdelete($update, $updatedate, $this->authuser["id"]);
@@ -49,18 +49,14 @@ final class UsersDeleteService extends AppService
     {
         $update = $this->input;
         if (!$id = $this->repouser->get_id_by($update["uuid"]))
-            $this->_exeption(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
+            $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
         if (!$this->modeluser->do_match_keys($update))
-            $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $row = $this->repouser->get_by_id($id);
         $iduser = $this->authuser["id"];
-        $now = date("Y-m-d H:i:s");
-        $crucsv = $row["cru_csvnote"] ?? "";
-        $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($iduser:$now)|".$crucsv;
-        $crucsv = substr($crucsv,0,499);
 
         $update = [
             "uuid" => $update["uuid"],
@@ -68,7 +64,7 @@ final class UsersDeleteService extends AppService
             "delete_date" => null,
             "delete_user" => null,
             "delete_platform" => null,
-            "cru_csvnote" => $crucsv,
+            "cru_csvnote" => $this->repouser->get_csvcru($row, $id),
         ];
 
         $this->modeluser->add_sysupdate($update, $iduser);

@@ -156,7 +156,7 @@ final class UserRepository extends AppRepository
 
         $sql = $crud->get_selectfrom();
         $r = $this->db->query($sql);
-        if ($this->db->is_error()) $this->_exeption(__("Data source error"));
+        if ($this->db->is_error()) $this->_exception(__("Data source error"));
 
         return [
             "result" => $r,

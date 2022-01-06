@@ -35,16 +35,16 @@ final class LoginService extends AppService
     public function in(): array
     {
         $email = $this->input["email"];
-        if (!$email) $this->_exeption(__("Empty email"));
+        if (!$email) $this->_exception(__("Empty email"));
 
         $password = $this->input["password"];
-        if (!$password) $this->_exeption(__("Empty password"));
+        if (!$password) $this->_exception(__("Empty password"));
 
         $aruser = $this->repository->get_by_email($email);
-        if (!($secret = ($aruser["secret"] ?? ""))) $this->_exeption(__("Invalid data"));
+        if (!($secret = ($aruser["secret"] ?? ""))) $this->_exception(__("Invalid data"));
 
         if (!$this->encdec->check_hashpassword($password, $secret))
-            $this->_exeption(__("Unauthorized"));
+            $this->_exception(__("Unauthorized"));
 
         $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->permissionrepo->get_by_user($iduser = $aruser["id"]);
 

@@ -8,16 +8,17 @@
  * @observations
  */
 namespace App\Repositories;
-use App\Enums\ExceptionType;
+use App\Traits\LogTrait;
 use App\Models\AppModel;
 use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\ComponentMysql;
-use App\Traits\LogTrait;
+use App\Enums\ExceptionType;
 use \Exception;
 
 abstract class AppRepository
 {
     use LogTrait;
+    
     protected AppModel $model;
     protected ComponentMysql $db;
     protected string $table;
@@ -32,7 +33,7 @@ abstract class AppRepository
         return new ComponentCrud();
     }
 
-    protected function _exeption(string $message, int $code=500): void
+    protected function _exception(string $message, int $code=500): void
     {
         $this->logerr($message,"app-service.exception");
         throw new Exception($message, $code);
@@ -93,7 +94,7 @@ abstract class AppRepository
 
         if($crud->is_error()) {
             $this->logerr($request,"insert");
-            $this->_exeption(__("Error inserting data"));
+            $this->_exception(__("Error inserting data"));
         }
 
         return $this->db->get_lastid();
@@ -102,11 +103,11 @@ abstract class AppRepository
     public function update(array $request): int
     {
         $pks = $this->_get_pks($request);
-        if(!$pks) $this->_exeption(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $mutables = $this->_get_no_pks($request);
         if(!$mutables)
-            $this->_exeption(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+            $this->_exception(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $crud = $this->_get_crud()
             ->set_comment("app.update(request)")
@@ -126,7 +127,7 @@ abstract class AppRepository
 
         if($crud->is_error()) {
             $this->logerr($request,"update");
-            $this->_exeption(__("Error updating data"));
+            $this->_exception(__("Error updating data"));
         }
 
         return $this->db->get_affected();
@@ -135,7 +136,7 @@ abstract class AppRepository
     public function delete(array $request): int
     {
         $pks = $this->_get_pks($request);
-        if(!$pks) $this->_exeption(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $crud = $this->_get_crud()
             ->set_comment("app.delete(request)")
@@ -151,7 +152,7 @@ abstract class AppRepository
 
         if($crud->is_error()) {
             $this->logerr($request,"delete");
-            $this->_exeption(__("Error deleting data"));
+            $this->_exception(__("Error deleting data"));
         }
 
         return $this->db->get_affected();
@@ -191,5 +192,13 @@ abstract class AppRepository
     public function get_lastinsert_id()
     {
         return $this->db->get_lastid();
+    }
+
+    public function get_csvcru(array $row, string $iduser): string
+    {
+        $now = date("Y-m-d H:i:s");
+        $crucsv = $row["cru_csvnote"] ?? "";
+        $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($iduser:$now)|".$crucsv;
+        return substr($crucsv,0,499);
     }
 }//AppRepository

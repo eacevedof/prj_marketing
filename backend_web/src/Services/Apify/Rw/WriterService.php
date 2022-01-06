@@ -36,11 +36,11 @@ final class WriterService extends AppService
 
     public function __construct(string $idcontext="", string $dbalias="", string $table="")
     {
-        if(!$idcontext) $this->_exeption("no context provided");
-        if(!$dbalias) $this->_exeption("no db-alias received");
+        if(!$idcontext) $this->_exception("no context provided");
+        if(!$dbalias) $this->_exception("no db-alias received");
         
         //table puede ir vacio si se desea ejecutar una consulta en crudo (raw)
-        //if(!$table) $this->_exeption("no table received");
+        //if(!$table) $this->_exception("no table received");
 
         $this->idcontext = $idcontext;
 
@@ -83,7 +83,7 @@ final class WriterService extends AppService
 
     private function _get_insert_sql(array $qparams): string
     {
-        if(!isset($qparams["fields"])) $this->_exeption("_get_insert_sql no fields");
+        if(!isset($qparams["fields"])) $this->_exception("_get_insert_sql no fields");
 
         $oCrud = new ComponentCrud();
         $oCrud->set_comment(str_replace(["*","/",],"",trim($qparams["comment"])));
@@ -105,7 +105,7 @@ final class WriterService extends AppService
 
     private function _get_update_sql(array $qparams): string
     {
-        if(!isset($qparams["fields"])) $this->_exeption("_get_update_sql no fields");
+        if(!isset($qparams["fields"])) $this->_exception("_get_update_sql no fields");
         //if(!isset($qparams["pks"])) return $this->add_error("_get_update_sql no pks");
 
         $oCrud = new ComponentCrud();
@@ -234,10 +234,10 @@ final class WriterService extends AppService
 
     public function write(array $qparams)
     {
-        if(!is_array($qparams)) $this->_exeption("write params is not an array");
-        if(!$this->maintable = $qparams["table"]) $this->_exeption("missing write table");
+        if(!is_array($qparams)) $this->_exception("write params is not an array");
+        if(!$this->maintable = $qparams["table"]) $this->_exception("missing write table");
         if(!in_array($action = $this->action, self::ACTIONS))
-            $this->_exeption("action {$action} not recognized!");
+            $this->_exception("action {$action} not recognized!");
 
         $sql = $this->_get_parsed_tosql($qparams, $this->action);
         return $this->write_raw($sql);

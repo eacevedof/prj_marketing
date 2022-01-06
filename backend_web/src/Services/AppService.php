@@ -34,7 +34,7 @@ abstract class AppService
 
     protected $input;
 
-    protected function _exeption(string $message, int $code=500): void
+    protected function _exception(string $message, int $code=500): void
     {
         $this->logerr($message,"app-service.exception");
         throw new Exception($message, $code);
@@ -44,7 +44,7 @@ abstract class AppService
     {
         $pathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
         $config = (new ComponentConfig($pathfile))->get_node("domain",$this->get_env("APP_DOMAIN"));
-        if(!$config) $this->_exeption("Domain {$this->get_env("APP_DOMAIN")} is not authorized");
+        if(!$config) $this->_exception("Domain {$this->get_env("APP_DOMAIN")} is not authorized");
 
         $encdec = new ComponentEncdecrypt(1);
         $encdec->set_sslmethod($config["sslenc_method"] ?? "");
