@@ -2,8 +2,6 @@
 namespace App\Services\Restrict\Users;
 
 use App\Services\AppService;
-use App\Traits\SessionTrait;
-use App\Traits\CookieTrait;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\HelperFactory as HF;
@@ -16,10 +14,6 @@ use App\Enums\PolicyType;
 
 final class UsersSearchService extends AppService
 {
-    use SessionTrait;
-    use CookieTrait;
-
-    private string $domain;
     private AuthService $auth;
     private UserRepository $repouser;
     private UserPermissionsRepository $repopermission;
