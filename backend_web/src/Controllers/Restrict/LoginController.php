@@ -13,6 +13,7 @@ use App\Enums\PreferenceType;
 use App\Enums\SessionType;
 use App\Enums\ExceptionType;
 use App\Enums\UrlType;
+use \Exception;
 
 final class LoginController extends RestrictController
 {
@@ -44,7 +45,7 @@ final class LoginController extends RestrictController
                     PreferenceType::URL_DEFAULT_MODULE => $result[PreferenceType::URL_DEFAULT_MODULE]
                 ])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.access");
             $this->_get_json()
