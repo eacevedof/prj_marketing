@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Services\Auth;
+
 use App\Factories\Specific\SessionFactory as SF;
 use App\Enums\SessionType;
 use App\Enums\ProfileType;
