@@ -17,7 +17,7 @@ final class UsersDeleteService extends AppService
     public function __construct(array $input)
     {
         $this->input = $input;
-        if(!$this->input["uuid"]) 
+        if(!$this->input["uuid"])
             $this->_exeption(__("Empty required data"),ExceptionType::CODE_BAD_REQUEST);
         $this->authuser = SF::get_auth()->get_user();
         if(!$this->authuser) $this->_exeption(__("No authenticated user"), ExceptionType::CODE_FORBIDDEN);
