@@ -31,7 +31,7 @@ final class UsersInsertService extends AppService
         $this->modeluser = MF::get("Base/User");
         $this->validator = VF::get($this->input, $this->modeluser);
         $this->repouser = RF::get("Base/User");
-        $this->preferences = RF::get("Base/UserPreferences");
+        $this->repoprefs = RF::get("Base/UserPreferences");
         $this->authuser = SF::get_auth()->get_user();
         $this->encdec = $this->_get_encdec();
     }
@@ -115,7 +115,7 @@ final class UsersInsertService extends AppService
         ];
 
         $this->modeluser->add_sysinsert($prefs, $this->authuser["id"]);
-        $this->preferences->insert($prefs);
+        $this->repoprefs->insert($prefs);
 
         return [
             "id" => $id,
