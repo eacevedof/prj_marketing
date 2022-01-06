@@ -42,6 +42,7 @@ final class UsersUpdateService extends AppService
         if ($auth->is_sysadmin()) {
             //puede hacer crud de is_business_owner y business_manager
         }
+
         if ($auth->is_business_owner()) {
             //puede actualizar su perfil y el de sus bm
         }
