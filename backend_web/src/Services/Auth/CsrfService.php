@@ -20,9 +20,9 @@ final class CsrfService extends AppService
         $this->_sessioninit();
     }
 
-    private function _get_domain(): string {return $_SERVER["REMOTE_HOST"]  ?? "";}
+    private function _get_domain(): string {return $_SERVER["REMOTE_HOST"] ?? "";}
 
-    private function _get_remote_ip(): string {return $_SERVER["REMOTE_ADDR"]  ?? "127.0.0.1";}
+    private function _get_remote_ip(): string {return $_SERVER["REMOTE_ADDR"] ?? "127.0.0.1";}
 
     private function _get_user_agent(): string {return $_SERVER["HTTP_USER_AGENT"] ?? ":)"; }
 

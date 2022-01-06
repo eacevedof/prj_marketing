@@ -30,7 +30,7 @@ final class UsersUpdateService extends AppService
         $this->validator = VF::get($this->input, $this->model);
         $this->repository = RF::get("Base/UserRepository");
         $this->repository->set_model($this->model);
-        $this->user = SF::get("Auth/Auth")->get_user();
+        $this->user = SF::get_auth()->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
