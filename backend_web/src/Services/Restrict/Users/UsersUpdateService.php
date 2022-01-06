@@ -34,6 +34,23 @@ final class UsersUpdateService extends AppService
         $this->encdec = $this->_get_encdec();
     }
 
+    private function _check_permission(): void
+    {
+        $auth = SF::get_auth();
+        if ($auth->is_root()) return;
+
+        if ($auth->is_sysadmin()) {
+            //puede hacer crud de is_business_owner y business_manager
+        }
+        if ($auth->is_business_owner()) {
+            //puede actualizar su perfil y el de sus bm
+        }
+
+        if ($auth->is_business_manager()) {
+            //solo puede editar su permiso
+        }
+    }
+
     private function _skip_validation(): self
     {
         $this->validator->add_skip("password2");
