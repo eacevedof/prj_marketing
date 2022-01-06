@@ -14,9 +14,9 @@ final class UsersInfoService extends AppService
     public function __construct(array $input)
     {
         $this->input = $input[0] ?? "";
-        if(!$this->input) {
+        if(!$this->input)
             $this->_exception(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
-        }
+
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
     }
