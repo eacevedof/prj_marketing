@@ -8,9 +8,9 @@
  * @observations
  */
 namespace App\Traits;
+use App\Factories\ComponentFactory as CF;
 use App\Components\Request\RequestComponent;
 use App\Enums\RequestType;
-use App\Factories\ComponentFactory;
 
 trait RequestTrait
 {
@@ -19,7 +19,7 @@ trait RequestTrait
     protected function _load_request(): RequestComponent
     {
         if(!$this->request)
-            $this->request = ComponentFactory::get("Request/Request");
+            $this->request = CF::get("Request/Request");
         return $this->request;
     }
 
