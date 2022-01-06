@@ -8,20 +8,19 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
+use App\Factories\ServiceFactory as SF;
 use App\Enums\PreferenceType;
 use App\Enums\SessionType;
 use App\Enums\ExceptionType;
-use App\Services\Restrict\PicklistService;
-use App\Factories\ServiceFactory as SF;
+use App\Enums\UrlType;
 
 final class LoginController extends RestrictController
 {
     public function index(): void
     {
         $this
-            ->add_var(SessionType::PAGE_TITLE, __("LOGIN"))
+            ->add_var(SessionType::PAGE_TITLE, __("Login"))
             ->add_var(SessionType::KEY_CSRF, $this->csrf->get_token());
-
         $this->render();
     }
 
@@ -53,5 +52,11 @@ final class LoginController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
+    }
+
+    public function logout(): void
+    {
+        $this->_load_session()->destroy();
+        $this->response->location(UrlType::ON_LOGOUT);
     }
 }//LoginController

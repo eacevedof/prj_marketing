@@ -15,11 +15,13 @@ use TheFramework\Helpers\HelperJson;
 
 trait ResponseTrait
 {
-    protected ResponseComponent $response;
+    protected ?ResponseComponent $response = null;
 
-    protected function _load_response(): void
+    protected function _load_response(): ResponseComponent
     {
-        $this->response = ComponentFactory::get("Response/Response");
+        if (!$this->response)
+            $this->response = ComponentFactory::get("Response/Response");
+        return $this->response;
     }
 
     protected function _get_json(): HelperJson

@@ -14,13 +14,13 @@ use App\Factories\Specific\SessionFactory as SsF;
 /**
  * Trait SessionTrait
  * @package App\Traits
- * this->session, _sessioninit()
+ * this->session, _load_session()
  */
 trait SessionTrait
 {
     private ?SessionComponent $session = null;
 
-    protected function _sessioninit(): SessionComponent
+    protected function _load_session(): SessionComponent
     {
         if(!$this->session) $this->session = SsF::get();
         return $this->session;
