@@ -9,8 +9,8 @@ use App\Enums\ExceptionType;
 
 final class UsersInfoService extends AppService
 {
-    private UserRepository $repository;
-    private UserPermissionsRepository $permissionrepo;
+    private UserRepository $repouser;
+    private UserPermissionsRepository $repopermission;
 
     public function __construct(array $input)
     {
@@ -18,20 +18,20 @@ final class UsersInfoService extends AppService
         if(!$this->input)
             $this->_exception(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
 
-        $this->repository = RF::get("Base/User");
-        $this->permissionrepo = RF::get("Base/UserPermissions");
+        $this->repouser = RF::get("Base/User");
+        $this->repopermission = RF::get("Base/UserPermissions");
     }
 
     public function __invoke(): array
     {
-        $user = $this->repository->get_info($this->input);
+        $user = $this->repouser->get_info($this->input);
         if(!$user)
             $this->_exception(
                 __("User with code {0} not found",$this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
 
-        $permissions = $this->permissionrepo->get_by_user($user["id"]);
+        $permissions = $this->repopermission->get_by_user($user["id"]);
         return [
             "user" => $user,
             "permissions" => $permissions
@@ -40,7 +40,7 @@ final class UsersInfoService extends AppService
 
     public function get_edit(): array
     {
-        $user = $this->repository->get_info($this->input);
+        $user = $this->repouser->get_info($this->input);
         if(!$user)
             $this->_exception(
                 __("User with code {0} not found",$this->input),
