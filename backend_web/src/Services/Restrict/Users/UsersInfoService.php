@@ -1,10 +1,11 @@
 <?php
 namespace App\Services\Restrict\Users;
-use App\Enums\ExceptionType;
-use App\Repositories\Base\UserPermissionsRepository;
+
 use App\Services\AppService;
-use App\Repositories\Base\UserRepository;
 use App\Factories\RepositoryFactory as RF;
+use App\Repositories\Base\UserPermissionsRepository;
+use App\Repositories\Base\UserRepository;
+use App\Enums\ExceptionType;
 
 final class UsersInfoService extends AppService
 {
