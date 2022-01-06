@@ -17,7 +17,6 @@ use App\Traits\ResponseTrait;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\CsrfService;
-use App\Enums\UrlType;
 
 abstract class RestrictController extends AppController
 {
@@ -45,12 +44,6 @@ abstract class RestrictController extends AppController
         $this->add_var("authuser", $this->authuser);
         $this->set_layout("restrict/restrict");
         $this->_add_topmenu();
-    }
-
-    public function logout(): void
-    {
-        $this->_sessioninit()->destroy();
-        $this->response->location(UrlType::ON_LOGOUT);
     }
 
     protected function _add_topmenu(): void

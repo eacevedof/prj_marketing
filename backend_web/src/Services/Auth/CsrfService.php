@@ -17,7 +17,7 @@ final class CsrfService extends AppService
     public function __construct()
     {
         $this->encdec = $this->_get_encdec();
-        $this->_sessioninit();
+        $this->_load_session();
     }
 
     private function _get_domain(): string {return $_SERVER["REMOTE_HOST"] ?? "";}

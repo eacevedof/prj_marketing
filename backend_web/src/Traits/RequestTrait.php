@@ -14,11 +14,13 @@ use App\Factories\ComponentFactory;
 
 trait RequestTrait
 {
-    protected RequestComponent $request;
+    protected ?RequestComponent $request = null;
 
-    protected function _load_request(): void
+    protected function _load_request(): RequestComponent
     {
-        $this->request = ComponentFactory::get("Request/Request");
+        if(!$this->request)
+            $this->request = ComponentFactory::get("Request/Request");
+        return $this->request;
     }
 
     private function _get_req_without_ops(array $request=[]): array
