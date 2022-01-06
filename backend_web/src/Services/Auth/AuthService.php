@@ -25,7 +25,6 @@ final class AuthService
         if(!self::$authuser) return false;
         if($this->is_root()) return true;
 
-        //$permissions = $this->session->get(SessionType::AUTH_USER_PERMISSIONS);
         $permissions = self::$authuser[SessionType::AUTH_USER_PERMISSIONS];
         return in_array($action, $permissions);
     }
