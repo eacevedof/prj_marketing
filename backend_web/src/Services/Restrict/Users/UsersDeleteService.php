@@ -1,21 +1,15 @@
 <?php
 namespace App\Services\Restrict\Users;
 use App\Services\AppService;
-use App\Traits\SessionTrait;
 use App\Factories\ModelFactory as MF;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Models\Base\UserModel;
 use App\Repositories\Base\UserRepository;
-
-use App\Traits\RequestTrait;
 use App\Enums\ExceptionType;
 
 final class UsersDeleteService extends AppService
 {
-    use SessionTrait;
-    use RequestTrait;
-
     private array $authuser;
     private UserRepository $repouser;
     private UserModel $modeluser;
