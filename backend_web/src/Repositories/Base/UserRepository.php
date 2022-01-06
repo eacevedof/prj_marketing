@@ -221,7 +221,7 @@ final class UserRepository extends AppRepository
             ->set_comment("user.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
-                "m.update_date", "m.update_user", "m.insert_date", "m.insert_user",
+                "m.update_date", "m.update_user", "m.insert_date", "m.insert_user", "m.delete_date", "m.delete_user",
                 "m.uuid","m.id, m.email, m.secret, m.fullname, m.address, m.birthdate",
                 "m.phone",
                 "m.id_profile","m.id_parent", "m.id_country", "m.id_language",
