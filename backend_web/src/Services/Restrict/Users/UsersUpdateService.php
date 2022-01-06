@@ -125,6 +125,7 @@ final class UsersUpdateService extends AppService
         }
 
         $update = $this->modeluser->map_request($update);
+        $this->_check_permission($update);
 
         if(!$update["secret"]) unset($update["secret"]);
         else
@@ -132,7 +133,6 @@ final class UsersUpdateService extends AppService
         $update["description"] = $update["fullname"];
         $this->modeluser->add_sysupdate($update, $this->authuser["id"]);
 
-        $this->_check_permission($update);
         $affected = $this->repouser->update($update);
         return [
             "affected" => $affected,
