@@ -10,9 +10,15 @@
 namespace App\Factories;
 
 use App\Services\AppService;
+use App\Services\Auth\AuthService;
 
 final class ServiceFactory
 {
+    public static function get_auth(): AuthService
+    {
+        return new AuthService();
+    }
+
     public static function get(string $service, array $params = []): ?AppService
     {
         $service = str_replace("/","\\",$service);

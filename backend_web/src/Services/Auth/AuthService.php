@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Services\Auth;
-use App\Services\AppService;
 use App\Factories\Specific\SessionFactory as SF;
 use App\Components\Session\SessionComponent;
-use App\Enums\ProfileType;
 use App\Enums\SessionType;
+use App\Enums\ProfileType;
 
-final class AuthService extends AppService
+final class AuthService
 {
     private SessionComponent $session;
     private static ?array $user = null;

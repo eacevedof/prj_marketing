@@ -13,11 +13,11 @@ use App\Controllers\AppController;
 use App\Traits\SessionTrait;
 use App\Traits\RequestTrait;
 use App\Traits\ViewTrait;
+use App\Traits\ResponseTrait;
 use App\Factories\ServiceFactory as SF;
 use App\Enums\UrlType;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\CsrfService;
-use App\Traits\ResponseTrait;
 
 abstract class RestrictController extends AppController
 {
@@ -26,19 +26,19 @@ abstract class RestrictController extends AppController
     use ViewTrait;
     use ResponseTrait;
 
-    protected CsrfService $csrf;
     protected AuthService $auth;
+    protected CsrfService $csrf;
     protected ?array $authuser;
 
     /**
-     * Builds request, response, auth, csrf, authuser, config-layout and toppmenu
+     * Builds request, response, auth, csrf, authuser, restrict-layout and toppmenu
      */
     public function __construct()
     {
         $this->_load_request();
         $this->_load_response();
 
-        $this->auth = SF::get("Auth\Auth");
+        $this->auth = SF::get_auth();
         $this->csrf = SF::get("Auth\Csrf");
         $this->authuser = $this->auth->get_user();
 

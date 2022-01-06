@@ -30,7 +30,7 @@ abstract class AppService
 
     protected function _get_auth(): ?AuthService
     {
-        if (!self::$auth) self::$auth = SF::get("Auth/Auth");
+        if (!self::$auth) self::$auth = SF::get_auth();
         return self::$auth;
     }
 
