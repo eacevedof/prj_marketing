@@ -19,20 +19,20 @@ final class UsersInsertService extends AppService
 {
     use RequestTrait;
 
-    private array $user;
+    private array $authuser;
     private ComponentEncdecrypt $encdec;
-    private UserRepository $repository;
+    private UserRepository $repouser;
     private FieldsValidator $validator;
-    private UserModel $model;
+    private UserModel $modeluser;
 
     public function __construct(array $input)
     {
         $this->input = $input;
-        $this->model = MF::get("Base/User");
-        $this->validator = VF::get($this->input, $this->model);
-        $this->repository = RF::get("Base/User");
+        $this->modeluser = MF::get("Base/User");
+        $this->validator = VF::get($this->input, $this->modeluser);
+        $this->repouser = RF::get("Base/User");
         $this->preferences = RF::get("Base/UserPreferences");
-        $this->user = SF::get_auth()->get_user();
+        $this->authuser = SF::get_auth()->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
@@ -46,10 +46,10 @@ final class UsersInsertService extends AppService
 
     private function _add_rules(): FieldsValidator
     {
-        $repository = $this->repository;
+        $repouser = $this->repouser;
         $this->validator
-            ->add_rule("email", "email", function ($data) use ($repository){
-                return $repository->email_exists($data["value"]) ? __("This email already exists"): false;
+            ->add_rule("email", "email", function ($data) use ($repouser){
+                return $repouser->email_exists($data["value"]) ? __("This email already exists"): false;
             })
             ->add_rule("email", "email", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
@@ -101,20 +101,20 @@ final class UsersInsertService extends AppService
             $this->_exception(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
         }
 
-        $insert = $this->model->map_request($insert);
+        $insert = $this->modeluser->map_request($insert);
         $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
         $insert["description"] = $insert["fullname"];
         $insert["uuid"] = uniqid();
-        $this->model->add_sysinsert($insert, $this->user["id"]);
+        $this->modeluser->add_sysinsert($insert, $this->authuser["id"]);
 
-        $id = $this->repository->insert($insert);
+        $id = $this->repouser->insert($insert);
         $prefs = [
             "id_user" => $id,
             "pref_key" => PreferenceType::URL_DEFAULT_MODULE,
             "pref_value" => "/restrict"
         ];
 
-        $this->model->add_sysinsert($prefs, $this->user["id"]);
+        $this->modeluser->add_sysinsert($prefs, $this->authuser["id"]);
         $this->preferences->insert($prefs);
 
         return [
