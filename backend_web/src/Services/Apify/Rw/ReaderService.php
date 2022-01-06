@@ -46,7 +46,7 @@ final class ReaderService extends AppService
     private function _get_parsed_tosql(array $qparams): string
     {
         if(!isset($qparams["fields"]) || !is_array($qparams["fields"]))
-            $this->_exeption("invalid or empty fields in read params");
+            $this->_exception("invalid or empty fields in read params");
 
         $crud = new ComponentCrud();
         if($qparams["comment"] ?? "") $crud->set_comment($qparams["comment"]);
@@ -112,8 +112,8 @@ final class ReaderService extends AppService
     
     public function get_read(array $qparams): array
     {
-        if(!is_array($qparams)) $this->_exeption("read params is not an array");
-        if(!$table = trim($qparams["table"])) $this->_exeption("missing read table");
+        if(!is_array($qparams)) $this->_exception("read params is not an array");
+        if(!$table = trim($qparams["table"])) $this->_exception("missing read table");
 
         $this->maintable = explode(" ", $table)[0];
         $this->cachettl = (int) $qparams["cache_time"] ?? 0;

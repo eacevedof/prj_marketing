@@ -94,11 +94,11 @@ final class UsersUpdateService extends AppService
     {
         $update = $this->_get_req_without_ops($this->input);
         if (!$update)
-            $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
-            $this->_exeption(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
         }
 
         $update = $this->model->map_request($update);
