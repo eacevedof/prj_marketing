@@ -15,9 +15,9 @@ use App\Traits\RequestTrait;
 use App\Traits\ViewTrait;
 use App\Traits\ResponseTrait;
 use App\Factories\ServiceFactory as SF;
-use App\Enums\UrlType;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\CsrfService;
+use App\Enums\UrlType;
 
 abstract class RestrictController extends AppController
 {
