@@ -12,6 +12,11 @@ use App\Factories\ComponentFactory as CF;
 use App\Components\Request\RequestComponent;
 use App\Enums\RequestType;
 
+/**
+ * Trait RequestTrait
+ * @package App\Traits
+ * $this->request, _load_request, _get_csrf, _get_req_without_ops
+ */
 trait RequestTrait
 {
     protected ?RequestComponent $request = null;
