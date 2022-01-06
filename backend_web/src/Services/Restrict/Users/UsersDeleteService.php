@@ -16,7 +16,7 @@ final class UsersDeleteService extends AppService
     use SessionTrait;
     use RequestTrait;
 
-    private array $user;
+    private array $authuser;
     private UserRepository $repouser;
     private UserModel $modeluser;
 
@@ -25,8 +25,8 @@ final class UsersDeleteService extends AppService
         $this->input = $input;
         if(!$this->input["uuid"]) 
             $this->_exeption(__("Empty required data"),ExceptionType::CODE_BAD_REQUEST);
-        $this->user = SF::get_auth()->get_user();
-        if(!$this->user) $this->_exeption(__("No authenticated user"), ExceptionType::CODE_FORBIDDEN);
+        $this->authuser = SF::get_auth()->get_user();
+        if(!$this->authuser) $this->_exeption(__("No authenticated user"), ExceptionType::CODE_FORBIDDEN);
         $this->modeluser = MF::get("Base/User");
         $this->repouser = RF::get("Base/UserRepository")->set_model($this->modeluser);
     }
@@ -42,7 +42,7 @@ final class UsersDeleteService extends AppService
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $updatedate = $this->repouser->get_sysupdate($update);
-        $this->modeluser->add_sysdelete($update, $updatedate, $this->user["id"]);
+        $this->modeluser->add_sysdelete($update, $updatedate, $this->authuser["id"]);
         $affected = $this->repouser->update($update);
         //$this->repouser->delete($update);
         return [
@@ -62,7 +62,8 @@ final class UsersDeleteService extends AppService
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $row = $this->repouser->get_by_id($id);
-        $iduser = $this->user["id"]; $now = date("Y-m-d H:i:s");
+        $iduser = $this->authuser["id"];
+        $now = date("Y-m-d H:i:s");
         $crucsv = $row["cru_csvnote"] ?? "";
         $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($iduser:$now)|".$crucsv;
         $crucsv = substr($crucsv,0,499);
@@ -75,6 +76,7 @@ final class UsersDeleteService extends AppService
             "delete_platform" => null,
             "cru_csvnote" => $crucsv,
         ];
+
         $this->modeluser->add_sysupdate($update, $iduser);
         $affected = $this->repouser->update($update);
 
