@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Restrict\Users;
 
+use App\Enums\ProfileType;
 use App\Services\AppService;
 use App\Traits\RequestTrait;
 use App\Factories\ModelFactory as MF;
@@ -34,22 +35,25 @@ final class UsersUpdateService extends AppService
         $this->encdec = $this->_get_encdec();
     }
 
-    private function _check_permission(): void
+    private function _check_permission(array $row): void
     {
         $auth = SF::get_auth();
-        if ($auth->is_root()) return;
+        $iduser = $this->repouser->get_id_by($row["uuid"]);
+        if ($auth->is_root() || (((int)$this->authuser["id"]) === $iduser)) return;
 
-        if ($auth->is_sysadmin()) {
-            //puede hacer crud de is_business_owner y business_manager
-        }
+        if ($auth->is_sysadmin()
+            && in_array($row["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
+        )
+            return;
 
-        if ($auth->is_business_owner()) {
-            //puede actualizar su perfil y el de sus bm
-        }
+        $idowner = $this->repouser->get_owner($iduser);
+        $idowner = $idowner["id"];
+        if ($auth->is_business_owner() && in_array($row["id_profile"], [ProfileType::BUSINESS_MANAGER]
+            && $this->authuser["id"] === $idowner)
+        )
+            return;
 
-        if ($auth->is_business_manager()) {
-            //solo puede editar su permiso
-        }
+        $this->_exception(__("You are not allowed to update this data"));
     }
 
     private function _skip_validation(): self
@@ -121,12 +125,14 @@ final class UsersUpdateService extends AppService
         }
 
         $update = $this->modeluser->map_request($update);
+
         if(!$update["secret"]) unset($update["secret"]);
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $update["description"] = $update["fullname"];
         $this->modeluser->add_sysupdate($update, $this->authuser["id"]);
 
+        $this->_check_permission($update);
         $affected = $this->repouser->update($update);
         return [
             "affected" => $affected,
