@@ -1,15 +1,15 @@
 <?php
 namespace App\Services\Restrict\Users;
-use App\Factories\RepositoryFactory;
-use App\Models\Base\UserModel;
 use App\Services\AppService;
-use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
-use App\Enums\SessionType;
-use App\Factories\ModelFactory;
+use App\Factories\ModelFactory as MF;
+use App\Factories\ServiceFactory as SF;
+use App\Factories\RepositoryFactory as RF;
+use App\Models\Base\UserModel;
+use App\Repositories\Base\UserRepository;
+
 use App\Traits\RequestTrait;
 use App\Enums\ExceptionType;
-
 
 final class UsersDeleteService extends AppService
 {
@@ -17,33 +17,34 @@ final class UsersDeleteService extends AppService
     use RequestTrait;
 
     private array $user;
-    private UserRepository $repository;
-    private UserModel $model;
+    private UserRepository $repouser;
+    private UserModel $modeluser;
 
     public function __construct(array $input)
     {
         $this->input = $input;
-        if(!$this->input["uuid"]) $this->_exeption(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
-        $this->model = ModelFactory::get("Base/User");
-        $this->repository = RepositoryFactory::get("Base/UserRepository")->set_model($this->model);
-        $this->user = $this->_get_auth()->get_user();
+        if(!$this->input["uuid"]) 
+            $this->_exeption(__("Empty required data"),ExceptionType::CODE_BAD_REQUEST);
+        $this->user = SF::get_auth()->get_user();
+        if(!$this->user) $this->_exeption(__("No authenticated user"), ExceptionType::CODE_FORBIDDEN);
+        $this->modeluser = MF::get("Base/User");
+        $this->repouser = RF::get("Base/UserRepository")->set_model($this->modeluser);
     }
 
     public function __invoke(): array
     {
         $update = $this->input;
-        if (!$id = $this->repository->get_id_by($update["uuid"]))
+        if (!$id = $this->repouser->get_id_by($update["uuid"]))
             $this->_exeption(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
-        if (!$this->model->do_match_keys($update))
+        if (!$this->modeluser->do_match_keys($update))
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        $updatedate = $this->repository->get_sysupdate($update);
-        $this->model->add_sysdelete($update, $updatedate, $this->user["id"]);
-        $affected = $this->repository->update($update);
-        //$this->repository->delete($update);
+        $updatedate = $this->repouser->get_sysupdate($update);
+        $this->modeluser->add_sysdelete($update, $updatedate, $this->user["id"]);
+        $affected = $this->repouser->update($update);
+        //$this->repouser->delete($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]
@@ -53,14 +54,14 @@ final class UsersDeleteService extends AppService
     public function undelete(): array
     {
         $update = $this->input;
-        if (!$id = $this->repository->get_id_by($update["uuid"]))
+        if (!$id = $this->repouser->get_id_by($update["uuid"]))
             $this->_exeption(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
-        if (!$this->model->do_match_keys($update))
+        if (!$this->modeluser->do_match_keys($update))
             $this->_exeption(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        $row = $this->repository->get_by_id($id);
+        $row = $this->repouser->get_by_id($id);
         $iduser = $this->user["id"]; $now = date("Y-m-d H:i:s");
         $crucsv = $row["cru_csvnote"] ?? "";
         $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($iduser:$now)|".$crucsv;
@@ -74,8 +75,8 @@ final class UsersDeleteService extends AppService
             "delete_platform" => null,
             "cru_csvnote" => $crucsv,
         ];
-        $this->model->add_sysupdate($update, $iduser);
-        $affected = $this->repository->update($update);
+        $this->modeluser->add_sysupdate($update, $iduser);
+        $affected = $this->repouser->update($update);
 
         return [
             "affected" => $affected,
