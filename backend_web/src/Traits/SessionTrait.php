@@ -11,6 +11,11 @@ namespace App\Traits;
 use App\Components\Session\SessionComponent;
 use App\Factories\Specific\SessionFactory as SsF;
 
+/**
+ * Trait SessionTrait
+ * @package App\Traits
+ * this->session, _sessioninit()
+ */
 trait SessionTrait
 {
     private ?SessionComponent $session = null;

@@ -11,6 +11,11 @@ namespace App\Traits;
 
 use TheFramework\Components\Session\ComponentCookie;
 
+/**
+ * Trait CookieTrait
+ * @package App\Traits
+ * this->cookie, _cookieinit()
+ */
 trait CookieTrait
 {
     private ?ComponentCookie $cookie = null;
@@ -21,4 +26,4 @@ trait CookieTrait
         return $this->cookie;
     }
 
-}//SessionTrait
+}//CookieTrait
