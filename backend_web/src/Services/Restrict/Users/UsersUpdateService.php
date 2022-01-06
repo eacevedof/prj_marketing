@@ -12,7 +12,6 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Models\FieldsValidator;
 use App\Enums\ExceptionType;
 
-
 final class UsersUpdateService extends AppService
 {
     use RequestTrait;
