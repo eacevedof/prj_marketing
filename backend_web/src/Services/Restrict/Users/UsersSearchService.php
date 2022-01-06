@@ -2,17 +2,17 @@
 namespace App\Services\Restrict\Users;
 
 use App\Services\AppService;
-use App\Services\Auth\AuthService;
+use App\Traits\SessionTrait;
+use App\Traits\CookieTrait;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\HelperFactory as HF;
 use App\Factories\ComponentFactory as CF;
-use App\Enums\PolicyType;
-use App\Helpers\Views\DatatableHelper;
+use App\Services\Auth\AuthService;
 use App\Repositories\Base\UserPermissionsRepository;
 use App\Repositories\Base\UserRepository;
-use App\Traits\SessionTrait;
-use App\Traits\CookieTrait;
+use App\Helpers\Views\DatatableHelper;
+use App\Enums\PolicyType;
 
 final class UsersSearchService extends AppService
 {
