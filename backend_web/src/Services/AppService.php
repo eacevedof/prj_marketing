@@ -19,20 +19,20 @@ use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use \Exception;
 
+/**
+ * Class AppService
+ * @package App\Services
+ * No constructor,
+ * ErrorTrait, LogTrait, EvnTrait, input,
+ * _exception, _get_encdec
+ */
 abstract class AppService
 {
     use ErrorTrait;
     use LogTrait;
     use EnvTrait;
 
-    private static ?AuthService $auth = null;
     protected $input;
-
-    protected function _get_auth(): ?AuthService
-    {
-        if (!self::$auth) self::$auth = SF::get_auth();
-        return self::$auth;
-    }
 
     protected function _exeption(string $message, int $code=500): void
     {

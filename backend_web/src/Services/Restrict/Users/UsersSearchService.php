@@ -1,15 +1,18 @@
 <?php
 namespace App\Services\Restrict\Users;
-use App\Enums\PolicyType;
+
+use App\Services\AppService;
+use App\Services\Auth\AuthService;
+use App\Factories\ServiceFactory as SF;
+use App\Factories\RepositoryFactory as RF;
+use App\Factories\HelperFactory as HF;
 use App\Factories\ComponentFactory as CF;
+use App\Enums\PolicyType;
 use App\Helpers\Views\DatatableHelper;
 use App\Repositories\Base\UserPermissionsRepository;
-use App\Services\AppService;
 use App\Repositories\Base\UserRepository;
 use App\Traits\SessionTrait;
 use App\Traits\CookieTrait;
-use App\Factories\RepositoryFactory as RF;
-use App\Factories\HelperFactory as HF;
 
 final class UsersSearchService extends AppService
 {
@@ -17,20 +20,22 @@ final class UsersSearchService extends AppService
     use CookieTrait;
 
     private string $domain;
-    private UserRepository $repository;
-    private UserPermissionsRepository $permissionrepo;
+    private AuthService $auth;
+    private UserRepository $repouser;
+    private UserPermissionsRepository $repopermission;
 
     public function __construct(array $input)
     {
         $this->input = $input;
-        $this->repository = RF::get("Base/User");
-        $this->permissionrepo = RF::get("Base/UserPermissions");
+        $this->auth = SF::get_auth();
+        $this->repouser = RF::get("Base/User");
+        $this->repopermission = RF::get("Base/UserPermissions");
     }
 
     public function __invoke(): array
     {
         $search = CF::get_datatable($this->input)->get_search();
-        $rows = $this->repository->set_auth($this->_get_auth())->search($search);
+        $rows = $this->repouser->set_auth($this->auth)->search($search);
         return $rows;
     }
 
@@ -38,7 +43,7 @@ final class UsersSearchService extends AppService
     {
         $dthelp = HF::get("Views/Datatable")->add_column("id")->is_visible(false);
 
-        if($this->_get_auth()->is_root())
+        if($this->auth->is_root())
             $dthelp
                 ->add_column("delete_date")->add_label(__("Deleted at"))
                 ->add_column("e_deletedby")->add_label(__("Deleted by"));
@@ -52,7 +57,7 @@ final class UsersSearchService extends AppService
             ->add_column("e_country")->add_label(__("Country"))
             ->add_column("e_language")->add_label(__("Language"));
 
-        if($this->_get_auth()->is_root())
+        if($this->auth->is_root())
             $dthelp->add_action("show")
                 ->add_action("add")
                 ->add_action("edit")
@@ -60,12 +65,12 @@ final class UsersSearchService extends AppService
                 ->add_action("undel")
             ;
 
-        if($this->_get_auth()->is_user_allowed(PolicyType::USERS_WRITE))
+        if($this->auth->is_user_allowed(PolicyType::USERS_WRITE))
             $dthelp->add_action("add")
                 ->add_action("edit")
                 ->add_action("del");
 
-        if($this->_get_auth()->is_user_allowed(PolicyType::USERS_READ))
+        if($this->auth->is_user_allowed(PolicyType::USERS_READ))
             $dthelp->add_action("show");
 
         return $dthelp;

@@ -1,20 +1,17 @@
 <?php
 namespace App\Services\Restrict;
-use App\Services\AppService;
+use App\Factories\ServiceFactory as SF;
 use App\Enums\SessionType;
-use App\Traits\SessionTrait;
 
-final class ModulesService extends AppService
+final class ModulesService
 {
-    use SessionTrait;
     private array $permissions;
     private array $modules;
 
     public function __construct()
     {
-        $this->permissions = $this->_get_auth()->get_user()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
+        $this->permissions = SF::get_auth()->get_user()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
         $this->_load_modules();
-        $this->_sessioninit();
     }
 
     private function _load_modules(): void
@@ -45,7 +42,7 @@ final class ModulesService extends AppService
                 ]
             ],
         ];;
-    }
+    }// _load_modules
 
     private function _has_policy(string $policy): bool
     {
