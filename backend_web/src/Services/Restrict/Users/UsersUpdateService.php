@@ -35,27 +35,6 @@ final class UsersUpdateService extends AppService
         $this->encdec = $this->_get_encdec();
     }
 
-    private function _check_permission(array $row): void
-    {
-        $auth = SF::get_auth();
-        $iduser = $this->repouser->get_id_by($row["uuid"]);
-        if ($auth->is_root() || (((int)$this->authuser["id"]) === $iduser)) return;
-
-        if ($auth->is_sysadmin()
-            && in_array($row["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
-        )
-            return;
-
-        $idowner = $this->repouser->get_owner($iduser);
-        $idowner = $idowner["id"];
-        if ($auth->is_business_owner() && in_array($row["id_profile"], [ProfileType::BUSINESS_MANAGER]
-            && $this->authuser["id"] === $idowner)
-        )
-            return;
-
-        $this->_exception(__("You are not allowed to update this data"));
-    }
-
     private function _skip_validation(): self
     {
         $this->validator->add_skip("password2");
@@ -125,7 +104,6 @@ final class UsersUpdateService extends AppService
         }
 
         $update = $this->modeluser->map_request($update);
-        $this->_check_permission($update);
 
         if(!$update["secret"]) unset($update["secret"]);
         else
