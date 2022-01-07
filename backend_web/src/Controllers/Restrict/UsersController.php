@@ -59,7 +59,10 @@ final class UsersController extends RestrictController
                 ->set_error([__("only accept json is allowed")])
                 ->show();
 
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
+        if (!(
+            $this->auth->is_user_allowed(PolicyType::USERS_READ)
+            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
+        ))
             $this->response->location(UrlType::FORBIDDEN);
 
         $search = SF::get_callable("Restrict\Users\UsersSearch", $this->request->get_get());
@@ -230,8 +233,8 @@ final class UsersController extends RestrictController
 
         if(!($uuid = trim($uuid)))
             $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
-            ->set_error([__("No code provided")])
-            ->show();
+                ->set_error([__("No code provided")])
+                ->show();
 
         if (!$this->csrf->is_valid($this->_get_csrf())) {
             $this->_get_json()
