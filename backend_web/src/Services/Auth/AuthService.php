@@ -7,16 +7,24 @@ use App\Enums\ProfileType;
 
 final class AuthService
 {
+    private static ?AuthService $authService = null;
     private static ?array $authuser = null;
 
-    public function __construct()
+    private function __construct() {}
+
+    private function __clone() {}
+
+    public static function getme(): self
     {
-        if (!self::$authuser)
-            self::$authuser = SF::get()->get(SessionType::AUTH_USER) ?? [];
+        if (!self::$authService)
+            self::$authService = new AuthService();
+        return self::$authService;
     }
 
     public function get_user(): ?array
     {
+        if (!self::$authuser)
+            self::$authuser = SF::get()->get(SessionType::AUTH_USER) ?? [];
         return self::$authuser;
     }
 

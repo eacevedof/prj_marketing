@@ -16,7 +16,7 @@ final class ServiceFactory
 {
     public static function get_auth(): AuthService
     {
-        return new AuthService();
+        return AuthService::getme();
     }
 
     public static function get(string $service, array $params = []): ?AppService
