@@ -2,7 +2,7 @@
 /**
  * @var \App\Views\AppView $this
  */
-//$urlback = "/"
+if (!isset($urlback)) $urlback = "#";
 ?>
 <!--404 not found-->
 <div class="main-error-wrapper  page page-h ">
