@@ -158,25 +158,24 @@ final class UsersController extends RestrictController
                 "h1"=>__("Unauthorized")
             ],"/error/403");
 
-
-        /**
-         * @var UsersInfoService $service
-         */
-        $service = SF::get_callable("Restrict\Users\UsersInfo", [$uuid]);
         try {
+            /**
+             * @var UsersInfoService $service
+             */
+            $service = SF::get_callable("Restrict\Users\UsersInfo", [$uuid]);
             $result = $service();
             $this->add_var("h1",__("User info"))
-                ->add_var("uuid",$uuid)
+                ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
                 ->render_nl();
         }
         catch (NotFoundException $e) {
-            $this->add_var("h1",$e->getMessage())
+            $this->add_var("h1", $e->getMessage())
                 ->set_template("/error/404")
                 ->render_nl();
         }
         catch (ForbiddenException $e) {
-            $this->add_var("h1",$e->getMessage())
+            $this->add_var("h1", $e->getMessage())
                 ->set_template("/error/403")
                 ->render_nl();
         }
