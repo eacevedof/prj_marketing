@@ -31,6 +31,7 @@ abstract class RestrictController extends AppController
 
     /**
      * Builds request, response, auth, csrf, authuser, restrict-layout and toppmenu
+     * add authuser to views
      */
     public function __construct()
     {
