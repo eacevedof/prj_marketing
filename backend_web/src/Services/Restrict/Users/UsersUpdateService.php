@@ -2,6 +2,7 @@
 namespace App\Services\Restrict\Users;
 
 use App\Enums\ProfileType;
+use App\Exceptions\FieldsException;
 use App\Services\AppService;
 use App\Traits\RequestTrait;
 use App\Factories\ModelFactory as MF;
@@ -100,7 +101,7 @@ final class UsersUpdateService extends AppService
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
-            $this->_exception(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
+            throw new FieldsException(__("Fields validation errors"));
         }
 
         $update = $this->modeluser->map_request($update);

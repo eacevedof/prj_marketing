@@ -6,7 +6,7 @@ if (!isset($urlback)) $urlback = "#";
 if (!isset($ismodal)) $ismodal = 0;
 ?>
 <!--500 not found-->
-<div class="main-error-wrapper  page page-h ">
+<div class="main-error-wrapper page page-h">
   <img src="/themes/valex/assets/img/media/500.png" class="error-page" alt="error">
   <h2>Oopps. Internal server error 500.</h2>
   <?
