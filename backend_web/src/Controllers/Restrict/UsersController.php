@@ -14,6 +14,7 @@ use App\Enums\SessionType;
 use App\Enums\ProfileType;
 use App\Enums\ResponseType;
 use App\Enums\UrlType;
+use App\Exceptions\FieldsException;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
 use App\Services\Restrict\Users\UsersDeleteService;
@@ -201,20 +202,17 @@ final class UsersController extends RestrictController
                 ->add_var("languages", $this->picklist->get_languages())
                 ->render_nl();
         }
-        catch (NotFoundException $e)
-        {
+        catch (NotFoundException $e) {
             $this->add_var("h1",$e->getMessage())
                 ->set_template("/error/404")
                 ->render_nl();
         }
-        catch (ForbiddenException $e)
-        {
+        catch (ForbiddenException $e) {
             $this->add_var("h1",$e->getMessage())
                 ->set_template("/error/403")
                 ->render_nl();
         }
-        catch (Exception $e)
-        {
+        catch (Exception $e) {
             $this->add_var("h1",$e->getMessage())
                 ->set_template("/error/500")
                 ->render_nl();
@@ -259,13 +257,12 @@ final class UsersController extends RestrictController
                 "result" => $result,
             ])->show();
         }
-        catch (Exception $e)
-        {
-            if ($service->is_error()) {
-                $this->_get_json()->set_code($e->getCode())
-                    ->set_error([["fields_validation" =>$service->get_errors()]])
-                    ->show();
-            }
+        catch (FieldsException $e) {
+            $this->_get_json()->set_code($e->getCode())
+                ->set_error([["fields_validation" =>$service->get_errors()]])
+                ->show();
+        }
+        catch (Exception $e) {
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
                 ->show();
