@@ -8,21 +8,21 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\PolicyType;
-use App\Enums\ExceptionType;
-use App\Enums\SessionType;
-use App\Enums\ProfileType;
-use App\Enums\ResponseType;
-use App\Enums\UrlType;
-use App\Exceptions\FieldsException;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
 use App\Services\Restrict\Users\UsersDeleteService;
 use App\Services\Restrict\Users\UsersInfoService;
 use App\Services\Restrict\Users\UsersUpdateService;
 use TheFramework\Helpers\HelperJson;
+use App\Enums\PolicyType;
+use App\Enums\ExceptionType;
+use App\Enums\SessionType;
+use App\Enums\ProfileType;
+use App\Enums\ResponseType;
+use App\Enums\UrlType;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ForbiddenException;
+use App\Exceptions\FieldsException;
 use \Exception;
 
 final class UsersController extends RestrictController
