@@ -35,6 +35,7 @@ final class UsersInfoService extends AppService
                 ExceptionType::CODE_NOT_FOUND
             );
 
+        $this->_check_permission($user);
         $permissions = $this->repopermission->get_by_user($user["id"]);
         return [
             "user" => $user,
@@ -61,7 +62,7 @@ final class UsersInfoService extends AppService
         )
             return;
 
-        $this->_exception(__("You are not allowed to update this data"), ExceptionType::CODE_FORBIDDEN);
+        $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
     }
 
     public function get_edit(): array

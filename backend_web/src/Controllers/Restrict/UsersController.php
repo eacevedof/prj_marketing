@@ -85,11 +85,12 @@ final class UsersController extends RestrictController
         }
     }
 
-    //@modal
+    //@modal (creation form)
     public function create(): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
-            $this->add_var("h1", __("Unauthorized"))
+            $this->add_var("ismodal",1)
+                ->add_var("h1", __("Unauthorized"))
                 ->set_template("/error/403")
                 ->render_nl();
         }
@@ -154,12 +155,17 @@ final class UsersController extends RestrictController
         if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
             $this->response->location(UrlType::FORBIDDEN);
 
-        $this->add_var(SessionType::PAGE_TITLE, __("USERS - info"));
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ)) {
+        $this->add_var("ismodal",1)
+            ->add_var(SessionType::PAGE_TITLE, __("USERS - info"));
+
+        if (!(
+            $this->auth->is_user_allowed(PolicyType::USERS_READ)
+            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
+        ))
             $this->render_error([
                 "h1"=>__("Unauthorized")
             ],"/error/403");
-        }
+
 
         /**
          * @var UsersInfoService $service
@@ -172,9 +178,19 @@ final class UsersController extends RestrictController
                 ->add_var("result", $result)
                 ->render_nl();
         }
-        catch (Exception $e)
-        {
-            $this->add_var("h1", $e->getMessage())
+        catch (NotFoundException $e) {
+            $this->add_var("h1",$e->getMessage())
+                ->set_template("/error/404")
+                ->render_nl();
+        }
+        catch (ForbiddenException $e) {
+            $this->add_var("h1",$e->getMessage())
+                ->set_template("/error/403")
+                ->render_nl();
+        }
+        catch (Exception $e) {
+            $this->add_var("h1",$e->getMessage())
+                ->set_template("/error/500")
                 ->render_nl();
         }
     }
