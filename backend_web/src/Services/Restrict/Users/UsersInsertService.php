@@ -1,8 +1,11 @@
 <?php
 namespace App\Services\Restrict\Users;
 
+use App\Enums\PolicyType;
 use App\Enums\PreferenceType;
+use App\Exceptions\FieldsException;
 use App\Services\AppService;
+use App\Services\Auth\AuthService;
 use App\Traits\RequestTrait;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\ServiceFactory as  SF;
@@ -19,6 +22,7 @@ final class UsersInsertService extends AppService
 {
     use RequestTrait;
 
+    private AuthService $auth;
     private array $authuser;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
@@ -27,13 +31,24 @@ final class UsersInsertService extends AppService
 
     public function __construct(array $input)
     {
+        $this->auth = SF::get_auth();
+        $this->_check_permission();
         $this->input = $input;
         $this->modeluser = MF::get("Base/User");
         $this->validator = VF::get($this->input, $this->modeluser);
         $this->repouser = RF::get("Base/User");
         $this->repoprefs = RF::get("Base/UserPreferences");
-        $this->authuser = SF::get_auth()->get_user();
+        $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
+    }
+
+    private function _check_permission(): void
+    {
+        if(!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+            $this->_exception(
+                __("You are not allowed to perform this operation"),
+                ExceptionType::CODE_FORBIDDEN
+            );
     }
 
     private function _skip_validation(): self
@@ -98,7 +113,7 @@ final class UsersInsertService extends AppService
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
-            $this->_exception(__("Fields validation errors"), ExceptionType::CODE_BAD_REQUEST);
+            throw new FieldsException(__("Fields validation errors"));
         }
 
         $insert = $this->modeluser->map_request($insert);

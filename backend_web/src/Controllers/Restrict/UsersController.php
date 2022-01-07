@@ -37,17 +37,21 @@ final class UsersController extends RestrictController
 
     public function index(?string $page=null): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
-            $this->response->location(UrlType::FORBIDDEN);
+        try {
+            $search = SF::get("Restrict\Users\UsersSearch");
 
-        $this->add_var(SessionType::PAGE_TITLE, __("Users"))
-            ->add_var("h1", __("Users"))
-            ->add_var("languages", $this->picklist->get_languages())
-            ->add_var("profiles", $this->picklist->get_profiles())
-            ->add_var("countries", $this->picklist->get_countries())
-            ->add_var("auth", $this->authuser)
-            ->add_var("dthelp", SF::get_callable("Restrict\Users\UsersSearch", [])->get_datatable())
-            ->render();
+            $this->add_var(SessionType::PAGE_TITLE, __("Users"))
+                ->add_var("h1", __("Users"))
+                ->add_var("languages", $this->picklist->get_languages())
+                ->add_var("profiles", $this->picklist->get_profiles())
+                ->add_var("countries", $this->picklist->get_countries())
+                ->add_var("auth", $this->authuser)
+                ->add_var("dthelp", $search->get_datatable())
+                ->render();
+        }
+        catch (ForbiddenException $e){
+            $this->response->location(UrlType::FORBIDDEN);
+        }
     }
 
     //@get
@@ -59,14 +63,8 @@ final class UsersController extends RestrictController
                 ->set_error([__("only accept json is allowed")])
                 ->show();
 
-        if (!(
-            $this->auth->is_user_allowed(PolicyType::USERS_READ)
-            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
-        ))
-            $this->response->location(UrlType::FORBIDDEN);
-
-        $search = SF::get_callable("Restrict\Users\UsersSearch", $this->request->get_get());
         try {
+            $search = SF::get_callable("Restrict\Users\UsersSearch", $this->request->get_get());
             $result = $search();
             $this->_get_json()->set_payload([
                 "message"  => __("auth ok"),
@@ -75,11 +73,8 @@ final class UsersController extends RestrictController
                 "total"    => $result["total"],
             ])->show();
         }
-        catch (Exception $e)
-        {
-            $this->logerr($e->getMessage(),"UsersController.search");
-
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
+        catch (Exception $e) {
+            $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
                 ->show();
         }
@@ -115,39 +110,36 @@ final class UsersController extends RestrictController
 
         if (!$this->csrf->is_valid($this->_get_csrf())) {
             $this->_get_json()
-                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
+                ->set_code(ResponseType::FORBIDDEN)
                 ->set_error([__("Invalid CSRF token")])
                 ->show();
         }
 
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
-                ->set_error([__("Not allowed to perform this operation")])
-                ->show();
-
-        /**
-         * @var UsersInsertService
-         */
-        $service = SF::get_callable("Restrict\Users\UsersInsert", $this->request->get_post());
         try {
+            /**
+             * @var UsersInsertService
+             */
+            $service = SF::get_callable("Restrict\Users\UsersInsert", $this->request->get_post());
             $result = $service();
             $this->_get_json()->set_payload([
-                "message"=>__("User successfully created"),
+                "message" => __("User successfully created"),
                 "result" => $result,
             ])->show();
         }
-        catch (Exception $e)
-        {
-            if ($service->is_error()) {
-                $this->_get_json()->set_code($e->getCode())
-                    ->set_error([["fields_validation" =>$service->get_errors()]])
-                    ->show();
-            }
+        catch (FieldsException $e) {
+            $this->_get_json()->set_code($e->getCode())
+                ->set_error([
+                    ["fields_validation" => $service->get_errors()]
+                ])
+                ->show();
+        }
+        catch (Exception $e) {
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }
+
+    }//insert
 
     //@modal
     public function info(string $uuid): void
