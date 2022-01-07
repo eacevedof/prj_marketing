@@ -9,11 +9,15 @@
  */
 namespace App\Services;
 
+use App\Exceptions\BadRequestException;
+use App\Exceptions\ForbiddenException;
+use App\Exceptions\NotFoundException;
 use App\Traits\ErrorTrait;
 use App\Traits\LogTrait;
 use App\Traits\EnvTrait;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
+use App\Enums\ExceptionType;
 use \Exception;
 
 /**
@@ -31,9 +35,14 @@ abstract class AppService
 
     protected $input;
 
-    protected function _exception(string $message, int $code=500): void
+    protected function _exception(string $message, int $code=ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
     {
         $this->logerr($message,"app-service.exception");
+        switch ($code) {
+            case ExceptionType::CODE_BAD_REQUEST: throw new BadRequestException($message);
+            case ExceptionType::CODE_FORBIDDEN: throw new ForbiddenException($message);
+            case ExceptionType::CODE_NOT_FOUND: throw new NotFoundException($message);
+        }
         throw new Exception($message, $code);
     }
 

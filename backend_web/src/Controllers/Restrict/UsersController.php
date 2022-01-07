@@ -19,8 +19,10 @@ use App\Services\Common\PicklistService;
 use App\Services\Restrict\Users\UsersDeleteService;
 use App\Services\Restrict\Users\UsersInfoService;
 use App\Services\Restrict\Users\UsersUpdateService;
-use App\Traits\ResponseTrait;
 use TheFramework\Helpers\HelperJson;
+use App\Exceptions\NotFoundException;
+use App\Exceptions\ForbiddenException;
+use \Exception;
 
 final class UsersController extends RestrictController
 {
@@ -69,7 +71,7 @@ final class UsersController extends RestrictController
                 "total"    => $result["total"],
             ])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->logerr($e->getMessage(),"UsersController.search");
 
@@ -129,7 +131,7 @@ final class UsersController extends RestrictController
                 "result" => $result,
             ])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             if ($service->is_error()) {
                 $this->_get_json()->set_code($e->getCode())
@@ -166,7 +168,7 @@ final class UsersController extends RestrictController
                 ->add_var("result", $result)
                 ->render_nl();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->add_var("h1", $e->getMessage())
                 ->render_nl();
@@ -182,6 +184,7 @@ final class UsersController extends RestrictController
                 ->render_nl();
         }
 
+        $this->add_var("ismodal",1);
         try {
             /**
              * @var UsersInfoService
@@ -198,10 +201,22 @@ final class UsersController extends RestrictController
                 ->add_var("languages", $this->picklist->get_languages())
                 ->render_nl();
         }
-        catch (\Exception $e)
+        catch (NotFoundException $e)
         {
             $this->add_var("h1",$e->getMessage())
                 ->set_template("/error/404")
+                ->render_nl();
+        }
+        catch (ForbiddenException $e)
+        {
+            $this->add_var("h1",$e->getMessage())
+                ->set_template("/error/403")
+                ->render_nl();
+        }
+        catch (Exception $e)
+        {
+            $this->add_var("h1",$e->getMessage())
+                ->set_template("/error/500")
                 ->render_nl();
         }
     }
@@ -244,7 +259,7 @@ final class UsersController extends RestrictController
                 "result" => $result,
             ])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             if ($service->is_error()) {
                 $this->_get_json()->set_code($e->getCode())
@@ -287,7 +302,7 @@ final class UsersController extends RestrictController
                 "result" => $result,
             ])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
@@ -325,7 +340,7 @@ final class UsersController extends RestrictController
                 "result" => $result,
             ])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([$e->getMessage()])
