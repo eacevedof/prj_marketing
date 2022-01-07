@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Restrict\Users;
 
+use App\Enums\ExceptionType;
 use App\Services\AppService;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
@@ -20,8 +21,10 @@ final class UsersSearchService extends AppService
 
     public function __construct(array $input)
     {
-        $this->input = $input;
         $this->auth = SF::get_auth();
+        $this->_check_permission();
+
+        $this->input = $input;
         $this->repouser = RF::get("Base/User");
         $this->repopermission = RF::get("Base/UserPermissions");
     }
@@ -29,8 +32,19 @@ final class UsersSearchService extends AppService
     public function __invoke(): array
     {
         $search = CF::get_datatable($this->input)->get_search();
-        $rows = $this->repouser->set_auth($this->auth)->search($search);
-        return $rows;
+        return $this->repouser->set_auth($this->auth)->search($search);
+    }
+
+    private function _check_permission(): void
+    {
+        if(!(
+            $this->auth->is_user_allowed(PolicyType::USERS_READ)
+            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
+        ))
+            $this->_exception(
+                __("You are not allowed to perform this operatoin"),
+                ExceptionType::CODE_FORBIDDEN
+            );
     }
 
     public function get_datatable(): DatatableHelper
