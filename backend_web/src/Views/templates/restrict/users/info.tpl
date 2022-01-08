@@ -33,6 +33,14 @@
             </span>
           </a>
         </li>
+        <li>
+          <a href="#preferences" data-bs-toggle="tab" aria-expanded="false">
+            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
+            <span class="hidden-xs">
+              <?=__("Preferences")?>
+            </span>
+          </a>
+        </li>
       </ul>
     </div>
 
@@ -64,8 +72,7 @@
           <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$profile["delete_user"] ?? ""?></span></li>
           <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$profile["delete_date"] ?? ""?></span></li>
         </ul>
-
-      </div>
+      </div><!-- profile -->
 
       <div class="tab-pane" id="permissions">
         <ol>
@@ -78,7 +85,22 @@
           endforeach;
           ?>
         </ol>
-      </div>
+      </div><!--permissions-->
+
+      <div class="tab-pane" id="preferences">
+        <ol>
+          <?php
+          $preferences = $result["preferences"] ?? [];
+          //dd($preferences);
+          foreach ($preferences as $arvalue):
+            ?>
+            <li><b><?$this->_echo($arvalue["pref_key"]);?>:</b>&nbsp;&nbsp;<span><?$this->_echo($arvalue["pref_value"]);?></span></li>
+          <?php
+          endforeach;
+          ?>
+        </ol>
+      </div><!--preferences-->
+
     </div><!--tab-content-->
   </div><!--card-body-->
 </div>
