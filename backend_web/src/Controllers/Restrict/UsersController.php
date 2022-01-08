@@ -225,25 +225,14 @@ final class UsersController extends RestrictController
                 ->set_error([__("Only type json for accept header is allowed")])
                 ->show();
 
-        if(!($uuid = trim($uuid)))
-            $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
-                ->set_error([__("No code provided")])
-                ->show();
-
-        if (!$this->csrf->is_valid($this->_get_csrf())) {
+        if (!$this->csrf->is_valid($this->_get_csrf()))
             $this->_get_json()
                 ->set_code(ExceptionType::CODE_UNAUTHORIZED)
                 ->set_error([__("Invalid CSRF token")])
                 ->show();
-        }
 
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
-                ->set_error([__("Not allowed to perform this operation")])
-                ->show();
-
-        $request = array_merge(["uuid"=>$uuid], $this->request->get_post());
         try {
+            $request = array_merge(["uuid"=>$uuid], $this->request->get_post());
             $update = SF::get_callable("Restrict\Users\UsersUpdate", $request);
             $result = $update();
             $this->_get_json()->set_payload([
@@ -261,7 +250,7 @@ final class UsersController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }
+    }//patch
 
     //@delete
     public function remove(string $uuid): void
