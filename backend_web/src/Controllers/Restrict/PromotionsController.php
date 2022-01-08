@@ -2,8 +2,8 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\RestrictController
- * @file RestrictController.php v1.0.0
+ * @name App\Controllers\Restrict\PromotionsController
+ * @file PromotionsController.php v1.0.0
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
@@ -30,10 +30,10 @@ final class PromotionsController extends RestrictController
         if (!$this->auth->is_user_allowed(PolicyType::DASHBOARD_READ))
             $this->response->location(UrlType::FORBIDDEN);
 
-        $this->add_var(PageType::TITLE, __("Promotions detail"));
-        $this->render([
-            "h1" => __("Promotion detail {0}", $id)
-        ]);
+        $this->add_var(PageType::TITLE, __("Promotions detail"))
+            ->add_var(PageType::H1, __("Promotions detail"))
+            ->render()
+        ;
     }
 
 }//PromotionController
