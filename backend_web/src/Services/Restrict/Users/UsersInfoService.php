@@ -1,13 +1,14 @@
 <?php
 namespace App\Services\Restrict\Users;
 
-use App\Enums\PolicyType;
 use App\Services\AppService;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Services\Auth\AuthService;
-use App\Repositories\Base\UserPermissionsRepository;
 use App\Repositories\Base\UserRepository;
+use App\Repositories\Base\UserPermissionsRepository;
+use App\Repositories\Base\UserPreferencesRepository;
+use App\Enums\PolicyType;
 use App\Enums\ProfileType;
 use App\Enums\ExceptionType;
 
@@ -16,6 +17,7 @@ final class UsersInfoService extends AppService
     private AuthService $auth;
     private UserRepository $repouser;
     private UserPermissionsRepository $repopermission;
+    private UserPreferencesRepository $repoprefs;
     private array $authuser;
 
     public function __construct(array $input)
@@ -23,12 +25,12 @@ final class UsersInfoService extends AppService
         $this->auth = SF::get_auth();
         $this->_check_permission();
 
-        $this->input = $input[0] ?? "";
-        if(!$this->input)
+        if(!$this->input = $input[0] ?? "")
             $this->_exception(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->repouser = RF::get("Base/User");
         $this->repopermission = RF::get("Base/UserPermissions");
+        $this->repoprefs = RF::get("Base/UserPreferences");
         $this->authuser = $this->auth->get_user();
     }
 
@@ -54,27 +56,26 @@ final class UsersInfoService extends AppService
             );
 
         $this->_check_entity_permission($user);
-        $permissions = $this->repopermission->get_by_user($user["id"]);
         return [
             "user" => $user,
-            "permissions" => $permissions
+            "permissions" => $this->repopermission->get_by_user($iduser = $user["id"]),
+            "preferences" => $this->repoprefs->get_by_user($iduser),
         ];
     }
 
     private function _check_entity_permission(array $entity): void
     {
-        $auth = SF::get_auth();
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
-        if ($auth->is_root() || ((int)$this->authuser["id"]) === $iduser) return;
+        if ($this->auth->is_root() || ((int)$this->authuser["id"]) === $iduser) return;
 
-        if ($auth->is_sysadmin()
+        if ($this->auth->is_sysadmin()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
         )
             return;
 
         $idowner = $this->repouser->get_owner($iduser);
         $idowner = $idowner["id"];
-        if ($auth->is_business_owner()
+        if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
             && $this->authuser["id"] === $idowner
         )
@@ -83,7 +84,7 @@ final class UsersInfoService extends AppService
         $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
     }
 
-    public function get_edit(): array
+    public function get_for_edit(): array
     {
         $user = $this->repouser->get_info($this->input);
         if(!$user)

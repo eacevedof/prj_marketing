@@ -201,7 +201,7 @@ final class UsersController extends RestrictController
              * @var UsersInfoService
              */
             $service = SF::get("Restrict\Users\UsersInfo", [$uuid]);
-            $result = $service->get_edit();
+            $result = $service->get_for_edit();
             $this->add_var(SessionType::KEY_CSRF, $this->csrf->get_token())
                 ->add_var("h1",__("Edit user {0}", $uuid))
                 ->add_var("uuid", $uuid)
