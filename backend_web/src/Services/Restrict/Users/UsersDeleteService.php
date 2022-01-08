@@ -43,12 +43,14 @@ final class UsersDeleteService extends AppService
             );
     }
 
-    private function _check_delete_permission(array $entity): void
+    private function _check_entity_delete_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
         $idauth = (int) $this->authuser["id"];
         if ($idauth === $iduser)
-            $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+            $this->_exception(
+                __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+            );
 
         if ($this->auth->is_root()) return;
 
@@ -66,58 +68,64 @@ final class UsersDeleteService extends AppService
         )
             return;
 
-        $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+        $this->_exception(
+            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        );
     }
 
-    private function _check_undelete_permission(array $entity): void
+    private function _check_entity_undelete_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
         $idauth = (int) $this->authuser["id"];
         if ($idauth === $iduser)
-            $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+            $this->_exception(
+                __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+            );
 
         if ($this->auth->is_root()) return;
 
-        $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+        $this->_exception(
+            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        );
     }
 
     public function __invoke(): array
     {
-        $update = $this->input;
-        if (!$id = $this->repouser->get_id_by($update["uuid"]))
+        $entity = $this->input;
+        if (!$id = $this->repouser->get_id_by($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
-        $update["id"] = $id;
-        if (!$this->entityuser->do_match_keys($update))
+        $entity["id"] = $id;
+        if (!$this->entityuser->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->_check_delete_permission($update);
-        $updatedate = $this->repouser->get_sysupdate($update);
-        $this->entityuser->add_sysdelete($update, $updatedate, $this->authuser["id"]);
-        $affected = $this->repouser->update($update);
-        //$this->repouser->delete($update);
+        $this->_check_entity_delete_permission($entity);
+        $updatedate = $this->repouser->get_sysupdate($entity);
+        $this->entityuser->add_sysdelete($entity, $updatedate, $this->authuser["id"]);
+        $affected = $this->repouser->update($entity);
+        //$this->repouser->delete($entity);
         return [
             "affected" => $affected,
-            "uuid" => $update["uuid"]
+            "uuid" => $entity["uuid"]
         ];
     }
     
     public function undelete(): array
     {
-        $update = $this->input;
-        if (!$id = $this->repouser->get_id_by($update["uuid"]))
+        $entity = $this->input;
+        if (!$id = $this->repouser->get_id_by($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
-        $update["id"] = $id;
-        if (!$this->entityuser->do_match_keys($update))
+        $entity["id"] = $id;
+        if (!$this->entityuser->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $entity = $this->repouser->get_by_id($id);
-        $this->_check_undelete_permission($entity);
+        $this->_check_entity_undelete_permission($entity);
         $iduser = $this->authuser["id"];
 
-        $update = [
-            "uuid" => $update["uuid"],
+        $entity = [
+            "uuid" => $entity["uuid"],
             "id" => $id,
             "delete_date" => null,
             "delete_user" => null,
@@ -125,12 +133,12 @@ final class UsersDeleteService extends AppService
             "cru_csvnote" => $this->repouser->get_csvcru($entity, $id),
         ];
 
-        $this->entityuser->add_sysupdate($update, $iduser);
-        $affected = $this->repouser->update($update);
+        $this->entityuser->add_sysupdate($entity, $iduser);
+        $affected = $this->repouser->update($entity);
 
         return [
             "affected" => $affected,
-            "uuid" => $update["uuid"]
+            "uuid" => $entity["uuid"]
         ];                
     }
 }
