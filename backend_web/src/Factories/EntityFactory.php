@@ -16,7 +16,7 @@ final class EntityFactory
     public static function get(string $entity): ?AppEntity
     {
         $entity = str_replace("/","\\",$entity);
-        if (!strstr($entity,"Model")) $entity .= "Model";
+        if (!strstr($entity,"Entity")) $entity .= "Entity";
         $Model = "\App\Models\\".$entity;
         try {
             $obj = new $Model();
