@@ -61,7 +61,7 @@ final class UsersController extends RestrictController
         if (!$this->request->is_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("only accept json is allowed")])
+                ->set_error([__("Only type json for accept header is allowed")])
                 ->show();
 
         try {
@@ -107,7 +107,7 @@ final class UsersController extends RestrictController
         if (!$this->request->is_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowd")])
+                ->set_error([__("Only type json for accept header is allowed")])
                 ->show();
 
         if (!$this->csrf->is_valid($this->_get_csrf()))
@@ -214,15 +214,15 @@ final class UsersController extends RestrictController
                 ->set_template("/error/500")
                 ->render_nl();
         }
-    }
+    }//modal edit
 
-    //@post
+    //@patch
     public function update(string $uuid): void
     {
         if (!$this->request->is_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("only accept json is allowed")])
+                ->set_error([__("Only type json for accept header is allowed")])
                 ->show();
 
         if(!($uuid = trim($uuid)))
@@ -242,13 +242,10 @@ final class UsersController extends RestrictController
                 ->set_error([__("Not allowed to perform this operation")])
                 ->show();
 
-        /**
-         * @var UsersUpdateService
-         */
         $request = array_merge(["uuid"=>$uuid], $this->request->get_post());
-        $service = SF::get_callable("Restrict\Users\UsersUpdate", $request);
         try {
-            $result = $service();
+            $update = SF::get_callable("Restrict\Users\UsersUpdate", $request);
+            $result = $update();
             $this->_get_json()->set_payload([
                 "message"=>__("User successfully created"),
                 "result" => $result,
@@ -256,7 +253,7 @@ final class UsersController extends RestrictController
         }
         catch (FieldsException $e) {
             $this->_get_json()->set_code($e->getCode())
-                ->set_error([["fields_validation" =>$service->get_errors()]])
+                ->set_error([["fields_validation" => $update->get_errors()]])
                 ->show();
         }
         catch (Exception $e) {
