@@ -14,11 +14,11 @@ final class FieldsValidator
 {
     private array $rules = [];
     private array $request;
-    private AppModel $model;
+    private AppEntity $model;
     private array $errors = [];
     private array $skip = [];
 
-    public function __construct(array $request, AppModel $model)
+    public function __construct(array $request, AppEntity $model)
     {
         $this->request = $request;
         $this->model = $model;

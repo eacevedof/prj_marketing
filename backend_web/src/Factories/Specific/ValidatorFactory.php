@@ -9,12 +9,12 @@
  */
 namespace App\Factories\Specific;
 
-use App\Models\AppModel;
+use App\Models\AppEntity;
 use App\Models\FieldsValidator;
 
 final class ValidatorFactory
 {
-    public static function get(array $request, AppModel $model): FieldsValidator
+    public static function get(array $request, AppEntity $model): FieldsValidator
     {
         return new FieldsValidator($request, $model);
     }

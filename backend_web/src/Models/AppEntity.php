@@ -2,8 +2,8 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Models\AppModel 
- * @file AppModel.php 2.1.0
+ * @name App\Models\AppEntity
+ * @file AppEntity.php 2.1.0
  * @date 28-06-2018 00:00 SPAIN
  * @observations
  */
@@ -13,7 +13,7 @@ use App\Enums\ModelType;
 use App\Enums\PlatformType;
 use App\Enums\RequestType;
 
-abstract class AppModel
+abstract class AppEntity
 {
     protected array $fields;
     protected array $pks;
@@ -110,4 +110,4 @@ abstract class AppModel
         $request[ModelType::UPDATE_DATE] = $updatedate;
         return $this;
     }
-}//AppModel
+}//AppEntity

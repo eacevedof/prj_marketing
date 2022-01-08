@@ -9,11 +9,11 @@
  */
 namespace App\Behaviours;
 
-use App\Models\AppModel;
+use App\Models\AppEntity;
 use App\Services\Dbs\CoreQueriesService;
 use App\Traits\CacheQueryTrait;
 
-final class SchemaBehaviour extends AppModel
+final class SchemaBehaviour extends AppEntity
 {
     use CacheQueryTrait;
 

@@ -3,12 +3,12 @@ namespace App\Services\Restrict\Users;
 
 use App\Services\AppService;
 use App\Traits\RequestTrait;
-use App\Factories\ModelFactory as MF;
+use App\Factories\EntityFactory as MF;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\Specific\ValidatorFactory as VF;
 use App\Services\Auth\AuthService;
 use App\Factories\ServiceFactory as SF;
-use App\Models\Base\UserModel;
+use App\Models\Base\UserEntity;
 use App\Repositories\Base\UserRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Enums\PolicyType;
@@ -26,7 +26,7 @@ final class UsersUpdateService extends AppService
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
     private FieldsValidator $validator;
-    private UserModel $modeluser;
+    private UserEntity $modeluser;
 
     public function __construct(array $input)
     {
