@@ -34,22 +34,20 @@ final class UsersUpdateService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        if (!$this->input["uuid"]) $this->_exception(__("Missing code key"));
+        if (!$this->input["uuid"])
+            $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->modeluser = MF::get("Base/User");
         $this->validator = VF::get($this->input, $this->modeluser);
         $this->repouser = RF::get("Base/UserRepository");
         $this->repouser->set_model($this->modeluser);
-        $this->authuser = SF::get_auth()->get_user();
+        $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
     private function _check_permission(): void
     {
-        if(!(
-            $this->auth->is_user_allowed(PolicyType::USERS_READ)
-            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
-        ))
+        if(!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
