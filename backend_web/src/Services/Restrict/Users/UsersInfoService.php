@@ -46,23 +46,6 @@ final class UsersInfoService extends AppService
             );
     }
 
-    public function __invoke(): array
-    {
-        $user = $this->repouser->get_info($this->input);
-        if(!$user)
-            $this->_exception(
-                __("User with code {0} not found", $this->input),
-                ExceptionType::CODE_NOT_FOUND
-            );
-
-        $this->_check_entity_permission($user);
-        return [
-            "user" => $user,
-            "permissions" => $this->repopermission->get_by_user($iduser = $user["id"]),
-            "preferences" => $this->repoprefs->get_by_user($iduser),
-        ];
-    }
-
     private function _check_entity_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
@@ -82,6 +65,23 @@ final class UsersInfoService extends AppService
             return;
 
         $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+    }
+
+    public function __invoke(): array
+    {
+        $user = $this->repouser->get_info($this->input);
+        if(!$user)
+            $this->_exception(
+                __("User with code {0} not found", $this->input),
+                ExceptionType::CODE_NOT_FOUND
+            );
+
+        $this->_check_entity_permission($user);
+        return [
+            "user" => $user,
+            "permissions" => $this->repopermission->get_by_user($iduser = $user["id"]),
+            "preferences" => $this->repoprefs->get_by_user($iduser),
+        ];
     }
 
     public function get_for_edit(): array
