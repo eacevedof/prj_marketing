@@ -19,7 +19,7 @@ abstract class AppRepository
 {
     use LogTrait;
     
-    protected AppEntity $model;
+    protected AppEntity $entity;
     protected ComponentMysql $db;
     protected string $table;
 
@@ -43,7 +43,7 @@ abstract class AppRepository
     {
         $pks = [];
         foreach($arData as $fieldname=>$sValue)
-            if(in_array($fieldname,$this->model->get_pks()))
+            if(in_array($fieldname,$this->entity->get_pks()))
                 $pks[$fieldname] = $sValue;
         return $pks;
     }
@@ -52,14 +52,14 @@ abstract class AppRepository
     {
         $pks = [];
         foreach($arData as $fieldname=>$sValue)
-            if(!in_array($fieldname, $this->model->get_pks()))
+            if(!in_array($fieldname, $this->entity->get_pks()))
                 $pks[$fieldname] = $sValue;
         return $pks;
     }
 
-    public function set_model(AppEntity $model): self
+    public function set_model(AppEntity $entity): self
     {
-        $this->model = $model;
+        $this->entity = $entity;
         return $this;
     }
 

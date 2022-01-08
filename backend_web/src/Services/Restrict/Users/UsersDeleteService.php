@@ -18,7 +18,7 @@ final class UsersDeleteService extends AppService
     private AuthService $auth;
     private array $authuser;
     private UserRepository $repouser;
-    private UserEntity $modeluser;
+    private UserEntity $entityuser;
 
     public function __construct(array $input)
     {
@@ -30,8 +30,8 @@ final class UsersDeleteService extends AppService
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->modeluser = MF::get("Base/User");
-        $this->repouser = RF::get("Base/UserRepository")->set_model($this->modeluser);
+        $this->entityuser = MF::get("Base/User");
+        $this->repouser = RF::get("Base/UserRepository")->set_model($this->entityuser);
     }
 
     private function _check_permission(): void
@@ -71,12 +71,12 @@ final class UsersDeleteService extends AppService
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
-        if (!$this->modeluser->do_match_keys($update))
+        if (!$this->entityuser->do_match_keys($update))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->_check_entity_permission($update);
         $updatedate = $this->repouser->get_sysupdate($update);
-        $this->modeluser->add_sysdelete($update, $updatedate, $this->authuser["id"]);
+        $this->entityuser->add_sysdelete($update, $updatedate, $this->authuser["id"]);
         $affected = $this->repouser->update($update);
         //$this->repouser->delete($update);
         return [
@@ -92,7 +92,7 @@ final class UsersDeleteService extends AppService
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $update["id"] = $id;
-        if (!$this->modeluser->do_match_keys($update))
+        if (!$this->entityuser->do_match_keys($update))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $row = $this->repouser->get_by_id($id);
@@ -107,7 +107,7 @@ final class UsersDeleteService extends AppService
             "cru_csvnote" => $this->repouser->get_csvcru($row, $id),
         ];
 
-        $this->modeluser->add_sysupdate($update, $iduser);
+        $this->entityuser->add_sysupdate($update, $iduser);
         $affected = $this->repouser->update($update);
 
         return [

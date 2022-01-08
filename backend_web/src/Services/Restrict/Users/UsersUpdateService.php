@@ -26,7 +26,7 @@ final class UsersUpdateService extends AppService
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
     private FieldsValidator $validator;
-    private UserEntity $modeluser;
+    private UserEntity $entityuser;
 
     public function __construct(array $input)
     {
@@ -37,10 +37,10 @@ final class UsersUpdateService extends AppService
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->modeluser = MF::get("Base/User");
-        $this->validator = VF::get($this->input, $this->modeluser);
+        $this->entityuser = MF::get("Base/User");
+        $this->validator = VF::get($this->input, $this->entityuser);
         $this->repouser = RF::get("Base/UserRepository");
-        $this->repouser->set_model($this->modeluser);
+        $this->repouser->set_model($this->entityuser);
         $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
@@ -141,13 +141,13 @@ final class UsersUpdateService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->modeluser->map_request($update);
+        $update = $this->entityuser->map_request($update);
         $this->_check_entity_permission($update);
         if(!$update["secret"]) unset($update["secret"]);
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $update["description"] = $update["fullname"];
-        $this->modeluser->add_sysupdate($update, $this->authuser["id"]);
+        $this->entityuser->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repouser->update($update);
         return [

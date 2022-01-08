@@ -13,11 +13,11 @@ use App\Models\AppEntity;
 
 final class EntityFactory
 {
-    public static function get(string $model): ?AppEntity
+    public static function get(string $entity): ?AppEntity
     {
-        $model = str_replace("/","\\",$model);
-        if (!strstr($model,"Model")) $model .= "Model";
-        $Model = "\App\Models\\".$model;
+        $entity = str_replace("/","\\",$entity);
+        if (!strstr($entity,"Model")) $entity .= "Model";
+        $Model = "\App\Models\\".$entity;
         try {
             $obj = new $Model();
         }

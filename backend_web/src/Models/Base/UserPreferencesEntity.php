@@ -23,4 +23,4 @@ final class UserPreferencesEntity extends AppEntity
         ];
     }
 
-}//ExampleEntity
+}//UserPreferencesEntity

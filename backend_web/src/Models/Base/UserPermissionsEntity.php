@@ -22,4 +22,4 @@ final class UserPermissionsEntity extends AppEntity
         ];
     }
 
-}//ExampleEntity
+}//UserPermissionsEntity

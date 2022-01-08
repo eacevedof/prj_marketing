@@ -27,15 +27,15 @@ final class UsersInsertService extends AppService
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
     private FieldsValidator $validator;
-    private UserEntity $modeluser;
+    private UserEntity $entityuser;
 
     public function __construct(array $input)
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
         $this->input = $input;
-        $this->modeluser = MF::get("Base/User");
-        $this->validator = VF::get($this->input, $this->modeluser);
+        $this->entityuser = MF::get("Base/User");
+        $this->validator = VF::get($this->input, $this->entityuser);
         $this->repouser = RF::get("Base/User");
         $this->repoprefs = RF::get("Base/UserPreferences");
         $this->authuser = $this->auth->get_user();
@@ -116,11 +116,11 @@ final class UsersInsertService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $insert = $this->modeluser->map_request($insert);
+        $insert = $this->entityuser->map_request($insert);
         $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
         $insert["description"] = $insert["fullname"];
         $insert["uuid"] = uniqid();
-        $this->modeluser->add_sysinsert($insert, $this->authuser["id"]);
+        $this->entityuser->add_sysinsert($insert, $this->authuser["id"]);
 
         $id = $this->repouser->insert($insert);
         $prefs = [
@@ -129,7 +129,7 @@ final class UsersInsertService extends AppService
             "pref_value" => "/restrict"
         ];
 
-        $this->modeluser->add_sysinsert($prefs, $this->authuser["id"]);
+        $this->entityuser->add_sysinsert($prefs, $this->authuser["id"]);
         $this->repoprefs->insert($prefs);
 
         return [
