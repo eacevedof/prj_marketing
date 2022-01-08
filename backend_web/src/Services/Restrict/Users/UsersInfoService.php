@@ -65,7 +65,7 @@ final class UsersInfoService extends AppService
     {
         $auth = SF::get_auth();
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
-        if ($auth->is_root() || (((int)$this->authuser["id"]) === $iduser)) return;
+        if ($auth->is_root() || ((int)$this->authuser["id"]) === $iduser) return;
 
         if ($auth->is_sysadmin()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
