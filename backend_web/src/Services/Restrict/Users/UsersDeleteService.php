@@ -5,10 +5,10 @@ use App\Enums\PolicyType;
 use App\Enums\ProfileType;
 use App\Services\AppService;
 use App\Services\Auth\AuthService;
-use App\Factories\ModelFactory as MF;
+use App\Factories\EntityFactory as MF;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
-use App\Models\Base\UserModel;
+use App\Models\Base\UserEntity;
 use App\Repositories\Base\UserRepository;
 use App\Enums\ExceptionType;
 
@@ -18,7 +18,7 @@ final class UsersDeleteService extends AppService
     private AuthService $auth;
     private array $authuser;
     private UserRepository $repouser;
-    private UserModel $modeluser;
+    private UserEntity $modeluser;
 
     public function __construct(array $input)
     {

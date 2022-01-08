@@ -2,16 +2,16 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Models\ExampleModel 
- * @file ExampleModel.php v1.0.0
+ * @name App\Models\ExampleEntity
+ * @file ExampleEntity.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
 namespace App\Models\Base;
 
-use App\Models\AppModel;
+use App\Models\AppEntity;
 
-final class UserPreferencesModel extends AppModel
+final class UserPreferencesEntity extends AppEntity
 {
     public function __construct()
     {
@@ -23,4 +23,4 @@ final class UserPreferencesModel extends AppModel
         ];
     }
 
-}//ExampleModel
+}//ExampleEntity

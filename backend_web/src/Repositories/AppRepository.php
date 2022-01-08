@@ -9,7 +9,7 @@
  */
 namespace App\Repositories;
 use App\Traits\LogTrait;
-use App\Models\AppModel;
+use App\Models\AppEntity;
 use TheFramework\Components\Db\ComponentCrud;
 use TheFramework\Components\Db\ComponentMysql;
 use App\Enums\ExceptionType;
@@ -19,7 +19,7 @@ abstract class AppRepository
 {
     use LogTrait;
     
-    protected AppModel $model;
+    protected AppEntity $model;
     protected ComponentMysql $db;
     protected string $table;
 
@@ -57,7 +57,7 @@ abstract class AppRepository
         return $pks;
     }
 
-    public function set_model(AppModel $model): self
+    public function set_model(AppEntity $model): self
     {
         $this->model = $model;
         return $this;

@@ -9,11 +9,11 @@
  */
 namespace App\Factories;
 
-use App\Models\AppModel;
+use App\Models\AppEntity;
 
-final class ModelFactory
+final class EntityFactory
 {
-    public static function get(string $model): ?AppModel
+    public static function get(string $model): ?AppEntity
     {
         $model = str_replace("/","\\",$model);
         if (!strstr($model,"Model")) $model .= "Model";
