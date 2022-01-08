@@ -1,22 +1,19 @@
 <?php
 namespace App\Services\Restrict;
 
-use App\Enums\ExceptionType;
-use App\Enums\PreferenceType;
 use App\Services\AppService;
 use App\Traits\SessionTrait;
-use App\Traits\CookieTrait;
 use App\Factories\RepositoryFactory as RF;
-use App\Repositories\Base\UserPermissionsRepository;
-
-use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Repositories\Base\UserRepository;
+use App\Repositories\Base\UserPermissionsRepository;
+use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Enums\SessionType;
+use App\Enums\ExceptionType;
+use App\Enums\PreferenceType;
 
 final class LoginService extends AppService
 {
     use SessionTrait;
-    use CookieTrait;
 
     private string $domain;
     private ComponentEncdecrypt $encdec;
