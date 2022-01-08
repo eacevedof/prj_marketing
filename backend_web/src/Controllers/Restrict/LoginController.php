@@ -8,6 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
+
 use App\Factories\ServiceFactory as SF;
 use App\Enums\PreferenceType;
 use App\Enums\PageType;
