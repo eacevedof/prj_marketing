@@ -2,7 +2,7 @@
 /**
  * @var \App\Views\AppView $this
  * @var \App\Helpers\Views\DatatableHelper $dthelp
- * @var array $auth
+ * @var array $authuser
  */
 ?>
 <link href="/themes/valex/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
@@ -64,8 +64,8 @@ import {button} from "/assets/js/common/datatable/button.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {column} from "/assets/js/common/datatable/column.js"
 
-const sessusrid = <?$this->_echo_js($auth["id"]);?>;
-const sesprofile = <?$this->_echo_js($auth["id_profile"]);?>;
+const sessusrid = <?$this->_echo_js($authuser["id"]);?>;
+const sesprofile = <?$this->_echo_js($authuser["id_profile"]);?>;
 
 const PROFILES = {
   ROOT:"1",
