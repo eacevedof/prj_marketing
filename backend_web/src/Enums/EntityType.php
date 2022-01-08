@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-abstract class ModelType
+abstract class EntityType
 {
     const STRING = "string";
     const INT = "int";

@@ -9,7 +9,7 @@
  */
 namespace App\Models;
 
-use App\Enums\ModelType;
+use App\Enums\EntityType;
 use App\Enums\PlatformType;
 use App\Enums\RequestType;
 
@@ -28,7 +28,7 @@ abstract class AppEntity
 
     public function get_requestkey(string $field): string
     {
-        return $this->fields[$field][ModelType::REQUEST_KEY] ?? $field;
+        return $this->fields[$field][EntityType::REQUEST_KEY] ?? $field;
     }
 
     public function get_type(string $field): string
@@ -44,7 +44,7 @@ abstract class AppEntity
     public function get_field(string $requestkey): string
     {
         foreach ($this->fields as $field => $array) {
-            if(($array[ModelType::REQUEST_KEY] ?? "") === $requestkey)
+            if(($array[EntityType::REQUEST_KEY] ?? "") === $requestkey)
                 return $field;
         }
         return "";
@@ -55,10 +55,10 @@ abstract class AppEntity
         $reqkeys = array_keys($request);
         $mapped = [];
         $nullables = [
-            ModelType::DATE,
-            ModelType::DATETIME,
-            ModelType::INT,
-            ModelType::DECIMAL
+            EntityType::DATE,
+            EntityType::DATETIME,
+            EntityType::INT,
+            EntityType::DECIMAL
         ];
         foreach ($reqkeys as $requestkey) {
             $dbfield = $this->get_field($requestkey);
@@ -88,26 +88,26 @@ abstract class AppEntity
     }
     public function add_sysinsert(array &$request, string $user, string $platform=PlatformType::WEB): self
     {
-        $request[ModelType::INSERT_DATE] = date("Y-m-d H:i:s");
-        $request[ModelType::INSERT_USER] = $user;
-        $request[ModelType::INSERT_PLATFORM] = $platform;
+        $request[EntityType::INSERT_DATE] = date("Y-m-d H:i:s");
+        $request[EntityType::INSERT_USER] = $user;
+        $request[EntityType::INSERT_PLATFORM] = $platform;
         return $this;
     }
 
     public function add_sysupdate(array &$request, string $user, string $platform=PlatformType::WEB): self
     {
-        $request[ModelType::UPDATE_DATE] = date("Y-m-d H:i:s");
-        $request[ModelType::UPDATE_USER] = $user;
-        $request[ModelType::UPDATE_PLATFORM] = $platform;
+        $request[EntityType::UPDATE_DATE] = date("Y-m-d H:i:s");
+        $request[EntityType::UPDATE_USER] = $user;
+        $request[EntityType::UPDATE_PLATFORM] = $platform;
         return $this;
     }
 
     public function add_sysdelete(array &$request, string $updatedate, string $user, string $platform=PlatformType::WEB): self
     {
-        $request[ModelType::DELETE_DATE] = date("Y-m-d H:i:s");
-        $request[ModelType::DELETE_USER] = $user;
-        $request[ModelType::DELETE_PLATFORM] = $platform;
-        $request[ModelType::UPDATE_DATE] = $updatedate;
+        $request[EntityType::DELETE_DATE] = date("Y-m-d H:i:s");
+        $request[EntityType::DELETE_USER] = $user;
+        $request[EntityType::DELETE_PLATFORM] = $platform;
+        $request[EntityType::UPDATE_DATE] = $updatedate;
         return $this;
     }
 }//AppEntity
