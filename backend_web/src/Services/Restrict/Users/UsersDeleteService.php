@@ -8,9 +8,9 @@ use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Models\Base\UserEntity;
 use App\Repositories\Base\UserRepository;
-use App\Enums\ExceptionType;
 use App\Enums\PolicyType;
 use App\Enums\ProfileType;
+use App\Enums\ExceptionType;
 
 final class UsersDeleteService extends AppService
 {
