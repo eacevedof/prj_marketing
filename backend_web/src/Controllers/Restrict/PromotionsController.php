@@ -33,8 +33,7 @@ final class PromotionsController extends RestrictController
 
         $this->add_var(PageType::TITLE, __("Promotions detail"))
             ->add_var(PageType::H1, __("Promotions detail"))
-            ->render()
-        ;
+            ->render();
     }
 
 }//PromotionController

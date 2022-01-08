@@ -20,23 +20,20 @@ final class LoginController extends RestrictController
 {
     public function index(): void
     {
-        $this
-            ->add_var(PageType::TITLE, __("Login"))
+        $this->add_var(PageType::TITLE, __("Login"))
             ->add_var(PageType::H1, __("Login"))
             ->add_var(PageType::CSRF, $this->csrf->get_token())
-            ->render()
-        ;
+            ->render();
     }
 
     //@post
     public function access(): void
     {
-        if (!$this->csrf->is_valid($this->_get_csrf())) {
+        if (!$this->csrf->is_valid($this->_get_csrf()))
             $this->_get_json()
                 ->set_code(ResponseType::UNAUTHORIZED)
                 ->set_error([__("Invalid CSRF token")])
                 ->show();
-        }
 
         try {
             $post = $this->request->get_post();
