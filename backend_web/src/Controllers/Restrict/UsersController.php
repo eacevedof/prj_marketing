@@ -258,27 +258,14 @@ final class UsersController extends RestrictController
         if (!$this->request->is_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("only accept json is allowed")])
+                ->set_error([__("Only type json for accept header is allowed")])
                 ->show();
 
-        if(!($uuid = trim($uuid)))
-            $this->_get_json()->set_code(HelperJson::CODE_BAD_REQUEST)
-                ->set_error([__("No code provided")])
-                ->show();
-
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
-            $this->_get_json()->set_code(HelperJson::CODE_UNAUTHORIZED)
-                ->set_error([__("Not allowed to perform this operation")])
-                ->show();
-
-        /**
-         * @var UsersDeleteService $service
-         */
-        $service = SF::get_callable("Restrict\Users\UsersDelete", ["uuid"=>$uuid]);
         try {
-            $result = $service();
+            $delete = SF::get_callable("Restrict\Users\UsersDelete", ["uuid"=>$uuid]);
+            $result = $delete();
             $this->_get_json()->set_payload([
-                "message"=>__("User successfully created"),
+                "message"=>__("User successfully removed"),
                 "result" => $result,
             ])->show();
         }
@@ -296,7 +283,7 @@ final class UsersController extends RestrictController
         if (!$this->request->is_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("only accept json is allowed")])
+                ->set_error([__("Only type json for accept header is allowed")])
                 ->show();
 
         if(!($uuid = trim($uuid)))
