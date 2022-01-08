@@ -35,6 +35,13 @@ abstract class AppService
 
     protected $input;
 
+    /**
+     * @param string $message
+     * @param int $code
+     * @throws BadRequestException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     */
     protected function _exception(string $message, int $code=ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
     {
         $this->logerr($message,"app-service.exception");
