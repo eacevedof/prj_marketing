@@ -12,7 +12,7 @@ namespace App\Controllers\Open;
 use App\Components\Kafka\ProducerComponent;
 use App\Enums\SessionType;
 use App\Enums\ResponseType;
-
+use App\Enums\PageType;
 
 final class ErrorsController extends OpenController
 {
@@ -31,13 +31,13 @@ final class ErrorsController extends OpenController
             $this->_get_json()
                 ->set_code(ResponseType::NOT_FOUND)
                 ->set_error(__("Content not found"))->show();
-        else
-            $this->set_layout("error/error")
-                ->set_template("error/404")
-                ->add_var(PageType::TITLE, __("Content not found"))
-                ->add_var("h1", __("Content not found"))
-                ->add_var("urlback",$this->request->get_referer() ?? "/")
-                ->render();
+
+        $this->set_layout("error/error")
+            ->set_template("error/404")
+            ->add_var(PageType::TITLE, __("Content not found"))
+            ->add_var("h1", __("Content not found"))
+            ->add_var("urlback",$this->request->get_referer() ?? "/")
+            ->render();
     }
 
     public function forbidden(): void
@@ -46,13 +46,13 @@ final class ErrorsController extends OpenController
             $this->_get_json()
                 ->set_code(ResponseType::FORBIDDEN)
                 ->set_error(__("Forbidden"))->show();
-        else
-            $this->set_layout("error/error")
-                ->set_template("error/403")
-                ->add_var(PageType::TITLE, __("Forbidden"))
-                ->add_var("h1", __("Forbidden"))
-                ->add_var("urlback",$this->request->get_referer() ?? "/")
-                ->render();
+
+        $this->set_layout("error/error")
+            ->set_template("error/403")
+            ->add_var(PageType::TITLE, __("Forbidden"))
+            ->add_var("h1", __("Forbidden"))
+            ->add_var("urlback",$this->request->get_referer() ?? "/")
+            ->render();
     }
 
 }//ErrorsController

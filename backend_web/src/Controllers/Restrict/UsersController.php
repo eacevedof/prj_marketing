@@ -42,7 +42,6 @@ final class UsersController extends RestrictController
                 ->add_var("languages", $this->picklist->get_languages())
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("countries", $this->picklist->get_countries())
-                ->add_var("authuser", $this->authuser)
                 ->add_var("dthelp", $search->get_datatable())
                 ->render();
         }
