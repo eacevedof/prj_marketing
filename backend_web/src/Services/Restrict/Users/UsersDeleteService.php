@@ -1,8 +1,6 @@
 <?php
 namespace App\Services\Restrict\Users;
 
-use App\Enums\PolicyType;
-use App\Enums\ProfileType;
 use App\Services\AppService;
 use App\Services\Auth\AuthService;
 use App\Factories\EntityFactory as MF;
@@ -11,6 +9,8 @@ use App\Factories\RepositoryFactory as RF;
 use App\Models\Base\UserEntity;
 use App\Repositories\Base\UserRepository;
 use App\Enums\ExceptionType;
+use App\Enums\PolicyType;
+use App\Enums\ProfileType;
 
 
 final class UsersDeleteService extends AppService
