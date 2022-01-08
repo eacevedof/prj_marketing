@@ -34,6 +34,8 @@ final class UsersUpdateService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
+        if (!$this->input["uuid"]) $this->_exception(__("Missing code key"));
+
         $this->modeluser = MF::get("Base/User");
         $this->validator = VF::get($this->input, $this->modeluser);
         $this->repouser = RF::get("Base/UserRepository");
@@ -135,8 +137,6 @@ final class UsersUpdateService extends AppService
     public function __invoke(): array
     {
         $update = $this->_get_req_without_ops($this->input);
-        if (!$update)
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
@@ -144,7 +144,7 @@ final class UsersUpdateService extends AppService
         }
 
         $update = $this->modeluser->map_request($update);
-
+        $this->_check_entity_permission($update);
         if(!$update["secret"]) unset($update["secret"]);
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
