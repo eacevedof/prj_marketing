@@ -43,10 +43,14 @@ final class UsersDeleteService extends AppService
             );
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _check_delete_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
-        if ($this->auth->is_root() && ((int)$this->authuser["id"]) !== $iduser) return;
+        $idauth = (int) $this->authuser["id"];
+        if ($idauth === $iduser)
+            $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+
+        if ($this->auth->is_root()) return;
 
         if ($this->auth->is_sysadmin()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
@@ -54,12 +58,25 @@ final class UsersDeleteService extends AppService
             return;
 
         $idowner = $this->repouser->get_owner($iduser);
-        $idowner = $idowner["id"];
+        $idowner = (int)$idowner["id"];
+        //si el usuario logado es owner y quiere eliminar un manager y es el owner del manager
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
-            && $this->authuser["id"] === $idowner
+            && $idauth === $idowner
         )
             return;
+
+        $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+    }
+
+    private function _check_undelete_permission(array $entity): void
+    {
+        $iduser = $this->repouser->get_id_by($entity["uuid"]);
+        $idauth = (int) $this->authuser["id"];
+        if ($idauth === $iduser)
+            $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+
+        if ($this->auth->is_root()) return;
 
         $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
     }
@@ -74,7 +91,7 @@ final class UsersDeleteService extends AppService
         if (!$this->entityuser->do_match_keys($update))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->_check_entity_permission($update);
+        $this->_check_delete_permission($update);
         $updatedate = $this->repouser->get_sysupdate($update);
         $this->entityuser->add_sysdelete($update, $updatedate, $this->authuser["id"]);
         $affected = $this->repouser->update($update);
@@ -95,7 +112,8 @@ final class UsersDeleteService extends AppService
         if (!$this->entityuser->do_match_keys($update))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        $row = $this->repouser->get_by_id($id);
+        $entity = $this->repouser->get_by_id($id);
+        $this->_check_undelete_permission($entity);
         $iduser = $this->authuser["id"];
 
         $update = [
@@ -104,7 +122,7 @@ final class UsersDeleteService extends AppService
             "delete_date" => null,
             "delete_user" => null,
             "delete_platform" => null,
-            "cru_csvnote" => $this->repouser->get_csvcru($row, $id),
+            "cru_csvnote" => $this->repouser->get_csvcru($entity, $id),
         ];
 
         $this->entityuser->add_sysupdate($update, $iduser);
