@@ -11,10 +11,6 @@ namespace App\Controllers\Restrict;
 
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
-use App\Services\Restrict\Users\UsersDeleteService;
-use App\Services\Restrict\Users\UsersInfoService;
-use App\Services\Restrict\Users\UsersUpdateService;
-use TheFramework\Helpers\HelperJson;
 use App\Enums\PolicyType;
 use App\Enums\PageType;
 use App\Enums\ProfileType;
@@ -46,7 +42,7 @@ final class UsersController extends RestrictController
                 ->add_var("languages", $this->picklist->get_languages())
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("countries", $this->picklist->get_countries())
-                ->add_var("auth", $this->authuser)
+                ->add_var("authuser", $this->authuser)
                 ->add_var("dthelp", $search->get_datatable())
                 ->render();
         }
