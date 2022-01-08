@@ -15,11 +15,11 @@ use App\Services\Restrict\Users\UsersInfoService;
 use App\Services\Restrict\Users\UsersUpdateService;
 use TheFramework\Helpers\HelperJson;
 use App\Enums\PolicyType;
-use App\Enums\ExceptionType;
-use App\Enums\SessionType;
+use App\Enums\PageType;
 use App\Enums\ProfileType;
 use App\Enums\ResponseType;
 use App\Enums\UrlType;
+use App\Enums\ExceptionType;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ForbiddenException;
 use App\Exceptions\FieldsException;
@@ -90,7 +90,7 @@ final class UsersController extends RestrictController
                 ->render_nl();
         }
 
-        $this->add_var(SessionType::KEY_CSRF, $this->csrf->get_token())
+        $this->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var("h1",__("New user"))
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
@@ -194,7 +194,7 @@ final class UsersController extends RestrictController
              */
             $service = SF::get("Restrict\Users\UsersInfo", [$uuid]);
             $result = $service->get_for_edit();
-            $this->add_var(SessionType::KEY_CSRF, $this->csrf->get_token())
+            $this->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("h1",__("Edit user {0}", $uuid))
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)

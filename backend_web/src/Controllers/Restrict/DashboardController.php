@@ -9,9 +9,9 @@
  */
 namespace App\Controllers\Restrict;
 
-use App\Enums\SessionType;
-use App\Enums\UrlType;
 use App\Factories\ServiceFactory as SF;
+use App\Enums\PageType;
+use App\Enums\UrlType;
 
 final class DashboardController extends RestrictController
 {
