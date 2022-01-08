@@ -32,7 +32,7 @@ final class ErrorsController extends OpenController
         else
             $this->set_layout("error/error")
                 ->set_template("error/404")
-                ->add_var(SessionType::PAGE_TITLE, __("Content not found"))
+                ->add_var(PageType::TITLE, __("Content not found"))
                 ->add_var("h1", __("Content not found"))
                 ->add_var("urlback",$this->request->get_referer() ?? "/")
                 ->render();
@@ -45,7 +45,7 @@ final class ErrorsController extends OpenController
         else
             $this->set_layout("error/error")
                 ->set_template("error/403")
-                ->add_var(SessionType::PAGE_TITLE, __("Forbidden"))
+                ->add_var(PageType::TITLE, __("Forbidden"))
                 ->add_var("h1", __("Forbidden"))
                 ->add_var("urlback",$this->request->get_referer() ?? "/")
                 ->render();

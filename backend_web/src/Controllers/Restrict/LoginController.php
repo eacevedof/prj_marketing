@@ -20,7 +20,7 @@ final class LoginController extends RestrictController
     public function index(): void
     {
         $this
-            ->add_var(SessionType::PAGE_TITLE, __("Login"))
+            ->add_var(PageType::TITLE, __("Login"))
             ->add_var(SessionType::KEY_CSRF, $this->csrf->get_token());
         $this->render();
     }

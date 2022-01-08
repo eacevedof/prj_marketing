@@ -40,7 +40,7 @@ final class UsersController extends RestrictController
         try {
             $search = SF::get("Restrict\Users\UsersSearch");
 
-            $this->add_var(SessionType::PAGE_TITLE, __("Users"))
+            $this->add_var(PageType::TITLE, __("Users"))
                 ->add_var("h1", __("Users"))
                 ->add_var("languages", $this->picklist->get_languages())
                 ->add_var("profiles", $this->picklist->get_profiles())
@@ -148,15 +148,7 @@ final class UsersController extends RestrictController
             $this->response->location(UrlType::FORBIDDEN);
 
         $this->add_var("ismodal",1)
-            ->add_var(SessionType::PAGE_TITLE, __("USERS - info"));
-
-        if (!(
-            $this->auth->is_user_allowed(PolicyType::USERS_READ)
-            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
-        ))
-            $this->render_error([
-                "h1"=>__("Unauthorized")
-            ],"/error/403");
+            ->add_var(PageType::TITLE, __("Users - info"));
 
         try {
             /**

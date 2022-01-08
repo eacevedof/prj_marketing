@@ -22,7 +22,7 @@ final class DashboardController extends RestrictController
 
         $service = SF::get_callable("Restrict\Modules");
         $this
-            ->add_var(SessionType::PAGE_TITLE, __("Dashboard"))
+            ->add_var(PageType::TITLE, __("Dashboard"))
             ->add_var("modules", $service())
         ;
 
