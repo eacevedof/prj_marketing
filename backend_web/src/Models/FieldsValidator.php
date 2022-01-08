@@ -14,20 +14,20 @@ final class FieldsValidator
 {
     private array $rules = [];
     private array $request;
-    private AppEntity $model;
+    private AppEntity $entity;
     private array $errors = [];
     private array $skip = [];
 
-    public function __construct(array $request, AppEntity $model)
+    public function __construct(array $request, AppEntity $entity)
     {
         $this->request = $request;
-        $this->model = $model;
+        $this->entity = $entity;
     }
     
     private function _is_length($field): bool
     {
-        $reqkey = $this->model->get_requestkey($field);
-        $ilen = $this->model->get_length($field);
+        $reqkey = $this->entity->get_requestkey($field);
+        $ilen = $this->entity->get_length($field);
         $value = $this->request[$reqkey] ?? "";
         return (strlen($value)<=$ilen);
     }
@@ -39,13 +39,13 @@ final class FieldsValidator
 
     private function _is_date(string $field): bool
     {
-        return in_array($this->model->get_type($field), [EntityType::DATE,EntityType::DATETIME]);
+        return in_array($this->entity->get_type($field), [EntityType::DATE,EntityType::DATETIME]);
     }
     
     private function _is_type($field): bool
     {
-        $reqkey = $this->model->get_requestkey($field);
-        $type = $this->model->get_type($field);
+        $reqkey = $this->entity->get_requestkey($field);
+        $type = $this->entity->get_type($field);
         $value = $this->request[$reqkey] ?? null;
 
         if ($this->_is_empty($value)) return true;
@@ -70,8 +70,8 @@ final class FieldsValidator
     private function _check_rules(): void
     {
         foreach($this->rules as $rule) {
-            $reqkey = $this->model->get_requestkey($field = $rule["field"]);
-            $label = $this->model->get_label($field);
+            $reqkey = $this->entity->get_requestkey($field = $rule["field"]);
+            $label = $this->entity->get_label($field);
             $message = $rule["fn"]([
                 "data" => $this->request,
                 "field" => $field,
@@ -114,7 +114,7 @@ final class FieldsValidator
             if($this->_is_operation($reqkey) || $this->_in_skip($reqkey))
                 continue;
 
-            $field = $this->model->get_field($reqkey);
+            $field = $this->entity->get_field($reqkey);
             if(!$field) {
                 $this->_add_error(
                     $reqkey,
@@ -124,10 +124,10 @@ final class FieldsValidator
                 continue;
             }
 
-            $label = $this->model->get_label($field);
+            $label = $this->entity->get_label($field);
 
             if (!($this->_is_length($field) || $this->_is_date($field))) {
-                $ilen = $this->model->get_length($field);
+                $ilen = $this->entity->get_length($field);
                 $ilenreq = strlen($this->request[$reqkey] ?? "");
 
                 $this->_add_error(
@@ -139,7 +139,7 @@ final class FieldsValidator
             }
 
             if (!$this->_is_type($field)) {
-                $type = $this->model->get_type($field);
+                $type = $this->entity->get_type($field);
                 $this->_add_error(
                     $reqkey,
                     "type",

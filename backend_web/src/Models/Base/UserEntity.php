@@ -147,4 +147,4 @@ final class UserEntity extends AppEntity
 
     }// construct
 
-}//ExampleEntity
+}//UserEntity

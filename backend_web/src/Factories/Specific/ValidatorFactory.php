@@ -14,9 +14,9 @@ use App\Models\FieldsValidator;
 
 final class ValidatorFactory
 {
-    public static function get(array $request, AppEntity $model): FieldsValidator
+    public static function get(array $request, AppEntity $entity): FieldsValidator
     {
-        return new FieldsValidator($request, $model);
+        return new FieldsValidator($request, $entity);
     }
 
 }//ValidatorFactory
