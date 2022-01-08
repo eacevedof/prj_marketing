@@ -57,7 +57,6 @@ final class LoginService extends AppService
         $prefs = $this->repoprefs->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
         $prefs = $prefs[0]["pref_value"] ?? "/restrict";
 
-
         return [
             "lang" => $lang,
             $prefkey => $prefs
