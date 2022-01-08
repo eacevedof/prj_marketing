@@ -2,18 +2,17 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\RestrictController
- * @file RestrictController.php v1.0.0
+ * @name App\Controllers\Restrict\LoginController
+ * @file LoginController.php v1.0.0
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
 namespace App\Controllers\Restrict;
-use App\Enums\ResponseType;
 use App\Factories\ServiceFactory as SF;
 use App\Enums\PreferenceType;
 use App\Enums\PageType;
-use App\Enums\SessionType;
 use App\Enums\UrlType;
+use App\Enums\ResponseType;
 use \Exception;
 
 final class LoginController extends RestrictController
@@ -48,7 +47,6 @@ final class LoginController extends RestrictController
         }
         catch (Exception $e)
         {
-            $this->logerr($e->getMessage(),"LoginController.access");
             $this->_get_json()
                 ->set_code(ResponseType::UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
