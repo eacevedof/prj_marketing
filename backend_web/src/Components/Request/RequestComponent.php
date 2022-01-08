@@ -53,10 +53,10 @@ final class RequestComponent
         return $_SERVER["HTTP_REFERER"] ?? null;
     }
 
-    public function is_json(): bool
+    public function is_accept_json(): bool
     {
         $accept = $this->get_header("accept");
-        $accept == strtolower($accept);
+        $accept = strtolower($accept);
         return strstr($accept,"application/json");
     }
 }
