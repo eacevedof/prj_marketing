@@ -21,8 +21,10 @@ final class LoginController extends RestrictController
     {
         $this
             ->add_var(PageType::TITLE, __("Login"))
-            ->add_var(PageType::CSRF, $this->csrf->get_token());
-        $this->render();
+            ->add_var(PageType::H1, __("Login"))
+            ->add_var(PageType::CSRF, $this->csrf->get_token())
+            ->render()
+        ;
     }
 
     //@post
