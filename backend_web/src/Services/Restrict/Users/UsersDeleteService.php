@@ -12,7 +12,6 @@ use App\Enums\ExceptionType;
 use App\Enums\PolicyType;
 use App\Enums\ProfileType;
 
-
 final class UsersDeleteService extends AppService
 {
     private AuthService $auth;
