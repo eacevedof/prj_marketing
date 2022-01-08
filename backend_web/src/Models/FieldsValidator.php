@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Models;
-use App\Enums\ModelType;
+use App\Enums\EntityType;
 
 final class FieldsValidator
 {
@@ -39,7 +39,7 @@ final class FieldsValidator
 
     private function _is_date(string $field): bool
     {
-        return in_array($this->model->get_type($field), [ModelType::DATE,ModelType::DATETIME]);
+        return in_array($this->model->get_type($field), [EntityType::DATE,EntityType::DATETIME]);
     }
     
     private function _is_type($field): bool
@@ -51,11 +51,11 @@ final class FieldsValidator
         if ($this->_is_empty($value)) return true;
 
         switch ($type) {
-            case ModelType::INT: return is_numeric($value);
-            case ModelType::DECIMAL: return is_float($value);
-            case ModelType::DATE: return strtotime($value);
-            case ModelType::DATETIME: return $this->_is_datetime_ok($value);
-            case ModelType::STRING: return is_string($field) || is_numeric($value) || is_float($value);
+            case EntityType::INT: return is_numeric($value);
+            case EntityType::DECIMAL: return is_float($value);
+            case EntityType::DATE: return strtotime($value);
+            case EntityType::DATETIME: return $this->_is_datetime_ok($value);
+            case EntityType::STRING: return is_string($field) || is_numeric($value) || is_float($value);
         }
         return false;
     }
