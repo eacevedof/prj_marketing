@@ -27,7 +27,7 @@ final class ErrorsController extends OpenController
 
     public function error_404(): void
     {
-        if ($this->request->is_json())
+        if ($this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::NOT_FOUND)
                 ->set_error(__("Content not found"))->show();
@@ -36,13 +36,13 @@ final class ErrorsController extends OpenController
             ->set_template("error/404")
             ->add_var(PageType::TITLE, __("Content not found"))
             ->add_var("h1", __("Content not found"))
-            ->add_var("urlback",$this->request->get_referer() ?? "/")
+            ->add_var("urlback",$this->request->get_referer() ?? "")
             ->render();
     }
 
     public function forbidden(): void
     {
-        if ($this->request->is_json())
+        if ($this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::FORBIDDEN)
                 ->set_error(__("Forbidden"))->show();
@@ -51,7 +51,7 @@ final class ErrorsController extends OpenController
             ->set_template("error/403")
             ->add_var(PageType::TITLE, __("Forbidden"))
             ->add_var("h1", __("Forbidden"))
-            ->add_var("urlback",$this->request->get_referer() ?? "/")
+            ->add_var("urlback",$this->request->get_referer() ?? "")
             ->render();
     }
 

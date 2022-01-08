@@ -59,7 +59,7 @@ final class UsersController extends RestrictController
     //@get
     public function search(): void
     {
-        if (!$this->request->is_json())
+        if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("Only type json for accept header is allowed")])
@@ -105,7 +105,7 @@ final class UsersController extends RestrictController
     //@post
     public function insert(): void
     {
-        if (!$this->request->is_json())
+        if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("Only type json for accept header is allowed")])
@@ -220,7 +220,7 @@ final class UsersController extends RestrictController
     //@patch
     public function update(string $uuid): void
     {
-        if (!$this->request->is_json())
+        if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("Only type json for accept header is allowed")])
@@ -256,7 +256,7 @@ final class UsersController extends RestrictController
     //@delete
     public function remove(string $uuid): void
     {
-        if (!$this->request->is_json())
+        if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("Only type json for accept header is allowed")])
@@ -281,7 +281,7 @@ final class UsersController extends RestrictController
     //@undelete
     public function undelete(string $uuid): void
     {
-        if (!$this->request->is_json())
+        if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("Only type json for accept header is allowed")])
