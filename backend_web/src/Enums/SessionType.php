@@ -8,7 +8,4 @@ abstract class SessionType
 
     const AUTH_USER = "auth_user";
     const AUTH_USER_PERMISSIONS = "auth_user_permissions";
-
-    const TITLE = "pagetitle";
-    const KEY_CSRF = "csrf";
 }

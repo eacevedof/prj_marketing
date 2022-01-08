@@ -8,10 +8,11 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
+use App\Enums\ResponseType;
 use App\Factories\ServiceFactory as SF;
 use App\Enums\PreferenceType;
+use App\Enums\PageType;
 use App\Enums\SessionType;
-use App\Enums\ExceptionType;
 use App\Enums\UrlType;
 use \Exception;
 
@@ -21,7 +22,7 @@ final class LoginController extends RestrictController
     {
         $this
             ->add_var(PageType::TITLE, __("Login"))
-            ->add_var(SessionType::KEY_CSRF, $this->csrf->get_token());
+            ->add_var(PageType::CSRF, $this->csrf->get_token());
         $this->render();
     }
 
@@ -30,7 +31,7 @@ final class LoginController extends RestrictController
     {
         if (!$this->csrf->is_valid($this->_get_csrf())) {
             $this->_get_json()
-                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
+                ->set_code(ResponseType::UNAUTHORIZED)
                 ->set_error([__("Invalid CSRF token")])
                 ->show();
         }
@@ -49,7 +50,7 @@ final class LoginController extends RestrictController
         {
             $this->logerr($e->getMessage(),"LoginController.access");
             $this->_get_json()
-                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
+                ->set_code(ResponseType::UNAUTHORIZED)
                 ->set_error([$e->getMessage()])
                 ->show();
         }
