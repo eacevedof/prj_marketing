@@ -1,17 +1,19 @@
 <?php
 namespace App\Services\Restrict\Users;
 
-use App\Enums\ProfileType;
-use App\Exceptions\FieldsException;
 use App\Services\AppService;
 use App\Traits\RequestTrait;
 use App\Factories\ModelFactory as MF;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\Specific\ValidatorFactory as VF;
+use App\Services\Auth\AuthService;
 use App\Factories\ServiceFactory as SF;
 use App\Models\Base\UserModel;
 use App\Repositories\Base\UserRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
+use App\Enums\PolicyType;
+use App\Enums\ProfileType;
+use App\Exceptions\FieldsException;
 use App\Models\FieldsValidator;
 use App\Enums\ExceptionType;
 
@@ -19,6 +21,7 @@ final class UsersUpdateService extends AppService
 {
     use RequestTrait;
 
+    private AuthService $auth;
     private array $authuser;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
@@ -27,6 +30,9 @@ final class UsersUpdateService extends AppService
 
     public function __construct(array $input)
     {
+        $this->auth = SF::get_auth();
+        $this->_check_permission();
+
         $this->input = $input;
         $this->modeluser = MF::get("Base/User");
         $this->validator = VF::get($this->input, $this->modeluser);
@@ -34,6 +40,39 @@ final class UsersUpdateService extends AppService
         $this->repouser->set_model($this->modeluser);
         $this->authuser = SF::get_auth()->get_user();
         $this->encdec = $this->_get_encdec();
+    }
+
+    private function _check_permission(): void
+    {
+        if(!(
+            $this->auth->is_user_allowed(PolicyType::USERS_READ)
+            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
+        ))
+            $this->_exception(
+                __("You are not allowed to perform this operation"),
+                ExceptionType::CODE_FORBIDDEN
+            );
+    }
+
+    private function _check_entity_permission(array $entity): void
+    {
+        $iduser = $this->repouser->get_id_by($entity["uuid"]);
+        if ($this->auth->is_root() || ((int)$this->authuser["id"]) === $iduser) return;
+
+        if ($this->auth->is_sysadmin()
+            && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
+        )
+            return;
+
+        $idowner = $this->repouser->get_owner($iduser);
+        $idowner = $idowner["id"];
+        if ($this->auth->is_business_owner()
+            && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
+            && $this->authuser["id"] === $idowner
+        )
+            return;
+
+        $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
     }
 
     private function _skip_validation(): self
