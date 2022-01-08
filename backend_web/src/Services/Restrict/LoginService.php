@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Restrict;
 
+use App\Enums\ExceptionType;
 use App\Enums\PreferenceType;
 use App\Services\AppService;
 use App\Traits\SessionTrait;
@@ -29,22 +30,22 @@ final class LoginService extends AppService
         $this->encdec = $this->_get_encdec();
         $this->repository = RF::get("Base/User");
         $this->permissionrepo = RF::get("Base/UserPermissions");
-        $this->prefrepo = RF::get("Base/UserPreferences");
+        $this->repoprefs = RF::get("Base/UserPreferences");
     }
 
     public function in(): array
     {
         $email = $this->input["email"];
-        if (!$email) $this->_exception(__("Empty email"));
+        if (!$email) $this->_exception(__("Empty email"), ExceptionType::CODE_BAD_REQUEST);
 
         $password = $this->input["password"];
-        if (!$password) $this->_exception(__("Empty password"));
+        if (!$password) $this->_exception(__("Empty password"), ExceptionType::CODE_BAD_REQUEST);
 
         $aruser = $this->repository->get_by_email($email);
-        if (!($secret = ($aruser["secret"] ?? ""))) $this->_exception(__("Invalid data"));
+        if (!($secret = ($aruser["secret"] ?? ""))) $this->_exception(__("Invalid data"), ExceptionType::CODE_BAD_REQUEST);
 
         if (!$this->encdec->check_hashpassword($password, $secret))
-            $this->_exception(__("Unauthorized"));
+            $this->_exception(__("Unauthorized"), ExceptionType::CODE_UNAUTHORIZED);
 
         $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->permissionrepo->get_by_user($iduser = $aruser["id"]);
 
@@ -53,15 +54,13 @@ final class LoginService extends AppService
             ->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"))
         ;
 
-        $prefs = $this->prefrepo->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
+        $prefs = $this->repoprefs->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
         $prefs = $prefs[0]["pref_value"] ?? "/restrict";
-        //$this->session->add(SessionType::AUTH_USER_PERMISSIONS, $permissions);
+
 
         return [
             "lang" => $lang,
             $prefkey => $prefs
         ];
-        //esto no me vale pq la respuesta es ajax y el navegador no escribe
-        //$this->cookie->add_value(key::LANG, $lang);
     }
 }
