@@ -8,6 +8,7 @@
  * @observations
  */
 namespace App\Controllers\Restrict;
+
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
 use App\Services\Restrict\Users\UsersDeleteService;
@@ -41,7 +42,7 @@ final class UsersController extends RestrictController
             $search = SF::get("Restrict\Users\UsersSearch");
 
             $this->add_var(PageType::TITLE, __("Users"))
-                ->add_var("h1", __("Users"))
+                ->add_var(PageType::H1, __("Users"))
                 ->add_var("languages", $this->picklist->get_languages())
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("countries", $this->picklist->get_countries())
@@ -84,14 +85,15 @@ final class UsersController extends RestrictController
     public function create(): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
-            $this->add_var("ismodal",1)
-                ->add_var("h1", __("Unauthorized"))
+            $this->add_var(PageType::TITLE, __("Unauthorized"))
+                ->add_var(PageType::H1, __("Unauthorized"))
+                ->add_var("ismodal",1)
                 ->set_template("/error/403")
                 ->render_nl();
         }
 
         $this->add_var(PageType::CSRF, $this->csrf->get_token())
-            ->add_var("h1",__("New user"))
+            ->add_var(PageType::H1,__("New user"))
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
             ->add_var("countries", $this->picklist->get_countries())
@@ -105,22 +107,18 @@ final class UsersController extends RestrictController
         if (!$this->request->is_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("only accept json is allowed")])
+                ->set_error([__("Only type json for accept header is allowd")])
                 ->show();
 
-        if (!$this->csrf->is_valid($this->_get_csrf())) {
+        if (!$this->csrf->is_valid($this->_get_csrf()))
             $this->_get_json()
                 ->set_code(ResponseType::FORBIDDEN)
                 ->set_error([__("Invalid CSRF token")])
                 ->show();
-        }
-
+        
         try {
-            /**
-             * @var UsersInsertService
-             */
-            $service = SF::get_callable("Restrict\Users\UsersInsert", $this->request->get_post());
-            $result = $service();
+            $insert = SF::get_callable("Restrict\Users\UsersInsert", $this->request->get_post());
+            $result = $insert();
             $this->_get_json()->set_payload([
                 "message" => __("User successfully created"),
                 "result" => $result,
@@ -129,7 +127,7 @@ final class UsersController extends RestrictController
         catch (FieldsException $e) {
             $this->_get_json()->set_code($e->getCode())
                 ->set_error([
-                    ["fields_validation" => $service->get_errors()]
+                    ["fields_validation" => $insert->get_errors()]
                 ])
                 ->show();
         }
@@ -144,35 +142,29 @@ final class UsersController extends RestrictController
     //@modal
     public function info(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_READ))
-            $this->response->location(UrlType::FORBIDDEN);
-
-        $this->add_var("ismodal",1)
-            ->add_var(PageType::TITLE, __("Users - info"));
+         $this->add_var(PageType::TITLE, __("User info"))
+             ->add_var(PageType::H1, __("User info"))
+             ->add_var("ismodal",1);
 
         try {
-            /**
-             * @var UsersInfoService $service
-             */
-            $service = SF::get_callable("Restrict\Users\UsersInfo", [$uuid]);
-            $result = $service();
-            $this->add_var("h1",__("User info"))
-                ->add_var("uuid", $uuid)
+            $info = SF::get_callable("Restrict\Users\UsersInfo", [$uuid]);
+            $result = $info();
+            $this->add_var("uuid", $uuid)
                 ->add_var("result", $result)
                 ->render_nl();
         }
         catch (NotFoundException $e) {
-            $this->add_var("h1", $e->getMessage())
+            $this->add_var(PageType::H1, $e->getMessage())
                 ->set_template("/error/404")
                 ->render_nl();
         }
         catch (ForbiddenException $e) {
-            $this->add_var("h1", $e->getMessage())
+            $this->add_var(PageType::H1, $e->getMessage())
                 ->set_template("/error/403")
                 ->render_nl();
         }
         catch (Exception $e) {
-            $this->add_var("h1",$e->getMessage())
+            $this->add_var(PageType::H1, $e->getMessage())
                 ->set_template("/error/500")
                 ->render_nl();
         }
@@ -182,20 +174,20 @@ final class UsersController extends RestrictController
     public function edit(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
-            $this->add_var("h1",__("Unauthorized"))
+            $this->add_var(PageType::TITLE, __("Unauthorized"))
+                ->add_var(PageType::H1, __("Unauthorized"))
+                ->add_var("ismodal",1)
                 ->set_template("/error/403")
                 ->render_nl();
         }
 
         $this->add_var("ismodal",1);
         try {
-            /**
-             * @var UsersInfoService
-             */
-            $service = SF::get("Restrict\Users\UsersInfo", [$uuid]);
-            $result = $service->get_for_edit();
-            $this->add_var(PageType::CSRF, $this->csrf->get_token())
-                ->add_var("h1",__("Edit user {0}", $uuid))
+            $edit = SF::get("Restrict\Users\UsersInfo", [$uuid]);
+            $result = $edit->get_for_edit();
+            $this->add_var(PageType::TITLE, __("Edit user {0}", $uuid))
+                ->add_var(PageType::H1, __("Edit user {0}", $uuid))
+                ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
                 ->add_var("profiles", $this->picklist->get_profiles())
@@ -205,17 +197,20 @@ final class UsersController extends RestrictController
                 ->render_nl();
         }
         catch (NotFoundException $e) {
-            $this->add_var("h1",$e->getMessage())
+            $this->add_var(PageType::TITLE, $e->getMessage())
+                ->add_var(PageType::H1, $e->getMessage())
                 ->set_template("/error/404")
                 ->render_nl();
         }
         catch (ForbiddenException $e) {
-            $this->add_var("h1",$e->getMessage())
+            $this->add_var(PageType::TITLE, $e->getMessage())
+                ->add_var(PageType::H1, $e->getMessage())
                 ->set_template("/error/403")
                 ->render_nl();
         }
         catch (Exception $e) {
-            $this->add_var("h1",$e->getMessage())
+            $this->add_var(PageType::TITLE, $e->getMessage())
+                ->add_var(PageType::H1, $e->getMessage())
                 ->set_template("/error/500")
                 ->render_nl();
         }
