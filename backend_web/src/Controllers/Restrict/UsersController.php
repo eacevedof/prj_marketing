@@ -53,6 +53,12 @@ final class UsersController extends RestrictController
         catch (ForbiddenException $e){
             $this->response->location(UrlType::FORBIDDEN);
         }
+        catch (Exception $e) {
+            $this->add_var(PageType::TITLE, $e->getMessage())
+                ->add_var(PageType::H1, $e->getMessage())
+                ->set_template("/error/500")
+                ->render();
+        }
     }
 
     //@get
