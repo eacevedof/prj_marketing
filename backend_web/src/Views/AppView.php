@@ -29,6 +29,7 @@ final class AppView
 
     private array $globals = [];
     private array $locals = [];
+    private array $headers = [];
 
     private string $pathlayout = "";
     private string $pathtemplate = "";
@@ -137,7 +138,7 @@ final class AppView
 
     private function _exception(string $message, int $code=500): void
     {
-        $this->logerr($message,"app-service.exception");
+        $this->logerr($message,"app-view.exception");
         throw new Exception($message, $code);
     }
 
@@ -224,8 +225,15 @@ final class AppView
         echo $raw ? $any : htmlentities($any);
     }
 
+    public function add_header(int $code): self
+    {
+        $this->headers = [];
+    }
+
     private function _flush(): void
     {
+        foreach ($this->headers as $code)
+            http_response_code($code);
         ob_end_flush();
         exit();
     }
