@@ -227,15 +227,22 @@ final class AppView
 
     public function add_header(int $code): self
     {
-        $this->headers = [];
+        $this->headers[] = $code;
         return $this;
+    }
+
+    private function _send_headers(): void
+    {
+        $headers = array_unique($this->headers);
+        foreach ($headers as $code)
+            http_response_code($code);
     }
 
     private function _flush(): void
     {
-        foreach ($this->headers as $code)
-            http_response_code($code);
-        ob_end_flush();
+        $uri = $_SERVER["REQUEST_URI"];
+        $this->_send_headers();
+        $flush = ob_end_flush();
         exit();
     }
 
