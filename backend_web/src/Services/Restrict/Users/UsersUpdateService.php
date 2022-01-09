@@ -64,8 +64,7 @@ final class UsersUpdateService extends AppService
         )
             return;
 
-        $idowner = $this->repouser->get_owner($iduser);
-        $idowner = $idowner["id"];
+        $idowner = $this->repouser->get_ownerid($iduser);
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
             && $this->authuser["id"] === $idowner

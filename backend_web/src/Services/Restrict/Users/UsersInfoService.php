@@ -61,7 +61,7 @@ final class UsersInfoService extends AppService
         //si logado es propietario del bm
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
-            && $this->authuser["id"] === $identowner
+            && $idauthuser === $identowner
         )
             return;
 
