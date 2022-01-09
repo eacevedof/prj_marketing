@@ -25,13 +25,7 @@ final class ServiceFactory
         if (!strstr($service,"Service")) $service .= "Service";
         
         $Service = "\App\Services\\".$service;
-        try {
-            $obj = new $Service($params);
-        }
-        catch (\Exception $e) {
-            return null;
-        }
-        return $obj;
+        return new $Service($params);
     }
 
     public static function get_callable(string $service, array $params = []): callable
