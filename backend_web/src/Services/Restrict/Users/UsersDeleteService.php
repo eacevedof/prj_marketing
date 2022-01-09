@@ -44,7 +44,7 @@ final class UsersDeleteService extends AppService
 
     private function _check_entity_delete_permission(array $entity): void
     {
-        $iduser = $this->repouser->get_id_by($entity["uuid"]);
+        $iduser = (int)$entity["id"];
         $idauthuser = (int)$this->authuser["id"];
 
         //si el logado quiere borrarse a si mismo
@@ -99,12 +99,13 @@ final class UsersDeleteService extends AppService
         if (!$this->entityuser->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        if ($entity["delete_date"])
+        if ($this->repouser->is_deleted($iduser))
             $this->_exception(
                 __("Is not possible to delete entity {0}", $entity["uuid"]),
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
 
+        $entity = $this->repouser->get_by_id($iduser);
         $this->_check_entity_delete_permission($entity);
 
         $updatedate = $this->repouser->get_sysupdate($entity);
@@ -120,33 +121,32 @@ final class UsersDeleteService extends AppService
     public function undelete(): array
     {
         $entity = $this->input;
-        if (!$id = $this->repouser->get_id_by($entity["uuid"]))
+        if (!$iduser = $this->repouser->get_id_by($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
-        $entity["id"] = $id;
+        $entity["id"] = $iduser;
         if (!$this->entityuser->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        $entity = $this->repouser->get_by_id($id);
-        if (!$entity["delete_date"])
+        if (!$this->repouser->is_deleted($iduser))
             $this->_exception(
                 __("Is not possible to restore entity {0}", $entity["uuid"]),
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
 
         $this->_check_entity_undelete_permission($entity);
-        $iduser = $this->authuser["id"];
+        $idauthuser = $this->authuser["id"];
 
         $entity = [
             "uuid" => $entity["uuid"],
-            "id" => $id,
+            "id" => $iduser,
             "delete_date" => null,
             "delete_user" => null,
             "delete_platform" => null,
-            "cru_csvnote" => $this->repouser->get_csvcru($entity, $id),
+            "cru_csvnote" => $this->repouser->get_csvcru($entity, $idauthuser),
         ];
 
-        $this->entityuser->add_sysupdate($entity, $iduser);
+        $this->entityuser->add_sysupdate($entity, $idauthuser);
         $affected = $this->repouser->update($entity);
 
         return [
