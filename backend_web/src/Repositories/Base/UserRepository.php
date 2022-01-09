@@ -200,20 +200,6 @@ final class UserRepository extends AppRepository
         return intval($r[0]["id"] ?? 0);
     }
 
-    public function get_id_by(string $uuid): int
-    {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_crud()
-            ->set_comment("user.get_id_by(uuid)")
-            ->set_table("$this->table as m")
-            ->set_getfields(["m.id"])
-            ->add_and("m.uuid='$uuid'")
-            ->get_selectfrom()
-        ;
-        $r = $this->db->query($sql);
-        return intval($r[0]["id"] ?? 0);
-    }
-
     public function get_info(string $uuid): array
     {
         $uuid = $this->_get_sanitized($uuid);
@@ -262,19 +248,6 @@ final class UserRepository extends AppRepository
     {
         $this->auth = $auth;
         return $this;
-    }
-
-    public function get_by_id(string $id): array
-    {
-        $id = (int) $id;
-        $sql = $this->_get_crud()
-            ->set_table("$this->table as m")
-            ->set_getfields(["m.*"])
-            ->add_and("m.id=$id")
-            ->get_selectfrom()
-        ;
-        $r = $this->db->query($sql);
-        return $r[0] ?? [];
     }
 
     public function get_owner(string $userid): array
