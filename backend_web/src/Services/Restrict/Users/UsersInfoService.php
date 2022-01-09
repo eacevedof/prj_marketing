@@ -49,22 +49,32 @@ final class UsersInfoService extends AppService
     private function _check_entity_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
-        if ($this->auth->is_root() || ((int)$this->authuser["id"]) === $iduser) return;
+        $idauthuser = (int)$this->authuser["id"];
+        if ($this->auth->is_root() || $idauthuser === $iduser) return;
 
         if ($this->auth->is_sysadmin()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
         )
             return;
 
-        $idowner = $this->repouser->get_owner($iduser);
-        $idowner = $idowner["id"];
+        $identowner = $this->repouser->get_owner($iduser);
+        $identowner = $identowner["id"];
+        //si logado es propietario del bm
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
-            && $this->authuser["id"] === $idowner
+            && $this->authuser["id"] === $identowner
         )
             return;
 
-        $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+        //si el logado es bm y la ent es del mismo owner
+        $idauthowner = $this->repouser->get_owner($idauthuser);
+        $idauthowner = $idauthowner["id"];
+        if ($this->auth->is_business_manager() && $idauthowner === $identowner)
+            return;
+
+        $this->_exception(
+            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        );
     }
 
     public function __invoke(): array
