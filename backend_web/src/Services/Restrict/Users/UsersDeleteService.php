@@ -92,14 +92,15 @@ final class UsersDeleteService extends AppService
     public function __invoke(): array
     {
         $entity = $this->input;
-        if (!$id = $this->repouser->get_id_by($entity["uuid"]))
+        if (!$iduser = $this->repouser->get_id_by($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
-        $entity["id"] = $id;
+        $entity["id"] = $iduser;
         if (!$this->entityuser->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->_check_entity_delete_permission($entity);
+
         $updatedate = $this->repouser->get_sysupdate($entity);
         $this->entityuser->add_sysdelete($entity, $updatedate, $this->authuser["id"]);
         $affected = $this->repouser->update($entity);
