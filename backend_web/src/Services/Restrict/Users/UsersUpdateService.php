@@ -57,21 +57,25 @@ final class UsersUpdateService extends AppService
     private function _check_entity_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
-        if ($this->auth->is_root() || ((int)$this->authuser["id"]) === $iduser) return;
+        $idauthuser = (int)$this->authuser["id"];
+        if ($this->auth->is_root() || $idauthuser === $iduser) return;
 
         if ($this->auth->is_sysadmin()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
         )
             return;
 
-        $idowner = $this->repouser->get_ownerid($iduser);
+        $identowner = $this->repouser->get_ownerid($iduser);
+        //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
-            && $this->authuser["id"] === $idowner
+            && $idauthuser === $identowner
         )
             return;
 
-        $this->_exception(__("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN);
+        $this->_exception(
+            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        );
     }
 
     private function _skip_validation(): self
