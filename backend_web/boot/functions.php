@@ -19,8 +19,11 @@ function lgerr($var, $title=null)
     if($var) $var = PHP_EOL.$var.PHP_EOL;
     $var = $title.$var;
     $sPathFile = defined("PATH_LOGS") ? PATH_LOGS."/error/" : "";
+    if (!is_dir($sPathFile)) mkdir($sPathFile);
     $sPathFile .= "app_$dlog.log";
-    file_put_contents($sPathFile, $var, FILE_APPEND);
+    $oCursor=fopen($sPathFile,"ab");
+    fwrite($oCursor,$var);
+    fclose($oCursor);
 }
 
 function appboot_loadenv(): void
