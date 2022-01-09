@@ -54,7 +54,7 @@ if ($authuser):
           </li>
 
           <li class="float-end">
-            <p style="color:#0761E0;" class="pt-3"><?="[{$authuser["id"]}] {$authuser["description"]} | {$authuser["id_profile"]}"?></p>
+            <p style="color:#0761E0;" class="pt-3"><?="[{$authuser["id"]}, {$authuser["uuid"]}] {$authuser["description"]} | {$authuser["id_profile"]}"?></p>
           </li>
         </ul>
       </nav>

@@ -53,7 +53,7 @@ final class UsersInfoService extends AppService
         if ($this->auth->is_root() || $idauthuser === $iduser) return;
 
         if ($this->auth->is_sysadmin()
-            && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
+            && in_array($entity["id_profile"], [ProfileType::SYS_ADMIN, ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
         )
             return;
 
