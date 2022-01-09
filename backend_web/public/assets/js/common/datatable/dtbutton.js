@@ -2,7 +2,7 @@ import {reqtxt} from "/assets/js/common/req.js"
 import spinner from "/assets/js/common/spinner.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
 
-import search from "./search.js"
+import search from "./dtsearch.js"
 import rowswal from "./rowswal.js"
 
 let _$table = null,
@@ -140,7 +140,7 @@ const get_topbuttons = () => {
   return topbtns
 }
 
-export const button = {
+export const dtbutton = {
   add_topbtn: button => _topbtns.push(button),
   set_topbtns: buttons => _topbtns = buttons
 }

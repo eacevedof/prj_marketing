@@ -5,9 +5,9 @@ import {
 } from "/assets/js/common/url.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
 
-import dtcolumn from "./column.js"
-import dtsearch from "./search.js"
-import dtbutton from "./button.js"
+import dtcolumn from "./dtcolumn.js"
+import dtsearch from "./dtsearch.js"
+import dtbutton from "./dtbutton.js"
 
 load_asset_css("common/spinner")
 

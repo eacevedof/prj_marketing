@@ -43,7 +43,7 @@ echo $this->_element("common/elem-datatable-asset");
 <script type="module">
 import dt_render from "/assets/js/common/datatable/dttable.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
-import {column} from "/assets/js/common/datatable/column.js"
+import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 
 const sessusrid = <?$this->_echo_js($authuser["id"]);?>;
 const sesprofile = <?$this->_echo_js($authuser["id_profile"]);?>;
@@ -78,42 +78,42 @@ const is_deletable = row => {
   )
 }
 
-column.add_rowbtn({
+dtcolumn.add_rowbtn({
   btnid: "rowbtn-show",
   render: (v,t,row) => {
-    return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-md btn-dark">
+    return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-dark">
       <i class="mdi mdi-account-card-details"></i>
     </button>`
   }
 })
 
-column.add_rowbtn({
+dtcolumn.add_rowbtn({
   btnid: "rowbtn-edit",
   render: (v,t,row) => {
     if (is_editable(row))
-      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}" class="btn btn-md btn-info">
+      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}" class="btn btn-info">
         <i class="las la-pen"></i>
       </button>`
     return ""
   }
 })
 
-column.add_rowbtn({
+dtcolumn.add_rowbtn({
   btnid: "rowbtn-del",
   render: (v,t,row) => {
     if (is_deletable(row))
-      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}" class="btn btn-md btn-danger">
+      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}" class="btn btn-danger">
         <i class="las la-trash"></i>
       </button>`
     return ""
   }
 })
 
-column.add_rowbtn({
+dtcolumn.add_rowbtn({
   btnid: "rowbtn-undel",
   render: (v,t,row) => {
     if (sesprofile===PROFILES.ROOT && row.delete_date)
-      return `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}" class="btn btn-md btn-success">
+      return `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}" class="btn btn-success">
         <i class="las la-undo-alt"></i>
       </button>`
     return ""

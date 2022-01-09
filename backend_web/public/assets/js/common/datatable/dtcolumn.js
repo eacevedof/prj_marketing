@@ -124,7 +124,7 @@ const get_columns = () => {
   return allcols
 }
 
-export const column = {
+export const dtcolumn = {
   add_column: obj => _columns.push(obj),
   add_rowbtn: obj => _override.push(obj),
   add_extrowbtn: obj => _extrowbtns.push(obj),
