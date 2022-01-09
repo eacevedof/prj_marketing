@@ -99,6 +99,12 @@ final class UsersDeleteService extends AppService
         if (!$this->entityuser->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
+        if ($entity["delete_date"])
+            $this->_exception(
+                __("Is not possible to delete entity {0}", $entity["uuid"]),
+                ExceptionType::CODE_NOT_ACCEPTABLE
+            );
+
         $this->_check_entity_delete_permission($entity);
 
         $updatedate = $this->repouser->get_sysupdate($entity);
@@ -122,6 +128,12 @@ final class UsersDeleteService extends AppService
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
         $entity = $this->repouser->get_by_id($id);
+        if (!$entity["delete_date"])
+            $this->_exception(
+                __("Is not possible to restore entity {0}", $entity["uuid"]),
+                ExceptionType::CODE_NOT_ACCEPTABLE
+            );
+
         $this->_check_entity_undelete_permission($entity);
         $iduser = $this->authuser["id"];
 

@@ -1,5 +1,5 @@
 ### To-Do
-- custom headers en render de la vista
+- ~~custom headers en render de la vista~~
 - color boton swal en restore
 - formulario desde dash falta estilos
   - llevar estilos a css de lit
