@@ -94,7 +94,7 @@ const is_deletable = row => {
 dtcolumn.add_rowbtn({
   btnid: "rowbtn-show",
   render: (v,t,row) => {
-    if (is_infoable(row)) return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-dark">
+    if (is_infoable(row)) return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-dark" title="info">
       <i class="mdi mdi-account-card-details"></i>
     </button>`
     return ""
@@ -105,7 +105,7 @@ dtcolumn.add_rowbtn({
   btnid: "rowbtn-edit",
   render: (v,t,row) => {
     if (is_editable(row))
-      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}" class="btn btn-info">
+      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}" class="btn btn-info" title="edit">
         <i class="las la-pen"></i>
       </button>`
     return ""
@@ -116,7 +116,7 @@ dtcolumn.add_rowbtn({
   btnid: "rowbtn-del",
   render: (v,t,row) => {
     if (is_deletable(row))
-      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}" class="btn btn-danger">
+      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}" class="btn btn-danger" title="remove">
         <i class="las la-trash"></i>
       </button>`
     return ""
@@ -127,7 +127,7 @@ dtcolumn.add_rowbtn({
   btnid: "rowbtn-undel",
   render: (v,t,row) => {
     if (sesprofile===PROFILES.ROOT && row.delete_date)
-      return `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}" class="btn btn-success">
+      return `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}" class="btn btn-success" title="restore">
         <i class="las la-undo-alt"></i>
       </button>`
     return ""
