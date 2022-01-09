@@ -101,7 +101,7 @@ final class UsersDeleteService extends AppService
 
         if ($this->repouser->is_deleted($iduser))
             $this->_exception(
-                __("Is not possible to delete entity {0}", $entity["uuid"]),
+                __("This item is already deleted {0}", $entity["uuid"]),
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
 
