@@ -1,6 +1,6 @@
 <?php
 //components autoload
-//autoload.php 2.0.0
+//autoload.php 2.2.0
 $sPathRoot = dirname(__FILE__).DIRECTORY_SEPARATOR;
 //die("sPathRoot: $sPathRoot");//...tests\vendor\theframework\components
 $arSubFolders[] = get_include_path();
@@ -44,11 +44,6 @@ spl_autoload_register(function($sNSClassName)
         //print_r("\n classname include: $sClassName");
         if(stream_resolve_include_path($sClassName))
             include_once $sClassName;
-        
-        elseif(function_exists("lg"))
-        {
-            lg("Class not found: $sClassName");
-        }
     }
 });//spl_autoload_register
 
