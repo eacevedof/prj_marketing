@@ -10,21 +10,20 @@
 namespace App\Controllers\Open;
 
 use App\Controllers\AppController;
-use App\Enums\SessionType;
 use App\Traits\RequestTrait;
-use App\Traits\ResponseTrait;
 use App\Traits\ViewTrait;
-
+use App\Traits\ResponseTrait;
 
 abstract class OpenController extends AppController
 {
-    use ViewTrait;
     use RequestTrait;
+    use ViewTrait;
     use ResponseTrait;
 
     public function __construct()
     {
         $this->_load_request();
+        $this->_load_view();
         $this->_load_response();
         $this->set_layout("open/open");
     }

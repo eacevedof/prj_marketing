@@ -15,22 +15,27 @@ trait ViewTrait
 {
     private ?AppView $view = null;
 
-    private function _load_view(): void
+    private function _load_view(): AppView
     {
         if(!$this->view) $this->view = new AppView();
+        return $this->view;
     }
 
     protected function set_layout(string $pathlayout): AppView
     {
-        $this->_load_view();
-        $this->view->set_layout($pathlayout);
+        $this->_load_view()->set_layout($pathlayout);
+        return $this->view;
+    }
+
+    protected function set_template(string $pathtemplate): AppView
+    {
+        $this->_load_view()->set_template($pathtemplate);
         return $this->view;
     }
 
     protected function add_var(string $varname, $value): AppView
     {
-        $this->_load_view();
-        $this->view->add_var($varname, $value);
+        $this->_load_view()->add_var($varname, $value);
         return $this->view;
     }
 
