@@ -75,7 +75,7 @@ final class UsersDeleteService extends AppService
 
     private function _check_entity_undelete_permission(array $entity): void
     {
-        $iduser = $this->repouser->get_id_by($entity["uuid"]);
+        $iduser = (int) $entity["id"];
         $idauthuser = (int) $this->authuser["id"];
         if ($idauthuser === $iduser)
             $this->_exception(
@@ -134,6 +134,7 @@ final class UsersDeleteService extends AppService
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
 
+        $entity = $this->repouser->get_by_id($iduser);
         $this->_check_entity_undelete_permission($entity);
         $idauthuser = $this->authuser["id"];
 
