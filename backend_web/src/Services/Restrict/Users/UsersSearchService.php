@@ -42,7 +42,7 @@ final class UsersSearchService extends AppService
             || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
         ))
             $this->_exception(
-                __("You are not allowed to perform this operatoin"),
+                __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
     }
