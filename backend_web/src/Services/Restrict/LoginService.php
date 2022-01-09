@@ -18,16 +18,16 @@ final class LoginService extends AppService
 
     private string $domain;
     private ComponentEncdecrypt $encdec;
-    private UserRepository $repository;
-    private UserPermissionsRepository $permissionrepo;
+    private UserRepository $repouser;
+    private UserPermissionsRepository $repopermission;
 
     public function __construct(array $input)
     {
         $this->input = $input;
         $this->_load_session();
         $this->encdec = $this->_get_encdec();
-        $this->repository = RF::get("Base/User");
-        $this->permissionrepo = RF::get("Base/UserPermissions");
+        $this->repouser = RF::get("Base/User");
+        $this->repopermission = RF::get("Base/UserPermissions");
         $this->repoprefs = RF::get("Base/UserPreferences");
     }
 
@@ -39,13 +39,13 @@ final class LoginService extends AppService
         $password = $this->input["password"];
         if (!$password) $this->_exception(__("Empty password"), ExceptionType::CODE_BAD_REQUEST);
 
-        $aruser = $this->repository->get_by_email($email);
+        $aruser = $this->repouser->get_by_email($email);
         if (!($secret = ($aruser["secret"] ?? ""))) $this->_exception(__("Invalid data"), ExceptionType::CODE_BAD_REQUEST);
 
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exception(__("Unauthorized"), ExceptionType::CODE_UNAUTHORIZED);
 
-        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->permissionrepo->get_by_user($iduser = $aruser["id"]);
+        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->repopermission->get_by_user($iduser = $aruser["id"]);
 
         $this->session
             ->add(SessionType::AUTH_USER, $aruser)
