@@ -9,29 +9,13 @@
  */
 namespace App\Controllers\Open;
 
-use App\Components\Kafka\ProducerComponent;
-use App\Enums\SessionType;
 use App\Enums\ResponseType;
 use App\Enums\PageType;
 
 final class ErrorsController extends OpenController
 {
-    public function index(): void
-    {
-        $pathroute = realpath(__DIR__."/../routes/routes.php");
-        $routes = include $pathroute;
-        s("<pre>");
-        foreach($routes as $route)
-            s("<a href=\"{$route["url"]}\" target=\"_blank\">{$route["url"]}</a><br/>");
-    }
-
     public function error_404(): void
     {
-        if ($this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::NOT_FOUND)
-                ->set_error(__("Content not found"))->show();
-
         $this->set_layout("error/error")
             ->set_template("error/404")
             ->add_var(PageType::TITLE, __("Content not found"))
@@ -42,11 +26,6 @@ final class ErrorsController extends OpenController
 
     public function forbidden(): void
     {
-        if ($this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::FORBIDDEN)
-                ->set_error(__("Forbidden"))->show();
-
         $this->set_layout("error/error")
             ->set_template("error/403")
             ->add_var(PageType::TITLE, __("Forbidden"))
