@@ -46,6 +46,7 @@ include_once "../vendor/theframework/bootstrap.php";
 $arRoutes = include_once "../src/routes/routes.php";
 use TheFramework\Components\ComponentRouter;
 try {
+    //throw new Exception("example");
     $oR = new ComponentRouter($arRoutes);
     $arRun = $oR->get_rundata();
     unset($arRoutes);unset($oR);

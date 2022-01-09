@@ -11,23 +11,16 @@ function dd($var,$title=""){
 
 function lgerr($var, $title=null)
 {
+    $dlog = date("Ymd");
     $sNow = date("Y-m-d_H:i:s");
     if($title) $title = "<<  $title >>";
     $title = PHP_EOL."$sNow: $title";
     if(!is_string($var)) $var = var_export($var,1);
     if($var) $var = PHP_EOL.$var.PHP_EOL;
     $var = $title.$var;
-
-    $sPathFile = "";
-    if(defined("PATH_LOGS"))
-        $sPathFile .= TFW_PATH_FOLDER_LOG."/error/";
-    $sPathFile .= "tfwlog.log";
-
-    $oCursor=fopen($sPathFile,"ab");
-    $mxWritten = fwrite($oCursor,$var);
-    if($mxWritten===false)
-        fclose($oCursor);
-    fclose($oCursor);
+    $sPathFile = defined("PATH_LOGS") ? PATH_LOGS."/error/" : "";
+    $sPathFile .= "app_$dlog.log";
+    file_put_contents($sPathFile, $var, FILE_APPEND);
 }
 
 function appboot_loadenv(): void
