@@ -2,7 +2,7 @@
 /**
  * @var \App\Views\AppView $this
  */
-if (!isset($urlback)) $urlback = "#";
+if (!isset($urlback)) $urlback = "";
 if (!isset($ismodal)) $ismodal = 0;
 ?>
 <!--403 forbidden-->
@@ -11,7 +11,7 @@ if (!isset($ismodal)) $ismodal = 0;
   <h2>Sorry!. You are not allowed to see this content</h2>
   <h6>Contact the site admin to request for access </h6>
   <?
-  if(!$ismodal):
+  if(!$ismodal && $urlback):
   ?>
   <a class="btn btn-outline-danger" href="<?=$urlback?>">Back to Home</a>
   <?
