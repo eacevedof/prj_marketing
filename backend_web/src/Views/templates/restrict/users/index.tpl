@@ -60,13 +60,12 @@ const is_infoable = row => {
   const usrid = row.id
   return (
       !row?.delete_date && (
-          (sesprofile===PROFILES.ROOT || sessusrid===usrid) ||
-          (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
-          (sesprofile===PROFILES.BUSINESS_OWNER)
+          sesprofile===PROFILES.ROOT ||
+          (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.SYS_ADMIN, PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
+          sesprofile===PROFILES.BUSINESS_OWNER
       )
   )
 }
-
 
 const is_editable = row => {
   const usrprof = row.id_profile
