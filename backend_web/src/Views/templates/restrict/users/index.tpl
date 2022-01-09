@@ -55,6 +55,19 @@ const PROFILES = {
   BUSINESS_MANAGER:"4",
 }
 
+const is_infoable = row => {
+  const usrprof = row.id_profile
+  const usrid = row.id
+  return (
+      !row?.delete_date && (
+          (sesprofile===PROFILES.ROOT || sessusrid===usrid) ||
+          (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
+          (sesprofile===PROFILES.BUSINESS_OWNER)
+      )
+  )
+}
+
+
 const is_editable = row => {
   const usrprof = row.id_profile
   const usrid = row.id
@@ -81,9 +94,10 @@ const is_deletable = row => {
 dtcolumn.add_rowbtn({
   btnid: "rowbtn-show",
   render: (v,t,row) => {
-    return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-dark">
+    if (is_infoable(row)) return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-dark">
       <i class="mdi mdi-account-card-details"></i>
     </button>`
+    return ""
   }
 })
 
