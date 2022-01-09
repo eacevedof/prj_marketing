@@ -1,5 +1,5 @@
 ### To-Do
-- aplicar delete_date para BO y BM
+- ~~aplicar delete_date para BO y BM~~
 - refactor crud a querybuilder
 - ~~custom headers en render de la vista~~
 - color boton swal en restore
