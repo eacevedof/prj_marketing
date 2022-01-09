@@ -1,6 +1,5 @@
 <?php
 return [
-    ["url"=>"/forbidden","controller"=>"App\Controllers\Open\ErrorsController","method"=>"forbidden"],
     ["url"=>"/","controller"=>"App\Controllers\Open\HomeController","method"=>"index"],
     
     ["url"=>"/login","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"index"],
@@ -26,6 +25,7 @@ return [
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
+// APIFY
     ["url"=>"/apify/contexts","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
     ["url"=>"/apify/contexts/{id}","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
     
@@ -52,7 +52,8 @@ return [
     ["url"=>"/apify/security/login-middle","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"middle"],
     ["url"=>"/apify/security/is-valid-token","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"is_valid_token"],
 
-//resto de rutas    
-    ["url"=>"https://github.com/eacevedof/prj_phpapify/tree/master/backend/src/Controllers/Apify","controller"=>"App\Controllers\Open\ErrorsController","method"=>"error_404"],
-    ["url"=>"/404","controller"=>"App\Controllers\Open\ErrorsController","method"=>"error_404"]
+    ["url"=>"/error/forbidden-403","controller"=>"App\Controllers\Open\ErrorsController","method"=>"forbidden_403"],
+    ["url"=>"/error/forbidden-500","controller"=>"App\Controllers\Open\ErrorsController","method"=>"internal_500"],
+    //la 404 debe ser la última ruta siempre
+    ["url"=>"/error/not-found-404","controller"=>"App\Controllers\Open\ErrorsController","method"=>"notfound_404"],
 ];

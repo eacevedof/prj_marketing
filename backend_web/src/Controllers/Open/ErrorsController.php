@@ -14,7 +14,7 @@ use App\Enums\PageType;
 
 final class ErrorsController extends OpenController
 {
-    public function error_404(): void
+    public function notfound_404(): void
     {
         $this->set_layout("error/error")
             ->set_template("error/404")
@@ -25,7 +25,7 @@ final class ErrorsController extends OpenController
             ->render();
     }
 
-    public function forbidden(): void
+    public function forbidden_403(): void
     {
         $this->set_layout("error/error")
             ->set_template("error/403")

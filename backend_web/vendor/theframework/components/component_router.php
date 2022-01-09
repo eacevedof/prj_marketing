@@ -23,18 +23,18 @@ final class ComponentRouter
         $this->sPathRoutes = $sPathRoutes;
         $this->arRoutes = $arRoutes;
         $this->arRequest = ["url"=>"","url_pieces"=>[],"get_params"=>[]];
-        $this->load_routes();
-        $this->load_pieces();
+        $this->_load_routes();
+        $this->_load_pieces();
     }
     
-    private function load_routes(): void
+    private function _load_routes(): void
     {
         if($this->arRoutes || !$this->sPathRoutes)
             return;
         $this->arRoutes = include($this->sPathRoutes);
     }
 
-    private function load_pieces(): void
+    private function _load_pieces(): void
     {
         $arGet = $this->_get_get_params($this->sRequestUri);
         $arUrlsep = $this->_get_url_pieces($this->sRequestUri);
