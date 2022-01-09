@@ -9,6 +9,27 @@ function dd($var,$title=""){
     exit;
 }
 
+function lgerr($var, $title=null)
+{
+    $sNow = date("Y-m-d_H:i:s");
+    if($title) $title = "<<  $title >>";
+    $title = PHP_EOL."$sNow: $title";
+    if(!is_string($var)) $var = var_export($var,1);
+    if($var) $var = PHP_EOL.$var.PHP_EOL;
+    $var = $title.$var;
+
+    $sPathFile = "";
+    if(defined("PATH_LOGS"))
+        $sPathFile .= TFW_PATH_FOLDER_LOG."/error/";
+    $sPathFile .= "tfwlog.log";
+
+    $oCursor=fopen($sPathFile,"ab");
+    $mxWritten = fwrite($oCursor,$var);
+    if($mxWritten===false)
+        fclose($oCursor);
+    fclose($oCursor);
+}
+
 function appboot_loadenv(): void
 {
     $arpaths = [
