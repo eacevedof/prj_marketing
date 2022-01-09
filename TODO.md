@@ -2,7 +2,7 @@
 - ~~aplicar delete_date para BO y BM~~
 - refactor crud a querybuilder
 - ~~custom headers en render de la vista~~
-- color boton swal en restore
+- ~~color boton swal en restore~~
 - formulario desde dash falta estilos
   - llevar estilos a css de lit
 - al borrar que no cambie update-date
