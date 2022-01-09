@@ -18,7 +18,7 @@ final class PromotionsController extends RestrictController
     public function index(): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::DASHBOARD_READ))
-            $this->response->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::ERROR_FORBIDDEN);
 
         $this
             ->add_var(PageType::TITLE, __("Promotions"))
@@ -29,7 +29,7 @@ final class PromotionsController extends RestrictController
     public function detail(string $id)
     {
         if (!$this->auth->is_user_allowed(PolicyType::DASHBOARD_READ))
-            $this->response->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::ERROR_FORBIDDEN);
 
         $this->add_var(PageType::TITLE, __("Promotions detail"))
             ->add_var(PageType::H1, __("Promotions detail"))

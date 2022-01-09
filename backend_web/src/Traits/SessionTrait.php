@@ -18,7 +18,7 @@ use App\Factories\Specific\SessionFactory as SsF;
  */
 trait SessionTrait
 {
-    private ?SessionComponent $session = null;
+    protected ?SessionComponent $session = null;
 
     protected function _load_session(): SessionComponent
     {

@@ -28,7 +28,7 @@ trait RequestTrait
         return $this->request;
     }
 
-    private function _get_req_without_ops(array $request=[]): array
+    protected function _get_req_without_ops(array $request=[]): array
     {
         if (!$request) $request = $this->request->get_post();
         
