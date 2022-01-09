@@ -57,12 +57,14 @@ const PROFILES = {
 
 const is_infoable = row => {
   const usrprof = row.id_profile
+  if (sesprofile===PROFILES.ROOT)
+    return true
+
   return (
-      !row?.delete_date && (
-          sesprofile===PROFILES.ROOT ||
-          (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.SYS_ADMIN, PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
-          sesprofile===PROFILES.BUSINESS_OWNER
-      )
+    !row?.delete_date && (
+      (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.SYS_ADMIN, PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof))
+      || sesprofile===PROFILES.BUSINESS_OWNER
+    )
   )
 }
 
