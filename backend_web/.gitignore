@@ -1,5 +1,6 @@
 .vscode
 .idea
+architecture/*.crswap
 vendor/*
 !/vendor/theframework
 /config/*.prod.*
