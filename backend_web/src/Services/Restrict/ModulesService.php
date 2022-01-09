@@ -2,16 +2,20 @@
 namespace App\Services\Restrict;
 
 use App\Factories\ServiceFactory as SF;
+use App\Services\Auth\AuthService;
 use App\Enums\SessionType;
+
 
 final class ModulesService
 {
+    private AuthService $auth;
     private array $permissions;
     private array $modules;
 
     public function __construct()
     {
-        $this->permissions = SF::get_auth()->get_user()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
+        $this->auth = SF::get_auth();
+        $this->permissions = $this->auth->get_user()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
         $this->_load_modules();
     }
 
@@ -86,6 +90,8 @@ final class ModulesService
     private function _get_filtered_modules(): array
     {
         $modules = $this->modules;
+        if ($this->auth->is_root() && !$this->permissions)
+            return $modules;
         $this->_exclude_nowrite($modules);
         $this->_exclude_noread($modules);
         $this->_exclude_empty($modules);
