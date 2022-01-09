@@ -2,7 +2,7 @@
 /**
  * @var \App\Views\AppView $this
  */
-if (!isset($urlback)) $urlback = "#";
+if (!isset($urlback)) $urlback = "";
 if (!isset($ismodal)) $ismodal = 0;
 ?>
 <!--404 not found-->
@@ -11,7 +11,7 @@ if (!isset($ismodal)) $ismodal = 0;
   <h2>Oopps. The content you are looking for was not found</h2>
   <h6>You may have mistyped the address or the page may have moved.</h6>
   <?
-  if(!$ismodal):
+  if(!$ismodal && $urlback):
   ?>
   <a class="btn btn-outline-danger" href="<?=$urlback?>">Back to Home</a>
   <?
