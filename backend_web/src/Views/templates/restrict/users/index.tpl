@@ -79,12 +79,10 @@ const is_editable = row => {
 
 const is_deletable = row => {
   if (row.delete_date) return false
-  if (row.id !== sessusrid) return true
   if (sesprofile===PROFILES.ROOT && row.id !== sessusrid) return true
 
   const usrprof = row.id_profile
   return (
-    (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
     (sesprofile===PROFILES.BUSINESS_OWNER && usrprof===PROFILES.BUSINESS_MANAGER)
   )
 }
