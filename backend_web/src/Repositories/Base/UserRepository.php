@@ -146,6 +146,7 @@ final class UserRepository extends AppRepository
                 "m.is_notifiable",
                 "m.secret",
                 "m.phone",
+                "m.delete_date"
             ])
             ->set_limit(25, 0)
             ->set_orderby(["m.id"=>"DESC"])

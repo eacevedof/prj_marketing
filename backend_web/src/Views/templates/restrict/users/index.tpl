@@ -57,7 +57,6 @@ const PROFILES = {
 
 const is_infoable = row => {
   const usrprof = row.id_profile
-  const usrid = row.id
   return (
       !row?.delete_date && (
           sesprofile===PROFILES.ROOT ||
