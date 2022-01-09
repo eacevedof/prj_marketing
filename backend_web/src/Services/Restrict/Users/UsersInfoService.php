@@ -48,7 +48,7 @@ final class UsersInfoService extends AppService
 
     private function _check_entity_permission(array $entity): void
     {
-        $iduser = $this->repouser->get_id_by($entity["uuid"]);
+        $iduser = (int) $entity["id"];
         $idauthuser = (int)$this->authuser["id"];
         if ($this->auth->is_root() || $idauthuser === $iduser) return;
 

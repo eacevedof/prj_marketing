@@ -52,6 +52,10 @@ if ($authuser):
               <?=__("Logout")?>
             </a>
           </li>
+
+          <li class="float-end">
+            <p style="color:#0761E0;" class="pt-3"><?="{$authuser["description"]} [{$authuser["id"]}]"?></p>
+          </li>
         </ul>
       </nav>
       <!--Nav-->
