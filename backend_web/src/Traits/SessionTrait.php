@@ -8,6 +8,7 @@
  * @observations
  */
 namespace App\Traits;
+
 use App\Components\Session\SessionComponent;
 use App\Factories\Specific\SessionFactory as SsF;
 
