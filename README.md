@@ -38,3 +38,5 @@ column.add_rowbtn({
 })
 column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: yellow">Extra ${row.id}</span>`)
 ```
+### Errores
+- cargaba dos veces el html una como document y la otra como html/text

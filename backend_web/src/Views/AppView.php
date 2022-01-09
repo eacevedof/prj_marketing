@@ -242,6 +242,7 @@ final class AppView
     {
         $uri = $_SERVER["REQUEST_URI"];
         $this->_send_headers();
+        //$content = ob_get_contents();
         $flush = ob_end_flush();
         exit();
     }
