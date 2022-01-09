@@ -58,8 +58,7 @@ final class UsersDeleteService extends AppService
         )
             return;
 
-        $idowner = $this->repouser->get_owner($iduser);
-        $idowner = (int)$idowner["id"];
+        $idowner = $this->repouser->get_ownerid($iduser);
         //si el usuario logado es owner y quiere eliminar un manager y es el owner del manager
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
