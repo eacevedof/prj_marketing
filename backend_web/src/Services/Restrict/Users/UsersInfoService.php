@@ -15,10 +15,10 @@ use App\Enums\ExceptionType;
 final class UsersInfoService extends AppService
 {
     private AuthService $auth;
+    private array $authuser;
     private UserRepository $repouser;
     private UserPermissionsRepository $repopermission;
     private UserPreferencesRepository $repoprefs;
-    private array $authuser;
 
     public function __construct(array $input)
     {
@@ -28,10 +28,10 @@ final class UsersInfoService extends AppService
         if(!$this->input = $input[0] ?? "")
             $this->_exception(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
 
+        $this->authuser = $this->auth->get_user();
         $this->repouser = RF::get("Base/User");
         $this->repopermission = RF::get("Base/UserPermissions");
         $this->repoprefs = RF::get("Base/UserPreferences");
-        $this->authuser = $this->auth->get_user();
     }
 
     private function _check_permission(): void
