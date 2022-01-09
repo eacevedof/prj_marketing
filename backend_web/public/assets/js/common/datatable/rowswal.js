@@ -85,7 +85,7 @@ const on_undelete = uuid =>
     cancelButtonText: _texts.undelswal.cancel,
     type: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#DD6B55",
+    confirmButtonColor: "#2F8A01",
     closeOnConfirm: false,
     closeOnCancel: false
   })
