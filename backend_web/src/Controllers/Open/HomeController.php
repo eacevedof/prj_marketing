@@ -9,19 +9,16 @@
  */
 namespace App\Controllers\Open;
 
-use App\Controllers\Open\OpenController;
-use App\Enums\SessionType;
-use App\Traits\ViewTrait;
-
+use App\Enums\PageType;
 
 final class HomeController extends OpenController
 {
-    use ViewTrait;
-
     public function index(): void
     {
-
-        $this->render([], "open/index");
+        $this->set_template("open/index")
+            ->add_var(PageType::TITLE, __("Home"))
+            ->add_var(PageType::H1, __("Home"))
+            ->render();
     }
 
     public function foo(): void
@@ -45,8 +42,6 @@ final class HomeController extends OpenController
 
         $x = new Foo();
         die;
-        $this->set_layout("open/open");
-        $this->render([], "open/index");
     }
 
 }//OpenController
