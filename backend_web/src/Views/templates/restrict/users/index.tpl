@@ -132,6 +132,16 @@ dtcolumn.add_rowbtn({
   }
 })
 
+dtcolumn.add_column({
+  data: "uuid",
+  render: (v,t,row) => {
+    let tpl = `<span class="">${v}</span><sub style="color: #ccc">(${row.id})</sub>`
+    if (row.delete_date)
+      tpl = `<span class="tx-danger">${v}</span><sub style="color:#ccc">(${row.id})</sub>`
+    return tpl
+  }
+})
+
 rowswal.set_texts({
   delswal: {
     error: <?$this->_echo_js(__("<b>Error on delete</b>"));?>,
