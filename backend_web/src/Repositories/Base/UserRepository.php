@@ -99,8 +99,7 @@ final class UserRepository extends AppRepository
         }
 
         if($this->auth->is_root()) {
-            $crud->add_getfield("m.delete_date")
-                ->add_getfield("m.delete_user")
+            $crud->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
                 ->add_getfield("m.insert_user");
             return;
@@ -112,6 +111,7 @@ final class UserRepository extends AppRepository
             $childs = $this->get_childs($idparent);
             $childs = array_column($childs,"id");
             $crud->add_and_in("m.id", $childs);
+            $crud->add_and("m.delete_date IS NULL");
             return;
         }
 
@@ -119,6 +119,7 @@ final class UserRepository extends AppRepository
             $childs = $this->get_childs($user["id"]);
             $childs = array_column($childs,"id");
             $childs[] = $user["id"];
+            $crud->add_and("m.delete_date IS NULL");
             $crud->add_and_in("m.id", $childs);
         }
     }
