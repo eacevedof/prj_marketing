@@ -13,9 +13,9 @@ use App\Views\AppView;
 
 trait ViewTrait
 {
-    private ?AppView $view = null;
+    protected ?AppView $view = null;
 
-    private function _load_view(): AppView
+    protected function _load_view(): AppView
     {
         if(!$this->view) $this->view = new AppView();
         return $this->view;

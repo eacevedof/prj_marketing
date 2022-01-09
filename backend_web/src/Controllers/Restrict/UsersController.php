@@ -46,7 +46,7 @@ final class UsersController extends RestrictController
                 ->render();
         }
         catch (ForbiddenException $e){
-            $this->response->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::ERROR_FORBIDDEN);
         }
         catch (Exception $e) {
 
@@ -152,18 +152,21 @@ final class UsersController extends RestrictController
                 ->render_nl();
         }
         catch (NotFoundException $e) {
-            $this->add_var(PageType::H1, $e->getMessage())
-                ->set_template("/error/404")
+            $this->set_template("/error/404")
+                ->add_header(ResponseType::NOT_FOUND)
+                ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
         catch (ForbiddenException $e) {
-            $this->add_var(PageType::H1, $e->getMessage())
-                ->set_template("/error/403")
+            $this->set_template("/error/403")
+                ->add_header(ResponseType::FORBIDDEN)
+                ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
         catch (Exception $e) {
-            $this->add_var(PageType::H1, $e->getMessage())
-                ->set_template("/error/500")
+            $this->set_template("/error/500")
+                ->add_header(ResponseType::INTERNAL_SERVER_ERROR)
+                ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
     }
@@ -172,10 +175,10 @@ final class UsersController extends RestrictController
     public function edit(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
-            $this->add_var(PageType::TITLE, __("Unauthorized"))
+            $this->set_template("/error/403")
+                ->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
-                ->set_template("/error/403")
                 ->render_nl();
         }
 
@@ -195,21 +198,24 @@ final class UsersController extends RestrictController
                 ->render_nl();
         }
         catch (NotFoundException $e) {
-            $this->add_var(PageType::TITLE, $e->getMessage())
+            $this->set_template("/error/404")
+                ->add_header(ResponseType::NOT_FOUND)
+                ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
-                ->set_template("/error/404")
                 ->render_nl();
         }
         catch (ForbiddenException $e) {
-            $this->add_var(PageType::TITLE, $e->getMessage())
+            $this->set_template("/error/403")
+                ->add_header(ResponseType::FORBIDDEN)
+                ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
-                ->set_template("/error/403")
                 ->render_nl();
         }
         catch (Exception $e) {
-            $this->add_var(PageType::TITLE, $e->getMessage())
+            $this->set_template("/error/500")
+                ->add_header(ResponseType::INTERNAL_SERVER_ERROR)
+                ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
-                ->set_template("/error/500")
                 ->render_nl();
         }
     }//modal edit

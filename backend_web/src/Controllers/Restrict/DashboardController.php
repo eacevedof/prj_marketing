@@ -18,10 +18,11 @@ final class DashboardController extends RestrictController
     public function index(): void
     {
         if(!$this->auth->get_user())
-            $this->response->location(UrlType::FORBIDDEN);
+            $this->response->location(UrlType::ERROR_FORBIDDEN);
 
         $modules = SF::get_callable("Restrict\Modules");
-        $this->add_var(PageType::TITLE, __("Dashboard"))
+        $this
+            ->add_var(PageType::TITLE, __("Dashboard"))
             ->add_var(PageType::H1, __("Dashboard"))
             ->add_var("modules", $modules())
             ->render();
