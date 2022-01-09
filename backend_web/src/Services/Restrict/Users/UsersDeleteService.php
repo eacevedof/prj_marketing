@@ -76,8 +76,8 @@ final class UsersDeleteService extends AppService
     private function _check_entity_undelete_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by($entity["uuid"]);
-        $idauth = (int) $this->authuser["id"];
-        if ($idauth === $iduser)
+        $idauthuser = (int) $this->authuser["id"];
+        if ($idauthuser === $iduser)
             $this->_exception(
                 __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
             );
