@@ -8,8 +8,9 @@ use App\Repositories\Base\UserRepository;
 use App\Repositories\Base\UserPermissionsRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Enums\SessionType;
-use App\Enums\ExceptionType;
+use App\Enums\UrlType;
 use App\Enums\PreferenceType;
+use App\Enums\ExceptionType;
 
 final class LoginService extends AppService
 {
@@ -30,7 +31,7 @@ final class LoginService extends AppService
         $this->repoprefs = RF::get("Base/UserPreferences");
     }
 
-    public function in(): array
+    public function get_access(): array
     {
         $email = $this->input["email"];
         if (!$email) $this->_exception(__("Empty email"), ExceptionType::CODE_BAD_REQUEST);
@@ -51,12 +52,12 @@ final class LoginService extends AppService
             ->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"))
         ;
 
-        $prefs = $this->repoprefs->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
-        $prefs = $prefs[0]["pref_value"] ?? "/restrict";
+        $userprefs = $this->repoprefs->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
+        $userprefs = $userprefs[0]["pref_value"] ?? UrlType::RESTRICT;
 
         return [
             "lang" => $lang,
-            $prefkey => $prefs
+            $prefkey => $userprefs
         ];
     }
 }

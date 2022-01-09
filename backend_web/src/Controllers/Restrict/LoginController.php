@@ -37,7 +37,7 @@ final class LoginController extends RestrictController
 
         try {
             $post = $this->request->get_post();
-            $result = SF::get("Restrict\Login", $post)->in();
+            $result = SF::get("Restrict\Login", $post)->get_access();
             $this->_get_json()
                 ->set_payload([
                     "message"=>__("auth ok"),
