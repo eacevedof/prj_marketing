@@ -228,6 +228,7 @@ final class AppView
     public function add_header(int $code): self
     {
         $this->headers = [];
+        return $this;
     }
 
     private function _flush(): void
