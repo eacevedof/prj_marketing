@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="#">
+  <?= $this->_element("common/elem-favicon") ?>
   <title><?=$pagetitle?></title>
 <!-- css -->
   <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
@@ -35,7 +35,7 @@
   <?= $this->_asset_js_module([
     "index",
     "common/snackbar"
-  ]) ?>
+  ])?>
 </head>
 <body>
 <main>

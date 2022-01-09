@@ -2,7 +2,6 @@
 /**
  * @var \App\Views\AppView $this
  */
-
 ?>
 <div id="dashboard" class="row row-sm">
   <?
