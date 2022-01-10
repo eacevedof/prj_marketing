@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentQB
- * @file component_crud.php 2.12.0
- * @date 26-12-2021 20:31 SPAIN
+ * @file component_q_b.php 3.0.0
+ * @date 10-01-2022 20:31 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
