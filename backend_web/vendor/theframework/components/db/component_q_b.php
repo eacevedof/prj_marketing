@@ -9,6 +9,8 @@
  */
 namespace TheFramework\Components\Db;
 
+use \Exception;
+
 class ComponentQB
 {
     private string $comment         = "";
@@ -141,51 +143,39 @@ class ComponentQB
         return substr($tagged, 2, $ilen - 4);
     }
 
-    public function autoinsert($table=null,$arfieldval=[])
+    private function _exception(string $message, int $code=500): void
     {
-        //Limpio la consulta
-        $this->sql = "-- autoinsert";
+        throw new Exception($message, $code);
+    }
 
-        $comment = "";
-        if($this->comment)
-            $comment = "/*$this->comment*/";
+    public function autoinsert(?string $table=null, array $arfieldval=[]): self
+    {
+        if(!$table) $table = $this->table;
+        if(!$table) $this->_exception("missing table in autoinsert");
+        
+        $comment = $this->comment ? "/*$this->comment*/" : "/*autoinsert*/";
+        $arfieldval = $arfieldval ?? $this->arinsertfv;
+        if (!$arfieldval) $this->_exception("missing fields and values in autoinsert");
+        
+        $sql = "$comment INSERT INTO ";
+        $sql .= "$table ( ";
 
-        if(!$table)
-            $table = $this->table;
+        $fields = array_keys($arfieldval);
+        $this->_clean_reserved($fields);
+        $sql .= implode(",",$fields);
 
-        if($table)
-        {
-            if(!$arfieldval)
-                $arfieldval = $this->arinsertfv;
+        $values = array_values($arfieldval);
+        //los paso a entrecomillado
+        foreach ($values as $strval)
+            $araux[] = $strval===null ? "null" : "'$strval'";
 
-            if($arfieldval)
-            {
-                $sql = "$comment INSERT INTO ";
-                $sql .= "$table ( ";
+        $sql .= ") VALUES (";
+        $sql .= implode(",",$arAux);
+        $sql .= ")";
 
-                $fields = array_keys($arfieldval);
-                $this->_clean_reserved($fields);
-                $sql .= implode(",",$fields);
-
-                $arValues = array_values($arfieldval);
-                //los paso a entrecomillado
-                foreach ($arValues as $i=>$strval)
-                {
-                    if($strval===null)
-                        $arAux[] = "null";
-                    else
-                        $arAux[] = "'$strval'";
-                }
-
-                $sql .= ") VALUES (";
-                $sql .= implode(",",$arAux);
-                $sql .= ")";
-
-                $this->sql = $sql;
-                //si hay bd intenta ejecutar la consulta
-                $this->query("w");
-            }//si se han proporcionado correctamente los datos campo=>valor
-        }//se ha proporcionado una tabla
+        $this->sql = $sql;
+        //to-do
+        //$this->query("w");
         return $this;
     }//autoinsert
 
