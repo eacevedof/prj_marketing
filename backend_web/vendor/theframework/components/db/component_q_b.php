@@ -148,6 +148,24 @@ class ComponentQB
         throw new Exception($message, $code);
     }
 
+    private function _get_pkconds(array $arpks): array
+    {
+        $arconds = [];
+        foreach($arpks as $field=>$strval) {
+            $this->_clean_reserved($field);
+            if($strval===null)
+                $arconds[] = "$field IS NULL";
+            elseif($this->_is_tagged($strval)) {
+                $arconds[] = "$field={$this->_get_untagged($strval)}";
+            }
+            elseif($this->_is_numeric($field))
+                $arconds[] = "$field=$strval";
+            else
+                $arconds[] = "$field='$strval'";
+        }
+        return $arconds;
+    }
+
     public function insert(?string $table=null, array $arfieldval=[]): self
     {
         $this->sql = "error";
@@ -212,19 +230,7 @@ class ComponentQB
         $sql .= " WHERE 1 ";
 
         //condiciones con las claves
-        $arconds = [];
-        foreach($arpks as $field=>$strval) {
-            $this->_clean_reserved($field);
-            if($strval===null)
-                $arconds[] = "$field IS NULL";
-            elseif($this->_is_tagged($strval)) {
-                $arconds[] = "$field={$this->_get_untagged($strval)}";
-            }
-            elseif($this->_is_numeric($field))
-                $arconds[] = "$field=$strval";
-            else
-                $arconds[] = "$field='$strval'";
-        }
+        $arconds = $this->_get_pkconds($arpks);
 
         $arconds = array_merge($arconds, $this->arands);
         if($arconds)
@@ -249,20 +255,7 @@ class ComponentQB
         $sql = "$comment DELETE FROM $table ";
 
         //condiciones con las claves
-        $arconds = [];
-        foreach($arpks as $field=>$strval)
-        {
-            $this->_clean_reserved($field);
-            if($strval===null)
-                $arconds[] = "$field IS NULL";
-            elseif($this->_is_tagged($strval)) {
-                $arconds[] = "$field={$this->_get_untagged($strval)}";
-            }
-            elseif($this->_is_numeric($field))
-                $arconds[] = "$field=$strval";
-            else
-                $arconds[] = "$field='$strval'";
-        }
+        $arconds = $this->_get_pkconds($arpks);
 
         $sql .= " WHERE 1 ";
 
