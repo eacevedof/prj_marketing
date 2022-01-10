@@ -150,6 +150,7 @@ class ComponentQB
 
     public function insert(?string $table=null, array $arfieldval=[]): self
     {
+        $this->sql = "error";
         if(!$table) $table = $this->table;
         if(!$table) $this->_exception("missing table in autoinsert");
         
@@ -179,7 +180,7 @@ class ComponentQB
         return $this;
     }//insert
 
-    public function autoupdate($table=null,$arfieldval=[],$arpks=[])
+    public function autoupdate($table=null, array $arfieldval=[], array $arpks=[]): self
     {
         //Limpio la consulta
         $this->sql = "-- autoupdate";
