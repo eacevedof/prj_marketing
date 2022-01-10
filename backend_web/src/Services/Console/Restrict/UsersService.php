@@ -65,7 +65,7 @@ final class UsersService extends AppService implements IConsole
                 ->add_insert_fv("secret", $faker->get_hash(8))
                 ->add_insert_fv("phone",$faker->get_int(9,9))
                 ->add_insert_fv("uuid",uniqid())
-                ->autoinsert()
+                ->insert()
             ;
             $sql = $qb->get_sql();
             $r = $db->exec($sql);

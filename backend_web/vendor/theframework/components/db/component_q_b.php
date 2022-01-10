@@ -148,7 +148,7 @@ class ComponentQB
         throw new Exception($message, $code);
     }
 
-    public function autoinsert(?string $table=null, array $arfieldval=[]): self
+    public function insert(?string $table=null, array $arfieldval=[]): self
     {
         if(!$table) $table = $this->table;
         if(!$table) $this->_exception("missing table in autoinsert");
@@ -177,7 +177,7 @@ class ComponentQB
         //to-do
         //$this->query("w");
         return $this;
-    }//autoinsert
+    }//insert
 
     public function autoupdate($table=null,$arfieldval=[],$arpks=[])
     {

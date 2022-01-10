@@ -98,7 +98,7 @@ final class WriterService extends AppService
         if(in_array("update_date",$this->fields))
             $oCrud->add_insert_fv("update_date",null,0);
 
-        $oCrud->autoinsert();
+        $oCrud->insert();
         
         return $oCrud->get_sql();
     }
