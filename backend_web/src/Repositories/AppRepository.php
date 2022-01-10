@@ -89,7 +89,7 @@ abstract class AppRepository
         foreach($request as $field => $value)
             $qb->add_insert_fv($field, $value);
 
-        $qb->autoinsert();
+        $qb->insert();
         $this->log($qb->get_sql());
 
         if($qb->is_error()) {
