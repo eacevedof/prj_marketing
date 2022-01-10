@@ -43,7 +43,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.type='language'")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->get_selectfrom()
+            ->select()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -60,7 +60,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.type='country'")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->get_selectfrom()
+            ->select()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -77,7 +77,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.type='profile'")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->get_selectfrom()
+            ->select()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -93,7 +93,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             //->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->get_selectfrom()
+            ->select()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -109,7 +109,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_profile=$profileid")
             ->add_orderby("m.description")
-            ->get_selectfrom()
+            ->select()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);

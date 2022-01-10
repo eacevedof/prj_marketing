@@ -75,7 +75,7 @@ final class ReaderService extends AppService
         if(isset($qparams["limit"]["perpage"]))
             $qb->set_limit($qparams["limit"]["perpage"] ?? 1000,$qparams["limit"]["regfrom"]??0);
 
-        $qb->get_selectfrom();
+        $qb->select();
         $sql =  $qb->get_sql();
         return $sql;
     }

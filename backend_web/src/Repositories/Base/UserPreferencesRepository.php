@@ -30,6 +30,6 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.id_user=$userid")
         ;
         if ($prefkey) $qb->add_and("m.pref_key='$prefkey'");
-        return $this->db->query($qb->get_selectfrom());
+        return $this->db->query($qb->select());
     }
 }//UserPreferencesRepository

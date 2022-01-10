@@ -172,7 +172,7 @@ abstract class AppRepository
         foreach($pks as $fieldname=>$sValue)
             $qb->add_pk_fv($fieldname, $sValue);
 
-        $sql = $qb->get_selectfrom();
+        $sql = $qb->select();
         $r = $this->db->query($sql);
         return $r[0]["update_date"] ?? "";
     }
@@ -210,7 +210,7 @@ abstract class AppRepository
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.id=$id")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         return $r[0] ?? [];
@@ -223,7 +223,7 @@ abstract class AppRepository
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.uuid='$uuid'")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         return intval($r[0]["id"] ?? 0);
@@ -237,7 +237,7 @@ abstract class AppRepository
             ->set_table("$this->table as m")
             ->set_getfields(["m.delete_date"])
             ->add_and("m.id=$id")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         return (bool) ($r[0]["delete_date"] ?? "");

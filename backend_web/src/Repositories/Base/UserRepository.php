@@ -156,7 +156,7 @@ final class UserRepository extends AppRepository
         $this->_add_search_filter($qb, $search);
         $this->_add_auth_condition($qb);
 
-        $sql = $qb->get_selectfrom();
+        $sql = $qb->select();
         $r = $this->db->query($sql);
         if ($this->db->is_error()) $this->_exception(__("Data source error"));
 
@@ -181,7 +181,7 @@ final class UserRepository extends AppRepository
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.email='$email'")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         if(count($r)>1 || !$r) return [];
@@ -196,7 +196,7 @@ final class UserRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.email='$email'")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         return intval($r[0]["id"] ?? 0);
@@ -224,7 +224,7 @@ final class UserRepository extends AppRepository
             ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'")
             ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
             ->add_and("m.uuid='$uuid'")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         if (!$r) return [];
@@ -240,7 +240,7 @@ final class UserRepository extends AppRepository
             ->set_comment("get_all_hierarchy")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id", "m.id_parent"])
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         return $r;
