@@ -37,9 +37,6 @@ class ComponentQB
 
     private ?Object $oDB = null;
 
-    private array $errors           = [];
-    private bool $iserror           = false;
-
     private array $reserved = ["get", "order", "password"];
     
     const READ = "r";
@@ -340,14 +337,14 @@ class ComponentQB
 
     public function query():string {return $this->sql;}
 
-    public function get_sanitized($strval)
+    public function get_sanitized(?string $strval): ?string
     {
         if($strval===null) return null;
         // no se pq he escapado el % y el _ pero no debería
-        $sFixed = str_replace("'","\'",$strval);
-        //$sFixed = str_replace("%","\%",$sFixed);
-        //$sFixed = str_replace("_","\_",$sFixed); si quiero guardar  SQL_CALC_FOUND_ROWS me hace SQL\_CALC_\
-        return $sFixed;
+        $strfixed = str_replace("'","\'",$strval);
+        //$strfixed = str_replace("%","\%",$strfixed);
+        //$strfixed = str_replace("_","\_",$strfixed); si quiero guardar  SQL_CALC_FOUND_ROWS me hace SQL\_CALC_\
+        return $strfixed;
     }//get_sanitized
 
     public function set_db(Object $db): self
@@ -378,12 +375,12 @@ class ComponentQB
 
     private function add_error($sMessage):self{$this->iserror = true;$this->errors[]=$sMessage; return $this; return $this;}
 
-    public function is_distinct($isOn=true):self{$this->isdistinct=$isOn; return $this;}
-    public function is_foundrows($isOn=true):self {$this->calcfoundrows=$isOn; return $this;}
-    public function add_numeric($fieldname):self{$this->arnumeric[]=$fieldname; return $this;}
-    public function set_and($arands=[]):self{$this->arands = []; if(is_array($arands)) $this->arands=$arands; return $this;}
-    public function add_and($sAnd):self{$this->arands[]=$sAnd; return $this;}
-    public function add_and1($fieldname,$strval,$sOper="="):self{$this->arands[]="$fieldname $sOper $strval"; return $this;}
+    public function is_distinct(bool $ison=true):self{$this->isdistinct=$ison; return $this;}
+    public function is_foundrows(bool $ison=true):self {$this->calcfoundrows=$ison; return $this;}
+    public function add_numeric(string $fieldname):self{$this->arnumeric[]=$fieldname; return $this;}
+    public function set_and(array $arands=[]):self{$this->arands = []; if(is_array($arands)) $this->arands=$arands; return $this;}
+    public function add_and(string $condition):self{$this->arands[]=$condition; return $this;}
+    public function add_and1(string $fieldname, $strval, string $sOper="="):self{$this->arands[]="$fieldname $sOper $strval"; return $this;}
     public function add_and_in(string $fieldname, array $values, bool $isnum=true):self
     {
         $values = array_unique($values);
@@ -394,17 +391,9 @@ class ComponentQB
         return $this;
     }
 
-    public function add_join(string $sjoin, $sKey=null):self{if($sKey)$this->arjoins[$sKey]=$sjoin;else$this->arjoins[]=$sjoin; return $this;}
-    public function add_orderby($fieldname,$order="ASC"):self{$this->arorderby[$fieldname]=$order; return $this;}
-    public function add_groupby($fieldname):self{$this->argroupby[]=$fieldname; return $this;}
-    public function add_having($sHavecond):self{$this->arhaving[]=$sHavecond; return $this;}
-
-    public function add_end($sEnd,$sKey=null):self{if($sKey)$this->arend[$sKey]=$sEnd;else$this->arend[]=$sEnd; return $this;}
-    public function set_dbobj($oDb=null):self{$this->oDB=$oDb; return $this;}
-
-    public function is_error(){return $this->iserror;}
-    public function get_result(){$this->query(); return $this->arresult;}
-    public function get_errors($inJson=0){if($inJson) return json_encode($this->errors); return $this->errors;}
-    public function get_error($i=0){return isset($this->errors[$i])?$this->errors[$i]:null;}
-
+    public function add_join(string $sjoin, ?string $key=null):self{if($key)$this->arjoins[$key]=$sjoin;else$this->arjoins[]=$sjoin; return $this;}
+    public function add_orderby(string $fieldname, string $order="ASC"):self{$this->arorderby[$fieldname]=$order; return $this;}
+    public function add_groupby(string $fieldname):self{$this->argroupby[]=$fieldname; return $this;}
+    public function add_having(string $having):self{$this->arhaving[]=$having; return $this;}
+    public function add_end(string $strend, ?string $key=null):self{if($key)$this->arend[$key]=$strend;else$this->arend[]=$strend; return $this;}
 }//Crud 3.0.0
