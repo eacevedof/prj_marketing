@@ -1,20 +1,20 @@
 <?php
 //components autoload
 //autoload.php 2.3.0
-$sPathRoot = dirname(__FILE__).DIRECTORY_SEPARATOR;
-//die("sPathRoot: $sPathRoot");//...tests\vendor\theframework\components
-$arSubFolders[] = get_include_path();
-$arSubFolders[] = $sPathRoot;//ruta de components
+$pathcompsroot = dirname(__FILE__).DIRECTORY_SEPARATOR;
+//die("sPathRoot: $pathcompsroot");//...tests\vendor\theframework\components
+$compsubfolders[] = get_include_path();
+$compsubfolders[] = $pathcompsroot;//ruta de components
 //subcarpetas dentro de components
-$arSubFolders[] = $sPathRoot."console";
-$arSubFolders[] = $sPathRoot."db";
-$arSubFolders[] = $sPathRoot."session";
-$arSubFolders[] = $sPathRoot."config";
-$arSubFolders[] = $sPathRoot."formatter";
-$arSubFolders[] = $sPathRoot."db".DIRECTORY_SEPARATOR."integration";
-$arSubFolders[] = $sPathRoot."db".DIRECTORY_SEPARATOR."context";
-$sPathInclude = implode(PATH_SEPARATOR,$arSubFolders);
-set_include_path($sPathInclude);
+$compsubfolders[] = $pathcompsroot."console";
+$compsubfolders[] = $pathcompsroot."db";
+$compsubfolders[] = $pathcompsroot."session";
+$compsubfolders[] = $pathcompsroot."config";
+$compsubfolders[] = $pathcompsroot."formatter";
+$compsubfolders[] = $pathcompsroot."db".DIRECTORY_SEPARATOR."integration";
+$compsubfolders[] = $pathcompsroot."db".DIRECTORY_SEPARATOR."context";
+$includepath = implode(PATH_SEPARATOR, $compsubfolders);
+set_include_path($includepath);
 
 //a partir de un nombre de namespace busca el archivo y hace un include
 spl_autoload_register(function($fqnamespace) {
