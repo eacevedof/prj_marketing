@@ -130,7 +130,7 @@ final class WriterService extends AppService
                 $oCrud->add_and($sWhere);
 
 
-        $oCrud->autoupdate();
+        $oCrud->update();
         $sql = $oCrud->get_sql();
         //pr($sql);die;
         return $sql;
@@ -176,7 +176,7 @@ final class WriterService extends AppService
                 $oCrud->add_and($sWhere);
             }
 
-        $oCrud->autoupdate();
+        $oCrud->update();
         $sql = $oCrud->get_sql();
         //pr($sql);die;
         return $sql;

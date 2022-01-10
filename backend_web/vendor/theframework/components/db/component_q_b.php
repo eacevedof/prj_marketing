@@ -180,7 +180,7 @@ class ComponentQB
         return $this;
     }//insert
 
-    public function autoupdate($table=null, array $arfieldval=[], array $arpks=[]): self
+    public function update($table=null, array $arfieldval=[], array $arpks=[]): self
     {
         $this->sql = "error";
         if(!$table) $table = $this->table;
@@ -235,7 +235,7 @@ class ComponentQB
         //si hay bd intenta ejecutar la consulta
         //$this->query("w");
         return $this;
-    }//autoupdate
+    }//update
 
     public function autodelete($table=null,$arpks=[])
     {
