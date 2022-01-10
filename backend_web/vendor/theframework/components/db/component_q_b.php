@@ -45,59 +45,46 @@ class ComponentQB
         $this->table = $table;
     }
 
-    private function _get_orderby(): string
+    private function _get_joins(): string
     {
-        if(!$this->arorderby) return "";
-        $arsql = [];
-        $orderby = " ORDER BY ";
-        foreach($this->arorderby as $sField=>$sAD) {
-            $this->_clean_reserved($sField);
-            $arsql[] = "$sField $sAD";
-        }
-        $orderby = $orderby.implode(",",$arsql);
-        return $orderby;
+        if(!$this->arjoins) return "";
+        return " ".implode("\n",$this->arjoins);
     }
 
     private function _get_having(): string
     {
         if(!$this->arhaving) return "";
         $arsql = [];
-        $sHaving = " HAVING ";
-        foreach($this->arhaving as $sHavcond)
-            $arsql[] = $sHavcond;
-        $sHaving = $sHaving.implode(", ",$arsql);
-        return $sHaving;
+        foreach($this->arhaving as $havecond) $arsql[] = $havecond;
+        return " HAVING ".implode(", ",$arsql);
     }
 
     private function _get_groupby(): string
     {
         if(!$this->argroupby) return "";
-        $sGroupBy = "";
         $arsql = [];
-        if($this->argroupby)
-        {
-            $sGroupBy = " GROUP BY ";
-            foreach($this->argroupby as $sField) {
-                $this->_clean_reserved($sField);
-                $arsql[] = $sField;
-            }
-            $sGroupBy = $sGroupBy.implode(",",$arsql);
+        foreach($this->argroupby as $field) {
+            $this->_clean_reserved($field);
+            $arsql[] = $field;
         }
-        return $sGroupBy;
+        return " GROUP BY ".implode(",",$arsql);
     }
 
-    private function _get_joins(): string
+    private function _get_orderby(): string
     {
-        if(!$this->arjoins) return "";
-        $sjoin = " ".implode("\n",$this->arjoins);
-        return $sjoin;
+        if(!$this->arorderby) return "";
+        $arsql = [];
+        foreach($this->arorderby as $field=>$AD) {
+            $this->_clean_reserved($field);
+            $arsql[] = "$field $AD";
+        }
+        return " ORDER BY ".implode(",",$arsql);
     }
-
+    
     private function _get_end(): string
     {
         if(!$this->arend) return "";
-        $sEnd = " ".implode("\n",$this->arend);
-        return $sEnd;
+        return " ".implode("\n",$this->arend);
     }
 
     private function _get_limit(): string
@@ -115,27 +102,28 @@ class ComponentQB
         return $sLimit;
     }
 
-    private function _is_numeric($fieldname): bool{return in_array($fieldname,$this->arnumeric);}
+    private function _is_numeric(string $fieldname): bool{return in_array($fieldname,$this->arnumeric);}
 
-    private function _is_reserved($word): bool{return in_array(strtolower($word),$this->reserved);}
+    private function _is_reserved(string $word): bool{return in_array(strtolower($word),$this->reserved);}
 
-    private function _clean_reserved(&$mxfields)
+    private function _clean_reserved(&$mxfields): void
     {
+        if(is_string($mxfields)) {
+            if ($this->_is_reserved($mxfields))
+                $mxfields = "`$mxfields`";
+            return;
+        }
+
         if(is_array($mxfields)) {
             foreach ($mxfields as $i => $field) {
                 if ($this->_is_reserved($field))
                     $mxfields[$i] = "`$field`";
             }
         }
-        elseif(is_string($mxfields)) {
-            if ($this->_is_reserved($mxfields))
-                $mxfields = "`$mxfields`";
-        }
     }
 
-    private function _is_tagged($value)
+    private function _is_tagged(string $value): bool
     {
-        if(!is_string($value)) return false;
         //$value = trim($value);
         $tagini = substr($value,0,2);
         $tagend = substr($value, -2);
@@ -147,7 +135,7 @@ class ComponentQB
         return false;
     }
 
-    private function _get_untagged($tagged)
+    private function _get_untagged(string $tagged): string
     {
         $ilen = strlen($tagged);
         return substr($tagged, 2, $ilen - 4);
@@ -224,19 +212,19 @@ class ComponentQB
             $sql .= "SET ";
             //creo las asignaciones de campos set extras
             $arAux = [];
-            foreach($arfieldval as $sField=>$strval)
+            foreach($arfieldval as $field=>$strval)
             {
-                //echo "$sField  =  $strval\n";
-                $this->_clean_reserved($sField);
+                //echo "$field  =  $strval\n";
+                $this->_clean_reserved($field);
                 if($strval===null)
-                    $arAux[] = "$sField=null";
+                    $arAux[] = "$field=null";
                 elseif($this->_is_tagged($strval)) {
-                    $arAux[] = "$sField={$this->_get_untagged($strval)}";
+                    $arAux[] = "$field={$this->_get_untagged($strval)}";
                 }
-                elseif($this->_is_numeric($sField))
-                    $arAux[] = "$sField=$strval";
+                elseif($this->_is_numeric($field))
+                    $arAux[] = "$field=$strval";
                 else
-                    $arAux[] = "$sField='$strval'";
+                    $arAux[] = "$field='$strval'";
             }
 
             $sql .= implode(",",$arAux);
@@ -245,18 +233,18 @@ class ComponentQB
 
             //condiciones con las claves
             $arAux = [];
-            foreach($arpks as $sField=>$strval)
+            foreach($arpks as $field=>$strval)
             {
-                $this->_clean_reserved($sField);
+                $this->_clean_reserved($field);
                 if($strval===null)
-                    $arAux[] = "$sField IS null";
+                    $arAux[] = "$field IS null";
                 elseif($this->_is_tagged($strval)) {
-                    $arAux[] = "$sField={$this->_get_untagged($strval)}";
+                    $arAux[] = "$field={$this->_get_untagged($strval)}";
                 }
-                elseif($this->_is_numeric($sField))
-                    $arAux[] = "$sField=$strval";
+                elseif($this->_is_numeric($field))
+                    $arAux[] = "$field=$strval";
                 else
-                    $arAux[] = "$sField='$strval'";
+                    $arAux[] = "$field='$strval'";
             }
 
             $arAux = array_merge($arAux,$this->arands);
@@ -292,18 +280,18 @@ class ComponentQB
 
             //condiciones con las claves
             $arAux = [];
-            foreach($arpks as $sField=>$strval)
+            foreach($arpks as $field=>$strval)
             {
-                $this->_clean_reserved($sField);
+                $this->_clean_reserved($field);
                 if($strval===null)
-                    $arAux[] = "$sField IS null";
+                    $arAux[] = "$field IS null";
                 elseif($this->_is_tagged($strval)) {
-                    $arAux[] = "$sField={$this->_get_untagged($strval)}";
+                    $arAux[] = "$field={$this->_get_untagged($strval)}";
                 }
-                elseif($this->_is_numeric($sField))
-                    $arAux[] = "$sField=$strval";
+                elseif($this->_is_numeric($field))
+                    $arAux[] = "$field=$strval";
                 else
-                    $arAux[] = "$sField='$strval'";
+                    $arAux[] = "$field='$strval'";
             }
 
             $sql .= " WHERE 1 ";
@@ -345,18 +333,18 @@ class ComponentQB
 
                 //condiciones con las claves
                 $arAnd = [];
-                foreach($arpks as $sField=>$strval)
+                foreach($arpks as $field=>$strval)
                 {
-                    $this->_clean_reserved($sField);
+                    $this->_clean_reserved($field);
                     if($strval===null)
-                        $arAnd[] = "$sField IS null";
+                        $arAnd[] = "$field IS null";
                     elseif($this->_is_tagged($strval)) {
-                        $arAux[] = "$sField={$this->_get_untagged($strval)}";
+                        $arAux[] = "$field={$this->_get_untagged($strval)}";
                     }
-                    elseif($this->_is_numeric($sField))
-                        $arAux[] = "$sField=$strval";
+                    elseif($this->_is_numeric($field))
+                        $arAux[] = "$field=$strval";
                     else
-                        $arAux[] = "$sField='$strval'";
+                        $arAux[] = "$field='$strval'";
                 }
 
                 $sql .= " WHERE ".implode(" AND ",$arAnd);
@@ -399,15 +387,15 @@ class ComponentQB
 
                 //condiciones con las claves
                 $arAnd = [];
-                foreach($arpks as $sField=>$strval)
+                foreach($arpks as $field=>$strval)
                 {
-                    $this->_clean_reserved($sField);
+                    $this->_clean_reserved($field);
                     if($strval===null)
-                        $arAnd[] = "$sField IS null";
-                    elseif($this->_is_numeric($sField))
-                        $arAux[] = "$sField=$strval";
+                        $arAnd[] = "$field IS null";
+                    elseif($this->_is_numeric($field))
+                        $arAux[] = "$field=$strval";
                     else
-                        $arAux[] = "$sField='$strval'";
+                        $arAux[] = "$field='$strval'";
                 }
 
                 $sql .= " WHERE ".implode(" AND ",$arAnd);
@@ -446,14 +434,14 @@ class ComponentQB
         $sql .= $this->_get_joins();
         //condiciones con las claves
         $arAux = [];
-        foreach($arpks as $sField=>$strval) {
-            $this->_clean_reserved($sField);
+        foreach($arpks as $field=>$strval) {
+            $this->_clean_reserved($field);
             if($strval===null)
-                $arAux[] = "$sField IS null";
-            elseif($this->_is_numeric($sField))
-                $arAux[] = "$sField=$strval";
+                $arAux[] = "$field IS null";
+            elseif($this->_is_numeric($field))
+                $arAux[] = "$field=$strval";
             else
-                $arAux[] = "$sField='$strval'";
+                $arAux[] = "$field='$strval'";
         }
 
         $arAux = array_merge($arAux,$this->arands);
