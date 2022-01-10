@@ -152,11 +152,11 @@ class ComponentQB
     {
         $this->sql = "error";
         if(!$table) $table = $this->table;
-        if(!$table) $this->_exception("missing table in autoinsert");
+        if(!$table) $this->_exception("missing table in insert");
         
-        $comment = $this->comment ? "/*$this->comment*/" : "/*autoinsert*/";
+        $comment = $this->comment ? "/*$this->comment*/" : "/*insert*/";
         $arfieldval = $arfieldval ?? $this->arinsertfv;
-        if (!$arfieldval) $this->_exception("missing fields and values in autoinsert");
+        if (!$arfieldval) $this->_exception("missing fields and values in insert");
         
         $sql = "$comment INSERT INTO ";
         $sql .= "$table ( ";
@@ -171,7 +171,7 @@ class ComponentQB
             $araux[] = $strval===null ? "null" : "'$strval'";
 
         $sql .= ") VALUES (";
-        $sql .= implode(",",$arAux);
+        $sql .= implode(",",$araux);
         $sql .= ")";
 
         $this->sql = $sql;
@@ -182,71 +182,58 @@ class ComponentQB
 
     public function autoupdate($table=null, array $arfieldval=[], array $arpks=[]): self
     {
-        //Limpio la consulta
-        $this->sql = "-- autoupdate";
+        $this->sql = "error";
+        if(!$table) $table = $this->table;
+        if(!$table) $this->_exception("missing table in update");
 
-        $comment = "";
-        if($this->comment)
-            $comment = "/*$this->comment*/";
+        $comment = $this->comment ? "/*$this->comment*/" : "/*update*/";
+        $arfieldval = $arfieldval ?? $this->arupdatefv;
+        if (!$arfieldval) $this->_exception("missing fields and values in autoinsert");
+        $arpks = $arpks ?? $this->arpks;
 
-        if(!$table)
-            $table = $this->table;
-
-        if($table)
-        {
-            if(!$arfieldval)
-                $arfieldval = $this->arupdatefv;
-            if(!$arpks)
-                $arpks = $this->arpks;
-
-            $sql = "$comment UPDATE $table ";
-            $sql .= "SET ";
-            //creo las asignaciones de campos set extras
-            $arAux = [];
-            foreach($arfieldval as $field=>$strval)
-            {
-                //echo "$field  =  $strval\n";
-                $this->_clean_reserved($field);
-                if($strval===null)
-                    $arAux[] = "$field=null";
-                elseif($this->_is_tagged($strval)) {
-                    $arAux[] = "$field={$this->_get_untagged($strval)}";
-                }
-                elseif($this->_is_numeric($field))
-                    $arAux[] = "$field=$strval";
-                else
-                    $arAux[] = "$field='$strval'";
+        $sql = "$comment UPDATE $table ";
+        $sql .= "SET ";
+        //creo las asignaciones de campos set extras
+        $arsets = [];
+        foreach($arfieldval as $field=>$strval) {
+            $this->_clean_reserved($field);
+            if($strval===null)
+                $arsets[] = "$field=null";
+            elseif($this->_is_tagged($strval)) {
+                $arsets[] = "$field={$this->_get_untagged($strval)}";
             }
+            elseif($this->_is_numeric($field))
+                $arsets[] = "$field=$strval";
+            else
+                $arsets[] = "$field='$strval'";
+        }
 
-            $sql .= implode(",",$arAux);
+        $sql .= implode(",", $arsets);
+        $sql .= " WHERE 1 ";
 
-            $sql .= " WHERE 1 ";
-
-            //condiciones con las claves
-            $arAux = [];
-            foreach($arpks as $field=>$strval)
-            {
-                $this->_clean_reserved($field);
-                if($strval===null)
-                    $arAux[] = "$field IS null";
-                elseif($this->_is_tagged($strval)) {
-                    $arAux[] = "$field={$this->_get_untagged($strval)}";
-                }
-                elseif($this->_is_numeric($field))
-                    $arAux[] = "$field=$strval";
-                else
-                    $arAux[] = "$field='$strval'";
+        //condiciones con las claves
+        $arconds = [];
+        foreach($arpks as $field=>$strval) {
+            $this->_clean_reserved($field);
+            if($strval===null)
+                $arconds[] = "$field IS NULL";
+            elseif($this->_is_tagged($strval)) {
+                $arconds[] = "$field={$this->_get_untagged($strval)}";
             }
+            elseif($this->_is_numeric($field))
+                $arconds[] = "$field=$strval";
+            else
+                $arconds[] = "$field='$strval'";
+        }
 
-            $arAux = array_merge($arAux,$this->arands);
-            if($arAux)
-                $sql .= "AND ".implode(" AND ",$arAux);
+        $arconds = array_merge($arconds, $this->arands);
+        if($arconds)
+            $sql .= "AND ".implode(" AND ",$arconds);
 
-            $sql .= $this->_get_end();
-            $this->sql = $sql;
-            //si hay bd intenta ejecutar la consulta
-            $this->query("w");
-        }//se ha proporcionado una tabla
+        $sql .= $this->_get_end();
+        $this->sql = $sql;
+        //si hay bd intenta ejecutar la consulta
+        //$this->query("w");
         return $this;
     }//autoupdate
 
@@ -270,26 +257,26 @@ class ComponentQB
             $sql = "$comment DELETE FROM $table ";
 
             //condiciones con las claves
-            $arAux = [];
+            $araux = [];
             foreach($arpks as $field=>$strval)
             {
                 $this->_clean_reserved($field);
                 if($strval===null)
-                    $arAux[] = "$field IS null";
+                    $araux[] = "$field IS NULL";
                 elseif($this->_is_tagged($strval)) {
-                    $arAux[] = "$field={$this->_get_untagged($strval)}";
+                    $araux[] = "$field={$this->_get_untagged($strval)}";
                 }
                 elseif($this->_is_numeric($field))
-                    $arAux[] = "$field=$strval";
+                    $araux[] = "$field=$strval";
                 else
-                    $arAux[] = "$field='$strval'";
+                    $araux[] = "$field='$strval'";
             }
 
             $sql .= " WHERE 1 ";
 
-            $arAux = array_merge($arAux,$this->arands);
-            if($arAux)
-                $sql .= "AND ".implode(" AND ",$arAux);
+            $araux = array_merge($araux,$this->arands);
+            if($araux)
+                $sql .= "AND ".implode(" AND ",$araux);
 
             $sql .= $this->_get_end();
             $this->sql = $sql;
@@ -328,14 +315,14 @@ class ComponentQB
                 {
                     $this->_clean_reserved($field);
                     if($strval===null)
-                        $arAnd[] = "$field IS null";
+                        $arAnd[] = "$field IS NULL";
                     elseif($this->_is_tagged($strval)) {
-                        $arAux[] = "$field={$this->_get_untagged($strval)}";
+                        $araux[] = "$field={$this->_get_untagged($strval)}";
                     }
                     elseif($this->_is_numeric($field))
-                        $arAux[] = "$field=$strval";
+                        $araux[] = "$field=$strval";
                     else
-                        $arAux[] = "$field='$strval'";
+                        $araux[] = "$field='$strval'";
                 }
 
                 $sql .= " WHERE ".implode(" AND ",$arAnd);
@@ -382,11 +369,11 @@ class ComponentQB
                 {
                     $this->_clean_reserved($field);
                     if($strval===null)
-                        $arAnd[] = "$field IS null";
+                        $arAnd[] = "$field IS NULL";
                     elseif($this->_is_numeric($field))
-                        $arAux[] = "$field=$strval";
+                        $araux[] = "$field=$strval";
                     else
-                        $arAux[] = "$field='$strval'";
+                        $araux[] = "$field='$strval'";
                 }
 
                 $sql .= " WHERE ".implode(" AND ",$arAnd);
@@ -424,19 +411,19 @@ class ComponentQB
 
         $sql .= $this->_get_joins();
         //condiciones con las claves
-        $arAux = [];
+        $araux = [];
         foreach($arpks as $field=>$strval) {
             $this->_clean_reserved($field);
             if($strval===null)
-                $arAux[] = "$field IS null";
+                $araux[] = "$field IS NULL";
             elseif($this->_is_numeric($field))
-                $arAux[] = "$field=$strval";
+                $araux[] = "$field=$strval";
             else
-                $arAux[] = "$field='$strval'";
+                $araux[] = "$field='$strval'";
         }
 
-        $arAux = array_merge($arAux,$this->arands);
-        if($arAux) $sql .= " WHERE ".implode(" AND ",$arAux);
+        $araux = array_merge($araux,$this->arands);
+        if($araux) $sql .= " WHERE ".implode(" AND ",$araux);
 
         $sql .= $this->_get_groupby();
         $sql .= $this->_get_having();
