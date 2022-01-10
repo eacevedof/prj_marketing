@@ -146,7 +146,7 @@ final class WriterService extends AppService
             {
                 $oCrud->add_and($sWhere);
             }        
-        $oCrud->autodelete();
+        $oCrud->delete();
         $sql = $oCrud->get_sql();
         
         return $sql;      

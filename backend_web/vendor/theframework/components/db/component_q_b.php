@@ -188,7 +188,7 @@ class ComponentQB
 
         $comment = $this->comment ? "/*$this->comment*/" : "/*update*/";
         $arfieldval = $arfieldval ?? $this->arupdatefv;
-        if (!$arfieldval) $this->_exception("missing fields and values in autoinsert");
+        if (!$arfieldval) $this->_exception("missing fields and values in update");
         $arpks = $arpks ?? $this->arpks;
 
         $sql = "$comment UPDATE $table ";
@@ -237,55 +237,46 @@ class ComponentQB
         return $this;
     }//update
 
-    public function autodelete($table=null,$arpks=[])
+    public function delete(?string $table=null, array $arpks=[]): self
     {
-        //Limpio la consulta
-        $this->sql = "-- autodelete";
+        $this->sql = "error";
+        if(!$table) $table = $this->table;
+        if(!$table) $this->_exception("missing table in delete");
 
-        $comment = "";
-        if($this->comment)
-            $comment = "/*$this->comment*/";
+        $comment = $this->comment ? "/*$this->comment*/" : "/*delete*/";
+        $arpks = $arpks ?? $this->arpks;
 
-        if(!$table)
-            $table = $this->table;
+        $sql = "$comment DELETE FROM $table ";
 
-        if($table)
+        //condiciones con las claves
+        $arconds = [];
+        foreach($arpks as $field=>$strval)
         {
-            if(!$arpks)
-                $arpks = $this->arpks;
-
-            $sql = "$comment DELETE FROM $table ";
-
-            //condiciones con las claves
-            $araux = [];
-            foreach($arpks as $field=>$strval)
-            {
-                $this->_clean_reserved($field);
-                if($strval===null)
-                    $araux[] = "$field IS NULL";
-                elseif($this->_is_tagged($strval)) {
-                    $araux[] = "$field={$this->_get_untagged($strval)}";
-                }
-                elseif($this->_is_numeric($field))
-                    $araux[] = "$field=$strval";
-                else
-                    $araux[] = "$field='$strval'";
+            $this->_clean_reserved($field);
+            if($strval===null)
+                $arconds[] = "$field IS NULL";
+            elseif($this->_is_tagged($strval)) {
+                $arconds[] = "$field={$this->_get_untagged($strval)}";
             }
+            elseif($this->_is_numeric($field))
+                $arconds[] = "$field=$strval";
+            else
+                $arconds[] = "$field='$strval'";
+        }
 
-            $sql .= " WHERE 1 ";
+        $sql .= " WHERE 1 ";
 
-            $araux = array_merge($araux,$this->arands);
-            if($araux)
-                $sql .= "AND ".implode(" AND ",$araux);
+        $araux = array_merge($arconds, $this->arands);
+        if($araux)
+            $sql .= "AND ".implode(" AND ",$araux);
 
-            $sql .= $this->_get_end();
-            $this->sql = $sql;
-            //si hay bd intenta ejecutar la consulta
-            $this->query("w");
-
-        }//se ha proporcionado una tabla
+        $sql .= $this->_get_end();
+        $this->sql = $sql;
+        //si hay bd intenta ejecutar la consulta
+        //$this->query("w");
         return $this;
-    }//autodelete
+    }//delete
+
 
     public function autodelete_logic($table=null,$arpks=[])
     {

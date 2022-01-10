@@ -147,7 +147,7 @@ abstract class AppRepository
         foreach($pks as $fieldname=>$sValue)
             $qb->add_pk_fv($fieldname, $sValue);
 
-        $qb->autodelete();
+        $qb->delete();
         $this->log($qb->get_sql());
 
         if($qb->is_error()) {
