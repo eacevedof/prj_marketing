@@ -10,7 +10,7 @@
 namespace App\Repositories;
 use App\Traits\LogTrait;
 use App\Models\AppEntity;
-use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\Db\ComponentQB;
 use TheFramework\Components\Db\ComponentMysql;
 use App\Enums\ExceptionType;
 use \Exception;
@@ -28,9 +28,9 @@ abstract class AppRepository
         return str_replace("'","\\'", $value);
     }
 
-    protected function _get_crud(): ComponentCrud
+    protected function _get_qb(): ComponentQB
     {
-        return new ComponentCrud();
+        return new ComponentQB();
     }
 
     protected function _exception(string $message, int $code=500): void
@@ -81,18 +81,18 @@ abstract class AppRepository
 
     public function insert(array $request): int
     {
-        $crud = $this->_get_crud()
+        $qb = $this->_get_qb()
             ->set_comment("app.insert(request)")
             ->set_dbobj($this->db)
             ->set_table($this->table);
 
         foreach($request as $field => $value)
-            $crud->add_insert_fv($field, $value);
+            $qb->add_insert_fv($field, $value);
 
-        $crud->autoinsert();
-        $this->log($crud->get_sql());
+        $qb->autoinsert();
+        $this->log($qb->get_sql());
 
-        if($crud->is_error()) {
+        if($qb->is_error()) {
             $this->logerr($request,"insert");
             $this->_exception(__("Error inserting data"));
         }
@@ -109,23 +109,23 @@ abstract class AppRepository
         if(!$mutables)
             $this->_exception(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
-        $crud = $this->_get_crud()
+        $qb = $this->_get_qb()
             ->set_comment("app.update(request)")
             ->set_dbobj($this->db)
             ->set_table($this->table);
 
         //valores del "SET"
         foreach($mutables as $fieldname=>$sValue)
-            $crud->add_update_fv($fieldname, $sValue);
+            $qb->add_update_fv($fieldname, $sValue);
 
         //valores del WHERE
         foreach($pks as $fieldname=>$sValue)
-            $crud->add_pk_fv($fieldname, $sValue);
+            $qb->add_pk_fv($fieldname, $sValue);
 
-        $crud->autoupdate();
-        $this->log($crud->get_sql());
+        $qb->autoupdate();
+        $this->log($qb->get_sql());
 
-        if($crud->is_error()) {
+        if($qb->is_error()) {
             $this->logerr($request,"update");
             $this->_exception(__("Error updating data"));
         }
@@ -138,19 +138,19 @@ abstract class AppRepository
         $pks = $this->_get_pks($request);
         if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
-        $crud = $this->_get_crud()
+        $qb = $this->_get_qb()
             ->set_comment("app.delete(request)")
             ->set_dbobj($this->db)
             ->set_table($this->table);
 
         //valores del WHERE
         foreach($pks as $fieldname=>$sValue)
-            $crud->add_pk_fv($fieldname, $sValue);
+            $qb->add_pk_fv($fieldname, $sValue);
 
-        $crud->autodelete();
-        $this->log($crud->get_sql());
+        $qb->autodelete();
+        $this->log($qb->get_sql());
 
-        if($crud->is_error()) {
+        if($qb->is_error()) {
             $this->logerr($request,"delete");
             $this->_exception(__("Error deleting data"));
         }
@@ -162,7 +162,7 @@ abstract class AppRepository
     {
         if(!$pks) return "";
 
-        $crud = $this->_get_crud()
+        $qb = $this->_get_qb()
             ->set_comment("app.sysupdate")
             ->set_dbobj($this->db)
             ->set_getfields(["m.update_date"])
@@ -170,9 +170,9 @@ abstract class AppRepository
         ;
 
         foreach($pks as $fieldname=>$sValue)
-            $crud->add_pk_fv($fieldname, $sValue);
+            $qb->add_pk_fv($fieldname, $sValue);
 
-        $sql = $crud->get_selectfrom();
+        $sql = $qb->get_selectfrom();
         $r = $this->db->query($sql);
         return $r[0]["update_date"] ?? "";
     }
@@ -205,7 +205,7 @@ abstract class AppRepository
     public function get_by_id(string $id): array
     {
         $id = (int) $id;
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("get_by_id")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
@@ -218,7 +218,7 @@ abstract class AppRepository
     public function get_id_by(string $uuid): int
     {
         $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("user.get_id_by(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
@@ -232,7 +232,7 @@ abstract class AppRepository
     public function is_deleted(string $id): bool
     {
         $id = (int) $id;
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("get_by_id")
             ->set_table("$this->table as m")
             ->set_getfields(["m.delete_date"])

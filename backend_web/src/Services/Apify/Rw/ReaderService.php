@@ -10,7 +10,7 @@
 namespace App\Services\Apify\Rw;
 
 use TheFramework\Components\Db\Context\ComponentContext;
-use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\Db\ComponentQB;
 use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
@@ -48,18 +48,18 @@ final class ReaderService extends AppService
         if(!isset($qparams["fields"]) || !is_array($qparams["fields"]))
             $this->_exception("invalid or empty fields in read params");
 
-        $crud = new ComponentCrud();
-        if($qparams["comment"] ?? "") $crud->set_comment($qparams["comment"]);
+        $qb = new ComponentQB();
+        if($qparams["comment"] ?? "") $qb->set_comment($qparams["comment"]);
 
-        $crud->set_table($qparams["table"]);
-        if(isset($qparams["distinct"])) $crud->is_distinct($qparams["distinct"]);
-        if(isset($qparams["foundrows"])) $crud->is_foundrows($qparams["foundrows"]);
+        $qb->set_table($qparams["table"]);
+        if(isset($qparams["distinct"])) $qb->is_distinct($qparams["distinct"]);
+        if(isset($qparams["foundrows"])) $qb->is_foundrows($qparams["foundrows"]);
 
-        $crud->set_getfields($qparams["fields"]);
-        $crud->set_joins($qparams["joins"] ?? []);
-        $crud->set_and($qparams["where"] ?? []);
-        $crud->set_groupby($qparams["groupby"] ?? []);
-        $crud->set_having($qparams["having"] ?? []);
+        $qb->set_getfields($qparams["fields"]);
+        $qb->set_joins($qparams["joins"] ?? []);
+        $qb->set_and($qparams["where"] ?? []);
+        $qb->set_groupby($qparams["groupby"] ?? []);
+        $qb->set_having($qparams["having"] ?? []);
 
         $arTmp = [];
         if(isset($qparams["orderby"]))
@@ -70,13 +70,13 @@ final class ReaderService extends AppService
                 $arTmp[$arField[0]] = $arField[1] ?? "ASC";
             }
         }
-        $crud->set_orderby($arTmp);
+        $qb->set_orderby($arTmp);
 
         if(isset($qparams["limit"]["perpage"]))
-            $crud->set_limit($qparams["limit"]["perpage"] ?? 1000,$qparams["limit"]["regfrom"]??0);
+            $qb->set_limit($qparams["limit"]["perpage"] ?? 1000,$qparams["limit"]["regfrom"]??0);
 
-        $crud->get_selectfrom();
-        $sql =  $crud->get_sql();
+        $qb->get_selectfrom();
+        $sql =  $qb->get_sql();
         return $sql;
     }
 

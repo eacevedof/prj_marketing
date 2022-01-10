@@ -13,7 +13,7 @@ use App\Factories\DbFactory;
 use App\Factories\Specific\KafkaFactory;
 use App\Traits\LogTrait;
 use PDO;
-use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\Db\ComponentQB;
 use TheFramework\Components\Db\Context\ComponentContext;
 use RdKafka\Message;
 
@@ -27,11 +27,11 @@ final class LogConsumerService
         return DbFactory::get_pdo_by_ctx($context, "db_marketing_log");
     }
 
-    private function _get_query(): ComponentCrud
+    private function _get_query(): ComponentQB
     {
-        $crud = new ComponentCrud();
-        $crud->set_table("app_log");
-        return $crud;
+        $qb = new ComponentQB();
+        $qb->set_table("app_log");
+        return $qb;
     }
 
     private function _save(?array $data): void

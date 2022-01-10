@@ -34,7 +34,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_languages(): array
     {
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("picklist.get_languages")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
@@ -51,7 +51,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_countries(): array
     {
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("picklist.get_countries")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
@@ -68,7 +68,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_profiles(): array
     {
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("picklist.get_profiles")
             ->set_table("base_array as m")
             ->set_getfields(["m.id","m.description"])
@@ -85,7 +85,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_users(): array
     {
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("picklist.get_users")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])
@@ -101,7 +101,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_users_by_profile(string $profileid): array
     {
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("picklist.get_users_by_profile(profileid)")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])

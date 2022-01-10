@@ -14,7 +14,7 @@ use App\Components\Hierarchy\HierarchyComponent;
 use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
 use App\Factories\DbFactory as DbF;
-use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\Db\ComponentQB;
 use App\Factories\ComponentFactory as CF;
 
 final class UserRepository extends AppRepository
@@ -58,29 +58,29 @@ final class UserRepository extends AppRepository
         return "$field LIKE '%$value%'";
     }
 
-    private function _add_joins(ComponentCrud $crud): void
+    private function _add_joins(ComponentQB $qb): void
     {
         foreach ($this->joins["fields"] as $field => $alias)
-            $crud->add_getfield("$field as $alias");
+            $qb->add_getfield("$field as $alias");
 
         foreach ($this->joins["on"] as $join)
-            $crud->add_join($join);
+            $qb->add_join($join);
     }
     
-    private function _add_search_filter(ComponentCrud $crud, array $search): void
+    private function _add_search_filter(ComponentQB $qb, array $search): void
     {
         if(!$search) return;
 
         if($fields = $search["fields"])
             foreach ($fields as $field => $value )
-                $crud->add_and($this->_get_condition($field, $value));
+                $qb->add_and($this->_get_condition($field, $value));
 
         if($limit = $search["limit"])
-            $crud->set_limit($limit["length"], $limit["from"]);
+            $qb->set_limit($limit["length"], $limit["from"]);
 
         if($order = $search["order"]) {
             $field = $this->_get_join_field($order["field"]);
-            $crud->set_orderby([$field => "{$order["dir"]}"]);
+            $qb->set_orderby([$field => "{$order["dir"]}"]);
         }
 
         if($global = $search["global"]) {
@@ -88,18 +88,18 @@ final class UserRepository extends AppRepository
             foreach ($search["all"] as $field)
                 $or[] = $this->_get_condition($field, $global);
             $or = implode(" OR ",$or);
-            $crud->add_and("($or)");
+            $qb->add_and("($or)");
         }
     }
 
-    private function _add_auth_condition(ComponentCrud $crud): void
+    private function _add_auth_condition(ComponentQB $qb): void
     {
         if (!$this->auth) {
-            $crud->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
+            $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
         }
 
         if($this->auth->is_root()) {
-            $crud->add_getfield("m.delete_user")
+            $qb->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
                 ->add_getfield("m.insert_user");
             return;
@@ -110,8 +110,8 @@ final class UserRepository extends AppRepository
             $idparent = $user["id_parent"];
             $childs = $this->get_childs($idparent);
             $childs = array_column($childs,"id");
-            $crud->add_and_in("m.id", $childs);
-            $crud->add_and("m.delete_date IS NULL");
+            $qb->add_and_in("m.id", $childs);
+            $qb->add_and("m.delete_date IS NULL");
             return;
         }
 
@@ -119,14 +119,14 @@ final class UserRepository extends AppRepository
             $childs = $this->get_childs($user["id"]);
             $childs = array_column($childs,"id");
             $childs[] = $user["id"];
-            $crud->add_and("m.delete_date IS NULL");
-            $crud->add_and_in("m.id", $childs);
+            $qb->add_and("m.delete_date IS NULL");
+            $qb->add_and_in("m.id", $childs);
         }
     }
 
     public function search(array $search): array
     {
-        $crud = $this->_get_crud()
+        $qb = $this->_get_qb()
             ->set_comment("user.search")
             ->set_table("$this->table as m")
             ->is_foundrows()
@@ -152,11 +152,11 @@ final class UserRepository extends AppRepository
             ->set_limit(25, 0)
             ->set_orderby(["m.id"=>"DESC"])
         ;
-        $this->_add_joins($crud);
-        $this->_add_search_filter($crud, $search);
-        $this->_add_auth_condition($crud);
+        $this->_add_joins($qb);
+        $this->_add_search_filter($qb, $search);
+        $this->_add_auth_condition($qb);
 
-        $sql = $crud->get_selectfrom();
+        $sql = $qb->get_selectfrom();
         $r = $this->db->query($sql);
         if ($this->db->is_error()) $this->_exception(__("Data source error"));
 
@@ -169,7 +169,7 @@ final class UserRepository extends AppRepository
     public function get_by_email(string $email): array
     {
         $email = $this->_get_sanitized($email);
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("user.get_by_email")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -191,7 +191,7 @@ final class UserRepository extends AppRepository
     public function email_exists(string $email): int
     {
         $email = $this->_get_sanitized($email);
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("user.email_exists")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
@@ -205,7 +205,7 @@ final class UserRepository extends AppRepository
     public function get_info(string $uuid): array
     {
         $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("user.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -236,7 +236,7 @@ final class UserRepository extends AppRepository
 
     public function get_all_hierarchy(): array
     {
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("get_all_hierarchy")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id", "m.id_parent"])

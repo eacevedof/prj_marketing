@@ -23,7 +23,7 @@ final class SysfieldRepository extends AppRepository
     {
         if (!$userid) return "";
         $id = (int) $userid;
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("sysfield._get_user(userid)")
             ->set_table("base_user as m")
             ->set_getfields(["m.description"])
@@ -37,7 +37,7 @@ final class SysfieldRepository extends AppRepository
     private function _get_platform(string $platformid): string
     {
         if (!$platformid) return "";
-        $sql = $this->_get_crud()
+        $sql = $this->_get_qb()
             ->set_comment("sysfield._get_platform(platformid)")
             ->set_table("base_array as m")
             ->set_getfields(["m.description"])

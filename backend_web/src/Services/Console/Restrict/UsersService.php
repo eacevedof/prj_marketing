@@ -13,7 +13,7 @@ use App\Services\Console\IConsole;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Traits\ConsoleTrait;
 use App\Factories\DbFactory as DbF;
-use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\Db\ComponentQB;
 use TheFramework\Components\ComponentFaker;
 
 final class UsersService extends AppService implements IConsole
@@ -40,9 +40,9 @@ final class UsersService extends AppService implements IConsole
         $faker = new ComponentFaker();
 
         for ($i=0; $i<100; $i++) {
-            $crud = new ComponentCrud();
+            $qb = new ComponentQB();
 
-            $crud->set_table("base_user")
+            $qb->set_table("base_user")
                 ->add_insert_fv("address", $faker->get_paragraph(25))
                 ->add_insert_fv("birthdate", $faker->get_date())
                 ->add_insert_fv("date_validated", $faker->get_date("2020-01-01"))
@@ -67,7 +67,7 @@ final class UsersService extends AppService implements IConsole
                 ->add_insert_fv("uuid",uniqid())
                 ->autoinsert()
             ;
-            $sql = $crud->get_sql();
+            $sql = $qb->get_sql();
             $r = $db->exec($sql);
             if($db->is_error()) {
                 $this->_pr($this->get_error());
