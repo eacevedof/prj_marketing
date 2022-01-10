@@ -28,7 +28,7 @@ final class SysfieldRepository extends AppRepository
             ->set_table("base_user as m")
             ->set_getfields(["m.description"])
             ->add_and("m.id=$id")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         return $r[0]["description"] ?? "";
@@ -43,7 +43,7 @@ final class SysfieldRepository extends AppRepository
             ->set_getfields(["m.description"])
             ->add_and("m.code_erp=$platformid")
             ->add_and("m.type='platform'")
-            ->get_selectfrom()
+            ->select()
         ;
         $r = $this->db->query($sql);
         return $r[0]["description"] ?? "";

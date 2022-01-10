@@ -168,7 +168,7 @@ class ComponentQB
 
     public function insert(?string $table=null, array $arfieldval=[]): self
     {
-        $this->sql = "error";
+        $this->sql = "/*error insert*/";
         if(!$table) $table = $this->table;
         if(!$table) $this->_exception("missing table in insert");
         
@@ -200,7 +200,7 @@ class ComponentQB
 
     public function update(?string $table=null, array $arfieldval=[], array $arpks=[]): self
     {
-        $this->sql = "error";
+        $this->sql = "/*error update*/";
         if(!$table) $table = $this->table;
         if(!$table) $this->_exception("missing table in update");
 
@@ -245,7 +245,7 @@ class ComponentQB
 
     public function delete(?string $table=null, array $arpks=[]): self
     {
-        $this->sql = "error";
+        $this->sql = "/*error delete*/";
         if(!$table) $table = $this->table;
         if(!$table) $this->_exception("missing table in delete");
 
@@ -270,110 +270,9 @@ class ComponentQB
         return $this;
     }//delete
 
-
-    public function autodelete_logic($table=null,$arpks=[])
+    public function select($table=null,$fields=[],$arpks=[]): self
     {
-        //Limpio la consulta
-        $this->sql = "-- autodelete_logic";
-
-        if($this->comment)
-            $comment = "/*$this->comment*/";
-
-        if(!$table)
-            $table = $this->table;
-
-        if($table)
-        {
-            if(!$arpks)
-                $arpks = $this->arpks;
-
-            if($arpks)
-            {
-                //@todo
-                $sql = "$comment UPDATE $table ";
-                $sql .= "SET  ";
-
-                //condiciones con las claves
-                $arAnd = [];
-                foreach($arpks as $field=>$strval)
-                {
-                    $this->_clean_reserved($field);
-                    if($strval===null)
-                        $arAnd[] = "$field IS NULL";
-                    elseif($this->_is_tagged($strval)) {
-                        $araux[] = "$field={$this->_get_untagged($strval)}";
-                    }
-                    elseif($this->_is_numeric($field))
-                        $araux[] = "$field=$strval";
-                    else
-                        $araux[] = "$field='$strval'";
-                }
-
-                $sql .= " WHERE ".implode(" AND ",$arAnd);
-
-                $this->sql = $sql;
-                //si hay bd intenta ejecutar la consulta
-                $this->query("w");
-            }//si se han proporcionado correctamente las claves
-        }//se ha proporcionado una tabla
-        return $this;
-    }//autodelete_logic
-
-    public function autoundelete_logic($table=null,$arpks=[])
-    {
-        //Limpio la consulta
-        $this->sql = "-- autoundelete_logic";
-
-        if($this->comment)
-            $comment = "/*$this->comment*/";
-
-        if(!$table)
-            $table = $this->table;
-
-        if($table)
-        {
-            if(!$arpks)
-                $arpks = $this->arpks;
-
-            if($arpks)
-            {
-                $codUserSession = getPostParam("userId");
-                $sNow = date("Ymdhis");
-                $sql = "$comment UPDATE $table 
-                        SET 
-                        delete_date=null
-                        ,delte_user=null
-                        ,update_date='$sNow'
-                        ,update_user='$codUserSession'
-                        ";
-
-                //condiciones con las claves
-                $arAnd = [];
-                foreach($arpks as $field=>$strval)
-                {
-                    $this->_clean_reserved($field);
-                    if($strval===null)
-                        $arAnd[] = "$field IS NULL";
-                    elseif($this->_is_numeric($field))
-                        $araux[] = "$field=$strval";
-                    else
-                        $araux[] = "$field='$strval'";
-                }
-
-                $sql .= " WHERE ".implode(" AND ",$arAnd);
-
-                $this->sql = $sql;
-                if(is_object($this->oDB))
-                    $this->oDB->exec($this->sql);
-            }//si se han proporcionado correctamente las claves
-        }//se ha proporcionado una tabla
-        return $this;
-    }//autoundelete_logic
-
-    public function get_selectfrom($table=null,$fields=[],$arpks=[])
-    {
-        //Limpio la consulta
-        $this->sql = "-- get_selectfrom";
+        $this->sql = "/*error select*/";
 
         $comment = "";
         if($this->comment) $comment = "/*$this->comment*/";
@@ -447,7 +346,7 @@ class ComponentQB
         return $this;
     }
 
-    public function get_sql(){return $this->sql;}
+    public function query():string {return $this->sql;}
 
     public function get_sanitized($strval)
     {
