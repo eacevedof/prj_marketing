@@ -45,20 +45,20 @@ class ComponentQB
         $this->table = $table;
     }
 
-    private function _get_orderby()
+    private function _get_orderby(): string
     {
         if(!$this->arorderby) return "";
         $arsql = [];
-        $orderBy = " ORDER BY ";
+        $orderby = " ORDER BY ";
         foreach($this->arorderby as $sField=>$sAD) {
             $this->_clean_reserved($sField);
             $arsql[] = "$sField $sAD";
         }
-        $orderBy = $orderBy.implode(",",$arsql);
-        return $orderBy;
+        $orderby = $orderby.implode(",",$arsql);
+        return $orderby;
     }
 
-    private function _get_having()
+    private function _get_having(): string
     {
         if(!$this->arhaving) return "";
         $arsql = [];
@@ -69,7 +69,7 @@ class ComponentQB
         return $sHaving;
     }
 
-    private function _get_groupby()
+    private function _get_groupby(): string
     {
         if(!$this->argroupby) return "";
         $sGroupBy = "";
@@ -86,21 +86,21 @@ class ComponentQB
         return $sGroupBy;
     }
 
-    private function _get_joins()
+    private function _get_joins(): string
     {
         if(!$this->arjoins) return "";
         $sjoin = " ".implode("\n",$this->arjoins);
         return $sjoin;
     }
 
-    private function _get_end()
+    private function _get_end(): string
     {
         if(!$this->arend) return "";
         $sEnd = " ".implode("\n",$this->arend);
         return $sEnd;
     }
 
-    private function _get_limit()
+    private function _get_limit(): string
     {
         if(!$this->arlimit) return "";
         // LIMIT regfrom (secuenta desde 0), perpage
@@ -115,9 +115,9 @@ class ComponentQB
         return $sLimit;
     }
 
-    private function _is_numeric($fieldname){return in_array($fieldname,$this->arnumeric);}
+    private function _is_numeric($fieldname): bool{return in_array($fieldname,$this->arnumeric);}
 
-    private function _is_reserved($word){return in_array(strtolower($word),$this->reserved);}
+    private function _is_reserved($word): bool{return in_array(strtolower($word),$this->reserved);}
 
     private function _clean_reserved(&$mxfields)
     {
@@ -490,9 +490,10 @@ class ComponentQB
     public function set_having(array $arhaving=[]):self{$this->arhaving = []; if(is_array($arhaving)) $this->arhaving=$arhaving; return $this;}
 
     public function set_end(array $arend=[]):self{$this->arend = []; if(is_array($arend)) $this->arend=$arend; return $this;}
-    public function set_limit($iPPage=1000, $iRegfrom=0):self{
-        $this->arlimit=["regfrom"=>$iRegfrom, "perpage"=>$iPPage];
-        if($iPPage==null) $this->arlimit = [];
+    public function set_limit(int $ppage=1000, int $regfrom=0): self
+    {
+        $this->arlimit=["regfrom"=>$regfrom, "perpage"=>$ppage];
+        if($ppage==null) $this->arlimit = [];
         return $this;
     }
 
