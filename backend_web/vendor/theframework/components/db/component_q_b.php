@@ -180,7 +180,7 @@ class ComponentQB
         return $this;
     }//insert
 
-    public function update($table=null, array $arfieldval=[], array $arpks=[]): self
+    public function update(?string $table=null, array $arfieldval=[], array $arpks=[]): self
     {
         $this->sql = "error";
         if(!$table) $table = $this->table;
