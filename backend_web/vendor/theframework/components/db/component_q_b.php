@@ -45,7 +45,7 @@ class ComponentQB
         $this->table = $table;
     }
     
-    private function get_orderby()
+    private function _get_orderby()
     {
         if(!$this->arorderby) return "";
         $arsql = [];
@@ -58,7 +58,7 @@ class ComponentQB
         return $orderBy;
     }
 
-    private function get_having()
+    private function _get_having()
     {
         if(!$this->arhaving) return "";
         $arsql = [];
@@ -69,7 +69,7 @@ class ComponentQB
         return $sHaving;
     }
     
-    private function get_groupby()
+    private function _get_groupby()
     {
         if(!$this->argroupby) return "";
         $sGroupBy = "";
@@ -86,7 +86,7 @@ class ComponentQB
         return $sGroupBy;
     }
 
-    private function get_joins()
+    private function _get_joins()
     {
         if(!$this->arjoins) return "";
         $sjoin = " ".implode("\n",$this->arjoins);
@@ -443,7 +443,7 @@ class ComponentQB
         $sql .= implode(",",$fields)." ";
         $sql .= "FROM $table";
 
-        $sql .= $this->get_joins();
+        $sql .= $this->_get_joins();
         //condiciones con las claves
         $arAux = [];
         foreach($arpks as $sField=>$strval) {
@@ -459,9 +459,9 @@ class ComponentQB
         $arAux = array_merge($arAux,$this->arands);
         if($arAux) $sql .= " WHERE ".implode(" AND ",$arAux);
 
-        $sql .= $this->get_groupby();
-        $sql .= $this->get_having();
-        $sql .= $this->get_orderby();
+        $sql .= $this->_get_groupby();
+        $sql .= $this->_get_having();
+        $sql .= $this->_get_orderby();
         $sql .= $this->get_end();
         $sql .= $this->get_limit();
         $this->sql = $sql;
