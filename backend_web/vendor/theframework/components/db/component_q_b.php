@@ -93,7 +93,7 @@ class ComponentQB
     {
         if(!$this->arlimit) return "";
         // LIMIT regfrom (secuenta desde 0), perpage
-        $sLimit = " LIMIT ".implode(", ",$this->arlimit);
+        return " LIMIT ".implode(", ",$this->arlimit);
         /**
          * si por ejemplo deseo paginar de 10 en 10
          * para la pag:
@@ -101,7 +101,6 @@ class ComponentQB
          *  2 LIMIT 10,10        -- 11 a 20
          *  3 LIMIT 20,10        -- 21 a 30
          */
-        return $sLimit;
     }
 
     private function _is_numeric(string $fieldname): bool{return in_array($fieldname,$this->arnumeric);}
@@ -151,6 +150,7 @@ class ComponentQB
     private function _get_pkconds(array $arpks): array
     {
         $arconds = [];
+        $arpks = array_unique($arpks);
         foreach($arpks as $field=>$strval) {
             $this->_clean_reserved($field);
             if($strval===null)
@@ -347,12 +347,6 @@ class ComponentQB
         return $strfixed;
     }//get_sanitized
 
-    public function set_db(Object $db): self
-    {
-        $this->oDB = $db;
-        return $this;
-    }
-
     /**
      * @param char $mode READ para selects, WRITE update,insert,delete
      * @return mixto
@@ -373,7 +367,11 @@ class ComponentQB
         $this->_exception("missing exec or query method in db object");
     }//get_result
 
-    private function add_error($sMessage):self{$this->iserror = true;$this->errors[]=$sMessage; return $this; return $this;}
+    public function set_db(Object $db): self
+    {
+        $this->oDB = $db;
+        return $this;
+    }
 
     public function is_distinct(bool $ison=true):self{$this->isdistinct=$ison; return $this;}
     public function is_foundrows(bool $ison=true):self {$this->calcfoundrows=$ison; return $this;}
