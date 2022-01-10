@@ -11,55 +11,38 @@ namespace TheFramework\Components\Db;
 
 class ComponentQB
 {
-    private string $comment;
-    private string $table; //Tabla sobre la que se realizará el crud
-    private array $arinsertfv;
+    private string $comment         = "";
+    private string $table           = ""; //Tabla sobre la que se realizará el crud
+    private bool $isdistinct        = false;
+    private bool $calcfoundrows     = false;
+    private array $argetfields      = [];
+    private array $arjoins          = [];
+    private array $arands           = [];
+    private array $argroupby        = [];
+    private array $arhaving         = [];
+    private array $arorderby        = [];
+    private array $arlimit          = [];
+    private array $arend            = [];
     
-    private array $arnumeric; //si esta en este array no se escapa con '
-    private array $arorderby;
-    private array $argroupby;
-    private array $arhaving;
-    private array $arands;
-    private array $arjoins;
+    private array $arnumeric        = []; //si esta en este array no se escapa con '
+    private array $arinsertfv       = [];
+
+    private array $arpks            = [];
+    private array $arupdatefv       = [];
+
+    private string $sql             = "";
+    private array $arresult         = [];
     
-    private bool $isdistinct;
-    private bool $calcfoundrows;
-    private array $arupdatefv;
-    private array $arpks;
-    private array $argetfields;
-    private $arresult;
-    private $arend;
-    private $arlimit;
-
-    private string $sql;
-
-    private ?Object $oDB;
+    private ?Object $oDB = null;
     
-    protected $arErrors = [];
-    protected $isError = false;
+    private array $errors           = [];
+    private bool $iserror           = false;
 
-    protected $reserved = ["get", "order", "password"];
+    private array $reserved = ["get", "order", "password"];
 
-    /**
-     * 
-     * @param TheFramework\Components\Db\ComponentMysql $oDB
-     */
     public function __construct(string $table = "")
     {
-        $this->argetfields = [];
-
-        $this->arend = [];
-        $this->arresult = [];
-        $this->arinsertfv = [];
-        $this->arupdatefv = [];
-        $this->pksfv = [];
-
-        $this->arjoins = [];
-        $this->arands = [];
-        $this->arorderby = [];
-        $this->argroupby = [];
-        $this->arnumeric = [];
-        $this->oDB = null;
+        $this->table = $table;
     }
     
     private function get_orderby()
@@ -235,7 +218,7 @@ class ComponentQB
             if(!$arfieldval)
                 $arfieldval = $this->arupdatefv;
             if(!$arpks)
-                $arpks = $this->pksfv;
+                $arpks = $this->arpks;
 
             $sql = "$comment UPDATE $table ";
             $sql .= "SET ";
@@ -303,7 +286,7 @@ class ComponentQB
         if($table)
         {
             if(!$arpks)
-                $arpks = $this->pksfv;
+                $arpks = $this->arpks;
             
             $sql = "$comment DELETE FROM $table ";
 
@@ -352,7 +335,7 @@ class ComponentQB
         if($table)
         {
             if(!$arpks)
-                $arpks = $this->pksfv;
+                $arpks = $this->arpks;
             
             if($arpks)
             {    
@@ -400,7 +383,7 @@ class ComponentQB
         if($table)
         {
             if(!$arpks)
-                $arpks = $this->pksfv;
+                $arpks = $this->arpks;
             
             if($arpks)
             {    
@@ -451,7 +434,7 @@ class ComponentQB
         if(!$fields) $fields = $this->argetfields;
         if(!$fields) return $this->sql;
 
-        if(!$arpks) $arpks = $this->pksfv;
+        if(!$arpks) $arpks = $this->arpks;
 
         $sql = "$comment SELECT ";
         if($this->calcfoundrows) $sql .= "SQL_CALC_FOUND_ROWS ";
@@ -492,8 +475,8 @@ class ComponentQB
     public function set_insert_fv(array $arfieldval=[]):self{$this->arinsertfv = []; if(is_array($arfieldval)) $this->arinsertfv=$arfieldval; return $this;}
     public function add_insert_fv($fieldname,$strval,$isSanit=1):self{$this->arinsertfv[$fieldname]=($isSanit)?$this->get_sanitized($strval):$strval; return $this;}
 
-    public function set_pks_fv(array $arfieldval=[]):self{$this->pksfv = []; if(is_array($arfieldval)) $this->pksfv=$arfieldval; return $this;}
-    public function add_pk_fv($fieldname,$strval,$isSanit=1):self{$this->pksfv[$fieldname]=($isSanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function set_pks_fv(array $arfieldval=[]):self{$this->arpks = []; if(is_array($arfieldval)) $this->arpks=$arfieldval; return $this;}
+    public function add_pk_fv($fieldname,$strval,$isSanit=1):self{$this->arpks[$fieldname]=($isSanit)?$this->get_sanitized($strval):$strval; return $this;}
     
     public function set_update_fv(array $arfieldval=[]):self{$this->arupdatefv = []; if(is_array($arfieldval)) $this->arupdatefv=$arfieldval; return $this;}
     public function add_update_fv($fieldname,$strval,$isSanit=1):self{$this->arupdatefv[$fieldname]=($isSanit)?$this->get_sanitized($strval):$strval; return $this;}
@@ -549,7 +532,7 @@ class ComponentQB
         }
     }//query
 
-    private function add_error($sMessage):self{$this->isError = true;$this->arErrors[]=$sMessage; return $this; return $this;}
+    private function add_error($sMessage):self{$this->iserror = true;$this->errors[]=$sMessage; return $this; return $this;}
 
     public function is_distinct($isOn=true):self{$this->isdistinct=$isOn; return $this;}
     public function is_foundrows($isOn=true):self {$this->calcfoundrows=$isOn; return $this;}
@@ -575,9 +558,9 @@ class ComponentQB
     public function add_end($sEnd,$sKey=null):self{if($sKey)$this->arend[$sKey]=$sEnd;else$this->arend[]=$sEnd; return $this;}
     public function set_dbobj($oDb=null):self{$this->oDB=$oDb; return $this;}
 
-    public function is_error(){return $this->isError;}
+    public function is_error(){return $this->iserror;}
     public function get_result(){$this->query(); return $this->arresult;}
-    public function get_errors($inJson=0){if($inJson) return json_encode($this->arErrors); return $this->arErrors;}
-    public function get_error($i=0){return isset($this->arErrors[$i])?$this->arErrors[$i]:null;}
+    public function get_errors($inJson=0){if($inJson) return json_encode($this->errors); return $this->errors;}
+    public function get_error($i=0){return isset($this->errors[$i])?$this->errors[$i]:null;}
 
 }//Crud 3.0.0
