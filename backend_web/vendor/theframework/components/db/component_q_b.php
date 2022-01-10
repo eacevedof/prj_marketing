@@ -41,6 +41,9 @@ class ComponentQB
     private bool $iserror           = false;
 
     private array $reserved = ["get", "order", "password"];
+    
+    const READ = "r";
+    const WRITE = "w";
 
     public function __construct(string $table = "")
     {
@@ -270,20 +273,18 @@ class ComponentQB
         return $this;
     }//delete
 
-    public function select($table=null,$fields=[],$arpks=[]): self
+    public function select(?string $table=null, ?array $fields=null, ?array $arpks=null): self
     {
         $this->sql = "/*error select*/";
 
-        $comment = "";
-        if($this->comment) $comment = "/*$this->comment*/";
-
         if(!$table) $table = $this->table;
-        if(!$table) return $this->sql;
+        if(!$table) $this->_exception("missing table in select");
 
-        if(!$fields) $fields = $this->argetfields;
-        if(!$fields) return $this->sql;
+        $fields = $fields ?? $this->argetfields;
+        if (!$fields) $this->_exception("missing fields in select");
 
-        if(!$arpks) $arpks = $this->arpks;
+        $comment = $this->comment ? "/*$this->comment*/" : "/*select*/";
+        $arpks = $arpks ?? $this->arpks;
 
         $sql = "$comment SELECT ";
         if($this->calcfoundrows) $sql .= "SQL_CALC_FOUND_ROWS ";
@@ -293,19 +294,10 @@ class ComponentQB
         $sql .= "FROM $table";
 
         $sql .= $this->_get_joins();
-        //condiciones con las claves
-        $araux = [];
-        foreach($arpks as $field=>$strval) {
-            $this->_clean_reserved($field);
-            if($strval===null)
-                $araux[] = "$field IS NULL";
-            elseif($this->_is_numeric($field))
-                $araux[] = "$field=$strval";
-            else
-                $araux[] = "$field='$strval'";
-        }
 
-        $araux = array_merge($araux,$this->arands);
+        $arconds = $this->_get_pkconds($arpks);
+
+        $araux = array_merge($arconds, $this->arands);
         if($araux) $sql .= " WHERE ".implode(" AND ",$araux);
 
         $sql .= $this->_get_groupby();
@@ -313,22 +305,22 @@ class ComponentQB
         $sql .= $this->_get_orderby();
         $sql .= $this->_get_end();
         $sql .= $this->_get_limit();
+        
         $this->sql = $sql;
-
-        return $this->sql;
+        return $this;
     }//get_selectfrom
 
-    public function set_table(?string $table=null):self{$this->table=$table; return $this;}
-    public function set_comment(string $sComment):self{$this->comment = $sComment; return $this;}
+    public function set_table(string $table):self{$this->table=$table; return $this;}
+    public function set_comment(string $comment):self{$this->comment = $comment; return $this;}
 
     public function set_insert_fv(array $arfieldval=[]):self{$this->arinsertfv = []; if(is_array($arfieldval)) $this->arinsertfv=$arfieldval; return $this;}
-    public function add_insert_fv($fieldname,$strval,$isSanit=1):self{$this->arinsertfv[$fieldname]=($isSanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function add_insert_fv(string $fieldname, $strval, bool $dosanit=true):self{$this->arinsertfv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
     public function set_pks_fv(array $arfieldval=[]):self{$this->arpks = []; if(is_array($arfieldval)) $this->arpks=$arfieldval; return $this;}
-    public function add_pk_fv($fieldname,$strval,$isSanit=1):self{$this->arpks[$fieldname]=($isSanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function add_pk_fv(string $fieldname, $strval, bool $dosanit=true):self{$this->arpks[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
     public function set_update_fv(array $arfieldval=[]):self{$this->arupdatefv = []; if(is_array($arfieldval)) $this->arupdatefv=$arfieldval; return $this;}
-    public function add_update_fv($fieldname,$strval,$isSanit=1):self{$this->arupdatefv[$fieldname]=($isSanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function add_update_fv(string $fieldname, bool $strval,$dosanit=true):self{$this->arupdatefv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
     public function set_getfields(array $fields=[]):self{$this->argetfields = []; if(is_array($fields)) $this->argetfields=$fields; return $this;}
     public function add_getfield(string $fieldname):self{$this->argetfields[]=$fieldname; return $this;}
@@ -358,29 +350,31 @@ class ComponentQB
         return $sFixed;
     }//get_sanitized
 
-    /**
-     *
-     * @param char $sType r:read para selects, w:write. escrituras
-     * @return Solo se sale
-     */
-    private function query($sType="r")
+    public function set_db(Object $db): self
     {
-        if(is_object($this->oDB))
-        {
-            //insert,update,delete
-            if(method_exists($this->oDB,"exec") && $sType=="w")
-                $this->arresult = $this->oDB->exec($this->sql);
-            //selects
-            elseif(method_exists($this->oDB,"query") && $sType=="r")
-                $this->arresult = $this->oDB->query($this->sql);
-            else
-                return $this->add_error("No match method/type operation");
+        $this->oDB = $db;
+        return $this;
+    }
 
-            //propagamos el error
-            if($this->oDB->is_error())
-                $this->add_error($this->oDB->get_error());
-        }
-    }//query
+    /**
+     * @param char $mode READ para selects, WRITE update,insert,delete
+     * @return mixto
+     */
+    public function get_result(string $mode=self::READ)
+    {
+        $result = [];
+        if (!$this->oDB) $this->_exception("no db object not configured for get_result");
+        if (!$this->sql) $this->_exception("empty sql in get_result");
+
+        //insert,update,delete
+        if(method_exists($this->oDB,"exec") && $mode==self::WRITE)
+            return $this->oDB->exec($this->sql);
+
+        if(method_exists($this->oDB,"query") && $mode==self::READ)
+            return $this->oDB->query($this->sql);
+
+        $this->_exception("missing exec or query method in db object");
+    }//get_result
 
     private function add_error($sMessage):self{$this->iserror = true;$this->errors[]=$sMessage; return $this; return $this;}
 
