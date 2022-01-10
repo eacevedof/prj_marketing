@@ -10,7 +10,7 @@
 namespace App\Services\Apify\Rw;
 
 use TheFramework\Components\Db\Context\ComponentContext;
-use TheFramework\Components\Db\ComponentCrud;
+use TheFramework\Components\Db\ComponentQB;
 use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
@@ -85,7 +85,7 @@ final class WriterService extends AppService
     {
         if(!isset($qparams["fields"])) $this->_exception("_get_insert_sql no fields");
 
-        $oCrud = new ComponentCrud();
+        $oCrud = new ComponentQB();
         $oCrud->set_comment(str_replace(["*","/",],"",trim($qparams["comment"])));
         $oCrud->set_table($qparams["table"]);
         foreach($qparams["fields"] as $sFieldName=>$sFieldValue)
@@ -108,7 +108,7 @@ final class WriterService extends AppService
         if(!isset($qparams["fields"])) $this->_exception("_get_update_sql no fields");
         //if(!isset($qparams["pks"])) return $this->add_error("_get_update_sql no pks");
 
-        $oCrud = new ComponentCrud();
+        $oCrud = new ComponentQB();
         $oCrud->set_comment(str_replace(["*","/",],"",$qparams["comment"]));
         $oCrud->set_table($qparams["table"]);
 
@@ -138,7 +138,7 @@ final class WriterService extends AppService
 
     private function _get_delete_sql(array $qparams): string
     {
-        $oCrud = new ComponentCrud();
+        $oCrud = new ComponentQB();
         $oCrud->set_comment(str_replace(["*","/",],"",$qparams["comment"]));
         $oCrud->set_table($qparams["table"]);
         if(isset($qparams["where"]))
@@ -154,7 +154,7 @@ final class WriterService extends AppService
 
     private function _get_deletelogic_sql(array $qparams): string
     {
-        $oCrud = new ComponentCrud();
+        $oCrud = new ComponentQB();
         $oCrud->set_comment(str_replace(["*","/",],"",$qparams["comment"]));
         $oCrud->set_table($qparams["table"]);
         $this->_add_sysfields($oCrud, $qparams);
@@ -197,7 +197,7 @@ final class WriterService extends AppService
         return $r;
     }
 
-    private function _add_sysfields(ComponentCrud $oCrud, $qparams): void
+    private function _add_sysfields(ComponentQB $oCrud, $qparams): void
     {
         if(!($qparams["autosysfields"] ?? false)) return;
 
