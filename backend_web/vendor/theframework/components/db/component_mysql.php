@@ -2,162 +2,163 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name TheFramework\Components\Db\ComponentMysql 
- * @file component_mysql.php v2.2.0
- * @date 10-06-2020 15:10 SPAIN
+ * @name TheFramework\Components\Db\ComponentMysql
+ * @file component_mysql.php v2.3.0
+ * @date 10-01-2022 21:00 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
+use \Exception;
+use \PDOException;
 
 final class ComponentMysql
 {
-    private $arConn;
-    private $isError;
-    private $arErrors;    
-    private $iAffected;
-    private $iFoundrows;
-    private $iLastid;
-    
-    public function __construct($arConn=[]) 
+    private array $config = [];
+
+    private int $affected = 0;
+    private int $foundrows = 0;
+    private int $lastid = -1;
+
+    private bool $iserror = false;
+    private array $errors = [];
+
+    public function __construct(array $config=[])
     {
-        $this->isError = FALSE;
-        $this->arErrors = [];
-        $this->arConn = $arConn;
-        $this->iFoundrows = 0;
-        $this->iLastid = -1;
+        $this->config = $config;
     }
 
-    private function get_conn_string()
+    private function _exception(string $message, int $code=500): void
     {
-        if(!$this->arConn)
-            throw new \Exception("No database config passed");
+        throw new Exception($message, $code);
+    }
 
-        $arCon["mysql:host"] = $this->arConn["server"] ?? "";
-        $arCon["dbname"] = $this->arConn["database"] ?? "";
-        $arCon["port"] = $this->arConn["port"] ?? "";
-        //$arCon["ConnectionPooling"] = (isset($this->arConn["pool"])?$this->arConn["pool"]:"0");
-        
-        $sString = "";
-        foreach($arCon as $sK=>$sV)
-            $sString .= "$sK=$sV;";
-        
-        return $sString;
-    }//get_conn_string
-
-    private function get_rowcol($arResult,$iCol=NULL,$iRow=NULL)
+    private function _get_conn_string(): string
     {
-        if(is_int($iCol) || is_int($iRow))
+        if(!$this->config) $this->_exception("empty connection config");
+
+        $config["mysql:host"] = $this->config["server"] ?? "";
+        $config["dbname"] = $this->config["database"] ?? "";
+        $config["port"] = $this->config["port"] ?? "";
+        //$config["ConnectionPooling"] = (isset($this->config["pool"])?$this->config["pool"]:"0");
+
+        $strcon = "";
+        foreach($config as $sK=>$sV)
+            $strcon .= "$sK=$sV;";
+
+        return $strcon;
+    }//_get_conn_string
+
+    private function get_rowcol(array $result, ?int $col=null, ?int $row=null)
+    {
+        if(is_int($col) || is_int($row))
         {
-            $arColnames = $arResult[0];
+            $arColnames = $result[0];
             $arColnames = array_keys($arColnames);
-//bug($arColnames);
-            $sColname = (isset($arColnames[$iCol])?$arColnames[$iCol]:"");
+            $sColname = (isset($arColnames[$col])?$arColnames[$col]:"");
             if($sColname)
-                $arResult = array_column($arResult,$sColname);
-        
-            if(isset($arResult[$iRow]))
-                $arResult = $arResult[$iRow];
+                $result = array_column($result,$sColname);
+
+            if(isset($result[$row]))
+                $result = $result[$row];
         }
-        return $arResult;
+        return $result;
     }
-    
-    public function query($sSQL, $iCol=NULL, $iRow=NULL)
+
+    public function query(string $sql, ?int $col=null, ?int $row=null)
     {
-        $arResult = [];        
-        try 
+        $result = [];
+        try
         {
             //devuelve server y bd
-            $sConn = $this->get_conn_string();
-            //pr($sConn,"component_mysql.query");die;
-            //pr($this->arConn,"xxxxxxxxxxxxxxxx");die("yyyyyyyyyy");
+            $strcon = $this->_get_conn_string();
+            //pr($strcon,"component_mysql.query");die;
+            //pr($this->config,"xxxxxxxxxxxxxxxx");die("yyyyyyyyyy");
             //https://stackoverflow.com/questions/38671330/error-with-php7-and-sql-server-on-windows
-            $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
-                    ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
-            $oPdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
+            $pdo = new \PDO($strcon, $this->config["user"], $this->config["password"]
+                ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
 
-            $this->log($sSQL,"ComponentMysql.exec");
-            $oCursor = $oPdo->query($sSQL);
-            if($oCursor===FALSE)
+            $this->_log($sql,"ComponentMysql.exec");
+            $oCursor = $pdo->query($sql);
+            if($oCursor===false)
             {
-                $this->add_error("exec-error: $sSQL");
+                $this->_add_error("exec-error: $sql");
             }
             else
             {
                 while($arRow = $oCursor->fetch(\PDO::FETCH_ASSOC))
-                    $arResult[] = $arRow;
+                    $result[] = $arRow;
 
-                $sSQL = "SELECT FOUND_ROWS()";
-                $this->iFoundrows = $oPdo->query($sSQL)->fetch(\PDO::FETCH_COLUMN);
+                $sql = "SELECT FOUND_ROWS()";
+                $this->foundrows = $pdo->query($sql)->fetch(\PDO::FETCH_COLUMN);
 
-                $this->iAffected = count($arResult);
-                if($arResult)
-                    $arResult = $this->get_rowcol($arResult, $iCol, $iRow);
+                $this->affected = count($result);
+                if($result)
+                    $result = $this->get_rowcol($result, $col, $row);
             }
         }
-        catch(\PDOException $oE)
+        catch(PDOException $e)
         {
-            $sMessage = "exception:{$oE->getMessage()}";
-            $this->add_error($sMessage);
-            $this->log($sSQL,"ComponentMysql.query error: $sMessage");
+            $message = "exception:{$e->getMessage()}";
+            $this->_add_error($message);
+            $this->_log($sql,"ComponentMysql.query error: $message");
         }
-        return $arResult;
+        return $result;
     }//query
-    
-    public function exec($sSQL)
+
+    public function exec(string $sql)
     {
-        try 
+        try
         {
-            $sConn = $this->get_conn_string();
+            $strcon = $this->_get_conn_string();
             //https://stackoverflow.com/questions/19577056/using-pdo-to-create-table
-            $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
-                    ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
-            $oPdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
-            $this->log($sSQL,"ComponentMysql.exec");
-            $mxR = $oPdo->exec($sSQL);
+            $pdo = new \PDO($strcon,$this->config["user"],$this->config["password"]
+                ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
+            $this->_log($sql,"ComponentMysql.exec");
+            $mxR = $pdo->exec($sql);
 
-            $this->iAffected = $mxR;
+            $this->affected = $mxR;
 
-            if(strstr($sSQL,"INSERT INTO ")) $this->iLastid = $oPdo->lastInsertId();
+            if(strstr($sql,"INSERT INTO ")) $this->lastid = $pdo->lastInsertId();
 
-            if($mxR===FALSE)
+            if($mxR===false)
             {
-                $this->add_error("exec-error: $sSQL");
+                $this->_add_error("exec-error: $sql");
             }
             return $mxR;
         }
-        catch(\PDOException $oE)
-        {           
-            $sMessage = "exception:{$oE->getMessage()}";
-            $this->add_error($sMessage);
-            $this->log($sSQL,"ComponentMysql.exec error: $sMessage");
+        catch( $e)
+        {
+            $message = "exception:{$e->getMessage()}";
+            $this->_add_error($message);
+            $this->_log($sql,"ComponentMysql.exec error: $message");
         }
     }//exec    
-    
-    private function log($mxVar,$sTitle=NULL)
+
+    private function _log($mxVar, ?string $title=null): void
     {
         if(defined("PATH_LOGS") && class_exists("\TheFramework\Components\ComponentLog"))
         {
-            $oLog = new \TheFramework\Components\ComponentLog("sql",PATH_LOGS);
-            $oLog->save($mxVar,"-- ".$sTitle);
+            $oLog = new \TheFramework\Components\Component_Log("sql",PATH_LOGS);
+            $oLog->save($mxVar,"-- ". $title);
         }
         if(function_exists("get_log_producer"))
         {
-            get_log_producer()->send($mxVar, "-- ".$sTitle, "sql");
+            get_log_producer()->send($mxVar, "-- ". $title, "sql");
         }
     }
-  
-    private function add_error($sMessage){$this->isError = TRUE;$this->iAffected=-1; $this->arErrors[]=$sMessage;}    
-    public function is_error(){return $this->isError;}
-    public function get_errors(){return $this->arErrors;}
-    public function get_error($i=0){return isset($this->arErrors[$i])?$this->arErrors[$i]:NULL;}
-    public function show_errors(){echo "<pre>".var_export($this->arErrors,1);}
-    
-    public function add_conn($k,$v){$this->arConn[$k]=$v;}
-    public function set_conn($config){$this->arConn = $config;}
 
-    public function get_conn($k){return $this->arConn[$k];}
-    public function get_affected(){return $this->iAffected;}
-    public function get_foundrows(){return $this->iFoundrows;}
-    public function get_lastid(){return $this->iLastid;}
-    
+    private function _add_error(string $message){$this->iserror = true; $this->affected=-1; $this->errors[]=$message;}
+
+    public function add_conn(string $k, string $v): self {$this->config[$k]=$v; return $this;}
+    public function set_conn(array $config=[]): self {$this->config = $config; return $this;}
+
+    public function get_affected(){return $this->affected;}
+    public function get_foundrows(){return $this->foundrows;}
+    public function get_lastid(){return $this->lastid;}
+
+    public function is_error(){return $this->iserror;}
+    public function get_errors(){return $this->errors;}
+    public function get_error($i=0){return $this->errors[$i] ?? "";}
 }//ComponentMysql
