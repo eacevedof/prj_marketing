@@ -13,43 +13,43 @@ use TheFramework\Components\ComponentLog;
 
 trait LogTrait
 {
-    protected function log($mxVar,$sTitle=NULL): void
+    protected function log($mxVar, $title=null): void
     {
         $oLog = new ComponentLog("sql",PATH_LOGS);
-        $oLog->save($mxVar,$sTitle);
+        $oLog->save($mxVar, $title);
     }
 
-    protected function logreq($mxVar, $sTitle=NULL): void
+    protected function logreq($mxVar, $title=null): void
     {
         $oLog = new ComponentLog("request",PATH_LOGS);
-        $oLog->save($mxVar, $sTitle);
+        $oLog->save($mxVar, $title);
     }
 
-    protected function logd($mxVar,$sTitle=NULL): void
+    protected function logd($mxVar, $title=null): void
     {
         $oLog = new ComponentLog("debug",PATH_LOGS);
-        $oLog->save($mxVar,$sTitle);
+        $oLog->save($mxVar, $title);
     }
 
-    protected function logerr($mxVar,$sTitle=NULL): void
+    protected function logerr($mxVar, $title=null): void
     {
         $oLog = new ComponentLog("error",PATH_LOGS);
-        $oLog->save($mxVar,$sTitle);
+        $oLog->save($mxVar, $title);
     }
 
-    protected function logkafka($mxVar,$sTitle=NULL): void
+    protected function logkafka($mxVar, $title=null): void
     {
         $oLog = new ComponentLog("kafka",PATH_LOGS);
-        $oLog->save($mxVar,$sTitle);
+        $oLog->save($mxVar, $title);
     }
 
-    protected function logpr($mxVar,$sTitle=NULL): void
+    protected function logpr($mxVar, $title=null): void
     {
         $oLog = new ComponentLog("debug",PATH_LOGS);
         $mxVar = print_r($mxVar, 1);
-        $oLog->save($mxVar, $sTitle);
+        $oLog->save($mxVar, $title);
         echo date("Y-m-d H:i:s");
-        if($sTitle) echo "\n$sTitle:";
+        if($title) echo "\n$title:";
         echo "\n$mxVar\n\n";
     }
     
