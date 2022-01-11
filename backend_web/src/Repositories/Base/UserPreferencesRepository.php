@@ -22,7 +22,7 @@ final class UserPreferencesRepository extends AppRepository
 
     public function get_by_user(int $userid, string $prefkey=""): array
     {
-        $qb = $this->_get_qb()
+        $qb = $this->_get_qbuilder()
             ->set_comment("userpreferences.get_by_user(userid)")
             ->set_table("$this->table as m")
             ->set_getfields(["m.pref_key","m.pref_value"])
@@ -30,6 +30,6 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.id_user=$userid")
         ;
         if ($prefkey) $qb->add_and("m.pref_key='$prefkey'");
-        return $this->db->query($qb->select());
+        return $this->db->query($qb->select()->sql());
     }
 }//UserPreferencesRepository

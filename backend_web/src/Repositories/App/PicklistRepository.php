@@ -34,7 +34,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_languages(): array
     {
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("picklist.get_languages")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
@@ -43,7 +43,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.type='language'")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->select()
+            ->select()->sql()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -51,7 +51,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_countries(): array
     {
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("picklist.get_countries")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
@@ -60,7 +60,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.type='country'")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->select()
+            ->select()->sql()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -68,7 +68,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_profiles(): array
     {
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("picklist.get_profiles")
             ->set_table("base_array as m")
             ->set_getfields(["m.id","m.description"])
@@ -77,7 +77,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.type='profile'")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->select()
+            ->select()->sql()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -85,7 +85,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_users(): array
     {
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("picklist.get_users")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])
@@ -93,7 +93,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             //->add_orderby("m.order_by")
             ->add_orderby("m.description")
-            ->select()
+            ->select()->sql()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);
@@ -101,7 +101,7 @@ final class PicklistRepository extends AppRepository
 
     public function get_users_by_profile(string $profileid): array
     {
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("picklist.get_users_by_profile(profileid)")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])
@@ -109,7 +109,7 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_profile=$profileid")
             ->add_orderby("m.description")
-            ->select()
+            ->select()->sql()
         ;
         $this->result = $this->db->query($sql);
         return $this->_get_associative(["id","description"]);

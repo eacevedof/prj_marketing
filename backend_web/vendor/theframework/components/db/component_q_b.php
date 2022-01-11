@@ -166,7 +166,7 @@ class ComponentQB
         return $arconds;
     }
 
-    public function insert(?string $table=null, array $arfieldval=[]): self
+    public function insert(?string $table=null, ?array $arfieldval=null): self
     {
         $this->sql = "/*error insert*/";
         if(!$table) $table = $this->table;
@@ -198,7 +198,7 @@ class ComponentQB
         return $this;
     }//insert
 
-    public function update(?string $table=null, array $arfieldval=[], array $arpks=[]): self
+    public function update(?string $table=null, ?array $arfieldval=null, ?array $arpks=null): self
     {
         $this->sql = "/*error update*/";
         if(!$table) $table = $this->table;
@@ -243,7 +243,7 @@ class ComponentQB
         return $this;
     }//update
 
-    public function delete(?string $table=null, array $arpks=[]): self
+    public function delete(?string $table=null, ?array $arpks=null): self
     {
         $this->sql = "/*error delete*/";
         if(!$table) $table = $this->table;
@@ -317,7 +317,7 @@ class ComponentQB
     public function add_pk_fv(string $fieldname, $strval, bool $dosanit=true):self{$this->arpks[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
     public function set_update_fv(array $arfieldval=[]):self{$this->arupdatefv = []; if(is_array($arfieldval)) $this->arupdatefv=$arfieldval; return $this;}
-    public function add_update_fv(string $fieldname, bool $strval,$dosanit=true):self{$this->arupdatefv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function add_update_fv(string $fieldname, $strval, bool $dosanit=true):self{$this->arupdatefv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
     public function set_getfields(array $fields=[]):self{$this->argetfields = []; if(is_array($fields)) $this->argetfields=$fields; return $this;}
     public function add_getfield(string $fieldname):self{$this->argetfields[]=$fieldname; return $this;}
@@ -351,7 +351,7 @@ class ComponentQB
      * @param char $mode READ para selects, WRITE update,insert,delete
      * @return mixto
      */
-    public function get_result(string $mode=self::READ)
+    public function exec(string $mode=self::READ)
     {
         $result = [];
         if (!$this->oDB) $this->_exception("no db object not configured for get_result");

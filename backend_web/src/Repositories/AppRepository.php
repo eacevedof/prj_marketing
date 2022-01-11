@@ -18,7 +18,7 @@ use \Exception;
 abstract class AppRepository
 {
     use LogTrait;
-    
+
     protected AppEntity $entity;
     protected ComponentMysql $db;
     protected string $table;
@@ -28,7 +28,7 @@ abstract class AppRepository
         return str_replace("'","\\'", $value);
     }
 
-    protected function _get_qb(): ComponentQB
+    protected function _get_qbuilder(): ComponentQB
     {
         return new ComponentQB();
     }
@@ -63,17 +63,17 @@ abstract class AppRepository
         return $this;
     }
 
-    public function query($sSQL,$iCol=NULL,$iRow=NULL)
+    public function query(?string $sql, ?int $col=null, ?int $row=null)
     {
-        $mxRet = $this->db->query($sSQL,$iCol=NULL,$iRow=NULL);
+        $mxRet = $this->db->query($sql, $col, $row);
         if($this->db->is_error())
             $this->add_error($this->db->get_errors());
         return $mxRet;
     }
 
-    public function execute($sSQL)
+    public function execute(?string $sql)
     {
-        $mxRet = $this->db->exec($sSQL);
+        $mxRet = $this->db->exec($sql);
         if($this->db->is_error())
             $this->add_error($this->db->get_errors());
         return $mxRet;
@@ -81,18 +81,16 @@ abstract class AppRepository
 
     public function insert(array $request): int
     {
-        $qb = $this->_get_qb()
+        $qb = $this->_get_qbuilder()
             ->set_comment("app.insert(request)")
-            ->set_dbobj($this->db)
+            ->set_db($this->db)
             ->set_table($this->table);
 
         foreach($request as $field => $value)
             $qb->add_insert_fv($field, $value);
 
-        $qb->insert();
-        $this->log($qb->get_sql());
-
-        if($qb->is_error()) {
+        $qb->insert()->exec($qb::WRITE);
+        if($this->db->is_error()) {
             $this->logerr($request,"insert");
             $this->_exception(__("Error inserting data"));
         }
@@ -109,9 +107,9 @@ abstract class AppRepository
         if(!$mutables)
             $this->_exception(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
-        $qb = $this->_get_qb()
+        $qb = $this->_get_qbuilder()
             ->set_comment("app.update(request)")
-            ->set_dbobj($this->db)
+            ->set_db($this->db)
             ->set_table($this->table);
 
         //valores del "SET"
@@ -122,10 +120,10 @@ abstract class AppRepository
         foreach($pks as $fieldname=>$sValue)
             $qb->add_pk_fv($fieldname, $sValue);
 
-        $qb->update();
-        $this->log($qb->get_sql());
+        $qb->update()->exec($qb::WRITE);
+        $this->log($qb->sql());
 
-        if($qb->is_error()) {
+        if($this->db->is_error()) {
             $this->logerr($request,"update");
             $this->_exception(__("Error updating data"));
         }
@@ -138,19 +136,17 @@ abstract class AppRepository
         $pks = $this->_get_pks($request);
         if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
-        $qb = $this->_get_qb()
+        $qb = $this->_get_qbuilder()
             ->set_comment("app.delete(request)")
-            ->set_dbobj($this->db)
+            ->set_db($this->db)
             ->set_table($this->table);
 
         //valores del WHERE
         foreach($pks as $fieldname=>$sValue)
             $qb->add_pk_fv($fieldname, $sValue);
 
-        $qb->delete();
-        $this->log($qb->get_sql());
-
-        if($qb->is_error()) {
+        $qb->delete()->exec($qb::WRITE);
+        if($this->db->is_error()) {
             $this->logerr($request,"delete");
             $this->_exception(__("Error deleting data"));
         }
@@ -162,9 +158,9 @@ abstract class AppRepository
     {
         if(!$pks) return "";
 
-        $qb = $this->_get_qb()
+        $qb = $this->_get_qbuilder()
             ->set_comment("app.sysupdate")
-            ->set_dbobj($this->db)
+            ->set_db($this->db)
             ->set_getfields(["m.update_date"])
             ->set_table("$this->table as m")
         ;
@@ -172,24 +168,21 @@ abstract class AppRepository
         foreach($pks as $fieldname=>$sValue)
             $qb->add_pk_fv($fieldname, $sValue);
 
-        $sql = $qb->select();
+        $sql = $qb->select()->sql();
         $r = $this->db->query($sql);
         return $r[0]["update_date"] ?? "";
     }
-    
-    public function get_max($fieldname)
+
+    public function get_max(?string $fieldname): ?string
     {
-        if($fieldname)
-        {
-            $sSQL = "SELECT MAX($fieldname) AS maxed FROM $this->table";
-            $mxMaxed = $this->db->query($sSQL);
-            $mxMaxed = (isset($mxMaxed[0]["maxed"])?$mxMaxed[0]["maxed"]:NULL);
-            return $mxMaxed;
-        }
-        return NULL;
+        if (!$fieldname) return null;
+        
+        $sql = "SELECT MAX($fieldname) AS maxed FROM $this->table";
+        $result = $this->db->query($sql);
+        return $result[0]["maxed"] ?? "";
     }
 
-    public function get_lastinsert_id()
+    public function get_lastinsert_id(): int
     {
         return $this->db->get_lastid();
     }
@@ -205,12 +198,12 @@ abstract class AppRepository
     public function get_by_id(string $id): array
     {
         $id = (int) $id;
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("get_by_id")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.id=$id")
-            ->select()
+            ->select()->sql()
         ;
         $r = $this->db->query($sql);
         return $r[0] ?? [];
@@ -218,12 +211,12 @@ abstract class AppRepository
     public function get_id_by(string $uuid): int
     {
         $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("user.get_id_by(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.uuid='$uuid'")
-            ->select()
+            ->select()->sql()
         ;
         $r = $this->db->query($sql);
         return intval($r[0]["id"] ?? 0);
@@ -232,12 +225,12 @@ abstract class AppRepository
     public function is_deleted(string $id): bool
     {
         $id = (int) $id;
-        $sql = $this->_get_qb()
+        $sql = $this->_get_qbuilder()
             ->set_comment("get_by_id")
             ->set_table("$this->table as m")
             ->set_getfields(["m.delete_date"])
             ->add_and("m.id=$id")
-            ->select()
+            ->select()->sql()
         ;
         $r = $this->db->query($sql);
         return (bool) ($r[0]["delete_date"] ?? "");
