@@ -29,11 +29,10 @@ class ComponentQB
     private array $arnumeric        = []; //si esta en este array no se escapa con '
     private array $arinsertfv       = [];
 
-    private array $arpks            = [];
     private array $arupdatefv       = [];
+    private array $arpks            = [];
 
     private string $sql             = "";
-    private array $arresult         = [];
 
     private ?Object $oDB = null;
 
@@ -42,7 +41,7 @@ class ComponentQB
     const READ = "r";
     const WRITE = "w";
 
-    public function __construct(string $table = "")
+    public function __construct(string $table="")
     {
         $this->table = $table;
     }
@@ -307,27 +306,27 @@ class ComponentQB
         return $this;
     }//get_selectfrom
 
-    public function set_table(string $table):self{$this->table=$table; return $this;}
-    public function set_comment(string $comment):self{$this->comment = $comment; return $this;}
+    public function set_table(string $table): self {$this->table=$table; return $this;}
+    public function set_comment(string $comment): self {$this->comment = $comment; return $this;}
 
-    public function set_insert_fv(array $arfieldval=[]):self{$this->arinsertfv = []; if(is_array($arfieldval)) $this->arinsertfv=$arfieldval; return $this;}
-    public function add_insert_fv(string $fieldname, $strval, bool $dosanit=true):self{$this->arinsertfv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function set_insert_fv(array $arfieldval=[]): self {$this->arinsertfv = []; if(is_array($arfieldval)) $this->arinsertfv=$arfieldval; return $this;}
+    public function add_insert_fv(string $fieldname, $strval, bool $dosanit=true): self {$this->arinsertfv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
-    public function set_pks_fv(array $arfieldval=[]):self{$this->arpks = []; if(is_array($arfieldval)) $this->arpks=$arfieldval; return $this;}
-    public function add_pk_fv(string $fieldname, $strval, bool $dosanit=true):self{$this->arpks[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function set_pks_fv(array $arfieldval=[]): self {$this->arpks = []; if(is_array($arfieldval)) $this->arpks=$arfieldval; return $this;}
+    public function add_pk_fv(string $fieldname, $strval, bool $dosanit=true): self {$this->arpks[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
-    public function set_update_fv(array $arfieldval=[]):self{$this->arupdatefv = []; if(is_array($arfieldval)) $this->arupdatefv=$arfieldval; return $this;}
-    public function add_update_fv(string $fieldname, $strval, bool $dosanit=true):self{$this->arupdatefv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
+    public function set_update_fv(array $arfieldval=[]): self {$this->arupdatefv = []; if(is_array($arfieldval)) $this->arupdatefv=$arfieldval; return $this;}
+    public function add_update_fv(string $fieldname, $strval, bool $dosanit=true): self {$this->arupdatefv[$fieldname]=($dosanit)?$this->get_sanitized($strval):$strval; return $this;}
 
-    public function set_getfields(array $fields=[]):self{$this->argetfields = []; if(is_array($fields)) $this->argetfields=$fields; return $this;}
-    public function add_getfield(string $fieldname):self{$this->argetfields[]=$fieldname; return $this;}
+    public function set_getfields(array $fields=[]): self {$this->argetfields = []; if(is_array($fields)) $this->argetfields=$fields; return $this;}
+    public function add_getfield(string $fieldname): self {$this->argetfields[]=$fieldname; return $this;}
 
-    public function set_joins(array $arjoins=[]):self{$this->arjoins = []; if(is_array($arjoins)) $this->arjoins=$arjoins; return $this;}
-    public function set_orderby(array $arorderby=[]):self{$this->arorderby = []; if(is_array($arorderby)) $this->arorderby=$arorderby; return $this;}
-    public function set_groupby(array $argroupby=[]):self{$this->argroupby = []; if(is_array($argroupby)) $this->argroupby=$argroupby; return $this;}
-    public function set_having(array $arhaving=[]):self{$this->arhaving = []; if(is_array($arhaving)) $this->arhaving=$arhaving; return $this;}
+    public function set_joins(array $arjoins=[]): self {$this->arjoins = []; if(is_array($arjoins)) $this->arjoins=$arjoins; return $this;}
+    public function set_orderby(array $arorderby=[]): self {$this->arorderby = []; if(is_array($arorderby)) $this->arorderby=$arorderby; return $this;}
+    public function set_groupby(array $argroupby=[]): self {$this->argroupby = []; if(is_array($argroupby)) $this->argroupby=$argroupby; return $this;}
+    public function set_having(array $arhaving=[]): self {$this->arhaving = []; if(is_array($arhaving)) $this->arhaving=$arhaving; return $this;}
 
-    public function set_end(array $arend=[]):self{$this->arend = []; if(is_array($arend)) $this->arend=$arend; return $this;}
+    public function set_end(array $arend=[]): self {$this->arend = []; if(is_array($arend)) $this->arend=$arend; return $this;}
     public function set_limit(int $ppage=1000, int $regfrom=0): self
     {
         $this->arlimit=["regfrom"=>$regfrom, "perpage"=>$ppage];
@@ -374,14 +373,15 @@ class ComponentQB
         return $this;
     }
 
-    public function is_distinct(bool $ison=true):self{$this->isdistinct=$ison; return $this;}
-    public function is_foundrows(bool $ison=true):self {$this->calcfoundrows=$ison; return $this;}
-    public function add_numeric(string $fieldname):self{$this->arnumeric[]=$fieldname; return $this;}
-    public function set_and(array $arands=[]):self{$this->arands = []; if(is_array($arands)) $this->arands=$arands; return $this;}
-    public function add_and(string $condition):self{$this->arands[]=$condition; return $this;}
-    public function add_and1(string $fieldname, $strval, string $sOper="="):self{$this->arands[]="$fieldname $sOper $strval"; return $this;}
-    public function add_and_in(string $fieldname, array $values, bool $isnum=true):self
+    public function distinct(bool $ison=true): self{$this->isdistinct=$ison; return $this;}
+    public function calcfoundrows(bool $ison=true): self {$this->calcfoundrows=$ison; return $this;}
+    public function add_numeric(string $fieldname): self{$this->arnumeric[]=$fieldname; return $this;}
+    public function set_and(array $arands=[]): self{$this->arands = []; if(is_array($arands)) $this->arands=$arands; return $this;}
+    public function add_and(string $condition): self{$this->arands[]=$condition; return $this;}
+    public function add_and1(string $fieldname, $strval, string $sOper="="): self {$this->arands[]="$fieldname $sOper $strval"; return $this;}
+    public function add_in(string $fieldname, array $values): self
     {
+        $isnum = in_array($fieldname, $this->arnumeric);
         $values = array_unique($values);
         $glue = $isnum ? "," : "','";
         $in = implode($glue, $values);
@@ -390,9 +390,9 @@ class ComponentQB
         return $this;
     }
 
-    public function add_join(string $sjoin, ?string $key=null):self{if($key)$this->arjoins[$key]=$sjoin;else$this->arjoins[]=$sjoin; return $this;}
-    public function add_orderby(string $fieldname, string $order="ASC"):self{$this->arorderby[$fieldname]=$order; return $this;}
-    public function add_groupby(string $fieldname):self{$this->argroupby[]=$fieldname; return $this;}
-    public function add_having(string $having):self{$this->arhaving[]=$having; return $this;}
-    public function add_end(string $strend, ?string $key=null):self{if($key)$this->arend[$key]=$strend;else$this->arend[]=$strend; return $this;}
+    public function add_join(string $sjoin, ?string $key=null): self {if($key)$this->arjoins[$key]=$sjoin;else$this->arjoins[]=$sjoin; return $this;}
+    public function add_orderby(string $fieldname, string $order="ASC"): self {$this->arorderby[$fieldname]=$order; return $this;}
+    public function add_groupby(string $fieldname): self {$this->argroupby[]=$fieldname; return $this;}
+    public function add_having(string $having): self {$this->arhaving[]=$having; return $this;}
+    public function add_end(string $strend, ?string $key=null): self {if($key)$this->arend[$key]=$strend;else$this->arend[]=$strend; return $this;}
 }//Crud 3.0.0

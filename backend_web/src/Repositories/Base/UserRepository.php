@@ -110,7 +110,7 @@ final class UserRepository extends AppRepository
             $idparent = $user["id_parent"];
             $childs = $this->get_childs($idparent);
             $childs = array_column($childs,"id");
-            $qb->add_and_in("m.id", $childs);
+            $qb->add_in("m.id", $childs);
             $qb->add_and("m.delete_date IS NULL");
             return;
         }
@@ -120,7 +120,7 @@ final class UserRepository extends AppRepository
             $childs = array_column($childs,"id");
             $childs[] = $user["id"];
             $qb->add_and("m.delete_date IS NULL");
-            $qb->add_and_in("m.id", $childs);
+            $qb->add_in("m.id", $childs);
         }
     }
 
@@ -129,7 +129,7 @@ final class UserRepository extends AppRepository
         $qb = $this->_get_qbuilder()
             ->set_comment("user.search")
             ->set_table("$this->table as m")
-            ->is_foundrows()
+            ->calcfoundrows()
             ->set_getfields([
                 "m.id",
                 "m.uuid",
