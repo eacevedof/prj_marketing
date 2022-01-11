@@ -91,8 +91,11 @@ final class ComponentMysql
         while($row = $cursor->fetch(PDO::FETCH_ASSOC))
             $result[] = $row;
 
-        //$sql = "SELECT FOUND_ROWS()";
-        //$this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
+        //@deprecated https://dev.mysql.com/worklog/task/?id=12615
+        //mejor es hacer un count(*) sin limit
+        $sql = "SELECT FOUND_ROWS()";
+        $this->_log($sql, "componentmysql.count");
+        $this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
         return $this->_get_rowcol($result, $col, $row);
     }//query
 
