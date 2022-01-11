@@ -52,8 +52,8 @@ final class ReaderService extends AppService
         if($qparams["comment"] ?? "") $qb->set_comment($qparams["comment"]);
 
         $qb->set_table($qparams["table"]);
-        if(isset($qparams["distinct"])) $qb->is_distinct($qparams["distinct"]);
-        if(isset($qparams["foundrows"])) $qb->is_foundrows($qparams["foundrows"]);
+        if(isset($qparams["distinct"])) $qb->distinct($qparams["distinct"]);
+        if(isset($qparams["foundrows"])) $qb->calcfoundrows($qparams["foundrows"]);
 
         $qb->set_getfields($qparams["fields"]);
         $qb->set_joins($qparams["joins"] ?? []);
