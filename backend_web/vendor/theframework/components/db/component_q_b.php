@@ -38,7 +38,7 @@ class ComponentQB
     private ?Object $oDB = null;
 
     private array $reserved = ["get", "order", "password"];
-    
+
     const READ = "r";
     const WRITE = "w";
 
@@ -82,7 +82,7 @@ class ComponentQB
         }
         return " ORDER BY ".implode(",",$arsql);
     }
-    
+
     private function _get_end(): string
     {
         if(!$this->arend) return "";
@@ -171,11 +171,11 @@ class ComponentQB
         $this->sql = "/*error insert*/";
         if(!$table) $table = $this->table;
         if(!$table) $this->_exception("missing table in insert");
-        
+
         $comment = $this->comment ? "/*$this->comment*/" : "/*insert*/";
         $arfieldval = $arfieldval ?? $this->arinsertfv;
         if (!$arfieldval) $this->_exception("missing fields and values in insert");
-        
+
         $sql = "$comment INSERT INTO ";
         $sql .= "$table ( ";
 
@@ -302,7 +302,7 @@ class ComponentQB
         $sql .= $this->_get_orderby();
         $sql .= $this->_get_end();
         $sql .= $this->_get_limit();
-        
+
         $this->sql = $sql;
         return $this;
     }//get_selectfrom
@@ -335,7 +335,7 @@ class ComponentQB
         return $this;
     }
 
-    public function query():string {return $this->sql;}
+    public function sql():string {return $this->sql;}
 
     public function get_sanitized(?string $strval): ?string
     {
@@ -356,6 +356,7 @@ class ComponentQB
         $result = [];
         if (!$this->oDB) $this->_exception("no db object not configured for get_result");
         if (!$this->sql) $this->_exception("empty sql in get_result");
+        if (!in_array($mode, [self::READ, self::WRITE]))  $this->_exception("unrecognized mode");
 
         //insert,update,delete
         if(method_exists($this->oDB,"exec") && $mode==self::WRITE)
