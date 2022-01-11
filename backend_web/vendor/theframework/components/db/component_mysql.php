@@ -12,7 +12,6 @@ use \PDO;
 use \PDOException;
 use \Exception;
 
-
 final class ComponentMysql
 {
     private array $config = [];
@@ -67,49 +66,7 @@ final class ComponentMysql
         return $result;
     }
 
-    public function query(string $sql, ?int $col=null, ?int $row=null): array
-    {
-        $result = [];
-        try
-        {
-            //devuelve server y bd
-            $strcon = $this->_get_conn_string();
-            //pr($strcon,"component_mysql.query");die;
-            //pr($this->config,"xxxxxxxxxxxxxxxx");die("yyyyyyyyyy");
-            //https://stackoverflow.com/questions/38671330/error-with-php7-and-sql-server-on-windows
-            $pdo = new \PDO($strcon, $this->config["user"], $this->config["password"]
-                ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
-            $pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
-
-            $this->_log($sql,"componentmysql.exec");
-            $oCursor = $pdo->query($sql);
-            if($oCursor===false)
-            {
-                $this->_add_error("exec-error: $sql");
-            }
-            else
-            {
-                while($arRow = $oCursor->fetch(\PDO::FETCH_ASSOC))
-                    $result[] = $arRow;
-
-                $sql = "SELECT FOUND_ROWS()";
-                $this->foundrows = $pdo->query($sql)->fetch(\PDO::FETCH_COLUMN);
-
-                $this->affected = count($result);
-                if($result)
-                    $result = $this->_get_rowcol($result, $col, $row);
-            }
-        }
-        catch(PDOException $e)
-        {
-            $message = "exception:{$e->getMessage()}";
-            $this->_add_error($message);
-            $this->_log($sql,"componentmysql.query error: $message");
-        }
-        return $result;
-    }//query
-
-    private function _get_execpdo(): PDO
+    private function _get_pdo(): PDO
     {
         $strcon = $this->_get_conn_string();
         $pdo = new PDO(
@@ -122,10 +79,38 @@ final class ComponentMysql
         return $pdo;
     }
     
+    public function query(string $sql, ?int $col=null, ?int $row=null): array
+    {
+        $result = [];
+        try
+        {
+            $pdo = $this->_get_pdo();
+            $this->_log($sql,"componentmysql.exec");
+            $cursor = $pdo->query($sql);
+            
+            if($cursor===false) 
+                $this->_exception("pdo.query error");
+            
+            while($row = $cursor->fetch(PDO::FETCH_ASSOC))
+                $result[] = $row;
+
+            $sql = "SELECT FOUND_ROWS()";
+            $this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
+            return $this->_get_rowcol($result, $col, $row);
+        }
+        catch(PDOException $e)
+        {
+            $message = "exception:{$e->getMessage()}";
+            $this->_add_error($message);
+            $this->_log($sql,"componentmysql.query error: $message");
+        }
+        return $result;
+    }//query
+
     public function exec(string $sql)
     {
         try {
-            $pdo = $this->_get_execpdo();
+            $pdo = $this->_get_pdo();
             $this->_log($sql,"componentmysql.exec");
             $result = $pdo->exec($sql);
             if ($result === false)
@@ -149,9 +134,10 @@ final class ComponentMysql
     {
         if(defined("PATH_LOGS") && class_exists("\TheFramework\Components\ComponentLog"))
         {
-            $oLog = new \TheFramework\Components\Component_Log("sql",PATH_LOGS);
+            $oLog = new \TheFramework\Components\Component_Log("sql", PATH_LOGS);
             $oLog->save($mxVar,"-- ". $title);
         }
+
         if(function_exists("get_log_producer"))
         {
             get_log_producer()->send($mxVar, "-- ". $title, "sql");
@@ -170,4 +156,5 @@ final class ComponentMysql
     public function is_error(){return $this->iserror;}
     public function get_errors(){return $this->errors;}
     public function get_error($i=0){return $this->errors[$i] ?? "";}
+
 }//ComponentMysql
