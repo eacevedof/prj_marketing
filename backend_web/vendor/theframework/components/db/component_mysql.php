@@ -8,8 +8,10 @@
  * @observations
  */
 namespace TheFramework\Components\Db;
-use \Exception;
+use \PDO;
 use \PDOException;
+use \Exception;
+
 
 final class ComponentMysql
 {
@@ -36,9 +38,9 @@ final class ComponentMysql
     {
         if(!$this->config) $this->_exception("empty connection config");
 
-        $config["mysql:host"] = $this->config["server"] ?? "";
-        $config["dbname"] = $this->config["database"] ?? "";
-        $config["port"] = $this->config["port"] ?? "";
+        $config["mysql:host"]   = $this->config["server"] ?? "";
+        $config["dbname"]       = $this->config["database"] ?? "";
+        $config["port"]         = $this->config["port"] ?? "";
         //$config["ConnectionPooling"] = (isset($this->config["pool"])?$this->config["pool"]:"0");
 
         $strcon = "";
@@ -48,23 +50,24 @@ final class ComponentMysql
         return $strcon;
     }//_get_conn_string
 
-    private function get_rowcol(array $result, ?int $col=null, ?int $row=null)
+    private function _get_rowcol(array $result, ?int $col=null, ?int $row=null)
     {
-        if(is_int($col) || is_int($row))
-        {
-            $arColnames = $result[0];
-            $arColnames = array_keys($arColnames);
-            $sColname = (isset($arColnames[$col])?$arColnames[$col]:"");
-            if($sColname)
-                $result = array_column($result,$sColname);
+        if (!($col || $row) || !$result) return $result;
+        
+        $row0 = $result[0] ?? [];
+        $fieldnames = array_keys($row0);
+        
+        $sColname = (isset($fieldnames[$col])?$fieldnames[$col]:"");
+        if($sColname)
+            $result = array_column($result,$sColname);
 
-            if(isset($result[$row]))
-                $result = $result[$row];
-        }
+        if(isset($result[$row]))
+            $result = $result[$row];
+        
         return $result;
     }
 
-    public function query(string $sql, ?int $col=null, ?int $row=null)
+    public function query(string $sql, ?int $col=null, ?int $row=null): array
     {
         $result = [];
         try
@@ -78,7 +81,7 @@ final class ComponentMysql
                 ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
 
-            $this->_log($sql,"ComponentMysql.exec");
+            $this->_log($sql,"componentmysql.exec");
             $oCursor = $pdo->query($sql);
             if($oCursor===false)
             {
@@ -94,45 +97,51 @@ final class ComponentMysql
 
                 $this->affected = count($result);
                 if($result)
-                    $result = $this->get_rowcol($result, $col, $row);
+                    $result = $this->_get_rowcol($result, $col, $row);
             }
         }
         catch(PDOException $e)
         {
             $message = "exception:{$e->getMessage()}";
             $this->_add_error($message);
-            $this->_log($sql,"ComponentMysql.query error: $message");
+            $this->_log($sql,"componentmysql.query error: $message");
         }
         return $result;
     }//query
 
+    private function _get_execpdo(): PDO
+    {
+        $strcon = $this->_get_conn_string();
+        $pdo = new PDO(
+            $strcon,
+            $this->config["user"],
+            $this->config["password"],
+            [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]
+        );
+        $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        return $pdo;
+    }
+    
     public function exec(string $sql)
     {
-        try
-        {
-            $strcon = $this->_get_conn_string();
-            //https://stackoverflow.com/questions/19577056/using-pdo-to-create-table
-            $pdo = new \PDO($strcon,$this->config["user"],$this->config["password"]
-                ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
-            $pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
-            $this->_log($sql,"ComponentMysql.exec");
-            $mxR = $pdo->exec($sql);
+        try {
+            $pdo = $this->_get_execpdo();
+            $this->_log($sql,"componentmysql.exec");
+            $result = $pdo->exec($sql);
+            if ($result === false)
+                $this->_exception("pdo.exec error");
 
-            $this->affected = $mxR;
+            $this->affected = $result;
+            if(strstr($sql,"INSERT INTO "))
+                $this->lastid = $pdo->lastInsertId();
 
-            if(strstr($sql,"INSERT INTO ")) $this->lastid = $pdo->lastInsertId();
-
-            if($mxR===false)
-            {
-                $this->_add_error("exec-error: $sql");
-            }
-            return $mxR;
+            return $result;
         }
-        catch( $e)
-        {
+        catch (PDOException $e) {
             $message = "exception:{$e->getMessage()}";
+            $this->_exception("pdoexec: ");
             $this->_add_error($message);
-            $this->_log($sql,"ComponentMysql.exec error: $message");
+            $this->_log($sql,"componentmysql.exec error: $message");
         }
     }//exec    
 
