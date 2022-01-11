@@ -53,7 +53,7 @@ return [
     ["url"=>"/apify/security/is-valid-token","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"is_valid_token"],
 
     ["url"=>"/error/forbidden-403","controller"=>"App\Controllers\Open\ErrorsController","method"=>"forbidden_403"],
-    ["url"=>"/error/forbidden-500","controller"=>"App\Controllers\Open\ErrorsController","method"=>"internal_500"],
+    ["url"=>"/error/unexpected-500","controller"=>"App\Controllers\Open\ErrorsController","method"=>"internal_500"],
     //la 404 debe ser la última ruta siempre
     ["url"=>"/error/not-found-404","controller"=>"App\Controllers\Open\ErrorsController","method"=>"notfound_404"],
 ];
