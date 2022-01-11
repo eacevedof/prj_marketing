@@ -1,4 +1,5 @@
 ### To-Do
+- metodo 404 not found en error controller
 - ~~aplicar delete_date para BO y BM~~
 - refactor crud a querybuilder
 - ~~custom headers en render de la vista~~
