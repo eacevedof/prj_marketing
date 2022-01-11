@@ -16,6 +16,8 @@ final class ErrorsController extends OpenController
 {
     public function notfound_404(): void
     {
+        //to-do, check accept json por llamada ajax ya que si el router
+        //no encuentra la url termina llegando a este método
         $this->set_layout("error/error")
             ->set_template("error/404")
             ->add_header(ResponseType::NOT_FOUND)
