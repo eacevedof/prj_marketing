@@ -51,7 +51,11 @@ final class ComponentMysql
 
     private function _get_rowcol(array $result, ?int $col=null, ?int $row=null)
     {
-        if (!($col || $row) || !$result) return $result;
+        if (!(
+            //si los dos son nulos o result = array vacio
+            (is_null($col) || is_null($row)) && $result
+        ))
+            return $result;
         
         $row0 = $result[0] ?? [];
         $fieldnames = array_flip(array_keys($row0));
