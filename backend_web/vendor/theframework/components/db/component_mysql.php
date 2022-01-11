@@ -54,15 +54,15 @@ final class ComponentMysql
         if (!($col || $row) || !$result) return $result;
         
         $row0 = $result[0] ?? [];
-        $fieldnames = array_keys($row0);
-        
-        $sColname = (isset($fieldnames[$col])?$fieldnames[$col]:"");
-        if($sColname)
-            $result = array_column($result,$sColname);
+        $fieldnames = array_flip(array_keys($row0));
+        $colname = $fieldnames[$col] ?? "";
 
-        if(isset($result[$row]))
-            $result = $result[$row];
-        
+        if(!$colname)
+            $this->_exception("no column in position $col");
+
+        $result = array_column($result, $colname);
+        if ($row) $result = $result[$row] ?? "";
+
         return $result;
     }
 
@@ -81,65 +81,44 @@ final class ComponentMysql
     
     public function query(string $sql, ?int $col=null, ?int $row=null): array
     {
-        $result = [];
-        try
-        {
-            $pdo = $this->_get_pdo();
-            $this->_log($sql,"componentmysql.exec");
-            $cursor = $pdo->query($sql);
-            
-            if($cursor===false) 
-                $this->_exception("pdo.query error");
-            
-            while($row = $cursor->fetch(PDO::FETCH_ASSOC))
-                $result[] = $row;
+        $pdo = $this->_get_pdo();
+        $this->_log($sql,"componentmysql.query");
+        $cursor = $pdo->query($sql);
 
-            $sql = "SELECT FOUND_ROWS()";
-            $this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
-            return $this->_get_rowcol($result, $col, $row);
-        }
-        catch(PDOException $e)
-        {
-            $message = "exception:{$e->getMessage()}";
-            $this->_add_error($message);
-            $this->_log($sql,"componentmysql.query error: $message");
-        }
-        return $result;
+        if($cursor===false)
+            $this->_exception("pdo.query error");
+
+        while($row = $cursor->fetch(PDO::FETCH_ASSOC))
+            $result[] = $row;
+
+        //$sql = "SELECT FOUND_ROWS()";
+        //$this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
+        return $this->_get_rowcol($result, $col, $row);
     }//query
 
     public function exec(string $sql)
     {
-        try {
-            $pdo = $this->_get_pdo();
-            $this->_log($sql,"componentmysql.exec");
-            $result = $pdo->exec($sql);
-            if ($result === false)
-                $this->_exception("pdo.exec error");
+        $pdo = $this->_get_pdo();
+        $this->_log($sql,"componentmysql.exec");
+        $result = $pdo->exec($sql);
+        if ($result === false)
+            $this->_exception("pdo.exec error");
 
-            $this->affected = $result;
-            if(strstr($sql,"INSERT INTO "))
-                $this->lastid = $pdo->lastInsertId();
+        $this->affected = $result;
+        if(strstr($sql,"INSERT INTO "))
+            $this->lastid = $pdo->lastInsertId();
 
-            return $result;
-        }
-        catch (PDOException $e) {
-            $message = "exception:{$e->getMessage()}";
-            $this->_exception("pdoexec: ");
-            $this->_add_error($message);
-            $this->_log($sql,"componentmysql.exec error: $message");
-        }
+        return $result;
     }//exec    
 
     private function _log($mxVar, ?string $title=null): void
     {
-        if(defined("PATH_LOGS") && class_exists("\TheFramework\Components\ComponentLog"))
-        {
-            $oLog = new \TheFramework\Components\Component_Log("sql", PATH_LOGS);
+        if(defined("PATH_LOGS") && class_exists("\TheFramework\Components\ComponentLog")) {
+            $oLog = new \TheFramework\Components\ComponentLog("sql", PATH_LOGS);
             $oLog->save($mxVar,"-- ". $title);
         }
 
-        if(function_exists("get_log_producer"))
-        {
+        if(function_exists("get_log_producer")) {
             get_log_producer()->send($mxVar, "-- ". $title, "sql");
         }
     }
