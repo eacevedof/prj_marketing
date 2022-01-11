@@ -51,20 +51,20 @@ final class ComponentMysql
 
     private function _get_rowcol(array $result, ?int $col=null, ?int $row=null)
     {
-        if ((is_null($col) && is_null($row)) || !$result)
-            return $result;
-        
-        $row0 = $result[0] ?? [];
-        $fieldnames = array_flip(array_keys($row0));
-        $colname = $fieldnames[$col] ?? "";
+        if (!$result) return $result;
 
-        if(!$colname)
-            $this->_exception("no column in position $col");
+        $r = $result;
+        if (!is_null($row)) $r = $r[$row] ?? [];
 
-        $result = array_column($result, $colname);
-        if ($row) $result = $result[$row] ?? "";
+        if (!is_null($col)) {
+            $row0 = $result[0];
+            $fieldnames = array_keys($row0);
+            $colname = $fieldnames[$col] ?? "";
+            if(!$colname) $this->_exception("no column in position $col");
+            $r = array_column($r, $colname);
+        }
 
-        return $result;
+        return $r;
     }
 
     private function _get_pdo(): PDO
@@ -80,7 +80,7 @@ final class ComponentMysql
         return $pdo;
     }
     
-    public function query(string $sql, ?int $col=null, ?int $row=null): array
+    public function query(string $sql, ?int $icol=null, ?int $irow=null): array
     {
         $pdo = $this->_get_pdo();
         $this->_log($sql,"componentmysql.query");
@@ -97,7 +97,7 @@ final class ComponentMysql
         $sql = "SELECT FOUND_ROWS()";
         $this->_log($sql, "componentmysql.count");
         $this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
-        return $this->_get_rowcol($result, $col, $row);
+        return $this->_get_rowcol($result, $icol, $irow);
     }//query
 
     public function exec(string $sql)
