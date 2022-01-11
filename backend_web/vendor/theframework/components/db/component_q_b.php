@@ -11,7 +11,7 @@ namespace TheFramework\Components\Db;
 
 use \Exception;
 
-class ComponentQB
+final class ComponentQB
 {
     private string $comment         = "";
     private string $table           = ""; //Tabla sobre la que se realizará el crud
