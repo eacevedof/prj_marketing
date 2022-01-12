@@ -36,7 +36,7 @@ final class ReaderController extends ApifyController
             $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)
                 ->set_error($oServ->get_errors())
                 ->set_message("database error")
-                ->show(1);
+                ->show();
 
         $this->_get_json()->set_payload(["result"=>$arJson,"foundrows"=>$oServ->get_foundrows()])->show();
 
@@ -59,7 +59,7 @@ final class ReaderController extends ApifyController
             $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
                     set_message("database error")->
-                    show(1);
+                    show();
 
         $this->_get_json()->set_payload(["rows"=>$arJson,"numrows"=>$oServ->get_foundrows()])->show();
     }//raw

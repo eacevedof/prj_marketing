@@ -66,16 +66,12 @@ abstract class AppRepository
     public function query(?string $sql, ?int $col=null, ?int $row=null)
     {
         $mxRet = $this->db->query($sql, $col, $row);
-        if($this->db->is_error())
-            $this->add_error($this->db->get_errors());
         return $mxRet;
     }
 
     public function execute(?string $sql)
     {
         $mxRet = $this->db->exec($sql);
-        if($this->db->is_error())
-            $this->add_error($this->db->get_errors());
         return $mxRet;
     }
 
@@ -90,11 +86,6 @@ abstract class AppRepository
             $qb->add_insert_fv($field, $value);
 
         $qb->insert()->exec($qb::WRITE);
-        if($this->db->is_error()) {
-            $this->logerr($request,"insert");
-            $this->_exception(__("Error inserting data"));
-        }
-
         return $this->db->get_lastid();
     }//insert
 
@@ -121,13 +112,6 @@ abstract class AppRepository
             $qb->add_pk_fv($fieldname, $sValue);
 
         $qb->update()->exec($qb::WRITE);
-        $this->log($qb->sql());
-
-        if($this->db->is_error()) {
-            $this->logerr($request,"update");
-            $this->_exception(__("Error updating data"));
-        }
-
         return $this->db->get_affected();
     }//update
 
@@ -146,11 +130,6 @@ abstract class AppRepository
             $qb->add_pk_fv($fieldname, $sValue);
 
         $qb->delete()->exec($qb::WRITE);
-        if($this->db->is_error()) {
-            $this->logerr($request,"delete");
-            $this->_exception(__("Error deleting data"));
-        }
-
         return $this->db->get_affected();
     }//delete
 

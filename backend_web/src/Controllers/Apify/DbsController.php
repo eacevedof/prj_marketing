@@ -34,18 +34,18 @@ final class DbsController extends ApifyController
 
         $oServ = new ContextService();
         if(!$oServ->is_context($idContext))
-            $oJson->set_code(HelperJson::CODE_NOT_FOUND)->
-            set_error("context does not exist")->
-            show(1);
+            $oJson->set_code(HelperJson::CODE_NOT_FOUND)
+                ->set_error("context does not exist")
+                ->show();
 
         $oServ = new DbsService($idContext);
         $arJson = $oServ->get_all();
 
         if($oServ->is_error())
-            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
-            set_error($oServ->get_errors())->
-            set_message("database error")->
-            show(1);
+            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)
+                ->set_error($oServ->get_errors())
+                ->set_message("database error")
+                ->show();
 
         $oJson->set_payload($arJson)->show();
     }//index

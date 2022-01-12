@@ -158,7 +158,6 @@ final class UserRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $r = $this->db->query($sql);
-        if ($this->db->is_error()) $this->_exception(__("Data source error"));
 
         return [
             "result" => $r,
