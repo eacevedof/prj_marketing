@@ -46,6 +46,7 @@ final class ComponentMysql
         foreach($config as $sK=>$sV)
             $strcon .= "$sK=$sV;";
 
+        //mysql:host=cont-mariadb-univ;dbname=db_marketing;port=3306;
         return $strcon;
     }//_get_conn_string
 
@@ -89,6 +90,7 @@ final class ComponentMysql
         if($cursor===false)
             $this->_exception("pdo.query error");
 
+        $result = [];
         while($row = $cursor->fetch(PDO::FETCH_ASSOC))
             $result[] = $row;
 
