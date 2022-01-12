@@ -28,7 +28,7 @@ final class UserPermissionsRepository extends AppRepository
             ->set_getfields(["m.json_rw"])
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$userid")
-            ->select()
+            ->select()->sql()
         ;
         $json = $this->db->query($sql, 0, 0);
         if(!$json) return [];
