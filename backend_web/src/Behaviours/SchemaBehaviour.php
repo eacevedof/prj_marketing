@@ -31,8 +31,6 @@ final class SchemaBehaviour extends AppEntity
     {
         $r = $this->oDb->query($sSQL, $iCol, $iRow);
         $this->iFoundrows = $this->oDb->get_foundrows();
-        if($this->oDb->is_error())
-            $this->add_error($this->oDb->get_errors());
         return $r;
     }
 
@@ -83,7 +81,7 @@ final class SchemaBehaviour extends AppEntity
         return $arRows;
     }
 
-    public function get_fields($sTable,$sDb="")
+    public function get_fields($sTable,$sDb=""): array
     {
         $sSQL = $this->oQServ->get_fields_min($sDb,$sTable);
         if($arRows = $this->get_cached($sSQL)) return $arRows;

@@ -38,9 +38,9 @@ final class ContextsController extends ApifyController
             //pr($oServ->is_context($idContext));die;
             //pr("con");die;
             if(!$oServ->is_context($idContext))
-                $oJson->set_code(HelperJson::CODE_NOT_FOUND)->
-                        set_error("context does not exist")->
-                        show(1);
+                $oJson->set_code(HelperJson::CODE_NOT_FOUND)
+                    ->set_error("context does not exist")
+                    ->show();
 
             $arJson = $oServ->get_pubconfig_by_id($this->request->get_get("id"));
         }
@@ -51,10 +51,10 @@ final class ContextsController extends ApifyController
         }
 
         if($oServ->is_error()) 
-            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
-                    set_error($oServ->get_errors())->
-                    set_message("database error")->
-                    show(1);
+            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)
+                ->set_error($oServ->get_errors())
+                ->set_message("database error")
+                ->show();
 
         $oJson->set_payload($arJson)->show();
 

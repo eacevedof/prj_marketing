@@ -25,9 +25,9 @@ final class TablesController extends ApifyController
 
         $idContext = $this->request->get_get("id_context");
         if(!$oServ->is_context($idContext))
-            $oJson->set_code(HelperJson::CODE_NOT_FOUND)->
-            set_error("context does not exist")->
-            show(1);
+            $oJson->set_code(HelperJson::CODE_NOT_FOUND)
+                ->set_error("context does not exist")
+                ->show();
 
         //schemainfo puede ser un alias o un dbname
         $sDb = $this->request->get_get("schemainfo");
@@ -40,9 +40,9 @@ final class TablesController extends ApifyController
         $sDb2 = $oServ->get_db($idContext,$sDb);
         if($sDb2) return $sDb2;
 
-        $oJson->set_code(HelperJson::CODE_NOT_FOUND)->
-        set_error("no database found in context 1")->
-        show(1);
+        $oJson->set_code(HelperJson::CODE_NOT_FOUND)
+            ->set_error("no database found in context 1")
+            ->show();
     }
 
     /**

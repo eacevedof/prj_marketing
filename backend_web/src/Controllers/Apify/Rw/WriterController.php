@@ -43,7 +43,7 @@ final class WriterController extends ApifyController
                 $json->set_code()
                     ->set_error($oServ->get_errors())
                     ->set_message("database error")
-                    ->show(1);
+                    ->show();
 
             if ($action == "insert")
                 $json->set_code(ResponseType::CREATED)->set_message("resource created");
