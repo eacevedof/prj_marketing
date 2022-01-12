@@ -37,10 +37,14 @@ final class ComponentMysql
     {
         if(!$this->config) $this->_exception("empty connection config");
 
-        $config["mysql:host"]   = $this->config["server"] ?? "";
-        $config["dbname"]       = $this->config["database"] ?? "";
-        $config["port"]         = $this->config["port"] ?? "";
-        //$config["ConnectionPooling"] = (isset($this->config["pool"])?$this->config["pool"]:"0");
+        if(!($this->config["server"] ?? "")) $this->_exception("missing server in config");
+        if(!($this->config["database"] ?? "")) $this->_exception("missing database in config");
+        if(!($this->config["user"] ?? "")) $this->_exception("missing user in config");
+        if(!isset($this->config["password"])) $this->_exception("missing password in config");
+
+        $config["mysql:host"]   = $this->config["server"];
+        $config["dbname"]       = $this->config["database"];
+        $config["port"]         = $this->config["port"] ?? "3386";
 
         $strcon = "";
         foreach($config as $sK=>$sV)
@@ -50,22 +54,22 @@ final class ComponentMysql
         return $strcon;
     }//_get_conn_string
 
-    private function _get_rowcol(array $result, ?int $col=null, ?int $row=null)
+    private function _get_rowcol(array $result, ?int $icol=null, ?int $irow=null)
     {
         if (!$result) return $result;
 
-        $r = $result;
-        if (!is_null($row)) $r = $r[$row] ?? [];
+        $row0 = $result[0];
+        $fieldnames = array_keys($row0);
 
-        if (!is_null($col)) {
-            $row0 = $result[0];
-            $fieldnames = array_keys($row0);
-            $colname = $fieldnames[$col] ?? "";
-            if(!$colname) $this->_exception("no column in position $col");
-            $r = array_column($r, $colname);
+        if (!is_null($irow)) $result = $result[$irow] ?? [];
+
+        if (!is_null($icol)) {
+            $colname = $fieldnames[$icol] ?? "";
+            if(!$colname) $this->_exception("no column in position $icol");
+            $result = array_column($result, $colname);
         }
 
-        return $r;
+        return $result;
     }
 
     private function _get_pdo(): PDO
@@ -85,14 +89,12 @@ final class ComponentMysql
     {
         $pdo = $this->_get_pdo();
         $this->_log($sql,"componentmysql.query");
-        $cursor = $pdo->query($sql);
 
-        if($cursor===false)
+        if(($cursor = $pdo->query($sql))===false)
             $this->_exception("pdo.query error");
 
         $result = [];
-        while($row = $cursor->fetch(PDO::FETCH_ASSOC))
-            $result[] = $row;
+        while($row = $cursor->fetch(PDO::FETCH_ASSOC)) $result[] = $row;
 
         //@deprecated https://dev.mysql.com/worklog/task/?id=12615
         //mejor es hacer un count(*) sin limit
@@ -106,8 +108,7 @@ final class ComponentMysql
     {
         $pdo = $this->_get_pdo();
         $this->_log($sql,"componentmysql.exec");
-        $result = $pdo->exec($sql);
-        if ($result === false)
+        if (($result = $pdo->exec($sql)) === false)
             $this->_exception("pdo.exec error");
 
         $this->affected = $result;
@@ -129,17 +130,11 @@ final class ComponentMysql
         }
     }
 
-    private function _add_error(string $message){$this->iserror = true; $this->affected=-1; $this->errors[]=$message;}
-
     public function add_conn(string $k, string $v): self {$this->config[$k]=$v; return $this;}
     public function set_conn(array $config=[]): self {$this->config = $config; return $this;}
 
     public function get_affected(){return $this->affected;}
     public function get_foundrows(){return $this->foundrows;}
     public function get_lastid(){return $this->lastid;}
-
-    public function is_error(){return $this->iserror;}
-    public function get_errors(){return $this->errors;}
-    public function get_error($i=0){return $this->errors[$i] ?? "";}
 
 }//ComponentMysql
