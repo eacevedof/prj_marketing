@@ -341,8 +341,9 @@ final class ComponentQB
         if($strval===null) return null;
         // no se pq he escapado el % y el _ pero no debería
         //$strval = str_replace("\'","",$strval);
-        $strval = stripcslashes($strval);
-        //$strval = str_replace("'","\'",$strval);
+        //$strval = stripslashes($strval);
+        $strval = str_replace("\\","\\\\",$strval);
+        $strval = str_replace("'","\'",$strval);
         //$strfixed = str_replace("%","\%",$strfixed);
         //$strfixed = str_replace("_","\_",$strfixed); si quiero guardar  SQL_CALC_FOUND_ROWS me hace SQL\_CALC_\
         return $strval;
