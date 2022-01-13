@@ -54,6 +54,7 @@ final class UserRepository extends AppRepository
 
     private function _get_condition(string $field, string $value): string
     {
+        $value = $this->_get_qbuilder()->get_sanitized($value);
         $field = $this->_get_join_field($field);
         return "$field LIKE '%$value%'";
     }
