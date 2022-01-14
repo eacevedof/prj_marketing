@@ -31,6 +31,7 @@ final class ComponentQB
 
     private array $arupdatefv       = [];
     private array $arpks            = [];
+    private array $select           = [];
 
     private string $sql             = "";
 
@@ -49,7 +50,7 @@ final class ComponentQB
     private function _get_joins(): string
     {
         if(!$this->arjoins) return "";
-        return " ".implode("\n",$this->arjoins);
+        return implode("\n",$this->arjoins);
     }
 
     private function _get_having(): string
@@ -57,7 +58,7 @@ final class ComponentQB
         if(!$this->arhaving) return "";
         $arsql = [];
         foreach($this->arhaving as $havecond) $arsql[] = $havecond;
-        return " HAVING ".implode(", ",$arsql);
+        return "HAVING ".implode(", ",$arsql);
     }
 
     private function _get_groupby(): string
@@ -68,7 +69,7 @@ final class ComponentQB
             $this->_clean_reserved($field);
             $arsql[] = $field;
         }
-        return " GROUP BY ".implode(",",$arsql);
+        return "GROUP BY ".implode(",",$arsql);
     }
 
     private function _get_orderby(): string
@@ -79,7 +80,7 @@ final class ComponentQB
             $this->_clean_reserved($field);
             $arsql[] = "$field $AD";
         }
-        return " ORDER BY ".implode(",",$arsql);
+        return "ORDER BY ".implode(",",$arsql);
     }
 
     private function _get_end(): string
@@ -282,27 +283,26 @@ final class ComponentQB
         $comment = $this->comment ? "/*$this->comment*/" : "/*select*/";
         $arpks = $arpks ?? $this->arpks;
 
-        $sql = "$comment SELECT ";
-        if($this->calcfoundrows) $sql .= "SQL_CALC_FOUND_ROWS ";
-        if($this->isdistinct) $sql .= "DISTINCT ";
+        $this->select[] = "$comment SELECT";
+        if($this->calcfoundrows) $this->select[] = "SQL_CALC_FOUND_ROWS";
+        if($this->isdistinct) $this->select[] = "DISTINCT";
         $this->_clean_reserved($fields);
-        $sql .= implode(",",$fields)." ";
-        $sql .= "FROM $table";
+        $this->select["fields"] = implode(",",$fields);
+        $this->select[] = "FROM $table";
 
-        $sql .= $this->_get_joins();
+        $this->select[] = $this->_get_joins();
 
         $arconds = $this->_get_pkconds($arpks);
-
         $araux = array_merge($arconds, $this->arands);
-        if($araux) $sql .= " WHERE ".implode(" AND ",$araux);
+        if($araux) $this->select[] = "\nWHERE ".implode(" AND ",$araux);
 
-        $sql .= $this->_get_groupby();
-        $sql .= $this->_get_having();
-        $sql .= $this->_get_orderby();
-        $sql .= $this->_get_end();
-        $sql .= $this->_get_limit();
+        $this->select[] = $this->_get_groupby();
+        $this->select[] = $this->_get_having();
+        $this->select[] = $this->_get_orderby();
+        $this->select[] = $this->_get_end();
+        $this->select["limit"] = $this->_get_limit();
 
-        $this->sql = $sql;
+        $this->sql = implode(" ",$this->select);
         return $this;
     }//get_selectfrom
 
