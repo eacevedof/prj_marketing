@@ -63,20 +63,17 @@ final class ReaderService extends AppService
 
         if(isset($qparams["orderby"]))
         {
-            $arTmp = [];
             foreach($qparams["orderby"] as $sField) {
                 $fields = explode(" ",trim($sField));
-                $arTmp[$fields[0]] = $fields[1] ?? "ASC";
+                $qb->add_orderby($fields[0], $fields[1] ?? "ASC");
             }
-            $qb->set_orderby($arTmp);
         }
 
         if(isset($qparams["limit"]["perpage"]))
             $qb->set_limit($qparams["limit"]["perpage"] ?? 1000,$qparams["limit"]["regfrom"]??0);
 
         $qb->select();
-        $sql =  $qb->get_sql();
-        return $sql;
+        return $qb->sql();
     }
 
     public function read_raw(string $sql): array
@@ -93,8 +90,7 @@ final class ReaderService extends AppService
         //leo de bd
         $r = $this->behaveschema->read_raw($sql);
         $this->foundrows = $this->behaveschema->get_foundrows();
-        if($this->behaveschema->is_error())
-        {
+        if($this->behaveschema->is_error()) {
             if($ttl) $this->cache_del_qandcount($sql, $this->maintable);
             $this->logerr($errors = $this->behaveschema->get_errors(),"readservice.read_raw");
             $this->add_error($errors);
