@@ -4,3 +4,5 @@ architecture/*.crswap
 vendor/*
 !/vendor/theframework
 /config/*.prod.*
+cache/*
+!cache/.gitkeep
