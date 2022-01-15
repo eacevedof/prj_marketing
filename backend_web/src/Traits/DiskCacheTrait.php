@@ -16,10 +16,9 @@ trait DiskCacheTrait
 {
     protected ?DiskCacheComponent $diskcache = null;
 
-    protected function _load_diskcache(): DiskCacheComponent
+    protected function _load_diskcache()
     {
         $this->diskcache = ComponentFactory::get("DiskCache/DiskCache");
-        return $this->diskcache;
     }
 
 }//DiskCacheTrait
