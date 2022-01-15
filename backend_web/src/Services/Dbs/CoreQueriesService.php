@@ -14,26 +14,25 @@ use App\Services\AppService;
 final class CoreQueriesService extends AppService
 {
 
-    public function get_fields_min($sDb,$sTable)
+    public function get_fields_min(string $dbname, string $table): string
     {
-        $sSQL = "
+        return "
         /*CoreQueriesService.get_fields_min*/
         SELECT information_schema.columns.column_name field_name
         FROM information_schema.columns 
         WHERE 1
-        AND table_schema = '$sDb'
-        AND table_name = '$sTable'        
+        AND table_schema = '$dbname'
+        AND table_name = '$table'        
         ";
-        return $sSQL;
     }//get_fields
 
-    public function get_fields($sDb,$sTable)
+    public function get_fields(string $dbname, string $table): string
     {
-        $sSQL = "
+        return "
         /*CoreQueriesService.get_fields*/
         SELECT DISTINCT table_name,LOWER(column_name) AS field_name
         ,LOWER(DATA_TYPE) AS field_type
-        ,IF(pkfields.field_name IS NULL,0,1) is_pk
+        ,IF(pkfields.field_name IS null,0,1) is_pk
         ,character_maximum_length AS field_length
         ,numeric_precision ntot
         ,numeric_scale ndec
@@ -44,41 +43,40 @@ final class CoreQueriesService extends AppService
             SELECT key_column_usage.column_name field_name
             FROM information_schema.key_column_usage
             WHERE 1
-            AND table_schema = '$sDb'
+            AND table_schema = '$dbname'
             AND constraint_name = 'PRIMARY'
-            AND table_name = '$sTable'
+            AND table_name = '$table'
         ) AS pkfields
         ON information_schema.columns.column_name = pkfields.field_name
-        WHERE table_name='$sTable'
-        AND table_schema='$sDb'
+        WHERE table_name='$table'
+        AND table_schema='$dbname'
         ORDER BY ordinal_position ASC
         ";
-        return $sSQL;
     }//get_fields
 
-    public function get_tables($sDb,$sTable=NULL)
+    public function get_tables($dbname,$table=null): string
     {
-        $sSQL = "
+        $sql = "
         /*CoreQueriesService.get_tables*/
         SELECT table_name 
         FROM information_schema.tables 
         WHERE 1
-        AND table_schema='$sDb'
+        AND table_schema='$dbname'
         ";
-        if($sTable) $sSQL .= " AND table_name='$sTable'";
+        if($table) $sql .= " AND table_name='$table'";
 
-        $sSQL .= " ORDER BY 1";
-        //pr($sSQL,"sql");
-        return $sSQL;
+        $sql .= " ORDER BY 1";
+        //pr($sql,"sql");
+        return $sql;
     }//get_tables
 
-    public function get_field($sDb,$sTable,$sField)
+    public function get_field(string $dbname, string $table, string $field): string
     {
-        $sSQL = "
+        return "
         /*CoreQueriesService.get_fields*/
         SELECT DISTINCT table_name,LOWER(column_name) AS field_name
         ,LOWER(DATA_TYPE) AS field_type
-        ,IF(pkfields.field_name IS NULL,0,1) is_pk
+        ,IF(pkfields.field_name IS null,0,1) is_pk
         ,character_maximum_length AS field_length
         ,numeric_precision ntot
         ,numeric_scale ndec
@@ -89,17 +87,16 @@ final class CoreQueriesService extends AppService
             SELECT key_column_usage.column_name field_name
             FROM information_schema.key_column_usage
             WHERE 1
-            AND table_schema = '$sDb'
+            AND table_schema = '$dbname'
             AND constraint_name = 'PRIMARY'
-            AND table_name = '$sTable'
+            AND table_name = '$table'
         ) AS pkfields
         ON information_schema.columns.column_name = pkfields.field_name
-        WHERE table_name='$sTable'
-        AND table_schema='$sDb'
-        AND LOWER(column_name) = '$sField'
+        WHERE table_name='$table'
+        AND table_schema='$dbname'
+        AND LOWER(column_name) = '$field'
         ORDER BY ordinal_position ASC
         ";
-        return $sSQL;
     }//get_fields
 
 

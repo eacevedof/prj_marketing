@@ -24,7 +24,7 @@ final class ReaderService extends AppService
     private $dbname;
     
     private $oContext;
-    private $oBehav;
+    private $behaveschema;
     private string $sql;
     private int $foundrows;
     private float $cachettl = 0;
@@ -40,7 +40,7 @@ final class ReaderService extends AppService
         $oDb = DbFactory::get_dbobject_by_ctx($this->oContext, $this->dbname);
         if($oDb->is_error()) return $this->add_error($oDb->get_errors());
 
-        $this->oBehav = new SchemaBehaviour($oDb);
+        $this->behaveschema = new SchemaBehaviour($oDb);
     }
     
     private function _get_parsed_tosql(array $qparams): string
@@ -52,8 +52,8 @@ final class ReaderService extends AppService
         if($qparams["comment"] ?? "") $qb->set_comment($qparams["comment"]);
 
         $qb->set_table($qparams["table"]);
-        if(isset($qparams["distinct"])) $qb->distinct($qparams["distinct"]);
-        if(isset($qparams["foundrows"])) $qb->calcfoundrows($qparams["foundrows"]);
+        if(isset($qparams["distinct"])) $qb->distinct((bool) $qparams["distinct"]);
+        if(isset($qparams["foundrows"])) $qb->calcfoundrows((bool) $qparams["foundrows"]);
 
         $qb->set_getfields($qparams["fields"]);
         $qb->set_joins($qparams["joins"] ?? []);
@@ -61,16 +61,15 @@ final class ReaderService extends AppService
         $qb->set_groupby($qparams["groupby"] ?? []);
         $qb->set_having($qparams["having"] ?? []);
 
-        $arTmp = [];
         if(isset($qparams["orderby"]))
         {
-            foreach($qparams["orderby"] as $sField)
-            {
-                $arField = explode(" ",trim($sField));
-                $arTmp[$arField[0]] = $arField[1] ?? "ASC";
+            $arTmp = [];
+            foreach($qparams["orderby"] as $sField) {
+                $fields = explode(" ",trim($sField));
+                $arTmp[$fields[0]] = $fields[1] ?? "ASC";
             }
+            $qb->set_orderby($arTmp);
         }
-        $qb->set_orderby($arTmp);
 
         if(isset($qparams["limit"]["perpage"]))
             $qb->set_limit($qparams["limit"]["perpage"] ?? 1000,$qparams["limit"]["regfrom"]??0);
@@ -92,12 +91,12 @@ final class ReaderService extends AppService
         }
 
         //leo de bd
-        $r = $this->oBehav->read_raw($sql);
-        $this->foundrows = $this->oBehav->get_foundrows();
-        if($this->oBehav->is_error())
+        $r = $this->behaveschema->read_raw($sql);
+        $this->foundrows = $this->behaveschema->get_foundrows();
+        if($this->behaveschema->is_error())
         {
             if($ttl) $this->cache_del_qandcount($sql, $this->maintable);
-            $this->logerr($errors = $this->oBehav->get_errors(),"readservice.read_raw");
+            $this->logerr($errors = $this->behaveschema->get_errors(),"readservice.read_raw");
             $this->add_error($errors);
             return $r;
         }

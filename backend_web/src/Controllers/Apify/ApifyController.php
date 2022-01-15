@@ -9,12 +9,12 @@
  */
 namespace App\Controllers\Apify;
 
-use App\Enums\ResponseType;
 use App\Traits\RequestTrait;
 use App\Traits\ResponseTrait;
-use TheFramework\Helpers\HelperJson;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\SignatureService;
+use App\Enums\ResponseType;
+use TheFramework\Helpers\HelperJson;
 
 abstract class ApifyController extends AppController
 {
