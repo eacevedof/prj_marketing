@@ -68,14 +68,13 @@ final class DiskCacheComponent
         }
     }
 
-    private function _write(string $content): self
+    private function _write(string $content): string
     {
-        $filename = $this->_get_cached_file();
-        if ($this->_is_alive($filename)) return $this;
         $this->_remove_olds();
         $dietime = $this->_get_dietime(date("YmdHis"));
         $path = "{$this->pathfinal}/$this->hashname-{$dietime}.dat";
         file_put_contents($path, $content);
+        return $path;
     }
 
     public function get_content(string $content): ?string
@@ -84,7 +83,9 @@ final class DiskCacheComponent
         $filename = $this->_get_cached_file();
         if ($this->_is_alive($filename))
             return file_get_contents($filename);
-        $this->_write($content);
+
+        $file = $this->_write($content);
+        return file_get_contents($file);
     }
 
     public function set_folder(string $pathsub): self
