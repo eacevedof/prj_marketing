@@ -15,7 +15,7 @@
   - ~~falta estilos en boton~~
 - accion clone
 - generador de módulo .py
-- queries de _array con or de id_owner=-1
+- ~~queries de _array con or de id_owner=-1~~
 - ~~limpieza de código (por ejemplo $this->auth)~~
   - ~~en servicios mejor un private user o solo mantener auth?~~ 
 - dttable refresh current page
