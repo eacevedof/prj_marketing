@@ -24,7 +24,6 @@ final class DiskCacheComponent
         $this->pathfinal = $path;
     }
 
-
     private function _get_cached_files(): array
     {
         $files = scandir($this->pathfinal);
@@ -48,15 +47,17 @@ final class DiskCacheComponent
         return (int) date("YmdHis", (strtotime($date) + $this->time));
     }
 
-    private function _is_alive(string $filename): bool
+    public function is_alive(): bool
     {
+        $this->_load_hashname()->_load_pathfinal();        
+        $filename = $this->_get_cached_file();
         if (!$filename) return false;
         $end = explode("-",$filename);
         $end = end($end);
         $end = substr($end, -4);//quita .dat
         if (!$end || !is_numeric($end)) return false;
         $dietime = $this->_get_dietime($end);
-        return ($dietime>(int) date("YmdHis"));
+        return ($dietime > (int) date("YmdHis"));
     }
 
     private function _remove_olds(): void
@@ -68,7 +69,7 @@ final class DiskCacheComponent
         }
     }
 
-    private function _write(string $content): string
+    public function write(string $content): string
     {
         $this->_remove_olds();
         $dietime = $this->_get_dietime(date("YmdHis"));
@@ -77,15 +78,10 @@ final class DiskCacheComponent
         return $path;
     }
 
-    public function get_content(string $content): ?string
+    public function get_content(): ?string
     {
-        $this->_load_hashname()->_load_pathfinal();
         $filename = $this->_get_cached_file();
-        if ($this->_is_alive($filename))
-            return file_get_contents($filename);
-
-        $file = $this->_write($content);
-        return file_get_contents($file);
+        return file_get_contents($filename);
     }
 
     public function set_folder(string $pathsub): self
