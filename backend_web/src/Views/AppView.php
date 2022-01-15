@@ -10,12 +10,14 @@
  */
 namespace App\Views;
 
+use App\Traits\DiskCacheTrait;
 use App\Traits\LogTrait;
 use \Exception;
 
 final class AppView
 {
     use LogTrait;
+    use DiskCacheTrait;
 
     private const PATH_LAYOUTS = PATH_SRC."/Views/layouts";
     private const PATH_TEMPLATES = PATH_SRC."/Views/templates";
@@ -25,7 +27,8 @@ final class AppView
     private const PATH_ASSETS_IMG = "/assets/images/";
     private const PATH_ASSETS_CSS = "/assets/css/";
 
-    private array $request;
+    private array $araction;
+    private string $requri;
 
     private array $globals = [];
     private array $locals = [];
@@ -36,7 +39,9 @@ final class AppView
 
     public function __construct()
     {
-        $this->request = $_REQUEST["ACTION"] ?? [];
+        $this->requri = $_SERVER["REQUEST_URI"];
+        $this->araction = $_REQUEST["ACTION"] ?? [];
+        $this->_load_diskcache();
     }
 
     private function _load_path_layout(): void
@@ -46,7 +51,7 @@ final class AppView
 
     private function _load_path_folder_template(): void
     {
-        $strcontroller = $this->request["controller"] ?? "";
+        $strcontroller = $this->araction["controller"] ?? "";
         if ($strcontroller) {
            $strcontroller = str_replace("App\Controllers","", $strcontroller);
            $strcontroller = str_replace("\\","/", $strcontroller);
@@ -58,8 +63,8 @@ final class AppView
 
     private function _load_path_template_name(): void
     {
-        $action = $this->request["method"] ?? "index";
-        $this->pathtemplate .= "/$action.tpl";
+        $araction = $this->araction["method"] ?? "index";
+        $this->pathtemplate .= "/$araction.tpl";
     }
 
     private function _template(): void
@@ -240,7 +245,6 @@ final class AppView
 
     private function _flush(): void
     {
-        $uri = $_SERVER["REQUEST_URI"];
         $this->_send_headers();
         //$content = ob_get_contents();
         $flush = ob_end_flush();
