@@ -9,12 +9,11 @@
  */
 namespace App\Behaviours;
 
-use App\Models\AppEntity;
 use App\Services\Dbs\CoreQueriesService;
 use App\Traits\CacheQueryTrait;
 use TheFramework\Components\Db\ComponentMysql;
 
-final class SchemaBehaviour extends AppEntity
+final class SchemaBehaviour
 {
     use CacheQueryTrait;
 
@@ -23,7 +22,7 @@ final class SchemaBehaviour extends AppEntity
     private int $foundrows = 0;
     private const CACHE_TIME = 3600;
     
-    public function __construct($db=null) 
+    public function __construct(?Object $db=null)
     {
         $this->db = $db ?? new ComponentMysql();
         $this->servqueries = new CoreQueriesService();
@@ -88,45 +87,45 @@ final class SchemaBehaviour extends AppEntity
         return $r;
     }
     
-    public function get_tables($db="")
+    public function get_tables(string $dbname="")
     {
-        $sql = $this->servqueries->get_tables($db);
+        $sql = $this->servqueries->get_tables($dbname);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;
     }
     
-    public function get_table(string $table, string $db=""): array
+    public function get_table(string $table, string $dbname=""): array
     {
-        $sql = $this->servqueries->get_tables($db,$table);
+        $sql = $this->servqueries->get_tables($dbname,$table);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql,0);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;        
     }
    
-    public function get_fields_info(string $table, string $db="")
+    public function get_fields_info(string $table, string $dbname="")
     {
-        $sql = $this->servqueries->get_fields($db,$table);
+        $sql = $this->servqueries->get_fields($dbname,$table);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;
     }
 
-    public function get_fields(string $table, string $db=""): array
+    public function get_fields(string $table, string $dbname=""): array
     {
-        $sql = $this->servqueries->get_fields_min($db,$table);
+        $sql = $this->servqueries->get_fields_min($dbname,$table);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;
     }
 
-    public function get_field_info(string $field, string $table, string $db="")
+    public function get_field_info(string $field, string $table, string $dbname="")
     {
-        $sql = $this->servqueries->get_field($db,$table,$field);
+        $sql = $this->servqueries->get_field($dbname, $table, $field);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);

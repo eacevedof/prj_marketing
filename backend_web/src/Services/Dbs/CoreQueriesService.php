@@ -54,7 +54,7 @@ final class CoreQueriesService extends AppService
         ";
     }//get_fields
 
-    public function get_tables($dbname,$table=null): string
+    public function get_tables(string $dbname, ?string $table=null): string
     {
         $sql = "
         /*CoreQueriesService.get_tables*/
