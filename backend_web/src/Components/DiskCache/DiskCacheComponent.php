@@ -17,7 +17,7 @@ final class DiskCacheComponent
         return $this;
     }
 
-    private function _load_pathfinal(): self
+    private function _load_pathfinal(): void
     {
         $path = $this->pathcache;
         if ($this->pathsub) $path .= "/$this->pathsub";
@@ -101,5 +101,4 @@ final class DiskCacheComponent
         $this->time = $time;
         return $this;
     }
-
 }

@@ -28,6 +28,7 @@ final class AppView
     private const PATH_ASSETS_CSS = "/assets/css/";
 
     private array $araction;
+    private bool $docache = false;
     private string $requri;
 
     private array $globals = [];
@@ -161,6 +162,11 @@ final class AppView
 
     public function render(array $vars = []): void
     {
+        if ($this->docache && $this->diskcache->is_alive()) {
+            $content = $this->diskcache->get_content();
+            echo $content;
+            return;
+        }
         $this->locals = $vars;
 
         $this->_load_path_layout();
@@ -206,6 +212,18 @@ final class AppView
         $this->_flush();
     }
 
+    public function cache(int $time=3600): self
+    {
+        if (!$time) {
+            $this->docache = false;
+            return $this;
+        }
+        $this->docache = true;
+        $this->diskcache->set_keyname($this->requri)->set_time($time);
+        return $this;
+    }
+
+
     public function add_var(string $name, $var): self
     {
         if(trim($name)!=="") $this->globals[$name] = $var;
@@ -246,8 +264,11 @@ final class AppView
     private function _flush(): void
     {
         $this->_send_headers();
-        //$content = ob_get_contents();
-        $flush = ob_end_flush();
+        $content = ob_get_contents();
+        if ($this->docache) {
+            $this->diskcache->write($content);
+        }
+        $isflushok = ob_end_flush();
         exit();
     }
 
