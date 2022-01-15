@@ -25,7 +25,7 @@ final class DiskCacheComponent
     }
 
 
-    private function _get_cached_file(): string
+    private function _get_cached_files(): array
     {
         $files = scandir($this->pathfinal);
         if (count($files) == 2) return [];
@@ -33,6 +33,12 @@ final class DiskCacheComponent
         $files = array_filter($files, function ($file) {
            return strstr($file, $this->hashname); 
         });
+        return $files[0] ?? [];
+    }
+
+    private function _get_cached_file(): string
+    {
+        $files = $this->_get_cached_files();
         return $files[0] ?? "";
     }
 
@@ -47,24 +53,38 @@ final class DiskCacheComponent
         if (!$filename) return false;
         $end = explode("-",$filename);
         $end = end($end);
+        $end = substr($end, -4);//quita .dat
         if (!$end || !is_numeric($end)) return false;
         $dietime = $this->_get_dietime($end);
         return ($dietime>(int) date("YmdHis"));
     }
 
-    public function write(string $content): self
+    private function _remove_olds(): void
     {
-        $this->_load_hashname()->_load_pathfinal();
-        $file = $this->_get_cached_file();
-        if ($this->_is_alive($file)) return $this;
-
-
+        $files = $this->_get_cached_files();
+        foreach ($files as $file) {
+            $path = "{$this->pathfinal}/$file";
+            if (is_file($path)) unlink($path);
+        }
     }
 
-    public function read(string $content): self
+    private function _write(string $content): self
     {
+        $filename = $this->_get_cached_file();
+        if ($this->_is_alive($filename)) return $this;
+        $this->_remove_olds();
+        $dietime = $this->_get_dietime(date("YmdHis"));
+        $path = "{$this->pathfinal}/$this->hashname-{$dietime}.dat";
+        file_put_contents($path, $content);
+    }
 
-        return $this;
+    public function get_content(string $content): ?string
+    {
+        $this->_load_hashname()->_load_pathfinal();
+        $filename = $this->_get_cached_file();
+        if ($this->_is_alive($filename))
+            return file_get_contents($filename);
+        $this->_write($content);
     }
 
     public function set_folder(string $pathsub): self
