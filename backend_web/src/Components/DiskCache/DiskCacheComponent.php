@@ -65,8 +65,7 @@ final class DiskCacheComponent
         $enddate = end($enddate);
         $enddate = substr_replace($enddate ,"", -4);
         if (!($enddate && is_numeric($enddate))) return false;
-        $dietime = $this->_get_dietime($enddate);
-        return ($dietime > (int) date("YmdHis"));
+        return (((int) $enddate) > ((int) date("YmdHis")));
     }
 
     public function write(string $content): string
