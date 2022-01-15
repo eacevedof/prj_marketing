@@ -77,7 +77,6 @@ final class PicklistRepository extends AppRepository
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.type='profile'")
-            ->add_and("m.id_owner=-1")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
             ->select()->sql()
