@@ -34,6 +34,7 @@ final class ComponentQB
     private array $select           = [];
 
     private string $sql             = "";
+    private string $sqlcount        = "";
 
     private ?Object $oDB = null;
 
@@ -273,6 +274,7 @@ final class ComponentQB
     public function select(?string $table=null, ?array $fields=null, ?array $arpks=null): self
     {
         $this->sql = "/*error select*/";
+        $this->sqlcount = "/*error selectcount*/";
 
         if(!$table) $table = $this->table;
         if(!$table) $this->_exception("missing table in select");
@@ -284,11 +286,11 @@ final class ComponentQB
         $arpks = $arpks ?? $this->arpks;
 
         $this->select[] = "$comment SELECT";
-        if($this->calcfoundrows) $this->select[] = "SQL_CALC_FOUND_ROWS";
+        //if($this->calcfoundrows) $this->select[] = "SQL_CALC_FOUND_ROWS";
         if($this->isdistinct) $this->select[] = "DISTINCT";
         $this->_clean_reserved($fields);
         $this->select["fields"] = implode(",",$fields);
-        $this->select[] = "FROM $table";
+        $this->select[] = "\nFROM $table";
 
         $this->select[] = $this->_get_joins();
 
@@ -303,6 +305,9 @@ final class ComponentQB
         $this->select["limit"] = $this->_get_limit();
 
         $this->sql = implode(" ",$this->select);
+        $this->select["fields"] = "COUNT(*)";
+        unset($this->select["limit"]);
+        $this->sqlcount = implode(" ", $this->select);
         return $this;
     }//get_selectfrom
 

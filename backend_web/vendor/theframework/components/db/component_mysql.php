@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name TheFramework\Components\Db\ComponentMysql
- * @file component_mysql.php v2.3.0
- * @date 10-01-2022 21:00 SPAIN
+ * @file component_mysql.php v3.0.0
+ * @date 14-01-2022 12:00 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -22,6 +22,7 @@ final class ComponentMysql
 
     private bool $iserror = false;
     private array $errors = [];
+    private string $sqlcount = "";
 
     public function __construct(array $config=[])
     {
@@ -87,6 +88,7 @@ final class ComponentMysql
     
     public function query(string $sql, ?int $icol=null, ?int $irow=null): array
     {
+        $this->foundrows = 0;
         $pdo = $this->_get_pdo();
         $this->_log($sql,"componentmysql.query");
 
@@ -94,18 +96,23 @@ final class ComponentMysql
             $this->_exception("pdo.query error");
 
         $result = [];
-        while($row = $cursor->fetch(PDO::FETCH_ASSOC)) $result[] = $row;
+        while($row = $cursor->fetch(PDO::FETCH_ASSOC))
+            $result[] = $row;
 
         //@deprecated https://dev.mysql.com/worklog/task/?id=12615
         //mejor es hacer un count(*) sin limit
-        $sql = "SELECT FOUND_ROWS()";
-        $this->_log($sql, "componentmysql.count");
-        $this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
+        if ($this->sqlcount) {
+            $this->_log($this->sqlcount, "componentmysql.count");
+            $this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
+        }
         return $this->_get_rowcol($result, $icol, $irow);
     }//query
 
     public function exec(string $sql)
     {
+        $this->affected = 0;
+        $this->lastid = -1;
+
         $pdo = $this->_get_pdo();
         $this->_log($sql,"componentmysql.exec");
         if (($result = $pdo->exec($sql)) === false)
@@ -133,8 +140,15 @@ final class ComponentMysql
     public function add_conn(string $k, string $v): self {$this->config[$k]=$v; return $this;}
     public function set_conn(array $config=[]): self {$this->config = $config; return $this;}
 
-    public function get_affected(){return $this->affected;}
-    public function get_foundrows(){return $this->foundrows;}
+    //on insert
     public function get_lastid(){return $this->lastid;}
+
+    //on select
+    public function set_sqlcount(string $sql=""): self{$this->sqlcount = $sql; return $this;}
+    public function get_foundrows(){return $this->foundrows;}
+
+    //on update/delete
+    public function get_affected(){return $this->affected;}
+
 
 }//ComponentMysql
