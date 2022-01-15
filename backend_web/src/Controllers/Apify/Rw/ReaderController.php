@@ -26,15 +26,15 @@ final class ReaderController extends ApifyController
         $dbalias = $this->request->get_get("schemainfo");
         $ardecrypted = SF::get("Apify/Encrypts")->get_decrypted($this->request->get_post());
         
-        $oServ = new ReaderService($idcontext, $dbalias);
-        $arJson = $oServ->get_read($ardecrypted);
-        if($oServ->is_error()) 
+        $servreader = new ReaderService($idcontext, $dbalias);
+        $json = $servreader->get_read($ardecrypted);
+        if($servreader->is_error()) 
             $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_error($oServ->get_errors())
+                ->set_error($servreader->get_errors())
                 ->set_message("database error")
                 ->show();
 
-        $this->_get_json()->set_payload(["result"=>$arJson,"foundrows"=>$oServ->get_foundrows()])->show();
+        $this->_get_json()->set_payload(["result"=>$json, "foundrows"=>$servreader->get_foundrows()])->show();
 
     }//index
 
@@ -45,19 +45,19 @@ final class ReaderController extends ApifyController
     {
         $this->_check_usertoken();
         $idcontext = $this->request->get_get("context");
-        $sDb = $this->request->get_get("dbname");
+        $dbname = $this->request->get_get("dbname");
 
-        $sSQL = $this->request->get_post("query");
-        $oServ = new ReaderService($idcontext,$sDb);
+        $sql = $this->request->get_post("query");
+        $servreader = new ReaderService($idcontext, $dbname);
 
-        $arJson = $oServ->read_raw($sSQL);
-        if($oServ->is_error()) 
+        $json = $servreader->read_raw($sql);
+        if($servreader->is_error()) 
             $this->_get_json()->set_code(ResponseType::INTERNAL_SERVER_ERROR)->
-                    set_error($oServ->get_errors())->
+                    set_error($servreader->get_errors())->
                     set_message("database error")->
                     show();
 
-        $this->_get_json()->set_payload(["rows"=>$arJson,"numrows"=>$oServ->get_foundrows()])->show();
+        $this->_get_json()->set_payload(["rows"=>$json, "numrows"=>$servreader->get_foundrows()])->show();
     }//raw
    
 

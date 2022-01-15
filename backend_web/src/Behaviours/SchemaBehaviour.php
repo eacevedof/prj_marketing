@@ -9,12 +9,15 @@
  */
 namespace App\Behaviours;
 
-use App\Services\Dbs\CoreQueriesService;
 use App\Traits\CacheQueryTrait;
+use App\Traits\ErrorTrait;
+use App\Services\Dbs\CoreQueriesService;
 use TheFramework\Components\Db\ComponentMysql;
+use \Exception;
 
 final class SchemaBehaviour
 {
+    use ErrorTrait;
     use CacheQueryTrait;
 
     private ?ComponentMysql $db;
@@ -26,15 +29,6 @@ final class SchemaBehaviour
     {
         $this->db = $db ?? new ComponentMysql();
         $this->servqueries = new CoreQueriesService();
-    }
-    
-    public function query(string $sql, ?int $icol=null, ?int $irow=null): array
-    {
-        $sqlcount = $this->_get_count_query($sql);
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql, $icol, $irow);
-        //to-do esto va a fallar pq ya no se usa calcrows
-        $this->foundrows = $this->db->get_foundrows();
-        return $r;
     }
 
     private function _get_orderby_pos(string $sql): ?int
@@ -70,9 +64,32 @@ final class SchemaBehaviour
         return "/*count-query*/SELECT COUNT(*) FROM ($sql) AS c";
     }
 
+    public function query(string $sql, ?int $icol=null, ?int $irow=null): array
+    {
+        try {
+            $sqlcount = $this->_get_count_query($sql);
+            $r = $this->db
+                ->set_sqlcount($sqlcount)
+                ->query($sql, $icol, $irow)
+            ;
+            //to-do esto va a fallar pq ya no se usa calcrows
+            $this->foundrows = $this->db->get_foundrows();
+            return $r;
+        }
+        catch (Exception $e) {
+            $this->add_error($e->getMessage());
+        }
+        return [];
+    }
+
     public function execute(string $sql)
     {
-         return $this->db->exec($sql);
+        try {
+            return $this->db->exec($sql);
+        }
+        catch (Exception $e) {
+            $this->add_error($e->getMessage());
+        }
     }    
     
     public function get_schemas(): array
