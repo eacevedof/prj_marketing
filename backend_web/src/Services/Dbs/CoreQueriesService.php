@@ -66,7 +66,6 @@ final class CoreQueriesService extends AppService
         if($table) $sql .= " AND table_name='$table'";
 
         $sql .= " ORDER BY 1";
-        //pr($sql,"sql");
         return $sql;
     }//get_tables
 
