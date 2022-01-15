@@ -62,12 +62,13 @@ final class ComponentMysql
         $row0 = $result[0];
         $fieldnames = array_keys($row0);
 
-        if (!is_null($irow)) $result = $result[$irow] ?? [];
+        if ($isrow = !is_null($irow)) $result = $result[$irow] ?? [];
 
         if (!is_null($icol)) {
             $colname = $fieldnames[$icol] ?? "";
             if(!$colname) $this->_exception("no column in position $icol");
-            $result = array_column($result, $colname);
+            if($isrow) return $result[$colname];
+            return array_column($result, $colname);
         }
 
         return $result;
@@ -86,7 +87,7 @@ final class ComponentMysql
         return $pdo;
     }
     
-    public function query(string $sql, ?int $icol=null, ?int $irow=null): array
+    public function query(string $sql, ?int $icol=null, ?int $irow=null): array|string
     {
         $this->foundrows = 0;
         $pdo = $this->_get_pdo();
