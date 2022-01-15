@@ -12,96 +12,130 @@ namespace App\Behaviours;
 use App\Models\AppEntity;
 use App\Services\Dbs\CoreQueriesService;
 use App\Traits\CacheQueryTrait;
+use TheFramework\Components\Db\ComponentMysql;
 
 final class SchemaBehaviour extends AppEntity
 {
     use CacheQueryTrait;
 
-    private $oQServ;
-    private int $iFoundrows;
+    private ?ComponentMysql $db;
+    private CoreQueriesService $servqueries;
+    private int $foundrows = 0;
     private const CACHE_TIME = 3600;
     
-    public function __construct($oDb=NULL) 
+    public function __construct($db=null) 
     {
-        parent::__construct($oDb);
-        $this->oQServ = new CoreQueriesService();
+        $this->db = $db ?? new ComponentMysql();
+        $this->servqueries = new CoreQueriesService();
     }
     
-    public function query($sSQL, $iCol=NULL, $iRow=NULL)
+    public function query(string $sql, ?int $icol=null, ?int $irow=null): array
     {
-        $r = $this->oDb->query($sSQL, $iCol, $iRow);
-        $this->iFoundrows = $this->oDb->get_foundrows();
+        $sqlcount = $this->_get_count_query($sql);
+        $r = $this->db->set_sqlcount($sqlcount)->query($sql, $icol, $irow);
+        //to-do esto va a fallar pq ya no se usa calcrows
+        $this->foundrows = $this->db->get_foundrows();
         return $r;
     }
 
-    public function execute($sSQL)
+    private function _get_orderby_pos(string $sql): ?int
     {
-        $r = $this->oDb->exec($sSQL);
-        if($this->oDb->is_error())
-            $this->add_error($this->oDb->get_errors());
-        return $r;
+        $find = [" ORDER BY ", " ORDER BY\n", "\nORDER BY\n", "ORDER BY\n", "\nORDER BY ", "\nORDER BY"];
+        foreach ($find as $orderby){
+            $pos = strrpos($sql, $orderby, -1);
+            if ($pos !== false)
+                return $pos;
+        }
+        return null;
+    }
+
+    private function _get_limit(string $sql): ?int
+    {
+        $find = [" LIMIT ", " LIMIT\n", "\nLIMIT\n", "LIMIT\n", "\nLIMIT ", "\nLIMIT"];
+        foreach ($find as $limit){
+            $pos = strrpos($sql, $limit, -1);
+            if ($pos !== false)
+                return $pos;
+        }
+        return null;
+    }
+
+    private function _get_count_query(string $sql): string
+    {
+        if ($to = $this->_get_orderby_pos($sql))
+            $sql = substr($sql,0, $to);
+
+        if ($to = $this->_get_limit($sql))
+            $sql = substr($sql, 0, $to);
+
+        return "/*count-query*/SELECT COUNT(*) FROM ($sql) AS c";
+    }
+
+    public function execute(string $sql)
+    {
+         return $this->db->exec($sql);
     }    
     
-    public function get_schemas()
+    public function get_schemas(): array
     {
-        $sSQL = "-- get_schemas
+        $sql = "-- get_schemas
         SELECT schema_name as dbname
         FROM information_schema.schemata
         ORDER BY schema_name;";
-        if($arRows = $this->get_cached($sSQL)) return $arRows;
-        $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
-        return $arRows;
+        if($r = $this->get_cached($sql)) return $r;
+        $r = $this->query($sql);
+        $this->addto_cache($sql, $r, self::CACHE_TIME);
+        return $r;
     }
     
-    public function get_tables($sDb="")
+    public function get_tables($db="")
     {
-        $sSQL = $this->oQServ->get_tables($sDb);
-        if($arRows = $this->get_cached($sSQL)) return $arRows;
-        $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
-        return $arRows;
+        $sql = $this->servqueries->get_tables($db);
+        if($r = $this->get_cached($sql)) return $r;
+        $r = $this->query($sql);
+        $this->addto_cache($sql, $r, self::CACHE_TIME);
+        return $r;
     }
     
-    public function get_table(string $sTable, string $sDb=""): array
+    public function get_table(string $table, string $db=""): array
     {
-        $sSQL = $this->oQServ->get_tables($sDb,$sTable);
-        if($arRows = $this->get_cached($sSQL)) return $arRows;
-        $arRows = $this->query($sSQL,0);
-        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
-        return $arRows;        
+        $sql = $this->servqueries->get_tables($db,$table);
+        if($r = $this->get_cached($sql)) return $r;
+        $r = $this->query($sql,0);
+        $this->addto_cache($sql, $r, self::CACHE_TIME);
+        return $r;        
     }
    
-    public function get_fields_info($sTable,$sDb="")
+    public function get_fields_info(string $table, string $db="")
     {
-        $sSQL = $this->oQServ->get_fields($sDb,$sTable);
-        if($arRows = $this->get_cached($sSQL)) return $arRows;
-        $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
-        return $arRows;
+        $sql = $this->servqueries->get_fields($db,$table);
+        if($r = $this->get_cached($sql)) return $r;
+        $r = $this->query($sql);
+        $this->addto_cache($sql, $r, self::CACHE_TIME);
+        return $r;
     }
 
-    public function get_fields($sTable,$sDb=""): array
+    public function get_fields(string $table, string $db=""): array
     {
-        $sSQL = $this->oQServ->get_fields_min($sDb,$sTable);
-        if($arRows = $this->get_cached($sSQL)) return $arRows;
-        $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
-        return $arRows;
+        $sql = $this->servqueries->get_fields_min($db,$table);
+        if($r = $this->get_cached($sql)) return $r;
+        $r = $this->query($sql);
+        $this->addto_cache($sql, $r, self::CACHE_TIME);
+        return $r;
     }
 
-    public function get_field_info($sField,$sTable,$sDb="")
+    public function get_field_info(string $field, string $table, string $db="")
     {
-        $sSQL = $this->oQServ->get_field($sDb,$sTable,$sField);
-        if($arRows = $this->get_cached($sSQL)) return $arRows;
-        $arRows = $this->query($sSQL);
-        $this->addto_cache($sSQL, $arRows, self::CACHE_TIME);
-        return $arRows;
+        $sql = $this->servqueries->get_field($db,$table,$field);
+        if($r = $this->get_cached($sql)) return $r;
+        $r = $this->query($sql);
+        $this->addto_cache($sql, $r, self::CACHE_TIME);
+        return $r;
     }    
     
-    public function read_raw($sSQL){ return $this->query($sSQL);}
-    public function write_raw($sSQL){ return $this->execute($sSQL);}
-    public function get_foundrows(){return $this->iFoundrows; }
+    public function read_raw(string $sql){ return $this->query($sql);}
+    public function write_raw(string $sql){ return $this->execute($sql);}
+    public function get_foundrows(){return $this->foundrows; }
 
 
 }//SchemaBehaviour
