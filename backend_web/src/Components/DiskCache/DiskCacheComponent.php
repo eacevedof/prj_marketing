@@ -26,9 +26,11 @@ final class DiskCacheComponent
 
     private function _get_cached_files(): array
     {
-        if(!is_dir($this->pathfinal))
-            //606: rw----rw- lectura y escritura
-            mkdir($this->pathfinal, 606, true);
+        if(!is_dir($this->pathfinal)) {
+            mkdir($this->pathfinal, 0777, true);
+            chmod($this->pathcache, 0777);
+        }
+
         $files = scandir($this->pathfinal);
         if (count($files) == 2) return [];
         
@@ -76,7 +78,7 @@ final class DiskCacheComponent
         $this->_remove_olds();
         $dietime = $this->_get_dietime(date("YmdHis"));
         $path = "{$this->pathfinal}/$this->hashname-{$dietime}.dat";
-        file_put_contents($path, $content);
+        $r = file_put_contents($path, $content);
         return "{$this->hashname} $dietime cache until: ".date("Y-m-d H:i:s", $dietime);
     }
 
