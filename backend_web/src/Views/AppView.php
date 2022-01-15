@@ -45,6 +45,12 @@ final class AppView
         $this->_load_diskcache();
     }
 
+    private function _exception(string $message, int $code=500): void
+    {
+        $this->logerr($message,"app-view.exception");
+        throw new Exception($message, $code);
+    }
+    
     private function _load_path_layout(): void
     {
         if (!$this->pathlayout) $this->pathlayout = self::PATH_LAYOUTS."/default.tpl";
@@ -141,11 +147,53 @@ final class AppView
         $path = self::PATH_ASSETS_IMG.$pathimg;
         return $path;
     }
-
-    private function _exception(string $message, int $code=500): void
+    
+    private function _cache_exit(): void
     {
-        $this->logerr($message,"app-view.exception");
-        throw new Exception($message, $code);
+        if ($this->docache && $this->diskcache->is_alive()) {
+            $content = $this->diskcache->get_content();
+            $this->_send_headers();
+            exit($content);
+        }   
+    }
+    
+    private function _echo_js($any): void
+    {
+        $json = json_encode($any);
+        echo $json;
+    }
+
+    private function _echo_jslit($any): void
+    {
+        $json = json_encode($any);
+        echo str_replace("\"","&quot;", $json);
+    }
+
+    private function _echo(?string $any, bool $raw=true): void
+    {
+        $any = ($any ?? "");
+        echo $raw ? $any : htmlentities($any);
+    }
+    
+    private function _send_headers(): void
+    {
+        $headers = array_unique($this->headers);
+        foreach ($headers as $code)
+            http_response_code($code);
+    }
+
+    private function _flush_and_exit(): void
+    {
+        $this->_send_headers();
+        if ($this->docache) {
+            $content = ob_get_contents();
+            $now = date("Y-m-d H:i:s");
+            $content .= "<!-- cached at $now -->";
+            $this->diskcache->write($content);
+            exit($content);
+        }
+        $isflushok = ob_end_flush();
+        exit();
     }
 
     public function set_layout(string $pathlayout): self
@@ -160,13 +208,33 @@ final class AppView
         return $this;
     }
 
+    public function cache(int $time=3600, string $folder=""): self
+    {
+        if (!$time) {
+            $this->docache = false;
+            return $this;
+        }
+        $this->docache = true;
+        $this->diskcache
+            ->set_keyname($this->requri)->set_time($time)->set_folder($folder);
+        return $this;
+    }
+
+    public function add_var(string $name, $var): self
+    {
+        if(trim($name)!=="") $this->globals[$name] = $var;
+        return $this;
+    }
+
+    public function add_header(int $code): self
+    {
+        $this->headers[] = $code;
+        return $this;
+    }
+
     public function render(array $vars = []): void
     {
-        if ($this->docache && $this->diskcache->is_alive()) {
-            $content = $this->diskcache->get_content();
-            $this->_send_headers();
-            exit($content);
-        }
+        $this->_cache_exit();
         $this->locals = $vars;
 
         $this->_load_path_layout();
@@ -189,11 +257,12 @@ final class AppView
 
         include_once($this->pathlayout);
 
-        $this->_flush();
+        $this->_flush_and_exit();
     }
 
     public function render_nl(array $vars = []): void
     {
+        $this->_cache_exit();
         $this->locals = $vars;
         if (!$this->pathtemplate) {
             $this->_load_path_folder_template();
@@ -209,69 +278,8 @@ final class AppView
             $$name = $value;
 
         include_once($this->pathtemplate);
-        $this->_flush();
+        $this->_flush_and_exit();
     }
-
-    public function cache(int $time=3600, string $folder=""): self
-    {
-        if (!$time) {
-            $this->docache = false;
-            return $this;
-        }
-        $this->docache = true;
-        $this->diskcache
-            ->set_keyname($this->requri)->set_time($time)->set_folder($folder);
-        return $this;
-    }
-
-    public function add_var(string $name, $var): self
-    {
-        if(trim($name)!=="") $this->globals[$name] = $var;
-        return $this;
-    }
-
-    private function _echo_js($any): void
-    {
-        $json = json_encode($any);
-        echo $json;
-    }
-
-    private function _echo_jslit($any): void
-    {
-        $json = json_encode($any);
-        echo str_replace("\"","&quot;", $json);
-    }
-
-    private function _echo(?string $any, bool $raw=true): void
-    {
-        $any = ($any ?? "");
-        echo $raw ? $any : htmlentities($any);
-    }
-
-    public function add_header(int $code): self
-    {
-        $this->headers[] = $code;
-        return $this;
-    }
-
-    private function _send_headers(): void
-    {
-        $headers = array_unique($this->headers);
-        foreach ($headers as $code)
-            http_response_code($code);
-    }
-
-    private function _flush(): void
-    {
-        $this->_send_headers();
-        if ($this->docache) {
-            $content = ob_get_contents();
-            $now = date("Y-m-d H:i:s");
-            $content .= "<!-- cached at $now -->";
-            $this->diskcache->write($content);
-            exit($content);
-        }
-        $isflushok = ob_end_flush();
-        exit();
-    }
+    
+    
 }//AppView
