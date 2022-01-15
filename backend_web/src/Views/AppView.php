@@ -212,14 +212,15 @@ final class AppView
         $this->_flush();
     }
 
-    public function cache(int $time=3600): self
+    public function cache(int $time=3600, string $folder=""): self
     {
         if (!$time) {
             $this->docache = false;
             return $this;
         }
         $this->docache = true;
-        $this->diskcache->set_keyname($this->requri)->set_time($time);
+        $this->diskcache
+            ->set_keyname($this->requri)->set_time($time)->set_folder($folder);
         return $this;
     }
 
