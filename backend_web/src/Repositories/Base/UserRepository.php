@@ -158,7 +158,8 @@ final class UserRepository extends AppRepository
         $this->_add_auth_condition($qb);
 
         $sql = $qb->select()->sql();
-        $r = $this->db->query($sql);
+        $sqlcount = $qb->sqlcount();
+        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
 
         return [
             "result" => $r,

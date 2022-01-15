@@ -271,6 +271,28 @@ final class ComponentQB
         return $this;
     }//delete
 
+    private function _get_sql_count(): string
+    {
+        $arsql = $this->select;
+        unset($arsql["orderby"], $arsql["limit"]);
+        $subselect = trim(implode(" ",$arsql));
+        $sql = [
+            "SELECT",
+            "COUNT(*) AS foundrows",
+            "FROM (\n",
+            $subselect,
+            "\n) AS sqlcount"
+        ];
+        return implode(" ",$sql);
+    }
+
+    private function _remove_empty_item(array &$array): void
+    {
+        foreach ($array as $i => $item)
+            if ($item==="" || is_null($item))
+                unset($array[$i]);
+    }
+
     public function select(?string $table=null, ?array $fields=null, ?array $arpks=null): self
     {
         $this->sql = "/*error select*/";
@@ -286,10 +308,9 @@ final class ComponentQB
         $arpks = $arpks ?? $this->arpks;
 
         $this->select[] = "$comment SELECT";
-        //if($this->calcfoundrows) $this->select[] = "SQL_CALC_FOUND_ROWS";
         if($this->isdistinct) $this->select[] = "DISTINCT";
         $this->_clean_reserved($fields);
-        $this->select["fields"] = implode(",",$fields);
+        $this->select[] = implode(",",$fields);
         $this->select[] = "\nFROM $table";
 
         $this->select[] = $this->_get_joins();
@@ -300,14 +321,16 @@ final class ComponentQB
 
         $this->select[] = $this->_get_groupby();
         $this->select[] = $this->_get_having();
-        $this->select[] = $this->_get_orderby();
+        $this->select["orderby"] = $this->_get_orderby();
         $this->select[] = $this->_get_end();
         $this->select["limit"] = $this->_get_limit();
 
+        $this->_remove_empty_item($this->select);
+
         $this->sql = implode(" ",$this->select);
-        $this->select["fields"] = "COUNT(*)";
-        unset($this->select["limit"]);
-        $this->sqlcount = implode(" ", $this->select);
+        $this->sqlcount = "";
+        if ($this->calcfoundrows)
+            $this->sqlcount = $this->_get_sql_count();
         return $this;
     }//get_selectfrom
 
@@ -340,6 +363,7 @@ final class ComponentQB
     }
 
     public function sql():string {return $this->sql;}
+    public function sqlcount():string {return $this->sqlcount;}
 
     public function get_sanitized(?string $strval): ?string
     {

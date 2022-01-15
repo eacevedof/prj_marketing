@@ -103,7 +103,7 @@ final class ComponentMysql
         //mejor es hacer un count(*) sin limit
         if ($this->sqlcount) {
             $this->_log($this->sqlcount, "componentmysql.count");
-            $this->foundrows = $pdo->query($sql)->fetch(PDO::FETCH_COLUMN);
+            $this->foundrows = $pdo->query($this->sqlcount)->fetch(PDO::FETCH_COLUMN);
         }
         return $this->_get_rowcol($result, $icol, $irow);
     }//query
