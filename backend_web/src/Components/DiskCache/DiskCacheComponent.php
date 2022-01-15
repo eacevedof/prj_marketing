@@ -26,6 +26,7 @@ final class DiskCacheComponent
 
     private function _get_cached_files(): array
     {
+        if(!is_dir($this->pathfinal)) mkdir($this->pathfinal);
         $files = scandir($this->pathfinal);
         if (count($files) == 2) return [];
         
