@@ -9,13 +9,17 @@
  */
 namespace App\Traits;
 
+use App\Components\DiskCache\DiskCacheComponent;
+use App\Factories\ComponentFactory;
+
 trait DiskCacheTrait
 {
+    protected ?DiskCacheComponent $diskcache = null;
 
-
-    protected function save_into_disk(string $content, string $key): void
+    protected function _load_diskcache(): DiskCacheComponent
     {
-
+        $this->diskcache = ComponentFactory::get("DiskCache/DiskCache");
+        return $this->diskcache;
     }
 
 }//DiskCacheTrait
