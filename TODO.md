@@ -1,18 +1,18 @@
 ### To-Do
-- desarrollar sistema de cache para view
-- metodo 404 not found en error controller
+- ~~desarrollar sistema de cache para view~~
+- ~~metodo 404 not found en error controller~~
 - ~~aplicar delete_date para BO y BM~~
-- refactor crud a querybuilder
+- ~~refactor crud y querybuilder~~
 - ~~custom headers en render de la vista~~
 - ~~color boton swal en restore~~
 - formulario desde dash falta estilos
   - llevar estilos a css de lit
-- al borrar que no cambie update-date
+- ~~al borrar que no cambie update-date~~
 - sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
 - pestaña permisos en usuarios
   - edicion
-- accion restore
-  - falta estilos en boton
+- ~~accion restore~~
+  - ~~falta estilos en boton~~
 - accion clone
 - generador de módulo .py
 - queries de _array con or de id_owner=-1
