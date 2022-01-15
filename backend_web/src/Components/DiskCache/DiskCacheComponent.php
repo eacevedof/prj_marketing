@@ -47,6 +47,15 @@ final class DiskCacheComponent
         return (int) date("YmdHis", (strtotime($date) + $this->time));
     }
 
+    private function _remove_olds(): void
+    {
+        $files = $this->_get_cached_files();
+        foreach ($files as $file) {
+            $path = "{$this->pathfinal}/$file";
+            if (is_file($path)) unlink($path);
+        }
+    }
+
     public function is_alive(): bool
     {
         $this->_load_hashname()->_load_pathfinal();        
@@ -58,15 +67,6 @@ final class DiskCacheComponent
         if (!$end || !is_numeric($end)) return false;
         $dietime = $this->_get_dietime($end);
         return ($dietime > (int) date("YmdHis"));
-    }
-
-    private function _remove_olds(): void
-    {
-        $files = $this->_get_cached_files();
-        foreach ($files as $file) {
-            $path = "{$this->pathfinal}/$file";
-            if (is_file($path)) unlink($path);
-        }
     }
 
     public function write(string $content): string
