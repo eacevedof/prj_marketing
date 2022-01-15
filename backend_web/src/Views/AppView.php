@@ -263,13 +263,14 @@ final class AppView
     private function _flush(): void
     {
         $this->_send_headers();
-        $content = ob_get_contents();
         if ($this->docache) {
+            $content = ob_get_contents();
             $now = date("Y-m-d H:i:s");
             $content .= "<!-- cached at $now -->";
             $this->diskcache->write($content);
+            exit($content);
         }
-        exit($content);
+        $isflushok = ob_end_flush();
+        exit();
     }
-
 }//AppView

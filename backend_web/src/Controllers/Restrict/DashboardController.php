@@ -22,7 +22,7 @@ final class DashboardController extends RestrictController
 
         $modules = SF::get_callable("Restrict\Modules");
         $this->view->cache()
-            ->add_var(PageType::TITLE, __("Dashboard"))
+            ->add_var(PageType::TITLE, __("Dashboard x"))
             ->add_var(PageType::H1, __("Dashboard"))
             ->add_var("modules", $modules())
             ->render();
