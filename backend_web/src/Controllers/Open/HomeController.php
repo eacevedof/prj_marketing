@@ -16,7 +16,7 @@ final class HomeController extends OpenController
     public function index(): void
     {
         $this->set_template("open/index")
-            ->cache(15*60, "open")
+            ->cache()
             ->add_var(PageType::TITLE, __("Home"))
             ->add_var(PageType::H1, __("Home"))
             ->render();
