@@ -164,8 +164,8 @@ final class AppView
     {
         if ($this->docache && $this->diskcache->is_alive()) {
             $content = $this->diskcache->get_content();
-            echo $content;
-            return;
+            $this->_send_headers();
+            exit($content);
         }
         $this->locals = $vars;
 
@@ -223,7 +223,6 @@ final class AppView
         return $this;
     }
 
-
     public function add_var(string $name, $var): self
     {
         if(trim($name)!=="") $this->globals[$name] = $var;
@@ -266,10 +265,11 @@ final class AppView
         $this->_send_headers();
         $content = ob_get_contents();
         if ($this->docache) {
+            $now = date("Y-m-d H:i:s");
+            $content .= "<!-- cached at $now -->";
             $this->diskcache->write($content);
         }
-        $isflushok = ob_end_flush();
-        exit();
+        exit($content);
     }
 
 }//AppView

@@ -32,7 +32,7 @@ final class DiskCacheComponent
         $files = array_filter($files, function ($file) {
            return strstr($file, $this->hashname); 
         });
-        return $files[0] ?? [];
+        return array_values($files);
     }
 
     private function _get_cached_file(): string
@@ -61,11 +61,11 @@ final class DiskCacheComponent
         $this->_load_hashname()->_load_pathfinal();        
         $filename = $this->_get_cached_file();
         if (!$filename) return false;
-        $end = explode("-",$filename);
-        $end = end($end);
-        $end = substr($end, -4);//quita .dat
-        if (!$end || !is_numeric($end)) return false;
-        $dietime = $this->_get_dietime($end);
+        $enddate = explode("-",$filename);
+        $enddate = end($enddate);
+        $enddate = substr_replace($enddate ,"", -4);
+        if (!($enddate && is_numeric($enddate))) return false;
+        $dietime = $this->_get_dietime($enddate);
         return ($dietime > (int) date("YmdHis"));
     }
 
@@ -75,12 +75,13 @@ final class DiskCacheComponent
         $dietime = $this->_get_dietime(date("YmdHis"));
         $path = "{$this->pathfinal}/$this->hashname-{$dietime}.dat";
         file_put_contents($path, $content);
-        return $path;
+        return "{$this->hashname} $dietime cache until: ".date("Y-m-d H:i:s", $dietime);
     }
 
     public function get_content(): ?string
     {
         $filename = $this->_get_cached_file();
+        $filename = "$this->pathfinal/$filename";
         return file_get_contents($filename);
     }
 
