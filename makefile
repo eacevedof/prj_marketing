@@ -90,6 +90,9 @@ rem-logs: ## remove logs
 	rm -fr ./backend_web/logs/*
 	rm -f ./backend_web/public/*.log
 
+rem-cache: ## remove diskcache
+	rm -fr ./backend_web/cache/* !.gitkeep
+
 ssh-be: ## fpm
 	docker exec -it --user root php-marketing-be bash
 
