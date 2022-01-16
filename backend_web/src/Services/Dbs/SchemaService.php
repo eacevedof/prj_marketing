@@ -14,21 +14,23 @@ use App\Behaviours\SchemaBehaviour;
 final class SchemaService
 {
     private SchemaBehaviour $behavschema;
+    private string $dbname;
 
     public function __construct(?Object $db=null)
     {
         //necesitaria un objeto de db
+        $this->dbname = $db->get_config("database");
         $this->behavschema = new SchemaBehaviour($db);
     }
 
     public function get_tables(): array
     {
-        return $this->behavschema->get_tables();
+        return $this->behavschema->get_tables($this->dbname);
     }
 
     public function get_fields_info(string $table): array
     {
-        return $this->behavschema->get_fields_info($table);
+        return $this->behavschema->get_fields_info($this->dbname, $table);
     }
 
     public function get_tables_info(string $tables=""): array
