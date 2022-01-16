@@ -89,17 +89,26 @@ final class ModulesService extends AppService implements IConsole
         $this->builders["Entity"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], $this->pathbuild,PhpBuilder::TYPE_ENTITY
         );
-
         $this->builders["Repository"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxRepository.php"], $this->pathbuild,PhpBuilder::TYPE_REPOSITORY
         );
-
         $this->builders["Controller"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxsController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
-
         $this->builders["DeleteService"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxsDeleteService.php"], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
+        );
+        $this->builders["InfoService"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["XxxsInfoService.php"], $this->pathbuild,PhpBuilder::TYPE_INFO_SERVICE
+        );
+        $this->builders["InsertService"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["XxxsInsertService.php"], $this->pathbuild,PhpBuilder::TYPE_INSERT_SERVICE
+        );
+        $this->builders["SearchService"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["XxxsSearchService.php"], $this->pathbuild,PhpBuilder::TYPE_SEARCH_SERVICE
+        );
+        $this->builders["UpdateService"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["XxxsUpdateService.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_SERVICE
         );
     }
 
