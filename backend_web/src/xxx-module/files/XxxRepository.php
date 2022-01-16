@@ -9,10 +9,10 @@
  */
 namespace App\Repositories\App;
 
-use App\Services\Auth\AuthService;
-use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
+use App\Factories\RepositoryFactory as RF;
 use App\Factories\DbFactory as DbF;
+use App\Services\Auth\AuthService;
 use TheFramework\Components\Db\ComponentQB;
 
 final class XxxRepository extends AppRepository
@@ -99,9 +99,9 @@ final class XxxRepository extends AppRepository
             return;
         }
 
-        $xxx = $this->auth->get_user();
+        $user = $this->auth->get_user();
         if($this->auth->is_business_manager()) {
-            $idparent = $xxx["id_parent"];
+            $idparent = $user["id_parent"];
             $childs = $this->get_childs($idparent);
             $childs = array_column($childs,"id");
             $qb->add_in("m.id", $childs);
@@ -110,9 +110,9 @@ final class XxxRepository extends AppRepository
         }
 
         if($this->auth->is_business_owner()) {
-            $childs = $this->get_childs($xxx["id"]);
+            $childs = $this->get_childs($user["id"]);
             $childs = array_column($childs,"id");
-            $childs[] = $xxx["id"];
+            $childs[] = $user["id"];
             $qb->add_and("m.delete_date IS NULL");
             $qb->add_in("m.id", $childs);
         }
