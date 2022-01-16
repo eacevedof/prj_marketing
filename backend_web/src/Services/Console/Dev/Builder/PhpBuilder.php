@@ -70,7 +70,7 @@ final class PhpBuilder
         $tr = "tr_$field";
         $type = $this->_get_type($field);
         $length = $this->_get_length($field);
-        if ($length) $length = "\t\"length\" => $length,";
+        if ($length) $length = "\"length\" => $length,";
 
         return "
         \"$field\" => [
