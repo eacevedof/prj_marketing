@@ -10,10 +10,8 @@
 namespace App\Controllers\Restrict;
 
 use App\Factories\ServiceFactory as SF;
-use App\Services\Common\PicklistService;
 use App\Enums\PolicyType;
 use App\Enums\PageType;
-use App\Enums\ProfileType;
 use App\Enums\ResponseType;
 use App\Enums\UrlType;
 use App\Enums\ExceptionType;
