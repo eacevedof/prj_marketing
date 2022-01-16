@@ -22,8 +22,8 @@ final class ModulesService extends AppService implements IConsole
 
     public function __construct(array $input)
     {
-        $this->input = $input;
-        if (!$this->input || !is_string($input))
+        $this->input = $input[0] ?? "";
+        if (!$this->input || !is_string($this->input))
             $this->_exception("valid required input is a tablename");
         $this->schema = new SchemaService(DF::get_by_default());
     }
