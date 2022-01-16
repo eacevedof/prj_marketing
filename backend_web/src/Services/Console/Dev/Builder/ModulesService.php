@@ -23,17 +23,24 @@ final class ModulesService extends AppService implements IConsole
     public function __construct(array $input)
     {
         $this->input = $input[0] ?? "";
+        $this->schema = new SchemaService(DF::get_by_default());
+        $this->_check_input();
+    }
+
+    private function _check_input(): void
+    {
         if (!$this->input || !is_string($this->input))
             $this->_exception("valid required input is a tablename");
-        $this->schema = new SchemaService(DF::get_by_default());
+        $tables = $this->schema->get_tables();
+        $tables = array_column($tables,"table_name");
+        if (!in_array($this->input, $tables))
+            $this->_exception("not valid table: {$this->input}");
     }
 
     //php run.php modules <table-name> o
     //run modules <table-name> (en ssh-be)
     public function run(): void
     {
-        $data = $this->schema->get_tables();
 
-        $this->_pr($data,"data");
     }
 }
