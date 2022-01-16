@@ -19,10 +19,10 @@ final class PhpBuilder
     private array $aliases;
     private array $fields;
 
-    public const TYPE_ENTITY = "entity";
-    public const TYPE_REPOSITORY = "repository";
-    public const TYPE_CONTROLLER = "controller";
-    public const TYPE_DELETE_SERVICE = "delete-service";
+    public const TYPE_ENTITY = "Entity";
+    public const TYPE_REPOSITORY = "Repository";
+    public const TYPE_CONTROLLER = "Controller";
+    public const TYPE_DELETE_SERVICE = "DeleteService";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_ENTITY)
     {
@@ -86,6 +86,15 @@ final class PhpBuilder
        ";
     }
 
+    private function _replace_basic(string $content): string
+    {
+        $content = str_replace("Xxxs", $this->aliases["uppercased-plural"], $content);
+        $content = str_replace("Xxx", $this->aliases["uppercased"], $content);
+        $content = str_replace("xxxs", $this->aliases["lowered-plural"], $content);
+        $content = str_replace("xxx", $this->aliases["lowered"], $content);
+        return str_replace("XXXS", $this->aliases["uppered-plural"], $content);
+    }
+
     private function _build_entity(): void
     {
         $skip = [
@@ -145,20 +154,10 @@ final class PhpBuilder
         $contenttpl = str_replace("%TABLE%", $this->aliases["raw"], $contenttpl);
         $contenttpl = str_replace("%SEARCH_FIELDS%", $searchfields, $contenttpl);
         $contenttpl = str_replace("%INFO_FIELDS%", $infofields, $contenttpl);
-        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
-        $contenttpl = str_replace("xxx", $this->aliases["raw"], $contenttpl);
+        $contenttpl = $this->_replace_basic($contenttpl);
 
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Repository.php";
         file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _replace_basic(string $content): string
-    {
-        $content = str_replace("Xxxs", $this->aliases["uppercased-plural"], $content);
-        $content = str_replace("Xxx", $this->aliases["uppercased"], $content);
-        $content = str_replace("xxxs", $this->aliases["lowered-plural"], $content);
-        $content = str_replace("xxx", $this->aliases["lowered"], $content);
-        return str_replace("XXXS", $this->aliases["uppered-plural"], $content);
     }
 
     private function _build_controller(): void
@@ -169,11 +168,11 @@ final class PhpBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_delete_service(): void
+    private function _build_service(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace_basic($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}DeleteService.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -190,7 +189,7 @@ final class PhpBuilder
                 $this->_build_controller();
             break;
             case self::TYPE_DELETE_SERVICE:
-                $this->_build_delete_service();
+                $this->_build_service();
             break;
         }
     }
