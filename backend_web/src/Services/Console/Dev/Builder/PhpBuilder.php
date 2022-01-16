@@ -49,14 +49,18 @@ final class PhpBuilder
            "date"       => "EntityType::DATE",
        ];
 
-       $fieldinfo = $this->_get_field_details($field);
-       $type = $fieldinfo["field_type"];
+       $fielddet = $this->_get_field_details($field);
+       $type = $fielddet["field_type"];
        return $types[$type] ?? "-error-";
    }
 
    private function _get_length(string $field): string
    {
-
+        $fielddet = $this->_get_field_details($field);
+        $length = $fielddet["field_length"] ?? "";
+        if (!$length)
+            $length = $fielddet["ntot"];
+        return $length;
    }
 
    private function _get_field_tpl(string $field): string
