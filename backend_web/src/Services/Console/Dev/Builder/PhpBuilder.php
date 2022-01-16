@@ -93,8 +93,8 @@ final class PhpBuilder
         $arfields[] = "];";
         $strfields = implode("", $arfields);
         $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
-        $pathfile = $th
-
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Entity.php";
+        file_put_contents($pathfile, $contenttpl);
     }
 
     public function build(): void
