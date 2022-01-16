@@ -55,20 +55,15 @@ final class XxxRepository extends AppRepository
         //como no es root no puede ver borrados o desactivados
         $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
 
-        $user = $this->auth->get_user();
-        if($this->auth->is_business_manager()) {
-            $idparent = $user["id_parent"];
-            $childs = $this->get_childs($idparent);
-            $childs = array_column($childs,"id");
-            $qb->add_in("m.id", $childs);
+        $autuser = $this->auth->get_user();
+        if($this->auth->is_business_owner()) {
+            $qb->add_in("m.id_owner", $autuser["id"]);
             return;
         }
 
-        if($this->auth->is_business_owner()) {
-            $childs = $this->get_childs($user["id"]);
-            $childs = array_column($childs,"id");
-            $childs[] = $user["id"];
-            $qb->add_in("m.id", $childs);
+        if($this->auth->is_business_manager()) {
+            $idparent = $autuser["id_parent"];
+            $qb->add_in("m.id_owner", $idparent);
         }
     }
 
