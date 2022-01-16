@@ -62,11 +62,13 @@ final class ModulesService extends AppService implements IConsole
     private function _load_aliases(): void
     {
         $this->aliases["noprefix"] = ($noprefix = str_replace(["app_","base_"],"",$this->table));
+        $CamelCased = $this->_tocamelcase($noprefix);
         $this->aliases["raw"] = $this->table;
-        $this->aliases["uppercased"] = $this->_tocamelcase($noprefix);
-        $this->aliases["uppercased-plural"] = $this->_tocamelcase($noprefix)."s";
-        $this->aliases["lowercased"] = strtolower($this->_tocamelcase($noprefix));
-        $this->aliases["lowercased-plural"] = strtolower($this->_tocamelcase($noprefix))."s";
+        $this->aliases["uppercased"] = $CamelCased;
+        $this->aliases["uppercased-plural"] = "{$CamelCased}s";
+        $this->aliases["uppered-plural"] = strtoupper($CamelCased)."S";
+        $this->aliases["lowered"] = strtolower($CamelCased);
+        $this->aliases["lowered-plural"] = strtolower($CamelCased)."s";
     }
 
     private function _load_fields(): void
