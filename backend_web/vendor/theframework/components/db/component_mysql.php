@@ -34,7 +34,7 @@ final class ComponentMysql
         throw new Exception($message, $code);
     }
 
-    private function _get_conn_string(): string
+    private function _get_config_string(): string
     {
         if(!$this->config) $this->_exception("empty connection config");
 
@@ -53,7 +53,7 @@ final class ComponentMysql
 
         //mysql:host=cont-mariadb-univ;dbname=db_marketing;port=3306;
         return $strcon;
-    }//_get_conn_string
+    }//_get_config_string
 
     private function _get_rowcol(array $result, ?int $icol=null, ?int $irow=null)
     {
@@ -76,7 +76,7 @@ final class ComponentMysql
 
     private function _get_pdo(): PDO
     {
-        $strcon = $this->_get_conn_string();
+        $strcon = $this->_get_config_string();
         $pdo = new PDO(
             $strcon,
             $this->config["user"],
@@ -141,9 +141,14 @@ final class ComponentMysql
         */
     }
 
-    public function add_conn(string $k, string $v): self {$this->config[$k]=$v; return $this;}
-    public function set_conn(array $config=[]): self {$this->config = $config; return $this;}
+    public function add_config(string $k, string $v): self {$this->config[$k]=$v; return $this;}
+    public function set_config(array $config=[]): self {$this->config = $config; return $this;}
 
+    public function get_config(string $key): ?string|int 
+    {
+        return $this->config[$key] ?? "";
+    }
+    
     //on insert
     public function get_lastid(){return $this->lastid;}
 
@@ -153,6 +158,6 @@ final class ComponentMysql
 
     //on update/delete
     public function get_affected(){return $this->affected;}
-
+    
 
 }//ComponentMysql
