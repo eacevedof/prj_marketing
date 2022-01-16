@@ -11,7 +11,7 @@ namespace App\Traits;
 
 trait ConsoleTrait
 {
-    private $input;
+    protected $input;
 
     private function _pr($mxVar, string $title=""):void
     {
