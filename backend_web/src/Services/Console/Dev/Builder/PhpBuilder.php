@@ -23,6 +23,10 @@ final class PhpBuilder
     public const TYPE_REPOSITORY = "Repository";
     public const TYPE_CONTROLLER = "Controller";
     public const TYPE_DELETE_SERVICE = "DeleteService";
+    public const TYPE_INFO_SERVICE = "InfoService";
+    public const TYPE_INSERT_SERVICE = "InsertService";
+    public const TYPE_SEARCH_SERVICE = "SearchService";
+    public const TYPE_UPDATE_SERVICE = "UpdateService";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_ENTITY)
     {
@@ -189,6 +193,10 @@ final class PhpBuilder
                 $this->_build_controller();
             break;
             case self::TYPE_DELETE_SERVICE:
+            case self::TYPE_INFO_SERVICE:
+            case self::TYPE_INSERT_SERVICE:
+            case self::TYPE_SEARCH_SERVICE:
+            case self::TYPE_UPDATE_SERVICE:
                 $this->_build_service();
             break;
         }
