@@ -161,5 +161,4 @@ final class PhpBuilder
             break;
         }
     }
-
 }
