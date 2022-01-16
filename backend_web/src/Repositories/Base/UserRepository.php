@@ -10,6 +10,7 @@
 namespace App\Repositories\Base;
 
 use App\Services\Auth\AuthService;
+use App\Traits\SearchRepoTrait;
 use App\Components\Hierarchy\HierarchyComponent;
 use App\Factories\RepositoryFactory as RF;
 use App\Repositories\AppRepository;
@@ -19,7 +20,8 @@ use App\Factories\ComponentFactory as CF;
 
 final class UserRepository extends AppRepository
 {
-    private array $joins;
+    use SearchRepoTrait;
+
     private ?AuthService $auth = null;
 
     public function __construct()
@@ -42,55 +44,6 @@ final class UserRepository extends AppRepository
                 "LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'",
             ]
         ];
-    }
-
-    private function _get_join_field(string $field): string
-    {
-        //key: u1.description | false si no encuentra
-        $key = array_search($field, $this->joins["fields"]);
-        if ($key===false) return "m.$field";
-        return $key;
-    }
-
-    private function _get_condition(string $field, string $value): string
-    {
-        $value = $this->_get_qbuilder()->get_sanitized($value);
-        $field = $this->_get_join_field($field);
-        return "$field LIKE '%$value%'";
-    }
-
-    private function _add_joins(ComponentQB $qb): void
-    {
-        foreach ($this->joins["fields"] as $field => $alias)
-            $qb->add_getfield("$field as $alias");
-
-        foreach ($this->joins["on"] as $join)
-            $qb->add_join($join);
-    }
-    
-    private function _add_search_filter(ComponentQB $qb, array $search): void
-    {
-        if(!$search) return;
-
-        if($fields = $search["fields"])
-            foreach ($fields as $field => $value )
-                $qb->add_and($this->_get_condition($field, $value));
-
-        if($limit = $search["limit"])
-            $qb->set_limit($limit["length"], $limit["from"]);
-
-        if($order = $search["order"]) {
-            $field = $this->_get_join_field($order["field"]);
-            $qb->set_orderby([$field => "{$order["dir"]}"]);
-        }
-
-        if($global = $search["global"]) {
-            $or = [];
-            foreach ($search["all"] as $field)
-                $or[] = $this->_get_condition($field, $global);
-            $or = implode(" OR ",$or);
-            $qb->add_and("($or)");
-        }
     }
 
     private function _add_auth_condition(ComponentQB $qb): void
