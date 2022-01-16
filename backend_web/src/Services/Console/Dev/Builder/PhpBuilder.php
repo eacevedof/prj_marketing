@@ -67,17 +67,18 @@ final class PhpBuilder
 
     private function _get_field_tpl(string $field): string
     {
-       $tr = "tr_$field";
-       $type = $this->_get_type($field);
-       $length = $this->_get_length($field);
+        $tr = "tr_$field";
+        $type = $this->_get_type($field);
+        $length = $this->_get_length($field);
+        if ($length) $length = "\t\"length\" => $length,";
 
-       return "
+        return "
         \"$field\" => [
             \"label\" => __(\"$tr\"),
             EntityType::REQUEST_KEY => \"$field\",
             \"config\" => [
                 \"type\" => $type,
-                \"length\" => $length,
+                $length
             ]
         ],
        ";
@@ -87,7 +88,8 @@ final class PhpBuilder
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
         ];
         //tags %FIELDS%
         $contenttpl = file_get_contents($this->pathtpl);
