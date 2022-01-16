@@ -152,14 +152,19 @@ final class PhpBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
+    private function _replace_basic(string $content): string
+    {
+        $content = str_replace("Xxxs", $this->aliases["uppercased-plural"], $content);
+        $content = str_replace("Xxx", $this->aliases["uppercased"], $content);
+        $content = str_replace("xxxs", $this->aliases["lowered-plural"], $content);
+        $content = str_replace("xxx", $this->aliases["lowered"], $content);
+        return str_replace("XXXS", $this->aliases["uppered-plural"], $content);
+    }
+
     private function _build_controller(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = str_replace("Xxxs", $this->aliases["uppercased-plural"], $contenttpl);
-        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
-        $contenttpl = str_replace("xxxs", $this->aliases["lowered-plural"], $contenttpl);
-        $contenttpl = str_replace("xxx", $this->aliases["lowered"], $contenttpl);
-        $contenttpl = str_replace("XXXS", $this->aliases["uppered-plural"], $contenttpl);
+        $contenttpl = $this->_replace_basic($contenttpl);
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}Controller.php";
         file_put_contents($pathfile, $contenttpl);
     }
@@ -167,11 +172,7 @@ final class PhpBuilder
     private function _build_delete_service(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = str_replace("Xxxs", $this->aliases["uppercased-plural"], $contenttpl);
-        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
-        $contenttpl = str_replace("xxxs", $this->aliases["lowered-plural"], $contenttpl);
-        $contenttpl = str_replace("xxx", $this->aliases["lowered"], $contenttpl);
-        $contenttpl = str_replace("XXXS", $this->aliases["uppered-plural"], $contenttpl);
+        $contenttpl = $this->_replace_basic($contenttpl);
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}DeleteService.php";
         file_put_contents($pathfile, $contenttpl);
     }
