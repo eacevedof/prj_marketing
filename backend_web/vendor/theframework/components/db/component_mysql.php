@@ -144,9 +144,9 @@ final class ComponentMysql
     public function add_config(string $k, string $v): self {$this->config[$k]=$v; return $this;}
     public function set_config(array $config=[]): self {$this->config = $config; return $this;}
 
-    public function get_config(string $key): ?string|int 
+    public function get_config(string $key): ?string
     {
-        return $this->config[$key] ?? "";
+        return (string) ($this->config[$key] ?? "");
     }
     
     //on insert

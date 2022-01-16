@@ -89,7 +89,7 @@ if($isCLI)
         if($object) return $object->run();
     }
     catch (\Throwable $e) {
-        echo "error:\n\t{$e->getMessage()}\n\n";
+        echo "error:\n\t{$e->getMessage()}\n\n{$e->getFile()}:{$e->getLine()}\n\n";
     }
 
 }// is cli
