@@ -28,7 +28,7 @@ final class ModulesService extends AppService implements IConsole
         $this->input = $input[0] ?? "";
         $this->schema = new SchemaService(DF::get_by_default());
         $this->_check_input();
-        $this->pathbuild = self::PATH_XXXMODULE . "/module-".date("YmdHis");
+        $this->pathbuild = self::PATH_XXXMODULE . "/module-{$this->input}-".date("YmdHis");
     }
 
     private function _check_input(): void
