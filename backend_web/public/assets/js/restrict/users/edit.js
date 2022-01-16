@@ -3,6 +3,8 @@ import get_cssrules from "/assets/js/common/cssrules.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 import { SNACK } from "/assets/js/common/snackbar.js"
+import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
+import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 
 const URL_UPDATE = "/restrict/users/update"
 const ACTION = "users.update"
@@ -12,12 +14,12 @@ export class FormUserEdit extends LitElement {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
       "/themes/valex/assets/css/style.css",
-      "/assets/css/common/fielderrors.css",
-      "/assets/css/common/form-lit.css",
     ])])
-    console.log(globalStyle)
+    //console.log(globalStyle)
     return [
-      globalStyle
+      globalStyle,
+      cssformflex,
+      cssfielderror
     ];
   }
 
