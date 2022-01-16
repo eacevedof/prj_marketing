@@ -9,6 +9,8 @@
  */
 namespace App\Services\Console\Dev\Builder;
 
+use App\Enums\EntityType;
+
 final class PhpBuilder
 {
    private string $type;
@@ -27,10 +29,64 @@ final class PhpBuilder
        $this->type = $type;
    }
 
+   private function _get_field_details(string $field): array
+   {
+       $type = array_filter($this->fields, function ($item) use ($field) {
+           return $item["field_name"] === $field;
+       });
+       $type = array_values($type);
+       return $type[0] ?? [];
+   }
+
+   private function _get_type(string $field): string
+   {
+       $types = [
+           "decimal"    => "EntityType::DECIMAL",
+           "varchar"    => "EntityType::STRING",
+           "int"        => "EntityType::INT",
+           "tinyint"    => "EntityType::INT",
+           "datetime"   => "EntityType::DATETIME",
+           "date"       => "EntityType::DATE",
+       ];
+
+       $fieldinfo = $this->_get_field_details($field);
+       $type = $fieldinfo["field_type"];
+       return $types[$type] ?? "-error-";
+   }
+
+   private function _get_length(string $field): string
+   {
+
+   }
+
+   private function _get_field_tpl(string $field): string
+   {
+       $tr = "tr_$field";
+       $type = $this->_get_type($field);
+       $length = $this->_get_length($field);
+
+       return "
+        \"$field\" => [
+            \"label\" => __(\"$tr\"),
+            EntityType::REQUEST_KEY => \"$field\",
+            \"config\" => [
+                \"type\" => $type,
+                \"length\" => $length,
+            ]
+        ],
+       ";
+   }
+
    private function _build_entity(): string
    {
+        //tags %FIELDS%
         $contenttpl = file_get_contents($this->pathtpl);
-
+        $arfields = ["["];
+        foreach ($this->fields as $field)
+            $arfields[] = $this->_get_field_tpl($field);
+        $arfields[] = "];";
+        $strfields = implode("", $arfields);
+        $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
         return $contenttpl;
    }
 

@@ -86,7 +86,7 @@ final class ModulesService extends AppService implements IConsole
             $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], PhpBuilder::TYPE_ENTITY
         );
         $this->builders["repository"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], PhpBuilder::TYPE_REPOSITORY
+            $this->aliases, $this->fields, $this->filestpl["XxxRepository.php"], PhpBuilder::TYPE_REPOSITORY
         );
     }
 
