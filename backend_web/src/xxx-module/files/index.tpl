@@ -2,7 +2,7 @@
 /**
  * @var \App\Views\AppView $this
  * @var \App\Helpers\Views\DatatableHelper $dthelp
- * @var array $authxxx
+ * @var array $authuser
  */
 echo $this->_element("common/elem-datatable-asset");
 ?>
@@ -45,8 +45,8 @@ import dt_render from "/assets/js/common/datatable/dttable.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 
-const sessusrid = <?$this->_echo_js($authxxx["id"]);?>;
-const sesprofile = <?$this->_echo_js($authxxx["id_profile"]);?>;
+const sessusrid = <?$this->_echo_js($authuser["id"]);?>;
+const sesprofile = <?$this->_echo_js($authuser["id_profile"]);?>;
 
 const PROFILES = {
   ROOT:"1",

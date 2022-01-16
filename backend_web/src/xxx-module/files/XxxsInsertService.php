@@ -23,7 +23,7 @@ final class XxxsInsertService extends AppService
     use RequestTrait;
 
     private AuthService $auth;
-    private array $authxxx;
+    private array $authuser;
     private ComponentEncdecrypt $encdec;
     private XxxRepository $repoxxx;
     private FieldsValidator $validator;
@@ -38,7 +38,7 @@ final class XxxsInsertService extends AppService
         $this->validator = VF::get($this->input, $this->entityxxx);
         $this->repoxxx = RF::get("Base/Xxx");
         $this->repoprefs = RF::get("Base/XxxPreferences");
-        $this->authxxx = $this->auth->get_user();
+        $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
@@ -120,7 +120,7 @@ final class XxxsInsertService extends AppService
         $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
         $insert["description"] = $insert["fullname"];
         $insert["uuid"] = uniqid();
-        $this->entityxxx->add_sysinsert($insert, $this->authxxx["id"]);
+        $this->entityxxx->add_sysinsert($insert, $this->authuser["id"]);
 
         $id = $this->repoxxx->insert($insert);
         $prefs = [
@@ -129,7 +129,7 @@ final class XxxsInsertService extends AppService
             "pref_value" => "/restrict"
         ];
 
-        $this->entityxxx->add_sysinsert($prefs, $this->authxxx["id"]);
+        $this->entityxxx->add_sysinsert($prefs, $this->authuser["id"]);
         $this->repoprefs->insert($prefs);
 
         return [

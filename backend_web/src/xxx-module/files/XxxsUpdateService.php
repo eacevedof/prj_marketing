@@ -22,7 +22,7 @@ final class XxxsUpdateService extends AppService
     use RequestTrait;
 
     private AuthService $auth;
-    private array $authxxx;
+    private array $authuser;
     private ComponentEncdecrypt $encdec;
     private XxxRepository $repoxxx;
     private FieldsValidator $validator;
@@ -41,7 +41,7 @@ final class XxxsUpdateService extends AppService
         $this->validator = VF::get($this->input, $this->entityxxx);
         $this->repoxxx = RF::get("Base/XxxRepository");
         $this->repoxxx->set_model($this->entityxxx);
-        $this->authxxx = $this->auth->get_user();
+        $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
@@ -57,8 +57,8 @@ final class XxxsUpdateService extends AppService
     private function _check_entity_permission(array $entity): void
     {
         $idxxx = $this->repoxxx->get_id_by($entity["uuid"]);
-        $idauthxxx = (int)$this->authxxx["id"];
-        if ($this->auth->is_root() || $idauthxxx === $idxxx) return;
+        $idauthuser = (int)$this->authuser["id"];
+        if ($this->auth->is_root() || $idauthuser === $idxxx) return;
 
         if ($this->auth->is_sysadmin()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
@@ -69,7 +69,7 @@ final class XxxsUpdateService extends AppService
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
-            && $idauthxxx === $identowner
+            && $idauthuser === $identowner
         )
             return;
 
@@ -150,7 +150,7 @@ final class XxxsUpdateService extends AppService
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $update["description"] = $update["fullname"];
-        $this->entityxxx->add_sysupdate($update, $this->authxxx["id"]);
+        $this->entityxxx->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repoxxx->update($update);
         return [
