@@ -57,13 +57,13 @@ final class XxxRepository extends AppRepository
 
         $autuser = $this->auth->get_user();
         if($this->auth->is_business_owner()) {
-            $qb->add_and1("m.id_owner", $autuser["id"]);
+            $qb->add_andoper("m.id_owner", $autuser["id"]);
             return;
         }
 
         if($this->auth->is_business_manager()) {
             $idparent = $autuser["id_parent"];
-            $qb->add_and1("m.id_owner", $idparent);
+            $qb->add_andoper("m.id_owner", $idparent);
         }
     }
 

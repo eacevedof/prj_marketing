@@ -119,7 +119,7 @@ final class PhpBuilder
             "update_date"
         ];
         //tags: %TABLE%, %SEARCH_FIELDS%, %INFO_FIELDS%, xxx
-        $contenttpl = file_get_contents($this->pathtpl);
+
         $arfields = ["["];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
@@ -129,7 +129,8 @@ final class PhpBuilder
         $arfields[] = "];";
         $strfields = implode("", $arfields);
 
-        $contenttpl = str_replace("%TABLE%", $strfields, $contenttpl);
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = str_replace("%TABLE%", $this->aliases["raw"], $contenttpl);
         $contenttpl = str_replace("%SEARCH_FIELDS%", $strfields, $contenttpl);
         $contenttpl = str_replace("%INFO_FIELDS%", $strfields, $contenttpl);
         $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
