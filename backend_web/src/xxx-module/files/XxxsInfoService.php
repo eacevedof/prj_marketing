@@ -28,7 +28,7 @@ final class XxxsInfoService extends AppService
         if(!$this->input = $input[0] ?? "")
             $this->_exception(__("No xxx code provided"), ExceptionType::CODE_BAD_REQUEST);
 
-        $this->authxxx = $this->auth->get_xxx();
+        $this->authxxx = $this->auth->get_user();
         $this->repoxxx = RF::get("Base/Xxx");
         $this->repopermission = RF::get("Base/XxxPermissions");
         $this->repoprefs = RF::get("Base/XxxPreferences");

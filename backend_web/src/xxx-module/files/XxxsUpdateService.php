@@ -41,7 +41,7 @@ final class XxxsUpdateService extends AppService
         $this->validator = VF::get($this->input, $this->entityxxx);
         $this->repoxxx = RF::get("Base/XxxRepository");
         $this->repoxxx->set_model($this->entityxxx);
-        $this->authxxx = $this->auth->get_xxx();
+        $this->authxxx = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
