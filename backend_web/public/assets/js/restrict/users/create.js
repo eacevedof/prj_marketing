@@ -3,6 +3,8 @@ import get_cssrules from "/assets/js/common/cssrules.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
+import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
+import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 
 const URL_POST = "/restrict/users/insert"
 const ACTION = "users.insert"
@@ -14,13 +16,13 @@ export class FormUserCreate extends LitElement {
       "/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css",
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
       "/themes/valex/assets/css/style.css",
-      "/assets/css/common/fielderrors.css",
-      "/assets/css/common/form-lit.css",
     ])])
-    console.log(globalStyle)
+    //console.log(globalStyle)
     return [
-      globalStyle
-    ];
+      globalStyle,
+      cssformflex,
+      cssfielderror
+    ]
   }
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
@@ -258,7 +260,7 @@ export class FormUserCreate extends LitElement {
 
   //6
   updated(){
-    //aqui se deberia des setear la prpiedad despues de una llamada async
+    //aqui se deberia de setear la prpiedad despues de una llamada async
     //console.log("updated", this.fields)
   }
 
