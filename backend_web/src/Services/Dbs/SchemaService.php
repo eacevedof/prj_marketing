@@ -30,7 +30,7 @@ final class SchemaService
 
     public function get_fields_info(string $table): array
     {
-        return $this->behavschema->get_fields_info($this->dbname, $table);
+        return $this->behavschema->get_fields_info($table, $this->dbname);
     }
 
     public function get_tables_info(string $tables=""): array
