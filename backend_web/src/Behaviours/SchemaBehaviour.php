@@ -23,6 +23,7 @@ final class SchemaBehaviour
     private ?ComponentMysql $db;
     private CoreQueriesService $servqueries;
     private int $foundrows = 0;
+    private bool $usecache = false;
     private const CACHE_TIME = 3600;
     
     public function __construct(?Object $db=null)
@@ -98,15 +99,19 @@ final class SchemaBehaviour
         SELECT schema_name as dbname
         FROM information_schema.schemata
         ORDER BY schema_name;";
+        if (!$this->usecache) return $this->query($sql);
+
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;
     }
     
-    public function get_tables(string $dbname="")
+    public function get_tables(string $dbname=""): array
     {
         $sql = $this->servqueries->get_tables($dbname);
+        if (!$this->usecache) return $this->query($sql);
+
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
@@ -116,15 +121,17 @@ final class SchemaBehaviour
     public function get_table(string $table, string $dbname=""): array
     {
         $sql = $this->servqueries->get_tables($dbname,$table);
+        if (!$this->usecache) return $this->query($sql);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql,0);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;        
     }
    
-    public function get_fields_info(string $table, string $dbname="")
+    public function get_fields_info(string $table, string $dbname=""): array
     {
         $sql = $this->servqueries->get_fields($dbname,$table);
+        if (!$this->usecache) return $this->query($sql);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
@@ -134,21 +141,29 @@ final class SchemaBehaviour
     public function get_fields(string $table, string $dbname=""): array
     {
         $sql = $this->servqueries->get_fields_min($dbname,$table);
+        if (!$this->usecache) return $this->query($sql);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;
     }
 
-    public function get_field_info(string $field, string $table, string $dbname="")
+    public function get_field_info(string $field, string $table, string $dbname=""): array
     {
         $sql = $this->servqueries->get_field($dbname, $table, $field);
+        if (!$this->usecache) return $this->query($sql);
         if($r = $this->get_cached($sql)) return $r;
         $r = $this->query($sql);
         $this->addto_cache($sql, $r, self::CACHE_TIME);
         return $r;
     }    
-    
+
+    public function usecache(bool $use=true): self
+    {
+        $this->usecache = $use;
+        return $this;
+    }
+
     public function read_raw(string $sql){ return $this->query($sql);}
     public function write_raw(string $sql){ return $this->execute($sql);}
     public function get_foundrows(){return $this->foundrows; }
