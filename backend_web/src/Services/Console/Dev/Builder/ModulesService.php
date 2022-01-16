@@ -83,11 +83,17 @@ final class ModulesService extends AppService implements IConsole
     private function _load_builders(): void
     {
         $this->builders["entity"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], PhpBuilder::TYPE_ENTITY
+            $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], $this->pathbuild,PhpBuilder::TYPE_ENTITY
         );
+
         $this->builders["repository"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxRepository.php"], PhpBuilder::TYPE_REPOSITORY
+            $this->aliases, $this->fields, $this->filestpl["XxxRepository.php"], $this->pathbuild,PhpBuilder::TYPE_REPOSITORY
         );
+    }
+
+    private function _build(): void
+    {
+        $this->builders["entity"]->build();
     }
 
     //php run.php modules <table-name> o
@@ -95,7 +101,7 @@ final class ModulesService extends AppService implements IConsole
     public function run(): void
     {
         mkdir($this->pathbuild);
-
+        $this->_build();
         //$this->_pr($this->filestpl);
         //$fields = $this->schema->get_fields_info($this->table);
         //$this->_pr($fields);
