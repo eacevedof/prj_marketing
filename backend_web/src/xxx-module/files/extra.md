@@ -20,3 +20,9 @@ return [
 ### translations
 ```po
 ```
+
+### policies
+```
+const XXXS_READ = "xxxs:read";
+const XXXS_WRITE = "xxxs:write";
+```
