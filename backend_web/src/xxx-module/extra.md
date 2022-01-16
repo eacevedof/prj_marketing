@@ -13,3 +13,10 @@ return [
     ["url"=>"/restrict/xxxs/search","controller"=>"App\Controllers\Restrict\XxxsController", "method"=>"search"],
 ];
 ```
+### permissions
+```json
+```
+
+### translations
+```po
+```
