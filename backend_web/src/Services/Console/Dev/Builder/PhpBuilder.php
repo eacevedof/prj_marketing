@@ -129,7 +129,9 @@ final class PhpBuilder
         $arfields[] = "];";
         $strfields = implode("", $arfields);
 
-        $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
+        $contenttpl = str_replace("%TABLE%", $strfields, $contenttpl);
+        $contenttpl = str_replace("%SEARCH_FIELDS%", $strfields, $contenttpl);
+        $contenttpl = str_replace("%INFO_FIELDS%", $strfields, $contenttpl);
         $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
 
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Entity.php";
