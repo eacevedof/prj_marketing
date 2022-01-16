@@ -109,11 +109,40 @@ final class PhpBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
+
+    private function _build_repository(): void
+    {
+        $skip = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
+        //tags: %TABLE%,
+        $contenttpl = file_get_contents($this->pathtpl);
+        $arfields = ["["];
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $arfields[] = $this->_get_field_tpl($fieldname);
+        }
+        $arfields[] = "];";
+        $strfields = implode("", $arfields);
+
+        $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
+        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
+
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Entity.php";
+        file_put_contents($pathfile, $contenttpl);
+    }
+
     public function build(): void
     {
         switch ($this->type) {
             case self::TYPE_ENTITY:
                 $this->_build_entity();
+            break;
+            case self::TYPE_REPOSITORY:
+                $this->_build_repository();
             break;
         }
     }

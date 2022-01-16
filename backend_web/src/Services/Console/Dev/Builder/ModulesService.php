@@ -93,7 +93,11 @@ final class ModulesService extends AppService implements IConsole
 
     private function _build(): void
     {
-        $this->builders["entity"]->build();
+        foreach ($this->builders as $alias => $builder) {
+            $this->_pr("builder $alias starts");
+            $builder->build();
+            $this->_pr("builder $alias ends");
+        }
     }
 
     //php run.php modules <table-name> o
@@ -102,8 +106,5 @@ final class ModulesService extends AppService implements IConsole
     {
         mkdir($this->pathbuild);
         $this->_build();
-        //$this->_pr($this->filestpl);
-        //$fields = $this->schema->get_fields_info($this->table);
-        //$this->_pr($fields);
     }
 }
