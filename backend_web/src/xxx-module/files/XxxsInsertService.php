@@ -63,44 +63,7 @@ final class XxxsInsertService extends AppService
     {
         $repoxxx = $this->repoxxx;
         $this->validator
-            ->add_rule("email", "email", function ($data) use ($repoxxx){
-                return $repoxxx->email_exists($data["value"]) ? __("This email already exists"): false;
-            })
-            ->add_rule("email", "email", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("email", "email", function ($data) {
-                return filter_var($data["value"], FILTER_VALIDATE_EMAIL) ? false : __("Invalid email format");
-            })
-            ->add_rule("phone", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("fullname", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("birthdate", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("password", "not-equal", function ($data){
-                return ($data["value"] === ($data["data"]["password2"] ?? "")) ? false : __("Bad password confirmation");
-            })
-            ->add_rule("password", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_profile", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_parent", "by-profile", function ($data){
-                if (($data["data"]["id_profile"] ?? "") === "4" && !trim($data["value"]))
-                    return __("Empty field is not allowed");
-                return false;
-            })
-            ->add_rule("id_country", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_language", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
+            %FIELD_RULES%
         ;
         return $this->validator;
     }
@@ -117,20 +80,9 @@ final class XxxsInsertService extends AppService
         }
 
         $insert = $this->entityxxx->map_request($insert);
-        $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
-        $insert["description"] = $insert["fullname"];
         $insert["uuid"] = uniqid();
         $this->entityxxx->add_sysinsert($insert, $this->authuser["id"]);
-
         $id = $this->repoxxx->insert($insert);
-        $prefs = [
-            "id_xxx" => $id,
-            "pref_key" => PreferenceType::URL_DEFAULT_MODULE,
-            "pref_value" => "/restrict"
-        ];
-
-        $this->entityxxx->add_sysinsert($prefs, $this->authuser["id"]);
-        $this->repoprefs->insert($prefs);
 
         return [
             "id" => $id,
