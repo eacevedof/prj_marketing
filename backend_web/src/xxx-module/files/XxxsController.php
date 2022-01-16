@@ -24,13 +24,6 @@ use \Exception;
 
 final class XxxsController extends RestrictController
 {
-    private PicklistService $picklist;
-    
-    public function __construct()
-    {
-        parent::__construct();
-        $this->picklist = SF::get("Common\Picklist");
-    }
 
     public function index(?string $page=null): void
     {
@@ -39,9 +32,6 @@ final class XxxsController extends RestrictController
 
             $this->add_var(PageType::TITLE, __("Xxxs"))
                 ->add_var(PageType::H1, __("Xxxs"))
-                ->add_var("languages", $this->picklist->get_languages())
-                ->add_var("profiles", $this->picklist->get_profiles())
-                ->add_var("countries", $this->picklist->get_countries())
                 ->add_var("dthelp", $search->get_datatable())
                 ->render();
         }
@@ -93,10 +83,6 @@ final class XxxsController extends RestrictController
 
         $this->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1,__("New xxx"))
-            ->add_var("profiles", $this->picklist->get_profiles())
-            ->add_var("parents", $this->picklist->get_xxxs_by_profile(ProfileType::BUSINESS_OWNER))
-            ->add_var("countries", $this->picklist->get_countries())
-            ->add_var("languages", $this->picklist->get_languages())
             ->render_nl();
     }
 
@@ -192,10 +178,6 @@ final class XxxsController extends RestrictController
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
-                ->add_var("profiles", $this->picklist->get_profiles())
-                ->add_var("parents", $this->picklist->get_xxxs_by_profile(ProfileType::BUSINESS_OWNER))
-                ->add_var("countries", $this->picklist->get_countries())
-                ->add_var("languages", $this->picklist->get_languages())
                 ->render_nl();
         }
         catch (NotFoundException $e) {

@@ -89,6 +89,10 @@ final class ModulesService extends AppService implements IConsole
         $this->builders["repository"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxRepository.php"], $this->pathbuild,PhpBuilder::TYPE_REPOSITORY
         );
+
+        $this->builders["controller"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["XxxsController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+        );
     }
 
     private function _build(): void
