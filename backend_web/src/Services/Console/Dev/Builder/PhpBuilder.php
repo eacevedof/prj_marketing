@@ -21,6 +21,7 @@ final class PhpBuilder
 
     public const TYPE_ENTITY = "entity";
     public const TYPE_REPOSITORY = "repository";
+    public const TYPE_CONTROLLER = "controller";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_ENTITY)
     {
@@ -150,6 +151,46 @@ final class PhpBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
+    private function _build_controller(): void
+    {
+        $skip = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
+        //tags: %TABLE%, %SEARCH_FIELDS%, %INFO_FIELDS%, xxx
+
+        $arfields = [];
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $arfields[] = "\"m.$fieldname\"";
+        }
+        $searchfields = implode(",\n", $arfields);
+
+        $skip = [
+            "processflag", "insert_platform", "update_platform", "delete_platform", "cru_csvnote",
+            "is_erpsent", "is_enabled", "i"
+        ];
+        $arfields = [];
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $arfields[] = "\"m.$fieldname\"";
+        }
+        $infofields = implode(",\n", $arfields);
+
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = str_replace("%TABLE%", $this->aliases["raw"], $contenttpl);
+        $contenttpl = str_replace("%SEARCH_FIELDS%", $searchfields, $contenttpl);
+        $contenttpl = str_replace("%INFO_FIELDS%", $infofields, $contenttpl);
+        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
+        $contenttpl = str_replace("xxx", $this->aliases["raw"], $contenttpl);
+
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Repository.php";
+        file_put_contents($pathfile, $contenttpl);
+    }
+
     public function build(): void
     {
         switch ($this->type) {
@@ -158,6 +199,9 @@ final class PhpBuilder
             break;
             case self::TYPE_REPOSITORY:
                 $this->_build_repository();
+            break;
+            case self::TYPE_CONTROLLER:
+                $this->_build_controller();
             break;
         }
     }
