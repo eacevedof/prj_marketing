@@ -12,7 +12,7 @@ namespace App\Services\Console\Dev\Builder;
 use App\Services\Console\IConsole;
 use App\Services\AppService;
 use App\Traits\ConsoleTrait;
-use App\Factories\DbFactory as DbF;
+use App\Factories\DbFactory as DF;
 
 final class ModuleService extends AppService implements IConsole
 {
