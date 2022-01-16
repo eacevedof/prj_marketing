@@ -31,7 +31,7 @@ final class XxxRepository extends AppRepository
                 "ar3.description" => "e_country",
             ],
             "on" => [
-                "LEFT JOIN %TABLE% u2 ON m.delete_user = u2.id",
+                "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
                 "LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
                 "LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'",
             ]
@@ -154,7 +154,6 @@ final class XxxRepository extends AppRepository
             ->set_getfields([
                 %INFO_FIELDS%
             ])
-            ->add_join("LEFT JOIN %TABLE% u ON m.id_parent = u.id")
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
             ->add_and("m.uuid='$uuid'")
