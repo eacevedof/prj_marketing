@@ -153,41 +153,13 @@ final class PhpBuilder
 
     private function _build_controller(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
-        //tags: %TABLE%, %SEARCH_FIELDS%, %INFO_FIELDS%, xxx
-
-        $arfields = [];
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $arfields[] = "\"m.$fieldname\"";
-        }
-        $searchfields = implode(",\n", $arfields);
-
-        $skip = [
-            "processflag", "insert_platform", "update_platform", "delete_platform", "cru_csvnote",
-            "is_erpsent", "is_enabled", "i"
-        ];
-        $arfields = [];
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $arfields[] = "\"m.$fieldname\"";
-        }
-        $infofields = implode(",\n", $arfields);
-
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = str_replace("%TABLE%", $this->aliases["raw"], $contenttpl);
-        $contenttpl = str_replace("%SEARCH_FIELDS%", $searchfields, $contenttpl);
-        $contenttpl = str_replace("%INFO_FIELDS%", $infofields, $contenttpl);
+        $contenttpl = str_replace("Xxxs", $this->aliases["uppercased-plural"], $contenttpl);
         $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
-        $contenttpl = str_replace("xxx", $this->aliases["raw"], $contenttpl);
+        $contenttpl = str_replace("xxxs", $this->aliases["lowercased-plural"], $contenttpl);
+        $contenttpl = str_replace("xxx", $this->aliases["lowercased"], $contenttpl);
 
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Repository.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}Controller.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
