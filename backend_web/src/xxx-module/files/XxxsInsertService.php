@@ -38,7 +38,7 @@ final class XxxsInsertService extends AppService
         $this->validator = VF::get($this->input, $this->entityxxx);
         $this->repoxxx = RF::get("Base/Xxx");
         $this->repoprefs = RF::get("Base/XxxPreferences");
-        $this->authxxx = $this->auth->get_xxx();
+        $this->authxxx = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
 

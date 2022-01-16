@@ -28,7 +28,7 @@ final class XxxsDeleteService extends AppService
         if(!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->authxxx = $this->auth->get_xxx();
+        $this->authxxx = $this->auth->get_user();
         $this->entityxxx = MF::get("Base/Xxx");
         $this->repoxxx = RF::get("Base/XxxRepository")->set_model($this->entityxxx);
     }
@@ -142,7 +142,7 @@ final class XxxsDeleteService extends AppService
             "uuid" => $entity["uuid"],
             "id" => $idxxx,
             "delete_date" => null,
-            "delete_xxx" => null,
+            "delete_user" => null,
             "delete_platform" => null,
             "cru_csvnote" => $this->repoxxx->get_csvcru($entity, $idauthxxx),
         ];

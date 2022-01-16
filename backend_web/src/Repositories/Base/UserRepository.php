@@ -95,7 +95,7 @@ final class UserRepository extends AppRepository
 
     private function _add_auth_condition(ComponentQB $qb): void
     {
-        if (!$this->auth) {
+        if (!$this->auth->is_root()) {
             $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
         }
 

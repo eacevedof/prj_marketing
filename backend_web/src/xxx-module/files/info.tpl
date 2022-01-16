@@ -64,12 +64,12 @@
         </ol>
         <br/>
         <ul>
-          <li><b><?=__("Created by")?>:</b>&ensp;<span><?=$profile["insert_xxx"] ?? ""?></span></li>
+          <li><b><?=__("Created by")?>:</b>&ensp;<span><?=$profile["insert_user"] ?? ""?></span></li>
           <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$profile["insert_date"] ?? ""?></span></li>
-          <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$profile["update_xxx"] ?? ""?></span></li>
+          <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$profile["update_user"] ?? ""?></span></li>
           <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$profile["update_date"] ?? ""?></span></li>
 
-          <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$profile["delete_xxx"] ?? ""?></span></li>
+          <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$profile["delete_user"] ?? ""?></span></li>
           <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$profile["delete_date"] ?? ""?></span></li>
         </ul>
       </div><!-- profile -->

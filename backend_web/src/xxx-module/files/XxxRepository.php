@@ -25,7 +25,7 @@ final class XxxRepository extends AppRepository
     public function __construct()
     {
         $this->db = DbF::get_by_default();
-        $this->table = "base_xxx";
+        $this->table = "%TABLE%";
         $this->joins = [
             "fields" => [
                 "u1.description"  => "e_parent",
@@ -35,8 +35,8 @@ final class XxxRepository extends AppRepository
                 "ar3.description" => "e_country",
             ],
             "on" => [
-                "LEFT JOIN base_xxx u1 ON m.id_parent = u1.id",
-                "LEFT JOIN base_xxx u2 ON m.delete_xxx = u2.id",
+                "LEFT JOIN %TABLE% u1 ON m.id_parent = u1.id",
+                "LEFT JOIN %TABLE% u2 ON m.delete_user = u2.id",
                 "LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
                 "LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'",
                 "LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'",
@@ -95,18 +95,18 @@ final class XxxRepository extends AppRepository
 
     private function _add_auth_condition(ComponentQB $qb): void
     {
-        if (!$this->auth) {
+        if (!$this->auth->is_root()) {
             $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
         }
 
         if($this->auth->is_root()) {
-            $qb->add_getfield("m.delete_xxx")
+            $qb->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
-                ->add_getfield("m.insert_xxx");
+                ->add_getfield("m.insert_user");
             return;
         }
 
-        $xxx = $this->auth->get_xxx();
+        $xxx = $this->auth->get_user();
         if($this->auth->is_business_manager()) {
             $idparent = $xxx["id_parent"];
             $childs = $this->get_childs($idparent);
@@ -210,7 +210,7 @@ final class XxxRepository extends AppRepository
             ->set_comment("xxx.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
-                "m.update_date", "m.update_xxx", "m.insert_date", "m.insert_xxx", "m.delete_date", "m.delete_xxx",
+                "m.update_date", "m.update_user", "m.insert_date", "m.insert_user", "m.delete_date", "m.delete_user",
                 "m.uuid","m.id, m.email, m.secret, m.fullname, m.address, m.birthdate",
                 "m.phone",
                 "m.id_profile","m.id_parent", "m.id_country", "m.id_language",
@@ -220,7 +220,7 @@ final class XxxRepository extends AppRepository
                 "ar3.description as e_country",
                 "ar1.description as e_language",
             ])
-            ->add_join("LEFT JOIN base_xxx u ON m.id_parent = u.id")
+            ->add_join("LEFT JOIN %TABLE% u ON m.id_parent = u.id")
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'")
             ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
