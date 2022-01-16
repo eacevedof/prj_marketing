@@ -6,10 +6,9 @@ use App\Services\Auth\AuthService;
 use App\Factories\EntityFactory as MF;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
-use App\Models\Base\XxxEntity;
-use App\Repositories\Base\XxxRepository;
+use App\Models\App\XxxEntity;
+use App\Repositories\App\XxxRepository;
 use App\Enums\PolicyType;
-use App\Enums\ProfileType;
 use App\Enums\ExceptionType;
 
 final class XxxsDeleteService extends AppService

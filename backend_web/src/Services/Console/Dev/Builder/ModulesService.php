@@ -97,6 +97,10 @@ final class ModulesService extends AppService implements IConsole
         $this->builders["controller"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxsController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
+
+        $this->builders["delete-service"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["XxxsDeleteService.php"], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
+        );
     }
 
     private function _build(): void

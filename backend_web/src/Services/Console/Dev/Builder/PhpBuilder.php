@@ -22,6 +22,7 @@ final class PhpBuilder
     public const TYPE_ENTITY = "entity";
     public const TYPE_REPOSITORY = "repository";
     public const TYPE_CONTROLLER = "controller";
+    public const TYPE_DELETE_SERVICE = "delete-service";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_ENTITY)
     {
@@ -163,6 +164,18 @@ final class PhpBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
+    private function _build_delete_service(): void
+    {
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = str_replace("Xxxs", $this->aliases["uppercased-plural"], $contenttpl);
+        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
+        $contenttpl = str_replace("xxxs", $this->aliases["lowered-plural"], $contenttpl);
+        $contenttpl = str_replace("xxx", $this->aliases["lowered"], $contenttpl);
+        $contenttpl = str_replace("XXXS", $this->aliases["uppered-plural"], $contenttpl);
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}DeleteService.php";
+        file_put_contents($pathfile, $contenttpl);
+    }
+
     public function build(): void
     {
         switch ($this->type) {
@@ -174,6 +187,9 @@ final class PhpBuilder
             break;
             case self::TYPE_CONTROLLER:
                 $this->_build_controller();
+            break;
+            case self::TYPE_DELETE_SERVICE:
+                $this->_build_delete_service();
             break;
         }
     }
