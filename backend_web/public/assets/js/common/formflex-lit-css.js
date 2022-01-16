@@ -1,12 +1,6 @@
 import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssformflex = css`
-.modal-form {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 form label {
   font-weight: 500;
 }
