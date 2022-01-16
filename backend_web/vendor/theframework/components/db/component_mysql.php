@@ -133,9 +133,12 @@ final class ComponentMysql
             $oLog->save($mxVar,"-- ". $title);
         }
 
+        /**
+        para este proy de momento no se usa kafka
         if(function_exists("get_log_producer")) {
-            get_log_producer()->send($mxVar, "-- ". $title, "sql");
+            //get_log_producer()->send($mxVar, "-- ". $title, "sql");
         }
+        */
     }
 
     public function add_conn(string $k, string $v): self {$this->config[$k]=$v; return $this;}
