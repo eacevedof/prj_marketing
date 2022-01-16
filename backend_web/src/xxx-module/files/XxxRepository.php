@@ -10,6 +10,7 @@
 namespace App\Repositories\App;
 
 use App\Repositories\AppRepository;
+use App\Traits\SearchRepoTrait;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\DbFactory as DbF;
 use App\Services\Auth\AuthService;
@@ -17,7 +18,8 @@ use TheFramework\Components\Db\ComponentQB;
 
 final class XxxRepository extends AppRepository
 {
-    private array $joins;
+    use SearchRepoTrait;
+
     private ?AuthService $auth = null;
 
     public function __construct()
@@ -27,69 +29,20 @@ final class XxxRepository extends AppRepository
         $this->joins = [
             "fields" => [
                 "u2.description"  => "e_deletedby",
-                "ar1.description" => "e_language",
-                "ar3.description" => "e_country",
+                //"ar1.description" => "e_language",
             ],
             "on" => [
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                "LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
-                "LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'",
+                //"LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
             ]
         ];
     }
 
-    private function _get_join_field(string $field): string
-    {
-        $key = array_search($field, $this->joins["fields"]);
-        if ($key===false) return "m.$field";
-        return $key;
-    }
-
-    private function _get_condition(string $field, string $value): string
-    {
-        $value = $this->_get_qbuilder()->get_sanitized($value);
-        $field = $this->_get_join_field($field);
-        return "$field LIKE '%$value%'";
-    }
-
-    private function _add_joins(ComponentQB $qb): void
-    {
-        foreach ($this->joins["fields"] as $field => $alias)
-            $qb->add_getfield("$field as $alias");
-
-        foreach ($this->joins["on"] as $join)
-            $qb->add_join($join);
-    }
-    
-    private function _add_search_filter(ComponentQB $qb, array $search): void
-    {
-        if(!$search) return;
-
-        if($fields = $search["fields"])
-            foreach ($fields as $field => $value )
-                $qb->add_and($this->_get_condition($field, $value));
-
-        if($limit = $search["limit"])
-            $qb->set_limit($limit["length"], $limit["from"]);
-
-        if($order = $search["order"]) {
-            $field = $this->_get_join_field($order["field"]);
-            $qb->set_orderby([$field => "{$order["dir"]}"]);
-        }
-
-        if($global = $search["global"]) {
-            $or = [];
-            foreach ($search["all"] as $field)
-                $or[] = $this->_get_condition($field, $global);
-            $or = implode(" OR ",$or);
-            $qb->add_and("($or)");
-        }
-    }
-
     private function _add_auth_condition(ComponentQB $qb): void
     {
-        if (!$this->auth->is_root()) {
-            $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
+        if (!$this->auth->get_user()) {
+            $qb->add_and("1 = 0");
+            return;
         }
 
         if($this->auth->is_root()) {
@@ -99,13 +52,15 @@ final class XxxRepository extends AppRepository
             return;
         }
 
+        //como no es root no puede ver borrados o desactivados
+        $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
+
         $user = $this->auth->get_user();
         if($this->auth->is_business_manager()) {
             $idparent = $user["id_parent"];
             $childs = $this->get_childs($idparent);
             $childs = array_column($childs,"id");
             $qb->add_in("m.id", $childs);
-            $qb->add_and("m.delete_date IS NULL");
             return;
         }
 
@@ -113,7 +68,6 @@ final class XxxRepository extends AppRepository
             $childs = $this->get_childs($user["id"]);
             $childs = array_column($childs,"id");
             $childs[] = $user["id"];
-            $qb->add_and("m.delete_date IS NULL");
             $qb->add_in("m.id", $childs);
         }
     }
@@ -154,8 +108,7 @@ final class XxxRepository extends AppRepository
             ->set_getfields([
                 %INFO_FIELDS%
             ])
-            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
-            ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
+            //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
