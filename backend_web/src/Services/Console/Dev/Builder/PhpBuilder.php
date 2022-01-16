@@ -61,7 +61,7 @@ final class PhpBuilder
         $fielddet = $this->_get_field_details($field);
         $length = $fielddet["field_length"] ?? "";
         if (!$length)
-            $length = $fielddet["ntot"];
+            $length = $fielddet["ntot"] ?? "";
         return $length;
     }
 
