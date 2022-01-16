@@ -89,7 +89,7 @@ final class PhpBuilder
         $contenttpl = file_get_contents($this->pathtpl);
         $arfields = ["["];
         foreach ($this->fields as $field)
-            $arfields[] = $this->_get_field_tpl($field);
+            $arfields[] = $this->_get_field_tpl($field["field_name"]);
         $arfields[] = "];";
         $strfields = implode("", $arfields);
         $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
