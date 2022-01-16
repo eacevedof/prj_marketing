@@ -73,7 +73,7 @@ final class XxxsController extends RestrictController
     //@modal (creation form)
     public function create(): void
     {
-        if (!$this->auth->is_xxx_allowed(PolicyType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(PolicyType::XXXS_WRITE)) {
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
@@ -161,7 +161,7 @@ final class XxxsController extends RestrictController
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_xxx_allowed(PolicyType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(PolicyType::XXXS_WRITE)) {
             $this->set_template("/error/403")
                 ->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))

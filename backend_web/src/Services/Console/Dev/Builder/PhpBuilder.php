@@ -156,9 +156,9 @@ final class PhpBuilder
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = str_replace("Xxxs", $this->aliases["uppercased-plural"], $contenttpl);
         $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
-        $contenttpl = str_replace("xxxs", $this->aliases["lowercased-plural"], $contenttpl);
-        $contenttpl = str_replace("xxx", $this->aliases["lowercased"], $contenttpl);
-
+        $contenttpl = str_replace("xxxs", $this->aliases["lowered-plural"], $contenttpl);
+        $contenttpl = str_replace("xxx", $this->aliases["lowered"], $contenttpl);
+        $contenttpl = str_replace("XXXS", $this->aliases["uppered-plural"], $contenttpl);
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}Controller.php";
         file_put_contents($pathfile, $contenttpl);
     }

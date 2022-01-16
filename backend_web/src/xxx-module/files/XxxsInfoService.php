@@ -37,8 +37,8 @@ final class XxxsInfoService extends AppService
     private function _check_permission(): void
     {
         if(!(
-            $this->auth->is_xxx_allowed(PolicyType::USERS_READ)
-            || $this->auth->is_xxx_allowed(PolicyType::USERS_WRITE)
+            $this->auth->is_user_allowed(PolicyType::XXXS_READ)
+            || $this->auth->is_user_allowed(PolicyType::XXXS_WRITE)
         ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
