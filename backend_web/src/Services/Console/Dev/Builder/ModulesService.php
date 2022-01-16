@@ -22,6 +22,8 @@ final class ModulesService extends AppService implements IConsole
     private const PATH_XXXMODULE = PATH_SRC."/xxx-module";
     private const PATH_FILESTPL = PATH_SRC."/xxx-module/files";
     private string $pathbuild = "";
+    private array $filestpl = [];
+    private array $builders = [];
 
     public function __construct(array $input)
     {
@@ -29,6 +31,15 @@ final class ModulesService extends AppService implements IConsole
         $this->schema = new SchemaService(DF::get_by_default());
         $this->_check_input();
         $this->pathbuild = self::PATH_XXXMODULE . "/module-{$this->input}-".date("YmdHis");
+        $this->_add_files();
+    }
+
+    private function _add_files(): void
+    {
+        $files = scandir(self::PATH_FILESTPL);
+        foreach ($files as $file)
+            $this->filestpl[$file] = self::PATH_FILESTPL."/$file";
+        unset($this->filestpl["."],$this->filestpl[".."]);
     }
 
     private function _check_input(): void
@@ -41,14 +52,14 @@ final class ModulesService extends AppService implements IConsole
             $this->_exception("not valid table: {$this->input}. Valid are: ".implode(", ",$tables));
     }
 
-
-
     //php run.php modules <table-name> o
     //run modules <table-name> (en ssh-be)
     public function run(): void
     {
         mkdir($this->pathbuild);
+
+        //$this->_pr($this->filestpl);
         $fields = $this->schema->get_fields_info($this->input);
-        $this->_pr($fields);
+        //$this->_pr($fields);
     }
 }
