@@ -9,7 +9,7 @@
  */
 namespace App\Services\Apify;
 
-use App\Factories\RedisFactory;
+use App\Factories\Specific\RedisFactory;
 use App\Components\Encrypt\EncryptComponent;
 use App\Traits\LogTrait;
 use \Exception;

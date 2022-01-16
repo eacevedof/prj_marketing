@@ -9,7 +9,7 @@
  */
 namespace App\Traits;
 
-use App\Factories\RedisFactory;
+use App\Factories\Specific\RedisFactory;
 
 trait CacheQueryTrait
 {

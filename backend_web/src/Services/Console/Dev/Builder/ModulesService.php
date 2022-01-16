@@ -11,9 +11,9 @@ namespace App\Services\Console\Dev\Builder;
 
 use App\Services\Console\IConsole;
 use App\Services\AppService;
-use App\Services\Dbs\SchemaService;
 use App\Traits\ConsoleTrait;
 use App\Factories\DbFactory as DF;
+use App\Services\Dbs\SchemaService;
 
 final class ModulesService extends AppService implements IConsole
 {
@@ -32,6 +32,8 @@ final class ModulesService extends AppService implements IConsole
     //run modules <table-name> (en ssh-be)
     public function run(): void
     {
-        $this->_pr($this->input,"input");
+        $data = $this->schema->get_tables();
+
+        $this->_pr($data,"data");
     }
 }
