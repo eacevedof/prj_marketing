@@ -6,10 +6,7 @@ use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Services\Auth\AuthService;
 use App\Repositories\Base\XxxRepository;
-use App\Repositories\Base\XxxPermissionsRepository;
-use App\Repositories\Base\XxxPreferencesRepository;
 use App\Enums\PolicyType;
-use App\Enums\ProfileType;
 use App\Enums\ExceptionType;
 
 final class XxxsInfoService extends AppService
@@ -17,7 +14,6 @@ final class XxxsInfoService extends AppService
     private AuthService $auth;
     private array $authuser;
     private XxxRepository $repoxxx;
-    private XxxPreferencesRepository $repoprefs;
 
     public function __construct(array $input)
     {
@@ -29,7 +25,6 @@ final class XxxsInfoService extends AppService
 
         $this->authuser = $this->auth->get_user();
         $this->repoxxx = RF::get("Base/Xxx");
-        $this->repoprefs = RF::get("Base/XxxPreferences");
     }
 
     private function _check_permission(): void
