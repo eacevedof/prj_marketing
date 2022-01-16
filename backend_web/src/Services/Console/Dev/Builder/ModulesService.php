@@ -86,19 +86,19 @@ final class ModulesService extends AppService implements IConsole
 
     private function _load_builders(): void
     {
-        $this->builders["entity"] = new PhpBuilder(
+        $this->builders["Entity"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], $this->pathbuild,PhpBuilder::TYPE_ENTITY
         );
 
-        $this->builders["repository"] = new PhpBuilder(
+        $this->builders["Repository"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxRepository.php"], $this->pathbuild,PhpBuilder::TYPE_REPOSITORY
         );
 
-        $this->builders["controller"] = new PhpBuilder(
+        $this->builders["Controller"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxsController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
 
-        $this->builders["delete-service"] = new PhpBuilder(
+        $this->builders["DeleteService"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxsDeleteService.php"], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
         );
     }
