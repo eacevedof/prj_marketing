@@ -11,42 +11,33 @@ namespace App\Services\Dbs;
 
 use App\Behaviours\SchemaBehaviour;
 
-class SchemaService
+final class SchemaService
 {
-    private $oBehav;
+    private SchemaBehaviour $behavschema;
 
-    public function __construct($oDb=NULL)
+    public function __construct(?Object $db=null)
     {
         //necesitaria un objeto de db
-        $this->oBehav = new SchemaBehaviour($oDb);
+        $this->behavschema = new SchemaBehaviour($db);
     }
 
-    public function get_tables()
+    public function get_tables(): array
     {
-        //$arReturn = [];
-        $arReturn = $this->oBehav->get_tables();
-        return $arReturn;
+        return $this->behavschema->get_tables();
     }
 
-    public function get_fields_info($sTable)
+    public function get_fields_info(string $table): array
     {
-        $arReturn = $this->oBehav->get_fields_info($sTable);
-        return $arReturn;
+        return $this->behavschema->get_fields_info($table);
     }
 
-    public function get_tables_info($sTables="")
+    public function get_tables_info(string $tables=""): array
     {
-        $arTables = [];
-        if(!$sTables)
-            $arTables = $this->get_tables();
-        else
-            $arTables = explode(",",$sTables);
-
-        $arReturn = [];
-        foreach ($arTables as $sTable)
-            $arReturn[$sTable] = $this->get_fields_info($sTable);
-
-        return $arReturn;
+        $artables = $tables ? explode(",",$tables) : $this->get_tables();
+        $return = [];
+        foreach ($artables as $table)
+            $return[$table] = $this->get_fields_info($table);
+        return $return;
     }
 
 }//SchemaService
