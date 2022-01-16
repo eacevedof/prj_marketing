@@ -17,7 +17,6 @@ final class XxxsInfoService extends AppService
     private AuthService $auth;
     private array $authuser;
     private XxxRepository $repoxxx;
-    private XxxPermissionsRepository $repopermission;
     private XxxPreferencesRepository $repoprefs;
 
     public function __construct(array $input)
@@ -30,7 +29,6 @@ final class XxxsInfoService extends AppService
 
         $this->authuser = $this->auth->get_user();
         $this->repoxxx = RF::get("Base/Xxx");
-        $this->repopermission = RF::get("Base/XxxPermissions");
         $this->repoprefs = RF::get("Base/XxxPreferences");
     }
 
@@ -48,25 +46,16 @@ final class XxxsInfoService extends AppService
 
     private function _check_entity_permission(array $entity): void
     {
-        $idxxx = (int) $entity["id"];
+        if ($this->auth->is_root() || $this->auth->is_sysadmin()) return;
+
         $idauthuser = (int)$this->authuser["id"];
-        if ($this->auth->is_root() || $idauthuser === $idxxx) return;
-
-        if ($this->auth->is_sysadmin()
-            && in_array($entity["id_profile"], [ProfileType::SYS_ADMIN, ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
-        )
-            return;
-
-        $identowner = $this->repoxxx->get_ownerid($idxxx);
-        //si logado es propietario del bm
-        if ($this->auth->is_business_owner()
-            && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
-            && $idauthuser === $identowner
-        )
+        $identowner = (int) $entity["id_owner"];
+        //si el owner logado es propietario de la entidad
+        if ($this->auth->is_business_owner() && $idauthuser === $identowner)
             return;
 
         //si el logado es bm y la ent es del mismo owner
-        $idauthowner = $this->repoxxx->get_ownerid($idauthuser);
+        $idauthowner = (int)$this->authuser["id_owner"];
         if ($this->auth->is_business_manager() && $idauthowner === $identowner)
             return;
 
@@ -86,9 +75,7 @@ final class XxxsInfoService extends AppService
 
         $this->_check_entity_permission($xxx);
         return [
-            "xxx" => $xxx,
-            "permissions" => $this->repopermission->get_by_xxx($idxxx = $xxx["id"]),
-            "preferences" => $this->repoprefs->get_by_xxx($idxxx),
+            "xxx" => $xxx
         ];
     }
 
@@ -101,7 +88,6 @@ final class XxxsInfoService extends AppService
                 ExceptionType::CODE_NOT_FOUND
             );
         $this->_check_entity_permission($xxx);
-        if($birthdate = $xxx["birthdate"]) $xxx["birthdate"] = substr($birthdate, 0,10);
         return $xxx;
     }
 }
