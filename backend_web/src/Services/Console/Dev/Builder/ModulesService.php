@@ -28,7 +28,8 @@ final class ModulesService extends AppService implements IConsole
         $this->schema = new SchemaService(DF::get_by_default());
     }
 
-    //php run.php modules <table-name>
+    //php run.php modules <table-name> o
+    //run modules <table-name> (en ssh-be)
     public function run(): void
     {
         $this->_pr($this->input,"input");
