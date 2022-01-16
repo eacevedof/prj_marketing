@@ -74,7 +74,7 @@ final class XxxRepository extends AppRepository
             ->set_table("$this->table as m")
             ->calcfoundrows()
             ->set_getfields([
-                %SEARCH_FIELDS%
+                %SEARCH_FIELDS%,
                 "m.delete_date"
             ])
             ->set_limit(25, 0)

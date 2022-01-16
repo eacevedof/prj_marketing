@@ -110,7 +110,6 @@ final class PhpBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-
     private function _build_repository(): void
     {
         $skip = [
@@ -120,22 +119,34 @@ final class PhpBuilder
         ];
         //tags: %TABLE%, %SEARCH_FIELDS%, %INFO_FIELDS%, xxx
 
-        $arfields = ["["];
+        $arfields = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $arfields[] = $this->_get_field_tpl($fieldname);
+            $arfields[] = "\"m.$fieldname\"";
         }
-        $arfields[] = "];";
-        $strfields = implode("", $arfields);
+        $searchfields = implode(",\n", $arfields);
+
+        $skip = [
+            "processflag", "insert_platform", "update_platform", "delete_platform", "cru_csvnote",
+            "is_erpsent", "is_enabled", "i"
+        ];
+        $arfields = [];
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $arfields[] = "\"m.$fieldname\"";
+        }
+        $infofields = implode(",\n", $arfields);
 
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = str_replace("%TABLE%", $this->aliases["raw"], $contenttpl);
-        $contenttpl = str_replace("%SEARCH_FIELDS%", $strfields, $contenttpl);
-        $contenttpl = str_replace("%INFO_FIELDS%", $strfields, $contenttpl);
+        $contenttpl = str_replace("%SEARCH_FIELDS%", $searchfields, $contenttpl);
+        $contenttpl = str_replace("%INFO_FIELDS%", $infofields, $contenttpl);
         $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
+        $contenttpl = str_replace("xxx", $this->aliases["raw"], $contenttpl);
 
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Entity.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Repository.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
