@@ -85,14 +85,24 @@ final class PhpBuilder
 
     private function _build_entity(): void
     {
+        $skip = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i"
+        ];
         //tags %FIELDS%
         $contenttpl = file_get_contents($this->pathtpl);
         $arfields = ["["];
-        foreach ($this->fields as $field)
-            $arfields[] = $this->_get_field_tpl($field["field_name"]);
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $arfields[] = $this->_get_field_tpl($fieldname);
+        }
         $arfields[] = "];";
         $strfields = implode("", $arfields);
+
         $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
+        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
+
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Entity.php";
         file_put_contents($pathfile, $contenttpl);
     }
