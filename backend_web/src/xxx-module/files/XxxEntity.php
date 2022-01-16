@@ -7,7 +7,7 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
-namespace App\Models\Base;
+namespace App\Models\App;
 
 use App\Models\AppEntity;
 use App\Enums\EntityType;
