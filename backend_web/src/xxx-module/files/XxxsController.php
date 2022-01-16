@@ -34,8 +34,6 @@ final class XxxsController extends RestrictController
 
     public function index(?string $page=null): void
     {
-        //$r = get_loaded_extensions();
-        //dd($r);
         try {
             $search = SF::get("Restrict\Xxxs\XxxsSearch");
 
