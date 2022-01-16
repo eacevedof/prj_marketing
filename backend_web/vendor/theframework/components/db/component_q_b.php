@@ -410,7 +410,7 @@ final class ComponentQB
     public function add_numeric(string $fieldname): self{$this->arnumeric[]=$fieldname; return $this;}
     public function set_and(array $arands=[]): self{$this->arands = []; if(is_array($arands)) $this->arands=$arands; return $this;}
     public function add_and(string $condition): self{$this->arands[]=$condition; return $this;}
-    public function add_and1(string $fieldname, $strval, string $sOper="="): self {$this->arands[]="$fieldname $sOper $strval"; return $this;}
+    public function add_andoper(string $fieldname, $strval, string $sOper="="): self {$this->arands[]="$fieldname $sOper $strval"; return $this;}
     public function add_in(string $fieldname, array $values): self
     {
         $isnum = in_array($fieldname, $this->arnumeric);
