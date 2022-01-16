@@ -176,7 +176,7 @@ final class PhpBuilder
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace_basic($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
