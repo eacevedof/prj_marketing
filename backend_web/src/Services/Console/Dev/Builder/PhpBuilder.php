@@ -15,7 +15,9 @@ final class PhpBuilder
    private string $pathtpl;
    private array $aliases;
    private array $fields;
+
    public const TYPE_ENTITY = "entity";
+    public const TYPE_REPOSITORY = "repository";
 
    public function __construct(array $aliases, array $fields, string $pathtpl, string $type=self::TYPE_ENTITY)
    {
