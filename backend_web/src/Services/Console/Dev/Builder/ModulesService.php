@@ -65,8 +65,8 @@ final class ModulesService extends AppService implements IConsole
         $this->aliases["raw"] = $this->table;
         $this->aliases["uppercased"] = $this->_tocamelcase($noprefix);
         $this->aliases["uppercased-plural"] = $this->_tocamelcase($noprefix)."s";
-        $this->aliases["lowered"] = strtolower($this->_tocamelcase($noprefix));
-        $this->aliases["lowered-plural"] = strtolower($this->_tocamelcase($noprefix))."s";
+        $this->aliases["lowerercased"] = strtolower($this->_tocamelcase($noprefix));
+        $this->aliases["lowerercased-plural"] = strtolower($this->_tocamelcase($noprefix))."s";
     }
 
     private function _load_fields(): void
@@ -100,9 +100,8 @@ final class ModulesService extends AppService implements IConsole
     private function _build(): void
     {
         foreach ($this->builders as $alias => $builder) {
-            $this->_pr("builder $alias starts");
+            $this->_pr("builder $alias running ...");
             $builder->build();
-            $this->_pr("builder $alias ends");
         }
     }
 
