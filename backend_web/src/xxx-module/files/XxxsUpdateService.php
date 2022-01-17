@@ -6,16 +6,15 @@ use App\Traits\RequestTrait;
 use App\Factories\EntityFactory as MF;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\Specific\ValidatorFactory as VF;
-use App\Services\Auth\AuthService;
 use App\Factories\ServiceFactory as SF;
+use App\Services\Auth\AuthService;
 use App\Models\Base\XxxEntity;
 use App\Repositories\Base\XxxRepository;
-use TheFramework\Components\Session\ComponentEncdecrypt;
+use App\Models\FieldsValidator;
 use App\Enums\PolicyType;
 use App\Enums\ProfileType;
-use App\Exceptions\FieldsException;
-use App\Models\FieldsValidator;
 use App\Enums\ExceptionType;
+use App\Exceptions\FieldsException;
 
 final class XxxsUpdateService extends AppService
 {
@@ -23,7 +22,6 @@ final class XxxsUpdateService extends AppService
 
     private AuthService $auth;
     private array $authuser;
-    private ComponentEncdecrypt $encdec;
     private XxxRepository $repoxxx;
     private FieldsValidator $validator;
     private XxxEntity $entityxxx;
@@ -42,7 +40,6 @@ final class XxxsUpdateService extends AppService
         $this->repoxxx = RF::get("Base/XxxRepository");
         $this->repoxxx->set_model($this->entityxxx);
         $this->authuser = $this->auth->get_user();
-        $this->encdec = $this->_get_encdec();
     }
 
     private function _check_permission(): void
@@ -80,57 +77,14 @@ final class XxxsUpdateService extends AppService
 
     private function _skip_validation(): self
     {
-        $this->validator->add_skip("password2");
+        $this->validator->add_skip("id");
         return $this;
     }
 
     private function _add_rules(): FieldsValidator
     {
-        $repoxxx = $this->repoxxx;
         $this->validator
-            ->add_rule("email", "email", function ($data) use ($repoxxx){
-                $email = trim($data["value"]);
-                $uuid = $data["data"]["uuid"] ?? "";
-                $id = $repoxxx->get_id_by($uuid);
-                if (!$id) return __("Xxx with code {0} not found",$uuid);
-                $idemail = $repoxxx->email_exists($email);
-                if (!$idemail || ($id == $idemail)) return false;
-                return __("This email already exists");
-            })
-            ->add_rule("email", "email", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("email", "email", function ($data) {
-                return filter_var($data["value"], FILTER_VALIDATE_EMAIL) ? false : __("Invalid email format");
-            })
-            ->add_rule("phone", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("fullname", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("birthdate", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_profile", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_parent", "by-profile", function ($data){
-                if (($data["data"]["id_profile"] ?? "") === "4" && !trim($data["value"]))
-                    return __("Empty field is not allowed");
-                return false;
-            })
-            ->add_rule("id_country", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_language", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("password", "not-equal", function ($data){
-                if(!($password = trim($data["value"]))) return false;
-                $password2 = trim($data["data"]["password2"] ?? "");
-                return ($password === $password2) ? false : __("Bad password confirmation");
-            })
+            %FIELD_RULES%
         ;
         return $this->validator;
     }
