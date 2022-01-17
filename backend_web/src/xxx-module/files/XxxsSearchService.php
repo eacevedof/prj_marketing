@@ -1,17 +1,18 @@
 <?php
 namespace App\Services\Restrict\Xxxs;
 
-use App\Enums\ExceptionType;
 use App\Services\AppService;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\HelperFactory as HF;
 use App\Factories\ComponentFactory as CF;
 use App\Services\Auth\AuthService;
-use App\Repositories\Base\XxxPermissionsRepository;
-use App\Repositories\Base\XxxRepository;
+use App\Repositories\App\XxxPermissionsRepository;
+use App\Repositories\App\XxxRepository;
 use App\Helpers\Views\DatatableHelper;
 use App\Enums\PolicyType;
+use App\Enums\ExceptionType;
+
 
 final class XxxsSearchService extends AppService
 {

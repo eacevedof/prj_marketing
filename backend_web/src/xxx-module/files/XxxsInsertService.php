@@ -8,8 +8,8 @@ use App\Factories\ServiceFactory as  SF;
 use App\Factories\EntityFactory as MF;
 use App\Factories\Specific\ValidatorFactory as VF;
 use App\Services\Auth\AuthService;
-use App\Models\Base\XxxEntity;
-use App\Repositories\Base\XxxRepository;
+use App\Models\App\XxxEntity;
+use App\Repositories\App\XxxRepository;
 use App\Models\FieldsValidator;
 use App\Enums\PolicyType;
 use App\Enums\ExceptionType;
@@ -48,15 +48,12 @@ final class XxxsInsertService extends AppService
 
     private function _skip_validation(): self
     {
-        $this->validator
-            ->add_skip("password2")
-        ;
+        $this->validator->add_skip("id");
         return $this;
     }
 
     private function _add_rules(): FieldsValidator
     {
-        $repoxxx = $this->repoxxx;
         $this->validator
             %FIELD_RULES%
         ;
