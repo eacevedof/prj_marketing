@@ -13,7 +13,6 @@ use App\Helpers\Views\DatatableHelper;
 use App\Enums\PolicyType;
 use App\Enums\ExceptionType;
 
-
 final class XxxsSearchService extends AppService
 {
     private AuthService $auth;
