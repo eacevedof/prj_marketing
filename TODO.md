@@ -1,4 +1,5 @@
 ### To-Do
+- validadores en cliente
 - función que recupere todas las traducciones
 - cache por usuario o por elemento
   - comprobar cache en vista para evitar hacer toda la lógica de servicios
