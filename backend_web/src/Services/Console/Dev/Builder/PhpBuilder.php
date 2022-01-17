@@ -92,11 +92,9 @@ final class PhpBuilder
 
     private function _get_rule_tpl(string $field): string
     {
-        return "
-            ->add_rule(\"$field\", \"$field\", function (\$data) {
+        return "->add_rule(\"$field\", \"$field\", function (\$data) {
                 return trim(\$data[\"value\"]) ? false : __(\"Empty field is not allowed\");
-            })
-       ";
+            })";
     }
 
     private function _replace(string $content, array $replaces=[]): string
@@ -130,9 +128,7 @@ final class PhpBuilder
         $strfields = implode("", $arfields);
 
         $contenttpl = file_get_contents($this->pathtpl);
-
-        $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
-        $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
+        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
 
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
