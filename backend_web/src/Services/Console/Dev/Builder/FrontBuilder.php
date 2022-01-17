@@ -17,16 +17,15 @@ final class FrontBuilder
     private array $aliases;
     private array $fields;
 
-    public const TYPE_ENTITY = "Entity";
-    public const TYPE_REPOSITORY = "Repository";
+    public const TYPE_CREATE_JS = "create.js";
+    public const TYPE_CREATE_TPL = "create.tpl";
     public const TYPE_CONTROLLER = "Controller";
     public const TYPE_DELETE_SERVICE = "DeleteService";
     public const TYPE_INFO_SERVICE = "InfoService";
-    public const TYPE_CREATE_JS = "create.js";
     public const TYPE_SEARCH_SERVICE = "SearchService";
     public const TYPE_UPDATE_SERVICE = "UpdateService";
 
-    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_ENTITY)
+    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_CREATE_JS)
     {
        $this->pathtpl = $pathtpl;
        $this->pathmodule = $pathmodule;
@@ -228,10 +227,10 @@ final class FrontBuilder
     public function build(): void
     {
         switch ($this->type) {
-            case self::TYPE_ENTITY:
+            case self::TYPE_CREATE_JS:
                 $this->_build_entity();
             break;
-            case self::TYPE_REPOSITORY:
+            case self::TYPE_CREATE_TPL:
                 $this->_build_repository();
             break;
             case self::TYPE_CONTROLLER:
