@@ -19,11 +19,11 @@ final class FrontBuilder
 
     public const TYPE_CREATE_JS = "create.js";
     public const TYPE_CREATE_TPL = "create.tpl";
-    public const TYPE_CONTROLLER = "Controller";
-    public const TYPE_DELETE_SERVICE = "DeleteService";
-    public const TYPE_INFO_SERVICE = "InfoService";
-    public const TYPE_SEARCH_SERVICE = "SearchService";
-    public const TYPE_UPDATE_SERVICE = "UpdateService";
+    public const TYPE_EDIT_JS = "edit.js";
+    public const TYPE_EDIT_TPL = "edit.tpl";
+    public const TYPE_INFO_TPL = "info.tpl";
+    public const TYPE_INDEX_TPL = "index.tpl";
+    public const TYPE_CSS = "xxxs.css";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_CREATE_JS)
     {
@@ -177,7 +177,7 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_controller(): void
+    private function _build_js(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
@@ -185,7 +185,7 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_search_insert_update_service(): void
+    private function _build_css(): void
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
@@ -216,7 +216,7 @@ final class FrontBuilder
     }
 
 
-    private function _build_service(): void
+    private function _build_tpl(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
@@ -228,22 +228,16 @@ final class FrontBuilder
     {
         switch ($this->type) {
             case self::TYPE_CREATE_JS:
-                $this->_build_entity();
+            case self::TYPE_EDIT_JS:
+                $this->_build_js();
             break;
             case self::TYPE_CREATE_TPL:
-                $this->_build_repository();
+            case self::TYPE_EDIT_TPL:
+            case self::TYPE_INFO_TPL:
+                $this->_build_tpl();
             break;
-            case self::TYPE_CONTROLLER:
-                $this->_build_controller();
-            break;
-            case self::TYPE_SEARCH_SERVICE:
-            case self::TYPE_CREATE_JS:
-            case self::TYPE_UPDATE_SERVICE:
-                $this->_build_search_insert_update_service();
-            break;
-            case self::TYPE_DELETE_SERVICE:
-            case self::TYPE_INFO_SERVICE:
-                $this->_build_service();
+            case self::TYPE_CSS:
+                $this->_build_css();
             break;
         }
     }
