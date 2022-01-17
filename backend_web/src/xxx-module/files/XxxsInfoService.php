@@ -5,7 +5,7 @@ use App\Services\AppService;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Services\Auth\AuthService;
-use App\Repositories\Base\XxxRepository;
+use App\Repositories\App\XxxRepository;
 use App\Enums\PolicyType;
 use App\Enums\ExceptionType;
 
