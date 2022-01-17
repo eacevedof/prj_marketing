@@ -2,14 +2,14 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Services\Console\Dev\Builder\PhpBuilder
- * @file PhpBuilder.php 1.0.0
+ * @name App\Services\Console\Dev\Builder\FrontBuilder
+ * @file FrontBuilder.php 1.0.0
  * @date 31-10-2022 17:46 SPAIN
  * @observations
  */
 namespace App\Services\Console\Dev\Builder;
 
-final class PhpBuilder
+final class FrontBuilder
 {
     private string $type;
     private string $pathtpl;
@@ -22,7 +22,7 @@ final class PhpBuilder
     public const TYPE_CONTROLLER = "Controller";
     public const TYPE_DELETE_SERVICE = "DeleteService";
     public const TYPE_INFO_SERVICE = "InfoService";
-    public const TYPE_INSERT_SERVICE = "InsertService";
+    public const TYPE_CREATE_JS = "create.js";
     public const TYPE_SEARCH_SERVICE = "SearchService";
     public const TYPE_UPDATE_SERVICE = "UpdateService";
 
@@ -238,7 +238,7 @@ final class PhpBuilder
                 $this->_build_controller();
             break;
             case self::TYPE_SEARCH_SERVICE:
-            case self::TYPE_INSERT_SERVICE:
+            case self::TYPE_CREATE_JS:
             case self::TYPE_UPDATE_SERVICE:
                 $this->_build_search_insert_update_service();
             break;
