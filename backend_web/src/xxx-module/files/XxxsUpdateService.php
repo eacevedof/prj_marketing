@@ -35,9 +35,9 @@ final class XxxsUpdateService extends AppService
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->entityxxx = MF::get("Base/Xxx");
+        $this->entityxxx = MF::get("App/Xxx");
         $this->validator = VF::get($this->input, $this->entityxxx);
-        $this->repoxxx = RF::get("Base/XxxRepository");
+        $this->repoxxx = RF::get("App/XxxRepository");
         $this->repoxxx->set_model($this->entityxxx);
         $this->authuser = $this->auth->get_user();
     }

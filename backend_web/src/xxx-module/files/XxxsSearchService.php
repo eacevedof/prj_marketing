@@ -25,8 +25,8 @@ final class XxxsSearchService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        $this->repoxxx = RF::get("Base/Xxx");
-        $this->repopermission = RF::get("Base/XxxPermissions");
+        $this->repoxxx = RF::get("App/Xxx");
+        $this->repopermission = RF::get("App/XxxPermissions");
     }
 
     public function __invoke(): array
