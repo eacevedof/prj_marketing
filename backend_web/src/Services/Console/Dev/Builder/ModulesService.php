@@ -110,8 +110,8 @@ final class ModulesService extends AppService implements IConsole
         $this->builders["UpdateService"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxsUpdateService.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_SERVICE
         );
-        $this->builders["create"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["create.js"], $this->pathbuild,FrontBuilder::TYPE_UPDATE_SERVICE
+        $this->builders["create.js"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["create.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
         );
     }
 
