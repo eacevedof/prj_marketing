@@ -1,5 +1,7 @@
 ### To-Do
+- función que recupere todas las traducciones
 - cache por usuario o por elemento
+  - comprobar cache en vista para evitar hacer toda la lógica de servicios
 - ~~desarrollar sistema de cache para view~~
 - ~~metodo 404 not found en error controller~~
 - ~~aplicar delete_date para BO y BM~~
