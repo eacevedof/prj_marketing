@@ -87,11 +87,6 @@ export class FormXxxCreate extends LitElement {
     _id_country: {type: String, state:true},
     _id_language: {type: String, state:true},
     _id_profile: {type: String, state:true},
-
-    _parents: {type: Array, state:true},
-    _countries: {type: Array, state:true},
-    _languages: {type: Array, state:true},
-    _profiles: {type: Array, state:true},
   }
 
   //2
@@ -104,7 +99,7 @@ export class FormXxxCreate extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
-    this._btncancel = "Cancel"
+    this._btncancel = this.texts.tr01
 
     for(let p in this.fields) this["_".concat(p)] = this.fields[p]
   }
@@ -293,7 +288,7 @@ export class FormXxxCreate extends LitElement {
 
   }//on_submit
 
-}//FormEdit
+}//FormCreate
 
 if (!customElements.get("form-xxx-create"))
   customElements.define("form-xxx-create", FormXxxCreate)
