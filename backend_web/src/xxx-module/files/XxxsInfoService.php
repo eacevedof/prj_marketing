@@ -24,7 +24,7 @@ final class XxxsInfoService extends AppService
             $this->_exception(__("No xxx code provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->repoxxx = RF::get("Base/Xxx");
+        $this->repoxxx = RF::get("App/Xxx");
     }
 
     private function _check_permission(): void

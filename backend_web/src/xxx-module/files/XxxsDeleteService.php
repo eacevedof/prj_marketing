@@ -28,8 +28,8 @@ final class XxxsDeleteService extends AppService
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->entityxxx = MF::get("Base/Xxx");
-        $this->repoxxx = RF::get("Base/XxxRepository")->set_model($this->entityxxx);
+        $this->entityxxx = MF::get("App/Xxx");
+        $this->repoxxx = RF::get("App/XxxRepository")->set_model($this->entityxxx);
     }
 
     private function _check_permission(): void
