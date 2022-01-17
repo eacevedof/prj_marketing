@@ -1,22 +1,19 @@
 <?php
 namespace App\Services\Restrict\Xxxs;
 
-use App\Enums\PolicyType;
-use App\Enums\PreferenceType;
-use App\Exceptions\FieldsException;
 use App\Services\AppService;
-use App\Services\Auth\AuthService;
 use App\Traits\RequestTrait;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\ServiceFactory as  SF;
 use App\Factories\EntityFactory as MF;
 use App\Factories\Specific\ValidatorFactory as VF;
+use App\Services\Auth\AuthService;
 use App\Models\Base\XxxEntity;
 use App\Repositories\Base\XxxRepository;
-use TheFramework\Components\Session\ComponentEncdecrypt;
-
-use App\Enums\ExceptionType;
 use App\Models\FieldsValidator;
+use App\Enums\PolicyType;
+use App\Enums\ExceptionType;
+use App\Exceptions\FieldsException;
 
 final class XxxsInsertService extends AppService
 {
@@ -24,7 +21,6 @@ final class XxxsInsertService extends AppService
 
     private AuthService $auth;
     private array $authuser;
-    private ComponentEncdecrypt $encdec;
     private XxxRepository $repoxxx;
     private FieldsValidator $validator;
     private XxxEntity $entityxxx;
@@ -39,7 +35,6 @@ final class XxxsInsertService extends AppService
         $this->repoxxx = RF::get("Base/Xxx");
         $this->repoprefs = RF::get("Base/XxxPreferences");
         $this->authuser = $this->auth->get_user();
-        $this->encdec = $this->_get_encdec();
     }
 
     private function _check_permission(): void
