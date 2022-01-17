@@ -90,13 +90,26 @@ final class PhpBuilder
        ";
     }
 
-    private function _replace_basic(string $content): string
+    private function _get_rule_tpl(string $field): string
     {
-        $content = str_replace("Xxxs", $this->aliases["uppercased-plural"], $content);
-        $content = str_replace("Xxx", $this->aliases["uppercased"], $content);
-        $content = str_replace("xxxs", $this->aliases["lowered-plural"], $content);
-        $content = str_replace("xxx", $this->aliases["lowered"], $content);
-        return str_replace("XXXS", $this->aliases["uppered-plural"], $content);
+        return "
+            ->add_rule(\"$field\", \"$field\", function (\$data) {
+                return trim(\$data[\"value\"]) ? false : __(\"Empty field is not allowed\");
+            })
+       ";
+    }
+
+    private function _replace(string $content, array $replaces=[]): string
+    {
+        $basic = [
+            "Xxxs" => $this->aliases["uppercased-plural"],
+            "Xxx" => $this->aliases["uppercased"],
+            "xxxs" => $this->aliases["lowered-plural"],
+            "xxx" => $this->aliases["lowered"],
+            "XXXS" => $this->aliases["uppered-plural"],
+        ];
+        $basic = $basic + $replaces;
+        return str_replace(array_keys($basic), array_values($basic), $content);
     }
 
     private function _build_entity(): void
@@ -155,10 +168,12 @@ final class PhpBuilder
         $infofields = implode(",\n", $arfields);
 
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = str_replace("%TABLE%", $this->aliases["raw"], $contenttpl);
-        $contenttpl = str_replace("%SEARCH_FIELDS%", $searchfields, $contenttpl);
-        $contenttpl = str_replace("%INFO_FIELDS%", $infofields, $contenttpl);
-        $contenttpl = $this->_replace_basic($contenttpl);
+        $contenttpl = $this->_replace($contenttpl,
+                        [
+                            "%TABLE%"=>$this->aliases["raw"],
+                            "%SEARCH_FIELDS%"=> $searchfields,
+                            "%INFO_FIELDS%"=> $infofields,
+                        ]);
 
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Repository.php";
         file_put_contents($pathfile, $contenttpl);
@@ -167,7 +182,7 @@ final class PhpBuilder
     private function _build_controller(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace_basic($contenttpl);
+        $contenttpl = $this->_replace($contenttpl);
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}Controller.php";
         file_put_contents($pathfile, $contenttpl);
     }
@@ -175,7 +190,36 @@ final class PhpBuilder
     private function _build_service(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace_basic($contenttpl);
+        $contenttpl = $this->_replace($contenttpl);
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
+        file_put_contents($pathfile, $contenttpl);
+    }
+
+    private function _build_rules_service(): void
+    {
+        $skip = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
+        //tags: %FIELD_RULES%
+
+        $rules = "";
+        if (in_array($this->type, [self::TYPE_INSERT_SERVICE, self::TYPE_UPDATE_SERVICE])){
+            $arfields = [];
+            foreach ($this->fields as $field) {
+                $fieldname = $field["field_name"];
+                if (in_array($fieldname, $skip)) continue;
+                $arfields[] = $this->_get_rule_tpl($fieldname);
+            }
+            $rules = implode(",", $arfields);
+        }
+
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = $this->_replace($contenttpl,
+            [
+                "%FIELD_RULES%" => $rules
+            ]);
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
