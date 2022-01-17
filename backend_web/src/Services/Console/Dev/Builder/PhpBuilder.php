@@ -97,6 +97,11 @@ final class PhpBuilder
             })";
     }
 
+    private function _get_dtcolumn_tpl(string $field): string
+    {
+        return "->add_column(\"$field\")->add_label(__(\"tr_$field\"))->add_tooltip(__(\"tr_$field\"))";
+    }
+
     private function _replace(string $content, array $replaces=[]): string
     {
         $basic = [
@@ -183,15 +188,7 @@ final class PhpBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_service(): void
-    {
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_rules_service(): void
+    private function _build_search_insert_update_service(): void
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
@@ -201,22 +198,35 @@ final class PhpBuilder
         //tags: %FIELD_RULES%
 
         $arfields = [];
+        $columns = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
             $arfields[] = $this->_get_rule_tpl($fieldname);
+            $columns[] = $this->_get_dtcolumn_tpl($fieldname);
         }
         $rules = implode("", $arfields);
+        $dtcolumns = implode("\n", $columns);
 
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl,
             [
-                "%FIELD_RULES%" => $rules
+                "%FIELD_RULES%" => $rules,
+                "%DT_COLUMNS%"  => $dtcolumns
             ]);
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
+
+    private function _build_service(): void
+    {
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = $this->_replace($contenttpl);
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
+        file_put_contents($pathfile, $contenttpl);
+    }
+    
     public function build(): void
     {
         switch ($this->type) {
@@ -229,13 +239,13 @@ final class PhpBuilder
             case self::TYPE_CONTROLLER:
                 $this->_build_controller();
             break;
+            case self::TYPE_SEARCH_SERVICE:
             case self::TYPE_INSERT_SERVICE:
             case self::TYPE_UPDATE_SERVICE:
-                $this->_build_rules_service();
+                $this->_build_search_insert_update_service();
             break;
             case self::TYPE_DELETE_SERVICE:
             case self::TYPE_INFO_SERVICE:
-            case self::TYPE_SEARCH_SERVICE:
                 $this->_build_service();
             break;
         }

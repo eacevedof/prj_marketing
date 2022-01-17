@@ -2,12 +2,12 @@
 namespace App\Services\Restrict\Xxxs;
 
 use App\Services\AppService;
-use App\Services\Auth\AuthService;
 use App\Factories\EntityFactory as MF;
 use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Models\App\XxxEntity;
 use App\Repositories\App\XxxRepository;
+use App\Services\Auth\AuthService;
 use App\Enums\PolicyType;
 use App\Enums\ExceptionType;
 
