@@ -134,7 +134,7 @@ final class PhpBuilder
         $contenttpl = str_replace("%FIELDS%", $strfields, $contenttpl);
         $contenttpl = str_replace("Xxx", $this->aliases["uppercased"], $contenttpl);
 
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Entity.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -175,7 +175,7 @@ final class PhpBuilder
                             "%INFO_FIELDS%"=> $infofields,
                         ]);
 
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}Repository.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -183,7 +183,7 @@ final class PhpBuilder
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}Controller.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -204,16 +204,13 @@ final class PhpBuilder
         ];
         //tags: %FIELD_RULES%
 
-        $rules = "";
-        if (in_array($this->type, [self::TYPE_INSERT_SERVICE, self::TYPE_UPDATE_SERVICE])){
-            $arfields = [];
-            foreach ($this->fields as $field) {
-                $fieldname = $field["field_name"];
-                if (in_array($fieldname, $skip)) continue;
-                $arfields[] = $this->_get_rule_tpl($fieldname);
-            }
-            $rules = implode(",", $arfields);
+        $arfields = [];
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $arfields[] = $this->_get_rule_tpl($fieldname);
         }
+        $rules = implode("", $arfields);
 
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl,
@@ -236,11 +233,13 @@ final class PhpBuilder
             case self::TYPE_CONTROLLER:
                 $this->_build_controller();
             break;
+            case self::TYPE_INSERT_SERVICE:
+            case self::TYPE_UPDATE_SERVICE:
+                $this->_build_rules_service();
+            break;
             case self::TYPE_DELETE_SERVICE:
             case self::TYPE_INFO_SERVICE:
-            case self::TYPE_INSERT_SERVICE:
             case self::TYPE_SEARCH_SERVICE:
-            case self::TYPE_UPDATE_SERVICE:
                 $this->_build_service();
             break;
         }
