@@ -33,72 +33,7 @@ final class FrontBuilder
        $this->fields = $fields;
        $this->type = $type;
     }
-
-    private function _get_field_details(string $field): array
-    {
-       $type = array_filter($this->fields, function ($item) use ($field) {
-           return $item["field_name"] === $field;
-       });
-       $type = array_values($type);
-       return $type[0] ?? [];
-    }
-
-    private function _get_type(string $field): string
-    {
-        $types = [
-           "decimal"    => "EntityType::DECIMAL",
-           "varchar"    => "EntityType::STRING",
-           "int"        => "EntityType::INT",
-           "tinyint"    => "EntityType::INT",
-           "datetime"   => "EntityType::DATETIME",
-           "date"       => "EntityType::DATE",
-        ];
-
-        $fielddet = $this->_get_field_details($field);
-        $type = $fielddet["field_type"];
-        return $types[$type] ?? "-error-";
-    }
-
-    private function _get_length(string $field): string
-    {
-        $fielddet = $this->_get_field_details($field);
-        $length = $fielddet["field_length"] ?? "";
-        if (!$length)
-            $length = $fielddet["ntot"] ?? "";
-        return $length;
-    }
-
-    private function _get_field_tpl(string $field): string
-    {
-        $tr = "tr_$field";
-        $type = $this->_get_type($field);
-        $length = $this->_get_length($field);
-        if ($length) $length = "\"length\" => $length,";
-
-        return "
-        \"$field\" => [
-            \"label\" => __(\"$tr\"),
-            EntityType::REQUEST_KEY => \"$field\",
-            \"config\" => [
-                \"type\" => $type,
-                $length
-            ]
-        ],
-       ";
-    }
-
-    private function _get_rule_tpl(string $field): string
-    {
-        return "->add_rule(\"$field\", \"$field\", function (\$data) {
-                return trim(\$data[\"value\"]) ? false : __(\"Empty field is not allowed\");
-            })";
-    }
-
-    private function _get_dtcolumn_tpl(string $field): string
-    {
-        return "->add_column(\"$field\")->add_label(__(\"tr_$field\"))->add_tooltip(__(\"tr_$field\"))";
-    }
-
+    
     private function _replace(string $content, array $replaces=[]): string
     {
         $basic = [
@@ -111,8 +46,31 @@ final class FrontBuilder
         $basic = $basic + $replaces;
         return str_replace(array_keys($basic), array_values($basic), $content);
     }
+    
+    private function _get_field_details(string $field): array
+    {
+       $type = array_filter($this->fields, function ($item) use ($field) {
+           return $item["field_name"] === $field;
+       });
+       $type = array_values($type);
+       return $type[0] ?? [];
+    }
 
-    private function _build_entity(): void
+    private function _get_length(string $field): string
+    {
+        $fielddet = $this->_get_field_details($field);
+        $length = $fielddet["field_length"] ?? "";
+        if (!$length)
+            $length = $fielddet["ntot"] ?? "";
+        return $length;
+    }
+    
+    private function _get_field_create_tpl(string $field): string
+    {
+        return "_{$field}: {type: String, state:true},";
+    }
+
+    private function _build_create_js(): void
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
@@ -120,18 +78,14 @@ final class FrontBuilder
             "update_date"
         ];
         //tags %FIELDS%
-        $arfields = ["["];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $arfields[] = $this->_get_field_tpl($fieldname);
+            $arfields[] = $this->_get_field_create_tpl($fieldname);
         }
-        $arfields[] = "];";
-        $strfields = implode("", $arfields);
-
+        $strfields = implode("\n", $arfields);
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
-
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
