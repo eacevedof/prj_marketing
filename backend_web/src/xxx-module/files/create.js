@@ -81,12 +81,7 @@ export class FormXxxCreate extends LitElement {
     _address: {type: String, state:true},
     _birthdate: {type: String, state:true},
     _phone: {type: String, state:true},
-
-    _is_parent: {type: Boolean, state:true},
-    _id_parent: {type: String, state:true},
-    _id_country: {type: String, state:true},
-    _id_language: {type: String, state:true},
-    _id_profile: {type: String, state:true},
+    %FIELDS%
   }
 
   //2
