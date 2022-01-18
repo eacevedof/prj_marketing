@@ -40,7 +40,8 @@ final class ModulesService extends AppService implements IConsole
         $this->_load_aliases();
         $this->_load_fields();
         $this->_load_tplfiles();
-        $this->_load_builders();
+        $this->_load_phpbuilders();
+        $this->_load_frontbuilders();
     }
 
     private function _check_input(): void
@@ -84,7 +85,7 @@ final class ModulesService extends AppService implements IConsole
         unset($this->filestpl["."],$this->filestpl[".."]);
     }
 
-    private function _load_builders(): void
+    private function _load_phpbuilders(): void
     {
         $this->builders["Entity"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], $this->pathbuild,PhpBuilder::TYPE_ENTITY
@@ -110,8 +111,15 @@ final class ModulesService extends AppService implements IConsole
         $this->builders["UpdateService"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["XxxsUpdateService.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_SERVICE
         );
+    }
+
+    private function _load_frontbuilders(): void
+    {
         $this->builders["create.js"] = new FrontBuilder(
             $this->aliases, $this->fields, $this->filestpl["create.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
+        );
+        $this->builders["create.js"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["create.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
         );
     }
 

@@ -182,10 +182,15 @@ final class FrontBuilder
     {
         switch ($this->type) {
             case self::TYPE_CREATE_JS:
+                $this->_build_create_js();
+            break;
+            case self::TYPE_CREATE_TPL:
+
+            break;
             case self::TYPE_EDIT_JS:
                 $this->_build_js();
             break;
-            case self::TYPE_CREATE_TPL:
+
             case self::TYPE_EDIT_TPL:
             case self::TYPE_INFO_TPL:
                 $this->_build_tpl();
