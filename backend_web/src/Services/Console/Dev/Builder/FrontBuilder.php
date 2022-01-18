@@ -86,97 +86,30 @@ final class FrontBuilder
         $strfields = implode("\n", $arfields);
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_repository(): void
+    private function _build_create_tpl(): void
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
             , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
             "update_date"
         ];
-        //tags: %TABLE%, %SEARCH_FIELDS%, %INFO_FIELDS%, xxx
-
-        $arfields = [];
+        //tags %FIELDS%
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $arfields[] = "\"m.$fieldname\"";
+            $arfields[] = $this->_get_field_create_tpl($fieldname);
         }
-        $searchfields = implode(",\n", $arfields);
-
-        $skip = [
-            "processflag", "insert_platform", "update_platform", "delete_platform", "cru_csvnote",
-            "is_erpsent", "is_enabled", "i"
-        ];
-        $arfields = [];
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $arfields[] = "\"m.$fieldname\"";
-        }
-        $infofields = implode(",\n", $arfields);
-
+        $strfields = implode("\n", $arfields);
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl,
-                        [
-                            "%TABLE%"=>$this->aliases["raw"],
-                            "%SEARCH_FIELDS%"=> $searchfields,
-                            "%INFO_FIELDS%"=> $infofields,
-                        ]);
-
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
+        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_js(): void
-    {
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_css(): void
-    {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
-        //tags: %FIELD_RULES%
-
-        $arfields = [];
-        $columns = [];
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $arfields[] = $this->_get_rule_tpl($fieldname);
-            $columns[] = $this->_get_dtcolumn_tpl($fieldname);
-        }
-        $rules = implode("", $arfields);
-        $dtcolumns = implode("\n", $columns);
-
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl,
-            [
-                "%FIELD_RULES%" => $rules,
-                "%DT_COLUMNS%"  => $dtcolumns
-            ]);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-
-    private function _build_tpl(): void
-    {
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
-        file_put_contents($pathfile, $contenttpl);
-    }
     
     public function build(): void
     {
@@ -185,7 +118,7 @@ final class FrontBuilder
                 $this->_build_create_js();
             break;
             case self::TYPE_CREATE_TPL:
-
+                $this->_build_create_tpl();
             break;
             case self::TYPE_EDIT_JS:
                 $this->_build_js();
