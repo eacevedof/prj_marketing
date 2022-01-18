@@ -65,9 +65,19 @@ final class FrontBuilder
         return $length;
     }
     
-    private function _get_field_create_tpl(string $field): string
+    private function _get_properties_js(string $field): string
     {
         return "_{$field}: {type: String, state:true},";
+    }
+
+    private function _get_html_fields(string $field, string $pos): string
+    {
+        return "<div class=\"form-group\">
+                    <label for=\"$field\">\${this.texts.{$pos}</label>
+                    <div id=\"field-{$field}\">
+                        <input type=\"text\" id=\"{$field}\" .value=\${this._{$field}} class=\"form-control\">
+                    </div>
+                </div>";
     }
 
     private function _build_create_js(): void
@@ -78,15 +88,28 @@ final class FrontBuilder
             "update_date"
         ];
         //tags %FIELDS%
+        $arfields = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $arfields[] = $this->_get_field_create_tpl($fieldname);
+            $arfields[] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);
+
+        $arfields = [];
+        $i = 0;
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $pos = sprintf("%'02d\n", $i);
+            $arfields[] = $this->_get_html_fields($fieldname, $pos);
+            $i++;
+        }
+        $htmlfields = implode("\n", $arfields);
+
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}";
+        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields]);
+        $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -98,19 +121,31 @@ final class FrontBuilder
             "update_date"
         ];
         //tags %FIELDS%
+        $arfields = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $arfields[] = $this->_get_field_create_tpl($fieldname);
+            $arfields[] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);
+
+        $arfields = [];
+        $i = 0;
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $pos = sprintf("%'02d\n", $i);
+            $arfields[] = $this->_get_html_fields($fieldname, $pos);
+            $i++;
+        }
+        $htmlfields = implode("\n", $arfields);
+
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}";
+        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields]);
+        $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
 
-    
     public function build(): void
     {
         switch ($this->type) {

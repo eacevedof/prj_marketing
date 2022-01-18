@@ -74,13 +74,6 @@ export class FormXxxCreate extends LitElement {
     _btnsend: {type: String, state:true},
     _btncancel: {type: String, state:true},
 
-    _email: {type: String, state:true},
-    _password: {type: String, state:true},
-    _password2: {type: String, state:true},
-    _fullname: {type: String, state:true},
-    _address: {type: String, state:true},
-    _birthdate: {type: String, state:true},
-    _phone: {type: String, state:true},
     %FIELDS%
   }
 
@@ -105,103 +98,7 @@ export class FormXxxCreate extends LitElement {
       <form @submit=${this.on_submit}>
         
         <div class="flex-row">
-          <div class="flex-column-n1">
-            <div class="form-group">
-              <label for="email">${this.texts.f00}</label>
-              <div id="field-email">
-                <input type="email" id="email" .value=${this._email} class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="password">${this.texts.f01}</label>
-              <div id="field-password">
-                <input type="password" id="password" .value=${this._password} class="form-control">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="password2">${this.texts.f02}</label>
-              <div id="field-password2">
-                <input type="password" id="password2" .value=${this._password2} class="form-control">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="fullname">${this.texts.f03}</label>
-              <div id="field-fullname">
-                <input type="text" id="fullname" .value=${this._fullname} class="form-control">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="address">${this.texts.f04}</label>
-              <div id="field-address">
-                <input type="text" id="address" .value=${this._address} class="form-control">
-              </div>
-            </div>
-          </div>
-          
-          <div class="flex-column-n2">
-            <div class="form-group">
-              <label for="birthdate">${this.texts.f05}</label>
-              <div id="field-birthdate">
-                <input type="date" id="birthdate" .value=${this._birthdate} class="form-control">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="phone">${this.texts.f06}</label>
-              <div id="field-phone">
-                <input type="text" id="phone" .value=${this._phone} class="form-control">
-              </div>
-            </div>
-    
-            <div class="form-group">
-              <label for="id_profile">${this.texts.f08}</label>
-              <div id="field-id_profile">
-                <select id="id_profile" @change=${this.on_profile} class="form-control">
-                  ${this._profiles.map((item) =>
-                    html`<option value=${item.key}>${item.value}</option>`
-                  )}
-                </select>
-              </div>
-            </div>
-    
-            ${this._is_parent
-              ? html`<div class="form-group">
-                <label for="id_parent">${this.texts.f07}</label>
-                <div id="field-id_parent">
-                  <select id="id_parent" class="form-control">
-                    ${this._parents.map((item) =>
-                      html`<option value=${item.key} ?selected=${item.key===this._id_parent}>${item.value}</option>`
-                    )}
-                  </select>
-                </div>
-              </div>`
-              : html ``
-            }
-    
-            <div class="form-group">
-              <label for="id_country">${this.texts.f10}</label>
-              <div id="field-id_country">
-                <select id="id_country" class="form-control">
-                  ${this._countries.map((item) =>
-                    html`<option value=${item.key}>${item.value}</option>`
-                  )}
-                </select>
-              </div>
-            </div>
-    
-            <div class="form-group">
-              <label for="id_language">${this.texts.f09}</label>
-              <div id="field-id_language">
-                <select id="id_language" class="form-control">
-                  ${this._languages.map((item) =>
-                    html`<option value=${item.key}>${item.value}</option>`
-                  )}
-                </select>
-              </div>
-            </div>
-            
-          </div>
-
+          %HTML_FIELDS%
         </div>
         
         <div class="form-group">

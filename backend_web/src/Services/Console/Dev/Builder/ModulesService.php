@@ -118,7 +118,7 @@ final class ModulesService extends AppService implements IConsole
         $this->builders["create.js"] = new FrontBuilder(
             $this->aliases, $this->fields, $this->filestpl["create.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
         );
-        $this->builders["create.js"] = new FrontBuilder(
+        $this->builders["create.tpl"] = new FrontBuilder(
             $this->aliases, $this->fields, $this->filestpl["create.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
         );
     }
