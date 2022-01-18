@@ -1,4 +1,5 @@
 ### To-Do
+- fix tranferencia de traducciones a lit
 - modal info responsive
 - refactor a este patrón de carpetas de DDD: https://www.youtube.com/watch?v=y3MWfPDmVqo
 - validadores en cliente
