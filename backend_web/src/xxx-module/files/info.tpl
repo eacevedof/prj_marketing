@@ -16,28 +16,28 @@
     <div class="tabs-menu ">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
-          <a href="#profile" data-bs-toggle="tab" class="active" aria-expanded="true">
+          <a href="#tr-tab-1" data-bs-toggle="tab" class="active" aria-expanded="true">
             <span class="visible-xs">
               <i class="las la-xxx-circle tx-16 me-1"></i>
             </span>
             <span class="hidden-xs">
-              <?=__("Profile")?>
+              <?=__("tr_tab_1")?>
             </span>
           </a>
         </li>
         <li>
-          <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
+          <a href="#tr-tab-2" data-bs-toggle="tab" aria-expanded="false">
             <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
             <span class="hidden-xs">
-              <?=__("Permissions")?>
+              <?=__("tr_tab_2")?>
             </span>
           </a>
         </li>
         <li>
-          <a href="#preferences" data-bs-toggle="tab" aria-expanded="false">
+          <a href="#tr-tab-3" data-bs-toggle="tab" aria-expanded="false">
             <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
             <span class="hidden-xs">
-              <?=__("Preferences")?>
+              <?=__("tr_tab_3")?>
             </span>
           </a>
         </li>
