@@ -15,7 +15,6 @@ export class FormXxxEdit extends LitElement {
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
       "/themes/valex/assets/css/style.css",
     ])])
-    //console.log(globalStyle)
     return [
       globalStyle,
       cssformflex,
@@ -125,113 +124,10 @@ export class FormXxxEdit extends LitElement {
 
   //4
   render() {
-    //console.log("render","texts",this.texts,"fields:",this.fields)
     return html`
     <form @submit=${this.on_submit}>
       <div class="flex-row">
-        <div class="flex-column-n1">
-          
-          <div class="form-group">
-            <label for="email">${this.texts.f00}</label>
-            <div id="field-email">
-              <input type="email" id="email" .value=${this._email} class="form-control">
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label for="password">${this.texts.f01}</label>
-            <div id="field-password">
-              <input type="password" id="password" .value=${this._password} class="form-control">
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label for="password2">${this.texts.f02}</label>
-            <div id="field-password2">
-              <input type="password" id="password2" .value=${this._password2} class="form-control">
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label for="fullname">${this.texts.f03}</label>
-            <div id="field-fullname">
-              <input type="text" id="fullname" .value=${this._fullname} class="form-control">
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label for="address">${this.texts.f04}</label>
-            <div id="field-address">
-              <input type="text" id="address" .value=${this._address} class="form-control">
-            </div>
-          </div>
-    
-        </div>
-    
-        <div class="flex-column-n2">
-          <div class="form-group">
-            <label for="birthdate">${this.texts.f05}</label>
-            <div id="field-birthdate">
-              <input type="date" id="birthdate" .value=${this._birthdate} class="form-control">
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label for="phone">${this.texts.f06}</label>
-            <div id="field-phone">
-              <input type="text" id="phone" .value=${this._phone} class="form-control">
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label for="id_profile">${this.texts.f08}</label>
-            <div id="field-id_profile">
-              <select id="id_profile" @change=${this.on_profile} class="form-control">
-                ${this._profiles.map((item) =>
-                  html`<option value=${item.key} ?selected=${item.key===this._id_profile}>${item.value}</option>`
-                )}
-              </select>
-            </div>
-          </div>
-    
-          ${this._is_parent
-          ? html`
-            <div class="form-group">
-              <label for="id_parent">${this.texts.f07}</label>
-              <div id="field-id_parent">
-                <select id="id_parent" class="form-control">
-                  ${this._parents.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._id_parent}>${item.value}</option>`
-                  )}
-                </select>
-              </div>
-            </div>`
-          : html``
-          }
-    
-          <div class="form-group">
-            <label for="id_country">${this.texts.f10}</label>
-            <div id="field-id_country">
-              <select id="id_country" class="form-control">
-                ${this._countries.map((item) =>
-                  html`<option value=${item.key} ?selected=${item.key===this._id_country}>${item.value}</option>`
-                )}
-              </select>
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label for="id_language">${this.texts.f09}</label>
-            <div id="field-id_language">
-              <select id="id_language" class="form-control">
-              ${this._languages.map((item) =>
-                html`<option value=${item.key} ?selected=${item.key===this._id_language}>${item.value}</option>`
-              )}
-              </select>
-            </div>
-          </div>
-    
-        </div>
+          %HTML_FIELDS%
       </div>
     
       <div class="form-group mb-0">
@@ -257,19 +153,16 @@ export class FormXxxEdit extends LitElement {
 
   //5
   firstUpdated(changedProperties) {
-    this.$get("email").focus()
-    //console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
+    this.$get("%yyy%").focus()
   }
 
   //6
   updated() {
     //aqui se deberia des setear la prpiedad despues de una llamada async
-    //console.log("updated", this.fields)
   }
 
   async on_submit(e) {
     e.preventDefault()
-    //console.log("on_submit","texts",this.texts,"fields:",this.fields)
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
       fields: Object.keys(this.fields)
@@ -290,10 +183,10 @@ export class FormXxxEdit extends LitElement {
     this._issending = false
     this._btnsend = this.texts.tr00
 
-    if (response?.errors) {
+    if(response?.errors){
       let errors = response.errors[0]?.fields_validation
-      if (errors) {
-        window.snack.set_time(4).set_inner("Error").set_color(SNACK.ERROR).show()
+      if(errors) {
+        window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
         return error.append(errors)
       }
 
@@ -301,10 +194,11 @@ export class FormXxxEdit extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
-    $("#table-datatable").DataTable().ajax.reload()
+    const $dt = document.getElementById("table-datatable")
+    if ($dt) $($dt).DataTable().ajax.reload()
     window.snack.set_time(4)
         .set_color(SNACK.SUCCESS)
-        .set_inner(`<b>Data updated</b>`)
+        .set_inner(this.texts.tr04)
         .show()
 
   }//on_submit
