@@ -5,20 +5,12 @@
 $texts = [
   "tr00" => __("send"),
   "tr01" => __("Sending..."),
-  "tr02" => __("Error"),
-  "tr03" => __("Some unexpected error occurred"),
+  "tr02" => __("Cancel"),
+  "tr03" => __("Error"),
+  "tr04" => __("<b>Data created</b>"),
 
-  "f00" => __("Email"),
-  "f01" => __("Password"),
-  "f02" => __("Password confirm"),
-  "f03" => __("Full name"),
-  "f04" => __("Address"),
-  "f05" => __("Birthdate"),
-  "f06" => __("Phone"),
-  "f07" => __("Superior"),
-  "f08" => __("Profile"),
-  "f09" => __("Language"),
-  "f10" => __("Country"),
+
+  %HTML_FIELDS%
 ];
 
 $result = [
