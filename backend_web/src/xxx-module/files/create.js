@@ -87,7 +87,7 @@ export class FormXxxCreate extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
-    this._btncancel = this.texts.tr01
+    this._btncancel = this.texts.tr02
 
     for(let p in this.fields) this["_".concat(p)] = this.fields[p]
   }
@@ -126,14 +126,12 @@ export class FormXxxCreate extends LitElement {
 
   //5
   firstUpdated(changedProperties) {
-    this.$get("email").focus()
-    //console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
+    //this.$get("email").focus()
   }
 
   //6
   updated(){
     //aqui se deberia de setear la prpiedad despues de una llamada async
-    //console.log("updated", this.fields)
   }
 
   async on_submit(e) {
@@ -162,7 +160,7 @@ export class FormXxxCreate extends LitElement {
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
       if(errors) {
-        window.snack.set_time(4).set_inner("Error").set_color(SNACK.ERROR).show()
+        window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
         return error.append(errors)
       }
 
@@ -175,7 +173,7 @@ export class FormXxxCreate extends LitElement {
     window.modalraw.hide()
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
-      .set_inner(`<b>Data created</b>`)
+      .set_inner(this.texts.tr04)
       .show()
 
   }//on_submit
