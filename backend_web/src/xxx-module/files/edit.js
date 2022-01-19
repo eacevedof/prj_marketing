@@ -29,7 +29,7 @@ export class FormXxxEdit extends LitElement {
         .map(field => {
           const ob = {}
           if (field === "uuid") return {}
-          if (["parents", "profiles", "countries", "languages"].includes(field)) return {}
+          if (["sel-inputs-comma-separated"].includes(field)) return {}
           ob[field] = this.$get(field)?.value ?? ""
           return ob
         })
@@ -41,14 +41,6 @@ export class FormXxxEdit extends LitElement {
     return data
   }
 
-  on_profile(e) {
-    this._is_parent = false
-    if (e.target.value === "4")
-      this._is_parent = true
-    else
-      this._id_parent = ""
-  }
-
   on_cancel() {
     window.modalraw.hide()
   }
@@ -58,11 +50,9 @@ export class FormXxxEdit extends LitElement {
     super()
     this.texts = {}
     this.fields = {}
-    //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
   }
 
   static properties = {
-    //https://lit.dev/docs/components/properties/#property-options
     csrf: { type: String },
     texts: {
       converter: (strjson) => {
@@ -105,7 +95,6 @@ export class FormXxxEdit extends LitElement {
   //2
   requestUpdate() {
     super.requestUpdate()
-    //console.log("requestUpdate","texts",this.texts,"fields:",this.fields)
   }
 
   //3 (aqui siempre hay datos)
@@ -113,13 +102,9 @@ export class FormXxxEdit extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
-    this._btncancel = "Cancel"
+    this._btncancel = this.texts.tr02
 
-    //this._email = this.fields.email
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
-    //console.log("connectedCallback","parents:",this._parents)
-    this._is_parent = false
-    if (this._id_profile === "4") this._is_parent = true
   }
 
   //4
@@ -149,10 +134,9 @@ export class FormXxxEdit extends LitElement {
     </form>
     `
   }
-  //render
 
   //5
-  firstUpdated(changedProperties) {
+  firstUpdated() {
     this.$get("%yyy%").focus()
   }
 
