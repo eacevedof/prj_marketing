@@ -123,10 +123,10 @@ final class ModulesService extends AppService implements IConsole
         );
 
         $this->builders["edit.js"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["edit.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
+            $this->aliases, $this->fields, $this->filestpl["edit.js"], $this->pathbuild,FrontBuilder::TYPE_EDIT_JS
         );
         $this->builders["edit.tpl"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["edit.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
+            $this->aliases, $this->fields, $this->filestpl["edit.tpl"], $this->pathbuild,FrontBuilder::TYPE_EDIT_TPL
         );
     }
 
