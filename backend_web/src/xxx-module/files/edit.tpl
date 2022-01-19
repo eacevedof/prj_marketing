@@ -7,41 +7,15 @@
 $texts = [
   "tr00" => __("send"),
   "tr01" => __("Sending..."),
-  "tr02" => __("Error"),
-  "tr03" => __("Some unexpected error occurred"),
+  "tr02" => __("Cancel"),
+  "tr03" => __("Error"),
+  "tr04" => __("<b>Data updated</b>"),
 
-  "f00" => __("Email"),
-  "f01" => __("Password"),
-  "f02" => __("Password confirm"),
-  "f03" => __("Full name"),
-  "f04" => __("Address"),
-  "f05" => __("Birthdate"),
-  "f06" => __("Phone"),
-  "f07" => __("Superior"),
-  "f08" => __("Profile"),
-  "f09" => __("Language"),
-  "f10" => __("Country"),
+  %FIELD_LABELS%
 ];
 
 $result = [
-  "uuid" => $uuid,
-  "email" => $result["email"] ?? "",
-  "password" => "    ",
-  "password2" => "    ",
-  "fullname" => $result["fullname"] ?? "",
-  "address" => $result["address"] ?? "",
-  "birthdate" => $result["birthdate"] ?? "",
-  "phone" => $result["phone"] ?? "",
-
-  "id_profile" => $result["id_profile"] ?? "",
-  "id_parent" => $result["id_parent"] ?? "",
-  "id_country" => $result["id_country"] ?? "",
-  "id_language" => $result["id_language"] ?? "",
-
-  "profiles" => $profiles,
-  "parents" => $parents,
-  "countries" => $countries,
-  "languages" => $languages,
+  %FIELD_KEY_AND_VALUES%
 ];
 ?>
 <div class="modal-form">
@@ -57,7 +31,7 @@ $result = [
               <i class="las la-xxx-circle tx-16 me-1"></i>
             </span>
             <span class="hidden-xs">
-              <?=__("Profile")?>
+              <?=__("tr_Tab_1")?>
             </span>
           </a>
         </li>
@@ -65,7 +39,7 @@ $result = [
             <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
               <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
               <span class="hidden-xs">
-                <?=__("Permissions")?>
+                <?=__("tr_Tab_2")?>
               </span>
             </a>
           </li>

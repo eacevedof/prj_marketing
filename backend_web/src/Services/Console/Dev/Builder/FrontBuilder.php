@@ -116,7 +116,7 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_create_tpl(): void
+    private function _build_create_edit_tpl(): void
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
@@ -150,14 +150,14 @@ final class FrontBuilder
             case self::TYPE_CREATE_JS:
                 $this->_build_create_js();
             break;
-            case self::TYPE_CREATE_TPL:
-                $this->_build_create_tpl();
-            break;
             case self::TYPE_EDIT_JS:
-                $this->_build_js();
+                $this->_build_edit_js();
+            break;
+            case self::TYPE_CREATE_TPL:
+            case self::TYPE_EDIT_TPL:
+                $this->_build_create_edit_tpl();
             break;
 
-            case self::TYPE_EDIT_TPL:
             case self::TYPE_INFO_TPL:
                 $this->_build_tpl();
             break;

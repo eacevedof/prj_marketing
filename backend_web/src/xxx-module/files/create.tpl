@@ -9,7 +9,6 @@ $texts = [
   "tr03" => __("Error"),
   "tr04" => __("<b>Data created</b>"),
 
-
   %FIELD_LABELS%
 ];
 
