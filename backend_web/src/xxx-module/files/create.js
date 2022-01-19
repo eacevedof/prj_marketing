@@ -126,7 +126,7 @@ export class FormXxxCreate extends LitElement {
 
   //5
   firstUpdated(changedProperties) {
-    //this.$get("email").focus()
+    this.$get("%yyy%").focus()
   }
 
   //6

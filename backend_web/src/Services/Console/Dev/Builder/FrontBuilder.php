@@ -95,6 +95,7 @@ final class FrontBuilder
             $arfields[] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);
+        $firstfield = $arfields[0];
 
         $arfields = [];
         $i = 0;
@@ -108,7 +109,9 @@ final class FrontBuilder
         $htmlfields = implode("\n", $arfields);
 
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields]);
+        $contenttpl = $this->_replace($contenttpl, [
+            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
+        ]);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
