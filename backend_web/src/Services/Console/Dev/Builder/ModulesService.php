@@ -121,6 +121,13 @@ final class ModulesService extends AppService implements IConsole
         $this->builders["create.tpl"] = new FrontBuilder(
             $this->aliases, $this->fields, $this->filestpl["create.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
         );
+
+        $this->builders["edit.js"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["edit.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
+        );
+        $this->builders["edit.tpl"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["edit.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
+        );
     }
 
     private function _build(): void
