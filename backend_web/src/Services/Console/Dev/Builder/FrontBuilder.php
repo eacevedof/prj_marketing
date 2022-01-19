@@ -73,7 +73,7 @@ final class FrontBuilder
     private function _get_html_fields(string $field, string $pos): string
     {
         return "<div class=\"form-group\">
-                    <label for=\"$field\">\${this.texts.{$pos}</label>
+                    <label for=\"$field\">\${this.texts.f{$pos}}</label>
                     <div id=\"field-{$field}\">
                         <input type=\"text\" id=\"{$field}\" .value=\${this._{$field}} class=\"form-control\">
                     </div>
@@ -101,7 +101,7 @@ final class FrontBuilder
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $pos = sprintf("%'02d\n", $i);
+            $pos = sprintf("%02d", $i);
             $arfields[] = $this->_get_html_fields($fieldname, $pos);
             $i++;
         }
@@ -116,8 +116,8 @@ final class FrontBuilder
     private function _build_create_tpl(): void
     {
         $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
+            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
             "update_date"
         ];
         //tags %FIELDS%
