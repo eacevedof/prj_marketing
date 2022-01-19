@@ -116,7 +116,43 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_create_edit_tpl(): void
+    private function _build_edit_js(): void
+    {
+        $skip = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
+        //tags %FIELDS%
+        $arfields = [];
+        foreach ($this->fields as $i =>$field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $arfields[$i] = $this->_get_properties_js($fieldname);
+        }
+        $strfields = implode("\n", $arfields);
+        $firstfield = $this->fields[array_keys($arfields)[0]]["field_name"];
+
+        $arfields = [];
+        $i = 0;
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $pos = sprintf("%02d", $i);
+            $arfields[] = $this->_get_html_fields($fieldname, $pos);
+            $i++;
+        }
+        $htmlfields = implode("\n", $arfields);
+
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = $this->_replace($contenttpl, [
+            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
+        ]);
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        file_put_contents($pathfile, $contenttpl);
+    }
+
+    private function _build_create_tpl(): void
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
@@ -144,6 +180,34 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
+    private function _build_edit_tpl(): void
+    {
+        $skip = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
+            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
+        //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
+        $trs = [];
+        $kvs = [];
+        $i = 0;
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $pos = sprintf("%02d", $i);
+            $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
+            $kvs[] = "\"$fieldname\" => \$result[\"{$fieldname}\"],";
+            $i++;
+        }
+        $trs = implode("\n", $trs);
+        $kvs = implode("\n", $kvs);
+
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        file_put_contents($pathfile, $contenttpl);
+    }    
+
     public function build(): void
     {
         switch ($this->type) {
@@ -154,8 +218,10 @@ final class FrontBuilder
                 $this->_build_edit_js();
             break;
             case self::TYPE_CREATE_TPL:
+                $this->_build_create_tpl();
+            break;
             case self::TYPE_EDIT_TPL:
-                $this->_build_create_edit_tpl();
+                $this->_build_edit_tpl();
             break;
 
             case self::TYPE_INFO_TPL:
