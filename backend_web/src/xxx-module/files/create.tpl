@@ -10,27 +10,11 @@ $texts = [
   "tr04" => __("<b>Data created</b>"),
 
 
-  %HTML_FIELDS%
+  %FIELD_LABELS%
 ];
 
 $result = [
-  "email"     => "",
-  "password"  => "",
-  "password2" => "",
-  "fullname"  => "",
-  "address"   => "",
-  "birthdate" => "",
-  "phone"     => "",
-
-  "id_profile" => "",
-  "id_parent" => "",
-  "id_country" => "",
-  "id_language" => "",
-
-  "profiles" => $profiles,
-  "parents" => $parents,
-  "countries" => $countries,
-  "languages" => $languages,
+  %FIELD_KEY_AND_VALUES%
 ];
 ?>
 <div class="modal-form">
