@@ -89,13 +89,13 @@ final class FrontBuilder
         ];
         //tags %FIELDS%
         $arfields = [];
-        foreach ($this->fields as $field) {
+        foreach ($this->fields as $i =>$field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $arfields[] = $this->_get_properties_js($fieldname);
+            $arfields[$i] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);
-        $firstfield = $arfields[0];
+        $firstfield = $this->fields[array_keys($arfields)[0]]["field_name"];
 
         $arfields = [];
         $i = 0;
@@ -123,28 +123,22 @@ final class FrontBuilder
             "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
             "update_date"
         ];
-        //tags %FIELDS%
-        $arfields = [];
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $arfields[] = $this->_get_properties_js($fieldname);
-        }
-        $strfields = implode("\n", $arfields);
-
-        $arfields = [];
+        //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
+        $trs = [];
+        $kvs = [];
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $pos = sprintf("%'02d\n", $i);
-            $arfields[] = $this->_get_html_fields($fieldname, $pos);
-            $i++;
+            $pos = sprintf("%02d", $i);
+            $trs[] = "\"f$pos\" => __(\"tr_{$field}\"),";
+            $kvs[] = "\"$fieldname\" => \"\"";
         }
-        $htmlfields = implode("\n", $arfields);
+        $trs = implode("\n", $trs);
+        $kvs = implode("\n", $kvs);
 
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields]);
+        $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
