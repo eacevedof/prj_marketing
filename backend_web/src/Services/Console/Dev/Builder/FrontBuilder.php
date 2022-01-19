@@ -131,8 +131,9 @@ final class FrontBuilder
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
             $pos = sprintf("%02d", $i);
-            $trs[] = "\"f$pos\" => __(\"tr_{$field}\"),";
-            $kvs[] = "\"$fieldname\" => \"\"";
+            $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
+            $kvs[] = "\"$fieldname\" => \"\",";
+            $i++;
         }
         $trs = implode("\n", $trs);
         $kvs = implode("\n", $kvs);
