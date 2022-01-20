@@ -237,6 +237,14 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
+    private function _build_index_tpl(): void
+    {
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = $this->_replace($contenttpl);
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        file_put_contents($pathfile, $contenttpl);
+    }
+
     public function build(): void
     {
         switch ($this->type) {
@@ -255,6 +263,9 @@ final class FrontBuilder
 
             case self::TYPE_INFO_TPL:
                 $this->_build_info_tpl();
+            break;
+            case self::TYPE_INDEX_TPL:
+                $this->_build_index_tpl();
             break;
             case self::TYPE_CSS:
                 $this->_build_css();
