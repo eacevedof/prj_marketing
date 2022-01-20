@@ -38,6 +38,7 @@ echo $this->_element("common/elem-datatable-asset");
           </table>
         </div>
       </div>
+
     </div>
   </div>
 </div>
