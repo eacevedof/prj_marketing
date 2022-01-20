@@ -1,7 +1,9 @@
 <?php
 /**
- * @var \App\Views\AppView $this
+ * @var App\Views\AppView $this
  * @var array $result
+ * @var string $h1
+ * @var string $csrf
  */
 
 $texts = [
@@ -26,7 +28,7 @@ $result = [
     <div class="tabs-menu ">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
-          <a href="#tr-tab-1" data-bs-toggle="tab" class="active" aria-expanded="true">
+          <a href="#tab-1" data-bs-toggle="tab" class="active" aria-expanded="true">
             <span class="visible-xs">
               <i class="las la-xxx-circle tx-16 me-1"></i>
             </span>
@@ -36,7 +38,7 @@ $result = [
           </a>
         </li>
           <li>
-            <a href="#tr-tab-2" data-bs-toggle="tab" aria-expanded="false">
+            <a href="#tab-2" data-bs-toggle="tab" aria-expanded="false">
               <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
               <span class="hidden-xs">
                 <?=__("tr_tab_2")?>

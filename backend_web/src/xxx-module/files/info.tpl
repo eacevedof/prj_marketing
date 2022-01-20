@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \App\Views\AppView $this
+ * @var App\Views\AppView $this
  * @var string $h1
  * @var ?string $uuid
  * @var array $result
@@ -16,7 +16,7 @@
     <div class="tabs-menu ">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
-          <a href="#tr-tab-1" data-bs-toggle="tab" class="active" aria-expanded="true">
+          <a href="#tab-1" data-bs-toggle="tab" class="active" aria-expanded="true">
             <span class="visible-xs">
               <i class="las la-xxx-circle tx-16 me-1"></i>
             </span>
@@ -26,7 +26,7 @@
           </a>
         </li>
         <li>
-          <a href="#tr-tab-2" data-bs-toggle="tab" aria-expanded="false">
+          <a href="#tab-2" data-bs-toggle="tab" aria-expanded="false">
             <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
             <span class="hidden-xs">
               <?=__("tr_tab_2")?>
@@ -34,7 +34,7 @@
           </a>
         </li>
         <li>
-          <a href="#tr-tab-3" data-bs-toggle="tab" aria-expanded="false">
+          <a href="#tab-3" data-bs-toggle="tab" aria-expanded="false">
             <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
             <span class="hidden-xs">
               <?=__("tr_tab_3")?>
@@ -47,59 +47,48 @@
     <div class="tab-content border-start border-bottom border-right border-top-0 p-4 br-dark">
       <div class="tab-pane active" id="profile">
         <?php
-        $profile = $result["xxx"] ?? [];
+        $xxx = $result["xxx"] ?? [];
         ?>
         <ol>
-          <li><b><?=__("Nº")?>:</b>&ensp;<span><?=$profile["id"] ?? ""?></span></li>
-          <li><b><?=__("Code")?>:</b>&ensp;<span><?=$profile["uuid"] ?? ""?></span></li>
-          <li><b><?=__("Full name")?>:</b>&ensp;<span><?=$profile["fullname"] ?? ""?></span></li>
-          <li><b><?=__("Email")?>:</b>&ensp;<span><?=$profile["email"] ?? ""?></span></li>
-          <li><b><?=__("Phone")?>:</b>&ensp;<span><?=$profile["phone"] ?? ""?></span></li>
-          <li><b><?=__("Country")?>:</b>&ensp;<span><?=$profile["e_country"] ?? ""?></span></li>
-          <li><b><?=__("Language")?>:</b>&ensp;<span><?=$profile["e_language"] ?? ""?></span></li>
-          <li><b><?=__("Address")?>:</b>&ensp;<span><?=$profile["address"] ?? ""?></span></li>
-          <li><b><?=__("Birthdate")?>:</b>&ensp;<span><?=str_replace(" 00:00:00","",$profile["birthdate"] ?? "")?></span></li>
-          <li><b><?=__("Profile")?>:</b>&ensp;<span><?=$profile["e_profile"] ?? ""?></span></li>
-          <li><b><?=__("Superior")?>:</b>&ensp;<span><?=$profile["e_parent"] ?? ""?></span></li>
+          %FIELD_KEY_AND_VALUES%
         </ol>
         <br/>
         <ul>
-          <li><b><?=__("Created by")?>:</b>&ensp;<span><?=$profile["insert_user"] ?? ""?></span></li>
-          <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$profile["insert_date"] ?? ""?></span></li>
-          <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$profile["update_user"] ?? ""?></span></li>
-          <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$profile["update_date"] ?? ""?></span></li>
+          <li><b><?=__("Created by")?>:</b>&ensp;<span><?=$xxx["insert_user"] ?? ""?></span></li>
+          <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$xxx["insert_date"] ?? ""?></span></li>
+          <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$xxx["update_user"] ?? ""?></span></li>
+          <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$xxx["update_date"] ?? ""?></span></li>
 
-          <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$profile["delete_user"] ?? ""?></span></li>
-          <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$profile["delete_date"] ?? ""?></span></li>
+          <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$xxx["delete_user"] ?? ""?></span></li>
+          <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$xxx["delete_date"] ?? ""?></span></li>
         </ul>
-      </div><!-- profile -->
+      </div><!-- xxx -->
 
-      <div class="tab-pane" id="permissions">
+      <div class="tab-pane" id="tab-1">
         <ol>
           <?php
-          $permissions = $result["permissions"] ?? [];
-          foreach ($permissions as $field => $value):
+          $tab1 = $result["tab-1"] ?? [];
+          foreach ($tab1 as $field => $value):
           ?>
           <li><span><?$this->_echo($value);?></span></li>
           <?php
           endforeach;
           ?>
         </ol>
-      </div><!--permissions-->
+      </div><!--tab-1-->
 
-      <div class="tab-pane" id="preferences">
+      <div class="tab-pane" id="tab-2">
         <ol>
           <?php
-          $preferences = $result["preferences"] ?? [];
-          //dd($preferences);
-          foreach ($preferences as $arvalue):
+          $tab2 = $result["tab-2"] ?? [];
+          foreach ($tab2 as $arvalue):
             ?>
             <li><b><?$this->_echo($arvalue["pref_key"]);?>:</b>&nbsp;&nbsp;<span><?$this->_echo($arvalue["pref_value"]);?></span></li>
           <?php
           endforeach;
           ?>
         </ol>
-      </div><!--preferences-->
+      </div><!--tab-2-->
 
     </div><!--tab-content-->
   </div><!--card-body-->

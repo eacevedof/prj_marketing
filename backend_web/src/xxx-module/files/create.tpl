@@ -1,6 +1,8 @@
 <?php
 /**
- * @var \App\Views\AppView $this
+ * @var App\Views\AppView $this
+ * @var string $h1
+ * @var string $csrf
  */
 $texts = [
   "tr00" => __("send"),

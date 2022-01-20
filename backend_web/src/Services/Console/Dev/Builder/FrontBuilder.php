@@ -215,23 +215,16 @@ final class FrontBuilder
             "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
             "update_date"
         ];
-        //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
-        $trs = [];
+        //tags %FIELD_KEY_AND_VALUES%
         $kvs = [];
-        $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $pos = sprintf("%02d", $i);
-            $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
-            $kvs[] = "\"$fieldname\" => \$result[\"{$fieldname}\"],";
-            $i++;
+            $kvs[] = "<li><b><?=__(\"tr_{$fieldname}\")?>:</b>&ensp;<span><?=\${$this->aliases["lowered"]}[\"{$fieldname}\"] ?? \"\"?></span></li>";
         }
-        $trs = implode("\n", $trs);
         $kvs = implode("\n", $kvs);
-
         $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
+        $contenttpl = $this->_replace($contenttpl, ["%FIELD_KEY_AND_VALUES%" => $kvs]);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
