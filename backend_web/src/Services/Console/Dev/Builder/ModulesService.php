@@ -115,6 +115,10 @@ final class ModulesService extends AppService implements IConsole
 
     private function _load_frontbuilders(): void
     {
+        $this->builders["index.tpl"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["index.tpl"], $this->pathbuild,FrontBuilder::TYPE_INDEX_TPL
+        );
+
         $this->builders["create.js"] = new FrontBuilder(
             $this->aliases, $this->fields, $this->filestpl["create.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
         );
