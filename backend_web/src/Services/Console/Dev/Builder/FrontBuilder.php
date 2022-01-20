@@ -206,7 +206,15 @@ final class FrontBuilder
         $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
-    }    
+    }
+
+    private function _build_css(): void
+    {
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = $this->_replace($contenttpl);
+        $pathfile = "{$this->pathmodule}/{$this->aliases["lowered-plural"]}.css";
+        file_put_contents($pathfile, $contenttpl);
+    }
 
     public function build(): void
     {
