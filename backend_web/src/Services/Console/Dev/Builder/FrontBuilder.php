@@ -208,6 +208,34 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
+    private function _build_info_tpl(): void
+    {
+        $skip = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
+            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
+        //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
+        $trs = [];
+        $kvs = [];
+        $i = 0;
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $pos = sprintf("%02d", $i);
+            $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
+            $kvs[] = "\"$fieldname\" => \$result[\"{$fieldname}\"],";
+            $i++;
+        }
+        $trs = implode("\n", $trs);
+        $kvs = implode("\n", $kvs);
+
+        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        file_put_contents($pathfile, $contenttpl);
+    }
+
     private function _build_css(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
@@ -233,7 +261,7 @@ final class FrontBuilder
             break;
 
             case self::TYPE_INFO_TPL:
-                $this->_build_tpl();
+                $this->_build_info_tpl();
             break;
             case self::TYPE_CSS:
                 $this->_build_css();
