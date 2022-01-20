@@ -31,7 +31,7 @@ export class FormXxxCreate extends LitElement {
       .map(field => {
         const ob = {}
         if (field==="uuid") return {}
-        if ([""].includes(field)) return {}
+        if (["sel-inputs-comma-separated"].includes(field)) return {}
         ob[field] = this.$get(field)?.value ?? ""
         return ob
       })
