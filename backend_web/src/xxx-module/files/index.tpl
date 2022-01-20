@@ -1,8 +1,9 @@
 <?php
 /**
- * @var \App\Views\AppView $this
- * @var \App\Helpers\Views\DatatableHelper $dthelp
+ * @var App\Views\AppView $this
+ * @var App\Helpers\Views\DatatableHelper $dthelp
  * @var array $authuser
+ * @var string $h1
  */
 echo $this->_element("common/elem-datatable-asset");
 ?>
