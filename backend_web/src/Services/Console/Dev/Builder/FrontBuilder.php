@@ -72,10 +72,11 @@ final class FrontBuilder
 
     private function _get_html_fields(string $field, string $pos): string
     {
+        $len = $this->_get_length($field);
         return "<div class=\"form-group\">
                     <label for=\"$field\">\${this.texts.f{$pos}}</label>
                     <div id=\"field-{$field}\">
-                        <input type=\"text\" id=\"{$field}\" .value=\${this._{$field}} class=\"form-control\">
+                        <input type=\"text\" id=\"{$field}\" .value=\${this._{$field}} class=\"form-control\" maxlength=\"$len\">
                     </div>
                 </div>";
     }
