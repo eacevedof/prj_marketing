@@ -16,7 +16,7 @@ use App\Factories\DbFactory as DF;
 use App\Services\Dbs\SchemaService;
 
 
-final class ModulesService extends AppService implements IConsole
+final class ModuleBuilderService extends AppService implements IConsole
 {
     use ConsoleTrait;
 

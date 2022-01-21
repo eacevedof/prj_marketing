@@ -13,16 +13,18 @@ return [
     ["url"=>"/restrict/xxxs/search","controller"=>"App\Controllers\Restrict\XxxsController", "method"=>"search"],
 ];
 ```
-### permissions
-```json
-```
 
 ### translations
 ```po
+%PO_KEYS%
 ```
 
 ### policies
 ```
 const XXXS_READ = "xxxs:read";
 const XXXS_WRITE = "xxxs:write";
+```
+
+### permissions
+```json
 ```
