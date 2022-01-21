@@ -17,15 +17,9 @@ final class ExtraBuilder
     private array $aliases;
     private array $fields;
 
-    public const TYPE_CREATE_JS = "create.js";
-    public const TYPE_CREATE_TPL = "create.tpl";
-    public const TYPE_EDIT_JS = "edit.js";
-    public const TYPE_EDIT_TPL = "edit.tpl";
-    public const TYPE_INFO_TPL = "info.tpl";
-    public const TYPE_INDEX_TPL = "index.tpl";
-    public const TYPE_CSS = "xxxs.css";
+    public const TYPE_EXTRA_MD = "extra.md";
 
-    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_CREATE_JS)
+    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_EXTRA_MD)
     {
        $this->pathtpl = $pathtpl;
        $this->pathmodule = $pathmodule;
@@ -56,31 +50,7 @@ final class ExtraBuilder
        return $type[0] ?? [];
     }
 
-    private function _get_length(string $field): string
-    {
-        $fielddet = $this->_get_field_details($field);
-        $length = $fielddet["field_length"] ?? "";
-        if (!$length)
-            $length = $fielddet["ntot"] ?? "";
-        return $length;
-    }
-    
-    private function _get_properties_js(string $field): string
-    {
-        return "_{$field}: {type: String, state:true},";
-    }
-
-    private function _get_html_fields(string $field, string $pos): string
-    {
-        return "<div class=\"form-group\">
-                    <label for=\"$field\">\${this.texts.f{$pos}}</label>
-                    <div id=\"field-{$field}\">
-                        <input type=\"text\" id=\"{$field}\" .value=\${this._{$field}} class=\"form-control\">
-                    </div>
-                </div>";
-    }
-
-    private function _build_create_js(): void
+    private function _build_extra_md(): void
     {
         $skip = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
@@ -112,135 +82,6 @@ final class ExtraBuilder
         $contenttpl = $this->_replace($contenttpl, [
             "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
         ]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_edit_js(): void
-    {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
-        //tags %FIELDS%
-        $arfields = [];
-        foreach ($this->fields as $i =>$field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $arfields[$i] = $this->_get_properties_js($fieldname);
-        }
-        $strfields = implode("\n", $arfields);
-        $firstfield = $this->fields[array_keys($arfields)[0]]["field_name"];
-
-        $arfields = [];
-        $i = 0;
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $pos = sprintf("%02d", $i);
-            $arfields[] = $this->_get_html_fields($fieldname, $pos);
-            $i++;
-        }
-        $htmlfields = implode("\n", $arfields);
-
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, [
-            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
-        ]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_create_tpl(): void
-    {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
-            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
-        //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
-        $trs = [];
-        $kvs = [];
-        $i = 0;
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $pos = sprintf("%02d", $i);
-            $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
-            $kvs[] = "\"$fieldname\" => \"\",";
-            $i++;
-        }
-        $trs = implode("\n", $trs);
-        $kvs = implode("\n", $kvs);
-
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_edit_tpl(): void
-    {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
-            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
-        //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
-        $trs = [];
-        $kvs = [];
-        $i = 0;
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $pos = sprintf("%02d", $i);
-            $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
-            $kvs[] = "\"$fieldname\" => \$result[\"{$fieldname}\"],";
-            $i++;
-        }
-        $trs = implode("\n", $trs);
-        $kvs = implode("\n", $kvs);
-
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_info_tpl(): void
-    {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
-            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
-        //tags %FIELD_KEY_AND_VALUES%
-        $kvs = [];
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $kvs[] = "<li><b><?=__(\"tr_{$fieldname}\")?>:</b>&ensp;<span><?=\${$this->aliases["lowered"]}[\"{$fieldname}\"] ?? \"\"?></span></li>";
-        }
-        $kvs = implode("\n", $kvs);
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl, ["%FIELD_KEY_AND_VALUES%" => $kvs]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_css(): void
-    {
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["lowered-plural"]}.css";
-        file_put_contents($pathfile, $contenttpl);
-    }
-
-    private function _build_index_tpl(): void
-    {
-        $contenttpl = file_get_contents($this->pathtpl);
-        $contenttpl = $this->_replace($contenttpl);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
@@ -248,27 +89,8 @@ final class ExtraBuilder
     public function build(): void
     {
         switch ($this->type) {
-            case self::TYPE_CREATE_JS:
-                $this->_build_create_js();
-            break;
-            case self::TYPE_EDIT_JS:
-                $this->_build_edit_js();
-            break;
-            case self::TYPE_CREATE_TPL:
-                $this->_build_create_tpl();
-            break;
-            case self::TYPE_EDIT_TPL:
-                $this->_build_edit_tpl();
-            break;
-
-            case self::TYPE_INFO_TPL:
-                $this->_build_info_tpl();
-            break;
-            case self::TYPE_INDEX_TPL:
-                $this->_build_index_tpl();
-            break;
-            case self::TYPE_CSS:
-                $this->_build_css();
+            case self::TYPE_EXTRA_MD:
+                $this->_build_extra_md();
             break;
         }
     }
