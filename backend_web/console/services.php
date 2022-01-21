@@ -9,5 +9,5 @@ return [
     //commands
     "help"                   => "App\\Services\\Console\\HelpService",
     "users"                  => "App\\Services\\Console\\Restrict\\UsersService",
-    "build-module"           => "App\\Services\\Console\Dev\\Builder\\ModuleBuilderService",
+    "build-module"           => "App\\Services\\Console\\Dev\\Builder\\ModuleBuilderService",
 ];

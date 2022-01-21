@@ -40,14 +40,13 @@ final class ExtraBuilder
         $basic = $basic + $replaces;
         return str_replace(array_keys($basic), array_values($basic), $content);
     }
-    
-    private function _get_field_details(string $field): array
+
+    private function _get_translation(string $key): string
     {
-       $type = array_filter($this->fields, function ($item) use ($field) {
-           return $item["field_name"] === $field;
-       });
-       $type = array_values($type);
-       return $type[0] ?? [];
+        return "
+        msgid \"key\"
+        msgstr \"\"
+        ";
     }
 
     private function _build_extra_md(): void
@@ -57,25 +56,10 @@ final class ExtraBuilder
             , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
             "update_date"
         ];
-        //tags %FIELDS%
-        $arfields = [];
-        foreach ($this->fields as $i =>$field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $arfields[$i] = $this->_get_properties_js($fieldname);
-        }
-        $strfields = implode("\n", $arfields);
-        $firstfield = $this->fields[array_keys($arfields)[0]]["field_name"];
+        //tags %PO_KEYS%
 
-        $arfields = [];
-        $i = 0;
-        foreach ($this->fields as $field) {
-            $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
-            $pos = sprintf("%02d", $i);
-            $arfields[] = $this->_get_html_fields($fieldname, $pos);
-            $i++;
-        }
+
+
         $htmlfields = implode("\n", $arfields);
 
         $contenttpl = file_get_contents($this->pathtpl);
