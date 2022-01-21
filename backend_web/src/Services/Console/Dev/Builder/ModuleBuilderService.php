@@ -2,8 +2,8 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Services\Console\Dev\Builder\ModuleService
- * @file ModuleService.php 1.0.0
+ * @name App\Services\Console\Dev\Builder\ModuleBuilderService
+ * @file ModuleBuilderService.php 1.0.0
  * @date 31-10-2022 17:46 SPAIN
  * @observations
  */
@@ -14,7 +14,6 @@ use App\Services\AppService;
 use App\Traits\ConsoleTrait;
 use App\Factories\DbFactory as DF;
 use App\Services\Dbs\SchemaService;
-
 
 final class ModuleBuilderService extends AppService implements IConsole
 {
