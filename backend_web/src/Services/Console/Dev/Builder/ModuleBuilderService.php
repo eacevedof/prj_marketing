@@ -42,6 +42,7 @@ final class ModuleBuilderService extends AppService implements IConsole
         $this->_load_tplfiles();
         $this->_load_phpbuilders();
         $this->_load_frontbuilders();
+        $this->_load_extrabuilders();
     }
 
     private function _check_input(): void
@@ -139,6 +140,13 @@ final class ModuleBuilderService extends AppService implements IConsole
         
         $this->builders["xxxs.css"] = new FrontBuilder(
             $this->aliases, $this->fields, $this->filestpl["xxxs.css"], $this->pathbuild,FrontBuilder::TYPE_CSS
+        );
+    }
+
+    private function _load_extrabuilders(): void
+    {
+        $this->builders["extra.md"] = new ExtraBuilder(
+            $this->aliases, $this->fields, $this->filestpl["extra.md"], $this->pathbuild,ExtraBuilder::TYPE_EXTRA_MD
         );
     }
 
