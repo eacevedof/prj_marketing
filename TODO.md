@@ -1,4 +1,5 @@
 ### To-Do
+- token para acceso api usuario
 - patron de pool de objetos para conector a bd
 - fix tranferencia de traducciones a lit
 - modal info responsive
