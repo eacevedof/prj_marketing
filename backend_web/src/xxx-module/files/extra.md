@@ -20,11 +20,15 @@ return [
 ```
 
 ### policies
-```
+```php
+//PolicyType.php
 const XXXS_READ = "xxxs:read";
 const XXXS_WRITE = "xxxs:write";
 ```
 
 ### permissions
-```json
+```sql
+SELECT id,id_user,json_rw FROM `base_user_permissions` WHERE 1 AND id_user=1
+"xxxs:read",
+"xxxs:write"
 ```

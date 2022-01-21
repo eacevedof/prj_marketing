@@ -58,13 +58,18 @@ final class ExtraBuilder
         ];
         //tags %PO_KEYS%
 
-
-
-        $htmlfields = implode("\n", $arfields);
+        $pokeys = [];
+        foreach ($this->fields as $field) {
+            $fieldname = $field["field_name"];
+            if (in_array($fieldname, $skip)) continue;
+            $trkey = "tr_$field";
+            $pokeys[] = $this->_get_translation($trkey);
+        }
+        $pokeys = implode("\n", $pokeys);
 
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, [
-            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
+            "%PO_KEYS%" => $pokeys, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
         ]);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
