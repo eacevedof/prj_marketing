@@ -29,7 +29,7 @@ const XXXS_WRITE = "xxxs:write";
 ### permissions
 ```sql
 SELECT id,id_user,json_rw FROM `base_user_permissions` WHERE 1 AND id_user=1
-UPDATE `base_user_permissions` SET json_rw = REPLACE(json_rw,']','"xxxs:read",\n"xxxs:write"\n]') WHERE id_user=1  
+UPDATE `base_user_permissions` SET json_rw = REPLACE(json_rw,'\n]',',\n"xxxs:read",\n"xxxs:write"\n]') WHERE id_user=1  
 /*
 "xxxs:read",
 "xxxs:write"

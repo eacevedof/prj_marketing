@@ -44,7 +44,7 @@ final class ExtraBuilder
     private function _get_translation(string $key): string
     {
         return "
-        msgid \"key\"
+        msgid \"$key\"
         msgstr \"\"
         ";
     }
@@ -62,14 +62,13 @@ final class ExtraBuilder
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
             if (in_array($fieldname, $skip)) continue;
-            $trkey = "tr_$field";
+            $trkey = "tr_$fieldname";
             $pokeys[] = $this->_get_translation($trkey);
         }
-        $pokeys = implode("\n", $pokeys);
-
+        $pokeys = implode("", $pokeys);
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, [
-            "%PO_KEYS%" => $pokeys, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
+            "%PO_KEYS%" => $pokeys
         ]);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
