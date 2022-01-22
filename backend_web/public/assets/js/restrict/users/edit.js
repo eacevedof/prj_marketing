@@ -25,13 +25,13 @@ export class FormUserEdit extends LitElement {
 
   $get = sel => this.shadowRoot.querySelector(`#${sel}`)
 
-  get_data() {
+  _get_data() {
     const data = Object.keys(this.fields)
         .map(field => {
           const ob = {}
           if (field === "uuid") return {}
           if (["parents", "profiles", "countries", "languages"].includes(field)) return {}
-          ob[field] = this.$get(field)?.value ?? ""
+          ob[field] = this._$get(field)?.value ?? ""
           return ob
         })
         .reduce((old, cur) => ({
@@ -50,7 +50,7 @@ export class FormUserEdit extends LitElement {
       this._id_parent = ""
   }
 
-  on_cancel() {
+  _on_cancel() {
     window.modalraw.hide()
   }
 
@@ -257,7 +257,12 @@ export class FormUserEdit extends LitElement {
 
   //5
   firstUpdated(changedProperties) {
-    this.$get("email").focus()
+    try {
+      this._$get("email").focus()
+    }
+    catch (e) {
+      console.log(e)
+    }
     //console.log("firstUpdated","texts",this.texts,"fields:",this.fields)
   }
 
@@ -284,7 +289,7 @@ export class FormUserEdit extends LitElement {
           _action: ACTION,
           _csrf: this.csrf,
           uuid: this.fields.uuid,
-          ...this.get_data()
+          ...this._get_data()
         })
 
     this._issending = false

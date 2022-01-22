@@ -57,7 +57,7 @@ final class UsersInfoService extends AppService
         )
             return;
 
-        $identowner = $this->repouser->get_ownerid($iduser);
+        $identowner = $this->repouser->get_idowner($iduser);
         //si logado es propietario del bm
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
@@ -66,7 +66,7 @@ final class UsersInfoService extends AppService
             return;
 
         //si el logado es bm y la ent es del mismo owner
-        $idauthowner = $this->repouser->get_ownerid($idauthuser);
+        $idauthowner = $this->repouser->get_idowner($idauthuser);
         if ($this->auth->is_business_manager() && $idauthowner === $identowner)
             return;
 

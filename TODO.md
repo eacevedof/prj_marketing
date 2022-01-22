@@ -1,4 +1,5 @@
 ### To-Do
+- pasar a ModulesSErvice a una tabla
 - token para acceso api usuario
 - patron de pool de objetos para conector a bd
 - fix tranferencia de traducciones a lit

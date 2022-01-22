@@ -45,6 +45,7 @@ include_once "../vendor/theframework/bootstrap.php";
 //rutas, mapeo de url => controlador.metodo()
 $arRoutes = include_once "../src/routes/routes.php";
 use TheFramework\Components\ComponentRouter;
+
 try {
     //throw new Exception("example");
     $oR = new ComponentRouter($arRoutes);
@@ -76,8 +77,8 @@ catch (\Exception $ex)
     if($_SESSION) lgerr($_SESSION,"main-exception SESSION", "error");
     if($_REQUEST) lgerr($_REQUEST,"main-exception REQUEST", "error");
     if($_ENV) lgerr($_ENV,"main-exception ENV", "error");
-    lgerr(debug_backtrace());
     lgerr($ex->getMessage(), "main-exception", "error");
+    lgerr($ex->getFile()." : (line: {$ex->getLine()})", "", "error");
 
     $code = $ex->getCode()!==0 ? $ex->getCode():500;
     http_response_code($code);
@@ -91,7 +92,6 @@ catch (\Exception $ex)
     ];
     echo json_encode($response);
 }
-
 catch (\Throwable $ex)
 {
     if($_POST) lgerr($_POST,"fatal-error POST", "error");
@@ -99,7 +99,9 @@ catch (\Throwable $ex)
     if($_SESSION) lgerr($_SESSION,"fatal-error SESSION", "error");
     if($_REQUEST) lgerr($_REQUEST,"fatal-error REQUEST", "error");
     if($_ENV) lgerr($_ENV,"fatal-error ENV", "error");
+    if($arRun) lgerr($arRun, "to-run", "error");
     lgerr($ex->getMessage(), "fatal-error", "error");
+    lgerr($ex->getFile()." : (line: {$ex->getLine()})", "", "error");
 
     $code = $ex->getCode()!==0 ? $ex->getCode():500;
     http_response_code($code);

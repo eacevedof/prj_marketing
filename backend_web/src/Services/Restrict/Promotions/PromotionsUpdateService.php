@@ -1,32 +1,30 @@
 <?php
-namespace App\Services\Restrict\Users;
+namespace App\Services\Restrict\Promotions;
 
 use App\Services\AppService;
 use App\Traits\RequestTrait;
 use App\Factories\EntityFactory as MF;
 use App\Factories\RepositoryFactory as RF;
 use App\Factories\Specific\ValidatorFactory as VF;
-use App\Services\Auth\AuthService;
 use App\Factories\ServiceFactory as SF;
-use App\Models\Base\UserEntity;
-use App\Repositories\Base\UserRepository;
-use TheFramework\Components\Session\ComponentEncdecrypt;
+use App\Services\Auth\AuthService;
+use App\Models\App\PromotionEntity;
+use App\Repositories\App\PromotionRepository;
+use App\Models\FieldsValidator;
 use App\Enums\PolicyType;
 use App\Enums\ProfileType;
-use App\Exceptions\FieldsException;
-use App\Models\FieldsValidator;
 use App\Enums\ExceptionType;
+use App\Exceptions\FieldsException;
 
-final class UsersUpdateService extends AppService
+final class PromotionsUpdateService extends AppService
 {
     use RequestTrait;
 
     private AuthService $auth;
     private array $authuser;
-    private ComponentEncdecrypt $encdec;
-    private UserRepository $repouser;
+    private PromotionRepository $repopromotion;
     private FieldsValidator $validator;
-    private UserEntity $entityuser;
+    private PromotionEntity $entitypromotion;
 
     public function __construct(array $input)
     {
@@ -37,17 +35,16 @@ final class UsersUpdateService extends AppService
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->entityuser = MF::get("Base/User");
-        $this->validator = VF::get($this->input, $this->entityuser);
-        $this->repouser = RF::get("Base/UserRepository");
-        $this->repouser->set_model($this->entityuser);
+        $this->entitypromotion = MF::get("App/Promotion");
+        $this->validator = VF::get($this->input, $this->entitypromotion);
+        $this->repopromotion = RF::get("App/PromotionRepository");
+        $this->repopromotion->set_model($this->entitypromotion);
         $this->authuser = $this->auth->get_user();
-        $this->encdec = $this->_get_encdec();
     }
 
     private function _check_permission(): void
     {
-        if(!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+        if(!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -56,16 +53,16 @@ final class UsersUpdateService extends AppService
 
     private function _check_entity_permission(array $entity): void
     {
-        $iduser = $this->repouser->get_id_by($entity["uuid"]);
+        $idpromotion = $this->repopromotion->get_id_by($entity["uuid"]);
         $idauthuser = (int)$this->authuser["id"];
-        if ($this->auth->is_root() || $idauthuser === $iduser) return;
+        if ($this->auth->is_root() || $idauthuser === $idpromotion) return;
 
         if ($this->auth->is_sysadmin()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
         )
             return;
 
-        $identowner = $this->repouser->get_idowner($iduser);
+        $identowner = $this->repopromotion->get_idowner($idpromotion);
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
@@ -80,56 +77,45 @@ final class UsersUpdateService extends AppService
 
     private function _skip_validation(): self
     {
-        $this->validator->add_skip("password2");
+        $this->validator->add_skip("id");
         return $this;
     }
 
     private function _add_rules(): FieldsValidator
     {
-        $repouser = $this->repouser;
         $this->validator
-            ->add_rule("email", "email", function ($data) use ($repouser){
-                $email = trim($data["value"]);
-                $uuid = $data["data"]["uuid"] ?? "";
-                $id = $repouser->get_id_by($uuid);
-                if (!$id) return __("User with code {0} not found",$uuid);
-                $idemail = $repouser->email_exists($email);
-                if (!$idemail || ($id == $idemail)) return false;
-                return __("This email already exists");
-            })
-            ->add_rule("email", "email", function ($data) {
+            ->add_rule("id", "id", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("email", "email", function ($data) {
-                return filter_var($data["value"], FILTER_VALIDATE_EMAIL) ? false : __("Invalid email format");
-            })
-            ->add_rule("phone", "empty", function ($data) {
+            })->add_rule("uuid", "uuid", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("fullname", "empty", function ($data) {
+            })->add_rule("id_owner", "id_owner", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("birthdate", "empty", function ($data) {
+            })->add_rule("code_erp", "code_erp", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_profile", "empty", function ($data){
+            })->add_rule("description", "description", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_parent", "by-profile", function ($data){
-                if (($data["data"]["id_profile"] ?? "") === "4" && !trim($data["value"]))
-                    return __("Empty field is not allowed");
-                return false;
-            })
-            ->add_rule("id_country", "empty", function ($data){
+            })->add_rule("slug", "slug", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_language", "empty", function ($data){
+            })->add_rule("content", "content", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("password", "not-equal", function ($data){
-                if(!($password = trim($data["value"]))) return false;
-                $password2 = trim($data["data"]["password2"] ?? "");
-                return ($password === $password2) ? false : __("Bad password confirmation");
+            })->add_rule("id_type", "id_type", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("date_from", "date_from", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("date_to", "date_to", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("url_social", "url_social", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("url_design", "url_design", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("is_active", "is_active", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("invested", "invested", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("returned", "returned", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("notes", "notes", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
         ;
         return $this->validator;
@@ -144,15 +130,15 @@ final class UsersUpdateService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entityuser->map_request($update);
+        $update = $this->entitypromotion->map_request($update);
         $this->_check_entity_permission($update);
         if(!$update["secret"]) unset($update["secret"]);
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $update["description"] = $update["fullname"];
-        $this->entityuser->add_sysupdate($update, $this->authuser["id"]);
+        $this->entitypromotion->add_sysupdate($update, $this->authuser["id"]);
 
-        $affected = $this->repouser->update($update);
+        $affected = $this->repopromotion->update($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]

@@ -39,7 +39,7 @@ final class FieldsValidator
 
     private function _is_date(string $field): bool
     {
-        return in_array($this->entity->get_type($field), [EntityType::DATE,EntityType::DATETIME]);
+        return in_array($this->entity->get_type($field), [EntityType::DATE, EntityType::DATETIME]);
     }
     
     private function _is_type($field): bool
@@ -52,7 +52,7 @@ final class FieldsValidator
 
         switch ($type) {
             case EntityType::INT: return is_numeric($value);
-            case EntityType::DECIMAL: return is_float($value);
+            case EntityType::DECIMAL: return is_float($value) || is_numeric($value);
             case EntityType::DATE: return strtotime($value);
             case EntityType::DATETIME: return $this->_is_datetime_ok($value);
             case EntityType::STRING: return is_string($field) || is_numeric($value) || is_float($value);

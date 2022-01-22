@@ -7,7 +7,6 @@ use App\Factories\RepositoryFactory as RF;
 use App\Factories\HelperFactory as HF;
 use App\Factories\ComponentFactory as CF;
 use App\Services\Auth\AuthService;
-use App\Repositories\App\XxxPermissionsRepository;
 use App\Repositories\App\XxxRepository;
 use App\Helpers\Views\DatatableHelper;
 use App\Enums\PolicyType;
@@ -17,7 +16,6 @@ final class XxxsSearchService extends AppService
 {
     private AuthService $auth;
     private XxxRepository $repoxxx;
-    private XxxPermissionsRepository $repopermission;
 
     public function __construct(array $input)
     {
@@ -26,7 +24,6 @@ final class XxxsSearchService extends AppService
 
         $this->input = $input;
         $this->repoxxx = RF::get("App/Xxx");
-        $this->repopermission = RF::get("App/XxxPermissions");
     }
 
     public function __invoke(): array

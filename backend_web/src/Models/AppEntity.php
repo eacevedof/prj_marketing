@@ -67,7 +67,7 @@ abstract class AppEntity
                 $mapped[$dbfield] = ($value = trim($request[$requestkey]));
             }
             
-            if(in_array($dbtype, $nullables) && !$value)
+            if(in_array($dbtype, $nullables) && $value==="")
                 $mapped[$dbfield] = null;
         }
         return $mapped;
