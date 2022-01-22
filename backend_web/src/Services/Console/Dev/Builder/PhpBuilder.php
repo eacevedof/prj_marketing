@@ -193,7 +193,7 @@ final class PhpBuilder
         $columns = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfield)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $arfields[] = $this->_get_rule_tpl($fieldname);
             $columns[] = $this->_get_dtcolumn_tpl($fieldname);
         }
