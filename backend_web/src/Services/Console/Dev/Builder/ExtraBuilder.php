@@ -27,6 +27,16 @@ final class ExtraBuilder
        $this->aliases = $aliases;
        $this->fields = $fields;
        $this->type = $type;
+       $this->_load_skip_fields();;
+    }
+
+    private function _load_skip_fields(): void
+    {
+        $this->skipfields = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
     }
     
     private function _replace(string $content, array $replaces=[]): string
@@ -46,30 +56,25 @@ final class ExtraBuilder
     {
         return "
         msgid \"$key\"
-        msgstr \"\"
+        msgstr \"$key\"
         ";
     }
 
     private function _build_extra_md(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags %PO_KEYS%
 
         $pokeys = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $trkey = "tr_$fieldname";
             $pokeys[] = $this->_get_translation($trkey);
         }
         $pokeys = implode("", $pokeys);
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, [
-            "%PO_KEYS%" => $pokeys
+            "%PO_KEYS%" => trim($pokeys)
         ]);
         $pathfile = "{$this->pathmodule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
