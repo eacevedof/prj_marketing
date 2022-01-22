@@ -188,7 +188,6 @@ final class PhpBuilder
     private function _build_search_insert_update_service(): void
     {
         //tags: %FIELD_RULES%
-
         $arfields = [];
         $columns = [];
         foreach ($this->fields as $field) {
@@ -209,7 +208,6 @@ final class PhpBuilder
         $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
         file_put_contents($pathfile, $contenttpl);
     }
-
 
     private function _build_service(): void
     {
