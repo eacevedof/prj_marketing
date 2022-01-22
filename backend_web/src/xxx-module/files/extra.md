@@ -17,16 +17,16 @@ return [
 ### translations
 ```po
 msgid "Xxxs"
-msgstr ""
+msgstr "Xxxs"
 
 msgid "Xxx"
-msgstr ""
+msgstr "Xxx"
 
 msgid "xxxs"
-msgstr ""
+msgstr "xxxs"
 
 msgid "xxx"
-msgstr ""
+msgstr "xxx"
 
 %PO_KEYS%
 ```
