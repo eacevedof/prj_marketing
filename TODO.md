@@ -1,10 +1,16 @@
 ### To-Do
+- pasar a controladores por caso de uso
+- corregir carga de picklists por idowner
+- Authservice inyectado desde el controlador a los servicios?
+  - puede que si, habrá que probar el comportamiento singleton
 - pasar a ModulesSErvice a una tabla
 - token para acceso api usuario
 - patron de pool de objetos para conector a bd
 - fix tranferencia de traducciones a lit
 - modal info responsive
-- refactor a este patrón de carpetas de DDD: https://www.youtube.com/watch?v=y3MWfPDmVqo
+- refactor a este patrón de carpetas de DDD by **codely**:
+  - https://www.youtube.com/watch?v=X2CPc8DLwEQ (explicación de la distribución de carpetas)
+  - https://www.youtube.com/watch?v=y3MWfPDmVqo (la distribución en si)
 - validadores en cliente
 - función que recupere todas las traducciones
 - cache por usuario o por elemento

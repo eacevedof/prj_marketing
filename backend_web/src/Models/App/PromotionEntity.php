@@ -93,7 +93,7 @@ final class PromotionEntity extends AppEntity
                 "label" => __("Date from"),
                 EntityType::REQUEST_KEY => "date_from",
                 "config" => [
-                    "type" => EntityType::DATE,
+                    "type" => EntityType::DATETIME,
                 ]
             ],
 
@@ -101,7 +101,7 @@ final class PromotionEntity extends AppEntity
                 "label" => __("Date to"),
                 EntityType::REQUEST_KEY => "date_to",
                 "config" => [
-                    "type" => EntityType::DATE,
+                    "type" => EntityType::DATETIME,
                 ]
             ],
 

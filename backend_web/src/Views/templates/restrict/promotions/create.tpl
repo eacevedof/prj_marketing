@@ -1,51 +1,59 @@
 <?php
 /**
  * @var App\Views\AppView $this
+ * @var \App\Components\Date\DateComponent $date;
  * @var string $h1
  * @var string $csrf
  * @var array $businessowners
+ * @var array $promotions
  */
-$texts = [
-  "tr00" => __("send"),
-  "tr01" => __("Sending..."),
-  "tr02" => __("Cancel"),
-  "tr03" => __("Error"),
-  "tr04" => __("<b>Data created</b>"),
+use App\Factories\ComponentFactory as CF;
+$date = CF::get("Date/Date");
 
-  "f02" => __("Owner"),
-  "f03" => __("External code"),
-  "f04" => __("Description"),
-  "f05" => __("Slug"),
-  "f06" => __("Content"),
-  "f07" => __("Type"),
-  "f08" => __("Date from"),
-  "f09" => __("Date to"),
-  "f10" => __("Url social"),
-  "f11" => __("Url design"),
-  "f12" => __("Enabled"),
-  "f13" => __("Invested"),
-  "f14" => __("Inv returned"),
-  "f15" => __("Notes"),
+$datefrom = $date->set_date1(date("Y-m-d H:i:s"))->explode()->to_js()->get();
+$dateto = $date->set_date1(date("Y-m-d")." 23:59:00")->explode()->to_js()->get();
+
+$texts = [
+    "tr00" => __("send"),
+    "tr01" => __("Sending..."),
+    "tr02" => __("Cancel"),
+    "tr03" => __("Error"),
+    "tr04" => __("<b>Data created</b>"),
+
+    "f02" => __("Owner"),
+    "f03" => __("External code"),
+    "f04" => __("Description"),
+    "f05" => __("Slug"),
+    "f06" => __("Content"),
+    "f07" => __("Type"),
+    "f08" => __("Date from"),
+    "f09" => __("Date to"),
+    "f10" => __("Url social"),
+    "f11" => __("Url design"),
+    "f12" => __("Enabled"),
+    "f13" => __("Invested"),
+    "f14" => __("Inv returned"),
+    "f15" => __("Notes"),
 ];
 
-
 $result = [
-  "id_owner" => "",
-  "code_erp" => "",
-  "description" => "",
-  "slug" => "",
-  "content" => "",
-  "id_type" => "",
-  "date_from" => ($date = date("Y-m-d")),
-  "date_to" => $date,
-  "url_social" => "",
-  "url_design" => "",
-  "is_active" => "0",
-  "invested" => "0.00",
-  "returned" => "0.00",
-  "notes" => "",
+    "id_owner" => "",
+    "code_erp" => "",
+    "description" => "",
+    "slug" => "",
+    "content" => "",
+    "id_type" => "",
+    "date_from" => $datefrom,
+    "date_to" => $dateto,
+    "url_social" => "",
+    "url_design" => "",
+    "is_active" => "0",
+    "invested" => "0.00",
+    "returned" => "0.00",
+    "notes" => "",
 
-  "businessowners" => $businessowners
+  "promotions" => $promotions,
+  "businessowners" => $businessowners,
 ];
 ?>
 <div class="modal-form">

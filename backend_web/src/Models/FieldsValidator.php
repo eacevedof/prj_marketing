@@ -54,6 +54,7 @@ final class FieldsValidator
             case EntityType::INT: return is_numeric($value);
             case EntityType::DECIMAL: return is_float($value) || is_numeric($value);
             case EntityType::DATE: return strtotime($value);
+            //ejemplo datetime: 2022-01-22 00:00:00
             case EntityType::DATETIME: return $this->_is_datetime_ok($value);
             case EntityType::STRING: return is_string($field) || is_numeric($value) || is_float($value);
         }

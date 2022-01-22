@@ -27,7 +27,7 @@ export class FormPromotionCreate extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["uuid","businessowners"])}
+  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["uuid","promotions","businessowners"])}
 
   _on_cancel() {window.modalraw.hide()}
 
@@ -73,6 +73,7 @@ export class FormPromotionCreate extends LitElement {
     _returned: {type: Number, state:true},
     _notes: {type: String, state:true},
 
+    _promotions: {type: Array, state:true},
     _businessowners: {type: Array, state:true},
   }
 
@@ -131,19 +132,23 @@ export class FormPromotionCreate extends LitElement {
           <div class="form-group">
             <label for="id_type">${this.texts.f07}</label>
             <div id="field-id_type">
-              <input type="text" id="id_type" .value=${this._id_type} class="form-control" maxlength="10">
+              <select id="id_type" class="form-control">
+                ${this._promotions.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._id_type}>${item.value}</option>`
+                )}
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label for="date_from">${this.texts.f08}</label>
             <div id="field-date_from">
-              <input type="date" id="date_from" .value=${this._date_from} class="form-control">
+              <input type="datetime-local" id="date_from" .value=${this._date_from} class="form-control">
             </div>
           </div>
           <div class="form-group">
             <label for="date_to">${this.texts.f09}</label>
             <div id="field-date_to">
-              <input type="date" id="date_to" .value=${this._date_to} class="form-control">
+              <input type="datetime-local" id="date_to" .value=${this._date_to} class="form-control">
             </div>
           </div>
           <div class="form-group">

@@ -6,33 +6,39 @@ use App\Factories\ServiceFactory as SF;
 use App\Factories\RepositoryFactory as RF;
 use App\Services\Auth\AuthService;
 use App\Repositories\App\PicklistRepository;
+use App\Repositories\Base\ArrayRepository as BaseArray;
+use App\Repositories\App\ArrayRepository as AppArray;
 use App\Enums\ProfileType;
 
 //todo quitar AppService
 final class PicklistService extends AppService
 {
     private PicklistRepository $repopicklist;
+    private AppArray $repoapparray;
+    private BaseArray $repobasearray;
     private AuthService $auth;
 
     public function __construct()
     {
         $this->auth = SF::get_auth();
         $this->repopicklist = RF::get("App/Picklist");
+        $this->repobasearray = RF::get("Base/Array");
+        $this->repoapparray = RF::get("App/Array");
     }
 
     public function get_countries(): array
     {
-        return $this->repopicklist->get_countries();
+        return $this->repoapparray->get_countries();
     }
 
     public function get_languages(): array
     {
-        return $this->repopicklist->get_languages();
+        return $this->repoapparray->get_languages();
     }
 
     public function get_profiles(): array
     {
-        $profiles = $this->repopicklist->get_profiles();
+        $profiles = $this->repobasearray->get_profiles();
 
         if ($this->auth->is_root()) return $profiles;
 
@@ -49,6 +55,13 @@ final class PicklistService extends AppService
             });
 
         return array_values($profiles);
+    }
+
+    public function get_promotions(): array
+    {
+        return $this->repoapparray->get_promotions(
+            $this->auth->get_idowner()
+        );
     }
 
     public function get_users_by_profile(string $profileid): array

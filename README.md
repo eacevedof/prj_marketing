@@ -12,6 +12,7 @@ SN Marketing
 - root
   - Ve todo sin ninguna restricción incluso soft-deletes
   - no se filtra por jerarquia vertical
+  - originalmente no se ve afectado por las policies que se apliquen.
 - sys admin
   - Tiene todas las acciones CRUD pero se filtra el acceso por permisos
   - no se filtra por jerarquia vertical

@@ -3,7 +3,13 @@
  * @var \App\Views\AppView $this
  * @var \App\Helpers\Views\DatatableHelper $dthelp
  * @var array $authuser
+ * @var string $h1
+ * @var bool $authread
+ * @var bool $authwrite
  */
+if(!isset($authread)) $authread=false;
+if(!isset($authwrite)) $authwrite=false;
+
 echo $this->_element("common/elem-datatable-asset");
 ?>
 <div class="row row-sm">
@@ -35,56 +41,51 @@ echo $this->_element("common/elem-datatable-asset");
               </tr>
             </tfoot>
           </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </div><!--table-responsive-->
+      </div><!--cardbody-->
+    </div><!--card-->
+  </div><!--col-->
+</div><!--row-->
 <script type="module">
 import dt_render from "/assets/js/common/datatable/dttable.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
+import auth from "/assets/js/restrict/auth.js"
 
-const sessusrid = <?$this->_echo_js($authuser["id"]);?>;
-const sesprofile = <?$this->_echo_js($authuser["id_profile"]);?>;
-
-const PROFILES = {
-  ROOT:"1",
-  SYS_ADMIN:"2",
-  BUSINESS_OWNER:"3",
-  BUSINESS_MANAGER:"4",
-}
+auth.id_user = <?$this->_echo_js($authuser["id"]) ?>;
+auth.id_profile = <?$this->_echo_js($authuser["id_profile"]) ?>;
+auth.readable = <?= (int)$authread ?>;
+auth.writable = <?= (int)$authwrite ?>;
 
 const is_infoable = row => {
-  if (sesprofile===PROFILES.ROOT || row.id === sessusrid)
+  if (auth.is_root()) return true
+  if (row.delete_date) return false
+  if (row.id === auth.id_user) return true
+  if ((auth.is_sysadmin() && !auth.is_root(row.id_profile)) || auth.is_business_owner())
     return true
-
-  const usrprof = row.id_profile
-  return (
-    (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.SYS_ADMIN, PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof))
-    || sesprofile===PROFILES.BUSINESS_OWNER
-  )
+  return (auth.is_business_manager() && (auth.can_write() || auth.can_read()))
 }
 
 const is_editable = row => {
   if (row.delete_date) return false
-  if (sesprofile===PROFILES.ROOT || row.id === sessusrid) return true
+  if (auth.is_root() || row.id === auth.id_user) return true
 
-  const usrprof = row.id_profile
-  return (
-    (sesprofile===PROFILES.SYS_ADMIN && [PROFILES.BUSINESS_OWNER, PROFILES.BUSINESS_MANAGER].includes(usrprof)) ||
-    (sesprofile===PROFILES.BUSINESS_OWNER)
-  )
+  if ((auth.is_sysadmin() && auth.is_business(row.id_profile)) || auth.is_business_owner())
+    return true
+  return (auth.is_business_manager() && auth.can_write())
 }
 
 const is_deletable = row => {
   if (row.delete_date) return false
-  if (sesprofile===PROFILES.ROOT && row.id !== sessusrid) return true
+  if (auth.is_root() && row.id !== auth.id_user) return true
+  console.log("is-bow",auth.is_business_owner(), "row-profile",row.id_profile, "is-bm-prof",auth.is_business_manager(row.id_profile))
+  if (auth.is_business_owner() && auth.is_business_manager(row.id_profile)) return true
+  return (auth.is_business_manager() && auth.can_write() && row.id !== auth.id_user)
+}
 
-  const usrprof = row.id_profile
-  return (
-    (sesprofile===PROFILES.BUSINESS_OWNER && usrprof===PROFILES.BUSINESS_MANAGER)
-  )
+const is_restorable = row => {
+  if (!row.delete_date) return false
+  return (auth.is_root() && row.id !== auth.id_user)
 }
 
 dtcolumn.add_rowbtn({
@@ -122,7 +123,7 @@ dtcolumn.add_rowbtn({
 dtcolumn.add_rowbtn({
   btnid: "rowbtn-undel",
   render: (v,t,row) => {
-    if (sesprofile===PROFILES.ROOT && row.delete_date)
+    if (is_restorable(row))
       return `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}" class="btn btn-success" title="restore">
         <i class="las la-undo-alt"></i>
       </button>`
@@ -130,6 +131,9 @@ dtcolumn.add_rowbtn({
   }
 })
 
+//***********
+//columns
+//***********
 dtcolumn.add_column({
   data: "uuid",
   render: (v,t,row) => {
