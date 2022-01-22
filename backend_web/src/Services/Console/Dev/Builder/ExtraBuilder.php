@@ -16,6 +16,7 @@ final class ExtraBuilder
     private string $pathmodule;
     private array $aliases;
     private array $fields;
+    private array $skipfields;
 
     public const TYPE_EXTRA_MD = "extra.md";
 

@@ -16,6 +16,7 @@ final class PhpBuilder
     private string $pathmodule;
     private array $aliases;
     private array $fields;
+    private array $skipfields;
 
     public const TYPE_ENTITY = "Entity";
     public const TYPE_REPOSITORY = "Repository";
@@ -33,6 +34,16 @@ final class PhpBuilder
        $this->aliases = $aliases;
        $this->fields = $fields;
        $this->type = $type;
+       $this->_load_skip_fields();;
+    }
+
+    private function _load_skip_fields(): void
+    {
+        $this->skipfields = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
+            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];
     }
 
     private function _get_field_details(string $field): array
@@ -115,16 +126,11 @@ final class PhpBuilder
 
     private function _build_entity(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags %FIELDS%
         $arfields = ["["];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $arfields[] = $this->_get_field_tpl($fieldname);
         }
         $arfields[] = "];";
@@ -139,17 +145,10 @@ final class PhpBuilder
 
     private function _build_repository(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
-        //tags: %TABLE%, %SEARCH_FIELDS%, %INFO_FIELDS%, xxx
-
         $arfields = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $arfields[] = "\"m.$fieldname\"";
         }
         $searchfields = implode(",\n", $arfields);
@@ -188,18 +187,13 @@ final class PhpBuilder
 
     private function _build_search_insert_update_service(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags: %FIELD_RULES%
 
         $arfields = [];
         $columns = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfield)) continue;
             $arfields[] = $this->_get_rule_tpl($fieldname);
             $columns[] = $this->_get_dtcolumn_tpl($fieldname);
         }
@@ -246,6 +240,7 @@ final class PhpBuilder
             case self::TYPE_INFO_SERVICE:
                 $this->_build_service();
             break;
-        }
-    }
+        }//swithc (type)
+
+    }//build
 }

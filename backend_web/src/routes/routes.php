@@ -22,6 +22,16 @@ return [
     ["url"=>"/restrict/users/?int:page","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"search"],
 
+    //@promotions
+    ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"info"],
+    ["url"=>"/restrict/promotions/create","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"create"],
+    ["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"edit"],
+    ["url"=>"/restrict/promotions/insert","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"insert", "allowed"=>["post"]],
+    ["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"update", "allowed"=>["put"]],
+    ["url"=>"/restrict/promotions/delete/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"remove", "allowed"=>["delete"]],
+    ["url"=>"/restrict/promotions/undelete/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"undelete", "allowed"=>["patch"]],
+    ["url"=>"/restrict/promotions/?int:page","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"index"],
+    ["url"=>"/restrict/promotions/search","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"search"],
 
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
