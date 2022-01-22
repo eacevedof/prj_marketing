@@ -16,14 +16,15 @@ final class FrontBuilder
     private string $pathmodule;
     private array $aliases;
     private array $fields;
+    private array $skipfields;
 
-    public const TYPE_CREATE_JS = "create.js";
-    public const TYPE_CREATE_TPL = "create.tpl";
-    public const TYPE_EDIT_JS = "edit.js";
-    public const TYPE_EDIT_TPL = "edit.tpl";
-    public const TYPE_INFO_TPL = "info.tpl";
-    public const TYPE_INDEX_TPL = "index.tpl";
-    public const TYPE_CSS = "xxxs.css";
+    public const TYPE_CREATE_JS     = "create.js";
+    public const TYPE_CREATE_TPL    = "create.tpl";
+    public const TYPE_EDIT_JS       = "edit.js";
+    public const TYPE_EDIT_TPL      = "edit.tpl";
+    public const TYPE_INFO_TPL      = "info.tpl";
+    public const TYPE_INDEX_TPL     = "index.tpl";
+    public const TYPE_CSS           = "xxxs.css";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_CREATE_JS)
     {
@@ -32,6 +33,16 @@ final class FrontBuilder
        $this->aliases = $aliases;
        $this->fields = $fields;
        $this->type = $type;
+       $this->_load_skip_fields();;
+    }
+    
+    private function _load_skip_fields(): void
+    {
+        $this->skipfields = [
+            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
+            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
+            "update_date"
+        ];        
     }
     
     private function _replace(string $content, array $replaces=[]): string
@@ -83,16 +94,11 @@ final class FrontBuilder
 
     private function _build_create_js(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags %FIELDS%
         $arfields = [];
         foreach ($this->fields as $i =>$field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $arfields[$i] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);
@@ -102,7 +108,7 @@ final class FrontBuilder
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $pos = sprintf("%02d", $i);
             $arfields[] = $this->_get_html_fields($fieldname, $pos);
             $i++;
@@ -119,16 +125,11 @@ final class FrontBuilder
 
     private function _build_edit_js(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
-            , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags %FIELDS%
         $arfields = [];
         foreach ($this->fields as $i =>$field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $arfields[$i] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);
@@ -138,7 +139,7 @@ final class FrontBuilder
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $pos = sprintf("%02d", $i);
             $arfields[] = $this->_get_html_fields($fieldname, $pos);
             $i++;
@@ -155,18 +156,13 @@ final class FrontBuilder
 
     private function _build_create_tpl(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
-            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
         $trs = [];
         $kvs = [];
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $pos = sprintf("%02d", $i);
             $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
             $kvs[] = "\"$fieldname\" => \"\",";
@@ -183,18 +179,13 @@ final class FrontBuilder
 
     private function _build_edit_tpl(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
-            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
         $trs = [];
         $kvs = [];
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $pos = sprintf("%02d", $i);
             $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
             $kvs[] = "\"$fieldname\" => \$result[\"{$fieldname}\"],";
@@ -211,16 +202,11 @@ final class FrontBuilder
 
     private function _build_info_tpl(): void
     {
-        $skip = [
-            "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user",
-            "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
-            "update_date"
-        ];
         //tags %FIELD_KEY_AND_VALUES%
         $kvs = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $skip)) continue;
+            if (in_array($fieldname, $this->skipfields)) continue;
             $kvs[] = "<li><b><?=__(\"tr_{$fieldname}\")?>:</b>&ensp;<span><?=\${$this->aliases["lowered"]}[\"{$fieldname}\"] ?? \"\"?></span></li>";
         }
         $kvs = implode("\n", $kvs);

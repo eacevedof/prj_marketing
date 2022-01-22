@@ -16,6 +16,18 @@ return [
 
 ### translations
 ```po
+msgid "Xxxs"
+msgstr ""
+
+msgid "Xxx"
+msgstr ""
+
+msgid "xxxs"
+msgstr ""
+
+msgid "xxx"
+msgstr ""
+
 %PO_KEYS%
 ```
 
