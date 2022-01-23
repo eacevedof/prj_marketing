@@ -215,7 +215,7 @@ final class UserRepository extends AppRepository
         return $hier->get_topparent($userid, $this->get_all_hierarchy());
     }
 
-    public function get_ownerid(string $userid): int
+    public function get_idowner(string $userid): int
     {
         $owner = $this->get_owner($userid);
         return (int) $owner["id"];

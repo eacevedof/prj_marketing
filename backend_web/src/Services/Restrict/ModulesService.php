@@ -5,7 +5,6 @@ use App\Factories\ServiceFactory as SF;
 use App\Services\Auth\AuthService;
 use App\Enums\SessionType;
 
-
 final class ModulesService
 {
     private AuthService $auth;
@@ -46,7 +45,8 @@ final class ModulesService
                     ],
                 ]
             ],
-        ];;
+        ];
+
     }// _load_modules
 
     private function _has_policy(string $policy): bool

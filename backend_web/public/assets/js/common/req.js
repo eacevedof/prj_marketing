@@ -134,7 +134,7 @@ const _get_response_txt = response => {
   /*
   * Parse error: syntax error, unexpected token "." in /.../index.php on line 51
   * */
-  console.log("TXT_RESPONSE",response, typeof response)
+  //console.log("TXT_RESPONSE",response, typeof response)
   if (!response) return ""
   const resp = response.trim()
 

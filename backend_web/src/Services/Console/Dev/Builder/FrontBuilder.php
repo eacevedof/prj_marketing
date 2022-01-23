@@ -98,7 +98,7 @@ final class FrontBuilder
         $arfields = [];
         foreach ($this->fields as $i =>$field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
+            if (in_array($fieldname, $this->skipfields+["id","uuid"])) continue;
             $arfields[$i] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);

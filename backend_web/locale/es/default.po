@@ -27,3 +27,63 @@ msgstr "Editar"
 
 msgid "Remove"
 msgstr "Eliminar"
+
+msgid "Promotions"
+msgstr "Promotions"
+
+msgid "Promotion"
+msgstr "Promotion"
+
+msgid "promotions"
+msgstr "promotions"
+
+msgid "promotion"
+msgstr "promotion"
+
+msgid "Nº"
+msgstr "Nº"
+
+msgid "Cod. Promo"
+msgstr "Cod. Promo"
+
+msgid "Owner"
+msgstr "Owner"
+
+msgid "External code"
+msgstr "External code"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Slug"
+msgstr "Slug"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Date from"
+msgstr "Date from"
+
+msgid "Date to"
+msgstr "Date to"
+
+msgid "Url social"
+msgstr "Url social"
+
+msgid "Url design"
+msgstr "Url design"
+
+msgid "Enabled"
+msgstr "Enabled"
+
+msgid "Invested"
+msgstr "Invested"
+
+msgid "Inv returned"
+msgstr "Inv returned"
+
+msgid "Notes"
+msgstr "Notes"

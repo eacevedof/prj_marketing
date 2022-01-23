@@ -62,7 +62,7 @@ final class XxxsUpdateService extends AppService
         )
             return;
 
-        $identowner = $this->repoxxx->get_ownerid($idxxx);
+        $identowner = $this->repoxxx->get_idowner($idxxx);
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
