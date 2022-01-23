@@ -41,8 +41,8 @@ final class PromotionsController extends RestrictController
                 ->add_var(PageType::H1, __("Promotions"))
                 ->add_var("dthelp", $search->get_datatable())
                 ->add_var("idowner", $this->auth->get_idowner())
-                ->add_var("isread", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_READ))
-                ->add_var("iswrite", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE))
+                ->add_var("authread", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_READ))
+                ->add_var("authwrite", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE))
                 ->render();
         }
         catch (ForbiddenException $e) {
@@ -97,7 +97,8 @@ final class PromotionsController extends RestrictController
 
         $this->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1,__("New promotion"))
-            ->add_var("businessowners",  $businessowners)
+            ->add_var("promotions", $this->picklist->get_promotions())
+            ->add_var("businessowners", $businessowners)
             ->render_nl();
     }
 

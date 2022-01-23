@@ -49,8 +49,7 @@ final class PromotionsInfoService extends AppService
         if ($this->auth->is_business_owner() && $idauthuser === $identowner)
             return;
 
-        //si el logado es bm y la ent es del mismo owner
-        $idauthowner = (int)$this->authuser["id_owner"];
+        $idauthowner = $this->auth->get_idowner();
         if ($this->auth->is_business_manager() && $idauthowner === $identowner)
             return;
 
