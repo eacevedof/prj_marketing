@@ -5,6 +5,7 @@ import error from "/assets/js/common/fielderrors.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
 import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
+import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
 const URL_POST = "/restrict/xxxs/insert"
 const ACTION = "xxxs.insert"
@@ -24,26 +25,11 @@ export class FormXxxCreate extends LitElement {
     ]
   }
 
-  $get = sel => this.shadowRoot.querySelector(`#${sel}`)
+  _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  get_data() {
-    const data = Object.keys(this.fields)
-      .map(field => {
-        const ob = {}
-        if (field==="uuid") return {}
-        if (["sel-inputs-comma-separated"].includes(field)) return {}
-        ob[field] = this.$get(field)?.value ?? ""
-        return ob
-      })
-      .reduce((old, cur) => ({
-        ...old,
-        ...cur
-      }), {})
+  get_data() {return get_formdata(this.shadowRoot)(this.fields)([])}
 
-    return data
-  }
-
-  on_cancel() {
+  _on_cancel() {
     window.modalraw.hide()
   }
 
@@ -126,7 +112,12 @@ export class FormXxxCreate extends LitElement {
 
   //5
   firstUpdated(changedProperties) {
-    this.$get("%yyy%").focus()
+    try {
+      this._$get("%yyy%").focus()
+    }
+    catch (e){
+      console.log(e)
+    }
   }
 
   //6
@@ -151,7 +142,7 @@ export class FormXxxCreate extends LitElement {
         _action: ACTION,
         _csrf: this.csrf,
         uuid: this.fields.uuid,
-        ...this.get_data()
+        ...this.get_form_data()
       })
 
     this._issending = false

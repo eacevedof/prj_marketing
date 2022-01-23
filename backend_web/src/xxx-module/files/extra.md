@@ -13,9 +13,30 @@ return [
     ["url"=>"/restrict/xxxs/search","controller"=>"App\Controllers\Restrict\XxxsController", "method"=>"search"],
 ];
 ```
+### ModuleService.php
+```php
+"xxxs" => [
+    "title" => __("Xxxs"),
+    "icon" => "la-gift",
+    "actions" => [
+        "search" => [
+            "url" => "/restrict/xxxs",
+        ],
+        "create" => [
+            "url" => "/restrict/xxxs/create",
+        ],
+    ]
+],
+```
 
 ### translations
 ```po
+msgid "New xxx"
+msgstr "New xxx"
+
+msgid "Xxx info"
+msgstr "Xxx info"
+
 msgid "Xxxs"
 msgstr "Xxxs"
 

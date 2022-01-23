@@ -2,6 +2,7 @@ import reqjs from "/assets/js/common/req.js"
 import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import get_cssrules from "/assets/js/common/cssrules.js"
 import set_cookie from "/assets/js/common/cookie.js"
+import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
 const URL = "/login/access"
 
@@ -28,7 +29,7 @@ export class FormLogin extends LitElement {
     this.btnsend = "Enviar"
   }
 
-  $get = sel => this.shadowRoot.querySelector(sel)
+  _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   async on_submit(e) {
     e.preventDefault()
@@ -37,8 +38,8 @@ export class FormLogin extends LitElement {
 
     const response = await reqjs.post(URL,{
       _csrf: this.csrf,
-      email: this.$get("#email").value,
-      password: this.$get("#password").value,
+      email: this._$get("email").value,
+      password: this._$get("password").value,
     })
 
     this.issending = false

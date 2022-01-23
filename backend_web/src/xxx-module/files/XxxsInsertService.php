@@ -33,7 +33,6 @@ final class XxxsInsertService extends AppService
         $this->entityxxx = MF::get("App/Xxx");
         $this->validator = VF::get($this->input, $this->entityxxx);
         $this->repoxxx = RF::get("App/Xxx");
-        $this->repoprefs = RF::get("App/XxxPreferences");
         $this->authuser = $this->auth->get_user();
     }
 

@@ -2,6 +2,7 @@
 namespace App\Services\Auth;
 
 use App\Factories\Specific\SessionFactory as SF;
+use App\Factories\RepositoryFactory as RF;
 use App\Enums\SessionType;
 use App\Enums\ProfileType;
 
@@ -55,5 +56,15 @@ final class AuthService
     public function is_business_manager(): bool
     {
         return ((self::$authuser["id_profile"] ?? "") === ProfileType::BUSINESS_MANAGER);
+    }
+
+    public function get_idowner(): ?int
+    {
+        if ($this->is_root() || $this->is_sysadmin())
+            return null;
+        if ($this->is_business_owner())
+            return self::$authuser["id"];
+
+        return RF::get("Base/User")->get_idowner(self::$authuser["id"]);
     }
 }

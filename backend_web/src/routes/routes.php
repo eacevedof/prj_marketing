@@ -8,9 +8,6 @@ return [
     ["url"=>"/restrict/logout","controller"=>"App\Controllers\Restrict\LoginController", "method"=>"logout"],
     ["url"=>"/restrict","controller"=>"App\Controllers\Restrict\DashboardController", "method"=>"index"],
 
-    ["url"=>"/restrict/promotions","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"index"],
-    ["url"=>"/restrict/promotions/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"detail"],
-
     //@users
     ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"info"],
     ["url"=>"/restrict/users/create","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"create"],

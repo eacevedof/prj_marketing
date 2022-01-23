@@ -103,7 +103,7 @@ final class XxxsController extends RestrictController
             $insert = SF::get_callable("Restrict\Xxxs\XxxsInsert", $this->request->get_post());
             $result = $insert();
             $this->_get_json()->set_payload([
-                "message" => __("Xxx successfully created"),
+                "message" => __("{0} successfully created", __("Xxx")),
                 "result" => $result,
             ])->show();
         }
@@ -221,7 +221,7 @@ final class XxxsController extends RestrictController
             $update = SF::get_callable("Restrict\Xxxs\XxxsUpdate", $request);
             $result = $update();
             $this->_get_json()->set_payload([
-                "message"=>__("Xxx successfully created"),
+                "message"=> __("{0} successfully updated", __("Xxx")),
                 "result" => $result,
             ])->show();
         }
@@ -250,7 +250,7 @@ final class XxxsController extends RestrictController
             $delete = SF::get_callable("Restrict\Xxxs\XxxsDelete", ["uuid"=>$uuid]);
             $result = $delete();
             $this->_get_json()->set_payload([
-                "message"=>__("Xxx successfully removed"),
+                "message"=> __("{0} successfully removed", __("Xxx")),
                 "result" => $result,
             ])->show();
         }
@@ -274,7 +274,7 @@ final class XxxsController extends RestrictController
             $delete = SF::get_callable("Restrict\Xxxs\XxxsDelete", ["uuid"=>$uuid]);
             $result = $delete->undelete();
             $this->_get_json()->set_payload([
-                "message"=>__("Xxx successfully restored"),
+                "message"=> __("{0} successfully restored", __("Xxx")),
                 "result" => $result,
             ])->show();
         }
