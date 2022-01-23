@@ -96,14 +96,4 @@ final class AuthService
 
         return RF::get("Base/User")->get_idowner(self::$authuser["id"]);
     }
-
-    public function get_idowner(): ?int
-    {
-        if ($this->is_root() || $this->is_sysadmin())
-            return null;
-        if ($this->is_business_owner())
-            return self::$authuser["id"];
-
-        return RF::get("Base/User")->get_idowner(self::$authuser["id"]);
-    }
 }
