@@ -79,7 +79,7 @@ final class UsersUpdateController extends RestrictController
                 ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
-    }//modal edit
+    }//modal
 
     //@patch
     public function update(string $uuid): void

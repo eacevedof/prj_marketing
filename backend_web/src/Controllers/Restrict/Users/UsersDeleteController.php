@@ -55,7 +55,7 @@ final class UsersDeleteController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }
+    }//remove
 
     //@undelete
     public function undelete(string $uuid): void
@@ -79,5 +79,6 @@ final class UsersDeleteController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }
+    }//undelete
+
 }//UsersDeleteController
