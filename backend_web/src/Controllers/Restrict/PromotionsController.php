@@ -99,6 +99,7 @@ final class PromotionsController extends RestrictController
             ->add_var(PageType::H1,__("New promotion"))
             ->add_var("promotions", $this->picklist->get_promotions())
             ->add_var("businessowners", $businessowners)
+            ->add_var("notoryes", $this->picklist->get_not_or_yes())
             ->render_nl();
     }
 

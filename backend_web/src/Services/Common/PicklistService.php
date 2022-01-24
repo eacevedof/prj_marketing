@@ -99,7 +99,7 @@ final class PicklistService extends AppService
         return $users;
     }
 
-    public function get_no_yes(array $conf = ["n"=>"0", "y"=>"1"]): array
+    public function get_not_or_yes(array $conf = ["n"=>"0", "y"=>"1"]): array
     {
         return [
             $conf["n"] => __("No"),
