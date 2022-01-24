@@ -27,7 +27,7 @@ export class FormPromotionCreate extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["uuid","promotions","businessowners"])}
+  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["uuid","promotions","businessowners","notoryes"])}
 
   _on_cancel() {window.modalraw.hide()}
 
@@ -36,6 +36,7 @@ export class FormPromotionCreate extends LitElement {
     super()
     this.texts = {}
     this.fields = {}
+    this._is_active = "0"
   }
 
   static properties = {
@@ -75,6 +76,7 @@ export class FormPromotionCreate extends LitElement {
 
     _promotions: {type: Array, state:true},
     _businessowners: {type: Array, state:true},
+    _notoryes: {type: Array, state:true},
   }
 
   //2
@@ -166,7 +168,11 @@ export class FormPromotionCreate extends LitElement {
           <div class="form-group">
             <label for="is_active">${this.texts.f12}</label>
             <div id="field-is_active">
-              <input type="number" id="is_active" .value=${this._is_active} class="form-control" min="0" max="1" maxlength="3">
+              <select id="is_active" class="form-control">
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._is_active}>${item.value}</option>`
+                )}
+              </select>              
             </div>
           </div>
           <div class="form-group">

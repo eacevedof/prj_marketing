@@ -6,6 +6,7 @@
  * @var string $csrf
  * @var array $businessowners
  * @var array $promotions
+ * @var array $notoryes
  */
 use App\Factories\ComponentFactory as CF;
 $date = CF::get("Date/Date");
@@ -52,8 +53,9 @@ $result = [
     "returned" => "0.00",
     "notes" => "",
 
-  "promotions" => $promotions,
-  "businessowners" => $businessowners,
+    "promotions" => $promotions,
+    "notoryes" => $notoryes,
+    "businessowners" => $businessowners,
 ];
 ?>
 <div class="modal-form">
