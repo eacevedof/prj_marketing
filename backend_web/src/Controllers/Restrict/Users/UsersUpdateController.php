@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Restrict\Users;
 
+use App\Controllers\Restrict\RestrictController;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
 use App\Enums\PolicyType;
