@@ -100,7 +100,7 @@ final class UsersUpdateController extends RestrictController
             $update = SF::get_callable("Restrict\Users\UsersUpdate", $request);
             $result = $update();
             $this->_get_json()->set_payload([
-                "message"=>__("User successfully created"),
+                "message"=> __("{0} successfully created", __("User")),
                 "result" => $result,
             ])->show();
         }
