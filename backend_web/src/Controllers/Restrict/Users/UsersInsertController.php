@@ -2,9 +2,9 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\Users\
- * @file UsersController.php v1.0.0
- * @date 30-10-2021 14:33 SPAIN
+ * @name App\Controllers\Restrict\Users\UsersInsertController
+ * @file UsersInsertController.php v1.0.0
+ * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
 namespace App\Controllers\Restrict\Users;
@@ -15,10 +15,6 @@ use App\Enums\PolicyType;
 use App\Enums\PageType;
 use App\Enums\ProfileType;
 use App\Enums\ResponseType;
-use App\Enums\UrlType;
-use App\Enums\ExceptionType;
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ForbiddenException;
 use App\Exceptions\FieldsException;
 use \Exception;
 
