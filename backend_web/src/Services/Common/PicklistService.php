@@ -98,4 +98,12 @@ final class PicklistService extends AppService
         if($idsuer) unset($users[$idsuer]);
         return $users;
     }
+
+    public function get_no_yes(array $conf = ["n"=>"0", "y"=>"1"]): array
+    {
+        return [
+            $conf["n"] => __("No"),
+            $conf["y"] => __("Yes"),
+        ];
+    }
 }
