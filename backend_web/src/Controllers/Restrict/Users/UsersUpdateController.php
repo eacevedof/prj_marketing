@@ -97,7 +97,7 @@ final class UsersUpdateController extends RestrictController
                 ->show();
 
         try {
-            $request = array_merge(["uuid"=>$uuid], $this->request->get_post());
+            $request = ["uuid"=>$uuid] + $this->request->get_post();
             $update = SF::get_callable("Restrict\Users\UsersUpdate", $request);
             $result = $update();
             $this->_get_json()->set_payload([
