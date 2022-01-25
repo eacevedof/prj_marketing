@@ -18,7 +18,7 @@ return [
     ["url"=>"/restrict/users/undelete/:uuid","controller"=>"App\Controllers\Restrict\UsersController", "method"=>"undelete", "allowed"=>["patch"]],
 
     ["url"=>"/restrict/users/?int:page","controller"=>"App\Controllers\Restrict\Users\UsersSearchController", "method"=>"index"],
-    ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\UsersSearchController", "method"=>"search"],
+    ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\Users\UsersSearchController", "method"=>"search"],
 
     //@promotions
     ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Controllers\Restrict\PromotionsController", "method"=>"info"],

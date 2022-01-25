@@ -36,13 +36,12 @@ abstract class RestrictController extends AppController
     {
         $this->_load_request();
         $this->_load_response();
-        $this->_load_view();
+
+        $this->_load_view()->set_layout("restrict/restrict")->set_foldertpl("restrict");
 
         $this->auth = SF::get_auth();
         $this->csrf = SF::get("Auth\Csrf");
-
         $this->add_var("authuser", $this->auth->get_user());
-        $this->set_layout("restrict/restrict");
         $this->_add_topmenu();
     }
 

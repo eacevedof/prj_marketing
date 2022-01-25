@@ -37,6 +37,7 @@ final class AppView
 
     private string $pathlayout = "";
     private string $pathtemplate = "";
+    private string $foldertpl = "";
 
     public function __construct()
     {
@@ -58,14 +59,16 @@ final class AppView
 
     private function _load_path_folder_template(): void
     {
-        $strcontroller = $this->araction["controller"] ?? "";
-        if ($strcontroller) {
-           $strcontroller = str_replace("App\Controllers","", $strcontroller);
-           $strcontroller = str_replace("\\","/", $strcontroller);
-           $strcontroller = strtolower($strcontroller);
-           $strcontroller = str_replace("controller","", $strcontroller);
-           $this->pathtemplate = self::PATH_TEMPLATES . "$strcontroller";
-        }
+        $this->pathtemplate = self::PATH_TEMPLATES;
+        if (!$strcontroller = $this->araction["controller"] ?? "") return;
+
+        $parts = explode("\\",$strcontroller);
+        $strcontroller = end($parts);
+        $strcontroller = str_replace("Controller","", $strcontroller);
+        $parts = preg_split("/(?=[A-Z])/", "$strcontroller", -1, PREG_SPLIT_NO_EMPTY);
+        $strcontroller = strtolower($parts[0]);
+        if ($this->foldertpl) $this->pathtemplate .= "/$this->foldertpl";
+        $this->pathtemplate .= "/$strcontroller";
     }
 
     private function _load_path_template_name(): void
@@ -204,7 +207,15 @@ final class AppView
 
     public function set_template(string $pathtemplate): self
     {
-        if($pathtemplate) $this->pathtemplate = self::PATH_TEMPLATES ."/$pathtemplate.tpl";
+        $this->pathtemplate = self::PATH_TEMPLATES;
+        if($this->foldertpl) $this->pathtemplate .= "/$this->foldertpl";
+        if($pathtemplate) $this->pathtemplate .= "/$pathtemplate.tpl";
+        return $this;
+    }
+
+    public function set_foldertpl(string $folder): self
+    {
+        $this->foldertpl = $folder;
         return $this;
     }
 
