@@ -66,4 +66,4 @@ $result = [
 
   </div><!--card-body-->
 </div>
-<script type="module" src="/assets/js/restrict/xxxs/edit.js"></script>
+<script type="module" src="/assets/js/restrict/xxxs/update.js"></script>

@@ -72,4 +72,4 @@ $result = [
     />
   </div>
 </div>
-<script type="module" src="/assets/js/restrict/promotions/create.js"></script>
+<script type="module" src="/assets/js/restrict/promotions/insert.js"></script>

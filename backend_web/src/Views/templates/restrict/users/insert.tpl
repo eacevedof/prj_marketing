@@ -55,4 +55,4 @@ $result = [
     />
   </div>
 </div>
-<script type="module" src="/assets/js/restrict/users/create.js"></script>
+<script type="module" src="/assets/js/restrict/users/insert.js"></script>

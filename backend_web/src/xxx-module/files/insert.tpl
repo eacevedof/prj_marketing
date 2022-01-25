@@ -32,4 +32,4 @@ $result = [
     />
   </div>
 </div>
-<script type="module" src="/assets/js/restrict/xxxs/create.js"></script>
+<script type="module" src="/assets/js/restrict/xxxs/insert.js"></script>

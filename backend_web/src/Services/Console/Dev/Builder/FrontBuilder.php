@@ -18,10 +18,10 @@ final class FrontBuilder
     private array $fields;
     private array $skipfields;
 
-    public const TYPE_CREATE_JS     = "create.js";
-    public const TYPE_CREATE_TPL    = "create.tpl";
-    public const TYPE_EDIT_JS       = "edit.js";
-    public const TYPE_EDIT_TPL      = "edit.tpl";
+    public const TYPE_CREATE_JS     = "insert.js";
+    public const TYPE_CREATE_TPL    = "insert.tpl";
+    public const TYPE_EDIT_JS       = "update.js";
+    public const TYPE_EDIT_TPL      = "update.tpl";
     public const TYPE_INFO_TPL      = "info.tpl";
     public const TYPE_INDEX_TPL     = "index.tpl";
     public const TYPE_CSS           = "xxxs.css";

@@ -119,18 +119,18 @@ final class ModuleBuilderService extends AppService implements IConsole
             $this->aliases, $this->fields, $this->filestpl["index.tpl"], $this->pathbuild,FrontBuilder::TYPE_INDEX_TPL
         );
 
-        $this->builders["create.js"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["create.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
+        $this->builders["insert.js"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["insert.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
         );
-        $this->builders["create.tpl"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["create.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
+        $this->builders["insert.tpl"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["insert.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
         );
 
-        $this->builders["edit.js"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["edit.js"], $this->pathbuild,FrontBuilder::TYPE_EDIT_JS
+        $this->builders["update.js"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["update.js"], $this->pathbuild,FrontBuilder::TYPE_EDIT_JS
         );
-        $this->builders["edit.tpl"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["edit.tpl"], $this->pathbuild,FrontBuilder::TYPE_EDIT_TPL
+        $this->builders["update.tpl"] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl["update.tpl"], $this->pathbuild,FrontBuilder::TYPE_EDIT_TPL
         );
 
         $this->builders["info.tpl"] = new FrontBuilder(

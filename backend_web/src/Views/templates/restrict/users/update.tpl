@@ -90,4 +90,4 @@ $result = [
 
   </div><!--card-body-->
 </div>
-<script type="module" src="/assets/js/restrict/users/edit.js"></script>
+<script type="module" src="/assets/js/restrict/users/update.js"></script>
