@@ -135,6 +135,7 @@ final class PhpBuilder
         $dirname = dirname($pathfile);
         if (!is_dir($dirname)) $r = mkdir($dirname,0,1);
         $r = file_put_contents($pathfile, $content);
+        if ($r === false) exit("\n\n$dirname\n$pathfile\n");
     }
 
 
