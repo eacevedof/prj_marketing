@@ -132,10 +132,14 @@ final class PhpBuilder
 
     private function _create_file(string $pathfile, string $content):void
     {
+        //esta creando un modulo por fuera de files por eso peta
         $dirname = dirname($pathfile);
-        if (!is_dir($dirname)) $r = mkdir($dirname,0,1);
+        if (!is_dir($dirname)) //$r = mkdir($dirname,0777,1);
+            exec("mkdir -p $dirname");
+        sleep(1);
         $r = file_put_contents($pathfile, $content);
         if ($r === false) exit("\n\n$dirname\n$pathfile\n");
+        die();
     }
 
 
