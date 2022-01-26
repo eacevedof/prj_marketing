@@ -88,28 +88,42 @@ final class ModuleBuilderService extends AppService implements IConsole
     private function _load_phpbuilders(): void
     {
         $this->builders["Entity"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxEntity.php"], $this->pathbuild,PhpBuilder::TYPE_ENTITY
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxEntity.php"], $this->pathbuild,PhpBuilder::TYPE_ENTITY
         );
         $this->builders["Repository"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxRepository.php"], $this->pathbuild,PhpBuilder::TYPE_REPOSITORY
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxRepository.php"], $this->pathbuild,PhpBuilder::TYPE_REPOSITORY
         );
-        $this->builders["Controller"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxsController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+
+        $this->builders["DeleteController"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsDeleteController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
+        $this->builders["InfoController"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsInfoController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+        );
+        $this->builders["InsertController"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsInsertController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+        );
+        $this->builders["SearchController"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsSearchController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+        );
+        $this->builders["UpdateController"] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsUpdateController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+        );
+
         $this->builders["DeleteService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxsDeleteService.php"], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsDeleteService.php"], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
         );
         $this->builders["InfoService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxsInfoService.php"], $this->pathbuild,PhpBuilder::TYPE_INFO_SERVICE
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsInfoService.php"], $this->pathbuild,PhpBuilder::TYPE_INFO_SERVICE
         );
         $this->builders["InsertService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxsInsertService.php"], $this->pathbuild,PhpBuilder::TYPE_INSERT_SERVICE
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsInsertService.php"], $this->pathbuild,PhpBuilder::TYPE_INSERT_SERVICE
         );
         $this->builders["SearchService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxsSearchService.php"], $this->pathbuild,PhpBuilder::TYPE_SEARCH_SERVICE
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsSearchService.php"], $this->pathbuild,PhpBuilder::TYPE_SEARCH_SERVICE
         );
         $this->builders["UpdateService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["XxxsUpdateService.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_SERVICE
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsUpdateService.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_SERVICE
         );
     }
 
