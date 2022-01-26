@@ -20,8 +20,8 @@ final class FrontBuilder
 
     public const TYPE_INSERT_JS     = "Xxxs-front/insert.js";
     public const TYPE_INSERT_TPL    = "Xxxs-front/insert.tpl";
-    public const TYPE_UPDATE_JS       = "Xxxs-front/update.js";
-    public const TYPE_UPDATE_TPL      = "Xxxs-front/update.tpl";
+    public const TYPE_UPDATE_JS     = "Xxxs-front/update.js";
+    public const TYPE_UPDATE_TPL    = "Xxxs-front/update.tpl";
     public const TYPE_INFO_TPL      = "Xxxs-front/info.tpl";
     public const TYPE_INDEX_TPL     = "Xxxs-front/index.tpl";
     public const TYPE_CSS           = "Xxxs-front/xxxs.css";
@@ -123,7 +123,7 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_UPDATE_js(): void
+    private function _build_update_js(): void
     {
         //tags %FIELDS%
         $arfields = [];
@@ -239,7 +239,7 @@ final class FrontBuilder
                 $this->_build_create_js();
             break;
             case self::TYPE_UPDATE_JS:
-                $this->_build_UPDATE_js();
+                $this->_build_update_js();
             break;
             case self::TYPE_INSERT_TPL:
                 $this->_build_create_tpl();
