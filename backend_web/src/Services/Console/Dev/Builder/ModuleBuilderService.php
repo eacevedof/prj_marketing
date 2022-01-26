@@ -89,7 +89,7 @@ final class ModuleBuilderService extends AppService implements IConsole
 
         foreach ($files as $dir) {
             if ($dir==="extra.md") {
-                $this->filestpl[] = self::PATH_FILESTPL ."/$dir";
+                $this->filestpl[$dir] = self::PATH_FILESTPL ."/$dir";
                 continue;
             }
 
@@ -98,7 +98,7 @@ final class ModuleBuilderService extends AppService implements IConsole
             if (($key = array_search("..", $scanned)) !== false) unset($scanned[$key]);
 
             foreach ($scanned as $file)
-                $this->filestpl[] = self::PATH_FILESTPL . "/$dir/$file";
+                $this->filestpl["$dir/$file"] = self::PATH_FILESTPL . "/$dir/$file";
         }
     }
 
@@ -107,6 +107,7 @@ final class ModuleBuilderService extends AppService implements IConsole
         $this->builders[PhpBuilder::TYPE_ENTITY] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_ENTITY], $this->pathbuild,PhpBuilder::TYPE_ENTITY
         );
+
         $this->builders[PhpBuilder::TYPE_REPOSITORY] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_REPOSITORY], $this->pathbuild,PhpBuilder::TYPE_REPOSITORY
         );
