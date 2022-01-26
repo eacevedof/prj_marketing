@@ -98,7 +98,7 @@ final class FrontBuilder
         $arfields = [];
         foreach ($this->fields as $i =>$field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields+["id","uuid"])) continue;
+            if (in_array($fieldname, $this->skipfields + ["id","uuid"])) continue;
             $arfields[$i] = $this->_get_properties_js($fieldname);
         }
         $strfields = implode("\n", $arfields);
@@ -177,7 +177,7 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_UPDATE_tpl(): void
+    private function _build_update_tpl(): void
     {
         //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
         $trs = [];
@@ -245,7 +245,7 @@ final class FrontBuilder
                 $this->_build_create_tpl();
             break;
             case self::TYPE_UPDATE_TPL:
-                $this->_build_UPDATE_tpl();
+                $this->_build_update_tpl();
             break;
 
             case self::TYPE_INFO_TPL:
