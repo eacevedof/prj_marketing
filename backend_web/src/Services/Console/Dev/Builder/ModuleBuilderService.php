@@ -40,6 +40,7 @@ final class ModuleBuilderService extends AppService implements IConsole
         $this->_load_fields();
         $this->_load_tplfiles();
         $this->_load_phpbuilders();
+        $this->_load_phpservices();
         $this->_load_frontbuilders();
         $this->_load_extrabuilders();
     }
@@ -109,7 +110,10 @@ final class ModuleBuilderService extends AppService implements IConsole
         $this->builders["UpdateController"] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsUpdateController.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_CONTROLLER
         );
+    }
 
+    private function _load_phpservices(): void
+    {
         $this->builders[PhpBuilder::TYPE_DELETE_SERVICE] = new PhpBuilder(
             $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_DELETE_SERVICE], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
         );
