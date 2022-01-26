@@ -10,16 +10,12 @@ return [
 
     //@users
     ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersController", "method"=>"info"],
-
     ["url"=>"/restrict/users/create","controller"=>"App\Controllers\Restrict\Users\UsersInsertController", "method"=>"create"],
     ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\Users\UsersInsertController", "method"=>"insert", "allowed"=>["post"]],
-
     ["url"=>"/restrict/users/edit/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersUpdateController", "method"=>"edit"],
     ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersUpdateController", "method"=>"update", "allowed"=>["put"]],
-
     ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersDeleteController", "method"=>"remove", "allowed"=>["delete"]],
     ["url"=>"/restrict/users/undelete/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
-
     ["url"=>"/restrict/users/?int:page","controller"=>"App\Controllers\Restrict\Users\UsersSearchController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\Users\UsersSearchController", "method"=>"search"],
 
