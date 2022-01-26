@@ -47,7 +47,8 @@ final class UsersUpdateController extends RestrictController
         try {
             $edit = SF::get("Restrict\Users\UsersInfo", [$uuid]);
             $result = $edit->get_for_edit();
-            $this->add_var(PageType::TITLE, __("Edit user {0}", $uuid))
+            $this->set_template("users/update")
+                ->add_var(PageType::TITLE, __("Edit user {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit user {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)

@@ -41,6 +41,7 @@ final class UsersInsertController extends RestrictController
         }
 
         $this->add_var(PageType::CSRF, $this->csrf->get_token())
+            ->set_template("users/insert")
             ->add_var(PageType::H1,__("New user"))
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
