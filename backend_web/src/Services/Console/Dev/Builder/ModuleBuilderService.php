@@ -181,7 +181,7 @@ final class ModuleBuilderService extends AppService implements IConsole
     }
 
     //php run.php modules <table-name> o
-    //run modules <table-name> (en ssh-be)
+    //run build-module app_promotion (en ssh-be)
     public function run(): void
     {
         mkdir($this->pathbuild);
