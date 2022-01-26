@@ -205,7 +205,7 @@ export class FormPromotionCreate extends LitElement {
                 : html``
             }
           </button>
-          <button type="button" ?disabled=${this._issending} @click=${this.on_cancel} class="btn btn-secondary mt-3 mb-0">
+          <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
             ${this._btncancel}
             ${
                 this._issending

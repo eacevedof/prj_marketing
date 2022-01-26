@@ -39,6 +39,7 @@ export class FormUserEdit extends LitElement {
   }
 
   _on_cancel() {
+
     window.modalraw.hide()
   }
 
@@ -230,7 +231,7 @@ export class FormUserEdit extends LitElement {
             : html``
           }
         </button>
-        <button type="button" ?disabled=${this._issending} @click=${this.on_cancel} class="btn btn-secondary mt-3 mb-0">
+        <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
         ${this._btncancel}
         ${this._issending
           ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
