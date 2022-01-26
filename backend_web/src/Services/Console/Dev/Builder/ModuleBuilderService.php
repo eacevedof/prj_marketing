@@ -83,9 +83,18 @@ final class ModuleBuilderService extends AppService implements IConsole
     private function _load_tplfiles(): void
     {
         $files = scandir(self::PATH_FILESTPL);
-        foreach ($files as $file)
-            $this->filestpl[$file] = self::PATH_FILESTPL."/$file";
-        unset($this->filestpl["."],$this->filestpl[".."]);
+        foreach ($files as $dir) {
+            if ($dir==="extra.md") {
+                $this->filestpl[] = self::PATH_FILESTPL ."/$dir";
+                continue;
+            }
+
+            $scanned = scandir(self::PATH_FILESTPL . "/$dir");
+            unset($scanned["."],$scanned[".."]);
+
+            foreach ($scanned as $file)
+                $this->filestpl[] = self::PATH_FILESTPL . "/$dir/$file";
+        }
     }
 
     private function _load_phpdomain(): void
