@@ -18,14 +18,20 @@ final class PhpBuilder
     private array $fields;
     private array $skipfields;
 
-    public const TYPE_ENTITY = "Entity";
-    public const TYPE_REPOSITORY = "Repository";
-    public const TYPE_CONTROLLER = "Controller";
-    public const TYPE_DELETE_SERVICE = "DeleteService";
-    public const TYPE_INFO_SERVICE = "InfoService";
-    public const TYPE_INSERT_SERVICE = "InsertService";
-    public const TYPE_SEARCH_SERVICE = "SearchService";
-    public const TYPE_UPDATE_SERVICE = "UpdateService";
+    public const TYPE_ENTITY = "Xxxs-domain/Entity";
+    public const TYPE_REPOSITORY = "Xxxs-domain/Repository";
+
+    public const TYPE_DELETE_CONTROLLER = "Xxxs-controllers/XxxsDeleteController.php";
+    public const TYPE_INFO_CONTROLLER   = "Xxxs-controllers/XxxsInfoController.php";
+    public const TYPE_INSERT_CONTROLLER = "Xxxs-controllers/XxxsInsertController.php";
+    public const TYPE_SEARCH_CONTROLLER = "Xxxs-controllers/XxxsSearchController.php";
+    public const TYPE_UPDATE_CONTROLLER = "Xxxs-controllers/XxxsUpdateController.php";
+
+    public const TYPE_DELETE_SERVICE    = "Xxxs-services/DeleteService.php";
+    public const TYPE_INFO_SERVICE      = "Xxxs-services/InfoService.php";
+    public const TYPE_INSERT_SERVICE    = "Xxxs-services/InsertService.php";
+    public const TYPE_SEARCH_SERVICE    = "Xxxs-services/SearchService.php";
+    public const TYPE_UPDATE_SERVICE    = "Xxxs-services/UpdateService.php";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_ENTITY)
     {
@@ -226,7 +232,7 @@ final class PhpBuilder
             case self::TYPE_REPOSITORY:
                 $this->_build_repository();
             break;
-            case self::TYPE_CONTROLLER:
+            case self::TYPE_DELETE_CONTROLLER:
                 $this->_build_controller();
             break;
             case self::TYPE_SEARCH_SERVICE:

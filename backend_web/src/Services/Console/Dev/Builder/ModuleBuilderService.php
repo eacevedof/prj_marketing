@@ -95,35 +95,35 @@ final class ModuleBuilderService extends AppService implements IConsole
         );
 
         $this->builders["DeleteController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsDeleteController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsDeleteController.php"], $this->pathbuild,PhpBuilder::TYPE_DELETE_CONTROLLER
         );
         $this->builders["InfoController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsInfoController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsInfoController.php"], $this->pathbuild,PhpBuilder::TYPE_INFO_CONTROLLER
         );
         $this->builders["InsertController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsInsertController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsInsertController.php"], $this->pathbuild,PhpBuilder::TYPE_INSERT_CONTROLLER
         );
         $this->builders["SearchController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsSearchController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsSearchController.php"], $this->pathbuild,PhpBuilder::TYPE_SEARCH_CONTROLLER
         );
         $this->builders["UpdateController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsUpdateController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsUpdateController.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_CONTROLLER
         );
 
-        $this->builders["DeleteService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsDeleteService.php"], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
+        $this->builders[PhpBuilder::TYPE_DELETE_SERVICE] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_DELETE_SERVICE], $this->pathbuild,PhpBuilder::TYPE_DELETE_SERVICE
         );
-        $this->builders["InfoService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsInfoService.php"], $this->pathbuild,PhpBuilder::TYPE_INFO_SERVICE
+        $this->builders[PhpBuilder::TYPE_INFO_SERVICE] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_INFO_SERVICE], $this->pathbuild,PhpBuilder::TYPE_INFO_SERVICE
         );
-        $this->builders["InsertService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsInsertService.php"], $this->pathbuild,PhpBuilder::TYPE_INSERT_SERVICE
+        $this->builders[PhpBuilder::TYPE_INSERT_SERVICE] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_INSERT_SERVICE], $this->pathbuild,PhpBuilder::TYPE_INSERT_SERVICE
         );
-        $this->builders["SearchService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsSearchService.php"], $this->pathbuild,PhpBuilder::TYPE_SEARCH_SERVICE
+        $this->builders[PhpBuilder::TYPE_SEARCH_SERVICE] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_SEARCH_SERVICE], $this->pathbuild,PhpBuilder::TYPE_SEARCH_SERVICE
         );
-        $this->builders["UpdateService"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-services/XxxsUpdateService.php"], $this->pathbuild,PhpBuilder::TYPE_UPDATE_SERVICE
+        $this->builders[PhpBuilder::TYPE_UPDATE_SERVICE] = new PhpBuilder(
+            $this->aliases, $this->fields, $this->filestpl[PhpBuilder::TYPE_UPDATE_SERVICE], $this->pathbuild,PhpBuilder::TYPE_UPDATE_SERVICE
         );
     }
 
