@@ -83,6 +83,10 @@ final class ModuleBuilderService extends AppService implements IConsole
     private function _load_tplfiles(): void
     {
         $files = scandir(self::PATH_FILESTPL);
+        if (($key = array_search(".", $files)) !== false) unset($files[$key]);
+        if (($key = array_search("..", $files)) !== false) unset($files[$key]);
+
+
         foreach ($files as $dir) {
             if ($dir==="extra.md") {
                 $this->filestpl[] = self::PATH_FILESTPL ."/$dir";
@@ -90,7 +94,8 @@ final class ModuleBuilderService extends AppService implements IConsole
             }
 
             $scanned = scandir(self::PATH_FILESTPL . "/$dir");
-            unset($scanned["."],$scanned[".."]);
+            if (($key = array_search(".", $scanned)) !== false) unset($scanned[$key]);
+            if (($key = array_search("..", $scanned)) !== false) unset($scanned[$key]);
 
             foreach ($scanned as $file)
                 $this->filestpl[] = self::PATH_FILESTPL . "/$dir/$file";
