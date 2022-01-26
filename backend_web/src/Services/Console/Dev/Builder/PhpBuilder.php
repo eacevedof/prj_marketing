@@ -145,7 +145,7 @@ final class PhpBuilder
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
 
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
+        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -179,7 +179,8 @@ final class PhpBuilder
                             "%INFO_FIELDS%"=> $infofields,
                         ]);
 
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}.php";
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        $pathfile = $this->_replace($pathfile);
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -187,7 +188,8 @@ final class PhpBuilder
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        $pathfile = $this->_replace($pathfile);
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -211,7 +213,8 @@ final class PhpBuilder
                 "%FIELD_RULES%" => $rules,
                 "%DT_COLUMNS%"  => $dtcolumns
             ]);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        $pathfile = $this->_replace($pathfile);
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -219,7 +222,8 @@ final class PhpBuilder
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased-plural"]}{$this->type}.php";
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        $pathfile = $this->_replace($pathfile);
         file_put_contents($pathfile, $contenttpl);
     }
     
