@@ -27,11 +27,11 @@ final class PhpBuilder
     public const TYPE_SEARCH_CONTROLLER = "Xxxs-controllers/XxxsSearchController.php";
     public const TYPE_UPDATE_CONTROLLER = "Xxxs-controllers/XxxsUpdateController.php";
 
-    public const TYPE_DELETE_SERVICE    = "Xxxs-services/DeleteService.php";
-    public const TYPE_INFO_SERVICE      = "Xxxs-services/InfoService.php";
-    public const TYPE_INSERT_SERVICE    = "Xxxs-services/InsertService.php";
-    public const TYPE_SEARCH_SERVICE    = "Xxxs-services/SearchService.php";
-    public const TYPE_UPDATE_SERVICE    = "Xxxs-services/UpdateService.php";
+    public const TYPE_DELETE_SERVICE    = "Xxxs-services/XxxsDeleteService.php";
+    public const TYPE_INFO_SERVICE      = "Xxxs-services/XxxsInfoService.php";
+    public const TYPE_INSERT_SERVICE    = "Xxxs-services/XxxsInsertService.php";
+    public const TYPE_SEARCH_SERVICE    = "Xxxs-services/XxxsSearchService.php";
+    public const TYPE_UPDATE_SERVICE    = "Xxxs-services/XxxsUpdateService.php";
 
     public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_ENTITY)
     {
