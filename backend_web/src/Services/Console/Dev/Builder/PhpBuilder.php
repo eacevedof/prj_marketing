@@ -145,7 +145,8 @@ final class PhpBuilder
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
 
-        $pathfile = "{$this->pathmodule}/{$this->aliases["uppercased"]}{$this->type}";
+        $pathfile = "{$this->pathmodule}/{$this->type}";
+        $pathfile = $this->_replace($pathfile);
         file_put_contents($pathfile, $contenttpl);
     }
 
