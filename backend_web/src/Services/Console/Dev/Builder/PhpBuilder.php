@@ -130,6 +130,14 @@ final class PhpBuilder
         return str_replace(array_keys($basic), array_values($basic), $content);
     }
 
+    private function _create_file(string $pathfile, string $content):void
+    {
+        $dirname = dirname($pathfile);
+        if (!is_dir($dirname)) $r = mkdir($dirname,0,1);
+        $r = file_put_contents($pathfile, $content);
+    }
+
+
     private function _build_entity(): void
     {
         //tags %FIELDS%
@@ -147,7 +155,8 @@ final class PhpBuilder
 
         $pathfile = "{$this->pathmodule}/{$this->type}";
         $pathfile = $this->_replace($pathfile);
-        file_put_contents($pathfile, $contenttpl);
+
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_repository(): void
