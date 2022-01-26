@@ -18,8 +18,8 @@ final class PhpBuilder
     private array $fields;
     private array $skipfields;
 
-    public const TYPE_ENTITY = "Xxxs-domain/Entity";
-    public const TYPE_REPOSITORY = "Xxxs-domain/Repository";
+    public const TYPE_ENTITY = "Xxxs-domain/XxxEntity.php";
+    public const TYPE_REPOSITORY = "Xxxs-domain/XxxRepository.php";
 
     public const TYPE_DELETE_CONTROLLER = "Xxxs-controllers/XxxsDeleteController.php";
     public const TYPE_INFO_CONTROLLER   = "Xxxs-controllers/XxxsInfoController.php";
