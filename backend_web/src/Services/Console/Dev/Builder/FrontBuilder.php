@@ -18,15 +18,15 @@ final class FrontBuilder
     private array $fields;
     private array $skipfields;
 
-    public const TYPE_CREATE_JS     = "insert.js";
-    public const TYPE_CREATE_TPL    = "insert.tpl";
-    public const TYPE_EDIT_JS       = "update.js";
-    public const TYPE_EDIT_TPL      = "update.tpl";
-    public const TYPE_INFO_TPL      = "info.tpl";
-    public const TYPE_INDEX_TPL     = "index.tpl";
-    public const TYPE_CSS           = "xxxs.css";
+    public const TYPE_INSERT_JS     = "Xxxs-front/insert.js";
+    public const TYPE_INSERT_TPL    = "Xxxs-front/insert.tpl";
+    public const TYPE_UPDATE_JS       = "Xxxs-front/update.js";
+    public const TYPE_UPDATE_TPL      = "Xxxs-front/update.tpl";
+    public const TYPE_INFO_TPL      = "Xxxs-front/info.tpl";
+    public const TYPE_INDEX_TPL     = "Xxxs-front/index.tpl";
+    public const TYPE_CSS           = "Xxxs-front/xxxs.css";
 
-    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_CREATE_JS)
+    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_INSERT_JS)
     {
        $this->pathtpl = $pathtpl;
        $this->pathmodule = $pathmodule;
@@ -123,7 +123,7 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_edit_js(): void
+    private function _build_UPDATE_js(): void
     {
         //tags %FIELDS%
         $arfields = [];
@@ -177,7 +177,7 @@ final class FrontBuilder
         file_put_contents($pathfile, $contenttpl);
     }
 
-    private function _build_edit_tpl(): void
+    private function _build_UPDATE_tpl(): void
     {
         //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
         $trs = [];
@@ -235,17 +235,17 @@ final class FrontBuilder
     public function build(): void
     {
         switch ($this->type) {
-            case self::TYPE_CREATE_JS:
+            case self::TYPE_INSERT_JS:
                 $this->_build_create_js();
             break;
-            case self::TYPE_EDIT_JS:
-                $this->_build_edit_js();
+            case self::TYPE_UPDATE_JS:
+                $this->_build_UPDATE_js();
             break;
-            case self::TYPE_CREATE_TPL:
+            case self::TYPE_INSERT_TPL:
                 $this->_build_create_tpl();
             break;
-            case self::TYPE_EDIT_TPL:
-                $this->_build_edit_tpl();
+            case self::TYPE_UPDATE_TPL:
+                $this->_build_UPDATE_tpl();
             break;
 
             case self::TYPE_INFO_TPL:

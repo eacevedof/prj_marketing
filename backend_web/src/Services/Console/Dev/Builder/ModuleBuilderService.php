@@ -95,19 +95,19 @@ final class ModuleBuilderService extends AppService implements IConsole
         );
 
         $this->builders["DeleteController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsDeleteController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsDeleteController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
         $this->builders["InfoController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsInfoController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsInfoController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
         $this->builders["InsertController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsInsertController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsInsertController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
         $this->builders["SearchController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsSearchController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsSearchController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
         $this->builders["UpdateController"] = new PhpBuilder(
-            $this->aliases, $this->fields, $this->filestpl["Xxxs-domain/XxxsUpdateController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
+            $this->aliases, $this->fields, $this->filestpl["Xxxs-controllers/XxxsUpdateController.php"], $this->pathbuild,PhpBuilder::TYPE_CONTROLLER
         );
 
         $this->builders["DeleteService"] = new PhpBuilder(
@@ -129,30 +129,30 @@ final class ModuleBuilderService extends AppService implements IConsole
 
     private function _load_frontbuilders(): void
     {
-        $this->builders["index.tpl"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["index.tpl"], $this->pathbuild,FrontBuilder::TYPE_INDEX_TPL
+        $this->builders[FrontBuilder::TYPE_INDEX_TPL] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl[FrontBuilder::TYPE_INDEX_TPL], $this->pathbuild,FrontBuilder::TYPE_INDEX_TPL
         );
 
-        $this->builders["insert.js"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["insert.js"], $this->pathbuild,FrontBuilder::TYPE_CREATE_JS
+        $this->builders[FrontBuilder::TYPE_INSERT_JS] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl[FrontBuilder::TYPE_INSERT_JS], $this->pathbuild,FrontBuilder::TYPE_INSERT_JS
         );
-        $this->builders["insert.tpl"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["insert.tpl"], $this->pathbuild,FrontBuilder::TYPE_CREATE_TPL
-        );
-
-        $this->builders["update.js"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["update.js"], $this->pathbuild,FrontBuilder::TYPE_EDIT_JS
-        );
-        $this->builders["update.tpl"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["update.tpl"], $this->pathbuild,FrontBuilder::TYPE_EDIT_TPL
+        $this->builders[FrontBuilder::TYPE_INSERT_TPL] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl[FrontBuilder::TYPE_INSERT_TPL], $this->pathbuild,FrontBuilder::TYPE_INSERT_TPL
         );
 
-        $this->builders["info.tpl"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["info.tpl"], $this->pathbuild,FrontBuilder::TYPE_INFO_TPL
+        $this->builders[FrontBuilder::TYPE_UPDATE_JS] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl[FrontBuilder::TYPE_UPDATE_JS], $this->pathbuild,FrontBuilder::TYPE_UPDATE_JS
+        );
+        $this->builders[FrontBuilder::TYPE_UPDATE_TPL] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl[FrontBuilder::TYPE_UPDATE_TPL], $this->pathbuild,FrontBuilder::TYPE_UPDATE_TPL
+        );
+
+        $this->builders[FrontBuilder::TYPE_INFO_TPL] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl[FrontBuilder::TYPE_INFO_TPL], $this->pathbuild,FrontBuilder::TYPE_INFO_TPL
         );
         
-        $this->builders["xxxs.css"] = new FrontBuilder(
-            $this->aliases, $this->fields, $this->filestpl["xxxs.css"], $this->pathbuild,FrontBuilder::TYPE_CSS
+        $this->builders[FrontBuilder::TYPE_CSS] = new FrontBuilder(
+            $this->aliases, $this->fields, $this->filestpl[FrontBuilder::TYPE_CSS], $this->pathbuild,FrontBuilder::TYPE_CSS
         );
     }
 
