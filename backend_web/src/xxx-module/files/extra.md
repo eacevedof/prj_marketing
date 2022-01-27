@@ -1,7 +1,7 @@
 ### routes.php
 ```php
 //@xxxs
-["url"=>"/restrict/xxxs/info/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsController", "method"=>"info"],
+["url"=>"/restrict/xxxs/info/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsInfoController", "method"=>"info"],
 ["url"=>"/restrict/xxxs/create","controller"=>"App\Controllers\Restrict\Xxxs\XxxsInsertController", "method"=>"create"],
 ["url"=>"/restrict/xxxs/insert","controller"=>"App\Controllers\Restrict\Xxxs\XxxsInsertController", "method"=>"insert", "allowed"=>["post"]],
 ["url"=>"/restrict/xxxs/edit/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsUpdateController", "method"=>"edit"],

@@ -31,9 +31,9 @@ final class PromotionsInfoController extends RestrictController
     //@modal
     public function info(string $uuid): void
     {
-         $this->add_var(PageType::TITLE, __("Promotion info"))
-             ->add_var(PageType::H1, __("Promotion info"))
-             ->add_var("ismodal",1);
+        $this->add_var(PageType::TITLE, __("Promotion info"))
+            ->add_var(PageType::H1, __("Promotion info"))
+            ->add_var("ismodal",1);
 
         try {
             $info = SF::get_callable("Restrict\Promotions\PromotionsInfo", [$uuid]);
@@ -60,6 +60,6 @@ final class PromotionsInfoController extends RestrictController
                 ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
-    }//info
+    }
 
 }//PromotionsInfoController

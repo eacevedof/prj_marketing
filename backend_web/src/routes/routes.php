@@ -20,7 +20,7 @@ return [
     ["url"=>"/restrict/users/search","controller"=>"App\Controllers\Restrict\Users\UsersSearchController", "method"=>"search"],
 
     //@promotions
-    ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Controllers\Restrict\Promotions\PromotionsController", "method"=>"info"],
+    ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Controllers\Restrict\Promotions\PromotionsInfoController", "method"=>"info"],
     ["url"=>"/restrict/promotions/create","controller"=>"App\Controllers\Restrict\Promotions\PromotionsInsertController", "method"=>"create"],
     ["url"=>"/restrict/promotions/insert","controller"=>"App\Controllers\Restrict\Promotions\PromotionsInsertController", "method"=>"insert", "allowed"=>["post"]],
     ["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Controllers\Restrict\Promotions\PromotionsUpdateController", "method"=>"edit"],
