@@ -251,7 +251,12 @@ final class PhpBuilder
             case self::TYPE_REPOSITORY:
                 $this->_build_repository();
             break;
+
             case self::TYPE_DELETE_CONTROLLER:
+            case self::TYPE_INFO_CONTROLLER:
+            case self::TYPE_INSERT_CONTROLLER:
+            case self::TYPE_UPDATE_CONTROLLER:
+            case self::TYPE_SEARCH_CONTROLLER:
                 $this->_build_controller();
             break;
             case self::TYPE_SEARCH_SERVICE:
