@@ -14,7 +14,6 @@ use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
 use App\Enums\PolicyType;
 use App\Enums\PageType;
-use App\Enums\ProfileType;
 use App\Enums\ResponseType;
 use App\Enums\ExceptionType;
 use App\Exceptions\NotFoundException;
@@ -35,7 +34,7 @@ final class XxxsUpdateController extends RestrictController
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_xxx_allowed(PolicyType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE)) {
             $this->set_template("/error/403")
                 ->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
@@ -53,10 +52,6 @@ final class XxxsUpdateController extends RestrictController
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
-                ->add_var("profiles", $this->picklist->get_profiles())
-                ->add_var("parents", $this->picklist->get_xxxs_by_profile(ProfileType::BUSINESS_OWNER))
-                ->add_var("countries", $this->picklist->get_countries())
-                ->add_var("languages", $this->picklist->get_languages())
                 ->render_nl();
         }
         catch (NotFoundException $e) {
@@ -80,7 +75,7 @@ final class XxxsUpdateController extends RestrictController
                 ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
-    }//modal
+    }//edit
 
     //@patch
     public function update(string $uuid): void
@@ -116,6 +111,6 @@ final class XxxsUpdateController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }//patch
+    }//update
 
 }//XxxsUpdateController

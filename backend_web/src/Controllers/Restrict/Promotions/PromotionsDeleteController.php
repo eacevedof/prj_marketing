@@ -38,7 +38,7 @@ final class PromotionsDeleteController extends RestrictController
             $delete = SF::get_callable("Restrict\Promotions\PromotionsDelete", ["uuid"=>$uuid]);
             $result = $delete();
             $this->_get_json()->set_payload([
-                "message"=>__("{0} {1} successfully removed", __("Promotion"), $uuid),
+                "message"=>__("Promotion successfully removed"),
                 "result" => $result,
             ])->show();
         }
@@ -48,7 +48,7 @@ final class PromotionsDeleteController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }//remove
+    }
 
     //@undelete
     public function undelete(string $uuid): void
@@ -62,7 +62,7 @@ final class PromotionsDeleteController extends RestrictController
             $delete = SF::get_callable("Restrict\Promotions\PromotionsDelete", ["uuid"=>$uuid]);
             $result = $delete->undelete();
             $this->_get_json()->set_payload([
-                "message"=>__("{0} {1} successfully restored", __("Promotion"), $uuid),
+                "message"=>__("Promotion successfully restored"),
                 "result" => $result,
             ])->show();
         }
@@ -72,6 +72,6 @@ final class PromotionsDeleteController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }//undelete
+    }
 
 }//PromotionsDeleteController
