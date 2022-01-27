@@ -158,9 +158,8 @@ final class PhpBuilder
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELDS%" => $strfields]);
 
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        $pathfile = $this->_replace($pathfile);
-
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
         $this->_create_file($pathfile, $contenttpl);
     }
 
@@ -194,18 +193,18 @@ final class PhpBuilder
                             "%INFO_FIELDS%"=> $infofields,
                         ]);
 
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        $pathfile = $this->_replace($pathfile);
-        file_put_contents($pathfile, $contenttpl);
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_controller(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        $pathfile = $this->_replace($pathfile);
-        file_put_contents($pathfile, $contenttpl);
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_search_insert_update_service(): void
@@ -228,18 +227,19 @@ final class PhpBuilder
                 "%FIELD_RULES%" => $rules,
                 "%DT_COLUMNS%"  => $dtcolumns
             ]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        $pathfile = $this->_replace($pathfile);
-        file_put_contents($pathfile, $contenttpl);
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_service(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        $pathfile = $this->_replace($pathfile);
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
     
     public function build(): void
