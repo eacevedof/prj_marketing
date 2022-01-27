@@ -138,8 +138,8 @@ final class PhpBuilder
             exec("mkdir -p $dirname");
         sleep(1);
         $r = file_put_contents($pathfile, $content);
-        if ($r === false) exit("\n\n$dirname\n$pathfile\n");
-        die();
+        if ($r === false)
+            exit("ERROR on creation:\n\t$dirname\n\t$pathfile\n");
     }
 
 
