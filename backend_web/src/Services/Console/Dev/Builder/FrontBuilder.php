@@ -57,7 +57,19 @@ final class FrontBuilder
         $basic = $basic + $replaces;
         return str_replace(array_keys($basic), array_values($basic), $content);
     }
-    
+
+    private function _create_file(string $pathfile, string $content):void
+    {
+        //esta creando un modulo por fuera de files por eso peta
+        $dirname = dirname($pathfile);
+        if (!is_dir($dirname)) //$r = mkdir($dirname,0777,1);
+            exec("mkdir -p $dirname");
+        sleep(1);
+        $r = file_put_contents($pathfile, $content);
+        if ($r === false)
+            exit("ERROR on creation:\n\t$dirname\n\t$pathfile\n");
+    }
+
     private function _get_field_details(string $field): array
     {
        $type = array_filter($this->fields, function ($item) use ($field) {
@@ -119,8 +131,10 @@ final class FrontBuilder
         $contenttpl = $this->_replace($contenttpl, [
             "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
         ]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_update_js(): void
@@ -150,8 +164,10 @@ final class FrontBuilder
         $contenttpl = $this->_replace($contenttpl, [
             "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
         ]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_create_tpl(): void
@@ -173,8 +189,10 @@ final class FrontBuilder
 
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_update_tpl(): void
@@ -196,8 +214,10 @@ final class FrontBuilder
 
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_info_tpl(): void
@@ -212,24 +232,30 @@ final class FrontBuilder
         $kvs = implode("\n", $kvs);
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELD_KEY_AND_VALUES%" => $kvs]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_css(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->aliases["lowered-plural"]}.css";
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     private function _build_index_tpl(): void
     {
         $contenttpl = file_get_contents($this->pathtpl);
         $contenttpl = $this->_replace($contenttpl);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
-        file_put_contents($pathfile, $contenttpl);
+
+        $pathfile = $this->_replace($this->type);
+        $pathfile = "{$this->pathmodule}/{$pathfile}";
+        $this->_create_file($pathfile, $contenttpl);
     }
 
     public function build(): void
