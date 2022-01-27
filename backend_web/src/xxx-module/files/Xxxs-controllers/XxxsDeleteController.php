@@ -38,7 +38,7 @@ final class XxxsDeleteController extends RestrictController
             $delete = SF::get_callable("Restrict\Xxxs\XxxsDelete", ["uuid"=>$uuid]);
             $result = $delete();
             $this->_get_json()->set_payload([
-                "message"=>__("{0} {1} successfully removed", __("Xxx"), $uuid),
+                "message"=> __("{0} {1} successfully removed", __("Xxx"), $uuid),
                 "result" => $result,
             ])->show();
         }
@@ -62,7 +62,7 @@ final class XxxsDeleteController extends RestrictController
             $delete = SF::get_callable("Restrict\Xxxs\XxxsDelete", ["uuid"=>$uuid]);
             $result = $delete->undelete();
             $this->_get_json()->set_payload([
-                "message"=>__("{0} {1} successfully restored", __("Xxx"), $uuid),
+                "message"=> __("{0} {1} successfully restored", __("Xxx"), $uuid),
                 "result" => $result,
             ])->show();
         }
