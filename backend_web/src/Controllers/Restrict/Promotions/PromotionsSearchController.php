@@ -12,6 +12,7 @@ namespace App\Controllers\Restrict\Promotions;
 use App\Controllers\Restrict\RestrictController;
 use App\Factories\ServiceFactory as SF;
 use App\Services\Common\PicklistService;
+use App\Enums\PolicyType;
 use App\Enums\PageType;
 use App\Enums\ResponseType;
 use App\Enums\UrlType;
@@ -35,10 +36,10 @@ final class PromotionsSearchController extends RestrictController
 
             $this->add_var(PageType::TITLE, __("Promotions"))
                 ->add_var(PageType::H1, __("Promotions"))
-                ->add_var("languages", $this->picklist->get_languages())
-                ->add_var("profiles", $this->picklist->get_profiles())
-                ->add_var("countries", $this->picklist->get_countries())
                 ->add_var("dthelp", $search->get_datatable())
+                ->add_var("idowner", $this->auth->get_idowner())
+                ->add_var("authread", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_READ))
+                ->add_var("authwrite", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE))
                 ->render();
         }
         catch (ForbiddenException $e) {
