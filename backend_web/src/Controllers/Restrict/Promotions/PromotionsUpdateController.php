@@ -46,7 +46,9 @@ final class PromotionsUpdateController extends RestrictController
         try {
             $edit = SF::get("Restrict\Promotions\PromotionsInfo", [$uuid]);
             $result = $edit->get_for_edit();
-            $this->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
+            $this->set_template("promotions/update")
+                ->set_foldertpl("restrict")
+                ->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
