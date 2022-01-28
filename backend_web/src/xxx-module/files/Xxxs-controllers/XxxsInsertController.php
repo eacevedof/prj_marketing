@@ -48,7 +48,7 @@ final class XxxsInsertController extends RestrictController
             ->set_foldertpl("restrict")
             ->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1, __("New xxx"))
-            ->add_var("promotions", $this->picklist->get_promotion_types())
+            ->add_var("xxxs", $this->picklist->get_xxx_types())
             ->add_var("businessowners", $businessowners)
             ->add_var("notoryes", $this->picklist->get_not_or_yes())
             ->render_nl();
@@ -73,7 +73,7 @@ final class XxxsInsertController extends RestrictController
             $insert = SF::get_callable("Restrict\Xxxs\XxxsInsert", $this->request->get_post());
             $result = $insert();
             $this->_get_json()->set_payload([
-                "message" => __("Xxx successfully created"),
+                "message" => __("{0} successfully created", __("Xxx")),
                 "result" => $result,
             ])->show();
         }
@@ -89,7 +89,6 @@ final class XxxsInsertController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-
     }//insert
 
 }//XxxsInsertController

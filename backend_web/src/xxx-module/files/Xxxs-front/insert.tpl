@@ -16,6 +16,10 @@ $texts = [
 
 $result = [
   %FIELD_KEY_AND_VALUES%
+
+  "xxxs" => $xxxs,
+  "notoryes" => $notoryes,
+  "businessowners" => $businessowners,
 ];
 ?>
 <div class="modal-form">
