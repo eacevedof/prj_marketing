@@ -100,10 +100,6 @@ final class XxxsUpdateService extends AppService
 
         $update = $this->entityxxx->map_request($update);
         $this->_check_entity_permission($update);
-        if(!$update["secret"]) unset($update["secret"]);
-        else
-            $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
-        $update["description"] = $update["fullname"];
         $this->entityxxx->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repoxxx->update($update);
