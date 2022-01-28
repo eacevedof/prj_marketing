@@ -26,12 +26,12 @@ final class ArrayRepository extends AppRepository
         $this->db = DbF::get_by_default();
     }
 
-    public function get_promotions(?int $idowner=0): array
+    public function get_promotion_types(?int $idowner=0): array
     {
         if(!$idowner) $idowner = 0;
         $type = Types::PROMOTION;
         $sql = $this->_get_qbuilder()
-            ->set_comment("picklist.get_promotions")
+            ->set_comment("picklist.get_promotion_types")
             ->set_table("app_array as m")
             ->set_getfields(["m.id","m.description"])
             ->add_and("m.is_enabled=1")

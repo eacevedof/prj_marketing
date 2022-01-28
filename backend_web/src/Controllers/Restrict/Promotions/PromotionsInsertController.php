@@ -44,9 +44,11 @@ final class PromotionsInsertController extends RestrictController
             ? $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER)
             : [];
 
-        $this->add_var(PageType::CSRF, $this->csrf->get_token())
+        $this->set_template("promotions/insert")
+            ->set_foldertpl("restrict")
+            ->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1, __("New promotion"))
-            ->add_var("promotions", $this->picklist->get_promotions())
+            ->add_var("promotions", $this->picklist->get_promotion_types())
             ->add_var("businessowners", $businessowners)
             ->add_var("notoryes", $this->picklist->get_not_or_yes())
             ->render_nl();

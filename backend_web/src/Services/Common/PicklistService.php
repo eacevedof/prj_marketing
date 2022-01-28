@@ -57,9 +57,9 @@ final class PicklistService extends AppService
         return array_values($profiles);
     }
 
-    public function get_promotions(): array
+    public function get_promotion_types(): array
     {
-        return $this->repoapparray->get_promotions(
+        return $this->repoapparray->get_promotion_types(
             $this->auth->get_idowner()
         );
     }

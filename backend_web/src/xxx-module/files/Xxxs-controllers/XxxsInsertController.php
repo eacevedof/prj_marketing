@@ -44,10 +44,11 @@ final class XxxsInsertController extends RestrictController
             ? $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER)
             : [];
 
-        $this->add_var(PageType::CSRF, $this->csrf->get_token())
-            ->set_template("xxxs/insert")
+        $this->set_template("xxxs/insert")
+            ->set_foldertpl("restrict")
+            ->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1, __("New xxx"))
-            ->add_var("promotions", $this->picklist->get_promotions())
+            ->add_var("promotions", $this->picklist->get_promotion_types())
             ->add_var("businessowners", $businessowners)
             ->add_var("notoryes", $this->picklist->get_not_or_yes())
             ->render_nl();

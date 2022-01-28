@@ -97,7 +97,7 @@ final class PromotionsController extends RestrictController
 
         $this->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1,__("New promotion"))
-            ->add_var("promotions", $this->picklist->get_promotions())
+            ->add_var("promotions", $this->picklist->get_promotion_types())
             ->add_var("businessowners", $businessowners)
             ->add_var("notoryes", $this->picklist->get_not_or_yes())
             ->render_nl();
