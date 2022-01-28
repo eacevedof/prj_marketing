@@ -43,14 +43,12 @@ final class XxxsDeleteService extends AppService
 
     private function _check_entity_delete_permission(array $entity): void
     {
-        $idxxx = (int)$entity["id"];
-        $idauthuser = (int)$this->authuser["id_owner"];
-
         if ($this->auth->is_root() || $this->auth->is_sysadmin()) return;
 
         if ($this->auth->is_business_owner() || $this->auth->is_business_manager()) {
-            //comprobar si es propietario de la entidad o su owner es el mismo que el de la propiedad
-            return;
+            if ((int)$entity["id_owner"] === $this->auth->get_idowner())
+                //comprobar si es propietario de la entidad o su owner es el mismo que el de la propiedad
+                return;
         }
 
         $this->_exception(
