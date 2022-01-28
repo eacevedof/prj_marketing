@@ -47,6 +47,7 @@ final class XxxsUpdateController extends RestrictController
             $edit = SF::get("Restrict\Xxxs\XxxsInfo", [$uuid]);
             $result = $edit->get_for_edit();
             $this->set_template("xxxs/update")
+                ->set_foldertpl("restrict")
                 ->add_var(PageType::TITLE, __("Edit xxx {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit xxx {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
