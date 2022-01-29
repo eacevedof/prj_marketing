@@ -1,4 +1,5 @@
 ### To-Do
+- frontcontroller
 - pasar a controladores por caso de uso
 - corregir carga de picklists por idowner
 - Authservice inyectado desde el controlador a los servicios?
