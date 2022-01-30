@@ -9,13 +9,9 @@ if (!is_file("../boot/IndexMain.php")) exit("Boot\IndexMain not found!");
 include_once ("../boot/IndexMain.php");
 
 try {
-    //throw new Exception("example");
     (new IndexMain())->exec();
 }
-catch (Exception $ex) {
-    IndexMain::on_error($ex);
-}
-catch (Throwable $ex) {
+catch (Exception | Throwable $ex) {
     IndexMain::on_error($ex);
 }
 ob_end_flush();
