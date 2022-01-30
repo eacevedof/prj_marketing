@@ -33,8 +33,8 @@ final class ConsoleMain
 
         $armethparams = [];
         foreach($oRflecMethod->getParameters() as $oParam) {
-            if(isset($ar_arg[$oParam->getName()]))
-                $armethparams[] =  $ar_arg[$oParam->getName()];
+            if(isset($args[$oParam->getName()]))
+                $armethparams[] =  $args[$oParam->getName()];
             else
                 $armethparams[] =  $oParam->getDefaultValue();
         }
@@ -60,9 +60,9 @@ final class ConsoleMain
     
     public function exec(): void
     {
-        $ar_arg = get_console_args($this->argv);
-        if(isset($ar_arg["class"])) {
-            $this->_on_class_method_params($ar_arg);
+        $args = get_console_args($this->argv);
+        if(isset($args["class"])) {
+            $this->_on_class_method_params($args);
             return;
         }
 
