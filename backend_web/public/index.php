@@ -4,17 +4,17 @@ debug_print_backtrace();
 session_name("MARKETINGID");
 session_start();
 
-use Boot\Index;
+use Boot\IndexMain;
 include_once ("../boot/index.php");
 
 try {
     //throw new Exception("example");
-    (new Index())->exec();
+    (new IndexMain())->exec();
 }
 catch (Exception $ex) {
-    Index::on_error($ex);
+    IndexMain::on_error($ex);
 }
 catch (Throwable $ex) {
-    Index::on_error($ex);
+    IndexMain::on_error($ex);
 }
 ob_end_flush();

@@ -8,7 +8,7 @@ include_once "../vendor/theframework/bootstrap.php";
 use TheFramework\Components\ComponentRouter;
 use \Throwable;
 
-final class Index
+final class IndexMain
 {
     private $routes = [];
 
