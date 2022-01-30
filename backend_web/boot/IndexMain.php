@@ -81,13 +81,14 @@ final class IndexMain
 
     public static function on_error(Throwable $ex): void
     {
-        if ($_POST) lgerr($_POST,"index-exception POST", "error");
-        if ($_GET) lgerr($_GET,"index-exception GET", "error");
-        if ($_SESSION) lgerr($_SESSION,"index-exception SESSION", "error");
-        if ($_REQUEST) lgerr($_REQUEST,"index-exception REQUEST", "error");
-        if ($_ENV) lgerr($_ENV,"index-exception ENV", "error");
-        lgerr($ex->getMessage(), "index-exception", "error");
-        lgerr($ex->getFile()." : (line: {$ex->getLine()})", "", "error");
+        $uuid = uniqid();
+        if ($_POST) lgerr($_POST,"index-exception $uuid POST", "error");
+        if ($_GET) lgerr($_GET,"index-exception $uuid GET", "error");
+        if ($_SESSION) lgerr($_SESSION,"index-exception $uuid SESSION", "error");
+        if ($_REQUEST) lgerr($_REQUEST,"index-exception $uuid REQUEST", "error");
+        if ($_ENV) lgerr($_ENV,"index-exception $uuid ENV", "error");
+        lgerr($ex->getMessage(), "index-exception $uuid", "error");
+        lgerr($ex->getFile()." : (line: {$ex->getLine()})", "file-line $uuid", "error");
 
         $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
         http_response_code($code);
@@ -95,7 +96,9 @@ final class IndexMain
             "code" => $code,
             "status" => false,
             "errors" => [
-                "Unexpected error occured"
+                "Unexpected error occured",
+                $uuid,
+                date("Y-m-d H:i:s")
             ],
             "data" => []
         ];
