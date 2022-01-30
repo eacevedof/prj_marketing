@@ -1,10 +1,10 @@
 ### To-Do
-- frontcontroller
-- pasar a controladores por caso de uso
-- corregir carga de picklists por idowner
+- ~~frontcontroller~~
+- ~~pasar a controladores por caso de uso~~
+- ~~corregir carga de picklists por idowner~~
 - Authservice inyectado desde el controlador a los servicios?
   - puede que si, habrá que probar el comportamiento singleton
-- pasar a ModulesSErvice a una tabla
+- pasar a ModulesService a una tabla
 - token para acceso api usuario
 - patron de pool de objetos para conector a bd
 - fix tranferencia de traducciones a lit
