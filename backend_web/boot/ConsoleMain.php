@@ -4,7 +4,6 @@ namespace Boot;
 include_once "../boot/appbootstrap.php";
 include_once "../vendor/autoload.php";
 include_once "../vendor/theframework/bootstrap.php";
-define("PATH_CONSOLE", PATH_ROOT);
 
 use \ReflectionClass;
 use \ReflectionMethod;

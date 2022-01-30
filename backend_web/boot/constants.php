@@ -1,11 +1,8 @@
 <?php
 //constants.php 20200721
 define("DS",DIRECTORY_SEPARATOR);
-
-$pathpublic = $_SERVER["DOCUMENT_ROOT"];
-if($pathpublic) $sPath = realpath($pathpublic.DS."..");
-else $sPath = $_SERVER["PWD"];
-define("PATH_ROOT",$sPath);
+$sPath = realpath("../");
+define("PATH_ROOT", $sPath);
 
 $sPath = realpath(PATH_ROOT.DS."public");
 define("PATH_PUBLIC",$sPath);//carpeta public
