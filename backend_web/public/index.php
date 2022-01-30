@@ -3,116 +3,18 @@ ob_start();
 debug_print_backtrace();
 session_name("MARKETINGID");
 session_start();
-include("../boot/appbootstrap.php");
 
-//header("Access-Control-Allow-Origin: *");
-//Código de configuración de cabeceras que permiten consumir la API desde cualquier origen
-//fuente: https://stackoverflow.com/questions/14467673/enable-cors-in-htaccess
-// Allow from any origin
-if(isset($_SERVER["HTTP_ORIGIN"]))
-{
-    //No "Access-Control-Allow-Origin" header is present on the requested resource.
-    //should do a check here to match $_SERVER["HTTP_ORIGIN"] to a
-    //whitelist of safe domains
-    header("Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}");
-    header("Access-Control-Allow-Credentials: true");
-    header("Access-Control-Max-Age: 86400");    // cache for 1 day
-    //header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
-}
-// Access-Control headers are received during OPTIONS requests
-if($_SERVER["REQUEST_METHOD"] == "OPTIONS")
-{
-    if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]))
-        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-
-    if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]))
-        header("Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]}");
-}
-//si se está en producción se desactivan los mensajes en el navegador
-if($_ENV["APP_ENV"]=="prod")
-{
-    $sToday = date("Ymd");
-    ini_set("display_errors",0);
-    ini_set("log_errors",1);
-    //Define where do you want the log to go, syslog or a file of your liking with
-    ini_set("error_log",PATH_LOGS.DS."sys_$sToday.log"); // or ini_set("error_log", "/path/to/syslog/file")
-}
-
-//autoload de composer
-include_once "../vendor/autoload.php";
-//arranque de mis utilidades
-include_once "../vendor/theframework/bootstrap.php";
-//rutas, mapeo de url => controlador.metodo()
-$arRoutes = include_once "../src/routes/routes.php";
-use TheFramework\Components\ComponentRouter;
+use Boot\Index;
+include_once ("../boot/index.php");
 
 try {
     //throw new Exception("example");
-    $oR = new ComponentRouter($arRoutes);
-    $arRun = $oR->get_rundata();
-    unset($arRoutes);unset($oR);
-    if($methods = $arRun["allowed"] ?? []) {
-        if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods))
-            throw new \Exception("request method {$_SERVER["REQUEST_METHOD"]} not allowed");
-    }
-
-    if(!$_POST && $json = file_get_contents("php://input")) $_POST = json_decode($json, 1);
-
-    $_REQUEST["ACTION"] = $arRun;
-    $_REQUEST["ACTION_LANG"] = trim($_GET["lang"] ?? "")
-                                ?: trim($_COOKIE["lang"] ?? "")
-                                ?: trim($_SESSION["lang"] ?? "")
-                                ?: trim($_ENV["lang"] ?? "")
-                                ?: "en";
-
-    $oController = new $arRun["controller"]();
-    $oController->{$arRun["method"]}(
-        ...($arRun["_args"] ?? [])
-    );
+    (new Index())->exec();
 }
-catch (\Exception $ex)
-{
-    if($_POST) lgerr($_POST,"main-exception POST", "error");
-    if($_GET) lgerr($_GET,"main-exception GET", "error");
-    if($_SESSION) lgerr($_SESSION,"main-exception SESSION", "error");
-    if($_REQUEST) lgerr($_REQUEST,"main-exception REQUEST", "error");
-    if($_ENV) lgerr($_ENV,"main-exception ENV", "error");
-    lgerr($ex->getMessage(), "main-exception", "error");
-    lgerr($ex->getFile()." : (line: {$ex->getLine()})", "", "error");
-
-    $code = $ex->getCode()!==0 ? $ex->getCode():500;
-    http_response_code($code);
-    $response = [
-        "code" => $code,
-        "status" => false,
-        "errors" => [
-            $ex->getMessage()
-        ],
-        "data" => []
-    ];
-    echo json_encode($response);
+catch (Exception $ex) {
+    Index::on_error($ex);
 }
-catch (\Throwable $ex)
-{
-    if($_POST) lgerr($_POST,"fatal-error POST", "error");
-    if($_GET) lgerr($_GET,"fatal-error GET", "error");
-    if($_SESSION) lgerr($_SESSION,"fatal-error SESSION", "error");
-    if($_REQUEST) lgerr($_REQUEST,"fatal-error REQUEST", "error");
-    if($_ENV) lgerr($_ENV,"fatal-error ENV", "error");
-    if($arRun) lgerr($arRun, "to-run", "error");
-    lgerr($ex->getMessage(), "fatal-error", "error");
-    lgerr($ex->getFile()." : (line: {$ex->getLine()})", "", "error");
-
-    $code = $ex->getCode()!==0 ? $ex->getCode():500;
-    http_response_code($code);
-    $response = [
-        "code" => $code,
-        "status" => false,
-        "errors" => [
-            "Server throwable error"
-        ],
-        "data" => []
-    ];
-    echo json_encode($response);
+catch (Throwable $ex) {
+    Index::on_error($ex);
 }
 ob_end_flush();

@@ -9,7 +9,7 @@ return [
     ["url"=>"/restrict","controller"=>"App\Controllers\Restrict\DashboardController", "method"=>"index"],
 
     //@users
-    ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersController", "method"=>"info"],
+    ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersInfoController", "method"=>"info"],
     ["url"=>"/restrict/users/create","controller"=>"App\Controllers\Restrict\Users\UsersInsertController", "method"=>"create"],
     ["url"=>"/restrict/users/insert","controller"=>"App\Controllers\Restrict\Users\UsersInsertController", "method"=>"insert", "allowed"=>["post"]],
     ["url"=>"/restrict/users/edit/:uuid","controller"=>"App\Controllers\Restrict\Users\UsersUpdateController", "method"=>"edit"],
