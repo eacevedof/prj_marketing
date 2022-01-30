@@ -39,7 +39,7 @@ function appboot_loadenv(): void
         $pathenv = PATH_ROOT . DS . $envfile;
         if (is_file($pathenv)) {
             $content = file_get_contents($pathenv);
-            $lines = explode("\n", $content);
+            $lines = explode(PHP_EOL, $content);
 
             foreach ($lines as $strline) {
                 if (strstr($strline, "=")) {
@@ -81,7 +81,7 @@ function console_loadenv(string $pathenv): void
 
 function get_console_args($argv): array
 {
-    $_ARG = array();
+    $_ARG = [];
     foreach ($argv as $arg_i)
     {
         if (preg_match("/--([^=]+)=(.*)/",$arg_i,$arKeyVal)) {

@@ -4,12 +4,12 @@ namespace Boot;
 include_once "../boot/appbootstrap.php";
 include_once "../vendor/autoload.php";
 include_once "../vendor/theframework/bootstrap.php";
+define("PATH_CONSOLE", PATH_ROOT);
 
 use \ReflectionClass;
 use \ReflectionMethod;
 use \Throwable;
 use \Exception;
-
 
 final class ConsoleMain
 {
@@ -22,29 +22,28 @@ final class ConsoleMain
         $this->argv = $argv ?? [];
     }
 
-    public function exec(): void
+    private function _on_class_method_params(array $argv): void
     {
-        $ar_arg = get_console_args($this->argv);
-        if(isset($ar_arg["class"])) {
-            $classname = $ar_arg["class"];
-            $classname = str_replace(".","\\",$classname);
-            $instance = new $classname();
+        $classname = $argv["class"];
+        $classname = str_replace(".","\\",$classname);
+        $instance = new $classname();
 
-            if(!$ar_arg["method"]) $ar_arg["method"] = "run";
-            $method = $ar_arg["method"];
-            $oRflecMethod = new ReflectionMethod($classname, $method);
+        if(!$argv["method"]) $argv["method"] = "run";
+        $method = $argv["method"];
+        $oRflecMethod = new ReflectionMethod($classname, $method);
 
-            $arMethArgs = [];
-            foreach($oRflecMethod->getParameters() as $oParam)
-            {
-                if(isset($ar_arg[$oParam->getName()]))
-                    $arMethArgs[] =  $ar_arg[$oParam->getName()];
-                else
-                    $arMethArgs[] =  $oParam->getDefaultValue();
-            }
-            $oRflecMethod->invokeArgs($instance, $arMethArgs);
+        $armethparams = [];
+        foreach($oRflecMethod->getParameters() as $oParam) {
+            if(isset($ar_arg[$oParam->getName()]))
+                $armethparams[] =  $ar_arg[$oParam->getName()];
+            else
+                $armethparams[] =  $oParam->getDefaultValue();
         }
+        $oRflecMethod->invokeArgs($instance, $armethparams);        
+    }
 
+    private function _on_service_arguments(): void
+    {
         $alias = trim($this->argv[1] ?? "");
         if (!$alias) $alias = "help";
 
@@ -53,12 +52,22 @@ final class ConsoleMain
         if (!$classname)
             throw new Exception("no class found for cmd $alias");
 
-
         $reflection = new ReflectionClass($classname);
         //a partir de la pos 1 en adelante son parametros de input
         $input = array_slice($this->argv, 2);
         $object = $reflection->newInstanceArgs([$input]);
         if($object) $object->run();
+    }
+    
+    public function exec(): void
+    {
+        $ar_arg = get_console_args($this->argv);
+        if(isset($ar_arg["class"])) {
+            $this->_on_class_method_params($ar_arg);
+            return;
+        }
+
+        $this->_on_service_arguments();
     }
 
     public static function on_error(Throwable $ex): void
