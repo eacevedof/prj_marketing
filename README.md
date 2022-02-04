@@ -12,9 +12,14 @@ SN Marketing
 - ejecuta todos los tests
 ```
 make ssh-be
-be
-phpunit
+be; phpunit
+
+ó
+
+make ssh-be
+run-test
 ```
+- esto ejecuta los test incluyendo `testbootstrap.php`
 
 ### Profiles
 - root
