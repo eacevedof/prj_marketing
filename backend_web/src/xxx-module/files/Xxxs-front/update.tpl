@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Views\AppView $this
+ * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  * @var string $h1
  * @var string $csrf

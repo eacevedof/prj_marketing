@@ -1,15 +1,15 @@
 <?php
-namespace App\Services\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Application;
 
-use App\Services\AppService;
-use App\Factories\EntityFactory as MF;
-use App\Factories\ServiceFactory as SF;
-use App\Factories\RepositoryFactory as RF;
-use App\Models\App\XxxEntity;
-use App\Repositories\App\XxxRepository;
-use App\Services\Auth\AuthService;
-use App\Enums\PolicyType;
-use App\Enums\ExceptionType;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Infrastructure\Factories\EntityFactory as MF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Restrict\Xxxs\Domain\XxxEntity;
+use App\Restrict\Xxxs\Domain\XxxRepository;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\ExceptionType;
 
 final class XxxsDeleteService extends AppService
 {
@@ -28,8 +28,8 @@ final class XxxsDeleteService extends AppService
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->entityxxx = MF::get("App/Xxx");
-        $this->repoxxx = RF::get("App/XxxRepository")->set_model($this->entityxxx);
+        $this->entityxxx = MF::get(XxxEntity::class);
+        $this->repoxxx = RF::get(XxxRepository::class)->set_model($this->entityxxx);
     }
 
     private function _check_permission(): void
@@ -92,7 +92,7 @@ final class XxxsDeleteService extends AppService
             "uuid" => $entity["uuid"]
         ];
     }
-    
+
     public function undelete(): array
     {
         $entity = $this->input;
@@ -129,6 +129,6 @@ final class XxxsDeleteService extends AppService
         return [
             "affected" => $affected,
             "uuid" => $entity["uuid"]
-        ];                
+        ];
     }
 }

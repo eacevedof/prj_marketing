@@ -1,13 +1,13 @@
 <?php
-namespace App\Services\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Application;
 
-use App\Services\AppService;
-use App\Factories\ServiceFactory as SF;
-use App\Factories\RepositoryFactory as RF;
-use App\Services\Auth\AuthService;
-use App\Repositories\App\XxxRepository;
-use App\Enums\PolicyType;
-use App\Enums\ExceptionType;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Restrict\Auth\Application\AuthService;
+use App\Restrict\Xxxs\Domain\XxxRepository;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\ExceptionType;
 
 final class XxxsInfoService extends AppService
 {
@@ -24,7 +24,7 @@ final class XxxsInfoService extends AppService
             $this->_exception(__("No xxx code provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->repoxxx = RF::get("App/Xxx");
+        $this->repoxxx = RF::get(XxxRepository::class);
     }
 
     private function _check_permission(): void
@@ -43,14 +43,13 @@ final class XxxsInfoService extends AppService
     {
         if ($this->auth->is_root() || $this->auth->is_sysadmin()) return;
 
-        $idauthuser = (int)$this->authuser["id"];
+        $idauthuser = (int) $this->authuser["id"];
         $identowner = (int) $entity["id_owner"];
         //si el owner logado es propietario de la entidad
         if ($this->auth->is_business_owner() && $idauthuser === $identowner)
             return;
 
-        //si el logado es bm y la ent es del mismo owner
-        $idauthowner = (int)$this->authuser["id_owner"];
+        $idauthowner = $this->auth->get_idowner();
         if ($this->auth->is_business_manager() && $idauthowner === $identowner)
             return;
 

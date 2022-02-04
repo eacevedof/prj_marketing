@@ -4,7 +4,7 @@
             "App\\" : "src/"
         },
         "files": [
-            "src/Functions/global.php"
+          "src/Shared/Infrastructure/Functions/global.php"
         ]
     },
     "require-dev": {

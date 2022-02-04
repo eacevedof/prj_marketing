@@ -1,15 +1,15 @@
 ### routes.php
 ```php
 //@xxxs
-["url"=>"/restrict/xxxs/info/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsInfoController", "method"=>"info"],
-["url"=>"/restrict/xxxs/create","controller"=>"App\Controllers\Restrict\Xxxs\XxxsInsertController", "method"=>"create"],
-["url"=>"/restrict/xxxs/insert","controller"=>"App\Controllers\Restrict\Xxxs\XxxsInsertController", "method"=>"insert", "allowed"=>["post"]],
-["url"=>"/restrict/xxxs/edit/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsUpdateController", "method"=>"edit"],
-["url"=>"/restrict/xxxs/update/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsUpdateController", "method"=>"update", "allowed"=>["put"]],
-["url"=>"/restrict/xxxs/delete/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsDeleteController", "method"=>"remove", "allowed"=>["delete"]],
-["url"=>"/restrict/xxxs/undelete/:uuid","controller"=>"App\Controllers\Restrict\Xxxs\XxxsDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
-["url"=>"/restrict/xxxs/?int:page","controller"=>"App\Controllers\Restrict\Xxxs\XxxsSearchController", "method"=>"index"],
-["url"=>"/restrict/xxxs/search","controller"=>"App\Controllers\Restrict\Xxxs\XxxsSearchController", "method"=>"search"],
+["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsInfoController", "method"=>"info"],
+["url"=>"/restrict/promotions/create","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsInsertController", "method"=>"create"],
+["url"=>"/restrict/promotions/insert","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsInsertController", "method"=>"insert", "allowed"=>["post"]],
+["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsUpdateController", "method"=>"edit"],
+["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsUpdateController", "method"=>"update", "allowed"=>["put"]],
+["url"=>"/restrict/promotions/delete/:uuid","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsDeleteController", "method"=>"remove", "allowed"=>["delete"]],
+["url"=>"/restrict/promotions/undelete/:uuid","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
+["url"=>"/restrict/promotions/?int:page","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsSearchController", "method"=>"index"],
+["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\Xxxs\Infrastructure\Controllers\XxxsSearchController", "method"=>"search"],
 ```
 ### ModuleService.php
 ```php

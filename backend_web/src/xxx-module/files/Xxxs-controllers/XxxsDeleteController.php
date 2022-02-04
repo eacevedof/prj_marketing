@@ -1,28 +1,28 @@
 <?php
 /**
- * @author Eduardo Acevedo Farje.
+ * @author Module Builder
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\Xxxs\XxxsDeleteController
+ * @name App\Restrict\Xxxs\Infrastructure\Controllers\XxxsDeleteController
  * @file XxxsDeleteController.php v1.0.0
- * @date 23-01-2022 10:22 SPAIN
- * @observations
+ * @date %DATE% SPAIN
  */
-namespace App\Controllers\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Infrastructure\Controllers;
 
-use App\Controllers\Restrict\RestrictController;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Common\PicklistService;
-use App\Enums\ResponseType;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Picklist\Application\PicklistService;
+use App\Restrict\Xxxs\Application\XxxsDeleteService;
+use App\Shared\Infrastructure\Enums\ResponseType;
 use \Exception;
 
 final class XxxsDeleteController extends RestrictController
 {
     private PicklistService $picklist;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->picklist = SF::get("Common\Picklist");
+        $this->picklist = SF::get(PicklistService::class);
     }
 
     //@delete
@@ -35,10 +35,10 @@ final class XxxsDeleteController extends RestrictController
                 ->show();
 
         try {
-            $delete = SF::get_callable("Restrict\Xxxs\XxxsDelete", ["uuid"=>$uuid]);
+            $delete = SF::get_callable(XxxsDeleteService::class, ["uuid"=>$uuid]);
             $result = $delete();
             $this->_get_json()->set_payload([
-                "message"=> __("{0} {1} successfully removed", __("Xxx"), $uuid),
+                "message"=>__("{0} successfully removed", __("Xxx")),
                 "result" => $result,
             ])->show();
         }
@@ -48,7 +48,7 @@ final class XxxsDeleteController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }//remove
+    }
 
     //@undelete
     public function undelete(string $uuid): void
@@ -59,10 +59,10 @@ final class XxxsDeleteController extends RestrictController
                 ->set_error([__("Only type json for accept header is allowed")])
                 ->show();
         try {
-            $delete = SF::get_callable("Restrict\Xxxs\XxxsDelete", ["uuid"=>$uuid]);
+            $delete = SF::get_callable(XxxsDeleteService::class, ["uuid"=>$uuid]);
             $result = $delete->undelete();
             $this->_get_json()->set_payload([
-                "message"=> __("{0} {1} successfully restored", __("Xxx"), $uuid),
+                "message"=>__("{0} successfully restored", __("Xxx")),
                 "result" => $result,
             ])->show();
         }
@@ -72,6 +72,6 @@ final class XxxsDeleteController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }//undelete
+    }
 
 }//XxxsDeleteController

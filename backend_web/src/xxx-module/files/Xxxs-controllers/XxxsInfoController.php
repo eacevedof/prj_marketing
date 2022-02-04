@@ -1,42 +1,43 @@
 <?php
 /**
- * @author Eduardo Acevedo Farje.
+ * @author Module Builder.
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\Xxxs\XxxsInfoController
+ * @name App\Restrict\Xxxs\Infrastructure\Controllers\XxxsInfoController
  * @file XxxsInfoController.php v1.0.0
- * @date 23-01-2022 10:22 SPAIN
+ * @date %DATE% SPAIN
  * @observations
  */
-namespace App\Controllers\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Infrastructure\Controllers;
 
-use App\Controllers\Restrict\RestrictController;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Common\PicklistService;
-use App\Enums\PageType;
-use App\Enums\ResponseType;
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ForbiddenException;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Picklist\Application\PicklistService;
+use App\Restrict\Xxxs\Application\XxxsInfoService;
+use App\Shared\Infrastructure\Enums\PageType;
+use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Infrastructure\Exceptions\NotFoundException;
+use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use \Exception;
 
 final class XxxsInfoController extends RestrictController
 {
     private PicklistService $picklist;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->picklist = SF::get("Common\Picklist");
+        $this->picklist = SF::get(PicklistService::class);
     }
 
     //@modal
     public function info(string $uuid): void
     {
-         $this->add_var(PageType::TITLE, __("Xxx info"))
-             ->add_var(PageType::H1, __("Xxx info"))
-             ->add_var("ismodal",1);
+        $this->add_var(PageType::TITLE, __("Xxx info"))
+            ->add_var(PageType::H1, __("Xxx info"))
+            ->add_var("ismodal",1);
 
         try {
-            $info = SF::get_callable("Restrict\Xxxs\XxxsInfo", [$uuid]);
+            $info = SF::get_callable(XxxsInfoService::class, [$uuid]);
             $result = $info();
             $this->add_var("uuid", $uuid)
                 ->add_var("result", $result)
@@ -60,6 +61,6 @@ final class XxxsInfoController extends RestrictController
                 ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
-    }//info
+    }
 
 }//XxxsInfoController

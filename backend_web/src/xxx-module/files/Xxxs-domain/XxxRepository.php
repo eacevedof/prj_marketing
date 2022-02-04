@@ -1,19 +1,19 @@
 <?php
 /**
- * @author Eduardo Acevedo Farje.
+ * @author Module Builder
  * @link eduardoaf.com
- * @name App\Repositories\App\XxxRepository
+ * @name App\Restrict\Xxxs\Domain\XxxRepository
  * @file XxxRepository.php v1.0.0
- * @date 29-11-2018 19:00 SPAIN
- * @observations
+ * @date %DATE% SPAIN
  */
-namespace App\Repositories\App;
+namespace App\Restrict\Xxxs\Domain;
 
-use App\Repositories\AppRepository;
-use App\Traits\SearchRepoTrait;
-use App\Factories\RepositoryFactory as RF;
-use App\Factories\DbFactory as DbF;
-use App\Services\Auth\AuthService;
+use App\Shared\Domain\Repositories\AppRepository;
+use App\Shared\Infrastructure\Traits\SearchRepoTrait;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\DbFactory as DbF;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Domain\Repositories\Common\SysfieldRepository;
 use TheFramework\Components\Db\ComponentQB;
 
 final class XxxRepository extends AppRepository
@@ -110,7 +110,7 @@ final class XxxRepository extends AppRepository
         $r = $this->db->query($sql);
         if (!$r) return [];
 
-        $sysdata = RF::get("Common\Sysfield")->get_sysdata($r = $r[0]);
+        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
 
         return array_merge($r, $sysdata);
     }

@@ -2,33 +2,35 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\Xxxs\XxxsUpdateController
+ * @name App\Restrict\Xxxs\Infrastructure\Controllers\XxxsUpdateController
  * @file XxxsUpdateController.php v1.0.0
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
-namespace App\Controllers\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Infrastructure\Controllers;
 
-use App\Controllers\Restrict\RestrictController;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Common\PicklistService;
-use App\Enums\PolicyType;
-use App\Enums\PageType;
-use App\Enums\ResponseType;
-use App\Enums\ExceptionType;
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ForbiddenException;
-use App\Exceptions\FieldsException;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Picklist\Application\PicklistService;
+use App\Restrict\Xxxs\Application\XxxsUpdateService;
+use App\Restrict\Xxxs\Application\XxxsInfoService;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\PageType;
+use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Infrastructure\Exceptions\NotFoundException;
+use App\Shared\Infrastructure\Exceptions\ForbiddenException;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
 
 final class XxxsUpdateController extends RestrictController
 {
     private PicklistService $picklist;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->picklist = SF::get("Common\Picklist");
+        $this->picklist = SF::get(PicklistService::class);
     }
 
     //@modal
@@ -44,10 +46,9 @@ final class XxxsUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $edit = SF::get("Restrict\Xxxs\XxxsInfo", [$uuid]);
+            $edit = SF::get(XxxsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
-            $this->set_template("xxxs/update")
-                ->set_foldertpl("restrict")
+            $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit xxx {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit xxx {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
@@ -95,7 +96,7 @@ final class XxxsUpdateController extends RestrictController
 
         try {
             $request = ["uuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable("Restrict\Xxxs\XxxsUpdate", $request);
+            $update = SF::get_callable(XxxsUpdateService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
                 "message"=> __("{0} {1} successfully updated", __("Xxx"), $uuid),

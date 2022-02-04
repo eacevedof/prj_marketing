@@ -1,19 +1,23 @@
 <?php
-namespace App\Services\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Application;
 
-use App\Services\AppService;
-use App\Traits\RequestTrait;
-use App\Factories\RepositoryFactory as RF;
-use App\Factories\ServiceFactory as  SF;
-use App\Factories\EntityFactory as MF;
-use App\Factories\Specific\ValidatorFactory as VF;
-use App\Services\Auth\AuthService;
-use App\Models\App\XxxEntity;
-use App\Repositories\App\XxxRepository;
-use App\Models\FieldsValidator;
-use App\Enums\PolicyType;
-use App\Enums\ExceptionType;
-use App\Exceptions\FieldsException;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as  SF;
+use App\Shared\Infrastructure\Factories\EntityFactory as MF;
+use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Restrict\Auth\Application\AuthService;
+use App\Restrict\Xxxs\Domain\XxxEntity;
+use App\Restrict\Xxxs\Domain\XxxRepository;
+use App\Shared\Domain\Repositories\App\ArrayRepository;
+use App\Shared\Infrastructure\Components\Date\DateComponent;
+use App\Shared\Infrastructure\Components\Formatter\TextComponent;
+use App\Shared\Domain\Entities\FieldsValidator;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class XxxsInsertService extends AppService
 {
@@ -24,16 +28,35 @@ final class XxxsInsertService extends AppService
     private XxxRepository $repoxxx;
     private FieldsValidator $validator;
     private XxxEntity $entityxxx;
+    private TextComponent $textformat;
+    private DateComponent $datecomp;
+    private ArrayRepository $repoapparray;
 
     public function __construct(array $input)
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
+
+        $this->datecomp = CF::get(DateComponent::class);
+        $this->_map_dates($input);
         $this->input = $input;
-        $this->entityxxx = MF::get("App/Xxx");
+        $this->entityxxx = MF::get(XxxEntity::class);
         $this->validator = VF::get($this->input, $this->entityxxx);
-        $this->repoxxx = RF::get("App/Xxx");
+
+        $this->repoxxx = RF::get(XxxRepository::class);
+        $this->repoapparray = RF::get(ArrayRepository::class);
         $this->authuser = $this->auth->get_user();
+        $this->textformat = CF::get(TextComponent::class);
+    }
+
+    private function _map_dates(array &$input): void
+    {
+        $date = $input["date_from"] ?? "";
+        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
+        $input["date_from"] = $date;
+        $date = $input["date_to"] ?? "";
+        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
+        $input["date_to"] = $date;
     }
 
     private function _check_permission(): void
@@ -62,6 +85,7 @@ final class XxxsInsertService extends AppService
     public function __invoke(): array
     {
         $insert = $this->_get_req_without_ops($this->input);
+
         if (!$insert)
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
@@ -72,6 +96,9 @@ final class XxxsInsertService extends AppService
 
         $insert = $this->entityxxx->map_request($insert);
         $insert["uuid"] = uniqid();
+        $insert["slug"] = $this->textformat->set_text($insert["description"])->slug();
+        if (!$this->auth->is_system()) $insert["id_owner"] = $this->auth->get_idowner();
+
         $this->entityxxx->add_sysinsert($insert, $this->authuser["id"]);
         $id = $this->repoxxx->insert($insert);
 

@@ -12,6 +12,7 @@ try {
     (new IndexMain())->exec();
 }
 catch (Exception | Throwable $ex) {
+    IndexMain::debug($ex);
     IndexMain::on_error($ex);
 }
 ob_end_flush();

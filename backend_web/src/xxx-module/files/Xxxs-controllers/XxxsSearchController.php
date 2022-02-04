@@ -1,38 +1,38 @@
 <?php
 /**
- * @author Eduardo Acevedo Farje.
+ * @author Module Builder
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\Xxxs\XxxsSearchController
+ * @name App\Restrict\Xxxs\Infrastructure\Controllers\XxxsSearchController
  * @file XxxsSearchController.php v1.0.0
- * @date 23-01-2022 10:22 SPAIN
- * @observations
+ * @date %DATE% SPAIN
  */
-namespace App\Controllers\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Infrastructure\Controllers;
 
-use App\Controllers\Restrict\RestrictController;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Common\PicklistService;
-use App\Enums\PolicyType;
-use App\Enums\PageType;
-use App\Enums\ResponseType;
-use App\Enums\UrlType;
-use App\Exceptions\ForbiddenException;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Picklist\Application\PicklistService;
+use App\Restrict\Xxxs\Application\XxxsSearchService;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\PageType;
+use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Infrastructure\Enums\UrlType;
+use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use \Exception;
 
 final class XxxsSearchController extends RestrictController
 {
     private PicklistService $picklist;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->picklist = SF::get("Common\Picklist");
+        $this->picklist = SF::get(PicklistService::class);
     }
 
     public function index(?string $page=null): void
     {
         try {
-            $search = SF::get("Restrict\Xxxs\XxxsSearch");
+            $search = SF::get(XxxsSearchService::class);
 
             $this->add_var(PageType::TITLE, __("Xxxs"))
                 ->add_var(PageType::H1, __("Xxxs"))
@@ -62,7 +62,7 @@ final class XxxsSearchController extends RestrictController
                 ->show();
 
         try {
-            $search = SF::get_callable("Restrict\Xxxs\XxxsSearch", $this->request->get_get());
+            $search = SF::get_callable(XxxsSearchService::class, $this->request->get_get());
             $result = $search();
             $this->_get_json()->set_payload([
                 "message"  => __("auth ok"),

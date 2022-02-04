@@ -2,15 +2,14 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Models\ExampleEntity
- * @file ExampleEntity.php v1.0.0
- * @date 29-11-2018 19:00 SPAIN
- * @observations
+ * @name App\Restrict\Xxxs\Domain\XxxEntity
+ * @file XxxEntity.php v1.0.0
+ * @date %DATE% SPAIN
  */
-namespace App\Models\App;
+namespace App\Restrict\Xxxs\Domain;
 
-use App\Models\AppEntity;
-use App\Enums\EntityType;
+use App\Shared\Domain\Entities\AppEntity;
+use App\Shared\Infrastructure\Enums\EntityType;
 
 final class XxxEntity extends AppEntity
 {

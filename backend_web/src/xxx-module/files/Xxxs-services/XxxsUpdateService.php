@@ -1,20 +1,20 @@
 <?php
-namespace App\Services\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Application;
 
-use App\Services\AppService;
-use App\Traits\RequestTrait;
-use App\Factories\EntityFactory as MF;
-use App\Factories\RepositoryFactory as RF;
-use App\Factories\Specific\ValidatorFactory as VF;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Auth\AuthService;
-use App\Models\App\XxxEntity;
-use App\Repositories\App\XxxRepository;
-use App\Models\FieldsValidator;
-use App\Enums\PolicyType;
-use App\Enums\ProfileType;
-use App\Enums\ExceptionType;
-use App\Exceptions\FieldsException;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Shared\Infrastructure\Factories\EntityFactory as MF;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Auth\Application\AuthService;
+use App\Restrict\Xxxs\Domain\XxxEntity;
+use App\Restrict\Xxxs\Domain\XxxRepository;
+use App\Shared\Domain\Entities\FieldsValidator;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\ProfileType;
+use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class XxxsUpdateService extends AppService
 {
@@ -35,9 +35,9 @@ final class XxxsUpdateService extends AppService
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->entityxxx = MF::get("App/Xxx");
+        $this->entityxxx = MF::get(XxxEntity::class);
         $this->validator = VF::get($this->input, $this->entityxxx);
-        $this->repoxxx = RF::get("App/XxxRepository");
+        $this->repoxxx = RF::get(XxxRepository::class);
         $this->repoxxx->set_model($this->entityxxx);
         $this->authuser = $this->auth->get_user();
     }
@@ -84,7 +84,7 @@ final class XxxsUpdateService extends AppService
     private function _add_rules(): FieldsValidator
     {
         $this->validator
-            %FIELD_RULES%
+        %FIELD_RULES%
         ;
         return $this->validator;
     }

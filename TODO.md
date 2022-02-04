@@ -10,8 +10,10 @@
 - fix tranferencia de traducciones a lit
 - modal info responsive
 - refactor a este patrón de carpetas de DDD by **codely**:
-  - https://www.youtube.com/watch?v=X2CPc8DLwEQ (explicación de la distribución de carpetas)
+  - https://www.youtube.com/watch?v=X2CPc8DLwEQ (explicación de la distribución de carpetas JAVA)
+  - https://www.youtube.com/watch?v=UFnABp2s8Y0 (explicación de distribución de carpetas php)
   - https://www.youtube.com/watch?v=y3MWfPDmVqo (la distribución en si)
+  - repo php https://github.com/CodelyTV/php-ddd-example
 - validadores en cliente
 - función que recupere todas las traducciones
 - cache por usuario o por elemento

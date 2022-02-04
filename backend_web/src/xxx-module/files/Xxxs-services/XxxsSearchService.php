@@ -1,16 +1,16 @@
 <?php
-namespace App\Services\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Application;
 
-use App\Services\AppService;
-use App\Factories\ServiceFactory as SF;
-use App\Factories\RepositoryFactory as RF;
-use App\Factories\HelperFactory as HF;
-use App\Factories\ComponentFactory as CF;
-use App\Services\Auth\AuthService;
-use App\Repositories\App\XxxRepository;
-use App\Helpers\Views\DatatableHelper;
-use App\Enums\PolicyType;
-use App\Enums\ExceptionType;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\HelperFactory as HF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Restrict\Auth\Application\AuthService;
+use App\Restrict\Xxxs\Domain\XxxRepository;
+use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\ExceptionType;
 
 final class XxxsSearchService extends AppService
 {
@@ -23,7 +23,7 @@ final class XxxsSearchService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        $this->repoxxx = RF::get("App/Xxx");
+        $this->repoxxx = RF::get(XxxRepository::class);
     }
 
     public function __invoke(): array
@@ -46,7 +46,7 @@ final class XxxsSearchService extends AppService
 
     public function get_datatable(): DatatableHelper
     {
-        $dthelp = HF::get("Views/Datatable")->add_column("id")->is_visible(false);
+        $dthelp = HF::get(DatatableHelper::class)->add_column("id")->is_visible(false);
 
         if($this->auth->is_root())
             $dthelp

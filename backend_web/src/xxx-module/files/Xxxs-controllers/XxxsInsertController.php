@@ -2,37 +2,38 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Controllers\Restrict\Xxxs\XxxsInsertController
+ * @name App\Restrict\Xxxs\Infrastructure\Controllers\XxxsInsertController
  * @file XxxsInsertController.php v1.0.0
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
-namespace App\Controllers\Restrict\Xxxs;
+namespace App\Restrict\Xxxs\Infrastructure\Controllers;
 
-use App\Controllers\Restrict\RestrictController;
-use App\Factories\ServiceFactory as SF;
-use App\Services\Common\PicklistService;
-use App\Enums\PolicyType;
-use App\Enums\PageType;
-use App\Enums\ProfileType;
-use App\Enums\ResponseType;
-use App\Exceptions\FieldsException;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Picklist\Application\PicklistService;
+use App\Restrict\Xxxs\Application\XxxsInsertService;
+use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Shared\Infrastructure\Enums\PageType;
+use App\Shared\Infrastructure\Enums\ProfileType;
+use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
 
 final class XxxsInsertController extends RestrictController
 {
     private PicklistService $picklist;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->picklist = SF::get("Common\Picklist");
+        $this->picklist = SF::get(PicklistService::class);
     }
 
-    //@modal
+    //@modal (creation form)
     public function create(): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE)) {
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
@@ -44,15 +45,14 @@ final class XxxsInsertController extends RestrictController
             ? $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER)
             : [];
 
-        $this->set_template("xxxs/insert")
-            ->set_foldertpl("restrict")
+        $this->set_template("insert")
             ->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1, __("New xxx"))
             ->add_var("xxxs", $this->picklist->get_xxx_types())
             ->add_var("businessowners", $businessowners)
             ->add_var("notoryes", $this->picklist->get_not_or_yes())
             ->render_nl();
-    }//create
+    }
 
     //@post
     public function insert(): void
@@ -68,9 +68,9 @@ final class XxxsInsertController extends RestrictController
                 ->set_code(ResponseType::FORBIDDEN)
                 ->set_error([__("Invalid CSRF token")])
                 ->show();
-        
+
         try {
-            $insert = SF::get_callable("Restrict\Xxxs\XxxsInsert", $this->request->get_post());
+            $insert = SF::get_callable(XxxsInsertService::class, $this->request->get_post());
             $result = $insert();
             $this->_get_json()->set_payload([
                 "message" => __("{0} successfully created", __("Xxx")),
@@ -89,6 +89,7 @@ final class XxxsInsertController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
+
     }//insert
 
 }//XxxsInsertController

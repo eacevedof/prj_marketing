@@ -14,7 +14,7 @@ final class IndexMain
 
     public function __construct()
     {
-        $this->routes = include_once "../src/routes/routes.php";
+        $this->routes = include_once "../src/Shared/Infrastructure/routes/routes.php";
         $this->_load_cors_headers();
     }
 
@@ -76,7 +76,7 @@ final class IndexMain
         $oController = new $arrundata["controller"]();
         $oController->{$arrundata["method"]}(
             ...($arrundata["_args"] ?? [])
-        );        
+        );
     }
 
     public static function on_error(Throwable $ex): void
@@ -104,5 +104,27 @@ final class IndexMain
         ];
 
         echo json_encode($response);
+    }
+
+    public static function debug(Throwable $ex): void
+    {
+        if (getenv("APP_ENV")==="prod") return;
+        if (!((bool) getenv("APP_DEBUG"))) return;
+
+        $content = [];
+        $content["Exception"] = $ex->getMessage();
+        $content["File"] = $ex->getFile()."(".$ex->getLine().")";
+        $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
+        $content["response"] = $code;
+
+        if ($_POST) $content["POST"] = var_export($_POST, 1);
+        if ($_GET) $content["GET"] = var_export($_GET, 1);
+        if ($_SESSION) $content["SESSION"] = var_export($_SESSION, 1);
+        if ($_REQUEST) $content["REQUEST"] = var_export($_REQUEST, 1);
+        if ($_ENV) $content["ENV"] = var_export($_ENV, 1);
+
+        echo "<pre>";
+        print_r($content);
+        //echo json_encode($content);
     }
 }

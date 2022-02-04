@@ -1,7 +1,7 @@
 <?php
 /**
- * @var App\Views\AppView $this
- * @var App\Helpers\Views\DatatableHelper $dthelp
+ * @var App\Shared\Infrastructure\Views\AppView $this
+ * @var App\Shared\Infrastructure\Helpers\Views\DatatableHelper $dthelp
  * @var array $authuser
  * @var string $h1
  */

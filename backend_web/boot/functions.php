@@ -145,9 +145,9 @@ function __(string $msgid): string
     return $msgchanged;
 }
 
-use \App\Factories\Specific\KafkaFactory;
+use App\Shared\Infrastructure\Factories\Specific\KafkaFactory;
 
-function get_log_producer(): \App\Components\Kafka\ProducerComponent
+function get_log_producer(): \App\Shared\Infrastructure\Components\Kafka\ProducerComponent
 {
     return KafkaFactory::get_producer();
 }
