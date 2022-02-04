@@ -8,6 +8,14 @@ SN Marketing
 ### console
 - php run.php --class=App.Services.Kafka.LogConsumerService
 
+### tests (phpunit 9.3)
+- ejecuta todos los tests
+```
+make ssh-be
+be
+phpunit
+```
+
 ### Profiles
 - root
   - Ve todo sin ninguna restricción incluso soft-deletes

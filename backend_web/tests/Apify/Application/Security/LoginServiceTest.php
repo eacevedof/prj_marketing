@@ -4,10 +4,10 @@
 // ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests
 use PHPUnit\Framework\TestCase;
 use TheFramework\Components\ComponentLog;
-use App\Services\Apify\Security\LoginService;
+use App\Apify\Application\Security\LoginService;
 
-$pathappboot = realpath(__DIR__ . "/../../../../boot/appbootstrap.php");
-include_once($pathappboot);
+//$pathappboot = realpath(__DIR__ . "/../../../../boot/appbootstrap.php");
+//include_once($pathappboot);
 
 
 
