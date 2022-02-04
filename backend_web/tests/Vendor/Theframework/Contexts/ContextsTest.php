@@ -2,7 +2,7 @@
 namespace Tests\Vendor\Theframework\Contexts;
 
 use PHPUnit\Framework\TestCase;
-use Test\Traits\LogTrait;
+use Tests\Traits\LogTrait;
 
 use TheFramework\Components\Db\Context\ComponentContext;
 
@@ -14,7 +14,7 @@ final class ContextsTest extends TestCase
     {
         $oComp = new ComponentContext();
         $arConfig = $oComp->get_config();
-        print_r($arConfig);
+        $this->logpr($arConfig,"arconfig");
         $this->assertEquals(true, is_array($arConfig));
     }
 
