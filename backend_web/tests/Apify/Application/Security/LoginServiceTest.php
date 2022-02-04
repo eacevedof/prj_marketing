@@ -12,6 +12,7 @@ final class LoginServiceTest extends TestCase
 
     public function test_get_token_nok()
     {
+        $this->expectExceptionMessage("Domain localhost:200 is not authorized 2");
         $post=["user"=>"fulanito","password"=>"menganitox"];
         $oServ = new LoginService("localhost:200",$post);
         $oServ->get_token();
@@ -33,7 +34,6 @@ final class LoginServiceTest extends TestCase
         $isvalid = $oServ->is_valid($token);
         $this->assertTrue($isvalid);
     }
-
 
     public function test_valid_token_nok()
     {
