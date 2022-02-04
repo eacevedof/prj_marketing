@@ -15,7 +15,7 @@ alias be-console="cd $PATHWEB/console"
 alias show-profile="cat $HOME/.bashrc"
 alias edit-profile="vim $HOME/.bashrc"
 
-alias run-test="$PATHWEB/vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests"
+alias run-test="cd $PATHWEB; ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests"
 
 run() {
     #alias log-consumer="run --class=App.Services.Kafka.LogConsumerService"

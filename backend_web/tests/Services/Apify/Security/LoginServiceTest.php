@@ -9,7 +9,9 @@ use App\Services\Apify\Security\LoginService;
 $pathappboot = realpath(__DIR__ . "/../../../../boot/appbootstrap.php");
 include_once($pathappboot);
 
-class LoginServiceTest extends TestCase
+
+
+final class LoginServiceTest extends TestCase
 {
 
     private function log($mxVar,$sTitle=NULL)
