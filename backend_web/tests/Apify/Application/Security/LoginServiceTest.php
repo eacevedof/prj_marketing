@@ -1,29 +1,15 @@
 <?php
-// en: /<project>/backend 
-// ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests/Services/Apify/Security/LoginServiceTest.php --color=auto
-// ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests
+namespace Tests\Apify\Application\Security;
+
 use PHPUnit\Framework\TestCase;
-use TheFramework\Components\ComponentLog;
+use Tests\Traits\LogTrait;
+
 use App\Apify\Application\Security\LoginService;
-
-//$pathappboot = realpath(__DIR__ . "/../../../../boot/appbootstrap.php");
-//include_once($pathappboot);
-
-
 
 final class LoginServiceTest extends TestCase
 {
+    use LogTrait;
 
-    private function log($mxVar,$sTitle=NULL)
-    {
-        $oLog = new ComponentLog("logs",__DIR__);
-        $oLog->save($mxVar,$sTitle);
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Source domain not authorized
-     */
     public function test_get_token_nok()
     {
         $post=["user"=>"fulanito","password"=>"menganitox"];
@@ -31,10 +17,6 @@ final class LoginServiceTest extends TestCase
         $oServ->get_token();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Domain * is not authorized 2
-     */
     public function test_get_token_nok_for_domain_asterisk()
     {
         $post=["user"=>"fulanito","password"=>"menganitox"];
@@ -52,10 +34,7 @@ final class LoginServiceTest extends TestCase
         $this->assertTrue($isvalid);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Wrong token submitted
-     */
+
     public function test_valid_token_nok()
     {
         $post=["user"=>"fulanito","password"=>"menganitox"];
