@@ -3,17 +3,14 @@
 // ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./src/tests/Contexts/EncdecryptTest.php --color=auto
 // ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./src/tests
 use PHPUnit\Framework\TestCase;
-use TheFramework\Components\ComponentLog;
+use Test\Traits\LogTrait;
+
 use TheFramework\Components\Db\Context\ComponentContext;
 
-class ContextsTest extends TestCase
-{    
-    private function log($mxVar,$sTitle=NULL)
-    {
-        $oLog = new ComponentLog("logs",__DIR__);
-        $oLog->save($mxVar,$sTitle);
-    }
-    
+final class ContextsTest extends TestCase
+{
+    use LogTrait;
+
     public function test_get_context()
     {
         $oComp = new ComponentContext();
