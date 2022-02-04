@@ -54,3 +54,12 @@ column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: ye
 ```
 ### Errores
 - cargaba dos veces el html una como document y la otra como html/text
+- phpunit
+```
+Fatal error: Uncaught Error: Class "PHPUnit\TextUI\Command" not found in /appdata/www/backend_web/vendor/phpunit/phpunit/phpunit:61
+Stack trace:
+#0 {main}
+  thrown in /appdata/www/backend_web/vendor/phpunit/phpunit/phpunit on line 61
+
+no bastaba con composer dump habia que ejecutar composer update
+```
