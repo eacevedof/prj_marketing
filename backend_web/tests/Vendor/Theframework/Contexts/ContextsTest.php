@@ -1,7 +1,6 @@
 <?php
-// en: /<project>/backend 
-// ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./src/tests/Contexts/EncdecryptTest.php --color=auto
-// ./vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./src/tests
+namespace Tests\Vendor\Theframework\Contexts;
+
 use PHPUnit\Framework\TestCase;
 use Test\Traits\LogTrait;
 
@@ -16,7 +15,7 @@ final class ContextsTest extends TestCase
         $oComp = new ComponentContext();
         $arConfig = $oComp->get_config();
         print_r($arConfig);
-        $this->assertEquals(TRUE,is_array($arConfig));
+        $this->assertEquals(true, is_array($arConfig));
     }
 
     public function test_get_context_using_file()
@@ -27,7 +26,7 @@ final class ContextsTest extends TestCase
         $arConfig = $oComp->get_config();
         print_r($arConfig);
         print_r($oComp->get_errors());
-        $this->assertEquals(TRUE,is_array($arConfig));
+        $this->assertEquals(true, is_array($arConfig));
     }
     
     public function test_get_by_id()
@@ -35,7 +34,7 @@ final class ContextsTest extends TestCase
         $oComp = new ComponentContext();
         $arConfig = $oComp->get_config();
         print_r($oComp->get_by_id("xxx"));
-        $this->assertEquals(TRUE,is_array($arConfig));
+        $this->assertEquals(true, is_array($arConfig));
     }
 
 }//ContextsTest
