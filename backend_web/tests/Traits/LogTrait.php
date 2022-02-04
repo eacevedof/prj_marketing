@@ -13,7 +13,7 @@ trait LogTrait
 
     protected function logpr($mxVar, $title=null): void
     {
-        $oLog = new ComponentLog("debug",PATH_LOGS);
+        $oLog = new ComponentLog("test",PATH_LOGS);
         $mxVar = print_r($mxVar, 1);
         $oLog->save($mxVar, $title);
         echo date("Y-m-d H:i:s");

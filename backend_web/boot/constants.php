@@ -1,8 +1,7 @@
 <?php
 //constants.php 20200721
-define("DS",DIRECTORY_SEPARATOR);
-$sPath = realpath("../");
-define("PATH_ROOT", $sPath);
+define("DS", DIRECTORY_SEPARATOR);
+define("PATH_ROOT", dirname(__DIR__));
 
 $sPath = realpath(PATH_ROOT.DS."public");
 define("PATH_PUBLIC",$sPath);//carpeta public
