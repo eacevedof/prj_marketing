@@ -38,10 +38,11 @@ final class UsersUpdateController extends RestrictController
     public function edit(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
-            $this->set_template("/error/403")
-                ->add_var(PageType::TITLE, __("Unauthorized"))
+            $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
+                ->set_foldertpl("Open/Errors/Infrastructure/Views")
+                ->set_template("403")
                 ->render_nl();
         }
 
@@ -63,20 +64,23 @@ final class UsersUpdateController extends RestrictController
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
-                ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
+                ->set_foldertpl("Open/Errors/Infrastructure/Views")
+                ->set_template("404")
                 ->render_nl();
         }
         catch (ForbiddenException $e) {
             $this->add_header(ResponseType::FORBIDDEN)
-                ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
+                ->set_foldertpl("Open/Errors/Infrastructure/Views")
+                ->set_template("403")
                 ->render_nl();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
+                ->set_foldertpl("Open/Errors/Infrastructure/Views")
+                ->set_template("505")
                 ->render_nl();
         }
     }//modal

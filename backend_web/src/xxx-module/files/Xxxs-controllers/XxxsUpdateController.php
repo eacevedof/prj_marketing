@@ -37,10 +37,11 @@ final class XxxsUpdateController extends RestrictController
     public function edit(string $uuid): void
     {
         if (!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE)) {
-            $this->set_template("/error/403")
-                ->add_var(PageType::TITLE, __("Unauthorized"))
+            $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
+                ->set_foldertpl("Open/Errors/Infrastructure/Views")
+                ->set_template("403")
                 ->render_nl();
         }
 

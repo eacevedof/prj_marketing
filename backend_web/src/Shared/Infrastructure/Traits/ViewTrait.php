@@ -39,6 +39,12 @@ trait ViewTrait
         return $this->view;
     }
 
+    protected function add_header(int $code): AppView
+    {
+        $this->_load_view()->add_header($code);
+        return $this->view;
+    }
+
     protected function render($vars=[], string $pathtemplate=""): void
     {
         $this->_load_view();
