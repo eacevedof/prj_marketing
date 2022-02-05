@@ -62,22 +62,19 @@ final class UsersUpdateController extends RestrictController
                 ->render_nl();
         }
         catch (NotFoundException $e) {
-            $this->set_template("/error/404")
-                ->add_header(ResponseType::NOT_FOUND)
+            $this->add_header(ResponseType::NOT_FOUND)
                 ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
         catch (ForbiddenException $e) {
-            $this->set_template("/error/403")
-                ->add_header(ResponseType::FORBIDDEN)
+            $this->add_header(ResponseType::FORBIDDEN)
                 ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();
         }
         catch (Exception $e) {
-            $this->set_template("/error/500")
-                ->add_header(ResponseType::INTERNAL_SERVER_ERROR)
+            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->add_var(PageType::TITLE, $e->getMessage())
                 ->add_var(PageType::H1, $e->getMessage())
                 ->render_nl();

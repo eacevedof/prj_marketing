@@ -37,13 +37,14 @@ final class UsersInsertController extends RestrictController
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
-                ->set_template("/error/403")
+                ->set_foldertpl("Open/Errors/Infrastructure/Views")
+                ->set_template("403")
                 ->render_nl();
         }
 
         $this->add_var(PageType::CSRF, $this->csrf->get_token())
             ->set_template("insert")
-            ->add_var(PageType::H1,__("New user"))
+            ->add_var(PageType::H1, __("New user"))
             ->add_var("profiles", $this->picklist->get_profiles())
             ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
             ->add_var("countries", $this->picklist->get_countries())

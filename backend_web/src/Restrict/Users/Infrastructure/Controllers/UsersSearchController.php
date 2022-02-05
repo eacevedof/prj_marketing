@@ -47,7 +47,7 @@ final class UsersSearchController extends RestrictController
         }
         catch (Exception $e) {
             $this->logerr($e->getMessage(), "userscontroller.index");
-            //$this->response->location(UrlType::ERROR_INTERNAL);
+            $this->response->location(UrlType::ERROR_INTERNAL);
         }
 
     }//index

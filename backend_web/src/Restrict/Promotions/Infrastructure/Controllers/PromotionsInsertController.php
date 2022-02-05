@@ -37,7 +37,8 @@ final class PromotionsInsertController extends RestrictController
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
-                ->set_template("/error/403")
+                ->set_foldertpl("Open/Errors/Infrastructure/Views")
+                ->set_template("403")
                 ->render_nl();
         }
 

@@ -216,7 +216,7 @@ final class AppView
 
     public function set_foldertpl(string $folder): self
     {
-        $this->pathtpl["viewfolder"] = $folder;
+        $this->pathtpl["viewfolder"] = PATH_SRC.DS.$folder;
         return $this;
     }
 
