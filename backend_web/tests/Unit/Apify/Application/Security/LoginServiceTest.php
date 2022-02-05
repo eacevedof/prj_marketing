@@ -1,11 +1,10 @@
 <?php
-namespace Tests\Apify\Application\Security;
+namespace Tests\Unit\Apify\Application\Security;
 
-use Tests\Boot\AbsTestBase;
-
+use Tests\Unit\AbsUnitTest;
 use App\Apify\Application\Security\LoginService;
 
-final class LoginServiceTest extends AbsTestBase
+final class LoginServiceTest extends AbsUnitTest
 {
 
     public function test_get_token_nok(): void

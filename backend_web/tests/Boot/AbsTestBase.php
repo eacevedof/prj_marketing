@@ -8,8 +8,4 @@ abstract class AbsTestBase extends TestCase
 {
     use LogTrait;
 
-    public function setUp(): void
-    {
-
-    }
 }
