@@ -1,15 +1,11 @@
 <?php
 namespace Tests\Vendor\Theframework\Contexts;
 
-use PHPUnit\Framework\TestCase;
-use Tests\Traits\LogTrait;
-
+use Tests\Boot\AbsTestBase;
 use TheFramework\Components\Db\Context\ComponentContext;
 
-final class ContextsTest extends TestCase
+final class ContextsTest extends AbsTestBase
 {
-    use LogTrait;
-
     public function test_get_context()
     {
         $oComp = new ComponentContext();

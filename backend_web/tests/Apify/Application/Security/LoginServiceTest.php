@@ -1,14 +1,12 @@
 <?php
 namespace Tests\Apify\Application\Security;
 
-use PHPUnit\Framework\TestCase;
-use Tests\Traits\LogTrait;
+use Tests\Boot\AbsTestBase;
 
 use App\Apify\Application\Security\LoginService;
 
-final class LoginServiceTest extends TestCase
+final class LoginServiceTest extends AbsTestBase
 {
-    use LogTrait;
 
     public function test_get_token_nok()
     {
