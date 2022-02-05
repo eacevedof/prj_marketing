@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Traits;
+namespace Tests\Boot\Traits;
 
 use TheFramework\Components\ComponentLog;
 
