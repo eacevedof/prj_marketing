@@ -20,7 +20,7 @@ final class ErrorsController extends OpenController
         //to-do, check accept json por llamada ajax ya que si el router
         //no encuentra la url termina llegando a este método
         $this->set_layout("error/error")
-            ->set_template("error/404")
+            ->set_template("404")
             ->add_header(ResponseType::NOT_FOUND)
             ->add_var(PageType::TITLE, __("Content not found"))
             ->add_var(PageType::H1, __("Content not found"))
@@ -31,7 +31,7 @@ final class ErrorsController extends OpenController
     public function forbidden_403(): void
     {
         $this->set_layout("error/error")
-            ->set_template("error/403")
+            ->set_template("403")
             ->add_header(ResponseType::FORBIDDEN)
             ->add_var(PageType::TITLE, __("Forbidden"))
             ->add_var(PageType::H1, __("Forbidden"))
@@ -42,7 +42,7 @@ final class ErrorsController extends OpenController
     public function internal_500(): void
     {
         $this->set_layout("error/error")
-            ->set_template("error/500")
+            ->set_template("500")
             ->add_header(ResponseType::INTERNAL_SERVER_ERROR)
             ->add_var(PageType::TITLE, __("Unexpected"))
             ->add_var(PageType::H1, __("Unexpected"))
