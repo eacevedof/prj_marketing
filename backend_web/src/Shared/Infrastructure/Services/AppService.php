@@ -14,7 +14,7 @@ use App\Shared\Infrastructure\Traits\LogTrait;
 use App\Shared\Infrastructure\Traits\EnvTrait;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\BadRequestException;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;

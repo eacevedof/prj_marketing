@@ -13,9 +13,9 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
 use App\Restrict\Users\Domain\UserPreferencesRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Shared\Infrastructure\Enums\ExceptionType;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\PreferenceType;
+use App\Shared\Domain\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Restrict\Users\Domain\Enums\UserPreferenceType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class UsersInsertService extends AppService
@@ -44,7 +44,7 @@ final class UsersInsertService extends AppService
 
     private function _check_permission(): void
     {
-        if(!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -125,7 +125,7 @@ final class UsersInsertService extends AppService
         $id = $this->repouser->insert($insert);
         $prefs = [
             "id_user" => $id,
-            "pref_key" => PreferenceType::URL_DEFAULT_MODULE,
+            "pref_key" => UserPreferenceType::URL_DEFAULT_MODULE,
             "pref_value" => "/restrict"
         ];
 

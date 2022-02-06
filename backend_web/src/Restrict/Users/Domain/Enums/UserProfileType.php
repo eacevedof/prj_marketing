@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Infrastructure\Enums;
+namespace App\Restrict\Users\Domain\Enums;
 
-abstract class ProfileType
+abstract class UserProfileType
 {
     const ROOT = "1";
     const SYS_ADMIN = "2";

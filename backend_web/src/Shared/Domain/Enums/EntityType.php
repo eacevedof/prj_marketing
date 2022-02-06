@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Infrastructure\Enums;
+namespace App\Shared\Domain\Enums;
 
 abstract class EntityType
 {

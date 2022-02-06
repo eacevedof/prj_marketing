@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Exceptions;
 use \Exception;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Domain\Enums\ExceptionType;
 
 final class FieldsException extends Exception
 {

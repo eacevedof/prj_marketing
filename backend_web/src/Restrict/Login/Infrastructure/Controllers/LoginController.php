@@ -12,10 +12,10 @@ namespace App\Restrict\Login\Infrastructure\Controllers;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Login\Application\LoginService;
-use App\Shared\Infrastructure\Enums\PreferenceType;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\UrlType;
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Restrict\Users\Domain\Enums\UserPreferenceType;
+use App\Shared\Domain\Enums\PageType;
+use App\Shared\Domain\Enums\UrlType;
+use App\Shared\Domain\Enums\ResponseType;
 use \Exception;
 
 final class LoginController extends RestrictController
@@ -44,7 +44,7 @@ final class LoginController extends RestrictController
                 ->set_payload([
                     "message"=>__("auth ok"),
                     "lang" => $result["lang"],
-                    PreferenceType::URL_DEFAULT_MODULE => $result[PreferenceType::URL_DEFAULT_MODULE]
+                    UserPreferenceType::URL_DEFAULT_MODULE => $result[UserPreferenceType::URL_DEFAULT_MODULE]
                 ])->show();
         }
         catch (Exception $e)

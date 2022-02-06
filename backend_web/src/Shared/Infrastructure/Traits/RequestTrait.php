@@ -10,7 +10,7 @@
 namespace App\Shared\Infrastructure\Traits;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Request\RequestComponent;
-use App\Shared\Infrastructure\Enums\RequestType;
+use App\Shared\Domain\Enums\RequestType;
 
 /**
  * Trait RequestTrait

@@ -14,10 +14,10 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Promotions\Application\PromotionsUpdateService;
 use App\Restrict\Promotions\Application\PromotionsInfoService;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\ResponseType;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\PageType;
+use App\Shared\Domain\Enums\ResponseType;
+use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -36,7 +36,7 @@ final class PromotionsUpdateController extends RestrictController
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE)) {
+        if (!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)) {
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)

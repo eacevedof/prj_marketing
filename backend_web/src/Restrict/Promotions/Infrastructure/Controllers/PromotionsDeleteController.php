@@ -13,7 +13,7 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Promotions\Application\PromotionsDeleteService;
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Domain\Enums\ResponseType;
 use \Exception;
 
 final class PromotionsDeleteController extends RestrictController

@@ -8,10 +8,10 @@ use App\Restrict\Users\Domain\UserRepository;
 use App\Restrict\Users\Domain\UserPreferencesRepository;
 use App\Restrict\Users\Domain\UserPermissionsRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
-use App\Shared\Infrastructure\Enums\SessionType;
-use App\Shared\Infrastructure\Enums\UrlType;
-use App\Shared\Infrastructure\Enums\PreferenceType;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Domain\Enums\SessionType;
+use App\Shared\Domain\Enums\UrlType;
+use App\Restrict\Users\Domain\Enums\UserPreferenceType;
+use App\Shared\Domain\Enums\ExceptionType;
 
 final class LoginService extends AppService
 {
@@ -53,7 +53,7 @@ final class LoginService extends AppService
             ->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"))
         ;
 
-        $userprefs = $this->repoprefs->get_by_user($iduser, $prefkey = PreferenceType::URL_DEFAULT_MODULE);
+        $userprefs = $this->repoprefs->get_by_user($iduser, $prefkey = UserPreferenceType::URL_DEFAULT_MODULE);
         $userprefs = $userprefs[0]["pref_value"] ?? UrlType::RESTRICT;
 
         return [

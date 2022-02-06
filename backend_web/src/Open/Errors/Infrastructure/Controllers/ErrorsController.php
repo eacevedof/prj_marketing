@@ -10,8 +10,8 @@
 namespace App\Open\Errors\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Enums\ResponseType;
-use App\Shared\Infrastructure\Enums\PageType;
+use App\Shared\Domain\Enums\ResponseType;
+use App\Shared\Domain\Enums\PageType;
 
 final class ErrorsController extends OpenController
 {

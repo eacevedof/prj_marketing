@@ -15,9 +15,9 @@ use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Shared\Domain\Entities\FieldsValidator;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\AppArrayType;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Picklist\Domain;
+use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class PromotionsInsertService extends AppService
@@ -62,7 +62,7 @@ final class PromotionsInsertService extends AppService
 
     private function _check_permission(): void
     {
-        if(!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN

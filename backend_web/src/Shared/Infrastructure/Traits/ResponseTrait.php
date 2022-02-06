@@ -9,7 +9,7 @@
  */
 namespace App\Shared\Infrastructure\Traits;
 use App\Shared\Infrastructure\Components\Response\ResponseComponent;
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Factories\ComponentFactory;
 use TheFramework\Helpers\HelperJson;
 

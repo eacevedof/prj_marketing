@@ -8,7 +8,7 @@
  * @observations
  */
 namespace App\Shared\Domain\Entities;
-use App\Shared\Infrastructure\Enums\EntityType;
+use App\Shared\Domain\Enums\EntityType;
 
 final class FieldsValidator
 {

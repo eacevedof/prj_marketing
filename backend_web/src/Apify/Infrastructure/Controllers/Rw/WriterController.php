@@ -9,7 +9,7 @@
  */
 namespace App\Controllers\Apify\Rw;
 
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Domain\Enums\ResponseType;
 use App\Controllers\Apify\ApifyController;
 use App\Apify\Application\Rw\WriterService;
 use App\Shared\Infrastructure\Factories\ServiceFactory;

@@ -3,7 +3,7 @@ namespace Tests\Restrict\Auth\Application;
 
 use Tests\Unit\AbsUnitTest;
 use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Infrastructure\Enums\SessionType;
+use App\Shared\Domain\Enums\SessionType;
 
 final class AuthServiceTest extends AbsUnitTest
 {

@@ -12,9 +12,9 @@ use App\Restrict\Users\Domain\UserEntity;
 use App\Restrict\Users\Domain\UserRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Shared\Domain\Entities\FieldsValidator;
-use App\Shared\Infrastructure\Enums\ExceptionType;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\ProfileType;
+use App\Shared\Domain\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class UsersUpdateService extends AppService
@@ -47,7 +47,7 @@ final class UsersUpdateService extends AppService
 
     private function _check_permission(): void
     {
-        if(!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -61,14 +61,14 @@ final class UsersUpdateService extends AppService
         if ($this->auth->is_root() || $idauthuser === $iduser) return;
 
         if ($this->auth->is_sysadmin()
-            && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
+            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
         )
             return;
 
         $identowner = $this->repouser->get_idowner($iduser);
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
-            && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
+            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
             && $idauthuser === $identowner
         )
             return;

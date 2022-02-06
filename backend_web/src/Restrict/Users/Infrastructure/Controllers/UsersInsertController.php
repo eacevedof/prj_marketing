@@ -13,10 +13,10 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Application\UsersInsertService;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\ProfileType;
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\PageType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
 
@@ -33,7 +33,7 @@ final class UsersInsertController extends RestrictController
     //@modal
     public function create(): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(UserPolicyType::USERS_WRITE)) {
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
@@ -46,7 +46,7 @@ final class UsersInsertController extends RestrictController
             ->set_template("insert")
             ->add_var(PageType::H1, __("New user"))
             ->add_var("profiles", $this->picklist->get_profiles())
-            ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
+            ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
             ->add_var("countries", $this->picklist->get_countries())
             ->add_var("languages", $this->picklist->get_languages())
             ->render_nl();

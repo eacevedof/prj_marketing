@@ -52,7 +52,7 @@ msgstr "xxx"
 
 ### policies
 ```php
-//PolicyType.php
+//UserPolicyType.php
 const XXXS_READ = "xxxs:read";
 const XXXS_WRITE = "xxxs:write";
 ```

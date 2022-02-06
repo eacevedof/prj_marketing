@@ -2,7 +2,7 @@
 namespace Tests\Unit;
 
 use Tests\Boot\AbsTestBase;
-use App\Shared\Infrastructure\Enums\SessionType;
+use App\Shared\Domain\Enums\SessionType;
 
 abstract class AbsUnitTest extends AbsTestBase
 {

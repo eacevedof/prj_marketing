@@ -14,11 +14,11 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Application\UsersInfoService;
 use App\Restrict\Users\Application\UsersUpdateService;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\ProfileType;
-use App\Shared\Infrastructure\Enums\ResponseType;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\PageType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Shared\Domain\Enums\ResponseType;
+use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -37,7 +37,7 @@ final class UsersUpdateController extends RestrictController
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::USERS_WRITE)) {
+        if (!$this->auth->is_user_allowed(UserPolicyType::USERS_WRITE)) {
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
@@ -57,7 +57,7 @@ final class UsersUpdateController extends RestrictController
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
                 ->add_var("profiles", $this->picklist->get_profiles())
-                ->add_var("parents", $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER))
+                ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
                 ->add_var("countries", $this->picklist->get_countries())
                 ->add_var("languages", $this->picklist->get_languages())
                 ->render_nl();

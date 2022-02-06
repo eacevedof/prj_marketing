@@ -9,9 +9,9 @@
  */
 namespace App\Shared\Domain\Entities;
 
-use App\Shared\Infrastructure\Enums\EntityType;
-use App\Shared\Infrastructure\Enums\PlatformType;
-use App\Shared\Infrastructure\Enums\RequestType;
+use App\Shared\Domain\Enums\EntityType;
+use App\Shared\Domain\Enums\PlatformType;
+use App\Shared\Domain\Enums\RequestType;
 
 abstract class AppEntity
 {

@@ -3,7 +3,7 @@ namespace App\Restrict\Login\Application;
 
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Infrastructure\Enums\SessionType;
+use App\Shared\Domain\Enums\SessionType;
 
 final class ModulesService
 {

@@ -13,9 +13,9 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Application\UsersSearchService;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\ResponseType;
-use App\Shared\Infrastructure\Enums\UrlType;
+use App\Shared\Domain\Enums\PageType;
+use App\Shared\Domain\Enums\ResponseType;
+use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use \Exception;
 

@@ -9,7 +9,7 @@
  */
 namespace App\Controllers\Apify\Security;
 
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Domain\Enums\ResponseType;
 use App\Controllers\Apify\ApifyController;
 use App\Services\Apify\Security\SignatureService;
 

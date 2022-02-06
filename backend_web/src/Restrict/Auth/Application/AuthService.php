@@ -3,8 +3,8 @@ namespace App\Restrict\Auth\Application;
 
 use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Enums\SessionType;
-use App\Shared\Infrastructure\Enums\ProfileType;
+use App\Shared\Domain\Enums\SessionType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
 
 final class AuthService
 {
@@ -41,34 +41,34 @@ final class AuthService
     public function is_root(?string $idprofile=null): bool
     {
         return $idprofile
-            ? ($idprofile === ProfileType::ROOT)
-            : (self::$authuser["id_profile"] ?? "") === ProfileType::ROOT;
+            ? ($idprofile === UserProfileType::ROOT)
+            : (self::$authuser["id_profile"] ?? "") === UserProfileType::ROOT;
     }
 
     public function is_sysadmin(?string $idprofile=null): bool
     {
         return $idprofile
-            ? ($idprofile === ProfileType::SYS_ADMIN)
-            : (self::$authuser["id_profile"] ?? "") === ProfileType::SYS_ADMIN;
+            ? ($idprofile === UserProfileType::SYS_ADMIN)
+            : (self::$authuser["id_profile"] ?? "") === UserProfileType::SYS_ADMIN;
     }
 
     public function is_business_owner(?string $idprofile=null): bool
     {
         return $idprofile
-            ? ($idprofile === ProfileType::BUSINESS_OWNER)
-            : (self::$authuser["id_profile"] ?? "") === ProfileType::BUSINESS_OWNER;
+            ? ($idprofile === UserProfileType::BUSINESS_OWNER)
+            : (self::$authuser["id_profile"] ?? "") === UserProfileType::BUSINESS_OWNER;
     }
 
     public function is_business_manager(?string $idprofile=null): bool
     {
         return $idprofile
-            ? ($idprofile === ProfileType::BUSINESS_MANAGER)
-            : (self::$authuser["id_profile"] ?? "") === ProfileType::BUSINESS_MANAGER;
+            ? ($idprofile === UserProfileType::BUSINESS_MANAGER)
+            : (self::$authuser["id_profile"] ?? "") === UserProfileType::BUSINESS_MANAGER;
     }
 
     public function is_business(?string $idprofile=null): bool
     {
-        $business = [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER];
+        $business = [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER];
         return $idprofile
             ? in_array($idprofile, $business)
             : in_array(self::$authuser["id_profile"] ?? "", $business);
@@ -76,7 +76,7 @@ final class AuthService
 
     public function is_system(?string $idprofile=null): bool
     {
-        $system = [ProfileType::ROOT, ProfileType::SYS_ADMIN];
+        $system = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN];
         return $idprofile
             ? in_array($idprofile, $system)
             : in_array(self::$authuser["id_profile"] ?? "", $system);

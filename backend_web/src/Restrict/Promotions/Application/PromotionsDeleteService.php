@@ -8,8 +8,8 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Promotions\Domain\PromotionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\ExceptionType;
 
 final class PromotionsDeleteService extends AppService
 {
@@ -34,7 +34,7 @@ final class PromotionsDeleteService extends AppService
 
     private function _check_permission(): void
     {
-        if(!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN

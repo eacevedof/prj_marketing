@@ -8,9 +8,9 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Users\Domain\UserEntity;
 use App\Restrict\Users\Domain\UserRepository;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\ProfileType;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Shared\Domain\Enums\ExceptionType;
 
 final class UsersDeleteService extends AppService
 {
@@ -35,7 +35,7 @@ final class UsersDeleteService extends AppService
 
     private function _check_permission(): void
     {
-        if(!$this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -56,14 +56,14 @@ final class UsersDeleteService extends AppService
         if ($this->auth->is_root()) return;
 
         if ($this->auth->is_sysadmin()
-            && in_array($entity["id_profile"], [ProfileType::BUSINESS_OWNER, ProfileType::BUSINESS_MANAGER])
+            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
         )
             return;
 
         $identyowner = $this->repouser->get_idowner($iduser);
         //si el usuario logado es owner y quiere eliminar un manager que le pertenece
         if ($this->auth->is_business_owner()
-            && in_array($entity["id_profile"], [ProfileType::BUSINESS_MANAGER])
+            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
             && $idauthuser === $identyowner
         )
             return;

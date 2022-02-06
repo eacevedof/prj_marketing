@@ -13,7 +13,7 @@ use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Traits\ResponseTrait;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\SignatureService;
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Shared\Domain\Enums\ResponseType;
 use TheFramework\Helpers\HelperJson;
 
 abstract class ApifyController extends AppController

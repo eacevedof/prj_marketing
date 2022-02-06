@@ -9,7 +9,7 @@
 namespace App\Restrict\Promotions\Domain;
 
 use App\Shared\Domain\Entities\AppEntity;
-use App\Shared\Infrastructure\Enums\EntityType;
+use App\Shared\Domain\Enums\EntityType;
 
 final class PromotionEntity extends AppEntity
 {

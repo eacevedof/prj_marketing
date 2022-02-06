@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Infrastructure\Enums;
+namespace App\Picklist\Domain\Enums;
 
 abstract class AppArrayType
 {

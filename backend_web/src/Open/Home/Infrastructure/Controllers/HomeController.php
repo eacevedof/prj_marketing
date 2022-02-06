@@ -10,7 +10,7 @@
 namespace App\Open\Home\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Enums\PageType;
+use App\Shared\Domain\Enums\PageType;
 
 final class HomeController extends OpenController
 {

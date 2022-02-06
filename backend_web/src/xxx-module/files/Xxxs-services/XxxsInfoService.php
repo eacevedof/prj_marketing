@@ -6,8 +6,8 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Xxxs\Domain\XxxRepository;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\ExceptionType;
 
 final class XxxsInfoService extends AppService
 {
@@ -30,8 +30,8 @@ final class XxxsInfoService extends AppService
     private function _check_permission(): void
     {
         if(!(
-            $this->auth->is_user_allowed(PolicyType::XXXS_READ)
-            || $this->auth->is_user_allowed(PolicyType::XXXS_WRITE)
+            $this->auth->is_user_allowed(UserPolicyType::XXXS_READ)
+            || $this->auth->is_user_allowed(UserPolicyType::XXXS_WRITE)
         ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),

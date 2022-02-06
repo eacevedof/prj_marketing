@@ -12,7 +12,7 @@ use App\Shared\Infrastructure\Traits\LogTrait;
 use App\Shared\Domain\Entities\AppEntity;
 use TheFramework\Components\Db\ComponentQB;
 use TheFramework\Components\Db\ComponentMysql;
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Domain\Enums\ExceptionType;
 use \Exception;
 
 abstract class AppRepository

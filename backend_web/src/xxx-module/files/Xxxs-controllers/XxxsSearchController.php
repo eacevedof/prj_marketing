@@ -12,10 +12,10 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Xxxs\Application\XxxsSearchService;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\ResponseType;
-use App\Shared\Infrastructure\Enums\UrlType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\PageType;
+use App\Shared\Domain\Enums\ResponseType;
+use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use \Exception;
 
@@ -38,8 +38,8 @@ final class XxxsSearchController extends RestrictController
                 ->add_var(PageType::H1, __("Xxxs"))
                 ->add_var("dthelp", $search->get_datatable())
                 ->add_var("idowner", $this->auth->get_idowner())
-                ->add_var("authread", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_READ))
-                ->add_var("authwrite", $this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE))
+                ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ))
+                ->add_var("authwrite", $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
                 ->render();
         }
         catch (ForbiddenException $e) {

@@ -13,10 +13,10 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Xxxs\Application\XxxsInsertService;
-use App\Shared\Infrastructure\Enums\PolicyType;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\ProfileType;
-use App\Shared\Infrastructure\Enums\ResponseType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\PageType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
 
@@ -33,7 +33,7 @@ final class XxxsInsertController extends RestrictController
     //@modal (creation form)
     public function create(): void
     {
-        if (!$this->auth->is_user_allowed(PolicyType::PROMOTIONS_WRITE)) {
+        if (!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)) {
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
@@ -43,7 +43,7 @@ final class XxxsInsertController extends RestrictController
         }
 
         $businessowners =  ($this->auth->is_root() || $this->auth->is_sysadmin())
-            ? $this->picklist->get_users_by_profile(ProfileType::BUSINESS_OWNER)
+            ? $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
             : [];
 
         $this->set_template("insert")

@@ -8,7 +8,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\App\PicklistRepository;
 use App\Shared\Domain\Repositories\Base\ArrayRepository as BaseArray;
 use App\Shared\Domain\Repositories\App\ArrayRepository as AppArray;
-use App\Shared\Infrastructure\Enums\ProfileType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
 
 //todo quitar AppService? mmm no creo el sf necesita ese tipo
 final class PicklistService extends AppService
@@ -44,14 +44,14 @@ final class PicklistService extends AppService
 
         if ($this->auth->is_business_owner() || $this->auth->is_business_manager()) {
             $profiles = array_filter($profiles, function ($profile) {
-                return !in_array($profile["key"], [ProfileType::ROOT, ProfileType::SYS_ADMIN, ProfileType::BUSINESS_OWNER]);
+                return !in_array($profile["key"], [UserProfileType::ROOT, UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER]);
             });
             return array_values($profiles);
         }
 
         if ($this->auth->is_sysadmin())
             $profiles = array_filter($profiles, function ($profile){
-                return !in_array($profile["key"], [ProfileType::ROOT, ProfileType::SYS_ADMIN]) ;
+                return !in_array($profile["key"], [UserProfileType::ROOT, UserProfileType::SYS_ADMIN]) ;
             });
 
         return array_values($profiles);

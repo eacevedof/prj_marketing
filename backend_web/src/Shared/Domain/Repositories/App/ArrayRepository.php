@@ -12,8 +12,7 @@ namespace App\Shared\Domain\Repositories\App;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\PicklistTrait;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Shared\Infrastructure\Enums\AppArrayType as Types;
-use App\Shared\Infrastructure\Enums\AppArrayType;
+use App\Picklist\Domain\Enums\AppArrayType as Types;
 
 final class ArrayRepository extends AppRepository
 {

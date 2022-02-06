@@ -12,8 +12,8 @@ namespace App\Restrict\Dashboard\Infrastructure\Controllers;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Login\Application\ModulesService;
-use App\Shared\Infrastructure\Enums\PageType;
-use App\Shared\Infrastructure\Enums\UrlType;
+use App\Shared\Domain\Enums\PageType;
+use App\Shared\Domain\Enums\UrlType;
 
 final class DashboardController extends RestrictController
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Infrastructure\Enums;
+namespace App\Restrict\Users\Domain\Enums;
 
-abstract class PolicyType
+abstract class UserPolicyType
 {
     const DASHBOARD_READ = "dashboard:read";
 

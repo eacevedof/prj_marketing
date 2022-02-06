@@ -1,7 +1,7 @@
 <?php
 namespace App\Restrict\Users\Application;
 
-use App\Shared\Infrastructure\Enums\ExceptionType;
+use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -11,7 +11,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserPermissionsRepository;
 use App\Restrict\Users\Domain\UserRepository;
 use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
-use App\Shared\Infrastructure\Enums\PolicyType;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
 
 final class UsersSearchService extends AppService
 {
@@ -38,8 +38,8 @@ final class UsersSearchService extends AppService
     private function _check_permission(): void
     {
         if(!(
-            $this->auth->is_user_allowed(PolicyType::USERS_READ)
-            || $this->auth->is_user_allowed(PolicyType::USERS_WRITE)
+            $this->auth->is_user_allowed(UserPolicyType::USERS_READ)
+            || $this->auth->is_user_allowed(UserPolicyType::USERS_WRITE)
         ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
@@ -73,12 +73,12 @@ final class UsersSearchService extends AppService
                 ->add_action("undel")
             ;
 
-        if($this->auth->is_user_allowed(PolicyType::USERS_WRITE))
+        if($this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
             $dthelp->add_action("add")
                 ->add_action("edit")
                 ->add_action("del");
 
-        if($this->auth->is_user_allowed(PolicyType::USERS_READ))
+        if($this->auth->is_user_allowed(UserPolicyType::USERS_READ))
             $dthelp->add_action("show");
 
         return $dthelp;
