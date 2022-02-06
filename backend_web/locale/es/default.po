@@ -56,49 +56,49 @@ msgid "Max length allowed is {0} chars. {1} size is {2}"
 msgstr "La longitud máxima permitida es de {0} chars. El tamaño de {1} es {2}"
 
 msgid "Wrong datatype. Allowed: {0}"
-msgstr "Wrong datatype. Allowed: {0}"
+msgstr "Tipo de datos incorrecto. Permitido: {0}"
 
 msgid "No code/s provided"
-msgstr "No code/s provided"
+msgstr "Codigo/s no proporcionados"
 
 msgid "No data to update"
-msgstr "No data to update"
+msgstr "Sin datos a actualizar"
 
 msgid "Processing..."
-msgstr "Processing..."
+msgstr "Procesando..."
 
 msgid "Search&nbsp;:"
-msgstr "Search&nbsp;:"
+msgstr "Buscar&nbsp;:"
 
 msgid "Loading..."
-msgstr "Loading..."
+msgstr "Cargando..."
 
 msgid "First"
-msgstr "First"
+msgstr "Primero"
 
 msgid "Previous"
-msgstr "Previous"
+msgstr "Anterior"
 
 msgid "Next"
-msgstr "Next"
+msgstr "Siguiente"
 
 msgid "Last"
-msgstr "Last"
+msgstr "Último"
 
 msgid "Actions"
-msgstr "Actions"
+msgstr "Acciones"
 
 msgid "search"
-msgstr "search"
+msgstr "buscar"
 
 msgid "Select an option"
-msgstr "Select an option"
+msgstr "Selecciona una opción"
 
 msgid "Modules"
-msgstr "Modules"
+msgstr "Módulos"
 
 msgid "Logout"
-msgstr "Logout"
+msgstr "Cerrar sesión"
 
 msgid "Email"
 msgstr ""
@@ -131,16 +131,16 @@ msgid "Remove"
 msgstr "Eliminar"
 
 msgid "Promotions"
-msgstr "Promotions"
+msgstr "Promociones"
 
 msgid "Promotion"
-msgstr "Promotion"
+msgstr "Promoción"
 
 msgid "promotions"
-msgstr "promotions"
+msgstr "promociones"
 
 msgid "promotion"
-msgstr "promotion"
+msgstr "promoción"
 
 msgid "Nº"
 msgstr "Nº"
@@ -149,43 +149,43 @@ msgid "Cod. Promo"
 msgstr "Cod. Promo"
 
 msgid "Owner"
-msgstr "Owner"
+msgstr "Propietario"
 
 msgid "External code"
-msgstr "External code"
+msgstr "Código externo"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Descripción"
 
 msgid "Slug"
-msgstr "Slug"
+msgstr ""
 
 msgid "Content"
-msgstr "Content"
+msgstr "Contenido"
 
 msgid "Type"
-msgstr "Type"
+msgstr "Tipo"
 
 msgid "Date from"
-msgstr "Date from"
+msgstr "Fecha desde"
 
 msgid "Date to"
-msgstr "Date to"
+msgstr "Fecha hasta"
 
 msgid "Url social"
-msgstr "Url social"
+msgstr "Url red social"
 
 msgid "Url design"
-msgstr "Url design"
+msgstr "Url creatividad"
 
 msgid "Enabled"
-msgstr "Enabled"
+msgstr "Habilitado"
 
 msgid "Invested"
-msgstr "Invested"
+msgstr "Invertido"
 
 msgid "Inv returned"
-msgstr "Inv returned"
+msgstr "Inv. de retorno"
 
 msgid "Notes"
-msgstr "Notes"
+msgstr "Notas"
