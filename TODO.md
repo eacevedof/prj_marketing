@@ -1,5 +1,6 @@
 ### To-Do
 - promoción con límite de inscritos
+- promocion flags de captura 
 - estado de la suscripción
 - image upload en theframework?? de momento si.
 - ~~frontcontroller~~
