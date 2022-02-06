@@ -24,28 +24,6 @@ final class CsrfService extends AppService
 
     private function _get_user_agent(): string {return $_SERVER["HTTP_USER_AGENT"] ?? ":)"; }
 
-    public function get_token(): string
-    {
-        $arpackage = [
-            "salt0"    => date("Y-m-d H:i:s"),
-            "domain"   => $this->_get_domain(),
-            "salt1"    => rand(0,3),
-            "remoteip" => $this->_get_remote_ip(),
-            "salt2"    => rand(3,7),
-            "useragent" => md5($this->_get_user_agent()),
-            "salt3"    => rand(7,11),
-            "username" => $user["email"] ?? "",
-            "salt4"    => rand(11,15),
-            "password" => md5($this->autuser["secret"] ?? ""),
-            "salt5"    => rand(15,19),
-            "today"    => date("Y-m-d H:i:s"),
-        ];
-
-        $instring = implode("|",$arpackage);
-        $token = $this->encdec->get_sslencrypted($instring);
-        return $token;
-    }
-
     private function _validate_package($arpackage): void
     {
         if(count($arpackage)!==12) $this->_exception(__("Invalid csrf {0}",1));
@@ -70,6 +48,28 @@ final class CsrfService extends AppService
         $now = date("Y-m-d H:i:s");
         $mins = (int) $moment->get_nmins($now);
         if($mins > self::VALID_TIME_IN_MINS) $this->_exception(__("Expired csrf {0}",6));
+    }
+
+    public function get_token(): string
+    {
+        $arpackage = [
+            "salt0"    => date("Y-m-d H:i:s"),
+            "domain"   => $this->_get_domain(),
+            "salt1"    => rand(0,3),
+            "remoteip" => $this->_get_remote_ip(),
+            "salt2"    => rand(3,7),
+            "useragent" => md5($this->_get_user_agent()),
+            "salt3"    => rand(7,11),
+            "username" => $user["email"] ?? "",
+            "salt4"    => rand(11,15),
+            "password" => md5($this->autuser["secret"] ?? ""),
+            "salt5"    => rand(15,19),
+            "today"    => date("Y-m-d H:i:s"),
+        ];
+
+        $instring = implode("|",$arpackage);
+        $token = $this->encdec->get_sslencrypted($instring);
+        return $token;
     }
 
     public function is_valid(?string $token): bool
