@@ -30,7 +30,12 @@ final class TranslationService extends AppService implements IConsole
         $files = scandir($pathdir);
         if(count($files)<3) return [];
         unset($files[0]); unset($files[1]);
-        return array_values($files);
+        return array_map(
+            function ($file) use ($pathdir) {
+                return "$pathdir/$file";
+            },
+            array_values($files)
+        );
     }
 
     //php run.php modules
