@@ -10,4 +10,5 @@ return [
     "help"                   => "App\\Console\\Application\\HelpService",
     "users"                  => "App\\Console\\Application\\Restrict\\UsersService",
     "build-module"           => "App\\Console\\Application\\Dev\\Builder\\ModuleBuilderService",
+    "get-translation"        => "App\\Console\\Application\\Dev\\Translation\\TranslationService",
 ];
