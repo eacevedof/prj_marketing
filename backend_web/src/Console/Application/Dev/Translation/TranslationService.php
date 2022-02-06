@@ -21,6 +21,7 @@ final class TranslationService extends AppService implements IConsole
         "\_\_\(\"(.*?)\"",
     ];
     private const PATH_SRC = PATH_SRC;
+    private const PATH_TR_ES = PATH_SRC."/locale/es/default.po";
 
     private array $arfiles;
     private array $skipfolders;
@@ -74,6 +75,11 @@ final class TranslationService extends AppService implements IConsole
         foreach ($trs as $tr) $this->trs[] = $tr;
     }
 
+    private function _get_missing_es(array $trs): array
+    {
+
+    }
+
     //php run.php modules
     //run get-translation
     public function run(): void
@@ -89,6 +95,7 @@ final class TranslationService extends AppService implements IConsole
             }
         }
         $trs = array_values(array_unique($this->trs));
-        $this->logpr($trs,"trs");
+        $missing = $this->_get_missing_es($trs);
+        $this->logpr($missing, "missing-es");
     }
 }
