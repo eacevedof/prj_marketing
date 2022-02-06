@@ -1,10 +1,9 @@
 <?php
 namespace Tests\Restrict\Auth\Application;
 
-use App\Shared\Infrastructure\Enums\ProfileType;
-use App\Shared\Infrastructure\Enums\SessionType;
 use Tests\Unit\AbsUnitTest;
 use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Enums\SessionType;
 
 final class AuthServiceTest extends AbsUnitTest
 {
@@ -77,6 +76,13 @@ final class AuthServiceTest extends AbsUnitTest
         $this->log("test_is_business_owner");
         $authService = AuthService::getme();
         $this->assertFalse($authService->is_business_owner());
+    }
+
+    public function test_no_id_owner(): void
+    {
+        $this->log("test_no_id_owner");
+        $authService = AuthService::getme();
+        $this->assertNull($authService->get_idowner());
     }
 
 }
