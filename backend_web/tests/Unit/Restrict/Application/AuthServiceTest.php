@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Restrict\Auth\Application;
 
+use SebastianBergmann\Comparator\Comparator;
 use Tests\Unit\AbsUnitTest;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Enums\SessionType;
@@ -78,11 +79,17 @@ final class AuthServiceTest extends AbsUnitTest
         $this->assertFalse($authService->is_business_owner());
     }
 
-    public function test_no_id_owner(): void
+    public function test_no_owner_in_root_user(): void
     {
         $this->log("test_no_id_owner");
         $authService = AuthService::getme();
         $this->assertNull($authService->get_idowner());
     }
 
+    public function test_has_permissions_node(): void
+    {
+        $this->log("test_has_permissions_node");
+        $authService = AuthService::getme();
+        $this->assertArrayHasKey(SessionType::AUTH_USER_PERMISSIONS, $authService->get_user());
+    }
 }
