@@ -1,8 +1,8 @@
 <?php
 namespace Tests\Restrict\Auth\Application;
 
-use App\Shared\Infrastructure\Factories\ServiceFactory;
 use Tests\Unit\AbsUnitTest;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Auth\Application\CsrfService;
 
@@ -25,9 +25,9 @@ final class CsrfServiceTest extends AbsUnitTest
                 "HTTP_USER_AGENT" => ":)",
             ],
             [
-                "REMOTE_HOST" => "somehost",
-                "REMOTE_ADDR" => "127.0.0.1",
-                "HTTP_USER_AGENT" => "Mozilla",
+                "REMOTE_HOST" => "",
+                "REMOTE_ADDR" => "",
+                "HTTP_USER_AGENT" => "",
             ],
         ];
 
@@ -40,8 +40,24 @@ final class CsrfServiceTest extends AbsUnitTest
     public function test_get_token_for_root(): void
     {
         $this->_load_server();
-        $csrfService = ServiceFactory::get(CsrfService::class);
+        $csrfService = SF::get(CsrfService::class);
         $this->assertNotEmpty($token = $csrfService->get_token());
-        $this->logpr($token);
+        $this->assertTrue($csrfService->is_valid($token));
     }
+
+    public function test_get_token_for_root_in_empty_server(): void
+    {
+        $this->_load_server(1);
+        $csrfService = SF::get(CsrfService::class);
+        $this->assertNotEmpty($token = $csrfService->get_token());
+        $this->assertTrue($csrfService->is_valid($token));
+    }
+
+    public function test_is_valid_token_for_random_string(): void
+    {
+        $this->_load_server(1);
+        $this->expectExceptionMessage("Invalid csrf 1");
+        SF::get(CsrfService::class)->is_valid("SOME-RareToken-8789$5");
+    }
+
 }
