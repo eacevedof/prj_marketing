@@ -19,7 +19,7 @@ final class TranslationService extends AppService implements IConsole
 
     private const FIND_TR_PATTERN = [
         "\_\_\(\"(.*)\"\)",
-        "\_\_\(\"(.*)\", \)",
+        "\_\_\(\"(.*)\",",
     ];
     private const PATH_SRC = PATH_SRC;
 
@@ -63,7 +63,7 @@ final class TranslationService extends AppService implements IConsole
     private function _get_trs(string $content, string $pattern): array
     {
         //$pattern = self::FIND_TR_PATTERN;
-        $pattern = "/$pattern/imx";
+        $pattern = "/$pattern/m";
 
         $matches = [];
         preg_match_all($pattern, $content, $matches);
