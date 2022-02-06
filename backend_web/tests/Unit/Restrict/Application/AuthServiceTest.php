@@ -62,6 +62,21 @@ final class AuthServiceTest extends AbsUnitTest
     {
         $this->log("test_is_root");
         $authService = AuthService::getme();
-        $this->assertTrue($authService->get_user()["id_profile"] === ProfileType::ROOT);
+        $this->assertTrue($authService->is_root());
     }
+
+    public function test_is_not_sysadmin(): void
+    {
+        $this->log("test_is_not_sysadmin");
+        $authService = AuthService::getme();
+        $this->assertTrue($authService->is_sysadmin());
+    }
+
+    public function test_is_business_owner(): void
+    {
+        $this->log("test_is_business_owner");
+        $authService = AuthService::getme();
+        $this->assertTrue($authService->is_business_owner());
+    }
+
 }
