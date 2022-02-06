@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Restrict\Auth\Application;
 
+use App\Shared\Infrastructure\Factories\ServiceFactory;
 use Tests\Unit\AbsUnitTest;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Auth\Application\CsrfService;
@@ -8,7 +9,6 @@ use App\Restrict\Auth\Application\CsrfService;
 final class CsrfServiceTest extends AbsUnitTest
 {
     private AuthService $authService;
-    private CsrfService $csrfService;
 
     public function setUp(): void
     {
@@ -37,8 +37,11 @@ final class CsrfServiceTest extends AbsUnitTest
         $_SERVER["HTTP_USER_AGENT"] = $server["HTTP_USER_AGENT"] ?? "";
     }
 
-    public function test_get_token(): void
+    public function test_get_token_for_root(): void
     {
         $this->_load_server();
+        $csrfService = ServiceFactory::get(CsrfService::class);
+        $this->assertNotEmpty($token = $csrfService->get_token());
+        $this->logpr($token);
     }
 }

@@ -6,7 +6,7 @@ use Tests\Boot\AbsTestBase;
 
 abstract class AbsUnitTest extends AbsTestBase
 {
-    protected function _load_session(int $i): void
+    protected function _load_session(int $i=0): void
     {
         $users = [
             [
