@@ -49,11 +49,27 @@ final class TranslationService extends AppService implements IConsole
         }
     }
 
+    private function _get_trs(string $content): string
+    {
+        $pattern = self::FIND_TR_PATTERN;
+        $pattern = "/$pattern/";
+
+        $matches = [];
+        preg_match_all($pattern, $content, $matches);
+        return $matches[0][1] ?? [];
+    }
+
     //php run.php modules
     //run get-translation
     public function run(): void
     {
         $this->_load_files(self::PATH_SRC);
         $this->logpr($this->arfiles,"files");
+        foreach ($this->arfiles as $path) {
+            $content = file_get_contents($path);
+            if (!strstr($content, "__(\"")) continue;
+            $trs = $this->_get_trs($content);
+            $this->logpr($trs,"trs");
+        }
     }
 }
