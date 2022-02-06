@@ -1,3 +1,105 @@
+msgid "Content not found"
+msgstr "Content not found"
+
+msgid "Forbidden"
+msgstr "Forbidden"
+
+msgid "Unexpected"
+msgstr "Unexpected"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "Invalid csrf {0}"
+msgstr "Invalid csrf {0}"
+
+msgid "Expired csrf {0}"
+msgstr "Expired csrf {0}"
+
+msgid "Dashboard x"
+msgstr "Dashboard x"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "Empty email"
+msgstr "Empty email"
+
+msgid "Empty password"
+msgstr "Empty password"
+
+msgid "Invalid data"
+msgstr "Invalid data"
+
+msgid "Users"
+msgstr "Users"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Invalid CSRF token"
+msgstr "Invalid CSRF token"
+
+msgid "auth ok"
+msgstr "auth ok"
+
+msgid "Unrecognized field"
+msgstr "Unrecognized field"
+
+msgid "Max length allowed is {0} chars. {1} size is {2}"
+msgstr "Max length allowed is {0} chars. {1} size is {2}"
+
+msgid "Wrong datatype. Allowed: {0}"
+msgstr "Wrong datatype. Allowed: {0}"
+
+msgid "No code/s provided"
+msgstr "No code/s provided"
+
+msgid "No data to update"
+msgstr "No data to update"
+
+msgid "Processing..."
+msgstr "Processing..."
+
+msgid "Search&nbsp;:"
+msgstr "Search&nbsp;:"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "First"
+msgstr "First"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "Last"
+msgstr "Last"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "search"
+msgstr "search"
+
+msgid "Select an option"
+msgstr "Select an option"
+
+msgid "Modules"
+msgstr "Modules"
+
+msgid "Logout"
+msgstr "Logout"
+
 msgid "Email"
 msgstr ""
 
