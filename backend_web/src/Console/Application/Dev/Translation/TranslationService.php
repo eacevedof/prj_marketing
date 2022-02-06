@@ -35,6 +35,7 @@ final class TranslationService extends AppService implements IConsole
             "/appdata/www/backend_web/src/xxx-module",
             "/appdata/www/backend_web/src/Restrict/Users",
             //"/appdata/www/backend_web/src/Restrict/Promotions",
+            "/appdata/www/backend_web/src/Shared/Infrastructure/Helpers/Views/DatatableHelper.php"
         ];
         $this->trs = [];
     }
