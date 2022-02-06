@@ -1,4 +1,6 @@
 ### To-Do
+- promoción con límite de inscritos
+- estado de la suscripción
 - image upload en theframework?? de momento si.
 - ~~frontcontroller~~
 - ~~pasar a controladores por caso de uso~~
