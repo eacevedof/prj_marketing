@@ -1,8 +1,8 @@
 <?php
 namespace Tests\Unit;
 
-use App\Shared\Infrastructure\Enums\SessionType;
 use Tests\Boot\AbsTestBase;
+use App\Shared\Infrastructure\Enums\SessionType;
 
 abstract class AbsUnitTest extends AbsTestBase
 {
