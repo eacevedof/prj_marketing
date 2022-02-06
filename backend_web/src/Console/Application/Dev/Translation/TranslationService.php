@@ -17,7 +17,7 @@ final class TranslationService extends AppService implements IConsole
 {
     use ConsoleTrait;
 
-    private const FIND_TR_PATTERN = [
+    private const FIND_TR_PATTERNS = [
         "\_\_\(\"(.*)\"\)",
         "\_\_\(\"(.*)\",",
     ];
@@ -64,12 +64,9 @@ final class TranslationService extends AppService implements IConsole
     {
         //$pattern = self::FIND_TR_PATTERN;
         $pattern = "/$pattern/m";
-
         $matches = [];
         preg_match_all($pattern, $content, $matches);
-
         $result = $matches[1] ?? [];
-        if (is_string($result)) return [$result];
         return array_unique($result);
     }
 
@@ -88,8 +85,7 @@ final class TranslationService extends AppService implements IConsole
         foreach ($this->arfiles as $path) {
             $content = file_get_contents($path);
             if (!strstr($content, "__(\"")) continue;
-            $this->logpr($path, "paht");
-            foreach (self::FIND_TR_PATTERN as $pattern) {
+            foreach (self::FIND_TR_PATTERNS as $pattern) {
                 $trs = $this->_get_trs($content, $pattern);
                 $this->_add_trs($trs);
             }
