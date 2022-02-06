@@ -5,6 +5,7 @@ use Tests\Unit\AbsUnitTest;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Auth\Application\CsrfService;
+use \Exception;
 
 final class CsrfServiceTest extends AbsUnitTest
 {
@@ -28,6 +29,11 @@ final class CsrfServiceTest extends AbsUnitTest
                 "REMOTE_HOST" => "",
                 "REMOTE_ADDR" => "",
                 "HTTP_USER_AGENT" => "",
+            ],
+            [
+                "REMOTE_HOST" => "fake-host",
+                "REMOTE_ADDR" => "fake-addr",
+                "HTTP_USER_AGENT" => "fake-agent",
             ],
         ];
 
@@ -58,6 +64,18 @@ final class CsrfServiceTest extends AbsUnitTest
         $this->_load_server(1);
         $this->expectExceptionMessage("Invalid csrf 1");
         SF::get(CsrfService::class)->is_valid("SOME-RareToken-8789$5");
+    }
+
+    public function test_wrong_token_for_swapping_servers(): void
+    {
+        $this->expectException(Exception::class);
+        $this->_load_server();
+        $service = SF::get(CsrfService::class);
+        $tokenforserv0 = $service->get_token();
+        //fake request
+        $this->_load_server(2);
+        $service = SF::get(CsrfService::class);
+        $isvalid = $service->is_valid($tokenforserv0);
     }
 
 }
