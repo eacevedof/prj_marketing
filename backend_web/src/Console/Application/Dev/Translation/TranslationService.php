@@ -67,7 +67,7 @@ final class TranslationService extends AppService implements IConsole
     private function _add_trs(array $trs): void
     {
         $trs = $this->trs + $trs;
-        $this->trs = array_unique($trs);
+        $this->trs = array_values(array_unique($trs));
     }
 
     //php run.php modules
