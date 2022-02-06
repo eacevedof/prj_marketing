@@ -1,5 +1,5 @@
 ### To-Do
-- 
+- image upload en theframework?? de momento si.
 - ~~frontcontroller~~
 - ~~pasar a controladores por caso de uso~~
 - ~~corregir carga de picklists por idowner~~
