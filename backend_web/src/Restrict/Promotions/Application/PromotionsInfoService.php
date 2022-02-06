@@ -21,7 +21,7 @@ final class PromotionsInfoService extends AppService
         $this->_check_permission();
 
         if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No promotion code provided"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("No {0} code provided", __("promotion")), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
         $this->repopromotion = RF::get(PromotionRepository::class);
@@ -63,7 +63,7 @@ final class PromotionsInfoService extends AppService
         $promotion = $this->repopromotion->get_info($this->input);
         if(!$promotion)
             $this->_exception(
-                __("Promotion with code {0} not found", $this->input),
+                __("{0} with code {1} not found", __("Promotion"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
 
@@ -78,7 +78,7 @@ final class PromotionsInfoService extends AppService
         $promotion = $this->repopromotion->get_info($this->input);
         if(!$promotion)
             $this->_exception(
-                __("Promotion with code {0} not found",$this->input),
+                __("{0} with code {1} not found", __("Promotion"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
         $this->_check_entity_permission($promotion);

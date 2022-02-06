@@ -26,7 +26,7 @@ final class UsersInfoService extends AppService
         $this->_check_permission();
 
         if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No user code provided"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("No {0} code provided", __("user")), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
         $this->repouser = RF::get(UserRepository::class);

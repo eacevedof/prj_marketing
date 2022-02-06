@@ -282,3 +282,84 @@ msgstr "Ha ocurrido un error inesperado"
 
 msgid "Password confirm"
 msgstr "Confirmar contraseña"
+
+msgid "No {0} code provided"
+msgstr "Código de {0} no proporcionado"
+
+msgid "{0} with code {1} not found"
+msgstr "No se ha encontrado {0} con código {0}"
+
+msgid "Invalid value"
+msgstr "Valor incorrecto"
+
+msgid "Invalid date {0}"
+msgstr "Fecha incorrecta {0}"
+
+msgid "Date to should be larger or equal to date from."
+msgstr "La Fec. hasta debe ser mayor o igual a la Fec. desde."
+
+msgid "Invalid url"
+msgstr "Url incorrecta"
+
+msgid "Cod. Promo"
+msgstr "Cod. Promo"
+
+msgid "Owner"
+msgstr "Propietario"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Slug"
+msgstr ""
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Date from"
+msgstr "Fecha desde"
+
+msgid "Date to"
+msgstr "Fecha hasta"
+
+msgid "Url social"
+msgstr "Url social"
+
+msgid "Url design"
+msgstr "Url creatividad"
+
+msgid "Enabled"
+msgstr "Habilitado"
+
+msgid "Invested"
+msgstr "Invertido"
+
+msgid "Inv returned"
+msgstr "Inv de retorno"
+
+msgid "Notes"
+msgstr "Notas"
+
+msgid "External code"
+msgstr "Código externo"
+
+msgid "Promotion info"
+msgstr "Info de promoción"
+
+msgid "New promotion"
+msgstr "Nueva promoción"
+
+msgid "Edit promotion {0}"
+msgstr "Editar promoción {0}"
+
+msgid "{0} {1} successfully updated"
+msgstr "{0} {1} satisfactoriamente creado/a"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "<b>Data created</b>"
+msgstr "<b>Datos creados</b>"
+
+msgid "<b>Data updated</b>"
+msgstr "<b>Datos actualizados</b>"
