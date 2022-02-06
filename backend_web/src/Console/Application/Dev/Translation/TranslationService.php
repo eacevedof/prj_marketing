@@ -17,14 +17,17 @@ final class TranslationService extends AppService implements IConsole
 {
     use ConsoleTrait;
 
-    private const FIND_TR_PATTERN = "\_\_\(\"(.*)\"\)";
+    private const FIND_TR_PATTERN = "\_\_\(\"(.*)\"";
     private const PATH_SRC = PATH_SRC;
     private array $arfiles;
+    private array $trs;
+
 
     public function __construct(array $input)
     {
         $this->input = $input;
         $this->arfiles = [];
+        $this->trs = [];
     }
 
     public function _get_files(string $pathdir): array
@@ -49,14 +52,23 @@ final class TranslationService extends AppService implements IConsole
         }
     }
 
-    private function _get_trs(string $content): string
+    private function _get_trs(string $content): array
     {
         $pattern = self::FIND_TR_PATTERN;
         $pattern = "/$pattern/";
 
         $matches = [];
         preg_match_all($pattern, $content, $matches);
-        return $matches[0][1] ?? [];
+
+        $result = $matches[1] ?? [];
+        if (is_string($result)) return [$result];
+        return array_unique($result);
+    }
+
+    private function _add_trs(array $trs): void
+    {
+        $trs = $this->trs + $trs;
+        $this->trs = array_unique($trs);
     }
 
     //php run.php modules
@@ -69,7 +81,8 @@ final class TranslationService extends AppService implements IConsole
             $content = file_get_contents($path);
             if (!strstr($content, "__(\"")) continue;
             $trs = $this->_get_trs($content);
-            $this->logpr($trs,"trs");
+            $this->_add_trs($trs);
         }
+        $this->logpr($this->trs,"trs");
     }
 }
