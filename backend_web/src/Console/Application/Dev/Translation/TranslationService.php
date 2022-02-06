@@ -18,8 +18,7 @@ final class TranslationService extends AppService implements IConsole
     use ConsoleTrait;
 
     private const FIND_TR_PATTERNS = [
-        "\_\_\(\"(.*)\"\)",
-        "\_\_\(\"(.*)\",",
+        "\_\_\(\"(.*?)\"",
     ];
     private const PATH_SRC = PATH_SRC;
 
@@ -72,8 +71,7 @@ final class TranslationService extends AppService implements IConsole
 
     private function _add_trs(array $trs): void
     {
-        $trs = $this->trs + $trs;
-        $this->trs = array_values(array_unique($trs));
+        foreach ($trs as $tr) $this->trs[] = $tr;
     }
 
     //php run.php modules
@@ -90,6 +88,7 @@ final class TranslationService extends AppService implements IConsole
                 $this->_add_trs($trs);
             }
         }
-        $this->logpr($this->trs,"trs");
+        $trs = array_values(array_unique($this->trs));
+        $this->logpr($trs,"trs");
     }
 }
