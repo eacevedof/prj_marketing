@@ -1,7 +1,6 @@
 <?php
 namespace Tests\Restrict\Auth\Application;
 
-use SebastianBergmann\Comparator\Comparator;
 use Tests\Unit\AbsUnitTest;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Enums\SessionType;
