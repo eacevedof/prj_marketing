@@ -96,4 +96,10 @@ final class AuthService
 
         return RF::get(UserRepository::class)->get_idowner(self::$authuser["id"]);
     }
+
+    public static function reset(): void
+    {
+        self::$authService = null;
+        self::$authuser = null;
+    }
 }

@@ -58,5 +58,10 @@ final class AuthServiceTest extends AbsUnitTest
         $this->assertNotNull($user["id"]);
     }
 
-
+    public function test_is_root(): void
+    {
+        $this->log("test_is_root");
+        $authService = AuthService::getme();
+        $this->assertTrue($authService->get_user()["id_profile"] === ProfileType::ROOT);
+    }
 }
