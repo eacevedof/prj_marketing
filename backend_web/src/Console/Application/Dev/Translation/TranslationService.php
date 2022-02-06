@@ -19,13 +19,18 @@ final class TranslationService extends AppService implements IConsole
 
     private const FIND_TR_PATTERN = "\_\_\(\"(.*)\"\)";
     private const PATH_SRC = PATH_SRC;
+
     private array $arfiles;
+    private array $skipfolders;
     private array $trs;
 
     public function __construct(array $input)
     {
         $this->input = $input;
         $this->arfiles = [];
+        $this->skipfolders = [
+            "/appdata/www/backend_web/src/xxx-module"
+        ];
         $this->trs = [];
     }
 
@@ -46,6 +51,7 @@ final class TranslationService extends AppService implements IConsole
     {
         $files = $this->_get_files($path);
         foreach ($files as $file) {
+            if(in_array($file, $this->skipfolders)) continue;
             if (is_file($file)) $this->arfiles[] = $file;
             if (is_dir($file)) $this->_load_files($file);
         }
