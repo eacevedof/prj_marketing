@@ -7,7 +7,7 @@ mapping:
 */
 return [
     //commands
-    "help"                   => "App\\Services\\Console\\HelpService",
-    "users"                  => "App\\Services\\Console\\Restrict\\UsersService",
-    "build-module"           => "App\\Services\\Console\\Dev\\Builder\\ModuleBuilderService",
+    "help"                   => "App\\Console\\Application\\HelpService",
+    "users"                  => "App\\Console\\Application\\Restrict\\UsersService",
+    "build-module"           => "App\\Console\\Application\\Dev\\Builder\\ModuleBuilderService",
 ];
