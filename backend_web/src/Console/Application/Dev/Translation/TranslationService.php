@@ -17,11 +17,10 @@ final class TranslationService extends AppService implements IConsole
 {
     use ConsoleTrait;
 
-    private const FIND_TR_PATTERN = "\_\_\(\"(.*)\"";
+    private const FIND_TR_PATTERN = "\_\_\(\"(.*)\"\)";
     private const PATH_SRC = PATH_SRC;
     private array $arfiles;
     private array $trs;
-
 
     public function __construct(array $input)
     {
