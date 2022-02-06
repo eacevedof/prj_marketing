@@ -77,7 +77,7 @@ final class CsrfService extends AppService
         if(!$token) return false;
 
         $instring = $this->encdec->get_ssldecrypted($token);
-        $arpackage = explode("|",$instring);
+        $arpackage = explode("|", $instring);
         $this->_validate_package($arpackage);
         return true;
     }

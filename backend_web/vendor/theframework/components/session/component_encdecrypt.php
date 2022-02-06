@@ -78,8 +78,7 @@ class ComponentEncdecrypt
         $sHashIv = substr(hash("sha256",$this->sSslIv),0,16);
         $sDecrypted = base64_decode($sEncrypted);
         $sDecrypted = openssl_decrypt($sDecrypted,$this->sSslMethod,$sHashKey,0,$sHashIv);
-        if($this->useTime)
-        {
+        if ($this->useTime) {
             $sDecrypted = explode("-",$sDecrypted);
             return $sDecrypted[0];
         }
