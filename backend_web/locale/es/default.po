@@ -130,62 +130,158 @@ msgstr "Editar"
 msgid "Remove"
 msgstr "Eliminar"
 
-msgid "Promotions"
-msgstr "Promociones"
+msgid "Empty required code"
+msgstr "Empty required code"
 
-msgid "Promotion"
-msgstr "Promoción"
+msgid "You are not allowed to perform this operation"
+msgstr "You are not allowed to perform this operation"
 
-msgid "promotions"
-msgstr "promociones"
+msgid "Data not found"
+msgstr "Data not found"
 
-msgid "promotion"
-msgstr "promoción"
+msgid "Not all keys provided"
+msgstr "Not all keys provided"
+
+msgid "This item is already deleted {0}"
+msgstr "This item is already deleted {0}"
+
+msgid "Is not possible to restore entity {0}"
+msgstr "Is not possible to restore entity {0}"
+
+msgid "No user code provided"
+msgstr "No user code provided"
+
+msgid "User with code {0} not found"
+msgstr "User with code {0} not found"
+
+msgid "This email already exists"
+msgstr "This email already exists"
+
+msgid "Empty field is not allowed"
+msgstr "Empty field is not allowed"
+
+msgid "Invalid email format"
+msgstr "Invalid email format"
+
+msgid "Bad password confirmation"
+msgstr "Bad password confirmation"
+
+msgid "Empty data"
+msgstr "Empty data"
+
+msgid "Fields validation errors"
+msgstr "Fields validation errors"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "uuid"
+msgstr "uuid"
+
+msgid "Fullname"
+msgstr "Fullname"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Superior"
+msgstr "Superior"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Country"
+msgstr "Country"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Address"
+msgstr "Address"
+
+msgid "Birthdate"
+msgstr "Birthdate"
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Nationality"
+msgstr "Nationality"
+
+msgid "Only type json for accept header is allowed"
+msgstr "Only type json for accept header is allowed"
+
+msgid "User successfully removed"
+msgstr "User successfully removed"
+
+msgid "User successfully restored"
+msgstr "User successfully restored"
+
+msgid "User info"
+msgstr "User info"
+
+msgid "New user"
+msgstr "New user"
+
+msgid "User successfully created"
+msgstr "User successfully created"
+
+msgid "Edit user {0}"
+msgstr "Edit user {0}"
+
+msgid "{0} successfully created"
+msgstr "{0} successfully created"
+
+msgid "<b>Error on delete</b>"
+msgstr "<b>Error on delete</b>"
+
+msgid "Data successfully deleted"
+msgstr "Data successfully deleted"
+
+msgid "<b>Error on restore</b>"
+msgstr "<b>Error on restore</b>"
+
+msgid "Data successfully restored"
+msgstr "Data successfully restored"
+
+msgid "Permissions"
+msgstr "Permissions"
+
+msgid "Preferences"
+msgstr "Preferences"
 
 msgid "Nº"
 msgstr "Nº"
 
-msgid "Cod. Promo"
-msgstr "Cod. Promo"
+msgid "Full name"
+msgstr "Full name"
 
-msgid "Owner"
-msgstr "Propietario"
+msgid "Created by"
+msgstr "Created by"
 
-msgid "External code"
-msgstr "Código externo"
+msgid "Created at"
+msgstr "Created at"
 
-msgid "Description"
-msgstr "Descripción"
+msgid "Modified by"
+msgstr "Modified by"
 
-msgid "Slug"
-msgstr ""
+msgid "Modified at"
+msgstr "Modified at"
 
-msgid "Content"
-msgstr "Contenido"
+msgid "send"
+msgstr "send"
 
-msgid "Type"
-msgstr "Tipo"
+msgid "Sending..."
+msgstr "Sending..."
 
-msgid "Date from"
-msgstr "Fecha desde"
+msgid "Error"
+msgstr "Error"
 
-msgid "Date to"
-msgstr "Fecha hasta"
+msgid "Some unexpected error occurred"
+msgstr "Some unexpected error occurred"
 
-msgid "Url social"
-msgstr "Url red social"
-
-msgid "Url design"
-msgstr "Url creatividad"
-
-msgid "Enabled"
-msgstr "Habilitado"
-
-msgid "Invested"
-msgstr "Invertido"
-
-msgid "Inv returned"
-msgstr "Inv. de retorno"
-
-msgid "Notes"
-msgstr "Notas"
+msgid "Password confirm"
+msgstr "Password confirm"

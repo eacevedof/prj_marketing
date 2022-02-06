@@ -33,7 +33,7 @@ final class TranslationService extends AppService implements IConsole
         $this->arfiles = [];
         $this->skipfolders = [
             "/appdata/www/backend_web/src/xxx-module",
-            "/appdata/www/backend_web/src/Restrict/Users",
+            //"/appdata/www/backend_web/src/Restrict/Users",
             "/appdata/www/backend_web/src/Restrict/Promotions",
         ];
         $this->trs = [];
