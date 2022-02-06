@@ -25,9 +25,8 @@ final class TranslationService extends AppService implements IConsole
         $this->input = $input;
     }
 
-    public function _get_files(): array
+    public function _get_files(string $pathdir): array
     {
-        $pathdir = self::PATH_SRC;
         $files = scandir($pathdir);
         if(count($files)<3) return [];
         unset($files[0]); unset($files[1]);
@@ -38,8 +37,9 @@ final class TranslationService extends AppService implements IConsole
     //run get-translation
     public function run(): void
     {
+        $pathdir = self::PATH_SRC;
         //$this->logpr("itranl");
-        $files = $this->_get_files();
+        $files = $this->_get_files($pathdir);
         $this->logpr($files,"files");
     }
 }
