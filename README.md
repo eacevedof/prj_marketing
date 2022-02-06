@@ -7,6 +7,10 @@ SN Marketing
 
 ### console
 - php run.php --class=App.Services.Kafka.LogConsumerService
+```
+make ssh-be
+run help
+```
 
 ### tests (phpunit 9.3)
 - ejecuta todos los tests

@@ -79,4 +79,24 @@ final class ConsoleMain
         lgerr($ex->getMessage(), "console-exception $uuid", "error");
         lgerr($ex->getFile()." : (line: {$ex->getLine()})", "file-line $uuid", "error");
     }
+
+    public static function debug(Throwable $ex): void
+    {
+        if (getenv("APP_ENV")==="prod") return;
+        if (!((bool) getenv("APP_DEBUG"))) return;
+
+        $content = [];
+        $content["Exception"] = $ex->getMessage();
+        $content["File"] = $ex->getFile()."(".$ex->getLine().")";
+        $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
+        $content["response"] = $code;
+
+        if ($_POST) $content["POST"] = var_export($_POST, 1);
+        if ($_GET) $content["GET"] = var_export($_GET, 1);
+        if ($_SESSION) $content["SESSION"] = var_export($_SESSION, 1);
+        if ($_REQUEST) $content["REQUEST"] = var_export($_REQUEST, 1);
+        if ($_ENV) $content["ENV"] = var_export($_ENV, 1);
+
+        print_r($content);
+    }
 }

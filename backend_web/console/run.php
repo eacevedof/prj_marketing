@@ -11,4 +11,5 @@ try {
 }
 catch (Exception | Throwable $ex) {
     ConsoleMain::on_error($ex);
+    ConsoleMain::debug($ex);
 }
