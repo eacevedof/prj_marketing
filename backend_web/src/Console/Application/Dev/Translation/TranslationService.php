@@ -19,10 +19,12 @@ final class TranslationService extends AppService implements IConsole
 
     private const FIND_TR_PATTERN = "\_\_\(\"(.*)\"\)";
     private const PATH_SRC = PATH_SRC;
+    private array $arfiles;
 
     public function __construct(array $input)
     {
         $this->input = $input;
+        $this->arfiles = [];
     }
 
     public function _get_files(string $pathdir): array
