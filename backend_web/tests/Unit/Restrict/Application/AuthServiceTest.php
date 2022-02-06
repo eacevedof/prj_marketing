@@ -69,14 +69,14 @@ final class AuthServiceTest extends AbsUnitTest
     {
         $this->log("test_is_not_sysadmin");
         $authService = AuthService::getme();
-        $this->assertTrue($authService->is_sysadmin());
+        $this->assertFalse($authService->is_sysadmin());
     }
 
     public function test_is_business_owner(): void
     {
         $this->log("test_is_business_owner");
         $authService = AuthService::getme();
-        $this->assertTrue($authService->is_business_owner());
+        $this->assertFalse($authService->is_business_owner());
     }
 
 }
