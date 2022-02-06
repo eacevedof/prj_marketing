@@ -77,7 +77,14 @@ final class TranslationService extends AppService implements IConsole
 
     private function _get_missing_es(array $trs): array
     {
-
+        $estrs = file_get_contents(self::PATH_TR_ES);
+        $missing = [];
+        foreach ($trs as $tr) {
+            if (strstr($estrs, $tr) || trim($tr)==="") continue;
+            $missing[] = "msgid \"$tr\"";
+            $missing[] = "msgstr \"$tr\"";
+        }
+        return $missing;
     }
 
     //php run.php modules
