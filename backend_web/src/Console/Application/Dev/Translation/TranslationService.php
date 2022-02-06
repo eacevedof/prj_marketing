@@ -21,7 +21,7 @@ final class TranslationService extends AppService implements IConsole
         "\_\_\(\"(.*?)\"",
     ];
     private const PATH_SRC = PATH_SRC;
-    private const PATH_TR_ES = PATH_SRC."/locale/es/default.po";
+    private const PATH_TR_ES = PATH_ROOT."/locale/es/default.po";
 
     private array $arfiles;
     private array $skipfolders;
@@ -32,7 +32,9 @@ final class TranslationService extends AppService implements IConsole
         $this->input = $input;
         $this->arfiles = [];
         $this->skipfolders = [
-            "/appdata/www/backend_web/src/xxx-module"
+            "/appdata/www/backend_web/src/xxx-module",
+            "/appdata/www/backend_web/src/Restrict/Users",
+            "/appdata/www/backend_web/src/Restrict/Promotions",
         ];
         $this->trs = [];
     }
@@ -92,7 +94,7 @@ final class TranslationService extends AppService implements IConsole
     public function run(): void
     {
         $this->_load_files(self::PATH_SRC);
-        $this->logpr($this->arfiles,"files");
+        //$this->logpr($this->arfiles,"files");
         foreach ($this->arfiles as $path) {
             $content = file_get_contents($path);
             if (!strstr($content, "__(\"")) continue;
@@ -103,6 +105,7 @@ final class TranslationService extends AppService implements IConsole
         }
         $trs = array_values(array_unique($this->trs));
         $missing = $this->_get_missing_es($trs);
-        $this->logpr($missing, "missing-es");
+        foreach ($missing as $missing)
+            print_r($missing."\n");
     }
 }
