@@ -40,13 +40,20 @@ final class TranslationService extends AppService implements IConsole
         );
     }
 
+    private function _load_files(string $path): void
+    {
+        $files = $this->_get_files($path);
+        foreach ($files as $file) {
+            if (is_file($file)) $this->arfiles[] = $file;
+            if (is_dir($file)) $this->_load_files($file);
+        }
+    }
+
     //php run.php modules
     //run get-translation
     public function run(): void
     {
-        $pathdir = self::PATH_SRC;
-        //$this->logpr("itranl");
-        $files = $this->_get_files($pathdir);
-        $this->logpr($files,"files");
+        $this->_load_files(self::PATH_SRC);
+        $this->logpr($this->arfiles,"files");
     }
 }
