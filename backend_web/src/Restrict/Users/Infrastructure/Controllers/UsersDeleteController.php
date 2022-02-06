@@ -39,7 +39,7 @@ final class UsersDeleteController extends RestrictController
             $delete = SF::get_callable(UsersDeleteService::class, ["uuid"=>$uuid]);
             $result = $delete();
             $this->_get_json()->set_payload([
-                "message"=>__("User successfully removed"),
+                "message"=>__("{0} successfully removed", __("User")),
                 "result" => $result,
             ])->show();
         }
@@ -63,7 +63,7 @@ final class UsersDeleteController extends RestrictController
             $delete = SF::get(UsersDeleteService::class, ["uuid"=>$uuid]);
             $result = $delete->undelete();
             $this->_get_json()->set_payload([
-                "message"=>__("User successfully restored"),
+                "message"=>__("{0} successfully restored", __("User")),
                 "result" => $result,
             ])->show();
         }

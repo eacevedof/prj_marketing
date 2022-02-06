@@ -71,7 +71,7 @@ final class UsersInsertController extends RestrictController
             $insert = SF::get_callable(UsersInsertService::class, $this->request->get_post());
             $result = $insert();
             $this->_get_json()->set_payload([
-                "message" => __("User successfully created"),
+                "message" => __("{0} successfully created", __("User")),
                 "result" => $result,
             ])->show();
         }

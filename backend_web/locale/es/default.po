@@ -104,7 +104,7 @@ msgid "Email"
 msgstr ""
 
 msgid "Password"
-msgstr "clave"
+msgstr "Contraseña"
 
 msgid "Unauthorized"
 msgstr "No autorizado"
@@ -131,157 +131,154 @@ msgid "Remove"
 msgstr "Eliminar"
 
 msgid "Empty required code"
-msgstr "Empty required code"
+msgstr "El código obligatorio está vacío"
 
 msgid "You are not allowed to perform this operation"
-msgstr "You are not allowed to perform this operation"
+msgstr "No tienes permisos para ejecutar esta operación"
 
 msgid "Data not found"
-msgstr "Data not found"
+msgstr "Datos no encontrados"
 
 msgid "Not all keys provided"
-msgstr "Not all keys provided"
+msgstr "No se han proporcionado todas las claves"
 
 msgid "This item is already deleted {0}"
-msgstr "This item is already deleted {0}"
+msgstr "Este item ya estaba borrado {0}"
 
 msgid "Is not possible to restore entity {0}"
-msgstr "Is not possible to restore entity {0}"
+msgstr "No es posible restaurar la entidad {0}"
 
 msgid "No user code provided"
-msgstr "No user code provided"
+msgstr "No se ha proporcionado el código de usuario"
 
 msgid "User with code {0} not found"
-msgstr "User with code {0} not found"
+msgstr "No se ha encontrado el usuario con código {0}"
 
 msgid "This email already exists"
-msgstr "This email already exists"
+msgstr "Este email ya existe"
 
 msgid "Empty field is not allowed"
-msgstr "Empty field is not allowed"
+msgstr "No se permite que el campo este vacío"
 
 msgid "Invalid email format"
-msgstr "Invalid email format"
+msgstr "Formato de email inválido"
 
 msgid "Bad password confirmation"
-msgstr "Bad password confirmation"
+msgstr "Contraseña de confirmación incorrecta"
 
 msgid "Empty data"
-msgstr "Empty data"
+msgstr "Datos vacíos"
 
 msgid "Fields validation errors"
-msgstr "Fields validation errors"
+msgstr "Errores de validación de campos"
 
 msgid "Code"
-msgstr "Code"
+msgstr "Código"
 
 msgid "uuid"
-msgstr "uuid"
+msgstr ""
 
 msgid "Fullname"
-msgstr "Fullname"
+msgstr "Nombre completo"
 
 msgid "Phone"
-msgstr "Phone"
+msgstr "Teléfono"
 
 msgid "Superior"
 msgstr "Superior"
 
 msgid "Profile"
-msgstr "Profile"
+msgstr "Perfil"
 
 msgid "Country"
-msgstr "Country"
+msgstr "País"
 
 msgid "Language"
-msgstr "Language"
+msgstr "Idioma"
 
 msgid "ID"
 msgstr "ID"
 
 msgid "Address"
-msgstr "Address"
+msgstr "Dirección"
 
 msgid "Birthdate"
-msgstr "Birthdate"
+msgstr "Fec. nacimiento"
 
 msgid "Gender"
-msgstr "Gender"
+msgstr "Género"
 
 msgid "Nationality"
-msgstr "Nationality"
+msgstr "Nacionalidad"
 
 msgid "Only type json for accept header is allowed"
-msgstr "Only type json for accept header is allowed"
+msgstr "Solo se permite json en la cabecera accept"
 
-msgid "User successfully removed"
-msgstr "User successfully removed"
+msgid "{0} successfully removed"
+msgstr "{0} eliminado/a satisfactoriamente"
 
-msgid "User successfully restored"
-msgstr "User successfully restored"
+msgid "{0} successfully restored"
+msgstr "{0} restaurado/a satisfactoriamente"
 
 msgid "User info"
-msgstr "User info"
+msgstr "Info de usuario"
 
 msgid "New user"
-msgstr "New user"
-
-msgid "User successfully created"
-msgstr "User successfully created"
-
-msgid "Edit user {0}"
-msgstr "Edit user {0}"
+msgstr "Nuevo usuario"
 
 msgid "{0} successfully created"
-msgstr "{0} successfully created"
+msgstr "{0} creado/a satisfactoriamente"
+
+msgid "Edit user {0}"
+msgstr "Editar usuario {0}"
 
 msgid "<b>Error on delete</b>"
-msgstr "<b>Error on delete</b>"
+msgstr "<b>Error al eliminar</b>"
 
 msgid "Data successfully deleted"
-msgstr "Data successfully deleted"
+msgstr "Datos eliminados satisfactoriamente"
 
 msgid "<b>Error on restore</b>"
-msgstr "<b>Error on restore</b>"
+msgstr "<b>Error al restaurar</b>"
 
 msgid "Data successfully restored"
-msgstr "Data successfully restored"
+msgstr "Datos restaurados satisfactoriamente"
 
 msgid "Permissions"
-msgstr "Permissions"
+msgstr "Permisos"
 
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Preferencias"
 
 msgid "Nº"
 msgstr "Nº"
 
 msgid "Full name"
-msgstr "Full name"
+msgstr "Nombre completo"
 
 msgid "Created by"
-msgstr "Created by"
+msgstr "Creado por"
 
 msgid "Created at"
-msgstr "Created at"
+msgstr "Creado el"
 
 msgid "Modified by"
-msgstr "Modified by"
+msgstr "Modificado por"
 
 msgid "Modified at"
-msgstr "Modified at"
+msgstr "Modificado el"
 
 msgid "send"
-msgstr "send"
+msgstr "enviar"
 
 msgid "Sending..."
-msgstr "Sending..."
+msgstr "Enviando..."
 
 msgid "Error"
 msgstr "Error"
 
 msgid "Some unexpected error occurred"
-msgstr "Some unexpected error occurred"
+msgstr "Ha ocurrido un error inesperado"
 
 msgid "Password confirm"
-msgstr "Password confirm"
+msgstr "Confirmar contraseña"
