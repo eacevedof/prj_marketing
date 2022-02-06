@@ -24,7 +24,7 @@ final class CsrfService extends AppService
 
     private function _get_user_agent(): string {return $_SERVER["HTTP_USER_AGENT"] ?? ":)"; }
 
-    private function _validate_package($arpackage): void
+    private function _validate_package(array $arpackage): void
     {
         if(count($arpackage)!==12) $this->_exception(__("Invalid csrf {0}",1));
 
@@ -39,8 +39,7 @@ final class CsrfService extends AppService
 
         if($useragent !== md5($this->_get_user_agent())) $this->_exception(__("Invalid csrf {0}",4));
 
-        $user = $this->autuser;
-        $md5pass = $user["secret"] ?? "";
+        $md5pass = $this->autuser["secret"] ?? "";
         $md5pass = md5($md5pass);
         if($md5pass!==$password) $this->_exception(__("Invalid csrf {0}",5));
 
@@ -60,7 +59,7 @@ final class CsrfService extends AppService
             "salt2"    => rand(3,7),
             "useragent" => md5($this->_get_user_agent()),
             "salt3"    => rand(7,11),
-            "username" => $user["email"] ?? "",
+            "username" => $this->autuser["email"] ?? "",
             "salt4"    => rand(11,15),
             "password" => md5($this->autuser["secret"] ?? ""),
             "salt5"    => rand(15,19),

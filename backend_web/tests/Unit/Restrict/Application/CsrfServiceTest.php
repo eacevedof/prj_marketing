@@ -14,7 +14,6 @@ final class CsrfServiceTest extends AbsUnitTest
     {
         $this->_load_session();
         $this->authService = AuthService::getme();
-
     }
 
     private function _load_server(int $i=0): void
@@ -24,7 +23,12 @@ final class CsrfServiceTest extends AbsUnitTest
                 "REMOTE_HOST" => "",
                 "REMOTE_ADDR" => "127.0.0.1",
                 "HTTP_USER_AGENT" => ":)",
-            ]
+            ],
+            [
+                "REMOTE_HOST" => "somehost",
+                "REMOTE_ADDR" => "127.0.0.1",
+                "HTTP_USER_AGENT" => "Mozilla",
+            ],
         ];
 
         $server = $servers[$i] ?? [];
