@@ -10,6 +10,7 @@ try {
     (new ConsoleMain($argv))->exec();
 }
 catch (Exception | Throwable $ex) {
+    print_r("\n".$ex->getMessage()."\n\n");
     ConsoleMain::on_error($ex);
-    ConsoleMain::debug($ex);
+    //ConsoleMain::debug($ex);
 }

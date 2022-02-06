@@ -91,11 +91,8 @@ final class ConsoleMain
         $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
         $content["response"] = $code;
 
-        if ($_POST) $content["POST"] = var_export($_POST, 1);
-        if ($_GET) $content["GET"] = var_export($_GET, 1);
-        if ($_SESSION) $content["SESSION"] = var_export($_SESSION, 1);
-        if ($_REQUEST) $content["REQUEST"] = var_export($_REQUEST, 1);
         if ($_ENV) $content["ENV"] = var_export($_ENV, 1);
+        if ($_REQUEST) $content["REQUEST"] = var_export($_REQUEST, 1);
 
         print_r($content);
     }
