@@ -17,9 +17,21 @@ final class TranslationService extends AppService implements IConsole
 {
     use ConsoleTrait;
 
+    private const FIND_TR_PATTERN = "\_\_\(\"(.*)\"\)";
+    private const PATH_SRC = PATH_SRC;
+
     public function __construct(array $input)
     {
         $this->input = $input;
+    }
+
+    public function _get_files(): array
+    {
+        $pathdir = self::PATH_SRC;
+        $files = scandir($pathdir);
+        if(count($files)<3) return [];
+        unset($files[0]); unset($files[1]);
+        return array_values($files);
     }
 
     //php run.php modules
@@ -27,5 +39,7 @@ final class TranslationService extends AppService implements IConsole
     public function run(): void
     {
         //$this->logpr("itranl");
+        $files = $this->_get_files();
+        $this->logpr($files,"files");
     }
 }
