@@ -92,7 +92,7 @@
         <ol>
           <li><b><?=__("Content")?>:</b>&ensp;<span><?=$promotion["content"] ?? ""?></span></li>
         </ol>
-      </div><!--tab-general-->
+      </div><!--tab-conditions-->
 
     </div><!--tab-content-->
   </div><!--card-body-->
