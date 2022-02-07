@@ -18,7 +18,7 @@ return [
             "user" => "root",
             "pass" => "1234",
             "port" => 3306,
-            "charset" => env("DB_CHARSET", "utf8"),
+            "charset" => "utf8",
             "table_prefix" => ""
         ],
         "local" => [
@@ -28,7 +28,7 @@ return [
             "user" => "root",
             "pass" => "1234",
             "port" => 3306,
-            "charset" => env("DB_CHARSET", "utf8"),
+            "charset" => "utf8",
             "table_prefix" => ""
         ],
     ],
