@@ -59,19 +59,24 @@ export class FormPromotionCreate extends LitElement {
     _btnsend: {type: String, state:true},
     _btncancel: {type: String, state:true},
 
-    _description: {type: String, state:true},
-    _code_erp: {type: String, state:true},
     _id_owner: {type: String, state:true},
+    _code_erp: {type: String, state:true},
+    _description: {type: String, state:true},
     _slug: {type: String, state:true},
-    _content: {type: String, state:true},
-    _id_type: {type: Number, state:true},
     _date_from: {type: String, state:true},
     _date_to: {type: String, state:true},
-    _url_social: {type: String, state:true},
-    _url_design: {type: String, state:true},
+    _content: {type: String, state:true},
+    _bgcolor: {type: String, state:true},
+    _bgimage_xs: {type: String, state:true},
+    _bgimage_sm: {type: String, state:true},
+    _bgimage_md: {type: String, state:true},
+    _bgimage_lg: {type: String, state:true},
+    _bgimage_xl: {type: String, state:true},
+    _bgimage_xxl: {type: String, state:true},
     _is_active: {type: String, state:true},
-    _invested: {type: Number, state:true},
-    _returned: {type: Number, state:true},
+    _invested: {type: String, state:true},
+    _returned: {type: String, state:true},
+    _max_confirmed: {type: String, state:true},
     _notes: {type: String, state:true},
 
     _promotions: {type: Array, state:true},
@@ -129,16 +134,6 @@ export class FormPromotionCreate extends LitElement {
             <label for="content">${this.texts.f06}</label>
             <div id="field-content">
               <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="id_type">${this.texts.f07}</label>
-            <div id="field-id_type">
-              <select id="id_type" class="form-control">
-                ${this._promotions.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._id_type}>${item.value}</option>`
-                )}
-              </select>
             </div>
           </div>
           <div class="form-group">
