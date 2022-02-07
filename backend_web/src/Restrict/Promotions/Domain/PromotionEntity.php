@@ -70,24 +70,6 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
-            "content" => [
-                "label" => __("Content"),
-                EntityType::REQUEST_KEY => "content",
-                "config" => [
-                    "type" => EntityType::STRING,
-                    "length" => 2000,
-                ]
-            ],
-
-            "id_type" => [
-                "label" => __("Type"),
-                EntityType::REQUEST_KEY => "id_type",
-                "config" => [
-                    "type" => EntityType::INT,
-                    "length" => 10,
-                ]
-            ],
-
             "date_from" => [
                 "label" => __("Date from"),
                 EntityType::REQUEST_KEY => "date_from",
@@ -104,21 +86,75 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
-            "url_social" => [
-                "label" => __("Url social"),
-                EntityType::REQUEST_KEY => "url_social",
+            "content" => [
+                "label" => __("Content"),
+                EntityType::REQUEST_KEY => "content",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 250,
+                    "length" => 2000,
                 ]
             ],
 
-            "url_design" => [
-                "label" => __("Url design"),
-                EntityType::REQUEST_KEY => "url_design",
+            "bgcolor" => [
+                "label" => __("tr_bgcolor"),
+                EntityType::REQUEST_KEY => "bgcolor",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 250,
+                    "length" => 10,
+                ]
+            ],
+
+            "bgimage_xs" => [
+                "label" => __("tr_bgimage_xs"),
+                EntityType::REQUEST_KEY => "bgimage_xs",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 500,
+                ]
+            ],
+
+            "bgimage_sm" => [
+                "label" => __("tr_bgimage_sm"),
+                EntityType::REQUEST_KEY => "bgimage_sm",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 500,
+                ]
+            ],
+
+            "bgimage_md" => [
+                "label" => __("tr_bgimage_md"),
+                EntityType::REQUEST_KEY => "bgimage_md",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 500,
+                ]
+            ],
+
+            "bgimage_lg" => [
+                "label" => __("tr_bgimage_lg"),
+                EntityType::REQUEST_KEY => "bgimage_lg",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 500,
+                ]
+            ],
+
+            "bgimage_xl" => [
+                "label" => __("tr_bgimage_xl"),
+                EntityType::REQUEST_KEY => "bgimage_xl",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 500,
+                ]
+            ],
+
+            "bgimage_xxl" => [
+                "label" => __("tr_bgimage_xxl"),
+                EntityType::REQUEST_KEY => "bgimage_xxl",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 500,
                 ]
             ],
 
@@ -146,6 +182,15 @@ final class PromotionEntity extends AppEntity
                 "config" => [
                     "type" => EntityType::DECIMAL,
                     "length" => 10,
+                ]
+            ],
+
+            "max_confirmed" => [
+                "label" => __("tr_max_confirmed"),
+                EntityType::REQUEST_KEY => "max_confirmed",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 3,
                 ]
             ],
 

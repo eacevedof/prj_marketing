@@ -60,8 +60,7 @@ final class PromotionsInfoService extends AppService
 
     public function __invoke(): array
     {
-        $promotion = $this->repopromotion->get_info($this->input);
-        if(!$promotion)
+        if(!$promotion = $this->repopromotion->get_info($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("Promotion"), $this->input),
                 ExceptionType::CODE_NOT_FOUND

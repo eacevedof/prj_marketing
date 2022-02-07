@@ -123,7 +123,8 @@ final class PromotionsUpdateService extends AppService
 
     public function __invoke(): array
     {
-        $update = $this->_get_req_without_ops($this->input);
+        if (!$update = $this->_get_req_without_ops($this->input))
+            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);

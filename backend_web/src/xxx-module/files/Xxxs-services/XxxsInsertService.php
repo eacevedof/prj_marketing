@@ -84,9 +84,7 @@ final class XxxsInsertService extends AppService
 
     public function __invoke(): array
     {
-        $insert = $this->_get_req_without_ops($this->input);
-
-        if (!$insert)
+        if (!$insert = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {

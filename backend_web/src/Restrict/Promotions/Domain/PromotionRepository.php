@@ -80,19 +80,26 @@ final class PromotionRepository extends AppRepository
                 "m.code_erp",
                 "m.description",
                 "m.slug",
-                "m.content",
-                "m.id_type",
                 "m.date_from",
                 "m.date_to",
-                "m.url_social",
-                "m.url_design",
+                "m.content",
+                /*
+                "m.bgcolor",
+                "m.bgimage_xs",
+                "m.bgimage_sm",
+                "m.bgimage_md",
+                "m.bgimage_lg",
+                "m.bgimage_xl",
+                "m.bgimage_xxl",
+                */
                 "m.is_active",
                 "m.invested",
                 "m.returned",
+                "m.max_confirmed",
                 "m.notes",
                 "m.delete_date"
             ])
-            ->set_limit(25, 0)
+            ->set_limit(25)
             ->set_orderby(["m.id"=>"DESC"])
         ;
         $this->_add_joins($qb);
@@ -128,15 +135,20 @@ final class PromotionRepository extends AppRepository
                 "m.code_erp",
                 "m.description",
                 "m.slug",
-                "m.content",
-                "m.id_type",
                 "m.date_from",
                 "m.date_to",
-                "m.url_social",
-                "m.url_design",
+                "m.content",
+                "m.bgcolor",
+                "m.bgimage_xs",
+                "m.bgimage_sm",
+                "m.bgimage_md",
+                "m.bgimage_lg",
+                "m.bgimage_xl",
+                "m.bgimage_xxl",
                 "m.is_active",
                 "m.invested",
                 "m.returned",
+                "m.max_confirmed",
                 "m.notes"
             ])
             //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")

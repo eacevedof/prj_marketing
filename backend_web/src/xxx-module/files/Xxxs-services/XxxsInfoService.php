@@ -60,8 +60,7 @@ final class XxxsInfoService extends AppService
 
     public function __invoke(): array
     {
-        $xxx = $this->repoxxx->get_info($this->input);
-        if(!$xxx)
+        if(!$xxx = $this->repoxxx->get_info($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("Xxx"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
@@ -75,8 +74,7 @@ final class XxxsInfoService extends AppService
 
     public function get_for_edit(): array
     {
-        $xxx = $this->repoxxx->get_info($this->input);
-        if(!$xxx)
+        if(!$xxx = $this->repoxxx->get_info($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("Xxx"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
