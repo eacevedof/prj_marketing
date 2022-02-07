@@ -56,7 +56,6 @@
           <li><b><?=__("External code")?>:</b>&ensp;<span><?=$promotion["code_erp"] ?? ""?></span></li>
           <li><b><?=__("Description")?>:</b>&ensp;<span><?=$promotion["description"] ?? ""?></span></li>
           <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$promotion["slug"] ?? ""?></span></li>
-          <li><b><?=__("Type")?>:</b>&ensp;<span><?=$promotion["id_type"] ?? ""?></span></li>
           <li><b><?=__("Date from")?>:</b>&ensp;<span><?=$promotion["date_from"] ?? ""?></span></li>
           <li><b><?=__("Date to")?>:</b>&ensp;<span><?=$promotion["date_to"] ?? ""?></span></li>
           <li><b><?=__("Enabled")?>:</b>&ensp;<span><?=$promotion["is_active"] ?? ""?></span></li>
