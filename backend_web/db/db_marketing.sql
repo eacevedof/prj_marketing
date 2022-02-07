@@ -329,11 +329,12 @@ CREATE TABLE `app_promotions_subscriptions` (
   `id_promotion` int(11) NOT NULL,
   `id_promouser` int(11) NOT NULL COMMENT 'app_promotion_user.id',
   `date_subs` datetime DEFAULT NULL COMMENT 'cuando se inscribe',
-  `url_ref` varchar(250) DEFAULT NULL COMMENT 'de donde llega',
-  `code1` varchar(15) DEFAULT NULL COMMENT 'codigo unico de inscripción',
   `date_confirm` timestamp NULL DEFAULT NULL,
-  `subs_status` tinyint(4) DEFAULT 0 COMMENT 'app_array.promo_status suscribed, confirmed, excecuted',
   `date_exec` datetime DEFAULT NULL,
+  `code_exec` varchar(15) DEFAULT NULL COMMENT 'codigo unico de inscripción',
+  `subs_status` tinyint(3) DEFAULT 0 COMMENT 'app_array.promo_status suscribed, confirmed, excecuted',
+  `url_ref` varchar(1000) DEFAULT NULL COMMENT 'de donde llega',
+  `remote_ip` varchar(15) DEFAULT NULL,
   `notes` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
