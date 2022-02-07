@@ -74,7 +74,7 @@
           <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$promotion["delete_user"] ?? ""?></span></li>
           <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$promotion["delete_date"] ?? ""?></span></li>
         </ul>
-      </div><!-- general -->
+      </div><!--tab-general -->
 
       <div class="tab-pane" id="tab-design">
         <ol>
