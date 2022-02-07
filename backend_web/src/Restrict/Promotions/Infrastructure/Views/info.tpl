@@ -56,16 +56,26 @@
 <li><b><?=__("External code")?>:</b>&ensp;<span><?=$promotion["code_erp"] ?? ""?></span></li>
 <li><b><?=__("Description")?>:</b>&ensp;<span><?=$promotion["description"] ?? ""?></span></li>
 <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$promotion["slug"] ?? ""?></span></li>
-<li><b><?=__("Content")?>:</b>&ensp;<span><?=$promotion["content"] ?? ""?></span></li>
 <li><b><?=__("Type")?>:</b>&ensp;<span><?=$promotion["id_type"] ?? ""?></span></li>
 <li><b><?=__("Date from")?>:</b>&ensp;<span><?=$promotion["date_from"] ?? ""?></span></li>
 <li><b><?=__("Date to")?>:</b>&ensp;<span><?=$promotion["date_to"] ?? ""?></span></li>
-<li><b><?=__("Url social")?>:</b>&ensp;<span><?=$promotion["url_social"] ?? ""?></span></li>
-<li><b><?=__("Url design")?>:</b>&ensp;<span><?=$promotion["url_design"] ?? ""?></span></li>
 <li><b><?=__("Enabled")?>:</b>&ensp;<span><?=$promotion["is_active"] ?? ""?></span></li>
 <li><b><?=__("Invested")?>:</b>&ensp;<span><?=$promotion["invested"] ?? ""?></span></li>
 <li><b><?=__("Inv returned")?>:</b>&ensp;<span><?=$promotion["returned"] ?? ""?></span></li>
+<li><b><?=__("Max confirmed")?>:</b>&ensp;<span><?=$promotion["max_confirmed"] ?? ""?></span></li>
 <li><b><?=__("Notes")?>:</b>&ensp;<span><?=$promotion["notes"] ?? ""?></span></li>
+        </ol>
+        <ol>
+          <li><b><?=__("Content")?>:</b>&ensp;<span><?=$promotion["content"] ?? ""?></span></li>
+        </ol>
+        <ol>
+          <li><b><?=__("Bg color")?>:</b>&ensp;<span><?=$promotion["bgcolor"] ?? ""?></span></li>
+          <li><b><?=__("Bg image xs")?>:</b>&ensp;<span><?=$promotion["bgimage_xs"] ?? ""?></span></li>
+          <li><b><?=__("Bg image sm")?>:</b>&ensp;<span><?=$promotion["bgimage_sm"] ?? ""?></span></li>
+          <li><b><?=__("Bg image md")?>:</b>&ensp;<span><?=$promotion["bgimage_md"] ?? ""?></span></li>
+          <li><b><?=__("Bg image lg")?>:</b>&ensp;<span><?=$promotion["bgimage_lg"] ?? ""?></span></li>
+          <li><b><?=__("Bg image xl")?>:</b>&ensp;<span><?=$promotion["bgimage_xl"] ?? ""?></span></li>
+          <li><b><?=__("Bg image xxl")?>:</b>&ensp;<span><?=$promotion["bgimage_xxl"] ?? ""?></span></li>
         </ol>
         <br/>
         <ul>

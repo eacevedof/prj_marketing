@@ -1,4 +1,6 @@
 ### To-Do
+- pestaña permisos en usuarios
+  - edicion
 - promoción con límite de inscritos
 - promocion flags de captura 
 - estado de la suscripción
@@ -32,12 +34,10 @@
   - llevar estilos a css de lit
 - ~~al borrar que no cambie update-date~~
 - sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
-- pestaña permisos en usuarios
-  - edicion
 - ~~accion restore~~
   - ~~falta estilos en boton~~
 - accion clone
-- generador de módulo .py
+- ~~generador de módulo .py => php => run build-module xxx~~
 - ~~queries de _array con or de id_owner=-1~~
 - ~~limpieza de código (por ejemplo $this->auth)~~
   - ~~en servicios mejor un private user o solo mantener auth?~~ 
