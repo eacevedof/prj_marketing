@@ -1,5 +1,8 @@
 <?php
-// vendor/bin/phinx migrate --configuration db/phinx.php
+/**
+ *  vendor/bin/phinx migrate --configuration db/phinx.php
+ *
+ */
 return [
     "paths" => [
         "migrations" => "./migrations",
