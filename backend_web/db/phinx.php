@@ -1,9 +1,9 @@
 <?php
-
+$dir = __DIR__;
 return [
     "paths" => [
-        "migrations" => "%%PHINX_CONFIG_DIR%%/db/migrations",
-        "seeds" => "%%PHINX_CONFIG_DIR%%/db/seeds"
+        "migrations" => "$dir/migrations",
+        "seeds" => "$dir/seeds"
     ],
     "environments" => [
         "default_migration_table" => "phinxlog",
