@@ -134,22 +134,27 @@ CREATE TABLE `app_promotion` (
   `code_erp` varchar(25) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
   `slug` varchar(250) DEFAULT NULL,
-  `content` varchar(2000) DEFAULT NULL COMMENT 'pa q era esto? mmm',
-  `id_type` int(11) DEFAULT NULL,
   `date_from` datetime DEFAULT NULL,
   `date_to` datetime DEFAULT NULL,
-  `url_social` varchar(250) DEFAULT NULL COMMENT 'url en la red social',
-  `url_design` varchar(250) DEFAULT NULL COMMENT 'diseño por defecto',
+  `content` varchar(2000) DEFAULT NULL COMMENT 'condiciones generales',
+  `bgcolor` varchar(10) DEFAULT NULL COMMENT 'en caso no haya imagen',
+  `bgimage_xs` varchar(500) DEFAULT NULL COMMENT '<576',
+  `bgimage_sm` varchar(500) DEFAULT NULL COMMENT '>=576',
+  `bgimage_md` varchar(500) DEFAULT NULL COMMENT '>=768',
+  `bgimage_lg` varchar(500) DEFAULT NULL COMMENT '>=992',
+  `bgimage_xl` varchar(500) DEFAULT NULL COMMENT '>=1200',
+  `bgimage_xxl` varchar(500) DEFAULT NULL COMMENT '>=1400',
   `is_active` tinyint(4) NOT NULL DEFAULT 0,
   `invested` decimal(10,3) NOT NULL DEFAULT 0.000,
   `returned` decimal(10,3) NOT NULL DEFAULT 0.000,
+  `max_confirmed` tinyint(4) NOT NULL DEFAULT -1,
   `notes` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `app_promotion` */
 
-insert  into `app_promotion`(`processflag`,`insert_platform`,`insert_user`,`insert_date`,`update_platform`,`update_user`,`update_date`,`delete_platform`,`delete_user`,`delete_date`,`cru_csvnote`,`is_erpsent`,`is_enabled`,`i`,`id`,`uuid`,`id_owner`,`code_erp`,`description`,`slug`,`content`,`id_type`,`date_from`,`date_to`,`url_social`,`url_design`,`is_active`,`invested`,`returned`,`notes`) values (NULL,'2','1','2022-01-22 18:19:30',NULL,NULL,'2022-01-23 14:52:12',NULL,NULL,NULL,NULL,'0','1',NULL,1,'61ec4ab2a9587',379,'','aa','bb','cc',1,'2022-01-22 00:00:00','2022-01-22 00:00:00','http://eaf','http://',0,'0.000','0.000',''),(NULL,'2','1','2022-01-22 18:34:20',NULL,NULL,'2022-01-23 14:52:12','2','1','2022-01-22 18:38:47',NULL,'0','1',NULL,2,'61ec4e2ce4340',379,'','hola','xxx','somecon',1,'2022-01-24 00:00:00','2022-01-27 00:00:00','h','a',0,'0.000','0.000','hola'),(NULL,'2','1','2022-01-22 20:07:42',NULL,NULL,'2022-01-23 14:52:12',NULL,NULL,NULL,NULL,'0','1',NULL,3,'61ec640e94686',379,'','aa','bb','cc',1,'2022-01-22 00:00:00','2023-01-22 00:00:00','','http://eaf.com',1,'0.000','0.000',''),(NULL,'2','379','2022-01-22 21:38:05',NULL,NULL,'2022-01-23 14:52:12',NULL,NULL,NULL,NULL,'0','1',NULL,4,'61ec793d8a990',379,'','hola','hola','ndad',1,'2022-01-23 00:00:00','2022-01-25 00:00:00','','http://hola.com',0,'0.000','0.000',''),(NULL,'2','379','2022-01-22 22:00:23',NULL,NULL,'2022-01-22 22:00:23',NULL,NULL,NULL,NULL,'0','1',NULL,5,'61ec7e5d68748',379,'','xcx<zxc','xcx-zxc','xcxzc',1,'2022-01-22 00:00:00','2022-01-22 00:00:00','','http://eaf.com',0,'0.000','0.000',''),(NULL,'2','379','2022-01-23 14:46:15',NULL,NULL,'2022-01-23 14:46:15',NULL,NULL,NULL,NULL,'0','1',NULL,6,'61ed6a3710ce0',379,'abc123','esta es una super promo','esta-es-una-super-promo','Es un texto largo que ira en el formulario',1,'2020-01-23 00:00:00','2022-01-22 00:00:00','','http://eaf.com',1,'0.000','0.000','hola'),(NULL,'2','1','2022-01-23 19:55:34',NULL,NULL,'2022-01-23 19:55:34',NULL,NULL,NULL,NULL,'0','1',NULL,7,'61edb2b632189',177,'','some descrip','some-descrip','this-is a content',447,'2022-01-23 19:41:00','2022-01-23 23:59:00','','http://eaf.com',0,'0.000','0.000',''),(NULL,'2','1','2022-01-23 20:00:24',NULL,NULL,'2022-01-23 20:00:24','2','1','2022-01-28 21:56:46',NULL,'0','1',NULL,8,'61edb3d841a3c',355,'','sd fsd ghfh hffg SSS nNFFF','sd-fsd-ghfh-hffg-sss-nnfff','ffdgfd',447,'2022-01-23 19:59:00','2022-01-23 23:59:00','','http://eaf.com',0,'0.000','0.000',''),(NULL,'2','1','2022-01-23 20:22:12',NULL,NULL,'2022-01-23 20:22:12',NULL,NULL,NULL,NULL,'0','1',NULL,9,'61edb8f4c8116',95,'','dsfg gfsdg g','dsfg-gfsdg-g','ff',446,'2022-01-23 20:21:00','2022-01-23 23:59:00','','http://eaf.com',0,'0.000','0.000',''),(NULL,'2','1','2022-01-24 21:20:56',NULL,NULL,'2022-01-24 21:20:56',NULL,NULL,NULL,NULL,'0','1',NULL,10,'61ef1838708bd',177,'kk','hol','hol','mmm',447,'2022-01-24 21:20:00','2022-01-24 23:59:00','','http://eaf.mok',0,'0.000','0.000',''),(NULL,'2','1','2022-01-28 21:43:41','2','1','2022-01-28 21:57:11',NULL,NULL,NULL,'delete_user:1,delete_date:2022-01-28 21:51:32,delete_platform:2,(1:2022-01-28 21:57:11)|','0','1',NULL,11,'61f4638db43a0',342,'124','hola','hola','contn',446,'2022-01-28 21:16:00','2022-01-28 23:59:00','http://eaf.com.p','http://eaf.com.h',111,'0.000','0.000','444'),(NULL,'2','1','2022-02-03 20:37:31','2','1','2022-02-03 20:42:19',NULL,NULL,NULL,'delete_user:1,delete_date:2022-02-03 20:42:15,delete_platform:2,(1:2022-02-03 20:42:19)|','0','1',NULL,12,'61fc3d0b66fc7',359,'exxt','some','some','content',446,'2020-12-01 17:34:00','2021-12-01 20:57:00','abcd','http://img.com',1,'4.000','-1.000','xxx');
+insert  into `app_promotion`(`processflag`,`insert_platform`,`insert_user`,`insert_date`,`update_platform`,`update_user`,`update_date`,`delete_platform`,`delete_user`,`delete_date`,`cru_csvnote`,`is_erpsent`,`is_enabled`,`i`,`id`,`uuid`,`id_owner`,`code_erp`,`description`,`slug`,`date_from`,`date_to`,`content`,`bgcolor`,`bgimage_xs`,`bgimage_sm`,`bgimage_md`,`bgimage_lg`,`bgimage_xl`,`bgimage_xxl`,`is_active`,`invested`,`returned`,`max_confirmed`,`notes`) values (NULL,'2','1','2022-01-22 18:19:30',NULL,NULL,'2022-01-23 14:52:12',NULL,NULL,NULL,NULL,'0','1',NULL,1,'61ec4ab2a9587',379,'','aa','bb','2022-01-22 00:00:00','2022-01-22 00:00:00','cc',NULL,'http://eaf',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,''),(NULL,'2','1','2022-01-22 18:34:20',NULL,NULL,'2022-01-23 14:52:12','2','1','2022-01-22 18:38:47',NULL,'0','1',NULL,2,'61ec4e2ce4340',379,'','hola','xxx','2022-01-24 00:00:00','2022-01-27 00:00:00','somecon',NULL,'h',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,'hola'),(NULL,'2','1','2022-01-22 20:07:42',NULL,NULL,'2022-01-23 14:52:12',NULL,NULL,NULL,NULL,'0','1',NULL,3,'61ec640e94686',379,'','aa','bb','2022-01-22 00:00:00','2023-01-22 00:00:00','cc',NULL,'',NULL,NULL,NULL,NULL,NULL,1,'0.000','0.000',-1,''),(NULL,'2','379','2022-01-22 21:38:05',NULL,NULL,'2022-01-23 14:52:12',NULL,NULL,NULL,NULL,'0','1',NULL,4,'61ec793d8a990',379,'','hola','hola','2022-01-23 00:00:00','2022-01-25 00:00:00','ndad',NULL,'',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,''),(NULL,'2','379','2022-01-22 22:00:23',NULL,NULL,'2022-01-22 22:00:23',NULL,NULL,NULL,NULL,'0','1',NULL,5,'61ec7e5d68748',379,'','xcx<zxc','xcx-zxc','2022-01-22 00:00:00','2022-01-22 00:00:00','xcxzc',NULL,'',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,''),(NULL,'2','379','2022-01-23 14:46:15',NULL,NULL,'2022-01-23 14:46:15',NULL,NULL,NULL,NULL,'0','1',NULL,6,'61ed6a3710ce0',379,'abc123','esta es una super promo','esta-es-una-super-promo','2020-01-23 00:00:00','2022-01-22 00:00:00','Es un texto largo que ira en el formulario',NULL,'',NULL,NULL,NULL,NULL,NULL,1,'0.000','0.000',-1,'hola'),(NULL,'2','1','2022-01-23 19:55:34',NULL,NULL,'2022-01-23 19:55:34',NULL,NULL,NULL,NULL,'0','1',NULL,7,'61edb2b632189',177,'','some descrip','some-descrip','2022-01-23 19:41:00','2022-01-23 23:59:00','this-is a content',NULL,'',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,''),(NULL,'2','1','2022-01-23 20:00:24',NULL,NULL,'2022-01-23 20:00:24','2','1','2022-01-28 21:56:46',NULL,'0','1',NULL,8,'61edb3d841a3c',355,'','sd fsd ghfh hffg SSS nNFFF','sd-fsd-ghfh-hffg-sss-nnfff','2022-01-23 19:59:00','2022-01-23 23:59:00','ffdgfd',NULL,'',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,''),(NULL,'2','1','2022-01-23 20:22:12',NULL,NULL,'2022-01-23 20:22:12',NULL,NULL,NULL,NULL,'0','1',NULL,9,'61edb8f4c8116',95,'','dsfg gfsdg g','dsfg-gfsdg-g','2022-01-23 20:21:00','2022-01-23 23:59:00','ff',NULL,'',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,''),(NULL,'2','1','2022-01-24 21:20:56',NULL,NULL,'2022-01-24 21:20:56',NULL,NULL,NULL,NULL,'0','1',NULL,10,'61ef1838708bd',177,'kk','hol','hol','2022-01-24 21:20:00','2022-01-24 23:59:00','mmm',NULL,'',NULL,NULL,NULL,NULL,NULL,0,'0.000','0.000',-1,''),(NULL,'2','1','2022-01-28 21:43:41','2','1','2022-01-28 21:57:11',NULL,NULL,NULL,'delete_user:1,delete_date:2022-01-28 21:51:32,delete_platform:2,(1:2022-01-28 21:57:11)|','0','1',NULL,11,'61f4638db43a0',342,'124','hola','hola','2022-01-28 21:16:00','2022-01-28 23:59:00','contn',NULL,'http://eaf.com.p',NULL,NULL,NULL,NULL,NULL,111,'0.000','0.000',-1,'444'),(NULL,'2','1','2022-02-03 20:37:31','2','1','2022-02-03 20:42:19',NULL,NULL,NULL,'delete_user:1,delete_date:2022-02-03 20:42:15,delete_platform:2,(1:2022-02-03 20:42:19)|','0','1',NULL,12,'61fc3d0b66fc7',359,'exxt','some','some','2020-12-01 17:34:00','2021-12-01 20:57:00','content',NULL,'abcd',NULL,NULL,NULL,NULL,NULL,1,'4.000','-1.000',-1,'xxx');
 
 /*Table structure for table `app_promotion_array` */
 
@@ -185,6 +190,45 @@ CREATE TABLE `app_promotion_array` (
 
 insert  into `app_promotion_array`(`processflag`,`insert_platform`,`insert_user`,`insert_date`,`update_platform`,`update_user`,`update_date`,`delete_platform`,`delete_user`,`delete_date`,`cru_csvnote`,`is_erpsent`,`is_enabled`,`i`,`id`,`uuid`,`id_owner`,`code_erp`,`type`,`id_tosave`,`description`,`order_by`) values (NULL,'1',NULL,'2020-07-01 07:35:58',NULL,NULL,'2020-07-01 07:35:58',NULL,NULL,NULL,NULL,'0','1',NULL,1,NULL,1,NULL,'generic',NULL,'Generic',100);
 
+/*Table structure for table `app_promotion_ui` */
+
+DROP TABLE IF EXISTS `app_promotion_ui`;
+
+CREATE TABLE `app_promotion_ui` (
+  `processflag` varchar(5) DEFAULT NULL,
+  `insert_platform` varchar(3) DEFAULT '1',
+  `insert_user` varchar(15) DEFAULT NULL,
+  `insert_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update_platform` varchar(3) DEFAULT NULL,
+  `update_user` varchar(15) DEFAULT NULL,
+  `update_date` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `delete_platform` varchar(3) DEFAULT NULL,
+  `delete_user` varchar(15) DEFAULT NULL,
+  `delete_date` timestamp NULL DEFAULT NULL,
+  `cru_csvnote` varchar(500) DEFAULT NULL,
+  `is_erpsent` varchar(3) DEFAULT '0',
+  `is_enabled` varchar(3) DEFAULT '1',
+  `i` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(50) DEFAULT NULL,
+  `id_owner` int(11) DEFAULT NULL,
+  `code_erp` varchar(25) DEFAULT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `id_promotion` int(11) NOT NULL,
+  `input_language` tinyint(2) DEFAULT 1 COMMENT 'inputs en app_promotion_user',
+  `input_country` tinyint(2) DEFAULT 1,
+  `input_phone1` tinyint(2) DEFAULT 1,
+  `input_email` tinyint(2) DEFAULT 1,
+  `input_birthdate` tinyint(2) DEFAULT 1,
+  `input_name1` tinyint(2) DEFAULT 1,
+  `input_name2` tinyint(2) DEFAULT 1,
+  `input_gender` tinyint(2) DEFAULT 1,
+  `input_address` tinyint(2) DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `app_promotion_ui` */
+
 /*Table structure for table `app_promotion_urls` */
 
 DROP TABLE IF EXISTS `app_promotion_urls`;
@@ -212,6 +256,7 @@ CREATE TABLE `app_promotion_urls` (
   `id_promotion` int(11) NOT NULL,
   `id_type` int(11) NOT NULL DEFAULT 1 COMMENT 'promotion_array: fb|web|youtube,...',
   `design` varchar(250) DEFAULT NULL COMMENT 'url de la creatividad',
+  `url_promotion` varchar(2000) DEFAULT NULL COMMENT 'url de la promo publicada',
   `notes` varchar(300) DEFAULT NULL,
   `is_active` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
@@ -251,11 +296,7 @@ CREATE TABLE `app_promotion_user` (
   `name1` varchar(15) NOT NULL,
   `name2` varchar(15) DEFAULT NULL,
   `id_gender` varchar(5) DEFAULT NULL COMMENT 'app_array.type=gender',
-  `m1` int(5) DEFAULT NULL,
-  `m2` int(5) DEFAULT NULL,
-  `m3` int(5) DEFAULT NULL,
-  `m4` int(5) DEFAULT NULL,
-  `m5` int(5) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
@@ -291,7 +332,7 @@ CREATE TABLE `app_promotions_subscriptions` (
   `url_ref` varchar(250) DEFAULT NULL COMMENT 'de donde llega',
   `code1` varchar(15) DEFAULT NULL COMMENT 'codigo unico de inscripción',
   `date_confirm` timestamp NULL DEFAULT NULL,
-  `is_confirmed` tinyint(4) DEFAULT 0,
+  `subs_status` tinyint(4) DEFAULT 0 COMMENT 'app_array.promo_status suscribed, confirmed, excecuted',
   `date_exec` datetime DEFAULT NULL,
   `notes` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
