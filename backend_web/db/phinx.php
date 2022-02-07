@@ -1,16 +1,13 @@
 <?php
-/**
- *  vendor/bin/phinx migrate --configuration db/phinx.php
- *
- */
+
 return [
     "paths" => [
-        "migrations" => "./migrations",
-        "seeds" => "./seeds"
+        "migrations" => "%%PHINX_CONFIG_DIR%%/db/migrations",
+        "seeds" => "%%PHINX_CONFIG_DIR%%/db/seeds"
     ],
     "environments" => [
         "default_migration_table" => "phinxlog",
-        "default_database" => "local",
+        "default_environment" => "development",
         "production" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",
@@ -19,9 +16,8 @@ return [
             "pass" => "1234",
             "port" => 3306,
             "charset" => "utf8",
-            "table_prefix" => ""
         ],
-        "local" => [
+        "development" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",
             "name" => "db_marketing",
@@ -29,8 +25,16 @@ return [
             "pass" => "1234",
             "port" => 3306,
             "charset" => "utf8",
-            "table_prefix" => ""
         ],
+        "testing" => [
+            "adapter" => "mysql",
+            "host" => "host.docker.internal",
+            "name" => "db_marketing",
+            "user" => "root",
+            "pass" => "1234",
+            "port" => 3306,
+            "charset" => "utf8",
+        ]
     ],
     "version_order" => "creation"
 ];
