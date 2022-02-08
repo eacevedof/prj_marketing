@@ -1,5 +1,8 @@
 <?php
 $dir = __DIR__;
+
+include_once "$dir/migrations/AbsMigration.php";
+
 return [
     "paths" => [
         "migrations" => "$dir/migrations",
@@ -38,3 +41,4 @@ return [
     ],
     "version_order" => "creation"
 ];
+

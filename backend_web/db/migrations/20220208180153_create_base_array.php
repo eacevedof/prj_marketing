@@ -1,28 +1,9 @@
 <?php
 declare(strict_types=1);
-use Phinx\Migration\AbstractMigration;
+use Migrations\AbsMigration;
 
-final class CreateBaseArray extends AbstractMigration
+final class CreateBaseArray extends AbsMigration
 {
-    /*
-     * ``
-`update_platform`
-`update_user`
-`update_date`
-`delete_platform`
-`delete_user`
-`delete_date`
-`cru_csvnote`
-`is_erpsent`
-`is_enabled`
-`i`
-`id`
-`uuid``code_erp`
-`type`
-`id_tosave`
-`description`
-`order_by`
-     * */
     public function up(): void
     {
         $this->table("base_arra", ["collation" => "utf8_general_ci", "id"=> false, "primary_key" => ["id"]])
