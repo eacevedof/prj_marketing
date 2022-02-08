@@ -1,7 +1,7 @@
 <?php
 /*
+ * phinx create CreateBaseArray
  * phinx migrate
- *
  */
 $dir = __DIR__;
 
