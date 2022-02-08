@@ -25,7 +25,7 @@ final class CreateBaseArray extends AbstractMigration
      * */
     public function up(): void
     {
-        $this->table("base_arra", ["collation" => "utf8_general_ci"])
+        $this->table("base_arra", ["collation" => "utf8_general_ci", "id"=> false, "primary_key" => ["id"]])
             ->addColumn("processflag", "string", [
                 "limit" => 5,
                 "default" => null
@@ -39,7 +39,7 @@ final class CreateBaseArray extends AbstractMigration
                 "default" => null
             ])
             ->addColumn("insert_date", "datetime", [
-                "default" => "current_timestamp()",
+                "default" => "CURRENT_TIMESTAMP",
             ])
             ->addColumn("update_platform", "string", [
                 "limit" => 3
@@ -49,7 +49,7 @@ final class CreateBaseArray extends AbstractMigration
                 "default" => null
             ])
             ->addColumn("update_date", "datetime", [
-                "default" => "current_timestamp()",
+                "default" => "CURRENT_TIMESTAMP",
             ])
             ->addColumn("delete_platform", "string", [
                 "limit" => 3
@@ -58,10 +58,24 @@ final class CreateBaseArray extends AbstractMigration
                 "limit" => 15
             ])
             ->addColumn("delete_date", "datetime", [
-                "default" => "current_timestamp()",
+                "default" => "CURRENT_TIMESTAMP",
             ])
             ->addColumn("cru_csvnote", "string", [
                 "limit" => 500
+            ])
+            ->addColumn("is_erpsent", "string", [
+                "limit" => 3,
+                "default" =>0
+            ])
+            ->addColumn("is_enabled", "string", [
+                "limit" => 3,
+                "default" => 1
+            ])
+            ->addColumn("i", "integer", [
+                "limit" => 11
+            ])
+            ->addColumn("id", "integer", [
+                "limit" => 11
             ])
             ->create();
     }
