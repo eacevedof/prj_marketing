@@ -4,6 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateBaseArray extends AbsMigration
 {
+    private string $tablename = "base_array";
     public function up(): void
     {
         $this->_create_table();
@@ -12,7 +13,7 @@ final class CreateBaseArray extends AbsMigration
     
     private function _create_table(): void
     {
-        $table = $this->table("base_arrayx", [
+        $table = $this->table("{$this->tablename}", [
             "collation" => "utf8_general_ci",
             "id"=> false,
             "primary_key" => ["id"]
@@ -68,7 +69,7 @@ final class CreateBaseArray extends AbsMigration
         foreach ($array as $item) {
             list("id"=>$id, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
             $sql = "
-            INSERT INTO base_arrayx (id, `type`, `description`, order_by)
+            INSERT INTO {$this->tablename} (id, `type`, `description`, order_by)
             VALUES($id, '$type', '$description', $orderby)
             ";
             $this->execute($sql);
@@ -83,7 +84,7 @@ final class CreateBaseArray extends AbsMigration
         foreach ($array as $item) {
             list("code_erp"=>$coderp, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
             $sql = "
-            INSERT INTO base_arrayx (code_erp, `type`, `description`, order_by)
+            INSERT INTO {$this->tablename} (code_erp, `type`, `description`, order_by)
             VALUES('$coderp','$type', '$description', $orderby)
             ";
             $this->execute($sql);
