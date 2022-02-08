@@ -6,6 +6,12 @@ final class CreateBaseArray extends AbsMigration
 {
     public function up(): void
     {
+        $this->_create_table();
+        $this->_initial_load();
+    }
+    
+    private function _create_table(): void
+    {
         $table = $this->table("base_array", [
             "collation" => "utf8_general_ci",
             "id"=> false,
@@ -15,8 +21,8 @@ final class CreateBaseArray extends AbsMigration
         $this->add_sysfields($table);
 
         $table->addColumn("id", "integer", [
-                "limit" => 11
-            ])
+            "limit" => 11
+        ])
             ->addColumn("uuid", "string", [
                 "limit" => 50
             ])
@@ -33,9 +39,44 @@ final class CreateBaseArray extends AbsMigration
                 "limit" => 250
             ])
             ->addColumn("order_by", "integer", [
-                "limit" => 5
+                "limit" => 5,
+                "default"=>100
             ])
             ->create();
+    }
+    
+    private function _initial_load(): void
+    {
+        $array = [
+            ["id"=>"1", "type"=>"profile", "description"=>"root", "order_by"=>100],
+            ["id"=>"2", "type"=>"profile", "description"=>"sys admin", "order_by"=>100],
+            ["id"=>"3", "type"=>"profile", "description"=>"business owner", "order_by"=>100],
+            ["id"=>"4", "type"=>"profile", "description"=>"business manager", "order_by"=>100],
+        ];
+
+        foreach ($array as $item) {
+            list($id, $type, $description, $orderby) = $item;
+            $sql = "
+            INSERT INTO base_array (id, type, description, order_by)
+            VALUES($id, '$type', '$description', '$orderby')
+            ";
+            $this->execute($sql);
+        }
+
+        $array = [
+            ["code_erp" => 0, "type"=>"platform", "description"=>"etl", "order_by"=>100],
+            ["code_erp" => 1, "type"=>"platform", "description"=>"web", "order_by"=>100],
+            ["code_erp" => 2, "type"=>"platform", "description"=>"mobile", "order_by"=>100],
+        ];
+
+        foreach ($array as $item) {
+            list($coderp, $type, $description, $orderby) = $item;
+            $sql = "
+            INSERT INTO base_array (code_erp,type, description, order_by)
+            VALUES('$coderp','$type', '$description', '$orderby')
+            ";
+            $this->execute($sql);
+        }
     }
 
     public function down(): void
