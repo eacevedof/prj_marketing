@@ -77,6 +77,24 @@ final class CreateBaseArray extends AbstractMigration
             ->addColumn("id", "integer", [
                 "limit" => 11
             ])
+            ->addColumn("uuid", "string", [
+                "limit" => 50
+            ])
+            ->addColumn("code_erp", "string", [
+                "limit" => 25
+            ])
+            ->addColumn("type", "string", [
+                "limit" => 15
+            ])
+            ->addColumn("id_tosave", "string", [
+                "limit" => 25
+            ])
+            ->addColumn("description", "string", [
+                "limit" => 250
+            ])
+            ->addColumn("description", "integer", [
+                "limit" => 5
+            ])
             ->create();
     }
 
