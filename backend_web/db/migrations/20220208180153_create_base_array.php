@@ -12,7 +12,7 @@ final class CreateBaseArray extends AbsMigration
     
     private function _create_table(): void
     {
-        $table = $this->table("base_array", [
+        $table = $this->table("base_arrayx", [
             "collation" => "utf8_general_ci",
             "id"=> false,
             "primary_key" => ["id"]
@@ -23,26 +23,31 @@ final class CreateBaseArray extends AbsMigration
         $table->addColumn("id", "integer", [
             "limit" => 11
         ])
-            ->addColumn("uuid", "string", [
-                "limit" => 50
-            ])
-            ->addColumn("code_erp", "string", [
-                "limit" => 25
-            ])
-            ->addColumn("type", "string", [
-                "limit" => 15
-            ])
-            ->addColumn("id_tosave", "string", [
-                "limit" => 25
-            ])
-            ->addColumn("description", "string", [
-                "limit" => 250
-            ])
-            ->addColumn("order_by", "integer", [
-                "limit" => 5,
-                "default"=>100
-            ])
-            ->create();
+        ->addColumn("uuid", "string", [
+            "limit" => 50
+        ])
+        ->addColumn("code_erp", "string", [
+            "limit" => 25
+        ])
+        ->addColumn("type", "string", [
+            "limit" => 15
+        ])
+        ->addColumn("id_tosave", "string", [
+            "limit" => 25
+        ])
+        ->addColumn("description", "string", [
+            "limit" => 250
+        ])
+        ->addColumn("order_by", "integer", [
+            "limit" => 5,
+            "default"=>100
+        ])
+        ->create();
+
+        $table
+            ->changeColumn("id", "integer", ["identity" => true])
+            ->save()
+        ;
     }
     
     private function _initial_load(): void
@@ -55,10 +60,10 @@ final class CreateBaseArray extends AbsMigration
         ];
 
         foreach ($array as $item) {
-            list($id, $type, $description, $orderby) = $item;
+            list("id"=>$id, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
             $sql = "
-            INSERT INTO base_array (id, type, description, order_by)
-            VALUES($id, '$type', '$description', '$orderby')
+            INSERT INTO base_array (id, `type`, `description`, order_by)
+            VALUES($id, '$type', '$description', $orderby)
             ";
             $this->execute($sql);
         }
@@ -70,10 +75,10 @@ final class CreateBaseArray extends AbsMigration
         ];
 
         foreach ($array as $item) {
-            list($coderp, $type, $description, $orderby) = $item;
+            list("code_erp"=>$coderp, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
             $sql = "
-            INSERT INTO base_array (code_erp,type, description, order_by)
-            VALUES('$coderp','$type', '$description', '$orderby')
+            INSERT INTO base_array (code_erp, `type`, `description`, order_by)
+            VALUES('$coderp','$type', '$description', $orderby)
             ";
             $this->execute($sql);
         }
