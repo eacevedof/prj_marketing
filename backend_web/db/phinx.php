@@ -1,4 +1,8 @@
 <?php
+/*
+ * phinx migrate
+ *
+ */
 $dir = __DIR__;
 
 include_once "$dir/migrations/AbsMigration.php";
