@@ -23,7 +23,8 @@ final class CreateBaseArray extends AbsMigration
         $this->add_sysfields($table);
 
         $table->addColumn("id", "integer", [
-            "limit" => 11
+            "limit" => 11,
+            "identity" => true,
         ])
         ->addColumn("uuid", "string", [
             "limit" => 50,
@@ -51,11 +52,6 @@ final class CreateBaseArray extends AbsMigration
             "null" => true,
         ])
         ->create();
-
-        $table
-            ->changeColumn("id", "integer", ["identity" => true])
-            ->save()
-        ;
     }
     
     private function _initial_load(): void
