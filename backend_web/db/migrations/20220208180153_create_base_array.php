@@ -41,12 +41,27 @@ final class CreateBaseArray extends AbstractMigration
             ->addColumn("insert_date", "datetime", [
                 "default" => "current_timestamp()",
             ])
+            ->addColumn("update_platform", "string", [
+                "limit" => 3
+            ])
             ->addColumn("update_user", "string", [
                 "limit" => 15,
                 "default" => null
             ])
             ->addColumn("update_date", "datetime", [
                 "default" => "current_timestamp()",
+            ])
+            ->addColumn("delete_platform", "string", [
+                "limit" => 3
+            ])
+            ->addColumn("delete_user", "string", [
+                "limit" => 15
+            ])
+            ->addColumn("delete_date", "datetime", [
+                "default" => "current_timestamp()",
+            ])
+            ->addColumn("cru_csvnote", "string", [
+                "limit" => 500
             ])
             ->create();
     }
