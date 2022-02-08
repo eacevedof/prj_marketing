@@ -24,23 +24,29 @@ final class CreateBaseArray extends AbsMigration
             "limit" => 11
         ])
         ->addColumn("uuid", "string", [
-            "limit" => 50
+            "limit" => 50,
+            "null" => true,
         ])
         ->addColumn("code_erp", "string", [
-            "limit" => 25
+            "limit" => 25,
+            "null" => true,
         ])
         ->addColumn("type", "string", [
-            "limit" => 15
+            "limit" => 15,
+            "null" => true,
         ])
         ->addColumn("id_tosave", "string", [
-            "limit" => 25
+            "limit" => 25,
+            "null" => true,
         ])
         ->addColumn("description", "string", [
-            "limit" => 250
+            "limit" => 250,
+            "null" => true,
         ])
         ->addColumn("order_by", "integer", [
             "limit" => 5,
-            "default"=>100
+            "default"=>100,
+            "null" => true,
         ])
         ->create();
 
