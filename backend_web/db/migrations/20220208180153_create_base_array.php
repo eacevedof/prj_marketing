@@ -6,56 +6,11 @@ final class CreateBaseArray extends AbsMigration
 {
     public function up(): void
     {
-        $this->table("base_arra", ["collation" => "utf8_general_ci", "id"=> false, "primary_key" => ["id"]])
-            ->addColumn("processflag", "string", [
-                "limit" => 5,
-                "default" => null
-            ])
-            ->addColumn("insert_platform", "string", [
-                "limit" => 3,
-                "default" => 1
-            ])
-            ->addColumn("insert_user", "string", [
-                "limit" => 15,
-                "default" => null
-            ])
-            ->addColumn("insert_date", "datetime", [
-                "default" => "CURRENT_TIMESTAMP",
-            ])
-            ->addColumn("update_platform", "string", [
-                "limit" => 3
-            ])
-            ->addColumn("update_user", "string", [
-                "limit" => 15,
-                "default" => null
-            ])
-            ->addColumn("update_date", "datetime", [
-                "default" => "CURRENT_TIMESTAMP",
-            ])
-            ->addColumn("delete_platform", "string", [
-                "limit" => 3
-            ])
-            ->addColumn("delete_user", "string", [
-                "limit" => 15
-            ])
-            ->addColumn("delete_date", "datetime", [
-                "default" => "CURRENT_TIMESTAMP",
-            ])
-            ->addColumn("cru_csvnote", "string", [
-                "limit" => 500
-            ])
-            ->addColumn("is_erpsent", "string", [
-                "limit" => 3,
-                "default" =>0
-            ])
-            ->addColumn("is_enabled", "string", [
-                "limit" => 3,
-                "default" => 1
-            ])
-            ->addColumn("i", "integer", [
-                "limit" => 11
-            ])
-            ->addColumn("id", "integer", [
+        $table = $this->table("base_arra", ["collation" => "utf8_general_ci", "id"=> false, "primary_key" => ["id"]]);
+
+        $this->add_sysfields($table);
+
+        $table->addColumn("id", "integer", [
                 "limit" => 11
             ])
             ->addColumn("uuid", "string", [
