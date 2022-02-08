@@ -50,10 +50,12 @@ abstract class AbsMigration extends AbstractMigration
         ->addColumn("delete_user", "string", [
             "limit" => 15,
             "default" => null,
+            "null" => true,
         ])
         ->addColumn("delete_date", "datetime", [
             "null" => true,
             "default" => null,
+            "null" => true,
         ])
         ->addColumn("cru_csvnote", "string", [
             "limit" => 500,
