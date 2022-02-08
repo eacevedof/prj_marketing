@@ -6,7 +6,7 @@ final class CreateBaseArray extends AbsMigration
 {
     public function up(): void
     {
-        $table = $this->table("base_arra", [
+        $table = $this->table("base_array", [
             "collation" => "utf8_general_ci",
             "id"=> false,
             "primary_key" => ["id"]
