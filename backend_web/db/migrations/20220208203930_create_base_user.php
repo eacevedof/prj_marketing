@@ -124,7 +124,7 @@ final class CreateBaseUser extends AbsMigration
             "null" => true,
             "default" => true,
         ])
-        ->addColumn("is_notificable", "string", [
+        ->addColumn("is_notifiable", "string", [
             "limit" => 4,
             "null" => true,
             "default" => true,

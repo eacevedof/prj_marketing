@@ -18,7 +18,7 @@ INSERT INTO base_user
  insert_date,
  insert_platform,
  insert_user,
- is_notificable,
+ is_notifiable,
  secret,
  phone,
  uuid
