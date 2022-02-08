@@ -92,7 +92,7 @@ final class CreateBaseArray extends AbstractMigration
             ->addColumn("description", "string", [
                 "limit" => 250
             ])
-            ->addColumn("description", "integer", [
+            ->addColumn("order_by", "integer", [
                 "limit" => 5
             ])
             ->create();
