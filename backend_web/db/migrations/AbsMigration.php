@@ -78,4 +78,56 @@ abstract class AbsMigration extends AbstractMigration
             "null" => true,
         ]);
     }
+
+    protected function add_sysfields_min(Table $table): void
+    {
+        $table->addColumn("processflag", "string", [
+            "limit" => 5,
+            "default" => null,
+            "null" => true,
+        ])
+        ->addColumn("insert_platform", "string", [
+            "limit" => 3,
+            "default" => 1,
+            "null" => true,
+        ])
+        ->addColumn("insert_user", "string", [
+            "limit" => 15,
+            "default" => null,
+            "null" => true,
+        ])
+        ->addColumn("insert_date", "datetime", [
+            "null" => true,
+            "default" => "CURRENT_TIMESTAMP",
+        ])
+        ->addColumn("update_platform", "string", [
+            "limit" => 3,
+            "default" => null,
+            "null" => true,
+        ])
+        ->addColumn("update_user", "string", [
+            "limit" => 15,
+            "default" => null,
+            "null" => true,
+        ])
+        ->addColumn("update_date", "datetime", [
+            "default" => "CURRENT_TIMESTAMP",
+            "null" => true,
+        ])
+        ->addColumn("delete_platform", "string", [
+            "limit" => 3,
+            "default" => null,
+            "null" => true,
+        ])
+        ->addColumn("delete_user", "string", [
+            "limit" => 15,
+            "default" => null,
+            "null" => true,
+        ])
+        ->addColumn("delete_date", "datetime", [
+            "null" => true,
+            "default" => null,
+            "null" => true,
+        ]);
+    }
 }
