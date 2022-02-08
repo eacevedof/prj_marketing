@@ -62,7 +62,7 @@ final class CreateBaseArray extends AbsMigration
         foreach ($array as $item) {
             list("id"=>$id, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
             $sql = "
-            INSERT INTO base_array (id, `type`, `description`, order_by)
+            INSERT INTO base_arrayx (id, `type`, `description`, order_by)
             VALUES($id, '$type', '$description', $orderby)
             ";
             $this->execute($sql);
@@ -77,7 +77,7 @@ final class CreateBaseArray extends AbsMigration
         foreach ($array as $item) {
             list("code_erp"=>$coderp, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
             $sql = "
-            INSERT INTO base_array (code_erp, `type`, `description`, order_by)
+            INSERT INTO base_arrayx (code_erp, `type`, `description`, order_by)
             VALUES('$coderp','$type', '$description', $orderby)
             ";
             $this->execute($sql);
