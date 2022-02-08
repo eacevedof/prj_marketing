@@ -135,19 +135,27 @@ final class CreateBaseUser extends AbsMigration
     private function _initial_load(): void
     {
         $array = [
-            ["id"=>"1", "type"=>"profile", "description"=>"root", "order_by"=>100],
-            ["id"=>"2", "type"=>"profile", "description"=>"sys admin", "order_by"=>100],
-            ["id"=>"3", "type"=>"profile", "description"=>"business owner", "order_by"=>100],
-            ["id"=>"4", "type"=>"profile", "description"=>"business manager", "order_by"=>100],
+            [
+                //secret: eaf
+                "id"=>"1", "email"=>"root@email.com", "description"=>"Root One", "secret"=>"$2y$10\$BEClm.fzRU2shGk5nMLGRe4f0JnkXofGMBkLZ6sC86f8/aeetCMhC",
+                "fullname" => "Root One", "uuid"=>"U00001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id_language" => "2", "id_profile" => "1",
+            ],
         ];
 
         foreach ($array as $item) {
-            list("id"=>$id, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
+            list(
+                "id"=>$id, "email"=>$email, "description"=>$description, "secret"=>$secret, "fullname"=>$fullname,
+                "uuid"=>$uuid, "id_gender"=>$idgender, "id_nationality"=>$idnationality, "id_country"=>$idcountry,
+                "id_language"=>$idlanguage, "id_profile"=>$idprofile
+            ) = $item;
+
             $sql = "
-            INSERT INTO {$this->tablename} (id, `type`, `description`, order_by)
-            VALUES($id, '$type', '$description', $orderby)
+            INSERT INTO {$this->tablename} 
+            (id, `email`,`description`, secret, fullname, uuid, id_gender, id_nationality, id_country, id_language, id_profile)
+            VALUES($id, '$email', '$description', '$secret','$fullname','$uuid','$idgender','$idnationality','$idcountry','$idlanguage','$idprofile')
             ";
-            //$this->execute($sql);
+            $this->execute($sql);
         }
     }
 
