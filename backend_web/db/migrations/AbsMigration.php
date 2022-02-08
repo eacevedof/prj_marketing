@@ -72,7 +72,7 @@ abstract class AbsMigration extends AbstractMigration
         ])
         ->addColumn("i", "integer", [
             "limit" => 11,
-            "dfault"=> null,
+            "default"=> null,
             "null" => true,
         ]);
     }
