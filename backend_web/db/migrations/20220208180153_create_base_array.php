@@ -4,7 +4,8 @@ use Migrations\AbsMigration;
 
 final class CreateBaseArray extends AbsMigration
 {
-    private string $tablename = "base_arrayx";
+    private string $tablename = "base_array";
+
     public function up(): void
     {
         $this->_create_table();
