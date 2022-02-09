@@ -40,22 +40,22 @@ final class CreateAppIpUntracked extends AbsMigration
         ->addColumn("country", "string", [
             "limit" => 50,
             "null" => true,
-            "default" => true,
+            "default" => null,
         ])
         ->addColumn("whois", "string", [
             "limit" => 200,
             "null" => true,
-            "default" => true,
+            "default" => null,
         ])
         ->addColumn("comment", "string", [
             "limit" => 250,
             "null" => true,
-            "default" => true,
+            "default" => null,
         ])
         ->addColumn("is_enabled", "integer", [
             "limit" => 4,
-            "default"=> 1,
             "null"=>true,
+            "default"=> 1,
         ])
         ->create();
     }
