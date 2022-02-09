@@ -54,7 +54,7 @@ final class CreateAppIpUntracked extends AbsMigration
         ])
         ->addColumn("is_enabled", "integer", [
             "limit" => 4,
-            "default"=>1,
+            "default"=> 1,
             "null"=>true,
         ])
         ->create();
