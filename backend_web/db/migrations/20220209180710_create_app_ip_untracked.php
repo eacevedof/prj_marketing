@@ -2,7 +2,7 @@
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
-final class AppIpUntracked extends AbsMigration
+final class CreateAppIpUntracked extends AbsMigration
 {
     private string $tablename = "app_ip_untrackedx";
 
