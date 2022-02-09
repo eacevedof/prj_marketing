@@ -24,56 +24,44 @@ final class AppIpUntracked extends AbsMigration
             "limit" => 11,
             "identity" => true,
         ])
-        ->addColumn("uuid", "string", [
-            "limit" => 50,
+        ->addColumn("insert_date", "datetime", [
             "null" => true,
+            "default" => "CURRENT_TIMESTAMP",
         ])
-        ->addColumn("code_erp", "string", [
-            "limit" => 25,
+        ->addColumn("update_date", "datetime", [
+            "default" => "CURRENT_TIMESTAMP",
             "null" => true,
+            "update"=> "CURRENT_TIMESTAMP"
         ])
-        ->addColumn("type", "string", [
-            "limit" => 15,
-            "null" => true,
-        ])
-        ->addColumn("id_tosave", "string", [
-            "limit" => 25,
-            "null" => true,
-        ])
-        ->addColumn("description", "string", [
-            "limit" => 250,
-            "null" => true,
-        ])
-        ->addColumn("id_owner", "integer", [
-            "limit" => 11,
-            "default"=>-1,
+        ->addColumn("remote_ip", "string", [
+            "limit" => 100,
             "null" => false,
         ])
-        ->addColumn("order_by", "integer", [
-            "limit" => 5,
-            "default"=>100,
+        ->addColumn("country", "string", [
+            "limit" => 50,
             "null" => true,
+            "default" => true,
+        ])
+        ->addColumn("whois", "string", [
+            "limit" => 200,
+            "null" => true,
+            "default" => true,
+        ])
+        ->addColumn("comment", "string", [
+            "limit" => 250,
+            "null" => true,
+            "default" => true,
+        ])
+        ->addColumn("is_enabled", "integer", [
+            "limit" => 4,
+            "default"=>1,
+            "null"=>true,
         ])
         ->create();
     }
 
     private function _initial_load(): void
     {
-        $array = [
-            ["code_erp" => "en", "type"=>"language", "description"=>"English"],
-            ["code_erp" => "es", "type"=>"language", "description"=>"Spanish"],
-            ["code_erp" => "nl", "type"=>"language", "description"=>"Dutch"],
-            ["code_erp" => "pap", "type"=>"language", "description"=>"Papiaments"],
-        ];
-
-        foreach ($array as $item) {
-            list("code_erp"=>$coderp, "type"=>$type, "description"=>$description) = $item;
-            $sql = "
-            INSERT INTO {$this->tablename} (code_erp, `type`, `description`)
-            VALUES('$coderp','$type', '$description')
-            ";
-            $this->execute($sql);
-        }
     }
 
     public function down(): void
