@@ -1,5 +1,6 @@
 <?php
 /*
+ * https://book.cakephp.org/phinx/0/en/migrations.html
  * phinx create CreateBaseArray
  * phinx migrate
  */

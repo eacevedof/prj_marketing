@@ -90,6 +90,6 @@ final class CreateBaseArray extends AbsMigration
 
     public function down(): void
     {
-
+        $this->table($this->tablename)->drop()->save();
     }
 }

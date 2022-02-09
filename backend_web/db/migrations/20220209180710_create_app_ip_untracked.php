@@ -62,10 +62,11 @@ final class CreateAppIpUntracked extends AbsMigration
 
     private function _initial_load(): void
     {
+
     }
 
     public function down(): void
     {
-
+        $this->table($this->tablename)->drop()->save();
     }
 }
