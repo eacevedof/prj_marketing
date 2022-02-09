@@ -41,6 +41,7 @@ abstract class AbsMigration extends AbstractMigration
         ->addColumn("update_date", "datetime", [
             "default" => "CURRENT_TIMESTAMP",
             "null" => true,
+            "update"=> "CURRENT_TIMESTAMP"
         ])
         ->addColumn("delete_platform", "string", [
             "limit" => 3,
