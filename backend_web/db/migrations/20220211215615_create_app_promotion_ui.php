@@ -56,17 +56,87 @@ final class CreateAppPromotionUi extends AbsMigration
             "default" => 0,
         ])
         ->addColumn("pos_name2", "integer", [
-            "limit" => 2,
+            "limit" => 3,
             "null" => false,
             "default" => 100,
         ])
-        ->addColumn("input_name2", "integer", [
+        ->addColumn("input_language", "integer", [
             "limit" => 2,
             "null" => false,
             "default" => 0,
         ])
-        ->addColumn("pos_name2", "integer", [
+        ->addColumn("pos_language", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_language", "integer", [
             "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_language", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_country", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_country", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_country", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_phone1", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_phone1", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_birthdate", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_birthdate", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_birthdate", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_gender", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_gender", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_address", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_address", "integer", [
+            "limit" => 3,
             "null" => false,
             "default" => 100,
         ])
