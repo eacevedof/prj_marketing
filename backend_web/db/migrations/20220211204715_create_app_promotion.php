@@ -58,74 +58,72 @@ final class CreateAppPromotionData extends AbsMigration
             "limit" => 2000,
             "null" => false,
         ])
-
-`bgcolor``````````````````````````tags``notes`
-            ->addColumn("bgcolor", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("bgimage_xs", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("bgimage_sm", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("bgimage_md", "string", [
-                "limit" => 10,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("bgimage_lg", "string", [
-                "limit" => 10,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("bgimage_xl", "string", [
-                "limit" => 10,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("bgimage_xxl", "string", [
-                "limit" => 10,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("invested", "string", [
-                "limit" => 10,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("returned", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("drawable", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("cumulative", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("tags", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->addColumn("notes", "string", [
-                "limit" => 100,
-                "null" => true,
-                "default" => null,
-            ])
-            ->create();
+        ->addColumn("bgcolor", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("bgimage_xs", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("bgimage_sm", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("bgimage_md", "string", [
+            "limit" => 10,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("bgimage_lg", "string", [
+            "limit" => 10,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("bgimage_xl", "string", [
+            "limit" => 10,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("bgimage_xxl", "string", [
+            "limit" => 10,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("invested", "string", [
+            "limit" => 10,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("returned", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("drawable", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("cumulative", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("tags", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("notes", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
+        ->create();
     }
 
 
