@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateAppPromotion extends AbsMigration
 {
-    private string $tablename = "app_business_datax";
+    private string $tablename = "app_promotionx";
 
     public function up(): void
     {
