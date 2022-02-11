@@ -22,113 +22,53 @@ final class CreateAppPromotionUi extends AbsMigration
 
         $this->add_sysfields_min($table);
 
-        $table->addColumn("id", "integer", [
+        $this->add_fixed_fields($table);
+
+        $table->addColumn("id_promotion", "integer", [
             "limit" => 11,
-            "identity" => true,
-        ])
-        ->addColumn("uuid", "string", [
-            "limit" => 50,
-            "null" => true,
-        ])
-        ->addColumn("id_owner", "integer", [
-            "limit" => 11,
-            "null" => false
-        ])
-        ->addColumn("code_erp", "string", [
-            "limit" => 25,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("description", "string", [
-            "limit" => 250,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("slug", "string", [
-            "limit" => 250,
             "null" => false,
         ])
-        ->addColumn("date_from", "datetime", [
-            "null" => false,
-        ])
-        ->addColumn("date_to", "datetime", [
-            "null" => false,
-        ])
-        ->addColumn("content", "string", [
-            "limit" => 2000,
-            "null" => false,
-        ])
-        ->addColumn("bgcolor", "string", [
-            "limit" => 10,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("bgimage_xs", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("bgimage_sm", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("bgimage_md", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("bgimage_lg", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("bgimage_xl", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("bgimage_xxl", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("invested", "decimal", [
-            "null" => true,
-            "default" => 0,
-            "precision" => 10,
-            "scale" => 3
-        ])
-        ->addColumn("returned", "decimal", [
-            "null" => true,
-            "default" => 0,
-            "precision" => 10,
-            "scale" => 3
-        ])
-        ->addColumn("max_confirmed", "integer", [
-            "limit" => 4,
-            "null" => false,
-            "default" => 0,
-        ])
-        ->addColumn("is_drawable", "integer", [
+        ->addColumn("input_email", "integer", [
             "limit" => 2,
-            "null" => true,
-            "default" => 0,
+            "null" => false,
+            "default" => 1,
+            "comment" => "se mostrara el campo de email"
         ])
-        ->addColumn("is_cumulative", "integer", [
+        ->addColumn("pos_email", "integer", [
             "limit" => 2,
-            "null" => true,
+            "null" => false,
+            "default" => 100,
+            "comment" => "la posición required?"
+        ])
+        ->addColumn("input_name1", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 1,
+        ])
+        ->addColumn("pos_name1", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_name2", "integer", [
+            "limit" => 2,
+            "null" => false,
             "default" => 0,
         ])
-        ->addColumn("tags", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
+        ->addColumn("pos_name2", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 100,
         ])
-        ->addColumn("notes", "string", [
-            "limit" => 300,
-            "null" => true,
-            "default" => null,
+        ->addColumn("input_name2", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_name2", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 100,
         ])
         ->create();
     }
