@@ -2,7 +2,7 @@
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
-final class CreateAppPromotionData extends AbsMigration
+final class CreateAppPromotion extends AbsMigration
 {
     private string $tablename = "app_business_datax";
 
