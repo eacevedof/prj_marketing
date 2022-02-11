@@ -20,7 +20,7 @@ final class CreateAppPromotion extends AbsMigration
             "primary_key" => ["id"]
         ]);
 
-        $this->add_sysfields_min($table);
+        $this->add_sysfields($table);
 
         $table->addColumn("id", "integer", [
             "limit" => 11,
