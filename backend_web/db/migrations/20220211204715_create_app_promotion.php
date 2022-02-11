@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateAppPromotionData extends AbsMigration
 {
-    private string $tablename = "app_business_data";
+    private string $tablename = "app_business_datax";
 
     public function up(): void
     {
@@ -52,8 +52,8 @@ final class CreateAppPromotionData extends AbsMigration
             "null" => false,
         ])
         ->addColumn("date_to", "datetime", [
-                "null" => false,
-            ])
+            "null" => false,
+        ])
         ->addColumn("content", "string", [
             "limit" => 2000,
             "null" => false,
