@@ -131,4 +131,31 @@ abstract class AbsMigration extends AbstractMigration
             "null" => true,
         ]);
     }
+
+    protected function add_fixed_fields(Table $table): void
+    {
+        $table->addColumn("id", "integer", [
+            "limit" => 11,
+            "identity" => true,
+        ])
+        ->addColumn("uuid", "string", [
+            "limit" => 50,
+            "null" => true,
+        ])
+        ->addColumn("id_owner", "integer", [
+            "limit" => 11,
+            "null" => false
+        ])
+        ->addColumn("code_erp", "string", [
+            "limit" => 25,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("description", "string", [
+            "limit" => 250,
+            "null" => true,
+            "default" => null,
+        ]);
+    }
+
 }
