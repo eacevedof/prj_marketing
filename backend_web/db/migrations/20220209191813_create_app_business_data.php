@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateAppBusinessData extends AbsMigration
 {
-    private string $tablename = "app_business_data";
+    private string $tablename = "app_business_datax";
 
     public function up(): void
     {
@@ -69,7 +69,7 @@ final class CreateAppBusinessData extends AbsMigration
             "null" => true,
             "default" => null,
         ])
-        ->addColumn("head_bgcolor", "string", [
+        ->addColumn("body_bgcolor", "string", [
             "limit" => 10,
             "null" => true,
             "default" => null,

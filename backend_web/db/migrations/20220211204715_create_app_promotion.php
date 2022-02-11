@@ -99,7 +99,7 @@ final class CreateAppPromotion extends AbsMigration
             "precision" => 10,
             "scale" => 3
         ])
-        ->addColumn("returned", "number", [
+        ->addColumn("returned", "decimal", [
             "null" => true,
             "default" => 0,
             "precision" => 10,
@@ -110,12 +110,12 @@ final class CreateAppPromotion extends AbsMigration
             "null" => false,
             "default" => 0,
         ])
-        ->addColumn("is_drawable", "number", [
+        ->addColumn("is_drawable", "integer", [
             "limit" => 2,
             "null" => true,
             "default" => 0,
         ])
-        ->addColumn("is_cumulative", "string", [
+        ->addColumn("is_cumulative", "integer", [
             "limit" => 2,
             "null" => true,
             "default" => 0,
