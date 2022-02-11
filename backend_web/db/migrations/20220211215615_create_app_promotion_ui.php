@@ -35,7 +35,7 @@ final class CreateAppPromotionUi extends AbsMigration
             "comment" => "se mostrara el campo de email"
         ])
         ->addColumn("pos_email", "integer", [
-            "limit" => 2,
+            "limit" => 3,
             "null" => false,
             "default" => 100,
             "comment" => "la posición required?"
@@ -46,7 +46,7 @@ final class CreateAppPromotionUi extends AbsMigration
             "default" => 1,
         ])
         ->addColumn("pos_name1", "integer", [
-            "limit" => 2,
+            "limit" => 3,
             "null" => false,
             "default" => 100,
         ])
@@ -56,16 +56,6 @@ final class CreateAppPromotionUi extends AbsMigration
             "default" => 0,
         ])
         ->addColumn("pos_name2", "integer", [
-            "limit" => 3,
-            "null" => false,
-            "default" => 100,
-        ])
-        ->addColumn("input_language", "integer", [
-            "limit" => 2,
-            "null" => false,
-            "default" => 0,
-        ])
-        ->addColumn("pos_language", "integer", [
             "limit" => 3,
             "null" => false,
             "default" => 100,
@@ -90,22 +80,12 @@ final class CreateAppPromotionUi extends AbsMigration
             "null" => false,
             "default" => 100,
         ])
-        ->addColumn("input_country", "integer", [
-            "limit" => 2,
-            "null" => false,
-            "default" => 0,
-        ])
-        ->addColumn("pos_phone1", "integer", [
-            "limit" => 3,
-            "null" => false,
-            "default" => 100,
-        ])
         ->addColumn("input_phone1", "integer", [
             "limit" => 2,
             "null" => false,
             "default" => 0,
         ])
-        ->addColumn("pos_birthdate", "integer", [
+        ->addColumn("pos_phone1", "integer", [
             "limit" => 3,
             "null" => false,
             "default" => 100,
