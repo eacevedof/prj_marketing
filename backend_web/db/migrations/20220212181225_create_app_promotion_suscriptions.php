@@ -2,9 +2,9 @@
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
-final class CreateAppPromotionSuscriptions extends AbsMigration
+final class CreateAppPromotionSubscription extends AbsMigration
 {
-    private string $tablename = "app_promotion_suscriptionsx";
+    private string $tablename = "app_promotion_subscriptionx";
 
     public function up(): void
     {
