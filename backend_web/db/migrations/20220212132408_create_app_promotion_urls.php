@@ -60,7 +60,6 @@ final class CreateAppPromotionUrls extends AbsMigration
         ->create();
     }
 
-
     private function _initial_load(): void
     {
     }
