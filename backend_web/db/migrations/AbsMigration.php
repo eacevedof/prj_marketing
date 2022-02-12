@@ -13,20 +13,24 @@ abstract class AbsMigration extends AbstractMigration
             "limit" => 5,
             "default" => null,
             "null" => true,
+            "comment" => "en procesos etl indica estados de preprocesamiento"
         ])
         ->addColumn("insert_platform", "string", [
             "limit" => 3,
             "default" => 1,
             "null" => true,
+            "comment" => "desde que plataforma se ha realizado la creacion, mobile, web, api",
         ])
         ->addColumn("insert_user", "string", [
             "limit" => 15,
             "default" => null,
             "null" => true,
+            "comment" => "creador (no necesariamente en base_user) puede ser un proceso ETL",
         ])
         ->addColumn("insert_date", "datetime", [
             "null" => true,
             "default" => "CURRENT_TIMESTAMP",
+            "comment" => "datetime de la creacion",
         ])
         ->addColumn("update_platform", "string", [
             "limit" => 3,
@@ -67,16 +71,19 @@ abstract class AbsMigration extends AbstractMigration
             "limit" => 3,
             "default" =>0,
             "null" => true,
+            "comment" => "en procesos etl indica si se ha exportado"
         ])
         ->addColumn("is_enabled", "string", [
             "limit" => 3,
             "null" => true,
-            "default" => 1
+            "default" => 1,
+            "comment" => "bloquea por completo el archivo"
         ])
         ->addColumn("i", "integer", [
             "limit" => 11,
             "default"=> null,
             "null" => true,
+            "comment" => "en procesos de etl con disp offline el autoid en la máquina"
         ]);
     }
 
@@ -86,20 +93,24 @@ abstract class AbsMigration extends AbstractMigration
             "limit" => 5,
             "default" => null,
             "null" => true,
+            "comment" => "en procesos etl indica estados de preprocesamiento"
         ])
         ->addColumn("insert_platform", "string", [
             "limit" => 3,
             "default" => 1,
             "null" => true,
+            "comment" => "desde que plataforma se ha realizado la creacion, mobile, web, api",
         ])
         ->addColumn("insert_user", "string", [
             "limit" => 15,
             "default" => null,
             "null" => true,
+            "comment" => "creador (no necesariamente en base_user) puede ser un proceso ETL",
         ])
         ->addColumn("insert_date", "datetime", [
             "null" => true,
             "default" => "CURRENT_TIMESTAMP",
+            "comment" => "datetime de la creacion",
         ])
         ->addColumn("update_platform", "string", [
             "limit" => 3,
