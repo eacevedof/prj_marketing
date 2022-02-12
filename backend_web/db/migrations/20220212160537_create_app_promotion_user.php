@@ -30,14 +30,14 @@ final class CreateAppPromotionUser extends AbsMigration
         ])
         ->addColumn("id_language", "integer", [
             "limit" => 11,
-            "null" => false,
-            "default" => 1,
+            "null" => true,
+            "default" => null,
             "comment" => "app_array.type='language' 1: english, 2:spanish",
         ])
         ->addColumn("id_country", "integer", [
             "limit" => 11,
-            "null" => false,
-            "default" => 1,
+            "null" => true,
+            "default" => null,
             "comment" => "app_array.type='country'",
         ])
         ->addColumn("phone1", "string", [
