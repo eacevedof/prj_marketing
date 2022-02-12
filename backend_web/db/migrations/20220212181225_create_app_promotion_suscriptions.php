@@ -48,6 +48,10 @@ final class CreateAppPromotionSuscriptions extends AbsMigration
             "limit" => 15,
             "null" => false
         ])
+        ->addColumn("exec_user", "integer", [
+            "null" => true,
+            "default" => null,
+        ])
         ->addColumn("subscription_status", "integer", [
             "limit" => 2,
             "null" => false,
