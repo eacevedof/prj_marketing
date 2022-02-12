@@ -45,17 +45,36 @@ final class CreateAppPromotionUser extends AbsMigration
             "null" => true,
             "default" => null,
         ])
-        ->addColumn("notes", "string", [
-            "limit" => 300,
+        ->addColumn("email", "string", [
+            "limit" => 100,
             "null" => true,
             "default" => null,
-            "comment" => "notas relevantes, por ejemplo, hay que pasar el token=xxx"
         ])
-        ->addColumn("is_active", "integer", [
+        ->addColumn("birthdate", "datetime", [
+            "limit" => 20,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("name1", "string", [
+            "limit" => 15,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("name2", "string", [
+            "limit" => 15,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("id_gender", "integer", [
             "limit" => 2,
             "null" => false,
             "default" => 1,
-            "comment" => "para el futuro, indicará si hay que desactivar capturas desde esa publicacion"
+            "comment" => "app_array.type='gender', id_tosave:0: female, 1: male, 2:neutral",
+        ])
+        ->addColumn("address", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
         ])
         ->create();
     }
