@@ -28,7 +28,7 @@ final class CreateAppPromotionSuscriptions extends AbsMigration
             "limit" => 11,
             "null" => false,
         ])
-        $table->addColumn("id_promouser", "integer", [
+        ->addColumn("id_promouser", "integer", [
             "limit" => 11,
             "null" => false,
         ])
@@ -44,40 +44,15 @@ final class CreateAppPromotionSuscriptions extends AbsMigration
             "null" => false,
             "comment" => "fecha-hora en la que se ejecuta",
         ])
-        ->addColumn("phone1", "string", [
-            "limit" => 20,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("email", "string", [
-            "limit" => 100,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("birthdate", "datetime", [
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("name1", "string", [
+        ->addColumn("code_execution", "string", [
             "limit" => 15,
-            "null" => true,
-            "default" => null,
+            "null" => false
         ])
-        ->addColumn("name2", "string", [
-            "limit" => 15,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("id_gender", "integer", [
+        ->addColumn("subscription_status", "integer", [
             "limit" => 2,
             "null" => false,
             "default" => 1,
-            "comment" => "app_array.type='gender', id_tosave:0: female, 1: male, 2:neutral",
-        ])
-        ->addColumn("address", "string", [
-            "limit" => 100,
-            "null" => true,
-            "default" => null,
+            "comment" => "0:subscribed,1:confirmed,2:executed"
         ])
         ->create();
     }
