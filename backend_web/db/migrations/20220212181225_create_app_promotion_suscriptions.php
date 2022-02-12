@@ -37,11 +37,13 @@ final class CreateAppPromotionSuscriptions extends AbsMigration
             "comment" => "fecha de suscripción",
         ])
         ->addColumn("date_confirm", "datetime", [
-            "null" => false,
+            "null" => true,
+            "default" => null,
             "comment" => "fecha-hora en la que se confirma",
         ])
         ->addColumn("date_execution", "datetime", [
-            "null" => false,
+            "null" => true,
+            "default" => null,
             "comment" => "fecha-hora en la que se ejecuta",
         ])
         ->addColumn("code_execution", "string", [
@@ -52,11 +54,21 @@ final class CreateAppPromotionSuscriptions extends AbsMigration
             "null" => true,
             "default" => null,
         ])
-        ->addColumn("subscription_status", "integer", [
+        ->addColumn("subs_status", "integer", [
             "limit" => 2,
             "null" => false,
             "default" => 1,
             "comment" => "0:subscribed,1:confirmed,2:executed"
+        ])
+        ->addColumn("remote_ip", "string", [
+            "limit" => 15,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("notes", "string", [
+            "limit" => 300,
+            "null" => true,
+            "default" => null,
         ])
         ->create();
     }
