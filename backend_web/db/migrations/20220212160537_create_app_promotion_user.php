@@ -40,11 +40,10 @@ final class CreateAppPromotionUser extends AbsMigration
             "default" => 1,
             "comment" => "app_array.type='country'",
         ])
-        ->addColumn("url_promotion", "string", [
-            "limit" => 1000,
+        ->addColumn("phone1", "string", [
+            "limit" => 20,
             "null" => true,
             "default" => null,
-            "comment" => "la url de la promoción en la red social"
         ])
         ->addColumn("notes", "string", [
             "limit" => 300,
