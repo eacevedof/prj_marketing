@@ -1,4 +1,5 @@
 ### To-Do
+- habria que crear una tabla de business_data con configuración de los js de analitica
 - pestaña permisos en usuarios
   - edicion
 - promoción con límite de inscritos
