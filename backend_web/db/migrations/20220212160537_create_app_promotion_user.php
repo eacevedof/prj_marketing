@@ -28,16 +28,17 @@ final class CreateAppPromotionUser extends AbsMigration
             "limit" => 11,
             "null" => false,
         ])
-        ->addColumn("id_type", "integer", [
+        ->addColumn("id_language", "integer", [
             "limit" => 11,
             "null" => false,
-            "comment" => "app_array.type='promotion' ticktock, fb, twitter, instagram, other",
+            "default" => 1,
+            "comment" => "app_array.type='language' 1: english, 2:spanish",
         ])
-        ->addColumn("url_design", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-            "comment" => "la url del diseño en la red social"
+        ->addColumn("id_country", "integer", [
+            "limit" => 11,
+            "null" => false,
+            "default" => 1,
+            "comment" => "app_array.type='country'",
         ])
         ->addColumn("url_promotion", "string", [
             "limit" => 1000,
