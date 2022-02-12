@@ -51,7 +51,6 @@ final class CreateAppPromotionUser extends AbsMigration
             "default" => null,
         ])
         ->addColumn("birthdate", "datetime", [
-            "limit" => 20,
             "null" => true,
             "default" => null,
         ])
