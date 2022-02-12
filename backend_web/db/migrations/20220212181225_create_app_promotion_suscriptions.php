@@ -28,17 +28,21 @@ final class CreateAppPromotionSuscriptions extends AbsMigration
             "limit" => 11,
             "null" => false,
         ])
-        ->addColumn("id_language", "integer", [
+        $table->addColumn("id_promouser", "integer", [
             "limit" => 11,
-            "null" => true,
-            "default" => null,
-            "comment" => "app_array.type='language' 1: english, 2:spanish",
+            "null" => false,
         ])
-        ->addColumn("id_country", "integer", [
-            "limit" => 11,
-            "null" => true,
-            "default" => null,
-            "comment" => "app_array.type='country'",
+        ->addColumn("date_subscription", "datetime", [
+            "null" => false,
+            "comment" => "fecha de suscripción",
+        ])
+        ->addColumn("date_confirm", "datetime", [
+            "null" => false,
+            "comment" => "fecha-hora en la que se confirma",
+        ])
+        ->addColumn("date_execution", "datetime", [
+            "null" => false,
+            "comment" => "fecha-hora en la que se ejecuta",
         ])
         ->addColumn("phone1", "string", [
             "limit" => 20,
