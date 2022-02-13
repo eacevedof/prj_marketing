@@ -149,17 +149,17 @@ final class CreateBaseUser extends AbsMigration
                 //secret: eaf
                 "id"=>"1", "email"=>"root@sys.sys", "description"=>"Root One", "secret"=>$secret,
                 "fullname" => "Root Admin", "uuid"=>"sys000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
-                "id_language" => "2", "id_profile" => "1", "id_parent" => null
+                "id_language" => "2", "id_profile" => "1", "id_parent" => "null"
             ],
             [
                 "id"=>"2", "email"=>"Sys Admin@sys.sys", "description"=>"Sys One", "secret"=>$secret,
                 "fullname" => "Root Admin", "uuid"=>"sys000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
-                "id_language" => "2", "id_profile" => "2", "id_parent" => null
+                "id_language" => "2", "id_profile" => "2", "id_parent" => "null"
             ],
             [
                 "id"=>"3", "email"=>"bow@bow.com", "description"=>"Business Owner One", "secret"=>$secret,
                 "fullname" => "Business Owner Demo", "uuid"=>"demo000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
-                "id_language" => "2", "id_profile" => "3", "id_parent" => null
+                "id_language" => "2", "id_profile" => "3", "id_parent" => "null"
             ],
             [
                 "id"=>"4", "email"=>"adm@bow.com", "description"=>"Admin Of Business Owner One", "secret"=>$secret,
@@ -178,7 +178,7 @@ final class CreateBaseUser extends AbsMigration
             $sql = "
             INSERT INTO {$this->tablename} 
             (id, `email`,`description`, secret, fullname, uuid, id_gender, id_nationality, id_country, id_language, id_profile, id_parent)
-            VALUES($id, '$email', '$description', '$secret','$fullname','$uuid','$idgender','$idnationality','$idcountry','$idlanguage','$idprofile', id_parent)
+            VALUES($id, '$email', '$description', '$secret','$fullname','$uuid','$idgender','$idnationality','$idcountry','$idlanguage','$idprofile', $idparent)
             ";
             $this->execute($sql);
         }
