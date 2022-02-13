@@ -118,8 +118,7 @@ final class CreateBaseUser extends AbsMigration
         ])
         ->addColumn("log_attempts", "integer", [
             "limit" => 5,
-            "null" => true,
-            "default" => null,
+            "default" => 0,
         ])
         //esto mejor en preferences
         /*
