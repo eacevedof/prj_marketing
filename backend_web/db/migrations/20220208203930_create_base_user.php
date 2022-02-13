@@ -97,23 +97,18 @@ final class CreateBaseUser extends AbsMigration
         ])
         ->addColumn("id_language", "integer", [
             "limit" => 11,
-            "null" => true,
-            "default" => null,
-            "comment" => "su idioma de preferencia",
+            "null" => false,
+            "default" => 1,//ingles
+            "comment" => "app_array.type=language id_pk",
         ])
         ->addColumn("id_profile", "integer", [
             "limit" => 11,
-            "null" => true,
-            "default" => null,
+            "null" => false,
+            "default" => 2,
             "comment" => "base_array.type=profile perfil 1 root, 2 sys admin, 3 business owner, 4 busines manager"
         ])
         ->addColumn("url_picture", "string", [
             "limit" => 100,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("token_reset", "string", [
-            "limit" => 250,
             "null" => true,
             "default" => null,
         ])
@@ -128,6 +123,11 @@ final class CreateBaseUser extends AbsMigration
         ])
         //esto mejor en preferences
         /*
+        ->addColumn("token_reset", "string", [
+            "limit" => 250,
+            "null" => true,
+            "default" => null,
+        ])
         ->addColumn("geo_location", "string", [
             "limit" => 500,
             "null" => true,
