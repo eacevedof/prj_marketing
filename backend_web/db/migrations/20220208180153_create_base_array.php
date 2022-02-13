@@ -56,36 +56,17 @@ final class CreateBaseArray extends AbsMigration
     
     private function _initial_load(): void
     {
-        $array = [
-            ["id"=>"1", "type"=>"profile", "description"=>"root", "order_by"=>100],
-            ["id"=>"2", "type"=>"profile", "description"=>"sys admin", "order_by"=>100],
-            ["id"=>"3", "type"=>"profile", "description"=>"business owner", "order_by"=>100],
-            ["id"=>"4", "type"=>"profile", "description"=>"business manager", "order_by"=>100],
+        $sqls = [
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('1','profile',null,'root','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('2','profile',null,'sys admin','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('3','profile',null,'business owner','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('4','profile',null,'business manager','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('7','platform','0','etl','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('8','platform','1','web','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('9','platform','2','mobile','100');",
         ];
-
-        foreach ($array as $item) {
-            list("id"=>$id, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
-            $sql = "
-            INSERT INTO {$this->tablename} (id, `type`, `description`, order_by)
-            VALUES($id, '$type', '$description', $orderby)
-            ";
+        foreach ($sqls as $sql)
             $this->execute($sql);
-        }
-
-        $array = [
-            ["code_erp" => 0, "type"=>"platform", "description"=>"etl", "order_by"=>100],
-            ["code_erp" => 1, "type"=>"platform", "description"=>"web", "order_by"=>100],
-            ["code_erp" => 2, "type"=>"platform", "description"=>"mobile", "order_by"=>100],
-        ];
-
-        foreach ($array as $item) {
-            list("code_erp"=>$coderp, "type"=>$type, "description"=>$description, "order_by"=>$orderby) = $item;
-            $sql = "
-            INSERT INTO {$this->tablename} (code_erp, `type`, `description`, order_by)
-            VALUES('$coderp','$type', '$description', $orderby)
-            ";
-            $this->execute($sql);
-        }
     }
 
     public function down(): void
