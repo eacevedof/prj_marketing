@@ -19,7 +19,7 @@ abstract class AbsMigration extends AbstractMigration
             "limit" => 3,
             "default" => 1,
             "null" => true,
-            "comment" => "base_array.type=platform (id_relation) desde que plataforma se ha realizado la creacion, mobile, web, api",
+            "comment" => "base_array.type=platform (id_pk) desde que plataforma se ha realizado la creacion, mobile, web, api",
         ])
         ->addColumn("insert_user", "string", [
             "limit" => 15,

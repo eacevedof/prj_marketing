@@ -40,8 +40,8 @@ final class UserRepository extends AppRepository
             "on" => [
                 "LEFT JOIN base_user u1 ON m.id_parent = u1.id",
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                "LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
-                "LEFT JOIN base_array ar2 ON m.id_profile = ar2.id AND ar2.type='profile'",
+                "LEFT JOIN app_array ar1 ON m.id_language = ar1.id_pk AND ar1.type='language'",
+                "LEFT JOIN base_array ar2 ON m.id_profile = ar2.id_pk AND ar2.type='profile'",
                 "LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'",
             ]
         ];
@@ -132,7 +132,7 @@ final class UserRepository extends AppRepository
                 "m.uuid", "m.id_parent",
                 "ar1.code_erp as e_language"
             ])
-            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
+            ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id_pk AND ar1.type='language'")
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.email='$email'")
