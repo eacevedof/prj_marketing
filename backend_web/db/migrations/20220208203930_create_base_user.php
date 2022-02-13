@@ -80,7 +80,7 @@ final class CreateBaseUser extends AbsMigration
             "limit" => 11,
             "null" => true,
             "default" => null,
-            "comment" => "quien es su superior"
+            "comment" => "base_user.id quien es su superior"
         ])
         ->addColumn("id_gender", "integer", [
             "limit" => 11,
@@ -131,11 +131,13 @@ final class CreateBaseUser extends AbsMigration
             "null" => true,
             "default" => null,
         ])
+        //esto mejor en preferences
+        /*
         ->addColumn("is_notifiable", "string", [
             "limit" => 4,
             "null" => true,
             "default" => null,
-        ])
+        ])*/
         ->create();
     }
 
