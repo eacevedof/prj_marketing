@@ -38,7 +38,7 @@ final class CreateBaseArray extends AbsMigration
             "limit" => 15,
             "null" => true,
         ])
-        ->addColumn("id_tosave", "string", [
+        ->addColumn("id_relation", "string", [
             "limit" => 25,
             "null" => true,
         ])

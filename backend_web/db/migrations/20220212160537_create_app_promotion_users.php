@@ -68,7 +68,7 @@ final class CreateAppPromotionUsers extends AbsMigration
             "limit" => 2,
             "null" => false,
             "default" => 1,
-            "comment" => "app_array.type=gender, id_tosave:0: female, 1: male, 2:neutral",
+            "comment" => "app_array.type=gender, id_relation:0: female, 1: male, 2:neutral",
         ])
         ->addColumn("address", "string", [
             "limit" => 100,
