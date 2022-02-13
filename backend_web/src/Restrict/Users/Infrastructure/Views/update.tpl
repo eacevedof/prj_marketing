@@ -117,7 +117,8 @@ $datapermission = [
             fields="<?$this->_echo_jslit($datapermission);?>"
         />
       </div>
-      <div class="tab-pane" id="businessdata">
+
+      <div id="businessdata" class="tab-pane">
         businessdata
       </div>
     </div><!--tab-content-->
