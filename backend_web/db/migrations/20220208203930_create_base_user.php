@@ -69,6 +69,7 @@ final class CreateBaseUser extends AbsMigration
         ->addColumn("birthdate", "datetime", [
             "null" => true,
             "default" => null,
+            "comment" => "comprobar mayoria de edad",
         ])
         ->addColumn("geo_location", "string", [
             "limit" => 500,
@@ -79,26 +80,31 @@ final class CreateBaseUser extends AbsMigration
             "limit" => 11,
             "null" => true,
             "default" => null,
+            "comment" => "quien es su superior"
         ])
         ->addColumn("id_gender", "integer", [
             "limit" => 11,
             "null" => true,
             "default" => null,
+            "comment" => "app_array.type=gender"
         ])
         ->addColumn("id_nationality", "integer", [
             "limit" => 11,
             "null" => true,
             "default" => null,
+            "comment" => "app_array.type=nationality"
         ])
         ->addColumn("id_country", "integer", [
             "limit" => 11,
             "null" => true,
             "default" => null,
+            "comment" => "app_array.type=country"
         ])
         ->addColumn("id_language", "integer", [
             "limit" => 11,
             "null" => true,
             "default" => null,
+            "comment" => "su idioma de preferencia",
         ])
         ->addColumn("path_picture", "string", [
             "limit" => 100,
@@ -109,6 +115,7 @@ final class CreateBaseUser extends AbsMigration
             "limit" => 11,
             "null" => true,
             "default" => null,
+            "comment" => "base_array.type=profile perfil 1 root, 2 sys admin, 3 business owner, 4 busines manager"
         ])
         ->addColumn("token_reset", "string", [
             "limit" => 250,
