@@ -7,10 +7,10 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL_UPDATE = "/restrict/user-permissions/update"
-const ACTION = "userpermissions.update"
+const URL_UPDATE = "/restrict/users/update"
+const ACTION = "users.update"
 
-export class FormUserPermissionsUpdate extends LitElement {
+export class FormUserEdit extends LitElement {
   static get styles() {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
@@ -302,7 +302,8 @@ export class FormUserPermissionsUpdate extends LitElement {
         .show()
 
   }//on_submit
-}
 
-if (!customElements.get("form-user-permissions-update"))
-  customElements.define("form-user-permissions-update", FormUserPermissionsUpdate)
+}//FormEdit
+
+if (!customElements.get("form-user-edit"))
+  customElements.define("form-user-edit", FormUserEdit)
