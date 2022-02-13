@@ -46,6 +46,14 @@ $result = [
   "countries" => $countries,
   "languages" => $languages,
 ];
+
+$textpermission = [
+
+];
+
+$datapermission = [
+
+];
 ?>
 <div class="modal-form">
   <div class="card-header">
@@ -90,7 +98,7 @@ $result = [
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
-      <div class="tab-pane active" id="profile">
+      <div id="profile" class="tab-pane active">
         <form-user-update
           csrf=<?$this->_echo_js($csrf);?>
 
@@ -100,13 +108,13 @@ $result = [
         />
       </div>
 
-      <div class="tab-pane" id="permissions">
+      <div id="permissions" class="tab-pane">
         <form-user-permissions-update
             csrf=<?$this->_echo_js($csrf);?>
 
-            texts="<?$this->_echo_jslit($texts);?>"
+            texts="<?$this->_echo_jslit($textpermission);?>"
 
-            fields="<?$this->_echo_jslit($result);?>"
+            fields="<?$this->_echo_jslit($datapermission);?>"
         />
       </div>
       <div class="tab-pane" id="businessdata">

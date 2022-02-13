@@ -10,7 +10,7 @@ final class CsrfService extends AppService
 {
     private ?array $autuser;
     private ComponentEncdecrypt $encdec;
-    private const VALID_TIME_IN_MINS = 45;
+    private const VALID_TIME_IN_MINS = 180;
 
     public function __construct()
     {
