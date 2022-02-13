@@ -28,8 +28,8 @@ final class CreateBaseUserPermissions extends AbsMigration
         ])
         ->addColumn("id_user", "integer", [
             "limit" => 11,
-            "null" => true,
-            "default" => null,
+            "null" => false,
+            "comment" => "base_user.id"
         ])
         ->addColumn("json_rw", "string", [
             "limit" => 2000,
