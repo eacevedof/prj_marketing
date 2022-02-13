@@ -2,7 +2,10 @@
 /**
  * @var \App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
+ * @var string $uuid
  */
+use App\Restrict\Users\Domain\Enums\UserProfileType;
+$isbow = $result["id_profile"] === UserProfileType::BUSINESS_OWNER;
 
 $texts = [
   "tr00" => __("send"),
@@ -61,14 +64,28 @@ $result = [
             </span>
           </a>
         </li>
-          <li>
-            <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
-              <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-              <span class="hidden-xs">
-                <?=__("Permissions")?>
-              </span>
-            </a>
-          </li>
+        <li>
+          <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
+            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
+            <span class="hidden-xs">
+              <?=__("Permissions")?>
+            </span>
+          </a>
+        </li>
+        <?
+        if($isbow):
+        ?>
+        <li>
+          <a href="#businessdata" data-bs-toggle="tab" aria-expanded="false">
+            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
+            <span class="hidden-xs">
+              <?=__("Business data")?>
+            </span>
+          </a>
+        </li>
+        <?
+        endif;
+        ?>
       </ul>
     </div><!--nav-->
 
@@ -84,7 +101,10 @@ $result = [
       </div>
 
       <div class="tab-pane" id="permissions">
-
+      permissions
+      </div>
+      <div class="tab-pane" id="businessdata">
+        businessdata
       </div>
     </div><!--tab-content-->
 
