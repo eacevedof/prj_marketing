@@ -33,17 +33,23 @@ final class CreateAppIpUntracked extends AbsMigration
             "null" => true,
             "update"=> "CURRENT_TIMESTAMP"
         ])
+        ->addColumn("id_user", "integer", [
+            "limit" => 11,
+            "null" => false,
+            "comment" => "base_user.id, quien crea la exclusion"
+        ])
+        ->addColumn("id_owner", "integer", [
+            "limit" => 11,
+            "null" => false,
+            "default" => -1,
+            "comment" => "base_user.id, para que slug de subdominio se evitara el tracking"
+        ])
         ->addColumn("remote_ip", "string", [
             "limit" => 100,
             "null" => false,
         ])
         ->addColumn("country", "string", [
             "limit" => 50,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("whois", "string", [
-            "limit" => 200,
             "null" => true,
             "default" => null,
         ])

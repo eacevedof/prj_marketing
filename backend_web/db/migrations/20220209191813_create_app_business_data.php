@@ -34,6 +34,10 @@ final class CreateAppBusinessData extends AbsMigration
             "limit" => 11,
             "null" => false
         ])
+        ->addColumn("slug", "string", [
+            "limit" => 250,
+            "null" => false
+        ])
         ->addColumn("user_logo_1", "string", [
             "limit" => 100,
             "null" => true,
