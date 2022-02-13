@@ -26,6 +26,11 @@ final class CreateBaseUserPermissions extends AbsMigration
             "limit" => 11,
             "identity" => true,
         ])
+        ->addColumn("uuid", "string", [
+            "limit" => 50,
+            "null" => true,
+            "default" => null,
+        ])
         ->addColumn("id_user", "integer", [
             "limit" => 11,
             "null" => false,
@@ -33,11 +38,6 @@ final class CreateBaseUserPermissions extends AbsMigration
         ])
         ->addColumn("json_rw", "string", [
             "limit" => 2000,
-            "null" => true,
-            "default" => null,
-        ])
-        ->addColumn("uuid", "string", [
-            "limit" => 50,
             "null" => true,
             "default" => null,
         ])

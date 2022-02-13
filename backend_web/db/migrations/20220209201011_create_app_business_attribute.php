@@ -31,11 +31,11 @@ final class CreateAppBusinessAttribute extends AbsMigration
             "null" => false,
             "comment" => "app_business_data.id"
         ])
-        ->addColumn("pref_key", "string", [
+        ->addColumn("attr_key", "string", [
             "limit" => 250,
             "null" => false,
         ])
-        ->addColumn("pref_value", "string", [
+        ->addColumn("attr_value", "string", [
             "limit" => 2000,
             "null" => true,
             "default" => null,
