@@ -91,7 +91,7 @@ $result = [
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <div class="tab-pane active" id="profile">
-        <form-user-edit
+        <form-user-update
           csrf=<?$this->_echo_js($csrf);?>
 
           texts="<?$this->_echo_jslit($texts);?>"
@@ -101,7 +101,13 @@ $result = [
       </div>
 
       <div class="tab-pane" id="permissions">
-      permissions
+        <form-user-permissions-update
+            csrf=<?$this->_echo_js($csrf);?>
+
+            texts="<?$this->_echo_jslit($texts);?>"
+
+            fields="<?$this->_echo_jslit($result);?>"
+        />
       </div>
       <div class="tab-pane" id="businessdata">
         businessdata
