@@ -146,8 +146,8 @@ final class CreateBaseUser extends AbsMigration
         $array = [
             [
                 //secret: eaf
-                "id"=>"1", "email"=>"root@email.com", "description"=>"Root One", "secret"=>"$2y$10\$BEClm.fzRU2shGk5nMLGRe4f0JnkXofGMBkLZ6sC86f8/aeetCMhC",
-                "fullname" => "Root One", "uuid"=>"U00001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id"=>"1", "email"=>"root@sys.sys", "description"=>"Root One", "secret"=>"$2y$10\$BEClm.fzRU2shGk5nMLGRe4f0JnkXofGMBkLZ6sC86f8/aeetCMhC",
+                "fullname" => "Root Admin", "uuid"=>"sys000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
                 "id_language" => "2", "id_profile" => "1",
             ],
         ];
