@@ -1,6 +1,6 @@
 <?php
 //constants.php 20200721
-define("DS", DIRECTORY_SEPARATOR);
+if (!defined("DS")) define("DS", DIRECTORY_SEPARATOR);
 define("PATH_ROOT", dirname(__DIR__));
 define("PATH_PUBLIC", PATH_ROOT.DS."public");
 define("PATH_VENDOR", PATH_ROOT.DS."vendor");
