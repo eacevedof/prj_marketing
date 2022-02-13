@@ -10,7 +10,7 @@ import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js
 const URL_UPDATE = "/restrict/xxxs/update"
 const ACTION = "xxxs.update"
 
-export class FormXxxEdit extends LitElement {
+export class FormXxxUpdate extends LitElement {
   static get styles() {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
@@ -60,24 +60,7 @@ export class FormXxxEdit extends LitElement {
     _btnsend: { type: String, state: true },
     _btncancel: { type: String, state: true },
 
-    _email: { type: String, state: true },
-    _password: { type: String, state: true },
-    _password2: { type: String, state: true },
-    _fullname: { type: String, state: true },
-    _address: { type: String, state: true },
-    _birthdate: { type: String, state: true },
-    _phone: { type: String, state: true },
-
-    _is_parent: { type: Boolean, state: true },
-    _id_parent: { type: String, state: true },
-    _id_country: { type: String, state: true },
-    _id_language: { type: String, state: true },
-    _id_profile: { type: String, state: true },
-
-    _parents: { type: Array, state: true },
-    _countries: { type: Array, state: true },
-    _languages: { type: Array, state: true },
-    _profiles: { type: Array, state: true },
+      %FIELDS%
   }
 
   //2
@@ -182,5 +165,5 @@ export class FormXxxEdit extends LitElement {
 
 }//FormEdit
 
-if (!customElements.get("form-xxx-edit"))
-  customElements.define("form-xxx-edit", FormXxxEdit)
+if (!customElements.get("form-xxx-update"))
+  customElements.define("form-xxx-update", FormXxxUpdate)

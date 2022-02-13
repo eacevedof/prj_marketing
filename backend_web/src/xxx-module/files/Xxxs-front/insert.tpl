@@ -27,7 +27,7 @@ $result = [
     <h4 class="card-title mb-1"><?=$h1?></h4>
   </div>
   <div class="card-body pt-0">
-    <form-xxx-create
+    <form-xxx-insert
       csrf=<?$this->_echo_js($csrf);?>
 
       texts="<?$this->_echo_jslit($texts);?>"

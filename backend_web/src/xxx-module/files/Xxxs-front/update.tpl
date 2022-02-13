@@ -28,29 +28,21 @@ $result = [
     <div class="tabs-menu ">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
-          <a href="#tab-1" data-bs-toggle="tab" class="active" aria-expanded="true">
+          <a href="#tab-yyy" data-bs-toggle="tab" class="active" aria-expanded="true">
             <span class="visible-xs">
-              <i class="las la-xxx-circle tx-16 me-1"></i>
+              <i class="las la-yyy tx-16 me-1"></i>
             </span>
             <span class="hidden-xs">
-              <?=__("tr_tab_1")?>
+              <?=__("tr_tab_yyy")?>
             </span>
           </a>
         </li>
-          <li>
-            <a href="#tab-2" data-bs-toggle="tab" aria-expanded="false">
-              <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-              <span class="hidden-xs">
-                <?=__("tr_tab_2")?>
-              </span>
-            </a>
-          </li>
       </ul>
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <div class="tab-pane active" id="profile">
-        <form-xxx-edit
+        <form-xxx-update
           csrf=<?$this->_echo_js($csrf);?>
 
           texts="<?$this->_echo_jslit($texts);?>"
@@ -59,7 +51,7 @@ $result = [
         />
       </div>
 
-      <div class="tab-pane" id="permissions">
+      <div class="tab-pane" id="pane-yyy">
 
       </div>
     </div><!--tab-content-->

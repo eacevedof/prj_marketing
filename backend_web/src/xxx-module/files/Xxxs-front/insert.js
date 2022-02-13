@@ -10,7 +10,7 @@ import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js
 const URL_POST = "/restrict/xxxs/insert"
 const ACTION = "xxxs.insert"
 
-export class FormXxxCreate extends LitElement {
+export class FormXxxInsert extends LitElement {
   static get styles() {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/css/icons.css",
@@ -168,8 +168,7 @@ export class FormXxxCreate extends LitElement {
       .show()
 
   }//on_submit
+}
 
-}//FormCreate
-
-if (!customElements.get("form-xxx-create"))
-  customElements.define("form-xxx-create", FormXxxCreate)
+if (!customElements.get("form-xxx-insert"))
+  customElements.define("form-xxx-insert", FormXxxInsert)
