@@ -71,11 +71,6 @@ final class CreateBaseUser extends AbsMigration
             "default" => null,
             "comment" => "comprobar mayoria de edad",
         ])
-        ->addColumn("geo_location", "string", [
-            "limit" => 500,
-            "null" => true,
-            "default" => null,
-        ])
         ->addColumn("id_parent", "integer", [
             "limit" => 11,
             "null" => true,
@@ -106,19 +101,23 @@ final class CreateBaseUser extends AbsMigration
             "default" => null,
             "comment" => "su idioma de preferencia",
         ])
-        ->addColumn("path_picture", "string", [
-            "limit" => 100,
-            "null" => true,
-            "default" => null,
-        ])
         ->addColumn("id_profile", "integer", [
             "limit" => 11,
             "null" => true,
             "default" => null,
             "comment" => "base_array.type=profile perfil 1 root, 2 sys admin, 3 business owner, 4 busines manager"
         ])
+        ->addColumn("url_picture", "string", [
+            "limit" => 100,
+            "null" => true,
+            "default" => null,
+        ])
         ->addColumn("token_reset", "string", [
             "limit" => 250,
+            "null" => true,
+            "default" => null,
+        ])
+        ->addColumn("date_validated", "datetime", [
             "null" => true,
             "default" => null,
         ])
@@ -127,12 +126,14 @@ final class CreateBaseUser extends AbsMigration
             "null" => true,
             "default" => null,
         ])
-        ->addColumn("date_validated", "datetime", [
-            "null" => true,
-            "default" => null,
-        ])
         //esto mejor en preferences
         /*
+        ->addColumn("geo_location", "string", [
+            "limit" => 500,
+            "null" => true,
+            "default" => null,
+            "comment" => "(x,y,z)"
+        ])
         ->addColumn("is_notifiable", "string", [
             "limit" => 4,
             "null" => true,

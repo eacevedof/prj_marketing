@@ -57,10 +57,10 @@ final class CreateBaseArray extends AbsMigration
     private function _initial_load(): void
     {
         $sqls = [
-            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('1','profile',null,'root','100');",
-            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('2','profile',null,'sys admin','100');",
-            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('3','profile',null,'business owner','100');",
-            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('4','profile',null,'business manager','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('1','profile','1','root','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('2','profile','2','sys admin','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('3','profile','3','business owner','100');",
+            "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('4','profile','4','business manager','100');",
             "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('7','platform','0','etl','100');",
             "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('8','platform','1','web','100');",
             "INSERT INTO base_array ( id,type,id_relation,description,order_by) VALUES ('9','platform','2','mobile','100');",

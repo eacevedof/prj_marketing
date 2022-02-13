@@ -19,7 +19,7 @@ abstract class AbsMigration extends AbstractMigration
             "limit" => 3,
             "default" => 1,
             "null" => true,
-            "comment" => "desde que plataforma se ha realizado la creacion, mobile, web, api",
+            "comment" => "base_array.type=platform (id_relation) desde que plataforma se ha realizado la creacion, mobile, web, api",
         ])
         ->addColumn("insert_user", "string", [
             "limit" => 15,
@@ -155,7 +155,8 @@ abstract class AbsMigration extends AbstractMigration
         ])
         ->addColumn("id_owner", "integer", [
             "limit" => 11,
-            "null" => false
+            "null" => false,
+            "comment" => "base_user.id"
         ])
         ->addColumn("code_erp", "string", [
             "limit" => 25,
