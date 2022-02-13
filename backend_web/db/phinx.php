@@ -3,7 +3,13 @@
  * https://book.cakephp.org/phinx/0/en/migrations.html
  * phinx create CreateBaseArray
  * phinx migrate
- */
+ *
+ * vendor/bin/phinx init .
+ * $EDITOR phinx.yml
+ * mkdir -p db/migrations db/seeds
+ * vendor/bin/phinx create MyFirstMigration
+ * vendor/bin/phinx migrate -e development
+*/
 $dir = __DIR__;
 
 include_once "$dir/migrations/AbsMigration.php";
@@ -37,7 +43,7 @@ return [
         "testing" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",
-            "name" => "db_marketing",
+            "name" => "db_marketing_test",
             "user" => "root",
             "pass" => "1234",
             "port" => 3306,
