@@ -143,12 +143,28 @@ final class CreateBaseUser extends AbsMigration
 
     private function _initial_load(): void
     {
+        $secret = "$2y$10\$BEClm.fzRU2shGk5nMLGRe4f0JnkXofGMBkLZ6sC86f8/aeetCMhC";
         $array = [
             [
                 //secret: eaf
-                "id"=>"1", "email"=>"root@sys.sys", "description"=>"Root One", "secret"=>"$2y$10\$BEClm.fzRU2shGk5nMLGRe4f0JnkXofGMBkLZ6sC86f8/aeetCMhC",
+                "id"=>"1", "email"=>"root@sys.sys", "description"=>"Root One", "secret"=>$secret,
                 "fullname" => "Root Admin", "uuid"=>"sys000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
-                "id_language" => "2", "id_profile" => "1",
+                "id_language" => "2", "id_profile" => "1", "id_parent" => null
+            ],
+            [
+                "id"=>"2", "email"=>"Sys Admin@sys.sys", "description"=>"Sys One", "secret"=>$secret,
+                "fullname" => "Root Admin", "uuid"=>"sys000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id_language" => "2", "id_profile" => "1", "id_parent" => null
+            ],
+            [
+                "id"=>"3", "email"=>"bow@bow.com", "description"=>"Business Owner One", "secret"=>$secret,
+                "fullname" => "Business Owner Demo", "uuid"=>"demo000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id_language" => "2", "id_profile" => "1", "id_parent" => null
+            ],
+            [
+                "id"=>"3", "email"=>"adm@bow.com", "description"=>"Admin Of Business Owner One", "secret"=>$secret,
+                "fullname" => "Business Admin", "uuid"=>"demo000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id_language" => "2", "id_profile" => "1", "id_parent" => 3
             ],
         ];
 
@@ -156,13 +172,13 @@ final class CreateBaseUser extends AbsMigration
             list(
                 "id"=>$id, "email"=>$email, "description"=>$description, "secret"=>$secret, "fullname"=>$fullname,
                 "uuid"=>$uuid, "id_gender"=>$idgender, "id_nationality"=>$idnationality, "id_country"=>$idcountry,
-                "id_language"=>$idlanguage, "id_profile"=>$idprofile
+                "id_language"=>$idlanguage, "id_profile"=>$idprofile, "id_parent" => $idparent
             ) = $item;
 
             $sql = "
             INSERT INTO {$this->tablename} 
-            (id, `email`,`description`, secret, fullname, uuid, id_gender, id_nationality, id_country, id_language, id_profile)
-            VALUES($id, '$email', '$description', '$secret','$fullname','$uuid','$idgender','$idnationality','$idcountry','$idlanguage','$idprofile')
+            (id, `email`,`description`, secret, fullname, uuid, id_gender, id_nationality, id_country, id_language, id_profile, id_parent)
+            VALUES($id, '$email', '$description', '$secret','$fullname','$uuid','$idgender','$idnationality','$idcountry','$idlanguage','$idprofile', id_parent)
             ";
             $this->execute($sql);
         }
