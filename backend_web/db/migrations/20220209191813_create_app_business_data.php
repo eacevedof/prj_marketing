@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateAppBusinessData extends AbsMigration
 {
-    private string $tablename = "app_business_datax";
+    private string $tablename = "app_business_data";
 
     public function up(): void
     {

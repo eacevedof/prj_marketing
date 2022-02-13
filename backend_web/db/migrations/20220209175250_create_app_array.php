@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateAppArray extends AbsMigration
 {
-    private string $tablename = "app_arrayx";
+    private string $tablename = "app_array";
 
     public function up(): void
     {

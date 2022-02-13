@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateBaseUser extends AbsMigration
 {
-    private string $tablename = "base_userx";
+    private string $tablename = "base_user";
 
     public function up(): void
     {

@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateAppIpUntracked extends AbsMigration
 {
-    private string $tablename = "app_ip_untrackedx";
+    private string $tablename = "app_ip_untracked";
 
     public function up(): void
     {

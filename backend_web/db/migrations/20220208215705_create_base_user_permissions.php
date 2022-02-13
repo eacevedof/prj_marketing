@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateBaseUserPermissions extends AbsMigration
 {
-    private string $tablename = "base_user_permissionsx";
+    private string $tablename = "base_user_permissions";
 
     public function up(): void
     {

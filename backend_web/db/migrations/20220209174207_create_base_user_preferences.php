@@ -4,7 +4,7 @@ use Migrations\AbsMigration;
 
 final class CreateBaseUserPreferences extends AbsMigration
 {
-    private string $tablename = "base_user_preferencesx";
+    private string $tablename = "base_user_preferences";
 
     public function up(): void
     {
