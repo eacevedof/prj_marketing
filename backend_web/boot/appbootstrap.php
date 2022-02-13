@@ -1,6 +1,6 @@
 <?php
 //se usa en los test
-include("constants.php");
-include("functions.php");
+include_once("constants.php");
+include_once("functions.php");
 
 appboot_loadenv();
