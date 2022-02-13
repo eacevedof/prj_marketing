@@ -99,7 +99,6 @@ final class UserRepository extends AppRepository
                 "m.id_language",
                 "m.id_parent",
                 "m.id_profile",
-                "m.is_notifiable",
                 "m.secret",
                 "m.phone",
                 "m.delete_date"
