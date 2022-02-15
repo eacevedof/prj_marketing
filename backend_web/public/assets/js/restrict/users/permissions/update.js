@@ -7,7 +7,6 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-alert("hola")
 const URL_UPDATE = "/restrict/user-permissions/update"
 const ACTION = "userpermissions.update"
 
@@ -77,7 +76,7 @@ export class FormUserPermissionsUpdate extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
-    this._btncancel = this.texts.tr02
+    this._btncancel = this.texts.tr04
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
   }
@@ -88,27 +87,15 @@ export class FormUserPermissionsUpdate extends LitElement {
       <form @submit=${this.on_submit}>
         <div class="flex-row">
           <div class="form-group">
-            <label for="id">${this.texts.f00}</label>
-            <div id="field-id">
-              <input type="text" id="id" .value=${this._id} class="form-control" maxlength="10">
-            </div>
-          </div>
-          <div class="form-group">
             <label for="uuid">${this.texts.f01}</label>
             <div id="field-uuid">
               <input type="text" id="uuid" .value=${this._uuid} class="form-control" maxlength="50">
             </div>
           </div>
           <div class="form-group">
-            <label for="id_user">${this.texts.f02}</label>
-            <div id="field-id_user">
-              <input type="text" id="id_user" .value=${this._id_user} class="form-control" maxlength="10">
-            </div>
-          </div>
-          <div class="form-group">
             <label for="json_rw">${this.texts.f03}</label>
             <div id="field-json_rw">
-              <input type="text" id="json_rw" .value=${this._json_rw} class="form-control" maxlength="2000">
+              <textarea id="json_rw" .value=${this._json_rw} class="form-control" maxlength="2000"></textarea>
             </div>
           </div>
         </div>
@@ -121,7 +108,7 @@ export class FormUserPermissionsUpdate extends LitElement {
                 : html``
             }
           </button>
-          <button type="button" ?disabled=${this._issending} @click=${this.on_cancel} class="btn btn-secondary mt-3 mb-0">
+          <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
             ${this._btncancel}
             ${this._issending
                 ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`

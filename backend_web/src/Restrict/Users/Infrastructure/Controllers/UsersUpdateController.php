@@ -13,6 +13,7 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Application\UsersInfoService;
+use App\Restrict\Users\Application\UserPermissionsInfoService;
 use App\Restrict\Users\Application\UsersUpdateService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
@@ -49,14 +50,18 @@ final class UsersUpdateController extends RestrictController
         $this->add_var("ismodal",1);
         try {
             $edit = SF::get(UsersInfoService::class, [$uuid]);
+            $userpermission = SF::get(UserPermissionsInfoService::class);
+
             $result = $edit->get_for_edit();
+
+            $h1 = "{$result["description"]} ($uuid)";
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit user {0}", $uuid))
-                ->add_var(PageType::H1, __("Edit user {0}", $uuid))
+                ->add_var(PageType::H1, __("Edit user {0}", $h1))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
-                ->add_var("permissions", [])
+                ->add_var("permissions", $userpermission->get_for_edit_by_user($uuid))
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
                 ->add_var("countries", $this->picklist->get_countries())
@@ -81,7 +86,7 @@ final class UsersUpdateController extends RestrictController
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->add_var(PageType::H1, $e->getMessage())
                 ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("505")
+                ->set_template("500")
                 ->render_nl();
         }
     }//modal

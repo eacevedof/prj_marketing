@@ -61,7 +61,7 @@ final class XxxsInfoController extends RestrictController
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->add_var(PageType::H1, $e->getMessage())
                 ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("505")
+                ->set_template("500")
                 ->render_nl();
         }
     }

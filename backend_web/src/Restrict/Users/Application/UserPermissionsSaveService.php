@@ -1,5 +1,5 @@
 <?php
-namespace App\Restrict\UserPermissions\Application;
+namespace App\Restrict\Users\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;

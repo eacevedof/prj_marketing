@@ -11,4 +11,7 @@ abstract class UserPolicyType
 
     const PROMOTIONS_READ = "promotions:read";
     const PROMOTIONS_WRITE = "promotions:write";
+
+    const USER_PERMISSIONS_READ = "userpermissions:read";
+    const USER_PERMISSIONS_WRITE = "userpermissions:write";
 }

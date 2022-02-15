@@ -7,53 +7,65 @@
 use App\Restrict\Users\Domain\Enums\UserProfileType;
 $isbow = $result["id_profile"] === UserProfileType::BUSINESS_OWNER;
 
-dd($result);
 $texts = [
-  "tr00" => __("send"),
-  "tr01" => __("Sending..."),
-  "tr02" => __("Error"),
-  "tr03" => __("Some unexpected error occurred"),
+    "tr00" => __("send"),
+    "tr01" => __("Sending..."),
+    "tr02" => __("Error"),
+    "tr03" => __("Some unexpected error occurred"),
+    "tr04" => __("Cancel"),
 
-  "f00" => __("Email"),
-  "f01" => __("Password"),
-  "f02" => __("Password confirm"),
-  "f03" => __("Full name"),
-  "f04" => __("Address"),
-  "f05" => __("Birthdate"),
-  "f06" => __("Phone"),
-  "f07" => __("Superior"),
-  "f08" => __("Profile"),
-  "f09" => __("Language"),
-  "f10" => __("Country"),
+    "f00" => __("Email"),
+    "f01" => __("Password"),
+    "f02" => __("Password confirm"),
+    "f03" => __("Full name"),
+    "f04" => __("Address"),
+    "f05" => __("Birthdate"),
+    "f06" => __("Phone"),
+    "f07" => __("Superior"),
+    "f08" => __("Profile"),
+    "f09" => __("Language"),
+    "f10" => __("Country"),
 ];
 
 $result = [
-  "uuid" => $uuid,
-  "email" => $result["email"] ?? "",
-  "password" => "    ",
-  "password2" => "    ",
-  "fullname" => $result["fullname"] ?? "",
-  "address" => $result["address"] ?? "",
-  "birthdate" => $result["birthdate"] ?? "",
-  "phone" => $result["phone"] ?? "",
+    "uuid" => $uuid,
+    "email" => $result["email"] ?? "",
+    "password" => "    ",
+    "password2" => "    ",
+    "fullname" => $result["fullname"] ?? "",
+    "address" => $result["address"] ?? "",
+    "birthdate" => $result["birthdate"] ?? "",
+    "phone" => $result["phone"] ?? "",
 
-  "id_profile" => $result["id_profile"] ?? "",
-  "id_parent" => $result["id_parent"] ?? "",
-  "id_country" => $result["id_country"] ?? "",
-  "id_language" => $result["id_language"] ?? "",
+    "id_profile" => $result["id_profile"] ?? "",
+    "id_parent" => $result["id_parent"] ?? "",
+    "id_country" => $result["id_country"] ?? "",
+    "id_language" => $result["id_language"] ?? "",
 
-  "profiles" => $profiles,
-  "parents" => $parents,
-  "countries" => $countries,
-  "languages" => $languages,
+    "profiles" => $profiles,
+    "parents" => $parents,
+    "countries" => $countries,
+    "languages" => $languages,
 ];
 
 $textpermission = [
+    "tr00" => __("Send"),
+    "tr01" => __("Sending..."),
+    "tr02" => __("Error"),
+    "tr03" => __("Some unexpected error occurred"),
+    "tr04" => __("Cancel"),
 
+    "f00" => __("Nº"),
+    "f01" => __("Code"),
+    "f02" => __("User"),
+    "f03" => __("Permissions JSON"),
 ];
 
 $datapermission = [
-
+    "id" => $permissions["id"] ?? "",
+    "uuid" => $permissions["uuid"] ?? "",
+    "id_user" => $permissions["id_user"] ?? "",
+    "json_rw" => $permissions["json_rw"] ?? "",
 ];
 ?>
 <div class="modal-form">
@@ -61,7 +73,7 @@ $datapermission = [
     <h4 class="card-title mb-1"><?=$h1?></h4>
   </div>
   <div class="card-body p-2 pt-0">
-    <div class="tabs-menu ">
+    <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
           <a href="#profile" data-bs-toggle="tab" class="active" aria-expanded="true">
@@ -111,11 +123,11 @@ $datapermission = [
 
       <div id="permissions" class="tab-pane">
         <form-user-permissions-update
-            csrf=<?$this->_echo_js($csrf);?>
+          csrf=<?$this->_echo_js($csrf);?>
 
-            texts="<?$this->_echo_jslit($textpermission);?>"
+          texts="<?$this->_echo_jslit($textpermission);?>"
 
-            fields="<?$this->_echo_jslit($datapermission);?>"
+          fields="<?$this->_echo_jslit($datapermission);?>"
         />
       </div>
 

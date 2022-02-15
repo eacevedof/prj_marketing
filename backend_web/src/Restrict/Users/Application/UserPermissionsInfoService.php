@@ -1,5 +1,5 @@
 <?php
-namespace App\Restrict\UserPermissions\Application;
+namespace App\Restrict\Users\Application;
 
 use App\Restrict\Users\Domain\UserRepository;
 use App\Shared\Infrastructure\Services\AppService;
@@ -21,9 +21,6 @@ final class UserPermissionsInfoService extends AppService
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
-
-        if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No {0} code provided", "user_permissions"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
         $this->userrepository = RF::get(UserRepository::class);
