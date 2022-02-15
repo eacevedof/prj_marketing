@@ -65,7 +65,7 @@ $datapermission = [
     "id" => $permissions["id"] ?? "",
     "uuid" => $permissions["uuid"] ?? "",
     "id_user" => $permissions["id_user"] ?? "",
-    "json_rw" => $permissions["json_rw"] ?? "",
+    "json_rw" => $permissions["json_rw"] ?? "[]",
 ];
 ?>
 <div class="modal-form">
