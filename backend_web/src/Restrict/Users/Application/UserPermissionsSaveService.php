@@ -40,7 +40,6 @@ final class UserPermissionsSaveService extends AppService
             $this->_exception(__("Empty user code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->entityuserpermissions = MF::get(UserPermissionsEntity::class);
-        $this->validator = VF::get($this->input, $this->entityuserpermissions);
         $this->repouser = RF::get(UserRepository::class);
         $this->repouserpermissions = RF::get(UserPermissionsRepository::class);
         $this->repouserpermissions->set_model($this->entityuserpermissions);
@@ -96,18 +95,20 @@ final class UserPermissionsSaveService extends AppService
         ;
         return $this;
     }
-    
 
     private function _add_rules(): FieldsValidator
     {
         $this->validator
             ->add_rule("id", "id", function ($data) {
+                if ($data["data"]["_new"]) return false;
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
             ->add_rule("uuid", "uuid", function ($data) {
+                if ($data["data"]["_new"]) return false;
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_user", "id_user", function ($data) {
+                if ($data["data"]["_new"]) return false;
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
             ->add_rule("json_rw", "json_rw", function ($data) {
@@ -145,8 +146,11 @@ final class UserPermissionsSaveService extends AppService
         if (!$update = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
+        $this->validator = VF::get($this->input, $this->entityuserpermissions);
         if(!$permissions = $this->repouserpermissions->get_all_by_user($this->iduser)) {
-            //alta
+            $this->input["_new"] = true;
+            $this->validator = VF::get($this->input, $this->entityuserpermissions);
+
             if ($errors = $this->_skip_validation_create()->_add_rules()->get_errors()) {
                 $this->_set_errors($errors);
                 throw new FieldsException(__("Fields validation errors"));
