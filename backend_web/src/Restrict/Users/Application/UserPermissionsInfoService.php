@@ -88,6 +88,6 @@ final class UserPermissionsInfoService extends AppService
         if (!$id = $this->userrepository->get_id_by($uuid))
             $this->_exception("User with code {0} not found", $uuid);
 
-        return $this->repouserpermissions->get_by_user($id);
+        return $this->repouserpermissions->get_all_by_user($id);
     }
 }

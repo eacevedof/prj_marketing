@@ -26,7 +26,7 @@ export class FormUserPermissionsUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
+    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","id_user"])
   }
 
   _on_cancel() {
@@ -152,7 +152,10 @@ export class FormUserPermissionsUpdate extends LitElement {
         URL_UPDATE.replace(":uuid", this.useruuid), {
           _action: ACTION,
           _csrf: this.csrf,
+          id: this.fields.id,
           uuid: this.fields.uuid,
+          id_user: this.fields.id_user,
+
           ...this._get_data()
         })
 
@@ -170,8 +173,6 @@ export class FormUserPermissionsUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
-    const $dt = document.getElementById("table-datatable")
-    if ($dt) $($dt).DataTable().ajax.reload()
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
       .set_inner(this.texts.tr04)
