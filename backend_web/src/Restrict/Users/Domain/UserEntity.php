@@ -18,7 +18,7 @@ final class UserEntity extends AppEntity
     {
         $this->fields = [
             "id" => [
-                "label" => __("ID"),
+                "label" => __("Nº"),
                 EntityType::REQUEST_KEY => "id",
                 "config" => [
                     "type" => EntityType::INT,
