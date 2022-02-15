@@ -5,8 +5,8 @@
 
 $tpl = ":)$this->pathtemplate:";
 $texts = [
-  "tr00" => __("send"),
-  "tr01" => __("Sending..."),
+  "tr00" => __("Save"),
+  "tr01" => __("Processing..."),
   "tr02" => __("Error"),
   "tr03" => __("Some unexpected error occurred"),
 

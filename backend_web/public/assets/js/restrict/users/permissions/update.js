@@ -76,7 +76,7 @@ export class FormUserPermissionsUpdate extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
-    this._btncancel = this.texts.tr04
+    this._btncancel = this.texts.tr02
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
   }
@@ -85,18 +85,18 @@ export class FormUserPermissionsUpdate extends LitElement {
   render() {
     return html`
       <form @submit=${this.on_submit}>
-        <div class="flex-row">
-          <div class="form-group">
-            <label for="uuid">${this.texts.f01}</label>
-            <div id="field-uuid">
-              <input type="text" id="uuid" .value=${this._uuid} class="form-control" maxlength="50">
-            </div>
+        
+        <div class="form-group">
+          <label for="uuid">${this.texts.f01}</label>
+          <div id="field-uuid">
+            <input type="text" id="uuid" .value=${this._uuid} class="form-control" maxlength="50">
           </div>
-          <div class="form-group">
-            <label for="json_rw">${this.texts.f03}</label>
-            <div id="field-json_rw">
-              <textarea id="json_rw" .value=${this._json_rw} class="form-control" maxlength="2000"></textarea>
-            </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="json_rw">${this.texts.f03}</label>
+          <div id="field-json_rw">
+            <textarea id="json_rw" .value=${this._json_rw} class="form-control" maxlength="2000"></textarea>
           </div>
         </div>
 

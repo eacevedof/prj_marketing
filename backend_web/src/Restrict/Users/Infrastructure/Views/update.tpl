@@ -8,11 +8,11 @@ use App\Restrict\Users\Domain\Enums\UserProfileType;
 $isbow = $result["id_profile"] === UserProfileType::BUSINESS_OWNER;
 
 $texts = [
-    "tr00" => __("send"),
-    "tr01" => __("Sending..."),
-    "tr02" => __("Error"),
-    "tr03" => __("Some unexpected error occurred"),
-    "tr04" => __("Cancel"),
+    "tr00" => __("Save"),
+    "tr01" => __("Processing..."),
+    "tr02" => __("Cancel"),
+    "tr03" => __("Error"),
+    "tr04" => __("<b>Data updated</b>"),
 
     "f00" => __("Email"),
     "f01" => __("Password"),
