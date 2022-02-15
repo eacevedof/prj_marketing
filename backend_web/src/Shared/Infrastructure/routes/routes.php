@@ -18,6 +18,8 @@ return [
     ["url"=>"/restrict/users/undelete/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
     ["url"=>"/restrict/users/?int:page","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"search"],
+    //@users-permissions
+    ["url"=>"/restrict/users/:uuid/permissions/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPermissionsUpdateController", "method"=>"update", "allowed"=>["put"]],
 
     //@promotions
     ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInfoController", "method"=>"info"],

@@ -125,6 +125,7 @@ $datapermission = [
         <form-user-permissions-update
           csrf=<?$this->_echo_js($csrf);?>
 
+          useruuid="<?=$uuid?>"
           texts="<?$this->_echo_jslit($textpermission);?>"
 
           fields="<?$this->_echo_jslit($datapermission);?>"

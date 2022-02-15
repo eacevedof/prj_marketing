@@ -7,8 +7,8 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL_UPDATE = "/restrict/user-permissions/update"
-const ACTION = "userpermissions.update"
+const URL_UPDATE = "/restrict/users/:uuid/permissions/update"
+const ACTION = "userspermissions.update"
 
 export class FormUserPermissionsUpdate extends LitElement {
   static get styles() {
@@ -42,6 +42,8 @@ export class FormUserPermissionsUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+    useruuid: {type:String},
+
     texts: {
       converter: (strjson) => {
         if (strjson) return JSON.parse(strjson)
@@ -123,7 +125,7 @@ export class FormUserPermissionsUpdate extends LitElement {
   //5
   firstUpdated() {
     try {
-      this._$get("id").focus()
+      this._$get("json_rw").focus()
     }
     catch (e) {
       console.log(e)
@@ -147,7 +149,7 @@ export class FormUserPermissionsUpdate extends LitElement {
     error.clear()
 
     const response = await injson.put(
-        URL_UPDATE.concat(`/${this.fields.uuid}`), {
+        URL_UPDATE.replace(":uuid", this.useruuid), {
           _action: ACTION,
           _csrf: this.csrf,
           uuid: this.fields.uuid,

@@ -32,8 +32,8 @@ final class UserPermissionsSaveService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        if (!$this->input["uuid"])
-            $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$this->input["_useruuid"])
+            $this->_exception(__("Empty user code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->entityuserpermissions = MF::get(UserPermissionsEntity::class);
         $this->validator = VF::get($this->input, $this->entityuserpermissions);
