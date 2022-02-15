@@ -14,4 +14,17 @@ abstract class UserPolicyType
 
     const USER_PERMISSIONS_READ = "userpermissions:read";
     const USER_PERMISSIONS_WRITE = "userpermissions:write";
+
+    public static function get_all(): array
+    {
+        return [
+            self::DASHBOARD_READ,
+            self::USERS_READ,
+            self::USERS_WRITE,
+            self::PROMOTIONS_READ,
+            self::PROMOTIONS_WRITE,
+            self::USER_PERMISSIONS_READ,
+            self::USER_PERMISSIONS_WRITE,
+        ];
+    }
 }

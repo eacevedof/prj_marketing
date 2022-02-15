@@ -20,14 +20,14 @@ final class UserPermissionsRepository extends AppRepository
         $this->table = "base_user_permissions";
     }
 
-    public function get_by_user(int $userid): array
+    public function get_by_user(int $iduser): array
     {
         $sql = $this->_get_qbuilder()
             ->set_comment("userpermission.get_by_user(userid)")
             ->set_table("$this->table as m")
             ->set_getfields(["m.json_rw"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_user=$userid")
+            ->add_and("m.id_user=$iduser")
             ->select()->sql()
         ;
         $json = $this->db->query($sql, 0, 0);
@@ -35,4 +35,17 @@ final class UserPermissionsRepository extends AppRepository
         return json_decode($json,1);
     }
 
-}//ExampleRepository
+    public function get_all_by_user(int $iduser): array
+    {
+        $sql = $this->_get_qbuilder()
+            ->set_comment("userpermission.get_all_by_user(userid)")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.*"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_user=$iduser")
+            ->select()->sql()
+        ;
+        return $this->db->query($sql, null, 0) ?? [];
+    }
+
+}
