@@ -56,6 +56,7 @@ final class UsersUpdateController extends RestrictController
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
+                ->add_var("permissions", [])
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
                 ->add_var("countries", $this->picklist->get_countries())

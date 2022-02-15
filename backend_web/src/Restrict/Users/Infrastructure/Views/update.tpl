@@ -7,6 +7,7 @@
 use App\Restrict\Users\Domain\Enums\UserProfileType;
 $isbow = $result["id_profile"] === UserProfileType::BUSINESS_OWNER;
 
+dd($result);
 $texts = [
   "tr00" => __("send"),
   "tr01" => __("Sending..."),
