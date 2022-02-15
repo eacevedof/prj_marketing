@@ -118,7 +118,7 @@ final class UserPermissionsSaveService extends AppService
                 return $this->_is_valid_json($data["value"]) ? false : __("Invalid Json document");
             })
             ->add_rule("json_rw", "valid rules", function ($data){
-                $values = json_decode($data["value"]);
+                $values = json_decode($data["value"], 1);
                 if (!$values) return false;
 
                 $allpolicies = UserPolicyType::get_all();
@@ -128,7 +128,9 @@ final class UserPermissionsSaveService extends AppService
                         $invalid[] = $policy;
                 }
                 if (!$invalid) return false;
-                return __("Invalid policies: {0}", implode(", ",$invalid));
+                $invalid = implode(", ",$invalid);
+                $valid = implode(", ", $allpolicies);
+                return __("Invalid policies: {0} <br/>Valid are: {1}", $invalid, $valid);
             })
         ;
         return $this->validator;
@@ -136,7 +138,7 @@ final class UserPermissionsSaveService extends AppService
 
     private function _is_valid_json(string $string): bool
     {
-        $r = json_decode($string);
+        $r = json_decode($string, 1);
         return json_last_error() === JSON_ERROR_NONE;
     }
 
