@@ -87,13 +87,18 @@ final class UserPermissionsSaveService extends AppService
         );
     }
 
-    private function _skip_validation(): self
+    private function _skip_validation_create(): self
     {
-        $this->validator->add_skip("id");
+        $this->validator
+            ->add_skip("id")
+            ->add_skip("uuid")
+            ->add_skip("id_user")
+        ;
         return $this;
     }
+    
 
-    private function _add_rules_update(): FieldsValidator
+    private function _add_rules(): FieldsValidator
     {
         $this->validator
             ->add_rule("id", "id", function ($data) {
@@ -142,7 +147,19 @@ final class UserPermissionsSaveService extends AppService
 
         if(!$permissions = $this->repouserpermissions->get_all_by_user($this->iduser)) {
             //alta
-            return [];
+            if ($errors = $this->_skip_validation_create()->_add_rules()->get_errors()) {
+                $this->_set_errors($errors);
+                throw new FieldsException(__("Fields validation errors"));
+            }
+            $update["id_user"] = $this->iduser;
+            $update["uuid"] = uniqid();
+            $update = $this->entityuserpermissions->map_request($update);
+            $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
+            $affected = $this->repouserpermissions->insert($update);
+            return [
+                "affected" => $affected,
+                "uuid" => $update["uuid"]
+            ];
         }
 
         if ($permissions["id"] !== $update["id"])
@@ -152,7 +169,7 @@ final class UserPermissionsSaveService extends AppService
             );
 
 
-        if ($errors = $this->_add_rules_update()->get_errors()) {
+        if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
