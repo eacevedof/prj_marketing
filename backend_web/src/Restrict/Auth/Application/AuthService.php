@@ -45,6 +45,11 @@ final class AuthService
             : (self::$authuser["id_profile"] ?? "") === UserProfileType::ROOT;
     }
 
+    public function is_root_super(): bool
+    {
+        return (self::$authuser["uuid"] === "sys000001" && self::$authuser["id"]==="1");
+    }
+
     public function is_sysadmin(?string $idprofile=null): bool
     {
         return $idprofile

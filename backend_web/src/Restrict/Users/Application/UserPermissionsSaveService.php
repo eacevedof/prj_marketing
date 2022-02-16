@@ -37,20 +37,22 @@ final class UserPermissionsSaveService extends AppService
 
         $this->input = $input;
         if (!$useruuid = $this->input["_useruuid"])
-            $this->_exception(__("Empty user code"),ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
+
+        $this->repouser = RF::get(UserRepository::class);
+        if (!$this->iduser = $this->repouser->get_id_by($useruuid))
+            $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
 
         $this->entityuserpermissions = MF::get(UserPermissionsEntity::class);
-        $this->repouser = RF::get(UserRepository::class);
         $this->repouserpermissions = RF::get(UserPermissionsRepository::class);
         $this->repouserpermissions->set_model($this->entityuserpermissions);
         $this->authuser = $this->auth->get_user();
-
-        if (!$this->iduser = $this->repouser->get_id_by($useruuid))
-            $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
     }
 
     private function _check_permission(): void
     {
+        if($this->auth->is_root_super()) return;
+
         if(!$this->auth->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
