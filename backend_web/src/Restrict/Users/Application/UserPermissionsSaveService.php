@@ -63,7 +63,14 @@ final class UserPermissionsSaveService extends AppService
 
     private function _check_entity_permission(array $entity): void
     {
-        return;
+        //si es super puede interactuar con la entidad
+        if ($this->auth->is_root_super()) return;
+
+        //hay que comprobar el nivel del usuario dueño de los permisos
+        $permuser = $this->repouser->get_by_id($this->iduser);
+
+        //si es un root al que se le va a cambiar los permisos
+
 
         //tengo que recuperar el usuario del permiso y ver en que nivel está y si pertenece al bow para que le pueda
         //dar permisos
