@@ -2,12 +2,12 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataUpdateController
- * @file BusinessDataUpdateController.php v1.0.0
+ * @name App\Restrict\Users\Infrastructure\Controllers\UsersBusinessDataUpdateController
+ * @file UsersBusinessDataUpdateController.php v1.0.0
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
-namespace App\Restrict\BusinessData\Infrastructure\Controllers;
+namespace App\Restrict\Users\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -23,7 +23,7 @@ use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
 
-final class BusinessDataUpdateController extends RestrictController
+final class UsersBusinessDataUpdateController extends RestrictController
 {
     private PicklistService $picklist;
 

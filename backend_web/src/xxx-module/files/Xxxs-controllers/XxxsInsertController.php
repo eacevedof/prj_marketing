@@ -4,7 +4,7 @@
  * @link eduardoaf.com
  * @name App\Restrict\Xxxs\Infrastructure\Controllers\XxxsInsertController
  * @file XxxsInsertController.php v1.0.0
- * @date 23-01-2022 10:22 SPAIN
+ * @date %DATE% SPAIN
  * @observations
  */
 namespace App\Restrict\Xxxs\Infrastructure\Controllers;
