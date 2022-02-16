@@ -66,7 +66,7 @@ final class UserPermissionsSaveService extends AppService
         //si es super puede interactuar con la entidad
         if ($this->auth->is_root_super()) return;
 
-        //hay que comprobar el nivel del usuario dueño de los permisos
+        //si el us en sesion se quiere agregar permisos
         $permuser = $this->repouser->get_by_id($this->iduser);
         if ($this->authuser["id"] === $permuser["id"])
             $this->_exception(__("You can not change your own permissions"));
