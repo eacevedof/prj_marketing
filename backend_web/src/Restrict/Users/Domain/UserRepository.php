@@ -212,7 +212,7 @@ final class UserRepository extends AppRepository
         /**
          * @var HierarchyComponent $hier
          */
-        $hier = CF::get("Hierarchy\Hierarchy");
+        $hier = CF::get(HierarchyComponent::class);
         return $hier->get_topparent($userid, $this->get_all_hierarchy());
     }
 
@@ -227,7 +227,7 @@ final class UserRepository extends AppRepository
         /**
          * @var HierarchyComponent $hier
          */
-        $hier = CF::get("Hierarchy\Hierarchy");
+        $hier = CF::get(HierarchyComponent::class);
         return $hier->get_childs($userid, $this->get_all_hierarchy());
     }
 

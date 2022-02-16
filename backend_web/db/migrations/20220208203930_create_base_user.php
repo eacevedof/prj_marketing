@@ -148,7 +148,7 @@ final class CreateBaseUser extends AbsMigration
             [
                 //secret: eaf
                 "id"=>"1", "email"=>"root@sys.sys", "description"=>"Root One", "secret"=>$secret,
-                "fullname" => "Root Admin", "uuid"=>"sys000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "fullname" => "Super Root", "uuid"=>"sys000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
                 "id_language" => "2", "id_profile" => "1", "id_parent" => "null"
             ],
             [
