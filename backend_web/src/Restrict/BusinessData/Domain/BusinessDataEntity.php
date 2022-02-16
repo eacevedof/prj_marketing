@@ -17,7 +17,7 @@ final class BusinessDataEntity extends AppEntity
     {
         $this->fields = [
         "id" => [
-            "label" => __("tr_id"),
+            "label" => __("Nº"),
             EntityType::REQUEST_KEY => "id",
             "config" => [
                 "type" => EntityType::INT,
@@ -26,7 +26,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "uuid" => [
-            "label" => __("tr_uuid"),
+            "label" => __("uuid"),
             EntityType::REQUEST_KEY => "uuid",
             "config" => [
                 "type" => EntityType::STRING,
@@ -35,7 +35,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "id_user" => [
-            "label" => __("tr_id_user"),
+            "label" => __("User"),
             EntityType::REQUEST_KEY => "id_user",
             "config" => [
                 "type" => EntityType::INT,
@@ -44,7 +44,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "slug" => [
-            "label" => __("tr_slug"),
+            "label" => __("Slug"),
             EntityType::REQUEST_KEY => "slug",
             "config" => [
                 "type" => EntityType::STRING,
@@ -53,7 +53,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "user_logo_1" => [
-            "label" => __("tr_user_logo_1"),
+            "label" => __("Url logo sm"),
             EntityType::REQUEST_KEY => "user_logo_1",
             "config" => [
                 "type" => EntityType::STRING,
@@ -62,7 +62,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "user_logo_2" => [
-            "label" => __("tr_user_logo_2"),
+            "label" => __("Url logo md"),
             EntityType::REQUEST_KEY => "user_logo_2",
             "config" => [
                 "type" => EntityType::STRING,
@@ -71,7 +71,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "user_logo_3" => [
-            "label" => __("tr_user_logo_3"),
+            "label" => __("Url logo lg"),
             EntityType::REQUEST_KEY => "user_logo_3",
             "config" => [
                 "type" => EntityType::STRING,
@@ -80,7 +80,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "url_favicon" => [
-            "label" => __("tr_url_favicon"),
+            "label" => __("Url favicon"),
             EntityType::REQUEST_KEY => "url_favicon",
             "config" => [
                 "type" => EntityType::STRING,
@@ -89,7 +89,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "head_bgcolor" => [
-            "label" => __("tr_head_bgcolor"),
+            "label" => __("Head bg color"),
             EntityType::REQUEST_KEY => "head_bgcolor",
             "config" => [
                 "type" => EntityType::STRING,
@@ -98,7 +98,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "head_color" => [
-            "label" => __("tr_head_color"),
+            "label" => __("Head color"),
             EntityType::REQUEST_KEY => "head_color",
             "config" => [
                 "type" => EntityType::STRING,
@@ -107,7 +107,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "head_bgimage" => [
-            "label" => __("tr_head_bgimage"),
+            "label" => __("Head bg image"),
             EntityType::REQUEST_KEY => "head_bgimage",
             "config" => [
                 "type" => EntityType::STRING,
@@ -116,7 +116,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "body_bgcolor" => [
-            "label" => __("tr_body_bgcolor"),
+            "label" => __("Body bg color"),
             EntityType::REQUEST_KEY => "body_bgcolor",
             "config" => [
                 "type" => EntityType::STRING,
@@ -125,7 +125,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "body_color" => [
-            "label" => __("tr_body_color"),
+            "label" => __("Body color"),
             EntityType::REQUEST_KEY => "body_color",
             "config" => [
                 "type" => EntityType::STRING,
@@ -134,7 +134,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "body_bgimage" => [
-            "label" => __("tr_body_bgimage"),
+            "label" => __("Url body bg image"),
             EntityType::REQUEST_KEY => "body_bgimage",
             "config" => [
                 "type" => EntityType::STRING,
@@ -143,7 +143,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "site" => [
-            "label" => __("tr_site"),
+            "label" => __("Url site"),
             EntityType::REQUEST_KEY => "site",
             "config" => [
                 "type" => EntityType::STRING,
@@ -152,7 +152,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "url_social_fb" => [
-            "label" => __("tr_url_social_fb"),
+            "label" => __("Url Facebook"),
             EntityType::REQUEST_KEY => "url_social_fb",
             "config" => [
                 "type" => EntityType::STRING,
@@ -161,7 +161,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "url_social_ig" => [
-            "label" => __("tr_url_social_ig"),
+            "label" => __("Url Instagram"),
             EntityType::REQUEST_KEY => "url_social_ig",
             "config" => [
                 "type" => EntityType::STRING,
@@ -170,7 +170,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "url_social_twitter" => [
-            "label" => __("tr_url_social_twitter"),
+            "label" => __("Url Twitter"),
             EntityType::REQUEST_KEY => "url_social_twitter",
             "config" => [
                 "type" => EntityType::STRING,
@@ -179,7 +179,7 @@ final class BusinessDataEntity extends AppEntity
         ],
        
         "url_social_tiktok" => [
-            "label" => __("tr_url_social_tiktok"),
+            "label" => __("Url TikTok"),
             EntityType::REQUEST_KEY => "url_social_tiktok",
             "config" => [
                 "type" => EntityType::STRING,

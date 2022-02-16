@@ -366,3 +366,145 @@ msgstr "<b>Datos creados</b>"
 
 msgid "<b>Data updated</b>"
 msgstr "<b>Datos actualizados</b>"
+
+msgid "New business data"
+msgstr "New business data"
+
+msgid "Business data info"
+msgstr "Business data info"
+
+msgid "Business data"
+msgstr "Business data"
+
+msgid "business data"
+msgstr "business data"
+
+msgid "New business data"
+msgstr "New business data"
+
+msgid "Edit business data  {0}"
+msgstr "Edit business data  {0}"
+
+msgid "Bg color"
+msgstr "Bg color"
+
+msgid "Bg image xs"
+msgstr "Bg image xs"
+
+msgid "Bg image sm"
+msgstr "Bg image sm"
+
+msgid "Bg image md"
+msgstr "Bg image md"
+
+msgid "Bg image lg"
+msgstr "Bg image lg"
+
+msgid "Bg image xl"
+msgstr "Bg image xl"
+
+msgid "Bg image xxl"
+msgstr "Bg image xxl"
+
+msgid "Max confirmed"
+msgstr "Max confirmed"
+
+msgid "General"
+msgstr "General"
+
+msgid "Design"
+msgstr "Design"
+
+msgid "Conditions"
+msgstr "Conditions"
+
+msgid "Max confirmed"
+msgstr "Max confirmed"
+
+msgid "Bg color"
+msgstr "Bg color"
+
+msgid "Bg image xs"
+msgstr "Bg image xs"
+
+msgid "Bg image sm"
+msgstr "Bg image sm"
+
+msgid "Bg image md"
+msgstr "Bg image md"
+
+msgid "Bg image lg"
+msgstr "Bg image lg"
+
+msgid "Bg image xl"
+msgstr "Bg image xl"
+
+msgid "Bg image xxl"
+msgstr "Bg image xxl"
+
+msgid "Owner"
+msgstr "Owner"
+
+msgid "tr_tab_1"
+msgstr "tr_tab_1"
+
+msgid "tr_tab_2"
+msgstr "tr_tab_2"
+
+
+msgid "Nº"
+msgstr "Nº"
+
+msgid "uuid"
+msgstr "uuid"
+
+msgid "User"
+msgstr "User"
+
+msgid "Slug"
+msgstr "Slug"
+
+msgid "Url logo sm"
+msgstr "Url logo sm"
+
+msgid "Url logo md"
+msgstr "Url logo md"
+
+msgid "Url logo lg"
+msgstr "Url logo lg"
+
+msgid "Url favicon"
+msgstr "Url favicon"
+
+msgid "Head bg color"
+msgstr "Head bg color"
+
+msgid "Head color"
+msgstr "Head color"
+
+msgid "Head bg image"
+msgstr "Head bg image"
+
+msgid "Body bg color"
+msgstr "Body bg color"
+
+msgid "Body color"
+msgstr "Body color"
+
+msgid "Url body bg image"
+msgstr "Url body bg image"
+
+msgid "Url site"
+msgstr "Url site"
+
+msgid "Url Facebook"
+msgstr "Url Facebook"
+
+msgid "Url Instagram"
+msgstr "Url Instagram"
+
+msgid "Url Twitter"
+msgstr "Url Twitter"
+
+msgid "Url TikTok"
+msgstr "Url TikTok"

@@ -48,7 +48,7 @@ final class BusinessDataInsertController extends RestrictController
 
         $this->set_template("insert")
             ->add_var(PageType::CSRF, $this->csrf->get_token())
-            ->add_var(PageType::H1, __("New businessdata"))
+            ->add_var(PageType::H1, __("New business data"))
             ->add_var("businessdatas", $this->picklist->get_businessdata_types())
             ->add_var("businessowners", $businessowners)
             ->add_var("notoryes", $this->picklist->get_not_or_yes())

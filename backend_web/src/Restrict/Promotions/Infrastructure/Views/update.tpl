@@ -15,7 +15,7 @@ $texts = [
 
     "f00" => __("Nº"),
     "f01" => __("Code"),
-    "f02" => __("Nº_owner"),
+    "f02" => __("Owner"),
     "f03" => __("External code"),
     "f04" => __("Description"),
     "f05" => __("Slug"),

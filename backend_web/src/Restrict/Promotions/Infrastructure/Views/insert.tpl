@@ -22,7 +22,7 @@ $texts = [
     "tr03" => __("Error"),
     "tr04" => __("<b>Data created</b>"),
 
-    "f02" => __("Nº_owner"),
+    "f02" => __("Owner"),
     "f03" => __("External code"),
     "f04" => __("Description"),
     "f05" => __("Slug"),

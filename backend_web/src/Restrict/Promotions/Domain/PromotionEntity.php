@@ -96,7 +96,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "bgcolor" => [
-                "label" => __("tr_bgcolor"),
+                "label" => __("Bg color"),
                 EntityType::REQUEST_KEY => "bgcolor",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -105,7 +105,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "bgimage_xs" => [
-                "label" => __("tr_bgimage_xs"),
+                "label" => __("Bg image xs"),
                 EntityType::REQUEST_KEY => "bgimage_xs",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -114,7 +114,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "bgimage_sm" => [
-                "label" => __("tr_bgimage_sm"),
+                "label" => __("Bg image sm"),
                 EntityType::REQUEST_KEY => "bgimage_sm",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -123,7 +123,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "bgimage_md" => [
-                "label" => __("tr_bgimage_md"),
+                "label" => __("Bg image md"),
                 EntityType::REQUEST_KEY => "bgimage_md",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -132,7 +132,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "bgimage_lg" => [
-                "label" => __("tr_bgimage_lg"),
+                "label" => __("Bg image lg"),
                 EntityType::REQUEST_KEY => "bgimage_lg",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -141,7 +141,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "bgimage_xl" => [
-                "label" => __("tr_bgimage_xl"),
+                "label" => __("Bg image xl"),
                 EntityType::REQUEST_KEY => "bgimage_xl",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -150,7 +150,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "bgimage_xxl" => [
-                "label" => __("tr_bgimage_xxl"),
+                "label" => __("Bg image xxl"),
                 EntityType::REQUEST_KEY => "bgimage_xxl",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -186,7 +186,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "max_confirmed" => [
-                "label" => __("tr_max_confirmed"),
+                "label" => __("Max confirmed"),
                 EntityType::REQUEST_KEY => "max_confirmed",
                 "config" => [
                     "type" => EntityType::INT,

@@ -32,8 +32,8 @@ final class BusinessDataInfoController extends RestrictController
     //@modal
     public function info(string $uuid): void
     {
-        $this->add_var(PageType::TITLE, __("BusinessData info"))
-            ->add_var(PageType::H1, __("BusinessData info"))
+        $this->add_var(PageType::TITLE, __("Business data info"))
+            ->add_var(PageType::H1, __("Business data info"))
             ->add_var("ismodal",1);
 
         try {

@@ -50,8 +50,8 @@ final class BusinessDataUpdateController extends RestrictController
             $edit = SF::get(BusinessDataInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
             $this->set_template("update")
-                ->add_var(PageType::TITLE, __("Edit businessdata {0}", $uuid))
-                ->add_var(PageType::H1, __("Edit businessdata {0}", $uuid))
+                ->add_var(PageType::TITLE, __("Edit business data  {0}", $uuid))
+                ->add_var(PageType::H1, __("Edit business data  {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
