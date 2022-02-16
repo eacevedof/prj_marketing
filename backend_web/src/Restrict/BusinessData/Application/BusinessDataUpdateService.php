@@ -1,0 +1,150 @@
+<?php
+namespace App\Restrict\BusinessData\Application;
+
+use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Shared\Infrastructure\Factories\EntityFactory as MF;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Auth\Application\AuthService;
+use App\Restrict\BusinessData\Domain\BusinessDataEntity;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Shared\Domain\Entities\FieldsValidator;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Shared\Domain\Enums\ExceptionType;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
+
+final class BusinessDataUpdateService extends AppService
+{
+    use RequestTrait;
+
+    private AuthService $auth;
+    private array $authuser;
+    private BusinessDataRepository $repobusiness_data;
+    private FieldsValidator $validator;
+    private BusinessDataEntity $entitybusiness_data;
+
+    public function __construct(array $input)
+    {
+        $this->auth = SF::get_auth();
+        $this->_check_permission();
+
+        $this->input = $input;
+        if (!$this->input["uuid"])
+            $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
+
+        $this->entitybusiness_data = MF::get(BusinessDataEntity::class);
+        $this->validator = VF::get($this->input, $this->entitybusiness_data);
+        $this->repobusiness_data = RF::get(BusinessDataRepository::class);
+        $this->repobusiness_data->set_model($this->entitybusiness_data);
+        $this->authuser = $this->auth->get_user();
+    }
+
+    private function _check_permission(): void
+    {
+        if(!$this->auth->is_user_allowed(UserPolicyType::BUSINESS_DATAS_WRITE))
+            $this->_exception(
+                __("You are not allowed to perform this operation"),
+                ExceptionType::CODE_FORBIDDEN
+            );
+    }
+
+    private function _check_entity_permission(array $entity): void
+    {
+        $idbusiness_data = $this->repobusiness_data->get_id_by($entity["uuid"]);
+        $idauthuser = (int)$this->authuser["id"];
+        if ($this->auth->is_root() || $idauthuser === $idbusiness_data) return;
+
+        if ($this->auth->is_sysadmin()
+            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
+        )
+            return;
+
+        $identowner = $this->repobusiness_data->get_idowner($idbusiness_data);
+        //si logado es propietario y el bm a modificar le pertenece
+        if ($this->auth->is_business_owner()
+            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
+            && $idauthuser === $identowner
+        )
+            return;
+
+        $this->_exception(
+            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        );
+    }
+
+    private function _skip_validation(): self
+    {
+        $this->validator->add_skip("id");
+        return $this;
+    }
+
+    private function _add_rules(): FieldsValidator
+    {
+        $this->validator
+        ->add_rule("id", "id", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("uuid", "uuid", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("id_user", "id_user", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("slug", "slug", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("user_logo_1", "user_logo_1", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("user_logo_2", "user_logo_2", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("user_logo_3", "user_logo_3", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("url_favicon", "url_favicon", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("head_bgcolor", "head_bgcolor", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("head_color", "head_color", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("head_bgimage", "head_bgimage", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("body_bgcolor", "body_bgcolor", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("body_color", "body_color", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("body_bgimage", "body_bgimage", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("site", "site", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("url_social_fb", "url_social_fb", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("url_social_ig", "url_social_ig", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("url_social_twitter", "url_social_twitter", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })->add_rule("url_social_tiktok", "url_social_tiktok", function ($data) {
+                return trim($data["value"]) ? false : __("Empty field is not allowed");
+            })
+        ;
+        return $this->validator;
+    }
+
+    public function __invoke(): array
+    {
+        if (!$update = $this->_get_req_without_ops($this->input))
+            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
+        if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
+            $this->_set_errors($errors);
+            throw new FieldsException(__("Fields validation errors"));
+        }
+
+        $update = $this->entitybusiness_data->map_request($update);
+        $this->_check_entity_permission($update);
+        $this->entitybusiness_data->add_sysupdate($update, $this->authuser["id"]);
+
+        $affected = $this->repobusiness_data->update($update);
+        return [
+            "affected" => $affected,
+            "uuid" => $update["uuid"]
+        ];
+    }
+}
