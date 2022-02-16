@@ -44,6 +44,7 @@ final class CreateBaseUserPreferences extends AbsMigration
 
     private function _initial_load(): void
     {
+        //TO-DO url_default_module = /restrict/users
     }
 
     public function down(): void
