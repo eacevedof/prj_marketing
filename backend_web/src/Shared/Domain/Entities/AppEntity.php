@@ -11,15 +11,38 @@ namespace App\Shared\Domain\Entities;
 
 use App\Shared\Domain\Enums\EntityType;
 use App\Shared\Domain\Enums\PlatformType;
-use App\Shared\Domain\Enums\RequestType;
 
 abstract class AppEntity
 {
     protected array $fields;
     protected array $pks;
 
+    protected array $sysfields = [
+        EntityType::INSERT_DATE,
+        EntityType::INSERT_USER,
+        EntityType::INSERT_PLATFORM,
+        EntityType::UPDATE_DATE,
+        EntityType::UPDATE_USER,
+        EntityType::UPDATE_PLATFORM,
+        EntityType::DELETE_DATE,
+        EntityType::DELETE_USER,
+        EntityType::DELETE_PLATFORM,
+        EntityType::PROCESS_FLAG,
+        EntityType::CRU_CSVNOTE,
+        EntityType::IS_ERP_SENT,
+        EntityType::IS_ENABLED,
+        EntityType::I,
+    ];
+
     public function get_fields(): array {return $this->fields;}
     public function get_pks(): array {return $this->pks;}
+
+    public function in_fields(string $fieldname): bool
+    {
+        if(in_array($fieldname, $this->sysfields)) return true;
+
+        return (bool) ($this->fields[$fieldname] ?? false);
+    }
 
     public function get_label(string $field): string
     {
@@ -110,4 +133,5 @@ abstract class AppEntity
         $request[EntityType::UPDATE_DATE] = $updatedate;
         return $this;
     }
+
 }//AppEntity

@@ -167,8 +167,7 @@ final class UserPermissionsSaveService extends AppService
         $update = $this->entityuserpermissions->map_request($update);
         $this->_check_entity_permission();
         $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
-
-        $affected = $this->repouserpermissions->update($update);
+        $affected = $this->repouserpermissions->set_model($this->entityuserpermissions)->update($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]
@@ -177,7 +176,7 @@ final class UserPermissionsSaveService extends AppService
     
     private function _insert(array $update): array
     {
-        $this->input["_new"] = true;
+        $update["_new"] = true;
         $this->validator = VF::get($update, $this->entityuserpermissions);
         if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
@@ -187,7 +186,7 @@ final class UserPermissionsSaveService extends AppService
         $update["uuid"] = uniqid();
         $update = $this->entityuserpermissions->map_request($update);
         $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
-        $affected = $this->repouserpermissions->insert($update);
+        $affected = $this->repouserpermissions->set_model($this->entityuserpermissions)->insert($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]
@@ -201,7 +200,7 @@ final class UserPermissionsSaveService extends AppService
 
         $this->_check_entity_permission();
 
-        $this->input["_new"] = false;
+        $update["_new"] = false;
         $this->validator = VF::get($update, $this->entityuserpermissions);
 
         return ($permissions = $this->repouserpermissions->get_all_by_user($this->iduser))

@@ -22,5 +22,12 @@ abstract class EntityType
     const DELETE_DATE = "delete_date";
     const DELETE_PLATFORM = "delete_platform";
 
+    const PROCESS_FLAG = "processflag";
+    const CRU_CSVNOTE = "cru_csvnote";
+    const IS_ERP_SENT = "is_erpsent";
+    const IS_ENABLED = "is_enabled";
+    const I = "i";
+
     const REQUEST_KEY = "requestkey";
+
 }

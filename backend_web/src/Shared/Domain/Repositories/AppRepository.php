@@ -57,6 +57,12 @@ abstract class AppRepository
         return $pks;
     }
 
+    private function _is_in_entity(string $fieldname): bool
+    {
+        if (!$this->entity) return true;
+        return $this->entity->in_fields($fieldname);
+    }
+
     public function set_model(AppEntity $entity): self
     {
         $this->entity = $entity;
@@ -82,8 +88,10 @@ abstract class AppRepository
             ->set_db($this->db)
             ->set_table($this->table);
 
-        foreach($request as $field => $value)
+        foreach($request as $field => $value) {
+            if (!$this->_is_in_entity($field)) continue;
             $qb->add_insert_fv($field, $value);
+        }
 
         $qb->insert()->exec($qb::WRITE);
         return $this->db->get_lastid();
@@ -104,12 +112,16 @@ abstract class AppRepository
             ->set_table($this->table);
 
         //valores del "SET"
-        foreach($mutables as $fieldname=>$sValue)
+        foreach($mutables as $fieldname=>$sValue) {
+            if (!$this->_is_in_entity($fieldname)) continue;
             $qb->add_update_fv($fieldname, $sValue);
+        }
 
         //valores del WHERE
-        foreach($pks as $fieldname=>$sValue)
+        foreach($pks as $fieldname=>$sValue) {
+            if (!$this->_is_in_entity($fieldname)) continue;
             $qb->add_pk_fv($fieldname, $sValue);
+        }
 
         $qb->update()->exec($qb::WRITE);
         return $this->db->get_affected();
@@ -126,8 +138,10 @@ abstract class AppRepository
             ->set_table($this->table);
 
         //valores del WHERE
-        foreach($pks as $fieldname=>$sValue)
+        foreach($pks as $fieldname=>$sValue) {
+            if (!$this->_is_in_entity($fieldname)) continue;
             $qb->add_pk_fv($fieldname, $sValue);
+        }
 
         $qb->delete()->exec($qb::WRITE);
         return $this->db->get_affected();
