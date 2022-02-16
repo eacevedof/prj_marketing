@@ -142,7 +142,7 @@ final class UserPermissionsSaveService extends AppService
 
     private function _is_valid_json(string $string): bool
     {
-        json_decode($string, 1);
+        json_decode($string);
         return json_last_error() === JSON_ERROR_NONE;
     }
 
