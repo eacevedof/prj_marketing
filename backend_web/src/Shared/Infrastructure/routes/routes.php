@@ -32,6 +32,17 @@ return [
     ["url"=>"/restrict/promotions/?int:page","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"index"],
     ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"search"],
 
+    //@business data
+    ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInfoController", "method"=>"info"],
+    ["url"=>"/restrict/promotions/create","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInsertController", "method"=>"create"],
+    ["url"=>"/restrict/promotions/insert","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInsertController", "method"=>"insert", "allowed"=>["post"]],
+    ["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataUpdateController", "method"=>"edit"],
+    ["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataUpdateController", "method"=>"update", "allowed"=>["put"]],
+    ["url"=>"/restrict/promotions/delete/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataDeleteController", "method"=>"remove", "allowed"=>["delete"]],
+    ["url"=>"/restrict/promotions/undelete/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
+    ["url"=>"/restrict/promotions/?int:page","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataSearchController", "method"=>"index"],
+    ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataSearchController", "method"=>"search"],
+
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
 // APIFY
