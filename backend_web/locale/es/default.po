@@ -445,13 +445,6 @@ msgstr "Bg image xxl"
 msgid "Owner"
 msgstr "Owner"
 
-msgid "tr_tab_1"
-msgstr "tr_tab_1"
-
-msgid "tr_tab_2"
-msgstr "tr_tab_2"
-
-
 msgid "Nº"
 msgstr "Nº"
 
