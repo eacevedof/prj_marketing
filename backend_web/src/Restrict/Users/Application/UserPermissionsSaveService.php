@@ -144,39 +144,33 @@ final class UserPermissionsSaveService extends AppService
         return json_last_error() === JSON_ERROR_NONE;
     }
 
-    public function __invoke(): array
+    private function _insert(): array
     {
-        //hace trim
-        if (!$update = $this->_get_req_without_ops($this->input))
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
-        $this->input["_new"] = false;
+        $this->input["_new"] = true;
         $this->validator = VF::get($this->input, $this->entityuserpermissions);
-        if(!$permissions = $this->repouserpermissions->get_all_by_user($this->iduser)) {
-            $this->input["_new"] = true;
-            $this->validator = VF::get($this->input, $this->entityuserpermissions);
 
-            if ($errors = $this->_skip_validation_create()->_add_rules()->get_errors()) {
-                $this->_set_errors($errors);
-                throw new FieldsException(__("Fields validation errors"));
-            }
-            $update["id_user"] = $this->iduser;
-            $update["uuid"] = uniqid();
-            $update = $this->entityuserpermissions->map_request($update);
-            $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
-            $affected = $this->repouserpermissions->insert($update);
-            return [
-                "affected" => $affected,
-                "uuid" => $update["uuid"]
-            ];
+        if ($errors = $this->_skip_validation_create()->_add_rules()->get_errors()) {
+            $this->_set_errors($errors);
+            throw new FieldsException(__("Fields validation errors"));
         }
+        $update["id_user"] = $this->iduser;
+        $update["uuid"] = uniqid();
+        $update = $this->entityuserpermissions->map_request($update);
+        $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
+        $affected = $this->repouserpermissions->insert($update);
+        return [
+            "affected" => $affected,
+            "uuid" => $update["uuid"]
+        ];
+    }
 
+    private function _update(array $update, array $permissions): array
+    {
         if ($permissions["id"] !== $update["id"])
             $this->_exception(
                 __("This permission does not belong to user {0}", $this->input["_useruuid"]),
                 ExceptionType::CODE_BAD_REQUEST
             );
-
 
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
@@ -192,5 +186,17 @@ final class UserPermissionsSaveService extends AppService
             "affected" => $affected,
             "uuid" => $update["uuid"]
         ];
+    }
+
+    public function __invoke(): array
+    {
+        if (!$update = $this->_get_req_without_ops($this->input))
+            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
+        $this->input["_new"] = false;
+        $this->validator = VF::get($this->input, $this->entityuserpermissions);
+        return ($permissions = $this->repouserpermissions->get_all_by_user($this->iduser))
+            ? $this->_update($update, $permissions)
+            : $this->_insert();
     }
 }
