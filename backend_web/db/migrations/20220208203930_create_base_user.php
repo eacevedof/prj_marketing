@@ -152,7 +152,7 @@ final class CreateBaseUser extends AbsMigration
                 "id_language" => "2", "id_profile" => "1", "id_parent" => "null"
             ],
             [
-                "id"=>"2", "email"=>"Sys Admin@sys.sys", "description"=>"Sys One", "secret"=>$secret,
+                "id"=>"2", "email"=>"sysadm@sys.sys", "description"=>"Sys One", "secret"=>$secret,
                 "fullname" => "Root Admin", "uuid"=>"sys000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
                 "id_language" => "2", "id_profile" => "2", "id_parent" => "null"
             ],
