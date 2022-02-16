@@ -46,7 +46,7 @@ final class LoginService extends AppService
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exception(__("Unauthorized"), ExceptionType::CODE_UNAUTHORIZED);
 
-        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->repopermission->get_by_user($iduser = $aruser["id"]);
+        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->repopermission->get_by_user($iduser = (int) $aruser["id"]);
 
         $this->session
             ->add(SessionType::AUTH_USER, $aruser)

@@ -86,8 +86,9 @@ final class ComponentMysql
         $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         return $pdo;
     }
-    
-    public function query(string $sql, ?int $icol=null, ?int $irow=null): array|string
+
+    //? en return pq puede que el valor de la celda sea null
+    public function query(string $sql, ?int $icol=null, ?int $irow=null): ?array|?string
     {
         $this->foundrows = 0;
         $pdo = $this->_get_pdo();
