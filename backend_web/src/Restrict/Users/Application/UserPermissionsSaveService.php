@@ -42,7 +42,8 @@ final class UserPermissionsSaveService extends AppService
         $this->repouser = RF::get(UserRepository::class);
         if (!$this->iduser = $this->repouser->get_id_by($useruuid))
             $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
-
+        if ($this->iduser === 1)
+            $this->_exception(__("You can not add permissions to this user"));
         $this->entityuserpermissions = MF::get(UserPermissionsEntity::class);
         $this->repouserpermissions = RF::get(UserPermissionsRepository::class);
         $this->repouserpermissions->set_model($this->entityuserpermissions);
@@ -88,7 +89,7 @@ final class UserPermissionsSaveService extends AppService
         );
     }
 
-    private function _skip_validation_create(): self
+    private function _skip_validation_insert(): self
     {
         $this->validator
             ->add_skip("id")
@@ -103,18 +104,18 @@ final class UserPermissionsSaveService extends AppService
         $this->validator
             ->add_rule("id", "id", function ($data) {
                 if ($data["data"]["_new"]) return false;
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("uuid", "uuid", function ($data) {
                 if ($data["data"]["_new"]) return false;
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_user", "id_user", function ($data) {
                 if ($data["data"]["_new"]) return false;
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("json_rw", "json_rw", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("json_rw", "valid_json", function ($data){
                 return $this->_is_valid_json($data["value"]) ? false : __("Invalid Json document");
@@ -131,10 +132,11 @@ final class UserPermissionsSaveService extends AppService
                 }
                 if (!$invalid) return false;
                 $invalid = implode(", ",$invalid);
-                $valid = implode(", ", $allpolicies);
-                return __("Invalid policies: {0} <br/>Valid are: {1}", $invalid, $valid);
+                $valid = implode("<br/>", $allpolicies);
+                return __("Invalid policies: {0} <br/>Valid are:<br/>{1}", $invalid, $valid);
             })
         ;
+        
         return $this->validator;
     }
 
@@ -142,26 +144,6 @@ final class UserPermissionsSaveService extends AppService
     {
         $r = json_decode($string, 1);
         return json_last_error() === JSON_ERROR_NONE;
-    }
-
-    private function _insert(): array
-    {
-        $this->input["_new"] = true;
-        $this->validator = VF::get($this->input, $this->entityuserpermissions);
-
-        if ($errors = $this->_skip_validation_create()->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
-            throw new FieldsException(__("Fields validation errors"));
-        }
-        $update["id_user"] = $this->iduser;
-        $update["uuid"] = uniqid();
-        $update = $this->entityuserpermissions->map_request($update);
-        $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
-        $affected = $this->repouserpermissions->insert($update);
-        return [
-            "affected" => $affected,
-            "uuid" => $update["uuid"]
-        ];
     }
 
     private function _update(array $update, array $permissions): array
@@ -172,6 +154,7 @@ final class UserPermissionsSaveService extends AppService
                 ExceptionType::CODE_BAD_REQUEST
             );
 
+        //no se hace skip pq se tiene que cumplir todo
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
@@ -182,6 +165,26 @@ final class UserPermissionsSaveService extends AppService
         $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repouserpermissions->update($update);
+        return [
+            "affected" => $affected,
+            "uuid" => $update["uuid"]
+        ];
+    }
+    
+    private function _insert(): array
+    {
+        $this->input["_new"] = true;
+        $this->validator = VF::get($this->input, $this->entityuserpermissions);
+
+        if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
+            $this->_set_errors($errors);
+            throw new FieldsException(__("Fields validation errors"));
+        }
+        $update["id_user"] = $this->iduser;
+        $update["uuid"] = uniqid();
+        $update = $this->entityuserpermissions->map_request($update);
+        $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
+        $affected = $this->repouserpermissions->insert($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]
