@@ -68,10 +68,10 @@ final class UserPermissionsSaveService extends AppService
 
         //si el us en sesion se quiere agregar permisos
         $permuser = $this->repouser->get_by_id($this->iduser);
-        if ($this->authuser["id"] === $permuser["id"])
+        if ($this->authuser["id"] === $this->iduser)
             $this->_exception(__("You can not change your own permissions"));
 
-        //un root puede cambiar el de cualquiera
+        //un root puede cambiar el de cualquiera (menos el de el mismo, if anterior)
         if ($this->auth->is_root()) return;
 
         //un sysadmin puede cambiar solo a los que tiene debajo
@@ -84,6 +84,8 @@ final class UserPermissionsSaveService extends AppService
             && ((int) $this->authuser["id"]) === $identowner
         )
             return;
+
+        //to-do, solo se pueden agregar los permisos que tiene el owner ninguno más
 
         $this->_exception(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
