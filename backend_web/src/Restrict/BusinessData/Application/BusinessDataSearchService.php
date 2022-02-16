@@ -35,8 +35,8 @@ final class BusinessDataSearchService extends AppService
     private function _check_permission(): void
     {
         if(!(
-            $this->auth->is_user_allowed(UserPolicyType::BUSINESS_DATAS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::BUSINESS_DATAS_WRITE)
+            $this->auth->is_user_allowed(UserPolicyType::BUSINESSDATA_READ)
+            || $this->auth->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE)
         ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
@@ -83,12 +83,12 @@ final class BusinessDataSearchService extends AppService
                 ->add_action("undel")
             ;
 
-        if($this->auth->is_user_allowed(UserPolicyType::BUSINESS_DATAS_WRITE))
+        if($this->auth->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE))
             $dthelp->add_action("add")
                 ->add_action("edit")
                 ->add_action("del");
 
-        if($this->auth->is_user_allowed(UserPolicyType::BUSINESS_DATAS_READ))
+        if($this->auth->is_user_allowed(UserPolicyType::BUSINESSDATA_READ))
             $dthelp->add_action("show");
 
         return $dthelp;
