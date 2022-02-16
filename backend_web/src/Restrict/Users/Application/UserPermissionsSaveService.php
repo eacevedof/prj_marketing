@@ -175,7 +175,7 @@ final class UserPermissionsSaveService extends AppService
         ];
     }
     
-    private function _insert(): array
+    private function _insert(array $update): array
     {
         $this->input["_new"] = true;
         $this->validator = VF::get($this->input, $this->entityuserpermissions);
@@ -206,6 +206,6 @@ final class UserPermissionsSaveService extends AppService
 
         return ($permissions = $this->repouserpermissions->get_all_by_user($this->iduser))
             ? $this->_update($update, $permissions)
-            : $this->_insert();
+            : $this->_insert($update);
     }
 }
