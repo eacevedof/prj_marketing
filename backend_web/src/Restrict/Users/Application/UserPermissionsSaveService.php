@@ -178,7 +178,7 @@ final class UserPermissionsSaveService extends AppService
     private function _insert(array $update): array
     {
         $this->input["_new"] = true;
-        $this->validator = VF::get($this->input, $this->entityuserpermissions);
+        $this->validator = VF::get($update, $this->entityuserpermissions);
         if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
@@ -202,7 +202,7 @@ final class UserPermissionsSaveService extends AppService
         $this->_check_entity_permission();
 
         $this->input["_new"] = false;
-        $this->validator = VF::get($this->input, $this->entityuserpermissions);
+        $this->validator = VF::get($update, $this->entityuserpermissions);
 
         return ($permissions = $this->repouserpermissions->get_all_by_user($this->iduser))
             ? $this->_update($update, $permissions)
