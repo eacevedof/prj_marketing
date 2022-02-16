@@ -25,7 +25,7 @@ final class BusinessDataRepository extends AppRepository
     public function __construct()
     {
         $this->db = DbF::get_by_default();
-        $this->table = "app_business_data";
+        $this->table = "app_businessdata";
         $this->joins = [
             "fields" => [
                 "u2.description"  => "e_deletedby",
@@ -70,7 +70,7 @@ final class BusinessDataRepository extends AppRepository
     public function search(array $search): array
     {
         $qb = $this->_get_qbuilder()
-            ->set_comment("business_data.search")
+            ->set_comment("businessdata.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
             ->set_getfields([
@@ -116,7 +116,7 @@ final class BusinessDataRepository extends AppRepository
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_qbuilder()
-            ->set_comment("business_data.get_info(uuid)")
+            ->set_comment("businessdata.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",

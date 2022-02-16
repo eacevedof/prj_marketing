@@ -15,7 +15,7 @@ use App\Shared\Domain\Enums\ExceptionType;
 final class BusinessDataSearchService extends AppService
 {
     private AuthService $auth;
-    private BusinessDataRepository $repobusiness_data;
+    private BusinessDataRepository $repobusinessdata;
 
     public function __construct(array $input)
     {
@@ -23,13 +23,13 @@ final class BusinessDataSearchService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        $this->repobusiness_data = RF::get(BusinessDataRepository::class);
+        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
     }
 
     public function __invoke(): array
     {
         $search = CF::get_datatable($this->input)->get_search();
-        return $this->repobusiness_data->set_auth($this->auth)->search($search);
+        return $this->repobusinessdata->set_auth($this->auth)->search($search);
     }
 
     private function _check_permission(): void

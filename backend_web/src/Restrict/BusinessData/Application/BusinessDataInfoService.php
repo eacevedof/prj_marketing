@@ -13,7 +13,7 @@ final class BusinessDataInfoService extends AppService
 {
     private AuthService $auth;
     private array $authuser;
-    private BusinessDataRepository $repobusiness_data;
+    private BusinessDataRepository $repobusinessdata;
 
     public function __construct(array $input)
     {
@@ -21,10 +21,10 @@ final class BusinessDataInfoService extends AppService
         $this->_check_permission();
 
         if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No {0} code provided", "business_data"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("No {0} code provided", "businessdata"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->repobusiness_data = RF::get(BusinessDataRepository::class);
+        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
     }
 
     private function _check_permission(): void
@@ -60,26 +60,26 @@ final class BusinessDataInfoService extends AppService
 
     public function __invoke(): array
     {
-        if(!$business_data = $this->repobusiness_data->get_info($this->input))
+        if(!$businessdata = $this->repobusinessdata->get_info($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("Business data"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
 
-        $this->_check_entity_permission($business_data);
+        $this->_check_entity_permission($businessdata);
         return [
-            "business_data" => $business_data
+            "businessdata" => $businessdata
         ];
     }
 
     public function get_for_edit(): array
     {
-        if(!$business_data = $this->repobusiness_data->get_info($this->input))
+        if(!$businessdata = $this->repobusinessdata->get_info($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("Business data"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
-        $this->_check_entity_permission($business_data);
-        return $business_data;
+        $this->_check_entity_permission($businessdata);
+        return $businessdata;
     }
 }

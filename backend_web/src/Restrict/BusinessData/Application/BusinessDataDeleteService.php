@@ -15,8 +15,8 @@ final class BusinessDataDeleteService extends AppService
 {
     private AuthService $auth;
     private array $authuser;
-    private BusinessDataRepository $repobusiness_data;
-    private BusinessDataEntity $entitybusiness_data;
+    private BusinessDataRepository $repobusinessdata;
+    private BusinessDataEntity $entitybusinessdata;
 
     public function __construct(array $input)
     {
@@ -28,8 +28,8 @@ final class BusinessDataDeleteService extends AppService
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->entitybusiness_data = MF::get(BusinessDataEntity::class);
-        $this->repobusiness_data = RF::get(BusinessDataRepository::class)->set_model($this->entitybusiness_data);
+        $this->entitybusinessdata = MF::get(BusinessDataEntity::class);
+        $this->repobusinessdata = RF::get(BusinessDataRepository::class)->set_model($this->entitybusinessdata);
     }
 
     private function _check_permission(): void
@@ -68,25 +68,25 @@ final class BusinessDataDeleteService extends AppService
     public function __invoke(): array
     {
         $entity = $this->input;
-        if (!$idbusiness_data = $this->repobusiness_data->get_id_by($entity["uuid"]))
+        if (!$idbusinessdata = $this->repobusinessdata->get_id_by($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
-        $entity["id"] = $idbusiness_data;
-        if (!$this->entitybusiness_data->do_match_keys($entity))
+        $entity["id"] = $idbusinessdata;
+        if (!$this->entitybusinessdata->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        if ($this->repobusiness_data->is_deleted($idbusiness_data))
+        if ($this->repobusinessdata->is_deleted($idbusinessdata))
             $this->_exception(
                 __("This item is already deleted {0}", $entity["uuid"]),
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
 
-        $entity = $this->repobusiness_data->get_by_id($idbusiness_data);
+        $entity = $this->repobusinessdata->get_by_id($idbusinessdata);
         $this->_check_entity_delete_permission($entity);
 
-        $updatedate = $this->repobusiness_data->get_sysupdate($entity);
-        $this->entitybusiness_data->add_sysdelete($entity, $updatedate, $this->authuser["id"]);
-        $affected = $this->repobusiness_data->update($entity);
+        $updatedate = $this->repobusinessdata->get_sysupdate($entity);
+        $this->entitybusinessdata->add_sysdelete($entity, $updatedate, $this->authuser["id"]);
+        $affected = $this->repobusinessdata->update($entity);
         return [
             "affected" => $affected,
             "uuid" => $entity["uuid"]
@@ -96,35 +96,35 @@ final class BusinessDataDeleteService extends AppService
     public function undelete(): array
     {
         $entity = $this->input;
-        if (!$idbusiness_data = $this->repobusiness_data->get_id_by($entity["uuid"]))
+        if (!$idbusinessdata = $this->repobusinessdata->get_id_by($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
-        $entity["id"] = $idbusiness_data;
-        if (!$this->entitybusiness_data->do_match_keys($entity))
+        $entity["id"] = $idbusinessdata;
+        if (!$this->entitybusinessdata->do_match_keys($entity))
             $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
 
-        if (!$this->repobusiness_data->is_deleted($idbusiness_data))
+        if (!$this->repobusinessdata->is_deleted($idbusinessdata))
             $this->_exception(
                 __("Is not possible to restore entity {0}", $entity["uuid"]),
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
 
-        $entity = $this->repobusiness_data->get_by_id($idbusiness_data);
+        $entity = $this->repobusinessdata->get_by_id($idbusinessdata);
         //todo revisar si es necesario
         $this->_check_entity_undelete_permission($entity);
         $idauthuser = $this->authuser["id"];
 
         $entity = [
             "uuid" => $entity["uuid"],
-            "id" => $idbusiness_data,
+            "id" => $idbusinessdata,
             "delete_date" => null,
             "delete_user" => null,
             "delete_platform" => null,
-            "cru_csvnote" => $this->repobusiness_data->get_csvcru($entity, $idauthuser),
+            "cru_csvnote" => $this->repobusinessdata->get_csvcru($entity, $idauthuser),
         ];
 
-        $this->entitybusiness_data->add_sysupdate($entity, $idauthuser);
-        $affected = $this->repobusiness_data->update($entity);
+        $this->entitybusinessdata->add_sysupdate($entity, $idauthuser);
+        $affected = $this->repobusinessdata->update($entity);
 
         return [
             "affected" => $affected,

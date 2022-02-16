@@ -46,7 +46,7 @@ final class BusinessDataSearchController extends RestrictController
             $this->response->location(UrlType::ERROR_FORBIDDEN);
         }
         catch (Exception $e) {
-            $this->logerr($e->getMessage(), "business_datascontroller.index");
+            $this->logerr($e->getMessage(), "businessdatascontroller.index");
             $this->response->location(UrlType::ERROR_INTERNAL);
         }
 

@@ -22,9 +22,9 @@ final class BusinessDataUpdateService extends AppService
 
     private AuthService $auth;
     private array $authuser;
-    private BusinessDataRepository $repobusiness_data;
+    private BusinessDataRepository $repobusinessdata;
     private FieldsValidator $validator;
-    private BusinessDataEntity $entitybusiness_data;
+    private BusinessDataEntity $entitybusinessdata;
 
     public function __construct(array $input)
     {
@@ -35,10 +35,10 @@ final class BusinessDataUpdateService extends AppService
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->entitybusiness_data = MF::get(BusinessDataEntity::class);
-        $this->validator = VF::get($this->input, $this->entitybusiness_data);
-        $this->repobusiness_data = RF::get(BusinessDataRepository::class);
-        $this->repobusiness_data->set_model($this->entitybusiness_data);
+        $this->entitybusinessdata = MF::get(BusinessDataEntity::class);
+        $this->validator = VF::get($this->input, $this->entitybusinessdata);
+        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
+        $this->repobusinessdata->set_model($this->entitybusinessdata);
         $this->authuser = $this->auth->get_user();
     }
 
@@ -53,16 +53,16 @@ final class BusinessDataUpdateService extends AppService
 
     private function _check_entity_permission(array $entity): void
     {
-        $idbusiness_data = $this->repobusiness_data->get_id_by($entity["uuid"]);
+        $idbusinessdata = $this->repobusinessdata->get_id_by($entity["uuid"]);
         $idauthuser = (int)$this->authuser["id"];
-        if ($this->auth->is_root() || $idauthuser === $idbusiness_data) return;
+        if ($this->auth->is_root() || $idauthuser === $idbusinessdata) return;
 
         if ($this->auth->is_sysadmin()
             && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
         )
             return;
 
-        $identowner = $this->repobusiness_data->get_idowner($idbusiness_data);
+        $identowner = $this->repobusinessdata->get_idowner($idbusinessdata);
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
             && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
@@ -137,11 +137,11 @@ final class BusinessDataUpdateService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entitybusiness_data->map_request($update);
+        $update = $this->entitybusinessdata->map_request($update);
         $this->_check_entity_permission($update);
-        $this->entitybusiness_data->add_sysupdate($update, $this->authuser["id"]);
+        $this->entitybusinessdata->add_sysupdate($update, $this->authuser["id"]);
 
-        $affected = $this->repobusiness_data->update($update);
+        $affected = $this->repobusinessdata->update($update);
         return [
             "affected" => $affected,
             "uuid" => $update["uuid"]

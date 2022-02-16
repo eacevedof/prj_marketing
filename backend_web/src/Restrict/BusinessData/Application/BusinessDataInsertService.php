@@ -25,9 +25,9 @@ final class BusinessDataInsertService extends AppService
 
     private AuthService $auth;
     private array $authuser;
-    private BusinessDataRepository $repobusiness_data;
+    private BusinessDataRepository $repobusinessdata;
     private FieldsValidator $validator;
-    private BusinessDataEntity $entitybusiness_data;
+    private BusinessDataEntity $entitybusinessdata;
     private TextComponent $textformat;
     private DateComponent $datecomp;
     private ArrayRepository $repoapparray;
@@ -40,10 +40,10 @@ final class BusinessDataInsertService extends AppService
         $this->datecomp = CF::get(DateComponent::class);
         $this->_map_dates($input);
         $this->input = $input;
-        $this->entitybusiness_data = MF::get(BusinessDataEntity::class);
-        $this->validator = VF::get($this->input, $this->entitybusiness_data);
+        $this->entitybusinessdata = MF::get(BusinessDataEntity::class);
+        $this->validator = VF::get($this->input, $this->entitybusinessdata);
 
-        $this->repobusiness_data = RF::get(BusinessDataRepository::class);
+        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
         $this->repoapparray = RF::get(ArrayRepository::class);
         $this->authuser = $this->auth->get_user();
         $this->textformat = CF::get(TextComponent::class);
@@ -130,13 +130,13 @@ final class BusinessDataInsertService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $insert = $this->entitybusiness_data->map_request($insert);
+        $insert = $this->entitybusinessdata->map_request($insert);
         $insert["uuid"] = uniqid();
         $insert["slug"] = $this->textformat->set_text($insert["description"])->slug();
         if (!$this->auth->is_system()) $insert["id_owner"] = $this->auth->get_idowner();
 
-        $this->entitybusiness_data->add_sysinsert($insert, $this->authuser["id"]);
-        $id = $this->repobusiness_data->insert($insert);
+        $this->entitybusinessdata->add_sysinsert($insert, $this->authuser["id"]);
+        $id = $this->repobusinessdata->insert($insert);
 
         return [
             "id" => $id,
