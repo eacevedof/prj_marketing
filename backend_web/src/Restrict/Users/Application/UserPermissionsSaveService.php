@@ -167,9 +167,9 @@ final class UserPermissionsSaveService extends AppService
         $update = $this->entityuserpermissions->map_request($update);
         $this->_check_entity_permission();
         $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
-        $affected = $this->repouserpermissions->set_model($this->entityuserpermissions)->update($update);
+        $this->repouserpermissions->set_model($this->entityuserpermissions)->update($update);
         return [
-            "affected" => $affected,
+            "id" => $permissions["id"],
             "uuid" => $update["uuid"]
         ];
     }
@@ -186,9 +186,9 @@ final class UserPermissionsSaveService extends AppService
         $update["uuid"] = uniqid();
         $update = $this->entityuserpermissions->map_request($update);
         $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
-        $affected = $this->repouserpermissions->set_model($this->entityuserpermissions)->insert($update);
+        $id = $this->repouserpermissions->set_model($this->entityuserpermissions)->insert($update);
         return [
-            "affected" => $affected,
+            "id" => $id,
             "uuid" => $update["uuid"]
         ];
     }

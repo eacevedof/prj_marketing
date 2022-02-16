@@ -53,7 +53,6 @@ final class UsersUpdateController extends RestrictController
             $userpermission = SF::get(UserPermissionsInfoService::class);
 
             $result = $edit->get_for_edit();
-
             $h1 = "{$result["description"]} ($uuid)";
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit user {0}", $uuid))

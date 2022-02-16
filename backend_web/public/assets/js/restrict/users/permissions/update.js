@@ -173,6 +173,16 @@ export class FormUserPermissionsUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
+    console.log(response,"RESPONSE :)")
+    //solo si era nuevo permiso
+    if (!this.fields.id) {
+      this.fields.id = response.result.id
+      this.fields.uuid = response.result.uuid
+
+      this._id = this.fields.id
+      this._uuid = this.fields.uuid
+      console.log(this._id, this._uuid, "id e uuid")
+    }
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
       .set_inner(this.texts.tr04)

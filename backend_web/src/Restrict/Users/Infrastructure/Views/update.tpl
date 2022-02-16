@@ -7,7 +7,7 @@
 use App\Restrict\Users\Domain\Enums\UserProfileType;
 $isbow = $result["id_profile"] === UserProfileType::BUSINESS_OWNER;
 
-$texts = [
+$textuser = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
     "tr02" => __("Cancel"),
@@ -27,7 +27,8 @@ $texts = [
     "f10" => __("Country"),
 ];
 
-$result = [
+$datauser = [
+    "id" => $result["id"] ?? "",
     "uuid" => $uuid,
     "email" => $result["email"] ?? "",
     "password" => "    ",
@@ -62,9 +63,9 @@ $textpermission = [
 ];
 
 $datapermission = [
+    "id_user" => $result["id"] ?? "",
     "id" => $permissions["id"] ?? "",
     "uuid" => $permissions["uuid"] ?? "",
-    "id_user" => $permissions["id_user"] ?? "",
     "json_rw" => $permissions["json_rw"] ?? "[]",
 ];
 ?>
@@ -115,9 +116,9 @@ $datapermission = [
         <form-user-update
           csrf=<?$this->_echo_js($csrf);?>
 
-          texts="<?$this->_echo_jslit($texts);?>"
+          texts="<?$this->_echo_jslit($textuser);?>"
 
-          fields="<?$this->_echo_jslit($result);?>"
+          fields="<?$this->_echo_jslit($datauser);?>"
         />
       </div>
 
