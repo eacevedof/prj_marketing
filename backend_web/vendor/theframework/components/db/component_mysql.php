@@ -88,7 +88,7 @@ final class ComponentMysql
     }
 
     //? en return pq puede que el valor de la celda sea null
-    public function query(string $sql, ?int $icol=null, ?int $irow=null): ?array|?string
+    public function query(string $sql, ?int $icol=null, ?int $irow=null): array|string|null
     {
         $this->foundrows = 0;
         $pdo = $this->_get_pdo();
