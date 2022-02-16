@@ -61,33 +61,27 @@ final class UserPermissionsSaveService extends AppService
             );
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _check_entity_permission(): void
     {
         //si es super puede interactuar con la entidad
         if ($this->auth->is_root_super()) return;
 
         //hay que comprobar el nivel del usuario dueño de los permisos
         $permuser = $this->repouser->get_by_id($this->iduser);
+        if ($this->authuser["id"] === $permuser["id"])
+            $this->_exception(__("You can not change your own permissions"));
 
-        //si es un root al que se le va a cambiar los permisos
+        //un root puede cambiar el de cualquiera
+        if ($this->auth->is_root()) return;
 
+        //un sysadmin puede cambiar solo a los que tiene debajo
+        if ($this->auth->is_sysadmin() && $this->auth->is_business($permuser["id_profile"])) return;
 
-        //tengo que recuperar el usuario del permiso y ver en que nivel está y si pertenece al bow para que le pueda
-        //dar permisos
-        $iduserpermission = $this->repouserpermissions->get_id_by($entity["uuid"]);
-        $idauthuser = (int)$this->authuser["id"];
-        if ($this->auth->is_root() || $idauthuser === $iduserpermission) return;
-
-        if ($this->auth->is_sysadmin()
-            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
-        )
-            return;
-
-        $identowner = $this->repouserpermissions->get_idowner($iduserpermission);
+        $identowner = $this->repouser->get_idowner($this->iduser);
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
-            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
-            && $idauthuser === $identowner
+            && $this->auth->is_business_manager($permuser["id_profile"])
+            && ((int) $this->authuser["id"]) === $identowner
         )
             return;
 
@@ -168,7 +162,7 @@ final class UserPermissionsSaveService extends AppService
         }
 
         $update = $this->entityuserpermissions->map_request($update);
-        $this->_check_entity_permission($update);
+        $this->_check_entity_permission();
         $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repouserpermissions->update($update);
@@ -182,7 +176,6 @@ final class UserPermissionsSaveService extends AppService
     {
         $this->input["_new"] = true;
         $this->validator = VF::get($this->input, $this->entityuserpermissions);
-
         if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
@@ -203,8 +196,11 @@ final class UserPermissionsSaveService extends AppService
         if (!$update = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
+        $this->_check_entity_permission();
+
         $this->input["_new"] = false;
         $this->validator = VF::get($this->input, $this->entityuserpermissions);
+
         return ($permissions = $this->repouserpermissions->get_all_by_user($this->iduser))
             ? $this->_update($update, $permissions)
             : $this->_insert();
