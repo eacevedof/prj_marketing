@@ -34,13 +34,13 @@ final class CreateAppPromotionUrls extends AbsMigration
             "comment" => "app_array.type='promotion' ticktock, fb, twitter, instagram, other",
         ])
         ->addColumn("url_design", "string", [
-            "limit" => 500,
+            "limit" => 300,
             "null" => true,
             "default" => null,
             "comment" => "la url del diseño en la red social"
         ])
         ->addColumn("url_promotion", "string", [
-            "limit" => 1000,
+            "limit" => 300,
             "null" => true,
             "default" => null,
             "comment" => "la url de la promoción en la red social"
