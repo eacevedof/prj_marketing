@@ -1,4 +1,5 @@
 ### To-Do
+- platform console y emular auth user en console
 - metricas en promocion (viewed, subscribed, confirmed, executed)
 - tabla de acciones para promociones? permitiria sacar un informe más granular
 - url modal launcher view=xxx&uuid=xxx&tab=xxx
