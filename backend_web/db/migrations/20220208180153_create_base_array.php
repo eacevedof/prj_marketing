@@ -64,6 +64,7 @@ final class CreateBaseArray extends AbsMigration
             "INSERT INTO base_array ( id,type,id_pk,description,order_by) VALUES ('7','platform','0','etl','100');",
             "INSERT INTO base_array ( id,type,id_pk,description,order_by) VALUES ('8','platform','1','web','100');",
             "INSERT INTO base_array ( id,type,id_pk,description,order_by) VALUES ('9','platform','2','mobile','100');",
+            "INSERT INTO base_array ( id,type,id_pk,description,order_by) VALUES ('10','platform','3','console','100');",
         ];
         foreach ($sqls as $sql)
             $this->execute($sql);
