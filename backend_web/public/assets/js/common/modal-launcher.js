@@ -36,3 +36,16 @@ export default () => {
   //final = "/restrict/users/info/620d471857bc4".concat(url)
   _open_modal_by_get(final)
 }
+
+export const show_tab = () => {
+  const url = window.location.search;
+  if (!url) return
+  const urlparams = new URLSearchParams(url)
+  const tab = urlparams.get("tab")
+  if (!tab) return
+
+  const $tab = document.querySelector(`a[href="#${tab}"]`)
+  console.log($tab, "TAB modal-launcher")
+  if (!$tab) return;
+  $tab.click()
+}

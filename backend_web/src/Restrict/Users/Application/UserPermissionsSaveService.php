@@ -44,9 +44,9 @@ final class UserPermissionsSaveService extends AppService
             $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
         if ($this->iduser === 1)
             $this->_exception(__("You can not add permissions to this user"));
+
         $this->entityuserpermissions = MF::get(UserPermissionsEntity::class);
-        $this->repouserpermissions = RF::get(UserPermissionsRepository::class);
-        $this->repouserpermissions->set_model($this->entityuserpermissions);
+        $this->repouserpermissions = RF::get(UserPermissionsRepository::class)->set_model($this->entityuserpermissions);
         $this->authuser = $this->auth->get_user();
     }
 
@@ -167,7 +167,7 @@ final class UserPermissionsSaveService extends AppService
         $update = $this->entityuserpermissions->map_request($update);
         $this->_check_entity_permission();
         $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
-        $this->repouserpermissions->set_model($this->entityuserpermissions)->update($update);
+        $this->repouserpermissions->update($update);
         return [
             "id" => $permissions["id"],
             "uuid" => $update["uuid"]
@@ -186,7 +186,7 @@ final class UserPermissionsSaveService extends AppService
         $update["uuid"] = uniqid();
         $update = $this->entityuserpermissions->map_request($update);
         $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
-        $id = $this->repouserpermissions->set_model($this->entityuserpermissions)->insert($update);
+        $id = $this->repouserpermissions->insert($update);
         return [
             "id" => $id,
             "uuid" => $update["uuid"]
