@@ -9,6 +9,7 @@
  */
 namespace App\Restrict\Users\Infrastructure\Controllers;
 
+use App\Restrict\BusinessData\Application\BusinessDataInfoService;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
@@ -51,16 +52,20 @@ final class UsersUpdateController extends RestrictController
         try {
             $edit = SF::get(UsersInfoService::class, [$uuid]);
             $userpermission = SF::get(UserPermissionsInfoService::class);
+            $businessdata = SF::get(BusinessDataInfoService::class);
 
-            $result = $edit->get_for_edit();
-            $h1 = "{$result["description"]} ($uuid)";
+            $user = $edit->get_for_edit();
+            $h1 = "{$user["description"]} ($uuid)";
+
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit user {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit user {0}", $h1))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
-                ->add_var("result", $result)
+                ->add_var("result", $user)
                 ->add_var("permissions", $userpermission->get_for_edit_by_user($uuid))
+                ->add_var("businessdata", $businessdata->get_for_edit_by_user($uuid))
+
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
                 ->add_var("countries", $this->picklist->get_countries())

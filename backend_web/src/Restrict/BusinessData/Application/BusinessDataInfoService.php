@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\BusinessData\Application;
 
+use App\Restrict\Users\Domain\UserRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -13,6 +14,7 @@ final class BusinessDataInfoService extends AppService
 {
     private AuthService $auth;
     private array $authuser;
+    private UserRepository $repouser;
     private BusinessDataRepository $repobusinessdata;
 
     public function __construct(array $input)
@@ -21,9 +23,10 @@ final class BusinessDataInfoService extends AppService
         $this->_check_permission();
 
         if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No {0} code provided", "businessdata"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("No {0} code provided", "Business data"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
+        $this->repouser = RF::get(UserRepository::class);
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
     }
 
@@ -81,5 +84,13 @@ final class BusinessDataInfoService extends AppService
             );
         $this->_check_entity_permission($businessdata);
         return $businessdata;
+    }
+
+    public function get_for_edit_by_user(string $uuid): array
+    {
+        if (!$id = $this->repouser->get_id_by($uuid))
+            $this->_exception("User with code {0} not found", $uuid);
+
+        return $this->repobusinessdata->get_all_by_user($id);
     }
 }
