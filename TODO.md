@@ -1,18 +1,9 @@
 ### To-Do
-- platform console y emular auth user en console
-- ~~metricas en promocion (viewed, subscribed, confirmed, executed)~~
+- promocion flags de captura (??)
+- sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
 - tabla de acciones para promociones? permitiria sacar un informe más granular
 - url modal launcher view=xxx&uuid=xxx&tab=xxx
-- habria que crear una tabla de business_data con configuración de los js de analitica
-- ~~pestaña permisos en usuarios~~
-  - ~~edicion~~
-- ~~promoción con límite de inscritos (max_confirmed)~~
-- promocion flags de captura (??) 
-- ~~estado de la suscripción (subs_status)~~
-- image upload en theframework?? de momento si.
-- ~~frontcontroller~~
-- ~~pasar a controladores por caso de uso~~
-- ~~corregir carga de picklists por idowner~~
+- platform console y emular auth user en console
 - Authservice inyectado desde el controlador a los servicios?
   - puede que si, habrá que probar el comportamiento singleton
 - pasar ModulesService a una tabla
@@ -26,27 +17,38 @@
   - https://www.youtube.com/watch?v=y3MWfPDmVqo (la distribución en si)
   - repo php https://github.com/CodelyTV/php-ddd-example
 - validadores en cliente
-- ~~función que recupere todas las traducciones~~
 - cache por usuario o por elemento
   - comprobar cache en vista para evitar hacer toda la lógica de servicios
+- formulario desde dash falta estilos
+  - llevar estilos a css de lit
+- accion clone
+- dttable refresh current page
+  - https://stackoverflow.com/questions/42905454/datatables-ajax-reload-loses-page
+    - `dttable.ajax.reload( null, false )`
+  - https://datatables.net/reference/api/ajax.reload()
+- image upload en theframework?? de momento si.
+- habria que crear una tabla de business_data con configuración de los js de analitica
+
+### done
+- ~~metricas en promocion (viewed, subscribed, confirmed, executed)~~
+- ~~pestaña permisos en usuarios~~
+  - ~~edicion~~
+- ~~promoción con límite de inscritos (max_confirmed)~~
+- ~~estado de la suscripción (subs_status)~~
+- ~~frontcontroller~~
+- ~~pasar a controladores por caso de uso~~
+- ~~corregir carga de picklists por idowner~~
+- ~~función que recupere todas las traducciones~~
 - ~~desarrollar sistema de cache para view~~
 - ~~metodo 404 not found en error controller~~
 - ~~aplicar delete_date para BO y BM~~
 - ~~refactor crud y querybuilder~~
 - ~~custom headers en render de la vista~~
 - ~~color boton swal en restore~~
-- formulario desde dash falta estilos
-  - llevar estilos a css de lit
 - ~~al borrar que no cambie update-date~~
-- sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
 - ~~accion restore~~
   - ~~falta estilos en boton~~
-- accion clone
 - ~~generador de módulo .py => php => run build-module xxx~~
 - ~~queries de _array con or de id_owner=-1~~
 - ~~limpieza de código (por ejemplo $this->auth)~~
   - ~~en servicios mejor un private user o solo mantener auth?~~ 
-- dttable refresh current page
-  - https://stackoverflow.com/questions/42905454/datatables-ajax-reload-loses-page
-    - `dttable.ajax.reload( null, false )`
-  - https://datatables.net/reference/api/ajax.reload()
