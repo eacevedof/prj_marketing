@@ -77,7 +77,7 @@ $datapermission = [
     <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <li>
-          <a href="#profile" data-bs-toggle="tab" class="active" aria-expanded="true">
+          <a href="#main" data-bs-toggle="tab" class="active" aria-expanded="true">
             <span class="visible-xs">
               <i class="las la-user-circle tx-16 me-1"></i>
             </span>
@@ -112,7 +112,7 @@ $datapermission = [
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
-      <div id="profile" class="tab-pane active">
+      <div id="main" class="tab-pane active">
         <form-user-update
           csrf=<?$this->_echo_js($csrf);?>
 

@@ -11,6 +11,7 @@
 - patron de pool de objetos para conector a bd
 - fix tranferencia de traducciones a lit
 - modal info responsive
+- router al hacer redirect a pagina 1 debe arrastrar los parametros GET estos se pierden en la redirección
 - refactor a este patrón de carpetas de DDD by **codely**:
   - https://www.youtube.com/watch?v=X2CPc8DLwEQ (explicación de la distribución de carpetas JAVA)
   - https://www.youtube.com/watch?v=UFnABp2s8Y0 (explicación de distribución de carpetas php)
