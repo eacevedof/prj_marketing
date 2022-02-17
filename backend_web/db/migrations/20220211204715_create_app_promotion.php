@@ -130,6 +130,26 @@ final class CreateAppPromotion extends AbsMigration
             "null" => true,
             "default" => null,
         ])
+        ->addColumn("num_viewed", "integer", [
+            "limit" => 5,
+            "null" => false,
+            "default" => 0
+        ])
+        ->addColumn("num_subscribed", "integer", [
+            "limit" => 5,
+            "null" => false,
+            "default" => 0
+        ])
+        ->addColumn("num_confirmed", "integer", [
+            "limit" => 5,
+            "null" => false,
+            "default" => 0
+        ])
+        ->addColumn("num_executed", "integer", [
+            "limit" => 5,
+            "null" => false,
+            "default" => 0
+        ])
         ->create();
     }
 
