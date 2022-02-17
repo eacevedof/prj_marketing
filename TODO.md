@@ -1,4 +1,7 @@
 ### To-Do
+- metricas en promocion (viewed, subscribed, confirmed, executed)
+- tabla de acciones para promociones? permitiria sacar un informe más granular
+- url modal launcher view=xxx&uuid=xxx&tab=xxx
 - habria que crear una tabla de business_data con configuración de los js de analitica
 - pestaña permisos en usuarios
   - edicion
