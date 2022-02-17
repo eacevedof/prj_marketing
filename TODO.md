@@ -1,21 +1,21 @@
 ### To-Do
 - platform console y emular auth user en console
-- metricas en promocion (viewed, subscribed, confirmed, executed)
+- ~~metricas en promocion (viewed, subscribed, confirmed, executed)~~
 - tabla de acciones para promociones? permitiria sacar un informe más granular
 - url modal launcher view=xxx&uuid=xxx&tab=xxx
 - habria que crear una tabla de business_data con configuración de los js de analitica
-- pestaña permisos en usuarios
-  - edicion
-- promoción con límite de inscritos
-- promocion flags de captura 
-- estado de la suscripción
+- ~~pestaña permisos en usuarios~~
+  - ~~edicion~~
+- ~~promoción con límite de inscritos (max_confirmed)~~
+- promocion flags de captura (??) 
+- ~~estado de la suscripción (subs_status)~~
 - image upload en theframework?? de momento si.
 - ~~frontcontroller~~
 - ~~pasar a controladores por caso de uso~~
 - ~~corregir carga de picklists por idowner~~
 - Authservice inyectado desde el controlador a los servicios?
   - puede que si, habrá que probar el comportamiento singleton
-- pasar a ModulesService a una tabla
+- pasar ModulesService a una tabla
 - token para acceso api usuario
 - patron de pool de objetos para conector a bd
 - fix tranferencia de traducciones a lit
@@ -26,7 +26,7 @@
   - https://www.youtube.com/watch?v=y3MWfPDmVqo (la distribución en si)
   - repo php https://github.com/CodelyTV/php-ddd-example
 - validadores en cliente
-- función que recupere todas las traducciones
+- ~~función que recupere todas las traducciones~~
 - cache por usuario o por elemento
   - comprobar cache en vista para evitar hacer toda la lógica de servicios
 - ~~desarrollar sistema de cache para view~~

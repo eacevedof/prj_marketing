@@ -133,7 +133,8 @@ final class CreateAppPromotion extends AbsMigration
         ->addColumn("num_viewed", "integer", [
             "limit" => 5,
             "null" => false,
-            "default" => 0
+            "default" => 0,
+            "comment" => "metricas de trazabilidad, veces vista"
         ])
         ->addColumn("num_subscribed", "integer", [
             "limit" => 5,
