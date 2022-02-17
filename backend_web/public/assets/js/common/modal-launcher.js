@@ -14,6 +14,8 @@ const _open_modal = async (url) => {
   }).show()
 }
 
+const VIEWS = ["info", "edit"]
+
 export default () => {
   const url = window.location.search;
   if (!url) return
@@ -22,13 +24,15 @@ export default () => {
   const uuid = urlparams.get("uuid")
   if (!uuid) return
 
-  const view = urlparams.get("view") ?? "info"
-  const tab = urlparams.get("tab") ?? "main"
+  const view = urlparams.get("view")?.trim() ?? "info"
+  if (! VIEWS.includes(view)) return
 
-  const pathname = window.location.pathname
-  const final = pathname.concat(`/${view}`).concat(`/${uuid}`)
+  const tab = urlparams.get("tab")?.trim() ?? "main"
+  const pathname = window.location.pathname.split("/").slice(0,-1).join("/")
+  let final = pathname.concat(`/${view}`).concat(`/${uuid}`).concat(`?tab=${tab}`)
   //http://localhost:900/restrict/users/info/620d471857bc
   //http://localhost:900/restrict/users/edit/620d471857bc4
-  alert(final)
-
+  //alert(final)
+  //final = "/restrict/users/info/620d471857bc4".concat(url)
+  _open_modal(final)
 }
