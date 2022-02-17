@@ -1,4 +1,5 @@
 ### To-Do
+- en el listado, si se va a visualizar un modal que no se ejecute la carga del grid
 - promocion flags de captura (??)
 - sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
 - tabla de acciones para promociones? permitiria sacar un informe más granular
