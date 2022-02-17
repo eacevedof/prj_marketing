@@ -2,7 +2,7 @@ import {reqtxt} from "/assets/js/common/req.js"
 import spinner from "/assets/js/common/spinner.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
 
-const _open_modal = async (url) => {
+const _open_modal_by_get = async (url) => {
   spinner.render()
   const r = await reqtxt.get(url)
   spinner.remove()
@@ -25,7 +25,7 @@ export default () => {
   if (!uuid) return
 
   const view = urlparams.get("view")?.trim() ?? "info"
-  if (! VIEWS.includes(view)) return
+  if (!VIEWS.includes(view)) return
 
   const tab = urlparams.get("tab")?.trim() ?? "main"
   const pathname = window.location.pathname.split("/").slice(0,-1).join("/")
@@ -34,5 +34,5 @@ export default () => {
   //http://localhost:900/restrict/users/edit/620d471857bc4
   //alert(final)
   //final = "/restrict/users/info/620d471857bc4".concat(url)
-  _open_modal(final)
+  _open_modal_by_get(final)
 }
