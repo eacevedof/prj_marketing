@@ -84,7 +84,7 @@ abstract class AppRepository
     public function insert(array $request): int
     {
         $qb = $this->_get_qbuilder()
-            ->set_comment("apprepository.insert(request)")
+            ->set_comment("apprepository.insert")
             ->set_db($this->db)
             ->set_table($this->table);
 
@@ -107,7 +107,7 @@ abstract class AppRepository
             $this->_exception(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $qb = $this->_get_qbuilder()
-            ->set_comment("apprepository.update(request)")
+            ->set_comment("apprepository.update")
             ->set_db($this->db)
             ->set_table($this->table);
 
@@ -133,7 +133,7 @@ abstract class AppRepository
         if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $qb = $this->_get_qbuilder()
-            ->set_comment("apprepository.delete(request)")
+            ->set_comment("apprepository.delete")
             ->set_db($this->db)
             ->set_table($this->table);
 
@@ -152,7 +152,7 @@ abstract class AppRepository
         if(!$pks) return "";
 
         $qb = $this->_get_qbuilder()
-            ->set_comment("app.sysupdate")
+            ->set_comment("apprepository.get_sysupdate")
             ->set_db($this->db)
             ->set_getfields(["m.update_date"])
             ->set_table("$this->table as m")
@@ -178,7 +178,7 @@ abstract class AppRepository
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_qbuilder()
-            ->set_comment("apprepository.get_id_by(uuid)")
+            ->set_comment("apprepository.get_id_by_uuid")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.uuid='$uuid'")
@@ -192,7 +192,7 @@ abstract class AppRepository
     {
         $id = (int) $id;
         $sql = $this->_get_qbuilder()
-            ->set_comment("get_by_id")
+            ->set_comment("apprepository.get_by_id")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.id=$id")
@@ -206,7 +206,7 @@ abstract class AppRepository
     {
         $id = (int) $id;
         $sql = $this->_get_qbuilder()
-            ->set_comment("get_by_id")
+            ->set_comment("apprepository.is_deleted")
             ->set_table("$this->table as m")
             ->set_getfields(["m.delete_date"])
             ->add_and("m.id=$id")
