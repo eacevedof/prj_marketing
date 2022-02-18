@@ -39,12 +39,13 @@ final class BusinessDataInfoService extends AppService
             );
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _check_entity_permission(int $iduser): void
     {
         if ($this->auth->is_root() || $this->auth->is_sysadmin()) return;
 
         $idauthuser = (int) $this->authuser["id"];
-        $identowner = (int) $entity["id_owner"];
+        $identowner = (int) $this->repouser->get_idowner($iduser);
+
         //si el owner logado es propietario de la entidad
         if ($this->auth->is_business_owner() && $idauthuser === $identowner)
             return;
@@ -63,7 +64,7 @@ final class BusinessDataInfoService extends AppService
         if (!$id = $this->repouser->get_id_by_uuid($uuid))
             $this->_exception("User with code {0} not found", $uuid);
 
-        $this->_check_entity_permission([]);
+        $this->_check_entity_permission($id);
         return $this->repobusinessdata->get_all_by_user($id);
     }
 }
