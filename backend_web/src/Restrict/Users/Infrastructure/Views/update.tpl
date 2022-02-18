@@ -69,6 +69,26 @@ $datapermission = [
     "json_rw" => $permissions["json_rw"] ?? "[]",
 ];
 
+
+$textbusinessdata = [
+    "tr00" => __("Save"),
+    "tr01" => __("Processing..."),
+    "tr02" => __("Cancel"),
+    "tr03" => __("Error"),
+    "tr04" => __("<b>Data updated</b>"),
+
+    "f00" => __("Nº"),
+    "f01" => __("Code"),
+    "f02" => __("User"),
+    "f03" => __("Permissions JSON"),
+];
+
+$databusinessdata = [
+    "id_user" => $result["id"] ?? "",
+    "id" => $businessdata["id"] ?? "",
+    "uuid" => $businessdata["uuid"] ?? "",
+    "json_rw" => $businessdata["json_rw"] ?? "[]",
+];
 ?>
 <div class="modal-form">
   <div class="card-header">
@@ -142,9 +162,9 @@ $datapermission = [
             csrf=<?$this->_echo_js($csrf);?>
 
             useruuid="<?=$uuid?>"
-            texts="<?$this->_echo_jslit($textpermission);?>"
+            texts="<?$this->_echo_jslit($textbusinessdata);?>"
 
-            fields="<?$this->_echo_jslit($datapermission);?>"
+            fields="<?$this->_echo_jslit($databusinessdata);?>"
         />
       </div>
       <?
