@@ -38,8 +38,8 @@ final class XxxsSearchController extends RestrictController
                 ->add_var(PageType::H1, __("Xxxs"))
                 ->add_var("dthelp", $search->get_datatable())
                 ->add_var("idowner", $this->auth->get_idowner())
-                ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ))
-                ->add_var("authwrite", $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
+                ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::XXXS_READ))
+                ->add_var("authwrite", $this->auth->is_user_allowed(UserPolicyType::XXXS_WRITE))
                 ->render();
         }
         catch (ForbiddenException $e) {

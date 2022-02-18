@@ -42,7 +42,7 @@ export const show_tab = () => {
   if (!url) return
   const urlparams = new URLSearchParams(url)
   const tab = urlparams.get("tab")
-  if (!tab) return
+  if (!tab || tab==="main") return
 
   const $tab = document.querySelector(`a[href="#${tab}"]`)
   console.log($tab, "TAB modal-launcher")

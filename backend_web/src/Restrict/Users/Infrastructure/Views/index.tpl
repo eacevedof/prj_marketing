@@ -56,12 +56,16 @@ auth.id_profile = <?$this->_echo_js($authuser["id_profile"]) ?>;
 auth.readable = <?= (int)$authread ?>;
 auth.writable = <?= (int)$authwrite ?>;
 
+console.log("auth", auth)
+
 const is_infoable = row => {
   if (auth.is_root()) return true
   if (row.delete_date) return false
   if (row.id === auth.id_user) return true
   if ((auth.is_sysadmin() && !auth.is_root(row.id_profile)) || auth.is_business_owner())
     return true
+
+  console.log("is_infoable():","is-bm",auth.is_business_manager(), "auth-can-write",auth.can_write(), "auth-can-read", auth.can_read())
   return (auth.is_business_manager() && (auth.can_write() || auth.can_read()))
 }
 
@@ -77,7 +81,7 @@ const is_editable = row => {
 const is_deletable = row => {
   if (row.delete_date) return false
   if (auth.is_root() && row.id !== auth.id_user) return true
-  console.log("is-bow",auth.is_business_owner(), "row-profile",row.id_profile, "is-bm-prof",auth.is_business_manager(row.id_profile))
+  console.log("is_deletable():","is-bow",auth.is_business_owner(), "row-profile",row.id_profile, "is-bm-prof",auth.is_business_manager(row.id_profile))
   if (auth.is_business_owner() && auth.is_business_manager(row.id_profile)) return true
   return (auth.is_business_manager() && auth.can_write() && row.id !== auth.id_user)
 }

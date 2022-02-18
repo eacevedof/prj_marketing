@@ -9,6 +9,7 @@
  */
 namespace App\Restrict\Users\Infrastructure\Controllers;
 
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
@@ -40,6 +41,8 @@ final class UsersSearchController extends RestrictController
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("countries", $this->picklist->get_countries())
                 ->add_var("dthelp", $search->get_datatable())
+                ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::USERS_READ))
+                ->add_var("authwrite", $this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
                 ->render();
         }
         catch (ForbiddenException $e) {
