@@ -56,8 +56,6 @@ auth.id_profile = <?$this->_echo_js($authuser["id_profile"]) ?>;
 auth.readable = <?= (int)$authread ?>;
 auth.writable = <?= (int)$authwrite ?>;
 
-console.log("auth", auth)
-
 const is_infoable = row => {
   if (auth.is_root()) return true
   if (row.delete_date) return false
