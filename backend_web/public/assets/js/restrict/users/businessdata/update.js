@@ -7,8 +7,8 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL_UPDATE = "/restrict/business_datas/update"
-const ACTION = "business_datas.update"
+const URL_UPDATE = "/restrict/users/:uuid/business-data/update"
+const ACTION = "businessdata.update"
 
 export class FormBusinessDataUpdate extends LitElement {
   static get styles() {
@@ -101,136 +101,136 @@ export class FormBusinessDataUpdate extends LitElement {
     return html`
     <form @submit=${this.on_submit}>
       <div class="flex-row">
-          <div class="form-group">
-                    <label for="id">${this.texts.f00}</label>
-                    <div id="field-id">
-                        <input type="text" id="id" .value=${this._id} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="uuid">${this.texts.f01}</label>
-                    <div id="field-uuid">
-                        <input type="text" id="uuid" .value=${this._uuid} class="form-control" maxlength="50">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="id_user">${this.texts.f02}</label>
-                    <div id="field-id_user">
-                        <input type="text" id="id_user" .value=${this._id_user} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="slug">${this.texts.f03}</label>
-                    <div id="field-slug">
-                        <input type="text" id="slug" .value=${this._slug} class="form-control" maxlength="250">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="user_logo_1">${this.texts.f04}</label>
-                    <div id="field-user_logo_1">
-                        <input type="text" id="user_logo_1" .value=${this._user_logo_1} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="user_logo_2">${this.texts.f05}</label>
-                    <div id="field-user_logo_2">
-                        <input type="text" id="user_logo_2" .value=${this._user_logo_2} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="user_logo_3">${this.texts.f06}</label>
-                    <div id="field-user_logo_3">
-                        <input type="text" id="user_logo_3" .value=${this._user_logo_3} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="url_favicon">${this.texts.f07}</label>
-                    <div id="field-url_favicon">
-                        <input type="text" id="url_favicon" .value=${this._url_favicon} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="head_bgcolor">${this.texts.f08}</label>
-                    <div id="field-head_bgcolor">
-                        <input type="text" id="head_bgcolor" .value=${this._head_bgcolor} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="head_color">${this.texts.f09}</label>
-                    <div id="field-head_color">
-                        <input type="text" id="head_color" .value=${this._head_color} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="head_bgimage">${this.texts.f10}</label>
-                    <div id="field-head_bgimage">
-                        <input type="text" id="head_bgimage" .value=${this._head_bgimage} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="body_bgcolor">${this.texts.f11}</label>
-                    <div id="field-body_bgcolor">
-                        <input type="text" id="body_bgcolor" .value=${this._body_bgcolor} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="body_color">${this.texts.f12}</label>
-                    <div id="field-body_color">
-                        <input type="text" id="body_color" .value=${this._body_color} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="body_bgimage">${this.texts.f13}</label>
-                    <div id="field-body_bgimage">
-                        <input type="text" id="body_bgimage" .value=${this._body_bgimage} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="site">${this.texts.f14}</label>
-                    <div id="field-site">
-                        <input type="text" id="site" .value=${this._site} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="url_social_fb">${this.texts.f15}</label>
-                    <div id="field-url_social_fb">
-                        <input type="text" id="url_social_fb" .value=${this._url_social_fb} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="url_social_ig">${this.texts.f16}</label>
-                    <div id="field-url_social_ig">
-                        <input type="text" id="url_social_ig" .value=${this._url_social_ig} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="url_social_twitter">${this.texts.f17}</label>
-                    <div id="field-url_social_twitter">
-                        <input type="text" id="url_social_twitter" .value=${this._url_social_twitter} class="form-control" maxlength="100">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="url_social_tiktok">${this.texts.f18}</label>
-                    <div id="field-url_social_tiktok">
-                        <input type="text" id="url_social_tiktok" .value=${this._url_social_tiktok} class="form-control" maxlength="100">
-                    </div>
-                </div>
+        <div class="form-group">
+          <label for="id">${this.texts.f00}</label>
+          <div id="field-id">
+            <input type="text" id="id" .value=${this._id} class="form-control" maxlength="10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="uuid">${this.texts.f01}</label>
+          <div id="field-uuid">
+            <input type="text" id="uuid" .value=${this._uuid} class="form-control" maxlength="50">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="id_user">${this.texts.f02}</label>
+          <div id="field-id_user">
+            <input type="text" id="id_user" .value=${this._id_user} class="form-control" maxlength="10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="slug">${this.texts.f03}</label>
+          <div id="field-slug">
+            <input type="text" id="slug" .value=${this._slug} class="form-control" maxlength="250">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="user_logo_1">${this.texts.f04}</label>
+          <div id="field-user_logo_1">
+            <input type="text" id="user_logo_1" .value=${this._user_logo_1} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="user_logo_2">${this.texts.f05}</label>
+          <div id="field-user_logo_2">
+            <input type="text" id="user_logo_2" .value=${this._user_logo_2} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="user_logo_3">${this.texts.f06}</label>
+          <div id="field-user_logo_3">
+            <input type="text" id="user_logo_3" .value=${this._user_logo_3} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="url_favicon">${this.texts.f07}</label>
+          <div id="field-url_favicon">
+            <input type="text" id="url_favicon" .value=${this._url_favicon} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="head_bgcolor">${this.texts.f08}</label>
+          <div id="field-head_bgcolor">
+            <input type="text" id="head_bgcolor" .value=${this._head_bgcolor} class="form-control" maxlength="10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="head_color">${this.texts.f09}</label>
+          <div id="field-head_color">
+            <input type="text" id="head_color" .value=${this._head_color} class="form-control" maxlength="10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="head_bgimage">${this.texts.f10}</label>
+          <div id="field-head_bgimage">
+            <input type="text" id="head_bgimage" .value=${this._head_bgimage} class="form-control" maxlength="10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="body_bgcolor">${this.texts.f11}</label>
+          <div id="field-body_bgcolor">
+            <input type="text" id="body_bgcolor" .value=${this._body_bgcolor} class="form-control" maxlength="10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="body_color">${this.texts.f12}</label>
+          <div id="field-body_color">
+            <input type="text" id="body_color" .value=${this._body_color} class="form-control" maxlength="10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="body_bgimage">${this.texts.f13}</label>
+          <div id="field-body_bgimage">
+            <input type="text" id="body_bgimage" .value=${this._body_bgimage} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="site">${this.texts.f14}</label>
+          <div id="field-site">
+            <input type="text" id="site" .value=${this._site} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="url_social_fb">${this.texts.f15}</label>
+          <div id="field-url_social_fb">
+            <input type="text" id="url_social_fb" .value=${this._url_social_fb} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="url_social_ig">${this.texts.f16}</label>
+          <div id="field-url_social_ig">
+            <input type="text" id="url_social_ig" .value=${this._url_social_ig} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="url_social_twitter">${this.texts.f17}</label>
+          <div id="field-url_social_twitter">
+            <input type="text" id="url_social_twitter" .value=${this._url_social_twitter} class="form-control" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="url_social_tiktok">${this.texts.f18}</label>
+          <div id="field-url_social_tiktok">
+            <input type="text" id="url_social_tiktok" .value=${this._url_social_tiktok} class="form-control" maxlength="100">
+          </div>
+        </div>
       </div>
     
       <div class="form-group mb-0">
         <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
           ${this._btnsend}
           ${this._issending
-            ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-            : html``
+          ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
+          : html``
           }
         </button>
         <button type="button" ?disabled=${this._issending} @click=${this.on_cancel} class="btn btn-secondary mt-3 mb-0">
-        ${this._btncancel}
-        ${this._issending
+          ${this._btncancel}
+          ${this._issending
           ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
           : html``
-        }
+          }
         </button>
       </div>
     </form>
@@ -296,5 +296,5 @@ export class FormBusinessDataUpdate extends LitElement {
 
 }//FormEdit
 
-if (!customElements.get("form-business_data-update"))
-  customElements.define("form-business_data-update", FormBusinessDataUpdate)
+if (!customElements.get("form-business-data-update"))
+  customElements.define("form-business-data-update", FormBusinessDataUpdate)
