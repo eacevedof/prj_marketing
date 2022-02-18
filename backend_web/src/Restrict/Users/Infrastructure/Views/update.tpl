@@ -68,6 +68,7 @@ $datapermission = [
     "uuid" => $permissions["uuid"] ?? "",
     "json_rw" => $permissions["json_rw"] ?? "[]",
 ];
+
 ?>
 <div class="modal-form">
   <div class="card-header">
@@ -133,6 +134,9 @@ $datapermission = [
         />
       </div>
 
+      <?
+      if ($isbow):
+      ?>
       <div id="businessdata" class="tab-pane">
         <form-user-businessdata-update
             csrf=<?$this->_echo_js($csrf);?>
@@ -143,6 +147,9 @@ $datapermission = [
             fields="<?$this->_echo_jslit($datapermission);?>"
         />
       </div>
+      <?
+      endif;
+      ?>
     </div><!--tab-content-->
 
   </div><!--card-body-->

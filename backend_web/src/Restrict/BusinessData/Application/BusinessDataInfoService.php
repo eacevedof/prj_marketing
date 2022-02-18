@@ -88,7 +88,7 @@ final class BusinessDataInfoService extends AppService
 
     public function get_for_edit_by_user(string $uuid): array
     {
-        if (!$id = $this->repouser->get_id_by($uuid))
+        if (!$id = $this->repouser->get_id_by_uuid($uuid))
             $this->_exception("User with code {0} not found", $uuid);
 
         return $this->repobusinessdata->get_all_by_user($id);

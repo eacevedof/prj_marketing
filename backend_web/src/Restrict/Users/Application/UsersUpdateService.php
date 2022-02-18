@@ -56,7 +56,7 @@ final class UsersUpdateService extends AppService
 
     private function _check_entity_permission(array $entity): void
     {
-        $iduser = $this->repouser->get_id_by($entity["uuid"]);
+        $iduser = $this->repouser->get_id_by_uuid($entity["uuid"]);
         $idauthuser = (int)$this->authuser["id"];
         if ($this->auth->is_root() || $idauthuser === $iduser) return;
 
@@ -91,7 +91,7 @@ final class UsersUpdateService extends AppService
             ->add_rule("email", "email", function ($data) use ($repouser){
                 $email = trim($data["value"]);
                 $uuid = $data["data"]["uuid"] ?? "";
-                $id = $repouser->get_id_by($uuid);
+                $id = $repouser->get_id_by_uuid($uuid);
                 if (!$id) return __("User with code {0} not found",$uuid);
                 $idemail = $repouser->email_exists($email);
                 if (!$idemail || ($id == $idemail)) return false;

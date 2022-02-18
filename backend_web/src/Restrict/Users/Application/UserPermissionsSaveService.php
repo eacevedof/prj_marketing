@@ -40,7 +40,7 @@ final class UserPermissionsSaveService extends AppService
             $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
 
         $this->repouser = RF::get(UserRepository::class);
-        if (!$this->iduser = $this->repouser->get_id_by($useruuid))
+        if (!$this->iduser = $this->repouser->get_id_by_uuid($useruuid))
             $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
         if ($this->iduser === 1)
             $this->_exception(__("You can not add permissions to this user"));

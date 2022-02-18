@@ -64,7 +64,7 @@ final class UsersUpdateController extends RestrictController
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $user)
                 ->add_var("permissions", $userpermission->get_for_edit_by_user($uuid))
-                //->add_var("businessdata", $businessdata->get_for_edit_by_user($uuid))
+                ->add_var("businessdata", $businessdata->get_for_edit_by_user($uuid))
 
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))

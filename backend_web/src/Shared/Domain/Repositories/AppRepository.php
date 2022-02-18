@@ -35,7 +35,7 @@ abstract class AppRepository
 
     protected function _exception(string $message, int $code=500): void
     {
-        $this->logerr($message,"app-service.exception");
+        $this->logerr($message,"apprepository.exception");
         throw new Exception($message, $code);
     }
 
@@ -84,7 +84,7 @@ abstract class AppRepository
     public function insert(array $request): int
     {
         $qb = $this->_get_qbuilder()
-            ->set_comment("app.insert(request)")
+            ->set_comment("apprepository.insert(request)")
             ->set_db($this->db)
             ->set_table($this->table);
 
@@ -107,7 +107,7 @@ abstract class AppRepository
             $this->_exception(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $qb = $this->_get_qbuilder()
-            ->set_comment("app.update(request)")
+            ->set_comment("apprepository.update(request)")
             ->set_db($this->db)
             ->set_table($this->table);
 
@@ -133,7 +133,7 @@ abstract class AppRepository
         if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
 
         $qb = $this->_get_qbuilder()
-            ->set_comment("app.delete(request)")
+            ->set_comment("apprepository.delete(request)")
             ->set_db($this->db)
             ->set_table($this->table);
 
@@ -166,26 +166,26 @@ abstract class AppRepository
         return $r[0]["update_date"] ?? "";
     }
 
-    public function get_max(?string $fieldname): ?string
-    {
-        if (!$fieldname) return null;
-        
-        $sql = "SELECT MAX($fieldname) AS maxed FROM $this->table";
-        $result = $this->db->query($sql);
-        return $result[0]["maxed"] ?? "";
-    }
-
-    public function get_lastinsert_id(): int
-    {
-        return $this->db->get_lastid();
-    }
-
     public function get_csvcru(array $row, string $iduser): string
     {
         $now = date("Y-m-d H:i:s");
         $crucsv = $row["cru_csvnote"] ?? "";
         $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($iduser:$now)|".$crucsv;
         return substr($crucsv,0,499);
+    }
+
+    public function get_id_by_uuid(string $uuid): int
+    {
+        $uuid = $this->_get_sanitized($uuid);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("apprepository.get_id_by(uuid)")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.uuid='$uuid'")
+            ->select()->sql()
+        ;
+        $r = $this->db->query($sql);
+        return intval($r[0]["id"] ?? 0);
     }
 
     public function get_by_id(string $id): array
@@ -200,19 +200,6 @@ abstract class AppRepository
         ;
         $r = $this->db->query($sql);
         return $r[0] ?? [];
-    }
-    public function get_id_by(string $uuid): int
-    {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
-            ->set_comment("user.get_id_by(uuid)")
-            ->set_table("$this->table as m")
-            ->set_getfields(["m.id"])
-            ->add_and("m.uuid='$uuid'")
-            ->select()->sql()
-        ;
-        $r = $this->db->query($sql);
-        return intval($r[0]["id"] ?? 0);
     }
 
     public function is_deleted(string $id): bool

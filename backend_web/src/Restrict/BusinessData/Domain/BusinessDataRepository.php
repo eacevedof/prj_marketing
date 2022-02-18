@@ -25,7 +25,7 @@ final class BusinessDataRepository extends AppRepository
     public function __construct()
     {
         $this->db = DbF::get_by_default();
-        $this->table = "app_businessdata";
+        $this->table = "app_business_data";
         $this->joins = [
             "fields" => [
                 "u2.description"  => "e_deletedby",

@@ -53,7 +53,7 @@ final class BusinessDataUpdateService extends AppService
 
     private function _check_entity_permission(array $entity): void
     {
-        $idbusinessdata = $this->repobusinessdata->get_id_by($entity["uuid"]);
+        $idbusinessdata = $this->repobusinessdata->get_id_by_uuid($entity["uuid"]);
         $idauthuser = (int)$this->authuser["id"];
         if ($this->auth->is_root() || $idauthuser === $idbusinessdata) return;
 

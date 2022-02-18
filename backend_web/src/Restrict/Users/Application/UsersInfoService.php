@@ -89,6 +89,7 @@ final class UsersInfoService extends AppService
             "user" => $user,
             "permissions" => $this->repopermission->get_by_user($iduser = $user["id"]),
             "preferences" => $this->repoprefs->get_by_user($iduser),
+            "businessdata" => "to-do",
         ];
     }
 

@@ -68,7 +68,7 @@ final class BusinessDataDeleteService extends AppService
     public function __invoke(): array
     {
         $entity = $this->input;
-        if (!$idbusinessdata = $this->repobusinessdata->get_id_by($entity["uuid"]))
+        if (!$idbusinessdata = $this->repobusinessdata->get_id_by_uuid($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $entity["id"] = $idbusinessdata;
@@ -96,7 +96,7 @@ final class BusinessDataDeleteService extends AppService
     public function undelete(): array
     {
         $entity = $this->input;
-        if (!$idbusinessdata = $this->repobusinessdata->get_id_by($entity["uuid"]))
+        if (!$idbusinessdata = $this->repobusinessdata->get_id_by_uuid($entity["uuid"]))
             $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
 
         $entity["id"] = $idbusinessdata;

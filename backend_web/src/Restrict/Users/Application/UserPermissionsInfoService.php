@@ -17,7 +17,7 @@ final class UserPermissionsInfoService extends AppService
     private UserRepository $userrepository;
     private UserPermissionsRepository $repouserpermissions;
 
-    public function __construct(array $input)
+    public function __construct()
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
@@ -45,6 +45,7 @@ final class UserPermissionsInfoService extends AppService
 
         $idauthuser = (int) $this->authuser["id"];
         $identowner = (int) $entity["id_owner"];
+
         //si el owner logado es propietario de la entidad
         if ($this->auth->is_business_owner() && $idauthuser === $identowner)
             return;
@@ -58,34 +59,9 @@ final class UserPermissionsInfoService extends AppService
         );
     }
 
-    public function __invoke(): array
-    {
-        if(!$userpermissions = $this->repouserpermissions->get_info($this->input))
-            $this->_exception(
-                __("{0} with code {1} not found", __("UserPermissions"), $this->input),
-                ExceptionType::CODE_NOT_FOUND
-            );
-
-        $this->_check_entity_permission($userpermissions);
-        return [
-            "user_permissions" => $userpermissions
-        ];
-    }
-
-    public function get_for_edit(): array
-    {
-        if(!$userpermissions = $this->repouserpermissions->get_info($this->input))
-            $this->_exception(
-                __("{0} with code {1} not found", __("UserPermissions"), $this->input),
-                ExceptionType::CODE_NOT_FOUND
-            );
-        $this->_check_entity_permission($userpermissions);
-        return $userpermissions;
-    }
-
     public function get_for_edit_by_user(string $uuid): array
     {
-        if (!$id = $this->userrepository->get_id_by($uuid))
+        if (!$id = $this->userrepository->get_id_by_uuid($uuid))
             $this->_exception("User with code {0} not found", $uuid);
 
         return $this->repouserpermissions->get_all_by_user($id);
