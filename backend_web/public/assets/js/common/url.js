@@ -2,30 +2,30 @@
 export const get_parameter = key => {
   key = key.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   const regex = new RegExp(`[\\?&]${key}=([^&#]*)`);
-  const results = regex.exec(location.search);
+  const results = regex.exec(window.location.search);
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 export const get_url_position = pos => {
-  let parts = location.pathname.split("?")
+  let parts = window.location.pathname.split("?")
   parts = parts[0].split("/")
   return parts[pos] ?? ""
 }
 
 export const add_page_to_url = (page, position) => {
-  let url = location.pathname
-  const parts1 = url.split("?")
-  const parts2 = parts1[0].split("/")
+  let url = window.location.pathname
+  const urlparts = url.split("/")
 
-  if (parts2[position]) {
-    parts2[position] = page
+  if (urlparts[position]) {
+    urlparts[position] = page
   }
   else {
-    parts2.push(page)
+    urlparts.push(page)
   }
 
-  url = parts2.join("/")
-  if (parts1[1])  url = url.concat("?").concat(parts1[1])
+  url = urlparts.join("/")
+  const search = window.location.search
+  if (search)  url = url.concat(search)
   window.history.pushState({}, "", url)
 }
 
