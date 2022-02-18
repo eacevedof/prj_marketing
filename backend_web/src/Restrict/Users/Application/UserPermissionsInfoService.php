@@ -14,7 +14,7 @@ final class UserPermissionsInfoService extends AppService
 {
     private AuthService $auth;
     private array $authuser;
-    private UserRepository $userrepository;
+    private UserRepository $repouser;
     private UserPermissionsRepository $repouserpermissions;
 
     public function __construct()
@@ -23,7 +23,7 @@ final class UserPermissionsInfoService extends AppService
         $this->_check_permission();
 
         $this->authuser = $this->auth->get_user();
-        $this->userrepository = RF::get(UserRepository::class);
+        $this->repouser = RF::get(UserRepository::class);
         $this->repouserpermissions = RF::get(UserPermissionsRepository::class);
     }
 
@@ -39,12 +39,12 @@ final class UserPermissionsInfoService extends AppService
             );
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _check_entity_permission(int $iduser): void
     {
         if ($this->auth->is_root() || $this->auth->is_sysadmin()) return;
 
         $idauthuser = (int) $this->authuser["id"];
-        $identowner = (int) $entity["id_owner"];
+        $identowner = (int) $this->repouser->get_idowner($iduser);
 
         //si el owner logado es propietario de la entidad
         if ($this->auth->is_business_owner() && $idauthuser === $identowner)
@@ -61,9 +61,10 @@ final class UserPermissionsInfoService extends AppService
 
     public function get_for_edit_by_user(string $uuid): array
     {
-        if (!$id = $this->userrepository->get_id_by_uuid($uuid))
+        if (!$id = $this->repouser->get_id_by_uuid($uuid))
             $this->_exception("User with code {0} not found", $uuid);
 
+        $this->_check_entity_permission($id);
         return $this->repouserpermissions->get_all_by_user($id);
     }
 }
