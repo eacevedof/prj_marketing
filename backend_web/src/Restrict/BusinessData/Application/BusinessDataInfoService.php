@@ -17,13 +17,10 @@ final class BusinessDataInfoService extends AppService
     private UserRepository $repouser;
     private BusinessDataRepository $repobusinessdata;
 
-    public function __construct(array $input)
+    public function __construct()
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
-
-        if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No {0} code provided", "Business data"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
         $this->repouser = RF::get(UserRepository::class);
@@ -61,36 +58,12 @@ final class BusinessDataInfoService extends AppService
         );
     }
 
-    public function __invoke(): array
-    {
-        if(!$businessdata = $this->repobusinessdata->get_info($this->input))
-            $this->_exception(
-                __("{0} with code {1} not found", __("Business data"), $this->input),
-                ExceptionType::CODE_NOT_FOUND
-            );
-
-        $this->_check_entity_permission($businessdata);
-        return [
-            "businessdata" => $businessdata
-        ];
-    }
-
-    public function get_for_edit(): array
-    {
-        if(!$businessdata = $this->repobusinessdata->get_info($this->input))
-            $this->_exception(
-                __("{0} with code {1} not found", __("Business data"), $this->input),
-                ExceptionType::CODE_NOT_FOUND
-            );
-        $this->_check_entity_permission($businessdata);
-        return $businessdata;
-    }
-
     public function get_for_edit_by_user(string $uuid): array
     {
         if (!$id = $this->repouser->get_id_by_uuid($uuid))
             $this->_exception("User with code {0} not found", $uuid);
 
+        $this->_check_entity_permission([]);
         return $this->repobusinessdata->get_all_by_user($id);
     }
 }
