@@ -10,7 +10,7 @@ import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js
 const URL_UPDATE = "/restrict/users/:uuid/business-data/update"
 const ACTION = "businessdata.update"
 
-export class FormBusinessDataUpdate extends LitElement {
+export class FormUserBusinessDataUpdate extends LitElement {
   static get styles() {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
@@ -296,5 +296,5 @@ export class FormBusinessDataUpdate extends LitElement {
 
 }//FormEdit
 
-if (!customElements.get("form-business-data-update"))
-  customElements.define("form-business-data-update", FormBusinessDataUpdate)
+if (!customElements.get("form-user-businessdata-update"))
+  customElements.define("form-user-businessdata-update", FormUserBusinessDataUpdate)
