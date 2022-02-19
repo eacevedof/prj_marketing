@@ -113,6 +113,36 @@ final class TranslationService extends AppService implements IConsole
         return $missing;
     }
 
+    private function _get_repeated(): array
+    {
+        $estrs = file_get_contents(self::PATH_TR_ES);
+        $lines = explode("\n", $estrs);
+        $lines = array_filter($lines, function ($line){
+            return strstr($line, "msgid \"");
+        });
+
+        $lines = array_map(function ($line){
+            $line = substr($line, 0, -1);
+            return str_replace("msgid \"", "", $line);
+        }, $lines);
+
+        //foreach ($lines as $i => $line)
+            //$lines[$i] = "$line ({$i})";
+
+        $count = array_count_values($lines);
+        $count = array_filter($count, function ($num){
+            return $num>1;
+        });
+        $count = array_keys($count);
+
+        $found = [];
+        foreach ($lines as $i=>$line)
+            if (in_array($line, $count))
+                $found[] = "$line ({$i})";
+
+        return $found;
+    }
+
     private function _load_all_inoked_translations(): void
     {
         foreach ($this->arfiles as $path) {
@@ -138,6 +168,9 @@ final class TranslationService extends AppService implements IConsole
         switch ($parameter) {
             case "--not-used":
                 $found = $this->_get_not_used_es();
+            break;
+            case "--repeated":
+                $found = $this->_get_repeated();
             break;
             default:
                 $found = $this->_get_missing_es();
