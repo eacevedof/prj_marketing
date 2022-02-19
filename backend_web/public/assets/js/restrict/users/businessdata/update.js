@@ -60,9 +60,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _btnsend: { type: String, state: true },
     _btncancel: { type: String, state: true },
 
+    _id_user: {type: String, state:true},
     _id: {type: String, state:true},
     _uuid: {type: String, state:true},
-    _id_user: {type: String, state:true},
 
     _slug: {type: String, state:true},
     _user_logo_1: {type: String, state:true},
