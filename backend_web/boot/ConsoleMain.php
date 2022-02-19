@@ -47,7 +47,7 @@ final class ConsoleMain
         if (!$alias) $alias = "help";
 
         $commands = include_once("./services.php");
-        $classname = $commands[$alias] ?? "";
+        $classname = $commands[$alias]["service"] ?? "";
         if (!$classname)
             throw new Exception("no class found for cmd $alias");
 

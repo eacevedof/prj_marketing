@@ -28,8 +28,10 @@ final class HelpService extends AppService implements IConsole
     {
         $lines = [];
         $i = 1;
-        foreach($this->commands as $alias => $service) {
-            $lines[] = "\n($i) $alias:\n\t$service";
+        foreach($this->commands as $command => $conf) {
+            $service = $conf["service"];
+            $info = ($conf["info"] ?? "") ? "\n\t{$conf["info"]}" : "";
+            $lines[] = "\n($i) $command:\n\t{$service}{$info}";
             $i++;
         }
         $message = implode("", $lines)."\n";
