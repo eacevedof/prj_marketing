@@ -462,3 +462,6 @@ msgstr "Url TikTok"
 
 msgid "Business name"
 msgstr "Nombre de negocio"
+
+msgid "You can not add permissions to this user"
+msgstr "No puedes agregar permisos a este usuario"

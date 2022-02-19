@@ -42,6 +42,8 @@ export class FormUserBusinessDataUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+    useruuid: { type: String },
+
     texts: {
       converter: (strjson) => {
         if (strjson) return JSON.parse(strjson)
@@ -76,7 +78,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _body_bgcolor: {type: String, state:true},
     _body_color: {type: String, state:true},
     _body_bgimage: {type: String, state:true},
-    _site: {type: String, state:true},
+    _url_site: {type: String, state:true},
     _url_social_fb: {type: String, state:true},
     _url_social_ig: {type: String, state:true},
     _url_social_twitter: {type: String, state:true},
@@ -122,8 +124,8 @@ export class FormUserBusinessDataUpdate extends LitElement {
           : html``
       }
       <div class="form-group">
-        <label for="site">${this.texts.f03}</label>
-        <div id="field-site">
+        <label for="business_name">${this.texts.f03}</label>
+        <div id="field-business_name">
           <input type="text" id="business_name" .value=${this._business_name} placeholder="no editable" class="form-control" maxlength="250" required>
         </div>
       </div>
@@ -199,19 +201,25 @@ export class FormUserBusinessDataUpdate extends LitElement {
       <hr/>
       <div class="flex-row">
         <div class="form-group">
-          <label for="url_social_fb">${this.texts.f15}</label>
+          <label for="url_site">${this.texts.f15}</label>
+          <div id="field-url_site">
+            <input type="text" id="url_site" .value=${this._url_site} class="form-control" maxlength="100">
+          </div>
+        </div>        
+        <div class="form-group">
+          <label for="url_social_fb">${this.texts.f16}</label>
           <div id="field-url_social_fb">
             <input type="text" id="url_social_fb" .value=${this._url_social_fb} class="form-control" maxlength="100">
           </div>
         </div>
         <div class="form-group">
-          <label for="url_social_ig">${this.texts.f16}</label>
+          <label for="url_social_ig">${this.texts.f17}</label>
           <div id="field-url_social_ig">
             <input type="text" id="url_social_ig" .value=${this._url_social_ig} class="form-control" maxlength="100">
           </div>
         </div>
         <div class="form-group">
-          <label for="url_social_twitter">${this.texts.f17}</label>
+          <label for="url_social_twitter">${this.texts.f18}</label>
           <div id="field-url_social_twitter">
             <input type="text" id="url_social_twitter" .value=${this._url_social_twitter} class="form-control" maxlength="100">
           </div>
@@ -271,7 +279,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     error.clear()
 
     const response = await injson.put(
-        URL_UPDATE.concat(`/${this.fields.uuid}`), {
+        URL_UPDATE.replace(":uuid", this.useruuid), {
           _action: ACTION,
           _csrf: this.csrf,
           uuid: this.fields.uuid,
