@@ -379,9 +379,6 @@ msgstr "Business data"
 msgid "business data"
 msgstr "business data"
 
-msgid "New business data"
-msgstr "New business data"
-
 msgid "Edit business data {0}"
 msgstr "Edit business data {0}"
 
@@ -421,9 +418,6 @@ msgstr "Conditions"
 msgid "Max confirmed"
 msgstr "Max confirmed"
 
-msgid "Bg color"
-msgstr "Bg color"
-
 msgid "Bg image xs"
 msgstr "Bg image xs"
 
@@ -442,20 +436,8 @@ msgstr "Bg image xl"
 msgid "Bg image xxl"
 msgstr "Bg image xxl"
 
-msgid "Owner"
-msgstr "Owner"
-
-msgid "Nº"
-msgstr "Nº"
-
-msgid "uuid"
-msgstr "uuid"
-
 msgid "User"
 msgstr "User"
-
-msgid "Slug"
-msgstr "Slug"
 
 msgid "Url logo sm"
 msgstr "Url logo sm"

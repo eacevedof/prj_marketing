@@ -126,9 +126,6 @@ final class TranslationService extends AppService implements IConsole
             return str_replace("msgid \"", "", $line);
         }, $lines);
 
-        //foreach ($lines as $i => $line)
-            //$lines[$i] = "$line ({$i})";
-
         $count = array_count_values($lines);
         $count = array_filter($count, function ($num){
             return $num>1;
