@@ -101,32 +101,28 @@ export class FormUserBusinessDataUpdate extends LitElement {
   render() {
     return html`
     <form @submit=${this.on_submit}>
+      ${this._id
+          ? html`
+          <div class="flex-row">
+            <div class="form-group">
+              <label for="id">${this.texts.f00}</label>
+              <div id="field-id">${this._id}</div>
+            </div>
+            <div class="form-group">
+              <label for="uuid">${this.texts.f01}</label>
+              <div id="field-uuid">${this._uuid}</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="slug">${this.texts.f03}</label>
+            <div id="field-slug">${this._slug}</div>
+          </div>  
+          `
+          : html``
+      }
+
       <div class="flex-row">
-        <div class="form-group">
-          <label for="id">${this.texts.f00}</label>
-          <div id="field-id">
-            <input type="text" id="id" .value=${this._id} class="form-control" maxlength="10">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="uuid">${this.texts.f01}</label>
-          <div id="field-uuid">
-            <input type="text" id="uuid" .value=${this._uuid} class="form-control" maxlength="50">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="id_user">${this.texts.f02}</label>
-          <div id="field-id_user">
-            <input type="text" id="id_user" .value=${this._id_user} class="form-control" maxlength="10">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="slug">${this.texts.f03}</label>
-          <div id="field-slug">
-            <input type="text" id="slug" .value=${this._slug} class="form-control" maxlength="250">
-          </div>
-        </div>
-        <div class="form-group">
+         <div class="form-group">
           <label for="user_logo_1">${this.texts.f04}</label>
           <div id="field-user_logo_1">
             <input type="text" id="user_logo_1" .value=${this._user_logo_1} class="form-control" maxlength="100">
@@ -149,7 +145,10 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-url_favicon">
             <input type="text" id="url_favicon" .value=${this._url_favicon} class="form-control" maxlength="100">
           </div>
-        </div>
+        </div>        
+      </div>
+
+      <div class="flex-row">
         <div class="form-group">
           <label for="head_bgcolor">${this.texts.f08}</label>
           <div id="field-head_bgcolor">
@@ -167,7 +166,10 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-head_bgimage">
             <input type="text" id="head_bgimage" .value=${this._head_bgimage} class="form-control" maxlength="10">
           </div>
-        </div>
+        </div>        
+      </div>
+
+      <div class="flex-row">
         <div class="form-group">
           <label for="body_bgcolor">${this.texts.f11}</label>
           <div id="field-body_bgcolor">
@@ -185,7 +187,10 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-body_bgimage">
             <input type="text" id="body_bgimage" .value=${this._body_bgimage} class="form-control" maxlength="100">
           </div>
-        </div>
+        </div>  
+      </div>
+      
+      <div class="flex-row">
         <div class="form-group">
           <label for="site">${this.texts.f14}</label>
           <div id="field-site">

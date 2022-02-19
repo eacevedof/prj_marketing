@@ -154,10 +154,7 @@ final class CreateAppPromotion extends AbsMigration
         ->create();
     }
 
-
-    private function _initial_load(): void
-    {
-    }
+    private function _initial_load(): void { }
 
     public function down(): void
     {
