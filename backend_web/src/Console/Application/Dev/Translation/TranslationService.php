@@ -20,6 +20,7 @@ final class TranslationService extends AppService implements IConsole
     private const FIND_TR_PATTERNS = [
         "\_\_\(\"(.*?)\"",
     ];
+
     private const PATH_SRC = PATH_SRC;
     private const PATH_TR_ES = PATH_ROOT."/locale/es/default.po";
 
@@ -78,11 +79,11 @@ final class TranslationService extends AppService implements IConsole
         foreach ($trs as $tr) $this->trs[] = $tr;
     }
 
-    private function _get_missing_es(array $trs): array
+    private function _get_missing_es(): array
     {
         $estrs = file_get_contents(self::PATH_TR_ES);
         $missing = [];
-        foreach ($trs as $tr) {
+        foreach ($this->trs as $tr) {
             if (strstr($estrs, $tr) || trim($tr)==="") continue;
             $missing[] = "msgid \"$tr\"";
             $missing[] = "msgstr \"$tr\"";
@@ -90,12 +91,30 @@ final class TranslationService extends AppService implements IConsole
         return $missing;
     }
 
-    //php run.php modules
-    //run get-translation
-    public function run(): void
+    private function _get_not_used_es(): array
     {
-        $this->_load_files(self::PATH_SRC);
-        //$this->logpr($this->arfiles,"files");
+        $estrs = file_get_contents(self::PATH_TR_ES);
+        $lines = explode("\n", $estrs);
+        $lines = array_filter($lines, function ($line){
+           return strstr($line, "msgid \"");
+        });
+
+        $lines = array_map(function ($line){
+            $line = substr($line, 0, -1);
+            return str_replace("msgid \"", "", $line);
+        }, $lines);
+
+        $missing = [];
+        foreach ($lines as $i => $line) {
+            if (!in_array($line, $this->trs))
+                $missing[] = "$line ({$i})";
+        }
+
+        return $missing;
+    }
+
+    private function _load_all_inoked_translations(): void
+    {
         foreach ($this->arfiles as $path) {
             $content = file_get_contents($path);
             if (!strstr($content, "__(\"")) continue;
@@ -105,8 +124,27 @@ final class TranslationService extends AppService implements IConsole
             }
         }
         $trs = array_values(array_unique($this->trs));
-        $missing = $this->_get_missing_es($trs);
-        foreach ($missing as $missing)
-            print_r($missing."\n");
+        $this->trs = $trs;
+    }
+
+    //php run.php modules
+    //run get-translation
+    public function run(): void
+    {
+        $this->_load_files(self::PATH_SRC);
+        $this->_load_all_inoked_translations();
+
+        $parameter = trim($this->input[0] ?? "");
+        switch ($parameter) {
+            case "--not-used":
+                $found = $this->_get_not_used_es();
+            break;
+            default:
+                $found = $this->_get_missing_es();
+            break;
+        }
+
+        foreach ($found as $tr)
+            print_r($tr."\n");
     }
 }
