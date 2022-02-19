@@ -7,14 +7,16 @@ use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Restrict\Users\Domain\UserRepository;
-use App\Restrict\Users\Domain\UserPermissionsEntity;
+use App\Restrict\BusinessData\Domain\BusinessDataEntity;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
-
+use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class UserBusinessDataSaveService extends AppService
 {
@@ -26,7 +28,7 @@ final class UserBusinessDataSaveService extends AppService
     private UserRepository $repouser;
     private BusinessDataRepository $repobusinessdata;
     private FieldsValidator $validator;
-    private UserPermissionsEntity $entitybusinessdata;
+    private BusinessDataEntity $entitybusinessdata;
     private int $iduser;
 
     public function __construct(array $input)
@@ -44,7 +46,7 @@ final class UserBusinessDataSaveService extends AppService
         if ($this->iduser === 1)
             $this->_exception(__("You can not add permissions to this user"));
 
-        $this->entitybusinessdata = MF::get(UserPermissionsEntity::class);
+        $this->entitybusinessdata = MF::get(BusinessDataEntity::class);
         $this->repobusinessdata = RF::get(BusinessDataRepository::class)->set_model($this->entitybusinessdata);
         $this->authuser = $this->auth->get_user();
     }
@@ -118,8 +120,10 @@ final class UserBusinessDataSaveService extends AppService
                 if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-
-
+            ->add_rule("business_name", "business_name", function ($data) {
+                if (!$data["data"]["_new"]) return false;
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })
             ->add_rule("user_logo_1", "user_logo_1", function ($data) {
                 if (!$value = $data["value"]) return false;
                 return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
@@ -199,6 +203,7 @@ final class UserBusinessDataSaveService extends AppService
     
     private function _update(array $update, array $permissions): array
     {
+        unset($update["business_name"]);
         if ($permissions["id"] !== $update["id"])
             $this->_exception(
                 __("This permission does not belong to user {0}", $this->input["_useruuid"]),
@@ -231,6 +236,7 @@ final class UserBusinessDataSaveService extends AppService
         }
         $update["id_user"] = $this->iduser;
         $update["uuid"] = uniqid();
+        $update["slug"] = CF::get(TextComponent::class)->set_text($update["business_name"])->slug();
         $update = $this->entitybusinessdata->map_request($update);
         $this->entitybusinessdata->add_sysinsert($update, $this->authuser["id"]);
         $id = $this->repobusinessdata->insert($update);

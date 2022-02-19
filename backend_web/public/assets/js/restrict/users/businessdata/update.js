@@ -26,7 +26,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
+    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","id_user"])
   }
 
   _on_cancel() {
@@ -42,7 +42,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
-    useruuid: { type: String },
+    useruuid: {type:String},
 
     texts: {
       converter: (strjson) => {
@@ -255,7 +255,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
   //5
   firstUpdated() {
     try {
-      this._$get("id").focus()
+      this._$get("user_logo_1").focus()
     }
     catch (e) {
       console.log(e)
@@ -282,7 +282,11 @@ export class FormUserBusinessDataUpdate extends LitElement {
         URL_UPDATE.replace(":uuid", this.useruuid), {
           _action: ACTION,
           _csrf: this.csrf,
+
+          id: this.fields.id,
           uuid: this.fields.uuid,
+          id_user: this.fields.id_user,
+
           ...this._get_data()
         })
 
@@ -300,8 +304,14 @@ export class FormUserBusinessDataUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
-    const $dt = document.getElementById("table-datatable")
-    if ($dt) $($dt).DataTable().ajax.reload()
+    if (!this.fields.id) {
+      this.fields.id = response.result.id
+      this.fields.uuid = response.result.uuid
+
+      this._id = this.fields.id
+      this._uuid = this.fields.uuid
+    }
+
     window.snack.set_time(4)
         .set_color(SNACK.SUCCESS)
         .set_inner(this.texts.tr04)

@@ -35,7 +35,7 @@ final class UsersBusinessDataUpdateController extends RestrictController
                 ->show();
 
         try {
-            $request = ["uuid"=>$uuid] + $this->request->get_post();
+            $request = ["_useruuid"=>$uuid] + $this->request->get_post();
             $update = SF::get_callable(UserBusinessDataSaveService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([

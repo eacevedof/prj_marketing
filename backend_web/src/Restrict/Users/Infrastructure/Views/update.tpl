@@ -67,6 +67,7 @@ $textpermission = [
 
 $datapermission = [
     "id_user" => $result["id"] ?? "",
+
     "id" => $permissions["id"] ?? "",
     "uuid" => $permissions["uuid"] ?? "",
     "json_rw" => $permissions["json_rw"] ?? "[]",

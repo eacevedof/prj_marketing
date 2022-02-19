@@ -259,6 +259,7 @@ final class HelperJson
 
     public function set_code($iCode)
     {
+        if (!is_numeric($iCode)) $iCode = 500;
         $this->arResponse["payload"]["status"] = ($iCode<300);
         $this->arResponse["header"]["http"]["code"] = $iCode;
         $this->arResponse["header"]["http"]["message"] = "$iCode {$this->arCodes[$iCode]}";

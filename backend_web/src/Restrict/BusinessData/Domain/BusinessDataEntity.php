@@ -42,7 +42,16 @@ final class BusinessDataEntity extends AppEntity
                 "length" => 10,
             ]
         ],
-       
+
+        "business_name" => [
+            "label" => __("Business data"),
+            EntityType::REQUEST_KEY => "business_name",
+            "config" => [
+                "type" => EntityType::STRING,
+                "length" => 250,
+            ]
+        ],
+
         "slug" => [
             "label" => __("Slug"),
             EntityType::REQUEST_KEY => "slug",
@@ -142,9 +151,9 @@ final class BusinessDataEntity extends AppEntity
             ]
         ],
        
-        "site" => [
+        "url_site" => [
             "label" => __("Url site"),
-            EntityType::REQUEST_KEY => "site",
+            EntityType::REQUEST_KEY => "url_site",
             "config" => [
                 "type" => EntityType::STRING,
                 "length" => 100,
