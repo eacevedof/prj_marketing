@@ -64,8 +64,8 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _id: {type: String, state:true},
     _uuid: {type: String, state:true},
 
+    _business_name: {type: String, state:true},
     _slug: {type: String, state:true},
-    _bname: {type: String, state:true},
     _user_logo_1: {type: String, state:true},
     _user_logo_2: {type: String, state:true},
     _user_logo_3: {type: String, state:true},
@@ -115,40 +115,40 @@ export class FormUserBusinessDataUpdate extends LitElement {
             </div>
           </div>
           <div class="form-group">
-            <label for="slug">${this.texts.f03}</label>
+            <label for="slug">${this.texts.f04}</label>
             <div id="field-slug">${this._slug}</div>
           </div>  
           `
           : html``
       }
       <div class="form-group">
-        <label for="site">${this.texts.f04}</label>
+        <label for="site">${this.texts.f03}</label>
         <div id="field-site">
-          <input type="text" id="description" .value=${this._description} class="form-control" maxlength="100">
+          <input type="text" id="business_name" .value=${this._business_name} class="form-control" maxlength="250">
         </div>
       </div>
       
       <div class="flex-row">
          <div class="form-group">
-          <label for="user_logo_1">${this.texts.f04}</label>
+          <label for="user_logo_1">${this.texts.f05}</label>
           <div id="field-user_logo_1">
             <input type="text" id="user_logo_1" .value=${this._user_logo_1} class="form-control" maxlength="100">
           </div>
         </div>
         <div class="form-group">
-          <label for="user_logo_2">${this.texts.f05}</label>
+          <label for="user_logo_2">${this.texts.f06}</label>
           <div id="field-user_logo_2">
             <input type="text" id="user_logo_2" .value=${this._user_logo_2} class="form-control" maxlength="100">
           </div>
         </div>
         <div class="form-group">
-          <label for="user_logo_3">${this.texts.f06}</label>
+          <label for="user_logo_3">${this.texts.f07}</label>
           <div id="field-user_logo_3">
             <input type="text" id="user_logo_3" .value=${this._user_logo_3} class="form-control" maxlength="100">
           </div>
         </div>
         <div class="form-group">
-          <label for="url_favicon">${this.texts.f07}</label>
+          <label for="url_favicon">${this.texts.f08}</label>
           <div id="field-url_favicon">
             <input type="text" id="url_favicon" .value=${this._url_favicon} class="form-control" maxlength="100">
           </div>
@@ -157,19 +157,19 @@ export class FormUserBusinessDataUpdate extends LitElement {
 
       <div class="flex-row">
         <div class="form-group">
-          <label for="head_bgcolor">${this.texts.f08}</label>
+          <label for="head_bgcolor">${this.texts.f09}</label>
           <div id="field-head_bgcolor">
             <input type="color" id="head_bgcolor" .value=${this._head_bgcolor} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
-          <label for="head_color">${this.texts.f09}</label>
+          <label for="head_color">${this.texts.f10}</label>
           <div id="field-head_color">
             <input type="color" id="head_color" .value=${this._head_color} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
-          <label for="head_bgimage">${this.texts.f10}</label>
+          <label for="head_bgimage">${this.texts.f11}</label>
           <div id="field-head_bgimage">
             <input type="text" id="head_bgimage" .value=${this._head_bgimage} class="form-control" maxlength="10">
           </div>
@@ -178,19 +178,19 @@ export class FormUserBusinessDataUpdate extends LitElement {
 
       <div class="flex-row">
         <div class="form-group">
-          <label for="body_bgcolor">${this.texts.f11}</label>
+          <label for="body_bgcolor">${this.texts.f12}</label>
           <div id="field-body_bgcolor">
             <input type="color" id="body_bgcolor" .value=${this._body_bgcolor} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
-          <label for="body_color">${this.texts.f12}</label>
+          <label for="body_color">${this.texts.f13}</label>
           <div id="field-body_color">
             <input type="color" id="body_color" .value=${this._body_color} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
-          <label for="body_bgimage">${this.texts.f13}</label>
+          <label for="body_bgimage">${this.texts.f14}</label>
           <div id="field-body_bgimage">
             <input type="text" id="body_bgimage" .value=${this._body_bgimage} class="form-control" maxlength="100">
           </div>

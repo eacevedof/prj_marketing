@@ -110,6 +110,7 @@ $databusinessdata = [
     "id" => $businessdata["id"] ?? "",
     "uuid" => $businessdata["uuid"] ?? "",
 
+    "business_name" => $businessdata["business_name"] ?? "",
     "slug" => $businessdata["slug"] ?? "",
     "user_logo_1" => $businessdata["user_logo_1"] ?? "",
     "user_logo_2" => $businessdata["user_logo_2"] ?? "",
