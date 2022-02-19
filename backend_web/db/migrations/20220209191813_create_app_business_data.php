@@ -34,6 +34,10 @@ final class CreateAppBusinessData extends AbsMigration
             "limit" => 11,
             "null" => false
         ])
+        ->addColumn("business_name", "string", [
+            "limit" => 250,
+            "null" => false
+        ])
         ->addColumn("slug", "string", [
             "limit" => 250,
             "null" => false
@@ -88,7 +92,7 @@ final class CreateAppBusinessData extends AbsMigration
             "null" => true,
             "default" => null,
         ])
-        ->addColumn("site", "string", [
+        ->addColumn("url_business", "string", [
             "limit" => 100,
             "null" => true,
             "default" => null,
