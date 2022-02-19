@@ -7,8 +7,23 @@ mapping:
 */
 return [
     //commands
-    "help"                   => "App\\Console\\Application\\HelpService",
-    "users"                  => "App\\Console\\Application\\Restrict\\UsersService",
-    "build-module"           => "App\\Console\\Application\\Dev\\Builder\\ModuleBuilderService",
-    "get-translation"        => "App\\Console\\Application\\Dev\\Translation\\TranslationService",
+    "help"                   => [
+        "service"   =>  "App\\Console\\Application\\HelpService",
+        "info"      =>  "",
+    ],
+
+    "users"                  => [
+        "service"   =>  "App\\Console\\Application\\Restrict\\UsersService",
+        "info"      =>  "",
+    ],
+
+    "build-module"           => [
+        "service"   =>  "App\\Console\\Application\\Dev\\Builder\\ModuleBuilderService",
+        "info"      =>  "",
+    ],
+
+    "get-translation"        => [
+        "service"   =>  "App\\Console\\Application\\Dev\\Translation\\TranslationService",
+        "info"      =>  "",
+    ],
 ];
