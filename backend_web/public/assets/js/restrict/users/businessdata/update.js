@@ -124,32 +124,32 @@ export class FormUserBusinessDataUpdate extends LitElement {
       <div class="form-group">
         <label for="site">${this.texts.f03}</label>
         <div id="field-site">
-          <input type="text" id="business_name" .value=${this._business_name} class="form-control" maxlength="250">
+          <input type="text" id="business_name" .value=${this._business_name} placeholder="no editable" class="form-control" maxlength="250" required>
         </div>
       </div>
       
       <div class="form-group">
         <label for="user_logo_1">${this.texts.f05}</label>
         <div id="field-user_logo_1">
-          <input type="text" id="user_logo_1" .value=${this._user_logo_1} class="form-control" maxlength="100">
+          <input type="text" id="user_logo_1" .value=${this._user_logo_1} placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
       </div>
       <div class="form-group">
         <label for="user_logo_2">${this.texts.f06}</label>
         <div id="field-user_logo_2">
-          <input type="text" id="user_logo_2" .value=${this._user_logo_2} class="form-control" maxlength="100">
+          <input type="text" id="user_logo_2" .value=${this._user_logo_2} placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
       </div>
       <div class="form-group">
         <label for="user_logo_3">${this.texts.f07}</label>
         <div id="field-user_logo_3">
-          <input type="text" id="user_logo_3" .value=${this._user_logo_3} class="form-control" maxlength="100">
+          <input type="text" id="user_logo_3" .value=${this._user_logo_3} placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
       </div>
       <div class="form-group">
         <label for="url_favicon">${this.texts.f08}</label>
         <div id="field-url_favicon">
-          <input type="text" id="url_favicon" .value=${this._url_favicon} class="form-control" maxlength="100">
+          <input type="text" id="url_favicon" .value=${this._url_favicon} placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
       </div>        
 
@@ -174,6 +174,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
         </div>        
       </div>
 
+      <hr/>
       <div class="flex-row">
         <div class="form-group">
           <label for="body_bgcolor">${this.texts.f12}</label>
@@ -194,7 +195,8 @@ export class FormUserBusinessDataUpdate extends LitElement {
           </div>
         </div>  
       </div>
-      
+
+      <hr/>
       <div class="flex-row">
         <div class="form-group">
           <label for="url_social_fb">${this.texts.f15}</label>

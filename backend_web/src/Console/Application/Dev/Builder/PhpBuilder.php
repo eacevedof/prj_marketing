@@ -108,7 +108,7 @@ final class PhpBuilder
     private function _get_rule_tpl(string $field): string
     {
         return "->add_rule(\"$field\", \"$field\", function (\$data) {
-                return trim(\$data[\"value\"]) ? false : __(\"Empty field is not allowed\");
+                return \$data[\"value\"] ? false : __(\"Empty field is not allowed\");
             })";
     }
 

@@ -84,43 +84,19 @@ final class BusinessDataUpdateService extends AppService
     private function _add_rules(): FieldsValidator
     {
         $this->validator
-        ->add_rule("id", "id", function ($data) {
+            ->add_rule("slug", "slug", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("uuid", "uuid", function ($data) {
+            })
+            ->add_rule("slug", "slug", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("id_user", "id_user", function ($data) {
+            })
+            ->add_rule("user_logo_1", "user_logo_1", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("slug", "slug", function ($data) {
+            })
+            ->add_rule("user_logo_2", "user_logo_2", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("user_logo_1", "user_logo_1", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("user_logo_2", "user_logo_2", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("user_logo_3", "user_logo_3", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("url_favicon", "url_favicon", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("head_bgcolor", "head_bgcolor", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("head_color", "head_color", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("head_bgimage", "head_bgimage", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("body_bgcolor", "body_bgcolor", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("body_color", "body_color", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("body_bgimage", "body_bgimage", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("site", "site", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("url_social_fb", "url_social_fb", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("url_social_ig", "url_social_ig", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("url_social_twitter", "url_social_twitter", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("url_social_tiktok", "url_social_tiktok", function ($data) {
+            })
+            ->add_rule("user_logo_3", "user_logo_3", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })
         ;
