@@ -119,73 +119,84 @@ final class UserBusinessDataSaveService extends AppService
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
 
-            ->add_rule("slug", "slug", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
 
             ->add_rule("user_logo_1", "user_logo_1", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("user_logo_2", "user_logo_2", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("user_logo_3", "user_logo_3", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
 
             ->add_rule("url_favicon", "url_favicon", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
 
             ->add_rule("head_bgcolor", "head_bgcolor", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return false;
+                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("head_color", "head_color", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return false;
+                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("head_bgimage", "head_bgimage", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("body_bgcolor", "body_bgcolor", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return false;
+                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("body_color", "body_color", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return false;
+                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("body_bgimage", "body_bgimage", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("site", "site", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_fb", "url_social_fb", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_ig", "url_social_ig", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_twitter", "url_social_twitter", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_tiktok", "url_social_tiktok", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return filter_var($value, FILTER_VALIDATE_URL);
+                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
             })
         ;
         
         return $this->validator;
     }
 
+    private function is_valid_color(string $hexcolor): bool
+    {
+        $hexcolor = ltrim($hexcolor, "#");
+        if (
+            ctype_xdigit($hexcolor) &&
+            (strlen($hexcolor) == 6 || strlen($hexcolor) == 3))
+            return true;
+        return false;
+    }
+    
     private function _update(array $update, array $permissions): array
     {
         if ($permissions["id"] !== $update["id"])
@@ -231,7 +242,7 @@ final class UserBusinessDataSaveService extends AppService
 
     public function __invoke(): array
     {
-
+        unset($this->input["slug"]);
         if (!$update = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
