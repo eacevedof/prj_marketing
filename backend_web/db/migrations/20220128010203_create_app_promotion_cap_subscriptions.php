@@ -2,7 +2,7 @@
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
-final class CreateAppPromotionSubscriptions extends AbsMigration
+final class CreateAppPromotionCapSubscriptions extends AbsMigration
 {
     private string $tablename = "app_promotion_cap_subscriptions";
 
