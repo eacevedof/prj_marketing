@@ -65,6 +65,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _uuid: {type: String, state:true},
 
     _slug: {type: String, state:true},
+    _bname: {type: String, state:true},
     _user_logo_1: {type: String, state:true},
     _user_logo_2: {type: String, state:true},
     _user_logo_3: {type: String, state:true},
@@ -120,7 +121,13 @@ export class FormUserBusinessDataUpdate extends LitElement {
           `
           : html``
       }
-
+      <div class="form-group">
+        <label for="site">${this.texts.f04}</label>
+        <div id="field-site">
+          <input type="text" id="description" .value=${this._description} class="form-control" maxlength="100">
+        </div>
+      </div>
+      
       <div class="flex-row">
          <div class="form-group">
           <label for="user_logo_1">${this.texts.f04}</label>
@@ -191,12 +198,6 @@ export class FormUserBusinessDataUpdate extends LitElement {
       </div>
       
       <div class="flex-row">
-        <div class="form-group">
-          <label for="site">${this.texts.f14}</label>
-          <div id="field-site">
-            <input type="text" id="site" .value=${this._site} class="form-control" maxlength="100">
-          </div>
-        </div>
         <div class="form-group">
           <label for="url_social_fb">${this.texts.f15}</label>
           <div id="field-url_social_fb">

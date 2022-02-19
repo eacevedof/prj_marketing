@@ -16,7 +16,6 @@ export class FormUserUpdate extends LitElement {
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
       "/themes/valex/assets/css/style.css",
     ])])
-    //console.log(globalStyle)
     return [
       globalStyle,
       cssformflex,
@@ -48,11 +47,9 @@ export class FormUserUpdate extends LitElement {
     super()
     this.texts = {}
     this.fields = {}
-    //console.log("CONSTRUCTOR","texts",this.texts,"fields:",this.fields)
   }
 
   static properties = {
-    //https://lit.dev/docs/components/properties/#property-options
     csrf: { type: String },
     texts: {
       converter: (strjson) => {
