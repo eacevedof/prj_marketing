@@ -382,8 +382,8 @@ msgstr "business data"
 msgid "New business data"
 msgstr "New business data"
 
-msgid "Edit business data  {0}"
-msgstr "Edit business data  {0}"
+msgid "Edit business data {0}"
+msgstr "Edit business data {0}"
 
 msgid "Bg color"
 msgstr "Bg color"
