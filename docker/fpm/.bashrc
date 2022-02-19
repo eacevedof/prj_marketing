@@ -16,6 +16,7 @@ alias show-profile="cat $HOME/.bashrc"
 alias edit-profile="vim $HOME/.bashrc"
 
 alias run-test="be; phpunit ./tests"
+alias be-migrate="cd $PATHWEB/db; phinx migrate"
 
 run() {
     #alias log-consumer="run --class=App.Services.Kafka.LogConsumerService"
