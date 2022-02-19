@@ -151,9 +151,9 @@ final class BusinessDataEntity extends AppEntity
             ]
         ],
        
-        "url_site" => [
+        "url_business" => [
             "label" => __("Url site"),
-            EntityType::REQUEST_KEY => "url_site",
+            EntityType::REQUEST_KEY => "url_business",
             "config" => [
                 "type" => EntityType::STRING,
                 "length" => 100,

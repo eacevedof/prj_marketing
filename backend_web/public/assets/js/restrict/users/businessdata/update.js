@@ -78,7 +78,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _body_bgcolor: {type: String, state:true},
     _body_color: {type: String, state:true},
     _body_bgimage: {type: String, state:true},
-    _url_site: {type: String, state:true},
+    _url_business: {type: String, state:true},
     _url_social_fb: {type: String, state:true},
     _url_social_ig: {type: String, state:true},
     _url_social_twitter: {type: String, state:true},
@@ -201,9 +201,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
       <hr/>
       <div class="flex-row">
         <div class="form-group">
-          <label for="url_site">${this.texts.f15}</label>
-          <div id="field-url_site">
-            <input type="text" id="url_site" .value=${this._url_site} class="form-control" maxlength="100">
+          <label for="url_business">${this.texts.f15}</label>
+          <div id="field-url_business">
+            <input type="text" id="url_business" .value=${this._url_business} class="form-control" maxlength="100">
           </div>
         </div>        
         <div class="form-group">
