@@ -92,7 +92,7 @@ final class UsersUpdateService extends AppService
                 $email = trim($data["value"]);
                 $uuid = $data["data"]["uuid"] ?? "";
                 $id = $repouser->get_id_by_uuid($uuid);
-                if (!$id) return __("User with code {0} not found",$uuid);
+                if (!$id) return __("{0} with code {1} not found", __("User"), $uuid);
                 $idemail = $repouser->email_exists($email);
                 if (!$idemail || ($id == $idemail)) return false;
                 return __("This email already exists");

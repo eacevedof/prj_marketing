@@ -80,7 +80,7 @@ final class UsersInfoService extends AppService
         $user = $this->repouser->get_info($this->input);
         if(!$user)
             $this->_exception(
-                __("User with code {0} not found", $this->input),
+                __("{0} with code {1} not found", __("User"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
 

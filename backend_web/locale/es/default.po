@@ -37,6 +37,12 @@ msgstr "Contraseña en blanco"
 msgid "Invalid data"
 msgstr "Datos no válidos"
 
+msgid "User"
+msgstr "Usuario"
+
+msgid "user"
+msgstr "usuario"
+
 msgid "Users"
 msgstr "Usuarios"
 
@@ -148,9 +154,6 @@ msgstr "Este item ya estaba borrado {0}"
 msgid "Is not possible to restore entity {0}"
 msgstr "No es posible restaurar la entidad {0}"
 
-msgid "No user code provided"
-msgstr "No se ha proporcionado el código de usuario"
-
 msgid "User with code {0} not found"
 msgstr "No se ha encontrado el usuario con código {0}"
 
@@ -195,9 +198,6 @@ msgstr "País"
 
 msgid "Language"
 msgstr "Idioma"
-
-msgid "ID"
-msgstr "ID"
 
 msgid "Address"
 msgstr "Dirección"
@@ -368,43 +368,43 @@ msgid "<b>Data updated</b>"
 msgstr "<b>Datos actualizados</b>"
 
 msgid "New business data"
-msgstr "New business data"
+msgstr "Nuevos datos de negocio"
 
 msgid "Business data info"
-msgstr "Business data info"
+msgstr "Info de datos de negocio"
 
 msgid "Business data"
-msgstr "Business data"
+msgstr "Datos de negocio"
 
 msgid "business data"
-msgstr "business data"
+msgstr "datos de negocio"
 
 msgid "Edit business data {0}"
-msgstr "Edit business data {0}"
+msgstr "Editar datos de negocio {0}"
 
 msgid "Bg color"
-msgstr "Bg color"
+msgstr "Color de fondo"
 
 msgid "Bg image xs"
-msgstr "Bg image xs"
+msgstr "Imagen de fondo xs"
 
 msgid "Bg image sm"
-msgstr "Bg image sm"
+msgstr "Imagen de fondo sm"
 
 msgid "Bg image md"
-msgstr "Bg image md"
+msgstr "Imagen de fondo md"
 
 msgid "Bg image lg"
-msgstr "Bg image lg"
+msgstr "Imagen de fondo lg"
 
 msgid "Bg image xl"
-msgstr "Bg image xl"
+msgstr "Imagen de fondo lg"
 
 msgid "Bg image xxl"
-msgstr "Bg image xxl"
+msgstr "Imagen de fondo xxl"
 
 msgid "Max confirmed"
-msgstr "Max confirmed"
+msgstr "Máx. confirmados"
 
 msgid "General"
 msgstr "General"
@@ -414,30 +414,6 @@ msgstr "Design"
 
 msgid "Conditions"
 msgstr "Conditions"
-
-msgid "Max confirmed"
-msgstr "Max confirmed"
-
-msgid "Bg image xs"
-msgstr "Bg image xs"
-
-msgid "Bg image sm"
-msgstr "Bg image sm"
-
-msgid "Bg image md"
-msgstr "Bg image md"
-
-msgid "Bg image lg"
-msgstr "Bg image lg"
-
-msgid "Bg image xl"
-msgstr "Bg image xl"
-
-msgid "Bg image xxl"
-msgstr "Bg image xxl"
-
-msgid "User"
-msgstr "User"
 
 msgid "Url logo sm"
 msgstr "Url logo sm"
@@ -452,25 +428,25 @@ msgid "Url favicon"
 msgstr "Url favicon"
 
 msgid "Head bg color"
-msgstr "Head bg color"
+msgstr "Color de fondo de cabecera"
 
 msgid "Head color"
-msgstr "Head color"
+msgstr "Color en cabecera"
 
 msgid "Head bg image"
-msgstr "Head bg image"
+msgstr "Imagen de fondo de cabecera"
 
 msgid "Body bg color"
-msgstr "Body bg color"
+msgstr "Color de fondo del cuerpo"
 
 msgid "Body color"
-msgstr "Body color"
+msgstr "Color del cuerpo"
 
 msgid "Url body bg image"
-msgstr "Url body bg image"
+msgstr "Url de imagen de fondo del cuerpo"
 
 msgid "Url site"
-msgstr "Url site"
+msgstr "Url del sitio"
 
 msgid "Url Facebook"
 msgstr "Url Facebook"
