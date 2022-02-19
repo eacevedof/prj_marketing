@@ -3,6 +3,9 @@
  * @var \App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  * @var string $uuid
+ *
+ * @var array $permissions
+ * @var array $businessdata
  */
 use App\Restrict\Users\Domain\Enums\UserProfileType;
 $isbow = $result["id_profile"] === UserProfileType::BUSINESS_OWNER;
@@ -78,16 +81,48 @@ $textbusinessdata = [
     "tr04" => __("<b>Data updated</b>"),
 
     "f00" => __("Nº"),
-    "f01" => __("Code"),
+    "f01" => __("uuid"),
     "f02" => __("User"),
-    "f03" => __("Permissions JSON"),
+    "f03" => __("Slug"),
+    "f04" => __("Url logo sm"),
+    "f05" => __("Url logo md"),
+    "f06" => __("Url logo lg"),
+    "f07" => __("Url favicon"),
+    "f08" => __("Head bg color"),
+    "f09" => __("Head color"),
+    "f10" => __("Head bg image"),
+    "f11" => __("Body bg color"),
+    "f12" => __("Body color"),
+    "f13" => __("Url body bg image"),
+    "f14" => __("Url site"),
+    "f15" => __("Url Facebook"),
+    "f16" => __("Url Instagram"),
+    "f17" => __("Url Twitter"),
+    "f18" => __("Url TikTok"),
 ];
 
 $databusinessdata = [
     "id_user" => $result["id"] ?? "",
-    "id" => $businessdata["id"] ?? "",
-    "uuid" => $businessdata["uuid"] ?? "",
-    "json_rw" => $businessdata["json_rw"] ?? "[]",
+
+    "id" => $businessdata["id"],
+    "uuid" => $businessdata["uuid"],
+
+    "slug" => $businessdata["slug"],
+    "user_logo_1" => $businessdata["user_logo_1"],
+    "user_logo_2" => $businessdata["user_logo_2"],
+    "user_logo_3" => $businessdata["user_logo_3"],
+    "url_favicon" => $businessdata["url_favicon"],
+    "head_bgcolor" => $businessdata["head_bgcolor"],
+    "head_color" => $businessdata["head_color"],
+    "head_bgimage" => $businessdata["head_bgimage"],
+    "body_bgcolor" => $businessdata["body_bgcolor"],
+    "body_color" => $businessdata["body_color"],
+    "body_bgimage" => $businessdata["body_bgimage"],
+    "site" => $businessdata["site"],
+    "url_social_fb" => $businessdata["url_social_fb"],
+    "url_social_ig" => $businessdata["url_social_ig"],
+    "url_social_twitter" => $businessdata["url_social_twitter"],
+    "url_social_tiktok" => $businessdata["url_social_tiktok"],
 ];
 ?>
 <div class="modal-form">
