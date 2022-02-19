@@ -63,6 +63,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _id: {type: String, state:true},
     _uuid: {type: String, state:true},
     _id_user: {type: String, state:true},
+
     _slug: {type: String, state:true},
     _user_logo_1: {type: String, state:true},
     _user_logo_2: {type: String, state:true},
@@ -152,13 +153,13 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div class="form-group">
           <label for="head_bgcolor">${this.texts.f08}</label>
           <div id="field-head_bgcolor">
-            <input type="text" id="head_bgcolor" .value=${this._head_bgcolor} class="form-control" maxlength="10">
+            <input type="color" id="head_bgcolor" .value=${this._head_bgcolor} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
           <label for="head_color">${this.texts.f09}</label>
           <div id="field-head_color">
-            <input type="text" id="head_color" .value=${this._head_color} class="form-control" maxlength="10">
+            <input type="color" id="head_color" .value=${this._head_color} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
@@ -170,13 +171,13 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div class="form-group">
           <label for="body_bgcolor">${this.texts.f11}</label>
           <div id="field-body_bgcolor">
-            <input type="text" id="body_bgcolor" .value=${this._body_bgcolor} class="form-control" maxlength="10">
+            <input type="color" id="body_bgcolor" .value=${this._body_bgcolor} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
           <label for="body_color">${this.texts.f12}</label>
           <div id="field-body_color">
-            <input type="text" id="body_color" .value=${this._body_color} class="form-control" maxlength="10">
+            <input type="color" id="body_color" .value=${this._body_color} class="form-control" maxlength="10">
           </div>
         </div>
         <div class="form-group">
@@ -225,7 +226,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           : html``
           }
         </button>
-        <button type="button" ?disabled=${this._issending} @click=${this.on_cancel} class="btn btn-secondary mt-3 mb-0">
+        <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
           ${this._btncancel}
           ${this._issending
           ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
