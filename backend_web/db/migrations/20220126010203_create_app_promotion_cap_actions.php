@@ -2,9 +2,9 @@
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
-final class CreateAppPromotionActions extends AbsMigration
+final class CreateAppPromotionCapActions extends AbsMigration
 {
-    private string $tablename = "app_promotion_actions";
+    private string $tablename = "app_promotion_cap_actions";
 
     public function up(): void
     {
@@ -37,6 +37,11 @@ final class CreateAppPromotionActions extends AbsMigration
             "limit" => 2,
             "null" => false,
             "comment" => "app_array.type='promotion-steps' viewed, subscribed, confirmed, executed",
+        ])
+        ->addColumn("url_req", "string", [
+            "limit" => 300,
+            "null" => true,
+            "default" => false
         ])
         ->addColumn("url_ref", "string", [
             "limit" => 300,
