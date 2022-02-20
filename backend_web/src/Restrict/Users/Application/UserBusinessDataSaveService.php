@@ -126,20 +126,20 @@ final class UserBusinessDataSaveService extends AppService
             })
             ->add_rule("user_logo_1", "user_logo_1", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("user_logo_2", "user_logo_2", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("user_logo_3", "user_logo_3", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
 
             ->add_rule("url_favicon", "url_favicon", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
 
             ->add_rule("head_bgcolor", "head_bgcolor", function ($data) {
@@ -152,7 +152,7 @@ final class UserBusinessDataSaveService extends AppService
             })
             ->add_rule("head_bgimage", "head_bgimage", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("body_bgcolor", "body_bgcolor", function ($data) {
                 if (!$value = $data["value"]) return false;
@@ -164,31 +164,40 @@ final class UserBusinessDataSaveService extends AppService
             })
             ->add_rule("body_bgimage", "body_bgimage", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("site", "site", function ($data) {
+            ->add_rule("url_business", "url_business", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_fb", "url_social_fb", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_ig", "url_social_ig", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_twitter", "url_social_twitter", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_tiktok", "url_social_tiktok", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !filter_var($value, FILTER_VALIDATE_URL) ? __("Invalid url value") : false;
+                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
             })
         ;
         
         return $this->validator;
+    }
+
+    private function is_valid_url($value): bool
+    {
+        $proto = substr( $value, 0, 6);
+        if (!(strstr($proto, "http:") || strstr($proto, "https:")))
+            return false;
+        
+        return filter_var($value, FILTER_VALIDATE_URL);
     }
 
     private function is_valid_color(string $hexcolor): bool
