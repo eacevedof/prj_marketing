@@ -236,13 +236,14 @@ final class UserBusinessDataSaveService extends AppService
         }
         $update["id_user"] = $this->iduser;
         $update["uuid"] = uniqid();
-        $update["slug"] = CF::get(TextComponent::class)->set_text($update["business_name"])->slug();
+        $update["slug"] = CF::get(TextComponent::class)->set_text($update["business_name"])->slug()."-$this->iduser";
         $update = $this->entitybusinessdata->map_request($update);
         $this->entitybusinessdata->add_sysinsert($update, $this->authuser["id"]);
         $id = $this->repobusinessdata->insert($update);
         return [
             "id" => $id,
-            "uuid" => $update["uuid"]
+            "uuid" => $update["uuid"],
+            "slug" => $update["slug"]
         ];
     }
 
