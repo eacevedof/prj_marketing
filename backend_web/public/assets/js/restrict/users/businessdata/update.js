@@ -106,13 +106,17 @@ export class FormUserBusinessDataUpdate extends LitElement {
     return html `<a href="${url}" target="_blank" class="link-info">${text}</a>`
   }
 
-  _get_img_link(urlhref, text) {
+  _get_img_link(urlhref) {
     const url = urlhref.trim()
     if (!url) return html ``
     return html `<a href="${url}" target="_blank" class="link-info">
-      <img src="${url}" class="img-thumbnail">
-      ${text}
+      <img src="${url}" class="img-thumbnail wd-30p">
     </a>`
+  }
+
+  _handle_keyup(e, field) {
+    const value = e.target.value
+    this[field] = value
   }
 
   //4
@@ -145,28 +149,36 @@ export class FormUserBusinessDataUpdate extends LitElement {
       <div class="form-group">
         <label for="user_logo_1">${this.texts.f05}</label>
         <div id="field-user_logo_1">
-          <input type="text" id="user_logo_1" .value=${this._user_logo_1} placeholder="link cloudinary" class="form-control" maxlength="100">
+          <input type="text" id="user_logo_1" .value=${this._user_logo_1} 
+              @keyup=${e => this._handle_keyup(e, "_user_logo_1")}
+              placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
         ${this._get_img_link(this._user_logo_1, this.texts.f05)}
       </div>
       <div class="form-group">
         <label for="user_logo_2">${this.texts.f06}</label>
         <div id="field-user_logo_2">
-          <input type="text" id="user_logo_2" .value=${this._user_logo_2} placeholder="link cloudinary" class="form-control" maxlength="100">
+          <input type="text" id="user_logo_2" .value=${this._user_logo_2}
+               @keyup=${e => this._handle_keyup(e, "_user_logo_2")}
+               placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
         ${this._get_img_link(this._user_logo_2, this.texts.f06)}
       </div>
       <div class="form-group">
         <label for="user_logo_3">${this.texts.f07}</label>
         <div id="field-user_logo_3">
-          <input type="text" id="user_logo_3" .value=${this._user_logo_3} placeholder="link cloudinary" class="form-control" maxlength="100">
+          <input type="text" id="user_logo_3" .value=${this._user_logo_3}
+                 @keyup=${e => this._handle_keyup(e, "_user_logo_3")}    
+                 placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
         ${this._get_img_link(this._user_logo_3, this.texts.f07)}
       </div>
       <div class="form-group">
         <label for="url_favicon">${this.texts.f08}</label>
         <div id="field-url_favicon">
-          <input type="text" id="url_favicon" .value=${this._url_favicon} placeholder="link cloudinary" class="form-control" maxlength="100">
+          <input type="text" id="url_favicon" .value=${this._url_favicon}
+                 @keyup=${e => this._handle_keyup(e, "_url_favicon")}
+                 placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
         ${this._get_img_link(this._url_favicon, this.texts.f08)}
       </div>        
@@ -187,7 +199,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div class="form-group">
           <label for="head_bgimage">${this.texts.f11}</label>
           <div id="field-head_bgimage">
-            <input type="text" id="head_bgimage" .value=${this._head_bgimage} class="form-control" maxlength="10">
+            <input type="text" id="head_bgimage" .value=${this._head_bgimage}
+                  @keyup=${e => this._handle_keyup(e, "_head_bgimage")}
+                  class="form-control" maxlength="10">
           </div>
           ${this._get_img_link(this._head_bgimage, this.texts.f11)}
         </div>        
@@ -210,7 +224,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div class="form-group">
           <label for="body_bgimage">${this.texts.f14}</label>
           <div id="field-body_bgimage">
-            <input type="text" id="body_bgimage" .value=${this._body_bgimage} class="form-control" maxlength="100">
+            <input type="text" id="body_bgimage" .value=${this._body_bgimage}
+                   @keyup=${e => this._handle_keyup(e, "_body_bgimage")}
+                   class="form-control" maxlength="100">
           </div>
           ${this._get_img_link(this._body_bgimage, this.texts.f14)}
         </div>  
@@ -221,37 +237,47 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div class="form-group">
           <label for="url_business">${this.texts.f15}</label>
           <div id="field-url_business">
-            <input type="text" id="url_business" .value=${this._url_business} class="form-control" maxlength="100">
+            <input type="text" id="url_business" .value=${this._url_business}
+                   @keyup=${e => this._handle_keyup(e, "_url_business")}
+                   class="form-control" maxlength="100">
           </div>
-          ${this._get_img_link(this._url_business, this.texts.f15)}
+          ${this._get_link(this._url_business, this.texts.f15)}
         </div>        
         <div class="form-group">
           <label for="url_social_fb">${this.texts.f16}</label>
           <div id="field-url_social_fb">
-            <input type="text" id="url_social_fb" .value=${this._url_social_fb} class="form-control" maxlength="100">
+            <input type="text" id="url_social_fb" .value=${this._url_social_fb}
+                   @keyup=${e => this._handle_keyup(e, "_url_social_fb")}
+                   class="form-control" maxlength="100">
           </div>
-          ${this._get_img_link(this._url_social_fb, this.texts.f15)}
+          ${this._get_link(this._url_social_fb, this.texts.f15)}
         </div>
         <div class="form-group">
           <label for="url_social_ig">${this.texts.f17}</label>
           <div id="field-url_social_ig">
-            <input type="text" id="url_social_ig" .value=${this._url_social_ig} class="form-control" maxlength="100">
+            <input type="text" id="url_social_ig" .value=${this._url_social_ig}
+                   @keyup=${e => this._handle_keyup(e, "_url_social_ig")}
+                   class="form-control" maxlength="100">
           </div>
-          ${this._get_img_link(this._url_social_ig, this.texts.f15)}
+          ${this._get_link(this._url_social_ig, this.texts.f15)}
         </div>
         <div class="form-group">
           <label for="url_social_twitter">${this.texts.f18}</label>
           <div id="field-url_social_twitter">
-            <input type="text" id="url_social_twitter" .value=${this._url_social_twitter} class="form-control" maxlength="100">
+            <input type="text" id="url_social_twitter" .value=${this._url_social_twitter}
+                   @keyup=${e => this._handle_keyup(e, "_url_social_twitter")}
+                   class="form-control" maxlength="100">
           </div>
-          ${this._get_img_link(this._url_social_twitter, this.texts.f15)}
+          ${this._get_link(this._url_social_twitter, this.texts.f15)}
         </div>
         <div class="form-group">
           <label for="url_social_tiktok">${this.texts.f18}</label>
           <div id="field-url_social_tiktok">
-            <input type="text" id="url_social_tiktok" .value=${this._url_social_tiktok} class="form-control" maxlength="100">
+            <input type="text" id="url_social_tiktok" .value=${this._url_social_tiktok}
+                   @keyup=${e => this._handle_keyup(e, "_url_social_tiktok")}
+                   class="form-control" maxlength="100">
           </div>
-          ${this._get_img_link(this._url_social_tiktok, this.texts.f15)}
+          ${this._get_link(this._url_social_tiktok, this.texts.f15)}
         </div>
       </div>
     
