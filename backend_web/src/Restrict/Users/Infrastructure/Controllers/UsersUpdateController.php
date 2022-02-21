@@ -58,10 +58,11 @@ final class UsersUpdateController extends RestrictController
             $h1 = "{$user["description"]} ($uuid)";
 
             $profiles = $this->picklist->get_profiles(false);
-            if ($user["id"] = $this->auth->get_user()["id"]) {
+            if ($user["id"] === $this->auth->get_user()["id"]) {
                 $profiles = array_filter($profiles, function ($profile){
                     return in_array($profile["key"], ["", $this->auth->get_user()["id_profile"]]);
                 });
+                $profiles = array_values($profiles);
             }
 
             $this->set_template("update")

@@ -110,7 +110,6 @@ export class FormUserUpdate extends LitElement {
 
   //4
   render() {
-    console.log(this._id_profile, this._profiles)
     return html`
     <form @submit=${this.on_submit}>
       <div class="flex-row">
