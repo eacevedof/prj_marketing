@@ -45,7 +45,8 @@ final class PicklistService extends AppService
         if ($this->auth->is_sysadmin()) {
             $profiles = array_filter($profiles, function ($profile) use ($insert) {
                 $extra = $insert ? [UserProfileType::SYS_ADMIN]:[];
-                return !in_array($profile["key"], [UserProfileType::ROOT] + $extra);
+                $in = array_merge([UserProfileType::ROOT], $extra);
+                return !in_array($profile["key"], $in);
             });
             return array_values($profiles);
         }
@@ -53,7 +54,8 @@ final class PicklistService extends AppService
         if ($this->auth->is_business_owner()) {
             $profiles = array_filter($profiles, function ($profile) use ($insert) {
                 $extra = $insert ? [UserProfileType::BUSINESS_OWNER]:[];
-                return !in_array($profile["key"], [UserProfileType::ROOT, UserProfileType::SYS_ADMIN] + $extra);
+                $in = array_merge([UserProfileType::ROOT, UserProfileType::SYS_ADMIN], $extra);
+                return !in_array($profile["key"], $in);
             });
             return array_values($profiles);
         }
@@ -61,9 +63,8 @@ final class PicklistService extends AppService
         //business manager
         $profiles = array_filter($profiles, function ($profile) use ($insert) {
             $extra = $insert ? [UserProfileType::BUSINESS_MANAGER]:[];
-            return !in_array($profile["key"],
-        [UserProfileType::ROOT, UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER] + $extra
-            );
+            $in = array_merge([UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER], $extra);
+            return !in_array($profile["key"], $in);
         });
 
         return array_values($profiles);
