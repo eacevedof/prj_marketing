@@ -193,8 +193,8 @@ final class UserBusinessDataSaveService extends AppService
 
     private function is_valid_url($value): bool
     {
-        $proto = substr( $value, 0, 6);
-        if (!(strstr($proto, "http:") || strstr($proto, "https:")))
+        $proto = substr( $value, 0, 8);
+        if (!(strstr($proto, "http://") || strstr($proto, "https://")))
             return false;
         
         return filter_var($value, FILTER_VALIDATE_URL);
