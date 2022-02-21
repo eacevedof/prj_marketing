@@ -57,14 +57,6 @@ final class UsersUpdateController extends RestrictController
             $user = $edit->get_for_edit();
             $h1 = "{$user["description"]} ($uuid)";
 
-            $profiles = $this->picklist->get_profiles(false);
-            if ($user["id"] === $this->auth->get_user()["id"]) {
-                $profiles = array_filter($profiles, function ($profile){
-                    return in_array($profile["key"], ["", $this->auth->get_user()["id_profile"]]);
-                });
-                $profiles = array_values($profiles);
-            }
-
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit user {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit user {0}", $h1))
@@ -74,7 +66,7 @@ final class UsersUpdateController extends RestrictController
                 ->add_var("permissions", $userpermission->get_for_edit_by_user($uuid))
                 ->add_var("businessdata", $businessdata->get_for_edit_by_user($uuid))
 
-                ->add_var("profiles", $profiles)
+                ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
                 ->add_var("countries", $this->picklist->get_countries())
                 ->add_var("languages", $this->picklist->get_languages())

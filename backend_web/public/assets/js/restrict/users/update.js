@@ -28,7 +28,7 @@ export class FormUserUpdate extends LitElement {
   _get_data() {
     return get_formdata(this.shadowRoot)(this.fields)(["uuid", "parents", "profiles", "countries", "languages"])
   }
-
+/*
   on_profile(e) {
     this._is_parent = false
     if (e.target.value === "4")
@@ -36,7 +36,7 @@ export class FormUserUpdate extends LitElement {
     else
       this._id_parent = ""
   }
-
+*/
   _on_cancel() {
 
     window.modalraw.hide()
@@ -110,6 +110,7 @@ export class FormUserUpdate extends LitElement {
 
   //4
   render() {
+
     return html`
     <form @submit=${this.on_submit}>
       <div class="flex-row">
@@ -170,8 +171,8 @@ export class FormUserUpdate extends LitElement {
           <div class="form-group">
             <label for="id_profile">${this.texts.f08}</label>
             <div id="field-id_profile">
-              <select id="id_profile" @change=${this.on_profile} class="form-control">
-                ${this._profiles.map((item) =>
+              <select id="id_profile" class="form-control" readonly="readonly">
+                ${this._profiles.filter(item => parseInt(item.key) === parseInt(this._id_profile)).map((item) =>
                   html`<option value=${item.key} ?selected=${item.key===this._id_profile}>${item.value}</option>`
                 )}
               </select>

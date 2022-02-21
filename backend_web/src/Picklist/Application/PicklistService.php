@@ -36,37 +36,33 @@ final class PicklistService extends AppService
         return $this->repoapparray->get_languages();
     }
 
-    public function get_profiles($insert=true): array
+    public function get_profiles(): array
     {
         $profiles = $this->repobasearray->get_profiles();
 
         if ($this->auth->is_root()) return $profiles;
 
         if ($this->auth->is_sysadmin()) {
-            $profiles = array_filter($profiles, function ($profile) use ($insert) {
-                $extra = $insert ? [UserProfileType::SYS_ADMIN]:[];
-                $in = array_merge([UserProfileType::ROOT], $extra);
-                return !in_array($profile["key"], $in);
+            $profiles = array_filter($profiles, function ($profile){
+                $notin = [UserProfileType::ROOT];
+                return !in_array($profile["key"], $notin);
             });
             return array_values($profiles);
         }
 
         if ($this->auth->is_business_owner()) {
-            $profiles = array_filter($profiles, function ($profile) use ($insert) {
-                $extra = $insert ? [UserProfileType::BUSINESS_OWNER]:[];
-                $in = array_merge([UserProfileType::ROOT, UserProfileType::SYS_ADMIN], $extra);
-                return !in_array($profile["key"], $in);
+            $profiles = array_filter($profiles, function ($profile){
+                $notin = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN];
+                return !in_array($profile["key"], $notin);
             });
             return array_values($profiles);
         }
 
         //business manager
-        $profiles = array_filter($profiles, function ($profile) use ($insert) {
-            $extra = $insert ? [UserProfileType::BUSINESS_MANAGER]:[];
-            $in = array_merge([UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER], $extra);
-            return !in_array($profile["key"], $in);
+        $profiles = array_filter($profiles, function ($profile){
+            $notin = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER];
+            return !in_array($profile["key"], $notin);
         });
-
         return array_values($profiles);
     }
 
