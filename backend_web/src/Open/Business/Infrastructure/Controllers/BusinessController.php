@@ -21,7 +21,7 @@ final class BusinessController extends OpenController
     {
         //dd($this->request->get_get());
         $business = SF::get_callable(BusinessInfoService::class, [$slug]);
-        dd($slug);
+        dd($business);
         $this->add_var(PageType::TITLE, __("Home"))
             ->add_var(PageType::H1, __("Home"))
             ->cache()
