@@ -28,6 +28,7 @@ final class BusinessController extends OpenController
                 "slug" =>$slug,
                 "mode" =>$this->request->get_get("mode")
             ]);
+            $business = $business();
             $this->set_layout("open/business")
                 ->add_var(PageType::TITLE, $title =($business["promotion"]["description"] ?? $slug))
                 ->add_var(PageType::H1, $title)
