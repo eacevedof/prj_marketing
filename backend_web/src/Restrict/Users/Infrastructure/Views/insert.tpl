@@ -3,7 +3,6 @@
  * @var \App\Shared\Infrastructure\Views\AppView $this
  */
 
-$tpl = ":)$this->pathtemplate:";
 $texts = [
   "tr00" => __("Save"),
   "tr01" => __("Processing..."),

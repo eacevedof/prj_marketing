@@ -36,23 +36,35 @@ final class PicklistService extends AppService
         return $this->repoapparray->get_languages();
     }
 
-    public function get_profiles(): array
+    public function get_profiles($insert=true): array
     {
         $profiles = $this->repobasearray->get_profiles();
 
         if ($this->auth->is_root()) return $profiles;
 
-        if ($this->auth->is_business_owner() || $this->auth->is_business_manager()) {
-            $profiles = array_filter($profiles, function ($profile) {
-                return !in_array($profile["key"], [UserProfileType::ROOT, UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER]);
+        if ($this->auth->is_sysadmin()) {
+            $profiles = array_filter($profiles, function ($profile) use ($insert) {
+                $extra = $insert ? [UserProfileType::SYS_ADMIN]:[];
+                return !in_array($profile["key"], [UserProfileType::ROOT] + $extra);
             });
             return array_values($profiles);
         }
 
-        if ($this->auth->is_sysadmin())
-            $profiles = array_filter($profiles, function ($profile){
-                return !in_array($profile["key"], [UserProfileType::ROOT, UserProfileType::SYS_ADMIN]) ;
+        if ($this->auth->is_business_owner()) {
+            $profiles = array_filter($profiles, function ($profile) use ($insert) {
+                $extra = $insert ? [UserProfileType::BUSINESS_OWNER]:[];
+                return !in_array($profile["key"], [UserProfileType::ROOT, UserProfileType::SYS_ADMIN] + $extra);
             });
+            return array_values($profiles);
+        }
+
+        //business manager
+        $profiles = array_filter($profiles, function ($profile) use ($insert) {
+            $extra = $insert ? [UserProfileType::BUSINESS_MANAGER]:[];
+            return !in_array($profile["key"],
+        [UserProfileType::ROOT, UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER] + $extra
+            );
+        });
 
         return array_values($profiles);
     }

@@ -100,18 +100,17 @@ export class FormUserUpdate extends LitElement {
     super.connectedCallback()
     this._issending = false
     this._btnsend = this.texts.tr00
-    this._btncancel = "Cancel"
+    this._btncancel = this.texts.tr02
 
-    //this._email = this.fields.email
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
-    //console.log("connectedCallback","parents:",this._parents)
+
     this._is_parent = false
     if (this._id_profile === "4") this._is_parent = true
   }
 
   //4
   render() {
-    //console.log("render","texts",this.texts,"fields:",this.fields)
+    console.log(this._id_profile, this._profiles)
     return html`
     <form @submit=${this.on_submit}>
       <div class="flex-row">
