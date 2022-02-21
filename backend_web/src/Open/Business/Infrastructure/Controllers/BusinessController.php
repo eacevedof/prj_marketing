@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @name App\Open\Business\Infrastructure\Controllers\BusinessController
- * @file HomeController.php v1.0.0
+ * @file BusinessController.php v1.0.0
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
