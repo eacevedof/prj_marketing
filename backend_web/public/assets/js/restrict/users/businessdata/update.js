@@ -125,14 +125,15 @@ export class FormUserBusinessDataUpdate extends LitElement {
 
   //4
   render() {
+    const urlslug = window.location.origin.concat("/account/").concat(this._slug)
     return html`
     <form @submit=${this.on_submit}>
       ${this._id
           ? html`
           <div class="form-group">
             <label for="slug">${this.texts.f04}</label>
-            <div id="field-slug">${this._slug}</div>
-            ${this._get_link(window.location.origin.concat("/account/").concat(this._slug).concat("?mode=test"), this._slug)}
+            <div id="field-slug">${urlslug}</div>
+            ${this._get_link(urlslug.concat("?mode=test"), urlslug)}
           </div>  
           `
           : html``
