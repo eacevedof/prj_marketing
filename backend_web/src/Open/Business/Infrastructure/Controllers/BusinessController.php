@@ -25,8 +25,8 @@ final class BusinessController extends OpenController
         //dd($this->request->get_get());
         try {
             $business = SF::get_callable(BusinessInfoService::class, [
-                "slug" =>$slug,
-                "mode" =>$this->request->get_get("mode")
+                "slug" => $slug,
+                "mode" => $this->request->get_get("mode")
             ]);
             $business = $business();
             $this->set_layout("open/business")
