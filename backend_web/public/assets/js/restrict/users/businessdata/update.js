@@ -132,7 +132,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div class="form-group">
             <label for="slug">${this.texts.f04}</label>
             <div id="field-slug">${this._slug}</div>
-            ${this._get_link("/"+this._slug, this._slug)}
+            ${this._get_link(window.location.origin.concat("/account/").concat(this._slug).concat("?mode=test"), this._slug)}
           </div>  
           `
           : html``
@@ -275,7 +275,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           ${this._get_link(this._url_social_twitter, this.texts.f15)}
         </div>
         <div class="form-group">
-          <label for="url_social_tiktok">${this.texts.f18}</label>
+          <label for="url_social_tiktok">${this.texts.f19}</label>
           <div id="field-url_social_tiktok">
             <input type="text" id="url_social_tiktok" .value=${this._url_social_tiktok}
                    @keyup=${e => this._handle_keyup(e, "_url_social_tiktok")}
