@@ -10,12 +10,17 @@
 namespace App\Open\Business\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Open\Business\Application\BusinessInfoService;
 use App\Shared\Domain\Enums\PageType;
+
 
 final class BusinessController extends OpenController
 {
     public function index(string $slug): void
     {
+        //dd($this->request->get_get());
+        $business = SF::get_callable(BusinessInfoService::class, [$slug]);
         dd($slug);
         $this->add_var(PageType::TITLE, __("Home"))
             ->add_var(PageType::H1, __("Home"))
