@@ -138,6 +138,8 @@ final class UsersUpdateService extends AppService
     public function __invoke(): array
     {
         $update = $this->_get_req_without_ops($this->input);
+        if (!$iduser = $this->repouser->get_id_by_uuid($uuid = $update["uuid"]))
+            $this->_exception(__("{0} with code {1} not found", __("User"), $uuid), 404);
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
@@ -145,6 +147,7 @@ final class UsersUpdateService extends AppService
         }
 
         $update = $this->entityuser->map_request($update);
+        $update["id"] = $iduser;
         $this->_check_entity_permission($update);
         if(!$update["secret"]) unset($update["secret"]);
         else
