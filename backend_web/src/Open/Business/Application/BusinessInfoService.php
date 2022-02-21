@@ -25,6 +25,10 @@ final class BusinessInfoService extends AppService
 
     public function __invoke(): array
     {
-        return [];
+        return [
+            "promotion" => [],
+            "businessdata" => [],
+            "metadata" => [], //depende si es test o no
+        ];
     }
 }
