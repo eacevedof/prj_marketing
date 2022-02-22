@@ -37,7 +37,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
     {
         if (!($url = $data[$key] ?? "")) return "";
         $domain = $_SERVER["HTTP_HOST"];
-        $url = $domain."/".$url;
+        $url = "//".$domain."/".$url;
         return "<a href=\"$url\" target=\"_blank\">$url</a>";
     }
 
