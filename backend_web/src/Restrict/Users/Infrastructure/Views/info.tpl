@@ -5,7 +5,9 @@
  * @var ?string $uuid
  * @var array $result
  */
-//dd($result);
+use App\Shared\Infrastructure\Factories\HelperFactory as HF;
+use App\Shared\Infrastructure\Helpers\Views\BusinessDataHelper;
+$helper = HF::get(BusinessDataHelper::class);
 ?>
 <div>
   <div class="card-header">
@@ -124,63 +126,49 @@ endif;
         ?>
         <ol>
           <li><b><?=__("Business name")?>:</b>&ensp;<span><?=$businessdata["business_name"] ?? ""?></span></li>
-          <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$businessdata["slug"] ?? ""?></span></li>
-          <li><b><?=__("Url logo 1")?>:</b>&ensp;<span><?=$businessdata["user_logo_1"] ?? ""?></span></li>
-          <li><b><?=__("Url logo 2")?>:</b>&ensp;<span><?=$businessdata["user_logo_2"] ?? ""?></span></li>
-          <li><b><?=__("Url logo 3")?>:</b>&ensp;<span><?=$businessdata["user_logo_3"] ?? ""?></span></li>
-          <li><b><?=__("Url favicon")?>:</b>&ensp;<span><?=$businessdata["url_favicon"] ?? ""?></span></li>
+          <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$helper->get_link_domain($businessdata, "slug")?></li>
+          <li><b><?=__("Url logo 1")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_1")?></li>
+          <li><b><?=__("Url logo 2")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_2")?></li>
+          <li><b><?=__("Url logo 3")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_3")?></li>
+          <li><b><?=__("Url favicon")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "url_favicon")?></li>
         </ol>
         <br/>
         <ol>
-          <li><b><?=__("Head bg color")?>:</b>&ensp;<span style="background-color:<?=$businessdata["head_bgcolor"] ?? ""?>;">&nbsp;&nbsp;</span></li>
-          <li><b><?=__("Head color")?>:</b>&ensp;<span style="background-color:<?=$businessdata["head_bgcolor"] ?? ""?>;">&nbsp;&nbsp;</span></li>
+          <li><b><?=__("Head bg color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "head_bgcolor")?></li>
+          <li><b><?=__("Head color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "head_color")?></li>
           <li>
             <b><?=__("Url head bg image")?>:</b>&ensp;
-            <a href="<?=$businessdata["head_bgimage"] ?? "#"?>" target="_blank">
-              <img src="<?=$businessdata["head_bgimage"] ?? "#"?>"/>
-            </a>
+            <?=$helper->get_img_link($businessdata, "head_bgimage")?>
           </li>
 
-          <li><b><?=__("Body bg color")?>:</b>&ensp;<span style="background-color:<?=$businessdata["body_bgcolor"] ?? ""?>;">&nbsp;&nbsp;</span></li>
-          <li><b><?=__("Body color")?>:</b>&ensp;<span style="background-color:<?=$businessdata["body_color"] ?? ""?>;">&nbsp;&nbsp;</span></li>
+          <li><b><?=__("Body bg color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "body_bgcolor")?></li></li>
+          <li><b><?=__("Body color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "body_color")?></li>
           <li>
             <b><?=__("Url body bg image")?>:</b>&ensp;
-            <a href="<?=$businessdata["body_bgimage"] ?? "#"?>" target="_blank">
-              <img src="<?=$businessdata["body_bgimage"] ?? "#"?>"/>
-            </a>
+            <?=$helper->get_img_link($businessdata, "body_bgimage")?>
           </li>
         </ol>
         <br/>
         <ol>
           <li>
             <b><?=__("Url business")?>:</b>&ensp;
-            <a href="<?=$businessdata["url_business"] ?? "#"?>" target="_blank">
-              <?=$businessdata["url_business"] ?? "#"?>
-            </a>
+            <?=$helper->get_link($businessdata, "url_business")?>
           </li>
           <li>
             <b><?=__("Url Facebook")?>:</b>&ensp;
-            <a href="<?=$businessdata["url_social_fb"] ?? "#"?>" target="_blank">
-              <?=$businessdata["url_social_fb"] ?? "#"?>
-            </a>
+            <?=$helper->get_link($businessdata, "url_social_fb")?>
           </li>
           <li>
             <b><?=__("Url Instagram")?>:</b>&ensp;
-            <a href="<?=$businessdata["url_social_ig"] ?? "#"?>" target="_blank">
-              <?=$businessdata["url_social_ig"] ?? "#"?>
-            </a>
+            <?=$helper->get_link($businessdata, "url_social_ig")?>
           </li>
           <li>
             <b><?=__("Url Twitter")?>:</b>&ensp;
-            <a href="<?=$businessdata["url_social_twitter"] ?? "#"?>" target="_blank">
-              <?=$businessdata["url_social_twitter"] ?? "#"?>
-            </a>
+            <?=$helper->get_link($businessdata, "url_social_twitter")?>
           </li>
           <li>
             <b><?=__("Url Tiktok")?>:</b>&ensp;
-            <a href="<?=$businessdata["url_social_tiktok"] ?? "#"?>" target="_blank">
-              <?=$businessdata["url_social_tiktok"] ?? "#"?>
-            </a>
+            <?=$helper->get_link($businessdata, "url_social_tiktok")?>
           </li>
         </ol>
         <br/>
