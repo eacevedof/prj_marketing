@@ -24,21 +24,20 @@ final class BusinessDataHelper extends AppHelper implements IHelper
     public function get_link(array $data, string $key): string
     {
         if (!($url = $data[$key] ?? "")) return "";
-        $url = urlencode($url);
         return "<a href=\"$url\" target=\"_blank\">$url</a>";
     }
 
     public function get_img_link(array $data, string $key): string
     {
         if (!($url = $data[$key] ?? "")) return "";
-        return "<a href=\"$url\" target=\"_blank\"><img src=\"$url\" class=\"img-thumbnail wd-30p\"/></a>";
+        return "<a href=\"$url\" target=\"_blank\"><img src=\"$url\" class=\"img-thumbnail wd-30p\" style=\"width: 30%!important;\"/></a>";
     }
 
     public function get_link_domain(array $data, string $key): string
     {
         if (!($url = $data[$key] ?? "")) return "";
         $domain = $_SERVER["HTTP_HOST"];
-        $url = $domain."/".urlencode($url);
+        $url = $domain."/".$url;
         return "<a href=\"$url\" target=\"_blank\">$url</a>";
     }
 
