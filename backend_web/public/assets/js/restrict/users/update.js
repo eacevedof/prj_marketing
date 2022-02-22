@@ -160,7 +160,7 @@ export class FormUserUpdate extends LitElement {
               <input type="date" id="birthdate" .value=${this._birthdate} class="form-control">
             </div>
           </div>
-    
+          
           <div class="form-group">
             <label for="phone">${this.texts.f06}</label>
             <div id="field-phone">
@@ -184,8 +184,8 @@ export class FormUserUpdate extends LitElement {
             <div class="form-group">
               <label for="id_parent">${this.texts.f07}</label>
               <div id="field-id_parent">
-                <select id="id_parent" class="form-control">
-                  ${this._parents.map((item) =>
+                <select id="id_parent" class="form-control" readonly="readonly">
+                  ${this._parents.filter(item => parseInt(item.key) === parseInt(this._id_parent)).map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._id_parent}>${item.value}</option>`
                   )}
                 </select>

@@ -13,8 +13,6 @@ const ACTION = "users.insert"
 export class FormUserInsert extends LitElement {
   static get styles() {
     const globalStyle = css([get_cssrules([
-      "/themes/valex/assets/css/icons.css",
-      "/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css",
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
       "/themes/valex/assets/css/style.css",
     ])])
