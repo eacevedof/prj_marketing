@@ -20,14 +20,14 @@ final class UserPreferencesRepository extends AppRepository
         $this->table = "base_user_preferences";
     }
 
-    public function get_by_user(int $userid, string $prefkey=""): array
+    public function get_by_user(int $iduser, string $prefkey=""): array
     {
         $qb = $this->_get_qbuilder()
             ->set_comment("userpreferences.get_by_user(userid)")
             ->set_table("$this->table as m")
             ->set_getfields(["m.pref_key","m.pref_value"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_user=$userid")
+            ->add_and("m.id_user=$iduser")
         ;
         if ($prefkey) $qb->add_and("m.pref_key='$prefkey'");
         return $this->db->query($qb->select()->sql());

@@ -207,28 +207,28 @@ final class UserRepository extends AppRepository
         return $this;
     }
 
-    public function get_owner(string $userid): array
+    public function get_owner(string $iduser): array
     {
         /**
          * @var HierarchyComponent $hier
          */
         $hier = CF::get(HierarchyComponent::class);
-        return $hier->get_topparent($userid, $this->get_all_hierarchy());
+        return $hier->get_topparent($iduser, $this->get_all_hierarchy());
     }
 
-    public function get_idowner(string $userid): int
+    public function get_idowner(string $iduser): int
     {
-        $owner = $this->get_owner($userid);
+        $owner = $this->get_owner($iduser);
         return (int) $owner["id"];
     }
 
-    public function get_childs(string $userid): array
+    public function get_childs(string $iduser): array
     {
         /**
          * @var HierarchyComponent $hier
          */
         $hier = CF::get(HierarchyComponent::class);
-        return $hier->get_childs($userid, $this->get_all_hierarchy());
+        return $hier->get_childs($iduser, $this->get_all_hierarchy());
     }
 
 }//UserRepository

@@ -19,10 +19,10 @@ final class SysfieldRepository extends AppRepository
         $this->db = DbF::get_by_default();
     }
     
-    private function _get_user(string $userid): string
+    private function _get_user(string $iduser): string
     {
-        if (!$userid) return "";
-        $id = (int) $userid;
+        if (!$iduser) return "";
+        $id = (int) $iduser;
         $sql = $this->_get_qbuilder()
             ->set_comment("sysfield._get_user(userid)")
             ->set_table("base_user as m")

@@ -40,6 +40,7 @@ final class UsersInfoController extends RestrictController
             $info = SF::get_callable(UsersInfoService::class, [$uuid]);
             $result = $info();
             $this->add_var("uuid", $uuid)
+                ->add_var("isbow", $this->auth->is_business_owner($result["user"]["id_profile"]))
                 ->add_var("result", $result)
                 ->render_nl();
         }

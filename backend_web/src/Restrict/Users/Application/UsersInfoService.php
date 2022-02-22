@@ -8,6 +8,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
 use App\Restrict\Users\Domain\UserPermissionsRepository;
 use App\Restrict\Users\Domain\UserPreferencesRepository;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -32,6 +33,7 @@ final class UsersInfoService extends AppService
         $this->repouser = RF::get(UserRepository::class);
         $this->repopermission = RF::get(UserPermissionsRepository::class);
         $this->repoprefs = RF::get(UserPreferencesRepository::class);
+        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
     }
 
     private function _check_permission(): void
@@ -89,7 +91,9 @@ final class UsersInfoService extends AppService
             "user" => $user,
             "permissions" => $this->repopermission->get_by_user($iduser = $user["id"]),
             "preferences" => $this->repoprefs->get_by_user($iduser),
-            "businessdata" => "to-do",
+            "businessdata" => $this->auth->is_business_owner($user["id_profile"])
+                                ? $this->repobusinessdata->get_by_user($iduser)
+                                : [],
         ];
     }
 

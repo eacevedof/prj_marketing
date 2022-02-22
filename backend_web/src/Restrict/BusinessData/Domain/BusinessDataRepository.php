@@ -176,4 +176,15 @@ final class BusinessDataRepository extends AppRepository
         return $this->db->query($sql, null, 0) ?? [];
     }
 
+    public function get_by_user(int $iduser): array
+    {
+        $qb = $this->_get_qbuilder()
+            ->set_comment("businessdata.get_by_user")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.*"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_user=$iduser")
+        ;
+        return $this->db->query($qb->select()->sql(), null, 0);
+    }
 }//BusinessDataRepository
