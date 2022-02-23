@@ -5,9 +5,6 @@
  * @var ?string $uuid
  * @var array $result
  */
-use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-use App\Shared\Infrastructure\Helpers\Views\BusinessDataHelper;
-$helper = HF::get(BusinessDataHelper::class);
 ?>
 <div>
   <div class="card-header">
@@ -30,28 +27,8 @@ $helper = HF::get(BusinessDataHelper::class);
         </li>
 <?php
 $this->_element_view("permissions-tab");
-?>
-        <li>
-          <a href="#preferences" data-bs-toggle="tab" aria-expanded="false">
-            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-            <span class="hidden-xs">
-              <?=__("Preferences")?>
-            </span>
-          </a>
-        </li>
-<?php
-if ($isbow):
-?>
-        <li>
-          <a href="#businessdata" data-bs-toggle="tab" aria-expanded="false">
-            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-            <span class="hidden-xs">
-              <?=__("Business data")?>
-            </span>
-          </a>
-        </li>
-<?php
-endif;
+$this->_element_view("preferences-tab");
+$this->_element_view("businessdata-tab");
 ?>
       </ul>
     </div>
@@ -87,88 +64,9 @@ endif;
       </div><!-- profile -->
 <?php
 $this->_element_view("permissions-content");
+$this->_element_view("preferences-content");
+$this->_element_view("businessdata-content");
 ?>
-      <div id="preferences" class="tab-pane">
-        <ol>
-          <?php
-          $preferences = $result["preferences"] ?? [];
-          foreach ($preferences as $arvalue):
-            ?>
-            <li><b><?$this->_echo($arvalue["pref_key"]);?>:</b>&nbsp;&nbsp;<span><?$this->_echo($arvalue["pref_value"]);?></span></li>
-          <?php
-          endforeach;
-          ?>
-        </ol>
-      </div><!--preferences-->
-
-      <?php
-      if ($isbow):
-      ?>
-      <div id="businessdata" class="tab-pane">
-        <?php
-        $businessdata = $result["businessdata"] ?? [];
-        ?>
-        <ol>
-          <li><b><?=__("Business name")?>:</b>&ensp;<span><?=$businessdata["business_name"] ?? ""?></span></li>
-          <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$helper->get_link_domain($businessdata, "slug")?></li>
-          <li><b><?=__("Url logo 1")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_1")?></li>
-          <li><b><?=__("Url logo 2")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_2")?></li>
-          <li><b><?=__("Url logo 3")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_3")?></li>
-          <li><b><?=__("Url favicon")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "url_favicon")?></li>
-        </ol>
-        <br/>
-        <ol>
-          <li><b><?=__("Head bg color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "head_bgcolor")?></li>
-          <li><b><?=__("Head color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "head_color")?></li>
-          <li>
-            <b><?=__("Url head bg image")?>:</b>&ensp;
-            <?=$helper->get_img_link($businessdata, "head_bgimage")?>
-          </li>
-
-          <li><b><?=__("Body bg color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "body_bgcolor")?></li></li>
-          <li><b><?=__("Body color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "body_color")?></li>
-          <li>
-            <b><?=__("Url body bg image")?>:</b>&ensp;
-            <?=$helper->get_img_link($businessdata, "body_bgimage")?>
-          </li>
-        </ol>
-        <br/>
-        <ol>
-          <li>
-            <b><?=__("Url business")?>:</b>&ensp;
-            <?=$helper->get_link($businessdata, "url_business")?>
-          </li>
-          <li>
-            <b><?=__("Url Facebook")?>:</b>&ensp;
-            <?=$helper->get_link($businessdata, "url_social_fb")?>
-          </li>
-          <li>
-            <b><?=__("Url Instagram")?>:</b>&ensp;
-            <?=$helper->get_link($businessdata, "url_social_ig")?>
-          </li>
-          <li>
-            <b><?=__("Url Twitter")?>:</b>&ensp;
-            <?=$helper->get_link($businessdata, "url_social_twitter")?>
-          </li>
-          <li>
-            <b><?=__("Url Tiktok")?>:</b>&ensp;
-            <?=$helper->get_link($businessdata, "url_social_tiktok")?>
-          </li>
-        </ol>
-        <br/>
-        <ul>
-          <li><b><?=__("Created by")?>:</b>&ensp;<span><?=$businessdata["insert_user"] ?? ""?></span></li>
-          <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$businessdata["insert_date"] ?? ""?></span></li>
-          <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$businessdata["update_user"] ?? ""?></span></li>
-          <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$businessdata["update_date"] ?? ""?></span></li>
-
-          <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$businessdata["delete_user"] ?? ""?></span></li>
-          <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$businessdata["delete_date"] ?? ""?></span></li>
-        </ul>
-      </div><!-- businessdata -->
-      <?php
-      endif;
-      ?>
     </div><!--tab-content-->
   </div><!--card-body-->
 </div>
