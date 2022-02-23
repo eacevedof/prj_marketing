@@ -3,7 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($result["businessdata"]) || !$isbow) return;
+if (is_null($result["businessdata"])) return;
 
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\BusinessDataHelper;

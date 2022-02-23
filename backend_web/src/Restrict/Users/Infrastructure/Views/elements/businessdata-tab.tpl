@@ -4,7 +4,7 @@
  * @var array $result
 */
 
-if (is_null($result["businessdata"]) || !$isbow) return;
+if (is_null($result["businessdata"])) return;
 ?>
 <li>
   <a href="#businessdata" data-bs-toggle="tab" aria-expanded="false">

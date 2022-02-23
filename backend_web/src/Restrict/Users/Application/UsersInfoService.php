@@ -89,10 +89,6 @@ final class UsersInfoService extends AppService
         //comprueba propiedad de la entidad
         $this->_check_entity_permission($user);
 
-        $businessdata = $this->auth->get_module_permissions(
-            UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
-        )[0]; // && ($isbow = $this->auth->is_business_owner($user["id_profile"]));
-
         $permissions = $this->auth->get_module_permissions(
                 UserPolicyType::MODULE_USER_PERMISSIONS, UserPolicyType::READ
             )[0];// && $isbow;
@@ -100,6 +96,10 @@ final class UsersInfoService extends AppService
         $preferences = $this->auth->get_module_permissions(
                 UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::READ
             )[0]; // && $isbow;
+
+        $businessdata = $this->auth->get_module_permissions(
+            UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
+        )[0] && $this->auth->is_business_owner($user["id_profile"]);
 
         return [
             "user" => $user,
