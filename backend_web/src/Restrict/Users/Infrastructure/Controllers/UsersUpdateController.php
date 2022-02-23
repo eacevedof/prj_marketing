@@ -9,12 +9,10 @@
  */
 namespace App\Restrict\Users\Infrastructure\Controllers;
 
-use App\Restrict\BusinessData\Application\BusinessDataInfoService;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Application\UsersInfoService;
-use App\Restrict\Users\Application\UserPermissionsInfoService;
 use App\Restrict\Users\Application\UsersUpdateService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
@@ -50,11 +48,7 @@ final class UsersUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $info = SF::get(UsersInfoService::class, [$uuid]);
-            $userpermission = SF::get(UserPermissionsInfoService::class);
-            $businessdata = SF::get(BusinessDataInfoService::class, [$uuid]);
-
-            $user = $info->get_for_edit();
+            $user = SF::get(UsersInfoService::class, [$uuid])->get_for_edit();
             $h1 = "{$user["description"]} ($uuid)";
 
             $this->set_template("update")
@@ -63,8 +57,6 @@ final class UsersUpdateController extends RestrictController
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $user)
-                ->add_var("permissions", $userpermission->get_for_edit_by_user($uuid))
-                ->add_var("businessdata", $businessdata->get_for_edit_by_user($uuid))
 
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))

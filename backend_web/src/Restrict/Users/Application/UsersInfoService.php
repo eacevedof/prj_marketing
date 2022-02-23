@@ -79,8 +79,7 @@ final class UsersInfoService extends AppService
 
     public function __invoke(): array
     {
-        $user = $this->repouser->get_info($this->input);
-        if(!$user)
+        if(!$user = $this->repouser->get_info($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("User"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
@@ -111,8 +110,7 @@ final class UsersInfoService extends AppService
 
     public function get_for_edit(): array
     {
-        $user = $this->repouser->get_id_by_uuid($this->input);
-        if(!$user)
+        if(!$user = $this->repouser->get_id_by_uuid($this->input))
             $this->_exception(
                 __("User with code {0} not found", $this->input),
                 ExceptionType::CODE_NOT_FOUND
