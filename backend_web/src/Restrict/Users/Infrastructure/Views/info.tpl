@@ -26,9 +26,9 @@
           </a>
         </li>
 <?php
-$this->_element_view("permissions-tab");
-$this->_element_view("preferences-tab");
-$this->_element_view("businessdata-tab");
+$this->_element_view("info/permissions-tab");
+$this->_element_view("info/preferences-tab");
+$this->_element_view("info/businessdata-tab");
 ?>
       </ul>
     </div>
@@ -63,9 +63,9 @@ $this->_element_view("businessdata-tab");
         </ul>
       </div><!-- profile -->
 <?php
-$this->_element_view("permissions-content");
-$this->_element_view("preferences-content");
-$this->_element_view("businessdata-content");
+$this->_element_view("info/permissions-content");
+$this->_element_view("info/preferences-content");
+$this->_element_view("info/businessdata-content");
 ?>
     </div><!--tab-content-->
   </div><!--card-body-->
