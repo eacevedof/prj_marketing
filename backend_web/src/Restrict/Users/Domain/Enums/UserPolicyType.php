@@ -7,6 +7,8 @@ abstract class UserPolicyType
     const MODULE_USERS = "users";
     const MODULE_USER_PERMISSIONS = "userpermissions";
     const MODULE_BUSINESSDATA = "businessdata";
+    const MODULE_USER_PREFERENCES = "userpreferences";
+
     const MODULE_PROMOTIONS = "promotions";
 
     const DASHBOARD_READ = "dashboard:read";
@@ -17,11 +19,17 @@ abstract class UserPolicyType
     const USER_PERMISSIONS_READ = "userpermissions:read";
     const USER_PERMISSIONS_WRITE = "userpermissions:write";
 
+    const USER_PREFERENCES_READ = "userpreferences:read";
+    const USER_PREFERENCES_WRITE = "userpreferences:write";
+
     const BUSINESSDATA_READ = "businessdata:read";
     const BUSINESSDATA_WRITE = "businessdata:write";
 
     const PROMOTIONS_READ = "promotions:read";
     const PROMOTIONS_WRITE = "promotions:write";
+
+    const WRITE = "write";
+    const READ = "read";
 
     public static function get_all(): array
     {

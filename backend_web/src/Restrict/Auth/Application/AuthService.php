@@ -39,37 +39,48 @@ final class AuthService
         return in_array($action, $permissions);
     }
 
-    public function get_permission_module(string $module): array
+    public function get_module_permissions(string $module, ?string $type=null): array
     {
         if(!self::$authuser) return ["write"=>false, "read"=>false];
         if($this->is_root()) return ["write"=>true];
 
         switch ($module) {
             case UserPolicyType::MODULE_USERS:
-                return [
+                $permission = [
                     "write" => $this->is_user_allowed(UserPolicyType::USERS_WRITE),
                     "read" => $this->is_user_allowed(UserPolicyType::USERS_READ),
                 ];
+            break;
             case UserPolicyType::MODULE_USER_PERMISSIONS:
-                return [
+                $permission = [
                     "write" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE),
                     "read" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_READ),
                 ];
+            break;
             case UserPolicyType::MODULE_BUSINESSDATA:
-                return [
+                $permission = [
                     "write" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE),
                     "read" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_READ),
                 ];
+            break;
             case UserPolicyType::MODULE_PROMOTIONS:
-                return [
+                $permission = [
                     "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE),
                     "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_READ),
                 ];
+            default:
+                $permission = [
+                    "write" => false,
+                    "read" => false,
+                ];
+            break;
         }
-        return [
-            "write" => false,
-            "read" => false,
-        ];
+
+        if (!$type || !in_array($type, [UserPolicyType::READ, UserPolicyType::WRITE]))
+            return $permission;
+        if ($type===UserPolicyType::READ)
+            return [$permission["write"] || $permission["read"]];
+        return [$permission["write"]];
     }
 
     public function is_root(?string $idprofile=null): bool

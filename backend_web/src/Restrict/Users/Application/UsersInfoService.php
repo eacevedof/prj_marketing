@@ -86,14 +86,26 @@ final class UsersInfoService extends AppService
                 ExceptionType::CODE_NOT_FOUND
             );
 
+        //comprueba propiedad de la entidad
         $this->_check_entity_permission($user);
+
+        $businessdata = $this->auth->get_module_permissions(
+            UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
+        )[0] && ($isbow = $this->auth->is_business_owner($user["id_profile"]));
+
+        $permissions = $this->auth->get_module_permissions(
+                UserPolicyType::MODULE_USER_PERMISSIONS, UserPolicyType::READ
+            )[0] && $isbow;
+
+        $preferences = $this->auth->get_module_permissions(
+                UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::READ
+            )[0] && $isbow;
+
         return [
             "user" => $user,
-            "permissions" => $this->repopermission->get_by_user($iduser = $user["id"]),
-            "preferences" => $this->repoprefs->get_by_user($iduser),
-            "businessdata" => $this->auth->is_business_owner($user["id_profile"])
-                                ? $this->repobusinessdata->get_by_user($iduser)
-                                : [],
+            "permissions" => $permissions ? $this->repopermission->get_by_user($iduser = $user["id"]): null,
+            "businessdata" => $businessdata ? $this->repobusinessdata->get_by_user($iduser) : null,
+            "preferences" => $preferences ? $this->repoprefs->get_by_user($iduser) : null,
         ];
     }
 
