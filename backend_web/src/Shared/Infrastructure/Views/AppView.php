@@ -111,6 +111,20 @@ final class AppView
         include($path);
     }
 
+    private function _element_view(string $pathelement, $vars = []): void
+    {
+        $path = "{$this->pathtpl["viewfolder"]}/elements/$pathelement.tpl";
+        if(!is_file($path)) $this->_exception("element $path does not exist!");
+
+        foreach ($this->globals as $name => $value)
+            $$name = $value;
+
+        foreach ($vars as $name => $value)
+            $$name = $value;
+
+        include($path);
+    }
+
     private function _asset_js_module($pathjs):string
     {
         return $this->_asset_js($pathjs, "module");

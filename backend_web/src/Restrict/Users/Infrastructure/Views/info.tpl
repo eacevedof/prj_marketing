@@ -28,14 +28,10 @@ $helper = HF::get(BusinessDataHelper::class);
             </span>
           </a>
         </li>
-        <li>
-          <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
-            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-            <span class="hidden-xs">
-              <?=__("Permissions")?>
-            </span>
-          </a>
-        </li>
+<?php
+
+$this->_element_view("permissions-tab");
+?>
         <li>
           <a href="#preferences" data-bs-toggle="tab" aria-expanded="false">
             <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
@@ -90,20 +86,9 @@ endif;
           <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$profile["delete_date"] ?? ""?></span></li>
         </ul>
       </div><!-- profile -->
-
-      <div id="permissions" class="tab-pane">
-        <ol>
-          <?php
-          $permissions = $result["permissions"] ?? [];
-          foreach ($permissions as $field => $value):
-          ?>
-          <li><span><?$this->_echo($value);?></span></li>
-          <?php
-          endforeach;
-          ?>
-        </ol>
-      </div><!--permissions-->
-
+<?php
+$this->_element_view("permissions-content");
+?>
       <div id="preferences" class="tab-pane">
         <ol>
           <?php
