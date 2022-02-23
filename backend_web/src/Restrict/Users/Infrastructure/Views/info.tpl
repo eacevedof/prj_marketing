@@ -29,7 +29,6 @@ $helper = HF::get(BusinessDataHelper::class);
           </a>
         </li>
 <?php
-
 $this->_element_view("permissions-tab");
 ?>
         <li>
