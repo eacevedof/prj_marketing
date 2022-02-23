@@ -50,11 +50,11 @@ final class UsersUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $edit = SF::get(UsersInfoService::class, [$uuid]);
+            $info = SF::get(UsersInfoService::class, [$uuid]);
             $userpermission = SF::get(UserPermissionsInfoService::class);
             $businessdata = SF::get(BusinessDataInfoService::class, [$uuid]);
 
-            $user = $edit->get_for_edit();
+            $user = $info->get_for_edit();
             $h1 = "{$user["description"]} ($uuid)";
 
             $this->set_template("update")

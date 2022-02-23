@@ -91,11 +91,11 @@ final class UsersInfoService extends AppService
 
         $permissions = $this->auth->get_module_permissions(
                 UserPolicyType::MODULE_USER_PERMISSIONS, UserPolicyType::READ
-            )[0];// && $isbow;
+            )[0];
 
         $preferences = $this->auth->get_module_permissions(
                 UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::READ
-            )[0]; // && $isbow;
+            )[0];
 
         $businessdata = $this->auth->get_module_permissions(
             UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
@@ -111,14 +111,33 @@ final class UsersInfoService extends AppService
 
     public function get_for_edit(): array
     {
-        $user = $this->repouser->get_info($this->input);
+        $user = $this->repouser->get_id_by_uuid($this->input);
         if(!$user)
             $this->_exception(
                 __("User with code {0} not found", $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
+
+        //comprueba propiedad de la entidad
         $this->_check_entity_permission($user);
-        if($birthdate = $user["birthdate"]) $user["birthdate"] = substr($birthdate, 0,10);
-        return $user;
+
+        $permissions = $this->auth->get_module_permissions(
+            UserPolicyType::MODULE_USER_PERMISSIONS, UserPolicyType::WRITE
+        )[0];
+
+        $preferences = $this->auth->get_module_permissions(
+            UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::WRITE
+        )[0];
+
+        $businessdata = $this->auth->get_module_permissions(
+                UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::WRITE
+            )[0] && $this->auth->is_business_owner($user["id_profile"]);
+
+        return [
+            "user" => $user,
+            "permissions" => $permissions ? $this->repopermission->get_by_user($iduser = $user["id"]): null,
+            "businessdata" => $businessdata ? $this->repobusinessdata->get_by_user($iduser) : null,
+            "preferences" => $preferences ? $this->repoprefs->get_by_user($iduser) : null,
+        ];
     }
 }
