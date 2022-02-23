@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Auth\Application;
 
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Domain\Enums\SessionType;
@@ -38,9 +39,37 @@ final class AuthService
         return in_array($action, $permissions);
     }
 
-    public function get_permission_modules(string $string): array
+    public function get_permission_module(string $module): array
     {
+        if(!self::$authuser) return ["write"=>false, "read"=>false];
+        if($this->is_root()) return ["write"=>true];
 
+        switch ($module) {
+            case UserPolicyType::MODULE_USERS:
+                return [
+                    "write" => $this->is_user_allowed(UserPolicyType::USERS_WRITE),
+                    "read" => $this->is_user_allowed(UserPolicyType::USERS_READ),
+                ];
+            case UserPolicyType::MODULE_USER_PERMISSIONS:
+                return [
+                    "write" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE),
+                    "read" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_READ),
+                ];
+            case UserPolicyType::MODULE_BUSINESSDATA:
+                return [
+                    "write" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE),
+                    "read" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_READ),
+                ];
+            case UserPolicyType::MODULE_PROMOTIONS:
+                return [
+                    "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE),
+                    "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_READ),
+                ];
+        }
+        return [
+            "write" => false,
+            "read" => false,
+        ];
     }
 
     public function is_root(?string $idprofile=null): bool

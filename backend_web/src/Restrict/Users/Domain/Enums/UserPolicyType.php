@@ -6,6 +6,7 @@ abstract class UserPolicyType
 {
     const MODULE_USERS = "users";
     const MODULE_USER_PERMISSIONS = "userpermissions";
+    const MODULE_BUSINESSDATA = "businessdata";
     const MODULE_PROMOTIONS = "promotions";
 
     const DASHBOARD_READ = "dashboard:read";
