@@ -128,28 +128,27 @@ export class FormUserBusinessDataUpdate extends LitElement {
     const urlslug = window.location.origin.concat("/account/").concat(this._slug)
     return html`
     <form @submit=${this.on_submit}>
+      <div class="form-group">
+        <label for="business_name">${this.texts.f03}</label>
+        ${this._id
+            ? html`<div style="color: #0a7ffb"><b>${this._business_name}</b></div>`
+            : html`
+          <div id="field-business_name">
+            <input type="text" id="business_name" .value=${this._business_name} placeholder="${this.texts.tr05}"
+                   class="form-control" maxlength="250" required>
+          </div>`
+        }
+      </div>      
       ${this._id
           ? html`
           <div class="form-group">
             <label for="slug">${this.texts.f04}</label>
-            <div id="field-slug">${urlslug}</div>
-            ${this._get_link(urlslug.concat("?mode=test"), urlslug)}
+            <div id="field-slug">${this._slug}</div>
+            ${this._get_link(urlslug.concat("?mode=test"), this.texts.f50)}
           </div>  
           `
           : html``
       }
-      <div class="form-group">
-        <label for="business_name">${this.texts.f03}</label>
-        ${this._id
-        ? html`
-          <div id="field-slug">${this._business_name}</div>`
-        : html`
-          <div id="field-business_name">
-            <input type="text" id="business_name" .value=${this._business_name} placeholder="no editable"
-                   class="form-control" maxlength="250" required>
-          </div>`
-        }
-      </div>
       
       <div class="form-group">
         <label for="user_logo_1">${this.texts.f05}</label>

@@ -80,6 +80,7 @@ $textbusinessdata = [
     "tr02" => __("Cancel"),
     "tr03" => __("Error"),
     "tr04" => __("<b>Data updated</b>"),
+    "tr05" => __("No editable"),
 
     "f00" => __("Nº"),
     "f01" => __("uuid"),
@@ -102,6 +103,7 @@ $textbusinessdata = [
     "f17" => __("Url Instagram"),
     "f18" => __("Url Twitter"),
     "f19" => __("Url TikTok"),
+    "f50" => __("Space test")
 
 ];
 
