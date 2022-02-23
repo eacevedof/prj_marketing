@@ -8,7 +8,6 @@ use App\Shared\Domain\Enums\SessionType;
 final class AuthServiceTest extends AbsUnitTest
 {
 
-
     public function test_get_null_user(): void
     {
         $this->log("test_get_null_user");

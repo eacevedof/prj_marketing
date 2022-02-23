@@ -38,6 +38,11 @@ final class AuthService
         return in_array($action, $permissions);
     }
 
+    public function get_permission_modules(string $string): array
+    {
+
+    }
+
     public function is_root(?string $idprofile=null): bool
     {
         return $idprofile
