@@ -4,7 +4,6 @@
  * @var string $uuid
  * @var array $result
  */
-dd($result);
 ?>
 <div class="modal-form">
   <div class="card-header">
