@@ -10,6 +10,7 @@
     <h4 class="card-title mb-1"><?=$h1?></h4>
   </div>
   <div class="card-body p-2 pt-0">
+
     <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
 <?php
