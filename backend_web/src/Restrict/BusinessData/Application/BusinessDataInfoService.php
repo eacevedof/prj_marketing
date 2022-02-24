@@ -65,6 +65,6 @@ final class BusinessDataInfoService extends AppService
             $this->_exception("{0} with code {1} not found", __("User"), $uuid);
 
         $this->_check_entity_permission($id);
-        return $this->repobusinessdata->get_all_by_user($id);
+        return $this->repobusinessdata->get_by_user($id);
     }
 }

@@ -4,8 +4,10 @@
  * @var array $result
  */
 if (is_null($result["permissions"])) return;
+
 $iduser = $result["user"]["id"];
 $permissions = $result["permissions"];
+dd($permissions);
 
 $texts = [
     "tr00" => __("Save"),

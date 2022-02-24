@@ -267,7 +267,7 @@ final class UserBusinessDataSaveService extends AppService
         $update["_new"] = false;
         $this->validator = VF::get($update, $this->entitybusinessdata);
 
-        return ($permissions = $this->repobusinessdata->get_all_by_user($this->iduser))
+        return ($permissions = $this->repobusinessdata->get_by_user($this->iduser))
             ? $this->_update($update, $permissions)
             : $this->_insert($update);
     }
