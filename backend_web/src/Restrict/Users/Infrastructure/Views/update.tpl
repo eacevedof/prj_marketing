@@ -7,50 +7,6 @@
  * @var array $permissions
  * @var array $businessdata
  */
-use App\Restrict\Users\Domain\Enums\UserProfileType;
-$isbow = $result["id_profile"] === UserProfileType::BUSINESS_OWNER;
-
-$textuser = [
-    "tr00" => __("Save"),
-    "tr01" => __("Processing..."),
-    "tr02" => __("Cancel"),
-    "tr03" => __("Error"),
-    "tr04" => __("<b>Data updated</b>"),
-
-    "f00" => __("Email"),
-    "f01" => __("Password"),
-    "f02" => __("Password confirm"),
-    "f03" => __("Full name"),
-    "f04" => __("Address"),
-    "f05" => __("Birthdate"),
-    "f06" => __("Phone"),
-    "f07" => __("Superior"),
-    "f08" => __("Profile"),
-    "f09" => __("Language"),
-    "f10" => __("Country"),
-];
-
-$datauser = [
-    "id" => $result["id"] ?? "",
-    "uuid" => $uuid,
-    "email" => $result["email"] ?? "",
-    "password" => "    ",
-    "password2" => "    ",
-    "fullname" => $result["fullname"] ?? "",
-    "address" => $result["address"] ?? "",
-    "birthdate" => $result["birthdate"] ?? "",
-    "phone" => $result["phone"] ?? "",
-
-    "id_profile" => $result["id_profile"] ?? "",
-    "id_parent" => $result["id_parent"] ?? "",
-    "id_country" => $result["id_country"] ?? "",
-    "id_language" => $result["id_language"] ?? "",
-
-    "profiles" => $profiles,
-    "parents" => $parents,
-    "countries" => $countries,
-    "languages" => $languages,
-];
 ?>
 <div class="modal-form">
   <div class="card-header">
@@ -59,17 +15,8 @@ $datauser = [
   <div class="card-body p-2 pt-0">
     <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
-        <li>
-          <a href="#main" data-bs-toggle="tab" class="active" aria-expanded="true">
-            <span class="visible-xs">
-              <i class="las la-user-circle tx-16 me-1"></i>
-            </span>
-            <span class="hidden-xs">
-              <?=__("Profile")?>
-            </span>
-          </a>
-        </li>
 <?php
+$this->_element_view("info/main-tab");
 $this->_element_view("info/permissions-tab");
 $this->_element_view("info/preferences-tab");
 $this->_element_view("info/businessdata-tab");
@@ -78,16 +25,8 @@ $this->_element_view("info/businessdata-tab");
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
-      <div id="main" class="tab-pane active">
-        <form-user-update
-          csrf=<?$this->_echo_js($csrf);?>
-
-          texts="<?$this->_echo_jslit($textuser);?>"
-
-          fields="<?$this->_echo_jslit($datauser);?>"
-        />
-      </div>
 <?php
+$this->_element_view("update/main-content");
 $this->_element_view("update/permissions-content");
 $this->_element_view("update/preferences-content");
 $this->_element_view("update/businessdata-content");
