@@ -73,7 +73,7 @@ final class AuthService
             break;
         }
 
-        if (!$type || !in_array($type, [UserPolicyType::READ, UserPolicyType::WRITE]))
+        if (!in_array($type, [UserPolicyType::READ, UserPolicyType::WRITE]))
             return $permission;
 
         if ($type===UserPolicyType::READ)
