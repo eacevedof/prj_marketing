@@ -3,8 +3,10 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($result["usert"])) return;
-$textuser = [
+if (is_null($result["user"])) return;
+$user = $result["user"];
+
+$texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
     "tr02" => __("Cancel"),
@@ -24,21 +26,21 @@ $textuser = [
     "f10" => __("Country"),
 ];
 
-$datauser = [
-    "id" => $result["id"] ?? "",
+$user = [
+    "id" => $user["id"] ?? "",
     "uuid" => $uuid,
-    "email" => $result["email"] ?? "",
+    "email" => $user["email"] ?? "",
     "password" => "    ",
     "password2" => "    ",
-    "fullname" => $result["fullname"] ?? "",
-    "address" => $result["address"] ?? "",
-    "birthdate" => $result["birthdate"] ?? "",
-    "phone" => $result["phone"] ?? "",
+    "fullname" => $user["fullname"] ?? "",
+    "address" => $user["address"] ?? "",
+    "birthdate" => $user["birthdate"] ?? "",
+    "phone" => $user["phone"] ?? "",
 
-    "id_profile" => $result["id_profile"] ?? "",
-    "id_parent" => $result["id_parent"] ?? "",
-    "id_country" => $result["id_country"] ?? "",
-    "id_language" => $result["id_language"] ?? "",
+    "id_profile" => $user["id_profile"] ?? "",
+    "id_parent" => $user["id_parent"] ?? "",
+    "id_country" => $user["id_country"] ?? "",
+    "id_language" => $user["id_language"] ?? "",
 
     "profiles" => $profiles,
     "parents" => $parents,
@@ -50,9 +52,9 @@ $datauser = [
   <form-user-update
       csrf=<?$this->_echo_js($csrf);?>
 
-      texts="<?$this->_echo_jslit($textuser);?>"
+      texts="<?$this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($datauser);?>"
+      fields="<?$this->_echo_jslit($user);?>"
   />
 </div>
 

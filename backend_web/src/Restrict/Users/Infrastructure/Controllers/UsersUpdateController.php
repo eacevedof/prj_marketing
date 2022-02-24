@@ -48,16 +48,15 @@ final class UsersUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $user = SF::get(UsersInfoService::class, [$uuid])->get_for_edit();
-            dd($user);
-            $h1 = "{$user["description"]} ($uuid)";
+            $result = SF::get(UsersInfoService::class, [$uuid])->get_for_edit();
+            $h1 = "{$result["user"]["description"]} ($uuid)";
 
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit user {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit user {0}", $h1))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
-                ->add_var("result", $user)
+                ->add_var("result", $result)
 
                 ->add_var("profiles", $this->picklist->get_profiles())
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))

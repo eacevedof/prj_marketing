@@ -14,10 +14,10 @@
     <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
 <?php
-$this->_element_view("info/main-tab");
-$this->_element_view("info/permissions-tab");
-$this->_element_view("info/preferences-tab");
-$this->_element_view("info/businessdata-tab");
+$this->_element_view("update/main-tab");
+$this->_element_view("update/permissions-tab");
+$this->_element_view("update/preferences-tab");
+$this->_element_view("update/businessdata-tab");
 ?>
       </ul>
     </div><!--nav-->
