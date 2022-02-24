@@ -41,9 +41,6 @@ final class AuthService
 
     public function get_module_permissions(string $module, ?string $type=null): array
     {
-        if(!self::$authuser) return ["write"=>false, "read"=>false];
-        if($this->is_root()) return ["write"=>true];
-
         switch ($module) {
             case UserPolicyType::MODULE_USERS:
                 $permission = [
@@ -78,8 +75,10 @@ final class AuthService
 
         if (!$type || !in_array($type, [UserPolicyType::READ, UserPolicyType::WRITE]))
             return $permission;
+
         if ($type===UserPolicyType::READ)
             return [$permission["write"] || $permission["read"]];
+
         return [$permission["write"]];
     }
 

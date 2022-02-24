@@ -202,6 +202,20 @@ abstract class AppRepository
         return $r[0] ?? [];
     }
 
+    public function get_by_uuid(string $uuid): array
+    {
+        $uuid = $this->_get_sanitized($uuid);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("apprepository.get_by_uuid")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.*"])
+            ->add_and("m.uuid='$uuid'")
+            ->select()->sql()
+        ;
+        $r = $this->db->query($sql);
+        return $r[0] ?? [];
+    }
+
     public function is_deleted(string $id): bool
     {
         $id = (int) $id;

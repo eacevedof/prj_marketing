@@ -1,12 +1,10 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
- * @var array $result
  * @var string $uuid
- *
- * @var array $permissions
- * @var array $businessdata
+ * @var array $result
  */
+dd($result);
 ?>
 <div class="modal-form">
   <div class="card-header">

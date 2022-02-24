@@ -110,7 +110,7 @@ final class UsersInfoService extends AppService
 
     public function get_for_edit(): array
     {
-        if(!$user = $this->repouser->get_id_by_uuid($this->input))
+        if(!$user = $this->repouser->get_by_uuid($this->input))
             $this->_exception(
                 __("User with code {0} not found", $this->input),
                 ExceptionType::CODE_NOT_FOUND
