@@ -34,7 +34,7 @@ $user = [
     "password2" => "    ",
     "fullname" => $user["fullname"] ?? "",
     "address" => $user["address"] ?? "",
-    "birthdate" => $user["birthdate"] ?? "",
+    "birthdate" => substr($user["birthdate"] ?? "",0, 10),
     "phone" => $user["phone"] ?? "",
 
     "id_profile" => $user["id_profile"] ?? "",
@@ -47,6 +47,7 @@ $user = [
     "countries" => $countries,
     "languages" => $languages,
 ];
+//dd($user);
 ?>
 <div id="main" class="tab-pane active">
   <form-user-update
