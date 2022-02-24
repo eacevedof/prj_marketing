@@ -4,7 +4,10 @@
  * @var array $result
  */
 if (is_null($result["permissions"])) return;
-$textpermission = [
+$iduser = $result["user"]["id"];
+$permissions = $result["permissions"];
+
+$texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
     "tr02" => __("Cancel"),
@@ -17,8 +20,8 @@ $textpermission = [
     "f03" => __("Permissions JSON"),
 ];
 
-$datapermission = [
-    "id_user" => $result["id"] ?? "",
+$permissions = [
+    "id_user" => $iduser,
 
     "id" => $permissions["id"] ?? "",
     "uuid" => $permissions["uuid"] ?? "",
@@ -30,8 +33,8 @@ $datapermission = [
       csrf=<?$this->_echo_js($csrf);?>
 
       useruuid="<?=$uuid?>"
-      texts="<?$this->_echo_jslit($textpermission);?>"
+      texts="<?$this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($datapermission);?>"
+      fields="<?$this->_echo_jslit($permissions);?>"
   />
 </div>

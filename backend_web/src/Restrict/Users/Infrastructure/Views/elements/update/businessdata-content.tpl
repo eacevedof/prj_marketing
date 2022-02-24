@@ -4,7 +4,11 @@
  * @var array $result
  */
 if (is_null($result["businessdata"])) return;
-$textbusinessdata = [
+
+$iduser = $result["user"]["id"];
+$businessdata = $result["businessdata"];
+
+$texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
     "tr02" => __("Cancel"),
@@ -36,8 +40,8 @@ $textbusinessdata = [
     "f50" => __("Space test"),
 ];
 
-$databusinessdata = [
-    "id_user" => $result["id"] ?? "",
+$businessdata = [
+    "id_user" => $iduser,
 
     "id" => $businessdata["id"] ?? "",
     "uuid" => $businessdata["uuid"] ?? "",
@@ -66,9 +70,9 @@ $databusinessdata = [
         csrf=<?$this->_echo_js($csrf);?>
 
         useruuid="<?=$uuid?>"
-        texts="<?$this->_echo_jslit($textbusinessdata);?>"
+        texts="<?$this->_echo_jslit($texts);?>"
 
-        fields="<?$this->_echo_jslit($databusinessdata);?>"
+        fields="<?$this->_echo_jslit($businessdata);?>"
     />
 </div>
 
