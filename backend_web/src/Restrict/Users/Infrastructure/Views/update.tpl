@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \App\Shared\Infrastructure\Views\AppView $this
+ * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  * @var string $uuid
  *
@@ -52,26 +52,7 @@ $datauser = [
     "languages" => $languages,
 ];
 
-$textpermission = [
-    "tr00" => __("Save"),
-    "tr01" => __("Processing..."),
-    "tr02" => __("Cancel"),
-    "tr03" => __("Error"),
-    "tr04" => __("<b>Data updated</b>"),
 
-    "f00" => __("Nº"),
-    "f01" => __("Code"),
-    "f02" => __("User"),
-    "f03" => __("Permissions JSON"),
-];
-
-$datapermission = [
-    "id_user" => $result["id"] ?? "",
-
-    "id" => $permissions["id"] ?? "",
-    "uuid" => $permissions["uuid"] ?? "",
-    "json_rw" => $permissions["json_rw"] ?? "[]",
-];
 
 
 $textbusinessdata = [
@@ -106,31 +87,6 @@ $textbusinessdata = [
     "f50" => __("Space test")
 
 ];
-
-$databusinessdata = [
-    "id_user" => $result["id"] ?? "",
-
-    "id" => $businessdata["id"] ?? "",
-    "uuid" => $businessdata["uuid"] ?? "",
-
-    "business_name" => $businessdata["business_name"] ?? "",
-    "slug" => $businessdata["slug"] ?? "",
-    "user_logo_1" => $businessdata["user_logo_1"] ?? "",
-    "user_logo_2" => $businessdata["user_logo_2"] ?? "",
-    "user_logo_3" => $businessdata["user_logo_3"] ?? "",
-    "url_favicon" => $businessdata["url_favicon"] ?? "",
-    "head_bgcolor" => $businessdata["head_bgcolor"] ?? "#ffffff",
-    "head_color" => $businessdata["head_color"] ?? "#ffffff",
-    "head_bgimage" => $businessdata["head_bgimage"] ?? "",
-    "body_bgcolor" => $businessdata["body_bgcolor"] ?? "#ffffff",
-    "body_color" => $businessdata["body_color"] ?? "#ffffff",
-    "body_bgimage" => $businessdata["body_bgimage"] ?? "",
-    "url_business" => $businessdata["url_business"] ?? "",
-    "url_social_fb" => $businessdata["url_social_fb"] ?? "",
-    "url_social_ig" => $businessdata["url_social_ig"] ?? "",
-    "url_social_twitter" => $businessdata["url_social_twitter"] ?? "",
-    "url_social_tiktok" => $businessdata["url_social_tiktok"] ?? "",
-];
 ?>
 <div class="modal-form">
   <div class="card-header">
@@ -149,28 +105,11 @@ $databusinessdata = [
             </span>
           </a>
         </li>
-        <li>
-          <a href="#permissions" data-bs-toggle="tab" aria-expanded="false">
-            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-            <span class="hidden-xs">
-              <?=__("Permissions")?>
-            </span>
-          </a>
-        </li>
-        <?
-        if($isbow):
-        ?>
-        <li>
-          <a href="#businessdata" data-bs-toggle="tab" aria-expanded="false">
-            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-            <span class="hidden-xs">
-              <?=__("Business data")?>
-            </span>
-          </a>
-        </li>
-        <?
-        endif;
-        ?>
+  <?php
+  $this->_element_view("info/permissions-tab");
+  $this->_element_view("info/preferences-tab");
+  $this->_element_view("info/businessdata-tab");
+  ?>
       </ul>
     </div><!--nav-->
 
@@ -184,36 +123,12 @@ $databusinessdata = [
           fields="<?$this->_echo_jslit($datauser);?>"
         />
       </div>
-
-      <div id="permissions" class="tab-pane">
-        <form-user-permissions-update
-          csrf=<?$this->_echo_js($csrf);?>
-
-          useruuid="<?=$uuid?>"
-          texts="<?$this->_echo_jslit($textpermission);?>"
-
-          fields="<?$this->_echo_jslit($datapermission);?>"
-        />
-      </div>
-
-      <?
-      if ($isbow):
-      ?>
-      <div id="businessdata" class="tab-pane">
-        <form-user-businessdata-update
-            csrf=<?$this->_echo_js($csrf);?>
-
-            useruuid="<?=$uuid?>"
-            texts="<?$this->_echo_jslit($textbusinessdata);?>"
-
-            fields="<?$this->_echo_jslit($databusinessdata);?>"
-        />
-      </div>
-      <?
-      endif;
-      ?>
+  <?php
+  $this->_element_view("update/permissions-content");
+  $this->_element_view("update/preferences-content");
+  $this->_element_view("update/businessdata-content");
+  ?>
     </div><!--tab-content-->
-
   </div><!--card-body-->
 </div>
 <script type="module" src="/assets/js/restrict/users/update.js"></script>
