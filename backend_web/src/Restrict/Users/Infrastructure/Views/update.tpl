@@ -51,42 +51,6 @@ $datauser = [
     "countries" => $countries,
     "languages" => $languages,
 ];
-
-
-
-
-$textbusinessdata = [
-    "tr00" => __("Save"),
-    "tr01" => __("Processing..."),
-    "tr02" => __("Cancel"),
-    "tr03" => __("Error"),
-    "tr04" => __("<b>Data updated</b>"),
-    "tr05" => __("No editable"),
-
-    "f00" => __("Nº"),
-    "f01" => __("uuid"),
-    "f02" => __("User"),
-
-    "f03" => __("Business name"),
-    "f04" => __("Slug"),
-    "f05" => __("Url logo sm"),
-    "f06" => __("Url logo md"),
-    "f07" => __("Url logo lg"),
-    "f08" => __("Url favicon"),
-    "f09" => __("Head bg color"),
-    "f10" => __("Head color"),
-    "f11" => __("Head bg image"),
-    "f12" => __("Body bg color"),
-    "f13" => __("Body color"),
-    "f14" => __("Url body bg image"),
-    "f15" => __("Url site"),
-    "f16" => __("Url Facebook"),
-    "f17" => __("Url Instagram"),
-    "f18" => __("Url Twitter"),
-    "f19" => __("Url TikTok"),
-    "f50" => __("Space test")
-
-];
 ?>
 <div class="modal-form">
   <div class="card-header">
@@ -105,11 +69,11 @@ $textbusinessdata = [
             </span>
           </a>
         </li>
-  <?php
-  $this->_element_view("info/permissions-tab");
-  $this->_element_view("info/preferences-tab");
-  $this->_element_view("info/businessdata-tab");
-  ?>
+<?php
+$this->_element_view("info/permissions-tab");
+$this->_element_view("info/preferences-tab");
+$this->_element_view("info/businessdata-tab");
+?>
       </ul>
     </div><!--nav-->
 
@@ -123,11 +87,11 @@ $textbusinessdata = [
           fields="<?$this->_echo_jslit($datauser);?>"
         />
       </div>
-  <?php
-  $this->_element_view("update/permissions-content");
-  $this->_element_view("update/preferences-content");
-  $this->_element_view("update/businessdata-content");
-  ?>
+<?php
+$this->_element_view("update/permissions-content");
+$this->_element_view("update/preferences-content");
+$this->_element_view("update/businessdata-content");
+?>
     </div><!--tab-content-->
   </div><!--card-body-->
 </div>
