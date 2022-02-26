@@ -8,6 +8,7 @@
  */
 namespace App\Restrict\BusinessData\Domain;
 
+use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -165,10 +166,12 @@ final class BusinessDataRepository extends AppRepository
 
     public function get_by_user(int $iduser): array
     {
+        $type = AppArrayType::TIMEZONE;
         $sql = $this->_get_qbuilder()
             ->set_comment("businessdata.get_by_user")
             ->set_table("$this->table as m")
-            ->set_getfields(["m.*"])
+            ->set_getfields(["m.*", "ar1.description AS e_timezone"])
+            ->add_join("LEFT JOIN app_array ar1 ON m.id_tz = ar1.id_pk AND ar1.type='$type'")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
             ->select()->sql()

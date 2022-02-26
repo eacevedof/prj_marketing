@@ -83,6 +83,25 @@ final class ArrayRepository extends AppRepository
         return $this->_get_associative(["id","description"]);
     }
 
+    public function get_timezones(): array
+    {
+        $type = Types::TZ;
+        $sql = $this->_get_qbuilder()
+            ->set_comment("apparrayrepo.get_tzs")
+            ->set_table("app_array as m")
+            ->set_getfields(["m.id_pk as id", "m.description"])
+            ->add_and("m.is_enabled=1")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.type='$type'")
+            ->add_and("m.id_owner=-1")
+            ->add_orderby("m.order_by")
+            ->add_orderby("m.description")
+            ->select()->sql()
+        ;
+        $this->result = $this->db->query($sql);
+        return $this->_get_associative(["id","description"]);
+    }
+
     public function exists(int $id, string $type, string $pk="id"): bool
     {
         $sql = $this->_get_qbuilder()

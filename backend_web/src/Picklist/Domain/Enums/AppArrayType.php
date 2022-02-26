@@ -7,4 +7,5 @@ abstract class AppArrayType
     const COUNTRY = "country";
     const LANGUAGE = "language";
     const PROMOTION = "promotion";
+    const TIMEZONE = "tz";
 }

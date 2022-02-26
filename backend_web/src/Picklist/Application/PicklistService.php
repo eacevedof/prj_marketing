@@ -36,6 +36,11 @@ final class PicklistService extends AppService
         return $this->repoapparray->get_languages();
     }
 
+    public function get_timezones(): array
+    {
+        return $this->repoapparray->get_timezones();
+    }
+
     public function get_profiles(): array
     {
         $profiles = $this->repobasearray->get_profiles();
