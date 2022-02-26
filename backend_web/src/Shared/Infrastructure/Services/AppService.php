@@ -75,7 +75,7 @@ abstract class AppService
         $datefields = ["insert_date", "update_date", "delete_date"];
         $utc = CF::get(UtcComponent::class);
         foreach($row as $field=>$value)
-            if(in_array($field, $datefields))
+            if(in_array($field, $datefields) && $value)
                 $row[$field] = $utc->get_utcdt_in_tz($value, $tz);
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($row);

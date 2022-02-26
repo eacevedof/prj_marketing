@@ -135,7 +135,7 @@ final class UsersInfoService extends AppService
             "user" => $this->_get_with_sysdata($user),
             "permissions" => $ispermissions ? $this->repopermission->get_by_user($iduser = $user["id"]): null,
             "businessdata" => $isbusinessdata
-                ? $this->_get_with_sysdata($this->repobusinessdata->get_by_user($iduser))
+                ? $this->_get_with_sysdata($this->repobusinessdata->get_by_user($iduser), $this->auth->get_tz())
                 : null,
             "preferences" => $ispreferences ? $this->repoprefs->get_by_user($iduser) : null,
         ];

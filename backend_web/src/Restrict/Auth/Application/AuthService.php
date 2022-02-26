@@ -149,6 +149,12 @@ final class AuthService
         return RF::get(UserRepository::class)->get_idowner(self::$authuser["id"]);
     }
 
+    public function get_tz(): string
+    {
+        return "Europe/Madrid";
+        return $this->get_user()[SessionType::AUTH_USER_TZ] ?? "";
+    }
+
     public static function reset(): void
     {
         self::$authService = null;
