@@ -46,15 +46,17 @@ final class LoginService extends AppService
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exception(__("Unauthorized"), ExceptionType::CODE_UNAUTHORIZED);
 
-        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->repopermission->get_by_user($iduser = (int)$aruser["id"]);
+        $aruser[SessionType::AUTH_USER_PERMISSIONS] = json_decode(
+            $this->repopermission->get_by_user($iduser = (int)$aruser["id"])["json_rw"] ?? "", 1
+        );
 
         $tz = $this->repouserprefs->get_value_by_user_and_key($iduser, UserPreferenceType::KEY_TZ);
         if (!$tz) $tz = UserPreferenceType::DEFAULT_TZ;
+        $aruser[SessionType::AUTH_USER_TZ] = $tz;
 
         $this->session
             ->add(SessionType::AUTH_USER, $aruser)
-            ->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"))
-            ->add(SessionType::TZ, $tz)
+            ->add(SessionType::AUTH_USER_LANG, $lang = ($aruser["e_language"] ?? "en"))
         ;
 
         $defurl = $this->repouserprefs->get_value_by_user_and_key($iduser, UserPreferenceType::URL_DEFAULT_MODULE);
