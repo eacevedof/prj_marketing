@@ -5,7 +5,6 @@
  */
 if (is_null($result["preferences"])) return;
 $preferences = $result["preferences"];
-//dd($preferences);
 $iduser = $result["user"]["id"];
 
 $texts = [
