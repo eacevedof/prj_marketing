@@ -21,23 +21,39 @@ final class UtcComponent
         return (int) $secsoffset;
     }
 
-    private function get_datetime_by_timezone(string $timezone, string $format=self::DEFAULT_DT_FORMAT): string
+    public function get_dt_by_tz(string $timezone, string $format=self::DEFAULT_DT_FORMAT): string
     {
         $dt = new DateTime("now", new DateTimeZone($timezone));
         return $dt->format($format);
     }
 
-    private function get_datetime_by_ip(string $ip, string $format=self::DEFAULT_DT_FORMAT): string
+    /**
+     * Por defecto va de UI => BD. De UTCx a UTC0
+     *
+     * @param string $sourcedt "2022-01-03 10:11:22"
+     * @param string $sourcetz "Europe/Madrid"
+     * @param string $targettz "Europe/London"
+     * @param string $format "",
+     * @return string
+     * @throws \Exception
+     */
+    public function get_dt_into_tz(string $sourcedt, string $sourcetz, string $targettz=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
+    {
+        $source = new DateTime($sourcedt, new DateTimeZone($sourcetz));
+        $source->setTimezone(new DateTimeZone($targettz));
+        return $source->format($format);
+    }
+
+    private function get_dt_by_ip(string $ip, string $format=self::DEFAULT_DT_FORMAT): string
     {
         $timezone = $this->get_timezone_by_ip($ip);
-        return $this->get_datetime_by_timezone($timezone, $format);
+        return $this->get_dt_by_tz($timezone, $format);
     }
 
     public function get_timezone_by_ip(string $ip): string
     {
         $info = file_get_contents("http://ip-api.com/json/{$ip}");
         $info = json_decode($info, 1);
-        $timezone = $info["timezone"] ?? self::DEFAULT_TZ;
-        return $timezone;
+        return ($info["timezone"] ?? self::DEFAULT_TZ);
     }
 }
