@@ -29,7 +29,7 @@ final class LoginService extends AppService
         $this->encdec = $this->_get_encdec();
         $this->repouser = RF::get(UserRepository::class);
         $this->repopermission = RF::get(UserPermissionsRepository::class);
-        $this->repoprefs = RF::get(UserPreferencesRepository::class);
+        $this->repouserprefs = RF::get(UserPreferencesRepository::class);
     }
 
     public function get_access(): array
@@ -46,19 +46,23 @@ final class LoginService extends AppService
         if (!$this->encdec->check_hashpassword($password, $secret))
             $this->_exception(__("Unauthorized"), ExceptionType::CODE_UNAUTHORIZED);
 
-        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->repopermission->get_by_user($iduser = (int) $aruser["id"]);
+        $aruser[SessionType::AUTH_USER_PERMISSIONS] = $this->repopermission->get_by_user($iduser = (int)$aruser["id"]);
+
+        $tz = $this->repouserprefs->get_value_by_user_and_key($iduser, UserPreferenceType::KEY_TZ);
+        if (!$tz) $tz = UserPreferenceType::DEFAULT_TZ;
 
         $this->session
             ->add(SessionType::AUTH_USER, $aruser)
             ->add(SessionType::LANG, $lang = ($aruser["e_language"] ?? "en"))
+            ->add(SessionType::TZ, $tz)
         ;
 
-        $userprefs = $this->repoprefs->get_by_user($iduser, $prefkey = UserPreferenceType::URL_DEFAULT_MODULE);
-        $userprefs = $userprefs[0]["pref_value"] ?? UrlType::RESTRICT;
+        $defurl = $this->repouserprefs->get_value_by_user_and_key($iduser, UserPreferenceType::URL_DEFAULT_MODULE);
+        if (!$defurl) $defurl = UrlType::RESTRICT;
 
         return [
             "lang" => $lang,
-            $prefkey => $userprefs
+            UserPreferenceType::URL_DEFAULT_MODULE => $defurl
         ];
     }
 }
