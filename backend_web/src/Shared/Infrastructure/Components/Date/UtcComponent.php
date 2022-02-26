@@ -6,7 +6,7 @@ use \DateTime;
 
 final class UtcComponent
 {
-    public const DEFAULT_TZ = "Europe/London";
+    public const DEFAULT_TZ = "UTC";
     public const DEFAULT_DT_FORMAT = "Y-m-d H:i:s";
 
     private function _get_offset_between_zones(string $targettz, string $sourcetz = self::DEFAULT_TZ): int
@@ -32,7 +32,7 @@ final class UtcComponent
      *
      * @param string $sourcedt "2022-01-03 10:11:22"
      * @param string $sourcetz "Europe/Madrid"
-     * @param string $targettz "Europe/London"
+     * @param string $targettz "UTC"
      * @param string $format "Y-m-d H:i:s",
      * @return string
      * @throws \Exception

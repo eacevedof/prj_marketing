@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("UTC");
 ob_start();
 debug_print_backtrace();
 session_name("MARKETINGID");

@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("UTC");
 if (!is_file("../boot/ConsoleMain.php"))
     exit("Boot\ConsoleMain not found!");
 
