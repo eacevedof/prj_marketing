@@ -26,7 +26,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","id_user"])
+    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","id_user","timezones"])
   }
 
   _on_cancel() {
@@ -66,6 +66,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _id: {type: String, state:true},
     _uuid: {type: String, state:true},
 
+    _id_tz: {type: String, state:true},
     _business_name: {type: String, state:true},
     _slug: {type: String, state:true},
     _user_logo_1: {type: String, state:true},
@@ -83,6 +84,8 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _url_social_ig: {type: String, state:true},
     _url_social_twitter: {type: String, state:true},
     _url_social_tiktok: {type: String, state:true},
+
+    _timezones: {type: String, state:true},
   }
 
   //2
@@ -128,6 +131,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     const urlslug = window.location.origin.concat("/account/").concat(this._slug)
     return html`
     <form @submit=${this.on_submit}>
+      
       <div class="form-group">
         <label for="business_name">${this.texts.f03}</label>
         ${this._id
@@ -149,7 +153,16 @@ export class FormUserBusinessDataUpdate extends LitElement {
           `
           : html``
       }
-      
+      <div class="form-group">
+        <label for="id_tz">${this.texts.f51}</label>
+        <div id="field-id_tz">
+          <select id="id_tz" class="form-control">
+            ${this._timezones.map((item) =>
+                html`<option value=${item.key} ?selected=${item.key===this._id_tz}>${item.value}</option>`
+            )}
+          </select>
+        </div>
+      </div>      
       <div class="form-group">
         <label for="user_logo_1">${this.texts.f05}</label>
         <div id="field-user_logo_1">

@@ -62,6 +62,7 @@ final class UsersUpdateController extends RestrictController
                 ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
                 ->add_var("countries", $this->picklist->get_countries())
                 ->add_var("languages", $this->picklist->get_languages())
+                ->add_var("timezones", $this->picklist->get_timezones())
                 ->render_nl();
         }
         catch (NotFoundException $e) {

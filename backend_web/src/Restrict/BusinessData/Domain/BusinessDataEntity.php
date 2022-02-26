@@ -43,6 +43,15 @@ final class BusinessDataEntity extends AppEntity
             ]
         ],
 
+        "id_tz" => [
+            "label" => __("Timezone"),
+            EntityType::REQUEST_KEY => "id_tz",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 5,
+            ]
+        ],
+
         "business_name" => [
             "label" => __("Business data"),
             EntityType::REQUEST_KEY => "business_name",

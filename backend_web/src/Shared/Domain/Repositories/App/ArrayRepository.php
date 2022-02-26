@@ -85,7 +85,7 @@ final class ArrayRepository extends AppRepository
 
     public function get_timezones(): array
     {
-        $type = Types::TZ;
+        $type = Types::TIMEZONE;
         $sql = $this->_get_qbuilder()
             ->set_comment("apparrayrepo.get_tzs")
             ->set_table("app_array as m")

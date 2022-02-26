@@ -6,7 +6,7 @@
 if (is_null($result["businessdata"])) return;
 
 $iduser = $result["user"]["id"];
-$permissions = $result["businessdata"];
+$businessdata = $result["businessdata"];
 
 $texts = [
     "tr00" => __("Save"),
@@ -38,31 +38,35 @@ $texts = [
     "f18" => __("Url Twitter"),
     "f19" => __("Url TikTok"),
     "f50" => __("Space test"),
+    "f51" => __("Timezone"),
 ];
 
-$permissions = [
+$businessdata = [
     "id_user" => $iduser,
 
-    "id" => $permissions["id"] ?? "",
-    "uuid" => $permissions["uuid"] ?? "",
+    "id" => $businessdata["id"] ?? "",
+    "uuid" => $businessdata["uuid"] ?? "",
 
-    "business_name" => $permissions["business_name"] ?? "",
-    "slug" => $permissions["slug"] ?? "",
-    "user_logo_1" => $permissions["user_logo_1"] ?? "",
-    "user_logo_2" => $permissions["user_logo_2"] ?? "",
-    "user_logo_3" => $permissions["user_logo_3"] ?? "",
-    "url_favicon" => $permissions["url_favicon"] ?? "",
-    "head_bgcolor" => $permissions["head_bgcolor"] ?? "#ffffff",
-    "head_color" => $permissions["head_color"] ?? "#ffffff",
-    "head_bgimage" => $permissions["head_bgimage"] ?? "",
-    "body_bgcolor" => $permissions["body_bgcolor"] ?? "#ffffff",
-    "body_color" => $permissions["body_color"] ?? "#ffffff",
-    "body_bgimage" => $permissions["body_bgimage"] ?? "",
-    "url_business" => $permissions["url_business"] ?? "",
-    "url_social_fb" => $permissions["url_social_fb"] ?? "",
-    "url_social_ig" => $permissions["url_social_ig"] ?? "",
-    "url_social_twitter" => $permissions["url_social_twitter"] ?? "",
-    "url_social_tiktok" => $permissions["url_social_tiktok"] ?? "",
+    "id_tz" => $businessdata["id_tz"] ?? "",
+    "business_name" => $businessdata["business_name"] ?? "",
+    "slug" => $businessdata["slug"] ?? "",
+    "user_logo_1" => $businessdata["user_logo_1"] ?? "",
+    "user_logo_2" => $businessdata["user_logo_2"] ?? "",
+    "user_logo_3" => $businessdata["user_logo_3"] ?? "",
+    "url_favicon" => $businessdata["url_favicon"] ?? "",
+    "head_bgcolor" => $businessdata["head_bgcolor"] ?? "#ffffff",
+    "head_color" => $businessdata["head_color"] ?? "#ffffff",
+    "head_bgimage" => $businessdata["head_bgimage"] ?? "",
+    "body_bgcolor" => $businessdata["body_bgcolor"] ?? "#ffffff",
+    "body_color" => $businessdata["body_color"] ?? "#ffffff",
+    "body_bgimage" => $businessdata["body_bgimage"] ?? "",
+    "url_business" => $businessdata["url_business"] ?? "",
+    "url_social_fb" => $businessdata["url_social_fb"] ?? "",
+    "url_social_ig" => $businessdata["url_social_ig"] ?? "",
+    "url_social_twitter" => $businessdata["url_social_twitter"] ?? "",
+    "url_social_tiktok" => $businessdata["url_social_tiktok"] ?? "",
+
+    "timezones" => $timezones,
 ];
 ?>
 <div id="businessdata" class="tab-pane">
@@ -72,7 +76,7 @@ $permissions = [
         useruuid="<?=$uuid?>"
         texts="<?$this->_echo_jslit($texts);?>"
 
-        fields="<?$this->_echo_jslit($permissions);?>"
+        fields="<?$this->_echo_jslit($businessdata);?>"
     />
 </div>
 
