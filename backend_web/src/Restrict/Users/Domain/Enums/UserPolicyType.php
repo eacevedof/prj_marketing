@@ -4,13 +4,14 @@ namespace App\Restrict\Users\Domain\Enums;
 
 abstract class UserPolicyType
 {
+    //modulos
     const MODULE_USERS = "users";
     const MODULE_USER_PERMISSIONS = "userpermissions";
-    const MODULE_BUSINESSDATA = "businessdata";
     const MODULE_USER_PREFERENCES = "userpreferences";
-
+    const MODULE_BUSINESSDATA = "businessdata";
     const MODULE_PROMOTIONS = "promotions";
 
+    //politicas
     const DASHBOARD_READ = "dashboard:read";
 
     const USERS_READ = "users:read";
@@ -39,6 +40,8 @@ abstract class UserPolicyType
             self::USERS_WRITE,
             self::USER_PERMISSIONS_READ,
             self::USER_PERMISSIONS_WRITE,
+            self::USER_PREFERENCES_READ,
+            self::USER_PREFERENCES_WRITE,
             self::BUSINESSDATA_READ,
             self::BUSINESSDATA_WRITE,
             self::PROMOTIONS_READ,

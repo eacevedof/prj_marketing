@@ -16,8 +16,8 @@
 <?php
 $this->_element_view("update/main-tab");
 $this->_element_view("update/permissions-tab");
-$this->_element_view("update/preferences-tab");
 $this->_element_view("update/businessdata-tab");
+$this->_element_view("update/preferences-tab");
 ?>
       </ul>
     </div><!--nav-->
@@ -26,8 +26,8 @@ $this->_element_view("update/businessdata-tab");
 <?php
 $this->_element_view("update/main-content");
 $this->_element_view("update/permissions-content");
-$this->_element_view("update/preferences-content");
 $this->_element_view("update/businessdata-content");
+$this->_element_view("update/preferences-content");
 ?>
     </div><!--tab-content-->
   </div><!--card-body-->
@@ -35,6 +35,7 @@ $this->_element_view("update/businessdata-content");
 <script type="module" src="/assets/js/restrict/users/update.js"></script>
 <script type="module" src="/assets/js/restrict/users/permissions/update.js"></script>
 <script type="module" src="/assets/js/restrict/users/businessdata/update.js"></script>
+<script type="module" src="/assets/js/restrict/users/preferences/update.js"></script>
 <script type="module">
 import {show_tab} from "/assets/js/common/modal-launcher.js"
 show_tab()
