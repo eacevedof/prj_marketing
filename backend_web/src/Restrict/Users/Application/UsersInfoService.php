@@ -79,7 +79,7 @@ final class UsersInfoService extends AppService
 
     public function __invoke(): array
     {
-        if(!$user = $this->repouser->get_info($this->input))
+        if(!$user = $this->repouser->get_info_by_uuid($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("User"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
@@ -93,11 +93,11 @@ final class UsersInfoService extends AppService
             )[0];
 
         $isbusinessdata = $this->auth->get_module_permissions(
-                UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::READ
+                UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
             )[0];
 
         $ispreferences = $this->auth->get_module_permissions(
-            UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
+            UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::READ
         )[0] && $this->auth->is_business_owner($user["id_profile"]);
 
         return [

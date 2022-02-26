@@ -156,7 +156,7 @@ final class UserRepository extends AppRepository
         return intval($r[0]["id"] ?? 0);
     }
 
-    public function get_info(string $uuid): array
+    public function get_info_by_uuid(string $uuid): array
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_qbuilder()
