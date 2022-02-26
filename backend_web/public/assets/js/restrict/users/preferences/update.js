@@ -7,8 +7,10 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL_UPDATE = "/restrict/user-preferences/update"
-const ACTION = "user_preferencess.update"
+const URL_INSERT = "/restrict/users/:uuid/preferences/insert"
+const URL_UPDATE = "/restrict/users/:uuid/preferences/update"
+
+const ACTION = "userpreferences.update"
 
 export class FormUserPreferencesUpdate extends LitElement {
   static get styles() {
@@ -91,41 +93,26 @@ export class FormUserPreferencesUpdate extends LitElement {
           <td>
             <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
           </td>
+          <td>
+            <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
+          </td>         
+          <td>+</td>
         </tr>
+      </table>
+      <table>
         <tr>
+          <td>
+            <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
+          </td>
           <td>
             <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
           </td>
+          <td>
+            save | delete
+          </td>
         </tr>
       </table>
-      <div class="flex-row">
-        <div class="form-group">
-            <label for="id">${this.texts.f00}</label>
-            <div id="field-id">
-                <input type="text" id="id" .value=${this._id} class="form-control" maxlength="10">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="id_user">${this.texts.f01}</label>
-            <div id="field-id_user">
-                <input type="text" id="id_user" .value=${this._id_user} class="form-control" maxlength="10">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="pref_key">${this.texts.f02}</label>
-            <div id="field-pref_key">
-                <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="pref_value">${this.texts.f03}</label>
-            <div id="field-pref_value">
-                <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
-            </div>
-        </div>
-        </div>
-
-        <div class="form-group mb-0">
+      <div class="form-group mb-0">
         <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
         ${this._btnsend}
           ${this._issending

@@ -56,8 +56,7 @@ final class AppView
     private function _exception(string $message, int $code=500): void
     {
         $this->logerr($message,"app-view.exception");
-        dd($message);
-        throw new \Exception($message, $code);
+        throw new Exception($message, $code);
     }
 
     private function _load_viewfolder_by_controller(): void
