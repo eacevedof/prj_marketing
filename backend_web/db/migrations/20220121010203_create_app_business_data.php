@@ -34,6 +34,10 @@ final class CreateAppBusinessData extends AbsMigration
             "limit" => 11,
             "null" => false
         ])
+        ->addColumn("id_timezone", "integer", [
+            "limit" => 5,
+            "null" => false
+        ])
         ->addColumn("business_name", "string", [
             "limit" => 250,
             "null" => false
