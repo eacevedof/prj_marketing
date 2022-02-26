@@ -33,7 +33,7 @@ final class UtcComponent
      * @param string $sourcedt "2022-01-03 10:11:22"
      * @param string $sourcetz "Europe/Madrid"
      * @param string $targettz "Europe/London"
-     * @param string $format "",
+     * @param string $format "Y-m-d H:i:s",
      * @return string
      * @throws \Exception
      */
