@@ -22,6 +22,14 @@ final class RequestComponent
         return $_GET[$sKey] ?? null;
     }
 
+    public function get_remote_ip(): string
+    {
+        if ($ip = $_SERVER["HTTP_CLIENT_IP"]) return $ip;
+        if ($ip = $_SERVER["HTTP_X_FORWARDED_FOR"]) return $ip;
+        if ($ip = $_SERVER["REMOTE_ADDR"]) return $ip;
+        return "127.0.0.0";
+    }
+
     public function is_post($sKey=null): bool { return $sKey ? isset($_POST[$sKey]) : count($_POST)>0;}
 
     public function is_get($sKey=null): bool { return $sKey ? isset($_GET[$sKey]) : count($_GET)>0;}

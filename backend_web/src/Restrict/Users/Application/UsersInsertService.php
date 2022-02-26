@@ -3,9 +3,11 @@ namespace App\Restrict\Users\Application;
 
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ServiceFactory as  SF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\UserEntity;
 use App\Shared\Infrastructure\Services\AppService;
@@ -37,7 +39,7 @@ final class UsersInsertService extends AppService
         $this->entityuser = MF::get(UserEntity::class);
         $this->validator = VF::get($this->input, $this->entityuser);
         $this->repouser = RF::get(UserRepository::class);
-        $this->repoprefs = RF::get(UserPreferencesRepository::class);
+        $this->repouserprefs = RF::get(UserPreferencesRepository::class);
         $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
@@ -130,7 +132,15 @@ final class UsersInsertService extends AppService
         ];
 
         $this->entityuser->add_sysinsert($prefs, $this->authuser["id"]);
-        $this->repoprefs->insert($prefs);
+        $this->repouserprefs->insert($prefs);
+
+        $tz = CF::get(UtcComponent::class)->get_timezone_by_ip($this->request->get_remote_ip());
+        $prefs = [
+            "id_user" => $id,
+            "pref_key" => UserPreferenceType::TZ,
+            "pref_value" => $tz
+        ];
+        $this->repouserprefs->insert($prefs);
 
         return [
             "id" => $id,

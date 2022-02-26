@@ -52,6 +52,7 @@ final class UtcComponent
 
     public function get_timezone_by_ip(string $ip): string
     {
+        if ($ip === "127.0.0.1") return self::DEFAULT_TZ;
         $info = file_get_contents("http://ip-api.com/json/{$ip}");
         $info = json_decode($info, 1);
         return ($info["timezone"] ?? self::DEFAULT_TZ);
