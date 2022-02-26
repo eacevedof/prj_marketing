@@ -34,6 +34,10 @@ final class CreateAppPromotion extends AbsMigration
             "limit" => 11,
             "null" => false
         ])
+        ->addColumn("id_tz", "integer", [
+            "limit" => 5,
+            "null" => false
+        ])
         ->addColumn("code_erp", "string", [
             "limit" => 25,
             "null" => true,
