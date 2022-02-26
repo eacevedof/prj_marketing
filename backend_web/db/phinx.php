@@ -9,6 +9,9 @@
  * mkdir -p db/migrations db/seeds
  * vendor/bin/phinx create MyFirstMigration
  * vendor/bin/phinx migrate -e development
+ *
+ * dentro de la carpeta ssh-be/../db
+ * $PATHWEB/vendor/bin/phinx migrate -e testing
 */
 $dir = __DIR__;
 
