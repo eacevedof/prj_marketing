@@ -182,11 +182,7 @@ final class UserRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->db->query($sql);
-        if (!$r) return [];
-
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-
-        return array_merge($r, $sysdata);
+        return $r[0] ?? [];
     }
 
     public function get_all_hierarchy(): array
