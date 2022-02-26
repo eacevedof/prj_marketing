@@ -62,12 +62,10 @@ final class SysfieldRepository extends AppRepository
         if (!$sys) return [];
 
         foreach ($sys as $key=>$v) {
-            if(strstr($key,"_user"))
-                $sys[$key] = $this->_get_user($row[$key]);
-            else
-                $sys[$key] = $this->_get_platform($row[$key]);
+            $sys[$key] = (strstr($key,"_user"))
+                ? $this->_get_user($row[$key])
+                : $this->_get_platform($row[$key]);
         }
-
         return $sys;
     }
 }//ExampleRepository

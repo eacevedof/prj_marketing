@@ -21,6 +21,20 @@ final class UtcComponent
         return (int) $secsoffset;
     }
 
+    /**
+     * @param string $utcdt "2022-01-03 10:11:22"
+     * @param string $targettz user-timezone
+     * @param string $format "Y-m-d H:i:s",
+     * @return string
+     * @throws \Exception
+     */
+    public function get_utcdt_in_tz(string $utcdt, string $targettz=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
+    {
+        $source = new DateTime($utcdt, new DateTimeZone(self::DEFAULT_TZ));
+        $source->setTimezone(new DateTimeZone($targettz));
+        return $source->format($format);
+    }
+
     public function get_dt_by_tz(string $timezone, string $format=self::DEFAULT_DT_FORMAT): string
     {
         $dt = new DateTime("now", new DateTimeZone($timezone));

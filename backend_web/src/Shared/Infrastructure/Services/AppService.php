@@ -9,9 +9,13 @@
  */
 namespace App\Shared\Infrastructure\Services;
 
+use App\Shared\Domain\Repositories\Common\SysfieldRepository;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Traits\ErrorTrait;
 use App\Shared\Infrastructure\Traits\LogTrait;
 use App\Shared\Infrastructure\Traits\EnvTrait;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use TheFramework\Components\Config\ComponentConfig;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -64,6 +68,18 @@ abstract class AppService
         $encdec->set_sslkey($config["sslenc_key"] ?? "");
         $encdec->set_sslsalt($config["sslsalt"] ?? "");
         return $encdec;
+    }
+
+    protected function _get_with_sysdata(array $row, string $tz=UtcComponent::DEFAULT_TZ): array
+    {
+        $datefields = ["insert_date", "update_date", "delete_date"];
+        $utc = CF::get(UtcComponent::class);
+        foreach($row as $field=>$value)
+            if(in_array($field, $datefields))
+                $row[$field] = $utc->get_utcdt_in_tz($value, $tz);
+
+        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($row);
+        return array_merge($row, $sysdata);
     }
 
 }//AppService
