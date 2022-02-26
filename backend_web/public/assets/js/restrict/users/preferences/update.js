@@ -7,7 +7,7 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL_UPDATE = "/restrict/user_preferencess/update"
+const URL_UPDATE = "/restrict/user-preferences/update"
 const ACTION = "user_preferencess.update"
 
 export class FormUserPreferencesUpdate extends LitElement {
@@ -85,6 +85,19 @@ export class FormUserPreferencesUpdate extends LitElement {
   render() {
     return html`
     <form @submit=${this.on_submit}>
+      <table>
+        <tr><th>key</th><th>value</th></tr>
+        <tr>
+          <td>
+            <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
+          </td>
+        </tr>
+      </table>
       <div class="flex-row">
         <div class="form-group">
             <label for="id">${this.texts.f00}</label>

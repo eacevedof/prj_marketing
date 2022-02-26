@@ -19,9 +19,11 @@ return [
     ["url"=>"/restrict/users/undelete/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
     ["url"=>"/restrict/users/?int:page","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"search"],
-    //@users-permissions
+    //@users-tabs
     ["url"=>"/restrict/users/:uuid/permissions/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPermissionsUpdateController", "method"=>"update", "allowed"=>["put"]],
     ["url"=>"/restrict/users/:uuid/business-data/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersBusinessDataUpdateController", "method"=>"update", "allowed"=>["put"]],
+    ["url"=>"/restrict/users/:uuid/preferences/insert","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesUpdateController", "method"=>"insert", "allowed"=>["post"]],
+    ["url"=>"/restrict/users/:uuid/preferences/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesUpdateController", "method"=>"update", "allowed"=>["put"]],
 
     //@promotions
     ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInfoController", "method"=>"info"],
