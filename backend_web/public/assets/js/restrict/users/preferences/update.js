@@ -96,38 +96,35 @@ export class FormUserPreferencesUpdate extends LitElement {
           <td>
             <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
           </td>         
-          <td>+</td>
+          <td>
+            <button id="btn-submit" ?disabled=${this._issending} class="btn btn-secondary btn-success btn-icon me-2">
+              <span><i class="mdi mdi-plus-box"></i></span> add
+              ${this._issending 
+                ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
+                : html``
+              }
+            </button>            
+          </td>
         </tr>
       </table>
       <table>
         <tr>
           <td>
-            <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
+            <input type="text" id="pref_key_0" .value=${this._pref_key_1} class="form-control" maxlength="250">
           </td>
           <td>
-            <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
+            <input type="text" id="pref_value_0" .value=${this._pref_value_0} class="form-control" maxlength="2000">
           </td>
           <td>
-            save | delete
+            <button type="button" btnid="rowbtn-edit" uuid="620d471857bc4" class="btn btn-info" title="edit">
+              <i class="las la-pen"></i>up
+            </button>
+            <button type="button" btnid="rowbtn-del" uuid="620d471857bc4" class="btn btn-danger" title="remove">
+              <i class="las la-trash"></i>del
+            </button>            
           </td>
         </tr>
       </table>
-      <div class="form-group mb-0">
-        <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
-        ${this._btnsend}
-          ${this._issending
-          ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-          : html``
-        }
-        </button>
-        <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
-        ${this._btncancel}
-          ${this._issending
-          ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-          : html``
-        }
-        </button>
-      </div>
     </form>
     `
   }
