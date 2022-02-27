@@ -33,8 +33,45 @@ export class FormUserPreferencesUpdate extends LitElement {
     return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
   }
 
-  _on_insert() {
+  async _on_insert() {
+    e.preventDefault()
+    error.config({
+      wrapper: this.shadowRoot.querySelector("form"),
+      fields: Object.keys(this.fields)
+    })
 
+    this._issending = true
+    this._btnsend = this.texts.tr01
+    error.clear()
+
+    const response = await injson.post(
+      URL_INSERT.replace(":uuid",`/${this._useruuid}`), {
+        _action: ACTION,
+        _csrf: this.csrf,
+        pref_key: this._$get("pref_key").value,
+        pref_value: this._$get("pref_value").value,
+      })
+
+    this._issending = false
+    this._btnsend = this.texts.tr00
+
+    if(response?.errors){
+      let errors = response.errors[0]?.fields_validation
+      if(errors) {
+        window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
+        return error.append(errors)
+      }
+
+      errors = response?.errors
+      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
+    }
+
+    this._list = response.result
+
+    window.snack.set_time(4)
+      .set_color(SNACK.SUCCESS)
+      .set_inner(this.texts.tr04)
+      .show()
   }
 
   _on_update() {
@@ -51,6 +88,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     this.texts = {}
     this.fields = {}
 
+    this._useruuid = this.useruuid
     this._pref_key = ""
     this._pref_value = ""
     this._list = []
@@ -58,6 +96,7 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+    useruuid: { type: String },
     texts: {
       converter: (strjson) => {
         if (strjson) return JSON.parse(strjson)
@@ -101,7 +140,7 @@ export class FormUserPreferencesUpdate extends LitElement {
   //4
   render() {
     return html`
-    <form @submit=${this.on_submit}>
+    <form>
       <table>
         <tr>
           <th><label for="pref_key">${this.texts.f02}</label> </th>
@@ -119,7 +158,7 @@ export class FormUserPreferencesUpdate extends LitElement {
             </div>
           </td>         
           <td>
-            <button id="btn-submit" ?disabled=${this._issending} @click="${this._on_insert}" class="btn btn-secondary btn-success btn-icon me-2">
+            <button type="button" ?disabled=${this._issending} @click="${this._on_insert}" class="btn btn-secondary btn-success btn-icon me-2">
               <span><i class="mdi mdi-plus-box"></i></span> add
               ${this._issending 
                 ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
