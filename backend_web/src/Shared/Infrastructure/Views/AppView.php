@@ -135,13 +135,17 @@ final class AppView
 
         if (is_string($pathjs)) {
             $path = self::PATH_ASSETS_JS.$pathjs.".js";
+            $fc = substr($pathjs, 0, 1);
+            if ($fc==="/") $path = $pathjs.".js";
             return "<script{$type}src=\"$path\"></script>";
         }
 
         if (is_array($pathjs)) {
             $html = [];
-            foreach ($pathjs as $path) {
-                $path = self::PATH_ASSETS_JS.$path.".js";
+            foreach ($pathjs as $path_js) {
+                $path = self::PATH_ASSETS_JS.$path_js.".js";
+                $fc = substr($path_js, 0, 1);
+                if ($fc==="/") $path = $path_js.".js";
                 $html[] = "<script{$type}src=\"$path\"></script>";
             }
             return implode("\n",$html);
@@ -153,13 +157,17 @@ final class AppView
     {
         if (is_string($pathcss)) {
             $path = self::PATH_ASSETS_CSS . $pathcss . ".css";
+            $fc = substr($pathcss, 0, 1);
+            if ($fc==="/") $path = $pathcss.".css";
             return "<link href=\"$path\" rel=\"stylesheet\">";
         }
 
         if (is_array($pathcss)) {
             $html = [];
-            foreach ($pathcss as $path) {
-                $path = self::PATH_ASSETS_CSS . $path . ".css";
+            foreach ($pathcss as $path_css) {
+                $path = self::PATH_ASSETS_CSS . $path_css . ".css";
+                $fc = substr($path_css, 0, 1);
+                if ($fc==="/") $path = $path_css.".css";
                 $html[] = "<link href=\"$path\" rel=\"stylesheet\">";
             }
             return implode("\n",$html);

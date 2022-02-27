@@ -4,6 +4,10 @@
  * @var string $uuid
  * @var array $result
  */
+echo $this->_asset_css([
+    "/assets/css/vendor/theme-min/icons",
+    "/assets/css/common/tooltip"
+]);
 ?>
 <div class="modal-form">
   <div class="card-header">

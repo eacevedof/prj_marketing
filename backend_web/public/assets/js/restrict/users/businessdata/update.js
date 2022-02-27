@@ -15,6 +15,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
       "/themes/valex/assets/css/style.css",
+      "/assets/css/common/tooltip.css",
     ])])
     return [
       globalStyle,

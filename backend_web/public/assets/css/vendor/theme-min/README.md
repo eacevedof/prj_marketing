@@ -1,0 +1,1 @@
+- guarda css necesario de menor granularidad sacados de los plugins de vendor
