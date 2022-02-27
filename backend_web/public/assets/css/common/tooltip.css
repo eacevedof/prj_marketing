@@ -4,15 +4,18 @@
 }
 
 .tt-tooltip .tt-tooltiptext {
-    visibility: hidden;
+    visibility: visible;
     width: 120px;
-    background-color: #031b4e;
+    background-color: #383E3EFF;
     color: #fff;
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
     position: absolute;
     z-index: 1;
+    left: 15px;
+    top: 2px;
+    font-weight: lighter;
 }
 
 .tt-tooltip:hover .tt-tooltiptext {
@@ -27,7 +30,7 @@
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 50%;
-    background: rgb(178 198 240);
+    background: #383E3EFF;
     color: white;
     display: inline-flex;
     align-items: center;
