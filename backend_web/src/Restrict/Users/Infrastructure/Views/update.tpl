@@ -5,8 +5,8 @@
  * @var array $result
  */
 echo $this->_asset_css([
-    "/assets/css/vendor/theme-min/icons",
-    "/assets/css/common/tooltip"
+    "vendor/theme-min/icons",
+    "common/tooltip"
 ]);
 ?>
 <div class="modal-form">
