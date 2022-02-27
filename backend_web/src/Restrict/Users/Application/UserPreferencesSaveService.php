@@ -41,8 +41,6 @@ final class UserPreferencesSaveService extends AppService
         $this->repouser = RF::get(UserRepository::class);
         if (!$this->iduser = $this->repouser->get_id_by_uuid($useruuid))
             $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
-        if ($this->iduser === 1)
-            $this->_exception(__("You can not add permissions to this user"));
 
         $this->entityuserprefs = MF::get(UserPreferencesEntity::class);
         $this->repouserprefs = RF::get(UserPreferencesRepository::class)->set_model($this->entityuserprefs);
@@ -53,7 +51,7 @@ final class UserPreferencesSaveService extends AppService
     {
         if($this->auth->is_root_super()) return;
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::USER_PREFERENCES_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -193,16 +191,16 @@ final class UserPreferencesSaveService extends AppService
 
     public function __invoke(): array
     {
-        if (!$update = $this->_get_req_without_ops($this->input))
+        if (!$pref = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->_check_entity_permission();
 
-        $update["_new"] = false;
-        $this->validator = VF::get($update, $this->entityuserprefs);
+        $pref["_new"] = (bool)(($pref["id"] ?? ""));
+        $this->validator = VF::get($pref, $this->entityuserprefs);
 
         return ($preferences = $this->repouserprefs->get_by_user($this->iduser))
-            ? $this->_update($update, $preferences)
-            : $this->_insert($update);
+            ? $this->_update($pref, $preferences)
+            : $this->_insert($pref);
     }
 }
