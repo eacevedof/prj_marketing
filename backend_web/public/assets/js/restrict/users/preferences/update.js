@@ -94,10 +94,10 @@ export class FormUserPreferencesUpdate extends LitElement {
       <table>
         <tr>
           <th>key 
-            <p class="tt-tooltip">
+            <div class="tt-tooltip">
               <span class="tt-span">?</span>  
-              <span class="tt-tooltiptext">hola</span>
-            </p>
+              <p class="tt-tooltiptext">hola</p>
+            </div>
           </th>
           <th>value</th>
         </tr>
