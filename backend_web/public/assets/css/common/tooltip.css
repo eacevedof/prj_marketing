@@ -7,14 +7,14 @@
 .tt-tooltip .tt-tooltiptext {
     visibility: hidden;
     width: 400px;
-    background-color: #383E3EFF;
+    background-color: #242F48;
     color: #fff;
     padding: 1px 5px;
     border-radius: 5px;
     position: absolute;
     z-index: 1;
     left: 13px;
-    top: 2px;
+    top: 3px;
     font-weight: lighter;
 }
 
@@ -29,7 +29,7 @@
     padding-top: 1px;
     padding-left: 3px;
     border-radius: 50%;
-    background: #383E3EFF;
+    background: #242F48;
     color: white;
     display: inline-flex;
     align-items: center;
