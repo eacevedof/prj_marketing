@@ -106,51 +106,17 @@ final class UserPreferencesSaveService extends AppService
     {
         $this->validator
             ->add_rule("id", "id", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })->add_rule("id_user", "id_user", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })->add_rule("pref_key", "pref_key", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })->add_rule("pref_value", "pref_value", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-        ;
-        return $this->validator;
-
-        $this->validator
-            ->add_rule("id", "id", function ($data) {
                 if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("uuid", "uuid", function ($data) {
+            ->add_rule("pref_key", "pref_key", function ($data) {
                 if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("id_user", "id_user", function ($data) {
+            ->add_rule("pref_value", "pref_value", function ($data) {
                 if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("json_rw", "json_rw", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-
-            ->add_rule("json_rw", "valid rules", function ($data){
-                $values = json_decode($data["value"], 1);
-                if (!$values) return false;
-
-                $allpolicies = UserPolicyType::get_all();
-                $invalid = [];
-                foreach ($values as $policy){
-                    if (!in_array($policy, $allpolicies))
-                        $invalid[] = $policy;
-                }
-                if (!$invalid) return false;
-                $invalid = implode(", ",$invalid);
-                $valid = implode("<br/>", $allpolicies);
-                return __("Invalid policies: {0} <br/>Valid are:<br/>{1}", $invalid, $valid);
-            })
-        ;
-        
+            });
         return $this->validator;
     }
 
