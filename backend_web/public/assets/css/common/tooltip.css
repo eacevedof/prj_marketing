@@ -22,12 +22,14 @@
 .tt-span {
     height: 15px;
     width: 15px;
+    padding-top: 2px;
     padding-left: 4px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 50%;
-    background: #031b4e;
+    background: rgb(178 198 240);
     color: white;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     vertical-align: middle;
 }
