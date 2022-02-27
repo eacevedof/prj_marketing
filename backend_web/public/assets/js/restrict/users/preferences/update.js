@@ -62,7 +62,10 @@ export class FormUserPreferencesUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
+    this._pref_key = ""
+    this._pref_value = ""
     this._list = response.result
+    this._$get("pref_key").focus()
 
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
