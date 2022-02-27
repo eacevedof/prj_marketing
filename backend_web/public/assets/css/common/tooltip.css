@@ -1,11 +1,12 @@
 .tt-tooltip {
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
     position: relative;
     display: inline-block;
 }
 
 .tt-tooltip .tt-tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 400px;
     background-color: #383E3EFF;
     color: #fff;
     padding: 1px 5px;
@@ -22,16 +23,14 @@
 }
 
 .tt-span {
-    height: 15px;
-    width: 15px;
-    padding-top: 2px;
-    padding-left: 4px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    font-size: 12px;
+    height: 12px;
+    width: 12px;
+    padding-top: 1px;
+    padding-left: 3px;
     border-radius: 50%;
     background: #383E3EFF;
     color: white;
     display: inline-flex;
     align-items: center;
-    vertical-align: middle;
 }
