@@ -33,7 +33,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
   }
 
-  async _on_insert() {
+  async _on_insert(e) {
     e.preventDefault()
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
@@ -45,7 +45,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     error.clear()
 
     const response = await injson.post(
-      URL_INSERT.replace(":uuid",`/${this._useruuid}`), {
+      URL_INSERT.replace(":uuid", this.useruuid), {
         _action: ACTION,
         _csrf: this.csrf,
         pref_key: this._$get("pref_key").value,
@@ -97,6 +97,7 @@ export class FormUserPreferencesUpdate extends LitElement {
   static properties = {
     csrf: { type: String },
     useruuid: { type: String },
+
     texts: {
       converter: (strjson) => {
         if (strjson) return JSON.parse(strjson)
