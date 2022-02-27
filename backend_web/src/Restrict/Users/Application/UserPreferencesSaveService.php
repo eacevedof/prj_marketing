@@ -9,8 +9,8 @@ use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
-use App\Restrict\Users\Domain\UserPermissionsEntity;
-use App\Restrict\Users\Domain\UserPermissionsRepository;
+use App\Restrict\Users\Domain\UserPreferencesEntity;
+use App\Restrict\Users\Domain\UserPreferencesRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -24,9 +24,9 @@ final class UserPreferencesSaveService extends AppService
     private array $authuser;
 
     private UserRepository $repouser;
-    private UserPermissionsRepository $repouserpermissions;
+    private UserPreferencesRepository $repouserpermissions;
     private FieldsValidator $validator;
-    private UserPermissionsEntity $entityuserpermissions;
+    private UserPreferencesEntity $entityuserpermissions;
     private int $iduser;
 
     public function __construct(array $input)
@@ -44,8 +44,8 @@ final class UserPreferencesSaveService extends AppService
         if ($this->iduser === 1)
             $this->_exception(__("You can not add permissions to this user"));
 
-        $this->entityuserpermissions = MF::get(UserPermissionsEntity::class);
-        $this->repouserpermissions = RF::get(UserPermissionsRepository::class)->set_model($this->entityuserpermissions);
+        $this->entityuserpermissions = MF::get(UserPreferencesEntity::class);
+        $this->repouserpermissions = RF::get(UserPreferencesRepository::class)->set_model($this->entityuserpermissions);
         $this->authuser = $this->auth->get_user();
     }
 
@@ -86,7 +86,6 @@ final class UserPreferencesSaveService extends AppService
             return;
 
         //to-do, solo se pueden agregar los permisos que tiene el owner ninguno más
-
         $this->_exception(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
         );
@@ -149,9 +148,9 @@ final class UserPreferencesSaveService extends AppService
         return json_last_error() === JSON_ERROR_NONE;
     }
 
-    private function _update(array $update, array $permissions): array
+    private function _update(array $update, array $preferences): array
     {
-        if ($permissions["id"] !== $update["id"])
+        if ($preferences["id"] !== $update["id"])
             $this->_exception(
                 __("This permission does not belong to user {0}", $this->input["_useruuid"]),
                 ExceptionType::CODE_BAD_REQUEST
@@ -168,7 +167,7 @@ final class UserPreferencesSaveService extends AppService
         $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
         $this->repouserpermissions->update($update);
         return [
-            "id" => $permissions["id"],
+            "id" => $preferences["id"],
             "uuid" => $update["uuid"]
         ];
     }
@@ -202,8 +201,8 @@ final class UserPreferencesSaveService extends AppService
         $update["_new"] = false;
         $this->validator = VF::get($update, $this->entityuserpermissions);
 
-        return ($permissions = $this->repouserpermissions->get_by_user($this->iduser))
-            ? $this->_update($update, $permissions)
+        return ($preferences = $this->repouserpermissions->get_by_user($this->iduser))
+            ? $this->_update($update, $preferences)
             : $this->_insert($update);
     }
 }
