@@ -56,6 +56,19 @@ column.add_rowbtn({
 })
 column.add_extrowbtn((v,t,row) => `<span style="color:aquamarine; background: yellow">Extra ${row.id}</span>`)
 ```
+### tooltip
+```html
+tooltip.css
+
+<div class="tt-tooltip">
+  <span class="tt-span">i</span>  
+  <p class="tt-tooltiptext">
+    It is a long established fact that a reader will be distracted 
+    by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that
+  </p>
+</div>
+```
+
 ### Errores
 - cargaba dos veces el html una como document y la otra como html/text
 - phpunit
