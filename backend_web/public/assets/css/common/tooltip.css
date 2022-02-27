@@ -4,7 +4,7 @@
 }
 
 .tt-tooltip .tt-tooltiptext {
-    visibility: visible;
+    visibility: hidden;
     width: 120px;
     background-color: #383E3EFF;
     color: #fff;
