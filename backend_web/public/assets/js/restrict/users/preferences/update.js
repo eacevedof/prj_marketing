@@ -17,7 +17,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
       "/themes/valex/assets/css/style.css",
-      "/assets/css/vendor/theme-min/icons.css",
+      //"/assets/css/vendor/theme-min/icons.css", los iconos no cargan
       "/assets/css/common/tooltip.css"
     ])])
     return [
@@ -92,7 +92,15 @@ export class FormUserPreferencesUpdate extends LitElement {
     return html`
     <form @submit=${this.on_submit}>
       <table>
-        <tr><th>key</th><th>value</th></tr>
+        <tr>
+          <th>key 
+            <p class="tt-tooltip">
+              <span class="tt-span">?</span>  
+              <span class="tt-tooltiptext">hola</span>
+            </p>
+          </th>
+          <th>value</th>
+        </tr>
         <tr>
           <td>
             <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
