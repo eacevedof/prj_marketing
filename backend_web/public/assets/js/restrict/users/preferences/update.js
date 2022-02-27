@@ -29,10 +29,6 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
-  }
-
   async _on_insert(e) {
     e.preventDefault()
     error.config({
@@ -211,48 +207,6 @@ export class FormUserPreferencesUpdate extends LitElement {
   updated() {
     //aqui se deberia des setear la prpiedad despues de una llamada async
   }
-
-  async on_submit(e) {
-    e.preventDefault()
-    error.config({
-      wrapper: this.shadowRoot.querySelector("form"),
-      fields: Object.keys(this.fields)
-    })
-
-    this._issending = true
-    this._btnsend = this.texts.tr01
-    error.clear()
-
-    const response = await injson.put(
-      URL_UPDATE.concat(`/${this.fields.uuid}`), {
-        _action: ACTION,
-        _csrf: this.csrf,
-        uuid: this.fields.uuid,
-        ...this._get_data()
-      })
-
-    this._issending = false
-    this._btnsend = this.texts.tr00
-
-    if(response?.errors){
-      let errors = response.errors[0]?.fields_validation
-      if(errors) {
-        window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
-        return error.append(errors)
-      }
-
-      errors = response?.errors
-      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
-    }
-
-    const $dt = document.getElementById("table-datatable")
-    if ($dt) $($dt).DataTable().ajax.reload()
-    window.snack.set_time(4)
-      .set_color(SNACK.SUCCESS)
-      .set_inner(this.texts.tr04)
-      .show()
-
-  }//on_submit
 
 }//FormEdit
 
