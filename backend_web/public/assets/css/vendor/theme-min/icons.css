@@ -1,7 +1,3 @@
 @charset "UTF-8";
-.yyy {
-    background: #0ba360 !important;
-    border: 2px solid magenta !important;
-}
 @import url("/themes/valex/assets/plugins/fontawesome-free/css/all.min.css");
 @import url("/themes/valex/assets/plugins/materialdesignicons/materialdesignicons.css");

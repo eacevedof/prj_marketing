@@ -91,11 +91,11 @@ export class FormUserPreferencesUpdate extends LitElement {
   render() {
     return html`
     <form @submit=${this.on_submit}>
-      <table class="yyy">
+      <table>
         <tr><th>key</th><th>value</th></tr>
         <tr>
           <td>
-            <input type="text" id="pref_key" .value=${this._pref_key} class="form-control yyy" maxlength="250">
+            <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
           </td>
           <td>
             <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
