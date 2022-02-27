@@ -66,6 +66,8 @@ export class FormUserPreferencesUpdate extends LitElement {
     _id_user: {type: String, state:true},
     _pref_key: {type: String, state:true},
     _pref_value: {type: String, state:true},
+
+    _list: {type: Array, state:true},
   }
 
   //2
