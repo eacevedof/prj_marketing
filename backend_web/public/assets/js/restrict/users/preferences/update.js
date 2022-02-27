@@ -33,8 +33,16 @@ export class FormUserPreferencesUpdate extends LitElement {
     return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
   }
 
-  _on_cancel() {
-    window.modalraw.hide()
+  _on_insert() {
+
+  }
+
+  _on_update() {
+
+  }
+
+  _on_delete() {
+
   }
 
   //1
@@ -42,6 +50,10 @@ export class FormUserPreferencesUpdate extends LitElement {
     super()
     this.texts = {}
     this.fields = {}
+
+    this._pref_key = ""
+    this._pref_value = ""
+    this._list = []
   }
 
   static properties = {
@@ -83,8 +95,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._issending = false
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
-
-    for (let p in this.fields) this["_".concat(p)] = this.fields[p]
+    this._list = this.fields
   }
 
   //4
@@ -93,19 +104,22 @@ export class FormUserPreferencesUpdate extends LitElement {
     <form @submit=${this.on_submit}>
       <table>
         <tr>
-          <th>key
-          </th>
-          <th>value</th>
+          <th><label for="pref_key">${this.texts.f02}</label> </th>
+          <th><label for="pref_value">${this.texts.f03}</label> </th>
         </tr>
         <tr>
           <td>
-            <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
+            <div id="field-pref_key">
+              <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
+            </div>
           </td>
           <td>
+            <div id="field-pref_value">
             <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
+            </div>
           </td>         
           <td>
-            <button id="btn-submit" ?disabled=${this._issending} class="btn btn-secondary btn-success btn-icon me-2">
+            <button id="btn-submit" ?disabled=${this._issending} @click="${this._on_insert}" class="btn btn-secondary btn-success btn-icon me-2">
               <span><i class="mdi mdi-plus-box"></i></span> add
               ${this._issending 
                 ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
@@ -115,23 +129,29 @@ export class FormUserPreferencesUpdate extends LitElement {
           </td>
         </tr>
       </table>
+      <hr/>
       <table>
-        <tr>
-          <td>
-            <input type="text" id="pref_key_0" .value=${this._pref_key_1} class="form-control" maxlength="250">
-          </td>
-          <td>
-            <input type="text" id="pref_value_0" .value=${this._pref_value_0} class="form-control" maxlength="2000">
-          </td>
-          <td>
-            <button type="button" btnid="rowbtn-edit" uuid="620d471857bc4" class="btn btn-info" title="edit">
-              <i class="las la-pen"></i>up
-            </button>
-            <button type="button" btnid="rowbtn-del" uuid="620d471857bc4" class="btn btn-danger" title="remove">
-              <i class="las la-trash"></i>del
-            </button>            
-          </td>
-        </tr>
+        ${this._list.map( (row, i) =>
+            html`      
+            <tr>
+              <td>
+                <input type="hidden" id="id_${i}" value="${row.id}" class="form-control">
+                <input type="text" id="pref_key_${i}" value="${row.pref_key}" class="form-control" maxlength="250">
+              </td>
+              <td>
+                <input type="text" id="pref_key_${i}" value="${row.pref_value}" class="form-control" maxlength="2000">
+              </td>
+              <td>
+                <button type="button" @click="${this._on_insert}" class="btn btn-info">
+                  <i class="las la-pen"></i>up
+                </button>
+                <button type="button" @click="${this._on_delete}" class="btn btn-danger">
+                  <i class="las la-trash"></i>del
+                </button>
+              </td>
+            </tr>
+            `
+        )}
       </table>
     </form>
     `
@@ -140,7 +160,7 @@ export class FormUserPreferencesUpdate extends LitElement {
   //5
   firstUpdated() {
     try {
-      this._$get("id").focus()
+      this._$get("pref_key").focus()
     }
     catch (e) {
       console.log(e)

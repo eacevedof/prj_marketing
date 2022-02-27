@@ -14,10 +14,8 @@ $texts = [
   "tr03" => __("Error"),
   "tr04" => __("<b>Data updated</b>"),
 
-  "f00" => __("tr_id"),
-  "f01" => __("tr_id_user"),
-  "f02" => __("tr_pref_key"),
-  "f03" => __("tr_pref_value"),
+  "f02" => __("Key"),
+  "f03" => __("Value"),
 ];
 
 $preferences = array_map(function(array $row) {
@@ -27,6 +25,7 @@ $preferences = array_map(function(array $row) {
     "pref_value" => $row["pref_value"],
   ];
 }, $preferences);
+
 ?>
 <div id="preferences" class="tab-pane">
   <form-user-preferences-update
