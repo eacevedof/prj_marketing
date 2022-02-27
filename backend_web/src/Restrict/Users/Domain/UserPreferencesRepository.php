@@ -28,8 +28,37 @@ final class UserPreferencesRepository extends AppRepository
             ->set_getfields(["m.*"])
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
+            ->add_orderby("pref_key")
         ;
         return $this->db->query($qb->select()->sql());
+    }
+
+    public function get_by_id_and_user(int $id, int $iduser): int
+    {
+        $qb = $this->_get_qbuilder()
+            ->set_comment("userpreferences.get_by_id_and_user")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.*"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id = $id")
+            ->add_and("m.id_user=$iduser")
+        ;
+        $r = $this->db->query($qb->select()->sql());
+        return (int) ($r[0]["id"] ?? "");
+    }
+
+    public function get_id_by_id_and_user(int $id, int $iduser): array
+    {
+        $qb = $this->_get_qbuilder()
+            ->set_comment("userpreferences.get_id_by_id_and_user")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id = $id")
+            ->add_and("m.id_user=$iduser")
+        ;
+        $r = $this->db->query($qb->select()->sql());
+        return $r[0] ?? [];
     }
 
     public function get_value_by_user_and_key(int $iduser, string $prefkey): string

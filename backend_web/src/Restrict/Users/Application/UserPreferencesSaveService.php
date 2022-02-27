@@ -58,8 +58,16 @@ final class UserPreferencesSaveService extends AppService
             );
     }
 
-    private function _check_entity_permission(): void
+    private function _check_entity_permission(int $id): void
     {
+        if ($id) {
+            if(!$id = $this->repouserprefs->get_by_id_and_user($id, $this->iduser))
+                $this->_exception(
+                    __("{0} {1} does not exist", __("Preference"), $id),
+                    ExceptionType::CODE_BAD_REQUEST
+                );
+        }
+
         if ($this->auth->is_root_super()) return;
 
         $permuser = $this->repouser->get_by_id($this->iduser);
@@ -67,7 +75,7 @@ final class UserPreferencesSaveService extends AppService
         if ($idauthuser === $this->iduser)
             $this->_exception(__("You are not allowed to change your own permissions"));
 
-        //un root puede cambiar el de cualquiera (menos el de el mismo, if anterior)
+        //un root puede cambiar la pref de cualquiera (menos el de el mismo, if anterior)
         if ($this->auth->is_root()) return;
 
         if ($this->auth->is_sysadmin() && $this->auth->is_business($permuser["id_profile"])) return;
@@ -89,7 +97,6 @@ final class UserPreferencesSaveService extends AppService
     {
         $this->validator
             ->add_skip("id")
-            ->add_skip("uuid")
             ->add_skip("id_user")
         ;
         return $this;
@@ -147,60 +154,61 @@ final class UserPreferencesSaveService extends AppService
         return $this->validator;
     }
 
-    private function _update(array $update, array $preferences): array
+    private function _insert(array $prefreq): array
     {
-        if ($preferences["id"] !== $update["id"])
-            $this->_exception(
-                __("This permission does not belong to user {0}", $this->input["_useruuid"]),
-                ExceptionType::CODE_BAD_REQUEST
-            );
+        $this->validator = VF::get($prefreq, $this->entityuserprefs);
+        if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
+            $this->_set_errors($errors);
+            throw new FieldsException(__("Fields validation errors"));
+        }
+        $prefreq["id_user"] = $this->iduser;
+        $prefreq = $this->entityuserprefs->map_request($prefreq);
+        $this->entityuserprefs->add_sysinsert($prefreq, $this->authuser["id"]);
+        $this->repouserprefs->insert($prefreq);
+        $result = $this->repouserprefs->get_by_user($this->iduser);
 
+        return array_map(function ($row) {
+            return [
+                "id" => (int) $row["id"],
+                "pref_key" => $row["pref_key"],
+                "pref_value" => $row["pref_value"],
+            ];
+        }, $result);
+    }
+
+    private function _update(array $prefreq): array
+    {
+        $this->validator = VF::get($prefreq, $this->entityuserprefs);
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entityuserprefs->map_request($update);
-        $this->_check_entity_permission();
-        $this->entityuserprefs->add_sysupdate($update, $this->authuser["id"]);
-        $this->repouserprefs->update($update);
-        return [
-            "id" => $preferences["id"],
-            "uuid" => $update["uuid"]
-        ];
-    }
-    
-    private function _insert(array $update): array
-    {
-        $update["_new"] = true;
-        $this->validator = VF::get($update, $this->entityuserprefs);
-        if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
-            throw new FieldsException(__("Fields validation errors"));
-        }
-        $update["id_user"] = $this->iduser;
-        $update["uuid"] = uniqid();
-        $update = $this->entityuserprefs->map_request($update);
-        $this->entityuserprefs->add_sysinsert($update, $this->authuser["id"]);
-        $id = $this->repouserprefs->insert($update);
-        return [
-            "id" => $id,
-            "uuid" => $update["uuid"]
-        ];
+        $prefreq = $this->entityuserprefs->map_request($prefreq);
+        $this->_check_entity_permission((int) $prefreq["id"]);
+        $this->entityuserprefs->add_sysupdate($prefreq, $this->authuser["id"]);
+        $this->repouserprefs->update($prefreq);
+        $result = $this->repouserprefs->get_by_user($this->iduser);
+
+        return array_map(function ($row) {
+            return [
+                "id" => (int) $row["id"],
+                "pref_key" => $row["pref_key"],
+                "pref_value" => $row["pref_value"],
+            ];
+        }, $result);
     }
 
     public function __invoke(): array
     {
-        if (!$pref = $this->_get_req_without_ops($this->input))
+        if (!$prefreq = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->_check_entity_permission();
+        $prefreq["_new"] = true;
+        if($id = (int)($prefreq["id"] ?? "")) $prefreq["_new"] = false;
 
-        $pref["_new"] = (bool)(($pref["id"] ?? ""));
-        $this->validator = VF::get($pref, $this->entityuserprefs);
-
-        return ($preferences = $this->repouserprefs->get_by_user($this->iduser))
-            ? $this->_update($pref, $preferences)
-            : $this->_insert($pref);
+        return $id
+            ? $this->_update($prefreq)
+            : $this->_insert($prefreq);
     }
 }
