@@ -24,9 +24,9 @@ final class UserPreferencesSaveService extends AppService
     private array $authuser;
 
     private UserRepository $repouser;
-    private UserPreferencesRepository $repouserpermissions;
+    private UserPreferencesRepository $repouserprefs;
     private FieldsValidator $validator;
-    private UserPreferencesEntity $entityuserpermissions;
+    private UserPreferencesEntity $entityuserprefs;
     private int $iduser;
 
     public function __construct(array $input)
@@ -44,8 +44,8 @@ final class UserPreferencesSaveService extends AppService
         if ($this->iduser === 1)
             $this->_exception(__("You can not add permissions to this user"));
 
-        $this->entityuserpermissions = MF::get(UserPreferencesEntity::class);
-        $this->repouserpermissions = RF::get(UserPreferencesRepository::class)->set_model($this->entityuserpermissions);
+        $this->entityuserprefs = MF::get(UserPreferencesEntity::class);
+        $this->repouserprefs = RF::get(UserPreferencesRepository::class)->set_model($this->entityuserprefs);
         $this->authuser = $this->auth->get_user();
     }
 
@@ -62,10 +62,8 @@ final class UserPreferencesSaveService extends AppService
 
     private function _check_entity_permission(): void
     {
-        //si es super puede interactuar con la entidad
         if ($this->auth->is_root_super()) return;
 
-        //si el us en sesion se quiere agregar permisos
         $permuser = $this->repouser->get_by_id($this->iduser);
         $idauthuser = (int) $this->authuser["id"];
         if ($idauthuser === $this->iduser)
@@ -74,7 +72,6 @@ final class UserPreferencesSaveService extends AppService
         //un root puede cambiar el de cualquiera (menos el de el mismo, if anterior)
         if ($this->auth->is_root()) return;
 
-        //un sysadmin puede cambiar solo a los que tiene debajo
         if ($this->auth->is_sysadmin() && $this->auth->is_business($permuser["id_profile"])) return;
 
         $identowner = $this->repouser->get_idowner($this->iduser);
@@ -85,7 +82,6 @@ final class UserPreferencesSaveService extends AppService
         )
             return;
 
-        //to-do, solo se pueden agregar los permisos que tiene el owner ninguno más
         $this->_exception(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
         );
@@ -105,6 +101,19 @@ final class UserPreferencesSaveService extends AppService
     {
         $this->validator
             ->add_rule("id", "id", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })->add_rule("id_user", "id_user", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })->add_rule("pref_key", "pref_key", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })->add_rule("pref_value", "pref_value", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })
+        ;
+        return $this->validator;
+
+        $this->validator
+            ->add_rule("id", "id", function ($data) {
                 if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
@@ -119,9 +128,7 @@ final class UserPreferencesSaveService extends AppService
             ->add_rule("json_rw", "json_rw", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("json_rw", "valid_json", function ($data){
-                return $this->_is_valid_json($data["value"]) ? false : __("Invalid Json document");
-            })
+
             ->add_rule("json_rw", "valid rules", function ($data){
                 $values = json_decode($data["value"], 1);
                 if (!$values) return false;
@@ -142,12 +149,6 @@ final class UserPreferencesSaveService extends AppService
         return $this->validator;
     }
 
-    private function _is_valid_json(string $string): bool
-    {
-        json_decode($string);
-        return json_last_error() === JSON_ERROR_NONE;
-    }
-
     private function _update(array $update, array $preferences): array
     {
         if ($preferences["id"] !== $update["id"])
@@ -156,16 +157,15 @@ final class UserPreferencesSaveService extends AppService
                 ExceptionType::CODE_BAD_REQUEST
             );
 
-        //no se hace skip pq se tiene que cumplir todo
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entityuserpermissions->map_request($update);
+        $update = $this->entityuserprefs->map_request($update);
         $this->_check_entity_permission();
-        $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
-        $this->repouserpermissions->update($update);
+        $this->entityuserprefs->add_sysupdate($update, $this->authuser["id"]);
+        $this->repouserprefs->update($update);
         return [
             "id" => $preferences["id"],
             "uuid" => $update["uuid"]
@@ -175,16 +175,16 @@ final class UserPreferencesSaveService extends AppService
     private function _insert(array $update): array
     {
         $update["_new"] = true;
-        $this->validator = VF::get($update, $this->entityuserpermissions);
+        $this->validator = VF::get($update, $this->entityuserprefs);
         if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
         $update["id_user"] = $this->iduser;
         $update["uuid"] = uniqid();
-        $update = $this->entityuserpermissions->map_request($update);
-        $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
-        $id = $this->repouserpermissions->insert($update);
+        $update = $this->entityuserprefs->map_request($update);
+        $this->entityuserprefs->add_sysinsert($update, $this->authuser["id"]);
+        $id = $this->repouserprefs->insert($update);
         return [
             "id" => $id,
             "uuid" => $update["uuid"]
@@ -199,9 +199,9 @@ final class UserPreferencesSaveService extends AppService
         $this->_check_entity_permission();
 
         $update["_new"] = false;
-        $this->validator = VF::get($update, $this->entityuserpermissions);
+        $this->validator = VF::get($update, $this->entityuserprefs);
 
-        return ($preferences = $this->repouserpermissions->get_by_user($this->iduser))
+        return ($preferences = $this->repouserprefs->get_by_user($this->iduser))
             ? $this->_update($update, $preferences)
             : $this->_insert($update);
     }
