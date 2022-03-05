@@ -70,17 +70,11 @@ export class FormUserPreferencesUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
-    //this.requestUpdate("_pref_key", this._pref_key);
-    //this.requestUpdate("_pref_value", this._pref_value);
-    //this._pref_value = ""
     this._list = response.result
     this._pref_key = ""
     this._pref_value = ""
     console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
 
-    //this.requestUpdate()
-    //this._$get("pref_key").value = ""
-    //this._$get("pref_value").value = ""
     this._$get("pref_key").focus()
 
     window.snack.set_time(4)
@@ -89,7 +83,51 @@ export class FormUserPreferencesUpdate extends LitElement {
       .show()
   }
 
-  _on_update() {}
+  _on_update(e) {
+    e.preventDefault()
+    error.config({
+      wrapper: this.shadowRoot.querySelector("form"),
+      fields: Object.keys(this.fields)
+    })
+
+    this._issending = true
+    this._btnsend = this.texts.tr01
+    error.clear()
+
+    const response = await injson.put(
+      URL_UPDATE.replace(":uuid", this.useruuid), {
+        _action: ACTION,
+        _csrf: this.csrf,
+        pref_key: this._pref_key,
+        pref_value: this._pref_value,
+      })
+
+    this._issending = false
+    this._btnsend = this.texts.tr00
+
+    if(response?.errors){
+      let errors = response.errors[0]?.fields_validation
+      if(errors) {
+        window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
+        return error.append(errors)
+      }
+
+      errors = response?.errors
+      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
+    }
+
+    this._list = response.result
+    this._pref_key = ""
+    this._pref_value = ""
+    console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
+
+    this._$get("pref_key").focus()
+
+    window.snack.set_time(4)
+      .set_color(SNACK.SUCCESS)
+      .set_inner(this.texts.tr04)
+      .show()
+  }
 
   _on_delete() {}
 
@@ -122,6 +160,9 @@ export class FormUserPreferencesUpdate extends LitElement {
     _id_user: {type: String, state:true},
     _pref_key: {type: String, state:true},
     _pref_value: {type: String, state:true},
+
+    //_pref_key_up: {type: String, state:true},
+    //_pref_value_up: {type: String, state:true},
 
     _list: {type: Array, state:true},
   }
@@ -187,7 +228,7 @@ export class FormUserPreferencesUpdate extends LitElement {
                 <input type="text" id="pref_key_${i}" value=${row.pref_value} class="form-control" maxlength="2000">
               </td>
               <td>
-                <button type="button" @click="${this._on_insert}" class="btn btn-info">
+                <button type="button" @click="${this._on_update}" class="btn btn-info">
                   <i class="las la-pen"></i>up
                 </button>
                 <button type="button" @click="${this._on_delete}" class="btn btn-danger">
