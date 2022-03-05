@@ -74,8 +74,8 @@ export class FormUserPreferencesUpdate extends LitElement {
     //this.requestUpdate("_pref_value", this._pref_value);
     //this._pref_value = ""
     this._list = response.result
-    this._pref_key = "k"
-    this._pref_value = "v"
+    this._pref_key = ""
+    this._pref_value = ""
     console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
 
     //this.requestUpdate()
@@ -89,14 +89,9 @@ export class FormUserPreferencesUpdate extends LitElement {
       .show()
   }
 
-  _on_update() {
+  _on_update() {}
 
-  }
-
-  _on_delete() {
-
-  }
-
+  _on_delete() {}
 
   //propiedades reactivas
   static properties = {
@@ -105,6 +100,7 @@ export class FormUserPreferencesUpdate extends LitElement {
 
     texts: {
       converter: (strjson) => {
+        console.log("converting texts")
         if (strjson) return JSON.parse(strjson)
         return {}
       },
@@ -132,11 +128,19 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   //1
   constructor() {
+    console.log("contructor")
     super()
-
     this._pref_key = ""
     this._pref_value = ""
-    this._list = []
+    this._issending = false
+  }
+
+  //3 aqui los callbacks de properties ya se han procesado
+  connectedCallback() {
+    super.connectedCallback()
+    this._btnsend = this.texts.tr00
+    this._btncancel = this.texts.tr02
+    this._list = this.fields
   }
 
   //4
