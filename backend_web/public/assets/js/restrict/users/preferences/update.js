@@ -97,14 +97,6 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   }
 
-  //1
-  constructor() {
-    super()
-
-    this._pref_key = ""
-    this._pref_value = ""
-    this._list = []
-  }
 
   //propiedades reactivas
   static properties = {
@@ -138,19 +130,13 @@ export class FormUserPreferencesUpdate extends LitElement {
     _list: {type: Array, state:true},
   }
 
+  //1
+  constructor() {
+    super()
 
-  //2
-  requestUpdate() {
-    super.requestUpdate()
-  }
-
-  //3 (aqui siempre hay datos)
-  connectedCallback() {
-    super.connectedCallback()
-    this._issending = false
-    this._btnsend = this.texts.tr00
-    this._btncancel = this.texts.tr02
-    this._list = this.fields
+    this._pref_key = ""
+    this._pref_value = ""
+    this._list = []
   }
 
   //4
@@ -191,10 +177,10 @@ export class FormUserPreferencesUpdate extends LitElement {
             <tr>
               <td>
                 <input type="hidden" id="id_${i}" value="${row.id}" class="form-control">
-                <input type="text" id="pref_key_${i}" value="${row.pref_key}" class="form-control" maxlength="250">
+                <input type="text" id="pref_key_${i}" value=${row.pref_key} class="form-control" maxlength="250">
               </td>
               <td>
-                <input type="text" id="pref_key_${i}" value="${row.pref_value}" class="form-control" maxlength="2000">
+                <input type="text" id="pref_key_${i}" value=${row.pref_value} class="form-control" maxlength="2000">
               </td>
               <td>
                 <button type="button" @click="${this._on_insert}" class="btn btn-info">
