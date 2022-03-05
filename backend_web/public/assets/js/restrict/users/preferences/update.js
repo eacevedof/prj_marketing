@@ -29,6 +29,14 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
+  _on_change(e){
+    const input = e.target
+    if (!input) return
+    const id = input?.id
+    if (!id) return
+    this[`_${id}`] = input.value
+  }
+
   async _on_insert(e) {
     e.preventDefault()
     error.config({
@@ -44,8 +52,8 @@ export class FormUserPreferencesUpdate extends LitElement {
       URL_INSERT.replace(":uuid", this.useruuid), {
         _action: ACTION,
         _csrf: this.csrf,
-        pref_key: this._$get("pref_key").value,
-        pref_value: this._$get("pref_value").value,
+        pref_key: this._pref_key,
+        pref_value: this._pref_value,
       })
 
     this._issending = false
@@ -62,9 +70,17 @@ export class FormUserPreferencesUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
-    this._pref_key = ""
-    this._pref_value = ""
+    //this.requestUpdate("_pref_key", this._pref_key);
+    //this.requestUpdate("_pref_value", this._pref_value);
+    //this._pref_value = ""
     this._list = response.result
+    this._pref_key = "k"
+    this._pref_value = "v"
+    console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
+
+    //this.requestUpdate()
+    //this._$get("pref_key").value = ""
+    //this._$get("pref_value").value = ""
     this._$get("pref_key").focus()
 
     window.snack.set_time(4)
@@ -84,15 +100,13 @@ export class FormUserPreferencesUpdate extends LitElement {
   //1
   constructor() {
     super()
-    this.texts = {}
-    this.fields = {}
 
-    this._useruuid = this.useruuid
     this._pref_key = ""
     this._pref_value = ""
     this._list = []
   }
 
+  //propiedades reactivas
   static properties = {
     csrf: { type: String },
     useruuid: { type: String },
@@ -111,6 +125,7 @@ export class FormUserPreferencesUpdate extends LitElement {
       },
     },
 
+    //state true indica que es un estado interno
     _issending: { type: Boolean, state: true },
     _btnsend: { type: String, state: true },
     _btncancel: { type: String, state: true },
@@ -122,6 +137,7 @@ export class FormUserPreferencesUpdate extends LitElement {
 
     _list: {type: Array, state:true},
   }
+
 
   //2
   requestUpdate() {
@@ -143,18 +159,18 @@ export class FormUserPreferencesUpdate extends LitElement {
     <form>
       <table>
         <tr>
-          <th><label for="pref_key">${this.texts.f02}</label> </th>
-          <th><label for="pref_value">${this.texts.f03}</label> </th>
+          <th><label for="pref_key">${this.texts.f02}</label></th>
+          <th><label for="pref_value">${this.texts.f03}</label></th>
         </tr>
         <tr>
           <td>
             <div id="field-pref_key">
-              <input type="text" id="pref_key" .value=${this._pref_key} class="form-control" maxlength="250">
+              <input type="text" id="pref_key" .value=${this._pref_key} @change=${this._on_change} class="form-control" maxlength="250">
             </div>
           </td>
           <td>
             <div id="field-pref_value">
-            <input type="text" id="pref_value" .value=${this._pref_value} class="form-control" maxlength="2000">
+            <input type="text" id="pref_value" .value=${this._pref_value} @change=${this._on_change} class="form-control" maxlength="2000">
             </div>
           </td>         
           <td>
@@ -162,7 +178,7 @@ export class FormUserPreferencesUpdate extends LitElement {
               <span><i class="mdi mdi-plus-box"></i></span> add
               ${this._issending 
                 ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-                : html``
+                : null
               }
             </button>            
           </td>
@@ -171,7 +187,7 @@ export class FormUserPreferencesUpdate extends LitElement {
       <hr/>
       <table>
         ${this._list.map( (row, i) =>
-            html`      
+          html`      
             <tr>
               <td>
                 <input type="hidden" id="id_${i}" value="${row.id}" class="form-control">
