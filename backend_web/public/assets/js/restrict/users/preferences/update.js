@@ -119,7 +119,8 @@ export class FormUserPreferencesUpdate extends LitElement {
         _csrf: this.csrf,
 
         id: row.id,
-        pref_key: row.pref_key
+        pref_key: row.pref_key,
+        pref_value: row.pref_value
       })
 
     this._issending = false
@@ -184,7 +185,7 @@ export class FormUserPreferencesUpdate extends LitElement {
       .set_color(SNACK.SUCCESS)
       .set_inner(this.texts.tr04)
       .show()
-  }
+  }// delete
 
   //propiedades reactivas
   static properties = {
