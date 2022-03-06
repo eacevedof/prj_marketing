@@ -91,7 +91,8 @@ final class UserPreferencesDeleteService extends AppService
     {
         $prefreq = $this->entityuserprefs->map_request($prefreq);
         $this->_check_entity_permission((int) $prefreq["id"]);
-        $this->entityuserprefs->add_sysdelete($prefreq, $this->authuser["id"]);
+        $updatedate = $this->repouserprefs->get_sysupdate($prefreq);
+        $this->entityuserprefs->add_sysdelete($prefreq, $updatedate, $this->authuser["id"]);
         $this->repouserprefs->update($prefreq);
         $result = $this->repouserprefs->get_by_user($this->iduser);
 
