@@ -23,7 +23,7 @@ return [
     ["url"=>"/restrict/users/:uuid/permissions/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPermissionsUpdateController", "method"=>"update", "allowed"=>["put"]],
     ["url"=>"/restrict/users/:uuid/business-data/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersBusinessDataUpdateController", "method"=>"update", "allowed"=>["put"]],
     ["url"=>"/restrict/users/:uuid/preferences/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesUpdateController", "method"=>"update", "allowed"=>["put"]],
-    ["url"=>"/restrict/users/:uuid/preferences/delete","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesDeleteController", "method"=>"delete", "allowed"=>["put"]],
+    ["url"=>"/restrict/users/:uuid/preferences/delete","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesDeleteController", "method"=>"delete", "allowed"=>["delete"]],
 
     //@promotions
     ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInfoController", "method"=>"info"],
