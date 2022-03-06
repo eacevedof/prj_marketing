@@ -44,16 +44,16 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   _get_grid_idx = id => id.split("_").pop()
 
-  _get_grid_item = el => {
+  _get_row_value = el => {
     const id = this._get_id(el)
     const idx = this._get_grid_idx(id)
-    const row = [`id_${idx}`,`pref_key_${idx}`,`pref_value_${idx}`]
-                  .map( id => ({id: this._$get(id)?.value}) )
-                  .reduce((p, obc) => {
-                    console.log("obc",obc)
-                    return {...p, ...obc}
-                  }, {})
-    return row
+    return [`id_${idx}`,`pref_key_${idx}`,`pref_value_${idx}`]
+                  .map( id => {
+                    const tmp = {}
+                    tmp[id.replace(`_${idx}`,"")] = this._$get(id)?.value
+                    return tmp
+                  })
+                  .reduce((p, obc) => ({...p, ...obc}), {})
   }
 
   async _on_insert(e) {
@@ -108,9 +108,8 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._issending = true
     this._btnsend = this.texts.tr01
 
-    console.log("e.target",e.target)
-    const row = this._get_grid_item(e.target)
-    console.log(row,"row")
+    const row = this._get_row_value(e.target)
+
     const response = await injson.put(
       URL_UPDATE.replace(":uuid", this.useruuid), {
         _action: ACTION,
