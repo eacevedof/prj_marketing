@@ -117,6 +117,7 @@ final class UserPreferencesSaveService extends AppService
                 return false;
             })
             ->add_rule("pref_value", "pref_value", function ($data) {
+                //si la key es TZ recupera las TZ validas
                 return $data["value"] ? false : __("Empty field is not allowed");
             });
         return $this->validator;

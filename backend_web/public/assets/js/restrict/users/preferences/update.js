@@ -272,7 +272,14 @@ export class FormUserPreferencesUpdate extends LitElement {
                 ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
                 : null
               }
-            </button>            
+            </button>
+            <button type="button" ?disabled=${this._issending} @click="${this._refresh}" class="btn btn-secondary btn-success btn-icon me-2">
+              <span><i class="mdi mdi-plus-box"></i></span> add
+              ${this._issending
+                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
+                  : null
+              }
+            </button>
           </td>
         </tr>
       </table>
