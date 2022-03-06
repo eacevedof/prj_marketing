@@ -73,4 +73,18 @@ final class UserPreferencesRepository extends AppRepository
         $r = $this->db->query($qb->select()->sql());
         return $r[0][0] ?? "";
     }
+
+    public function key_exists(int $iduser, string $prefkey): int
+    {
+        $qb = $this->_get_qbuilder()
+            ->set_comment("userpreferences.key_exists")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_user=$iduser")
+            ->add_and("m.pref_key='$prefkey'");
+        $r = $this->db->query($qb->select()->sql());
+        return (int) ($r[0]["id"] ?? 0);
+    }
+
 }//UserPreferencesRepository

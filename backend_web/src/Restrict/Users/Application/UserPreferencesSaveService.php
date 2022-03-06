@@ -12,6 +12,7 @@ use App\Restrict\Users\Domain\UserRepository;
 use App\Restrict\Users\Domain\UserPreferencesEntity;
 use App\Restrict\Users\Domain\UserPreferencesRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
+use App\Restrict\Users\Domain\Enums\UserPreferenceType;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -106,7 +107,14 @@ final class UserPreferencesSaveService extends AppService
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("pref_key", "pref_key", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$prefkey = $data["value"]) __("Empty field is not allowed");
+                if (!in_array($prefkey, ($keys = [UserPreferenceType::URL_DEFAULT_MODULE, UserPreferenceType::KEY_TZ])))
+                    return __("Invalid key. Valid values are<br/>{0}", implode("<br/>", $keys));
+                if ($data["data"]["_new"] && $this->repouserprefs->key_exists($this->iduser, $prefkey))
+                    return __("{0} already exists", $prefkey);
+                if (!$data["data"]["_new"] && ($this->repouserprefs->key_exists($this->iduser, $prefkey) !== (int)$data["data"]["id"]))
+                    return __("{0} already exists", $prefkey);
+                return false;
             })
             ->add_rule("pref_value", "pref_value", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
