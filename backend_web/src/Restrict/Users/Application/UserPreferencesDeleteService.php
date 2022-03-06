@@ -5,7 +5,6 @@ use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
@@ -14,7 +13,6 @@ use App\Restrict\Users\Domain\UserPreferencesRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
-use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class UserPreferencesDeleteService extends AppService
 {
