@@ -10,6 +10,7 @@ import {selector} from "/assets/js/common/shadowroot/shadowroot.js"
 const URL_INSERT = "/restrict/users/:uuid/preferences/update"
 const URL_UPDATE = "/restrict/users/:uuid/preferences/update"
 const URL_DELETE = "/restrict/users/:uuid/preferences/delete"
+const URL_LIST = "/restrict/users/:uuid/preferences"
 
 const ACTION = "userpreferences.update"
 
@@ -192,6 +193,27 @@ export class FormUserPreferencesUpdate extends LitElement {
       .show()
   }// delete
 
+  async _get_list(e) {
+    e.preventDefault()
+
+    this._issending = true
+    this._btnsend = this.texts.tr01
+
+    const response = await injson.get(
+      URL_LIST.replace(":uuid", this.useruuid), {
+        _action: ACTION,
+      })
+
+    this._issending = false
+    this._btnsend = this.texts.tr00
+
+    const errors = response?.errors
+    if (errors)
+      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
+
+    this._list = response.result
+  }// get_list
+
   //propiedades reactivas
   static properties = {
     csrf: { type: String },
@@ -273,13 +295,15 @@ export class FormUserPreferencesUpdate extends LitElement {
                 : null
               }
             </button>
-            <button type="button" ?disabled=${this._issending} @click="${this._refresh}" class="btn btn-secondary btn-success btn-icon me-2">
-              <span><i class="mdi mdi-plus-box"></i></span> add
+          </td>
+          <td>
+            <button type="button" ?disabled=${this._issending} @click="${this._get_list}" class="btn btn-secondary btn-success btn-icon me-2">
+              <span><i class="mdi mdi-plus-box"></i></span> ref
               ${this._issending
                   ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
                   : null
               }
-            </button>
+            </button>            
           </td>
         </tr>
       </table>
