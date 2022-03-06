@@ -48,9 +48,10 @@ export class FormUserPreferencesUpdate extends LitElement {
     const id = this._get_id(el)
     const idx = this._get_grid_idx(id)
     const row = [`id_${idx}`,`pref_key_${idx}`,`pref_value_${idx}`]
-                  .map( id => ({id: this._$get(id)}) )
+                  .map( id => ({id: this._$get(id)?.value}) )
                   .reduce((p, obc) => {
-                    return  {...p, ...obc}
+                    console.log("obc",obc)
+                    return {...p, ...obc}
                   }, {})
     return row
   }
@@ -243,7 +244,7 @@ export class FormUserPreferencesUpdate extends LitElement {
                 <input type="text" id="pref_key_${i}" value=${row.pref_key} class="form-control" maxlength="250">
               </td>
               <td>
-                <input type="text" id="pref_key_${i}" value=${row.pref_value} class="form-control" maxlength="2000">
+                <input type="text" id="pref_value_${i}" value=${row.pref_value} class="form-control" maxlength="2000">
               </td>
               <td>
                 <button type="button" id="update_${i}" @click="${this._on_update}" class="btn btn-info">
