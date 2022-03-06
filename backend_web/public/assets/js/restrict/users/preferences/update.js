@@ -110,6 +110,7 @@ export class FormUserPreferencesUpdate extends LitElement {
 
     this._issending = true
     this._btnsend = this.texts.tr01
+    error.clear()
 
     const row = this._get_row_value(e.target)
 
@@ -151,7 +152,7 @@ export class FormUserPreferencesUpdate extends LitElement {
 
     this._issending = true
     this._btnsend = this.texts.tr01
-
+    error.clear()
     const row = this._get_row_value(e.target)
 
     const response = await injson.del(
