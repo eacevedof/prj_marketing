@@ -30,12 +30,21 @@ export class FormUserPreferencesUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _on_change(e){
-    const input = e.target
-    if (!input) return
-    const id = input?.id
+    const id = this._get_id(el)
     if (!id) return
     this[`_${id}`] = input.value
   }
+
+  _get_id(el){
+    if (!el) return null
+    const id = el?.id
+    if (!id) return null
+    return id
+  }
+
+  _get_grid_idx = id => id.split("_").pop()
+
+
 
   async _on_insert(e) {
     e.preventDefault()
@@ -73,8 +82,8 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._list = response.result
     this._pref_key = ""
     this._pref_value = ""
-    console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
 
+    console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
     this._$get("pref_key").focus()
 
     window.snack.set_time(4)
@@ -89,10 +98,17 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._issending = true
     this._btnsend = this.texts.tr01
 
+    const id = this._get_id(e.target)
+    const idx = this._get_grid_idx(id)
+
+
+
     const response = await injson.put(
       URL_UPDATE.replace(":uuid", this.useruuid), {
         _action: ACTION,
         _csrf: this.csrf,
+
+        id: this._id,
         pref_key: this._pref_key,
         pref_value: this._pref_value,
       })
@@ -231,7 +247,7 @@ export class FormUserPreferencesUpdate extends LitElement {
                 </button>
               </td>
             </tr>
-            `
+           `
         )}
       </table>
     </form>
