@@ -146,6 +146,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._list = response.result
     this._$get(`pref_key_${row._idx}`)?.focus()
 
+    console.log("update-list", this._list)
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
       .set_inner(this.texts.tr04)
@@ -211,7 +212,9 @@ export class FormUserPreferencesUpdate extends LitElement {
     if (errors)
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
 
+    this._list = []
     this._list = response.result
+    console.log("user-pref-get-list", this._list)
   }// get_list
 
   //propiedades reactivas
