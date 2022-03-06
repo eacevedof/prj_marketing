@@ -106,11 +106,9 @@ final class UserPreferencesSaveService extends AppService
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("pref_key", "pref_key", function ($data) {
-                if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("pref_value", "pref_value", function ($data) {
-                if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             });
         return $this->validator;

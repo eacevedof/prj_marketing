@@ -28,7 +28,7 @@ final class UserPreferencesRepository extends AppRepository
             ->set_getfields(["m.*"])
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
-            ->add_orderby("pref_key")
+            ->add_orderby("id", "DESC")
         ;
         return $this->db->query($qb->select()->sql());
     }
