@@ -70,19 +70,19 @@ final class UserPreferencesSaveService extends AppService
 
         if ($this->auth->is_root_super()) return;
 
-        $permuser = $this->repouser->get_by_id($this->iduser);
+        $prefuser = $this->repouser->get_by_id($this->iduser);
         $idauthuser = (int) $this->authuser["id"];
         if ($idauthuser === $this->iduser) return;
 
         //un root puede cambiar la pref de cualquiera (menos el de el mismo, if anterior)
         if ($this->auth->is_root()) return;
 
-        if ($this->auth->is_sysadmin() && $this->auth->is_business($permuser["id_profile"])) return;
+        if ($this->auth->is_sysadmin() && $this->auth->is_business($prefuser["id_profile"])) return;
 
         $identowner = $this->repouser->get_idowner($this->iduser);
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
-            && $this->auth->is_business_manager($permuser["id_profile"])
+            && $this->auth->is_business_manager($prefuser["id_profile"])
             && ((int) $this->authuser["id"]) === $identowner
         )
             return;
