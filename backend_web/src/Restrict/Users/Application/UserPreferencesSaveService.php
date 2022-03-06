@@ -74,7 +74,6 @@ final class UserPreferencesSaveService extends AppService
         $idauthuser = (int) $this->authuser["id"];
         if ($idauthuser === $this->iduser) return;
 
-
         if ($this->auth->is_sysadmin() && $this->auth->is_business($prefuser["id_profile"])) return;
 
         $identowner = $this->repouser->get_idowner($this->iduser);
