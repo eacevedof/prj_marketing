@@ -64,7 +64,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     e.preventDefault()
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
-      fields: Object.keys(this.fields)
+      fields: ["pref_key","pref_value"]
     })
 
     this._issending = true
@@ -107,12 +107,16 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   async _on_update(e) {
     e.preventDefault()
+    const row = this._get_row_value(e.target)
+
+    error.config({
+      wrapper: this.shadowRoot.querySelector("form"),
+      fields: [`pref_key_${row._idx}`,`pref_value_${row._idx}`]
+    })
 
     this._issending = true
     this._btnsend = this.texts.tr01
     error.clear()
-
-    const row = this._get_row_value(e.target)
 
     const response = await injson.put(
       URL_UPDATE.replace(":uuid", this.useruuid), {
@@ -279,10 +283,10 @@ export class FormUserPreferencesUpdate extends LitElement {
             <tr id="row_${i}">
               <td>
                 <input type="hidden" id="id_${i}" value="${row.id}" class="form-control">
-                <input type="text" id="pref_key_${i}" value=${row.pref_key} class="form-control" maxlength="250">
+                <input type="text" id="pref_key_${i}" value=${row.pref_key} class="form-control" placeholder="key" maxlength="250">
               </td>
               <td>
-                <input type="text" id="pref_value_${i}" value=${row.pref_value} class="form-control" maxlength="2000">
+                <input type="text" id="pref_value_${i}" value=${row.pref_value} class="form-control" placeholder="value" maxlength="2000">
               </td>
               <td>
                 <button type="button" id="update_${i}" @click="${this._on_update}" class="btn btn-info">
