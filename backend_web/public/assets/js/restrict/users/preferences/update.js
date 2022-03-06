@@ -113,7 +113,7 @@ export class FormUserPreferencesUpdate extends LitElement {
 
     const row = this._get_row_value(e.target)
 
-    const response = await injson.del(
+    const response = await injson.put(
       URL_UPDATE.replace(":uuid", this.useruuid), {
         _action: ACTION,
         _csrf: this.csrf,
@@ -153,7 +153,7 @@ export class FormUserPreferencesUpdate extends LitElement {
 
     const row = this._get_row_value(e.target)
 
-    const response = await injson.put(
+    const response = await injson.del(
       URL_DELETE.replace(":uuid", this.useruuid), {
         _action: ACTION,
         _csrf: this.csrf,
