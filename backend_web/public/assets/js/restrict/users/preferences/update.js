@@ -30,10 +30,10 @@ export class FormUserPreferencesUpdate extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  _on_change(e){
-    const id = this._get_id(el)
+  _on_change(ev){
+    const id = this._get_id(ev.target)
     if (!id) return
-    this[`_${id}`] = e.value
+    this[`_${id}`] = ev.value
   }
 
   _get_id(el){
@@ -113,7 +113,7 @@ export class FormUserPreferencesUpdate extends LitElement {
     const row = this._get_row_value(e.target)
 
     const response = await injson.del(
-      URL_DELETE.replace(":uuid", this.useruuid), {
+      URL_UPDATE.replace(":uuid", this.useruuid), {
         _action: ACTION,
         _csrf: this.csrf,
 
