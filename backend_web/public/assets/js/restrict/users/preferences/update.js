@@ -83,16 +83,11 @@ export class FormUserPreferencesUpdate extends LitElement {
       .show()
   }
 
-  _on_update(e) {
+  async _on_update(e) {
     e.preventDefault()
-    error.config({
-      wrapper: this.shadowRoot.querySelector("form"),
-      fields: Object.keys(this.fields)
-    })
 
     this._issending = true
     this._btnsend = this.texts.tr01
-    error.clear()
 
     const response = await injson.put(
       URL_UPDATE.replace(":uuid", this.useruuid), {

@@ -19,7 +19,6 @@ use \Exception;
 
 final class UsersPreferencesUpdateController extends RestrictController
 {
-
     //@patch
     public function update(string $uuid): void
     {
@@ -40,7 +39,7 @@ final class UsersPreferencesUpdateController extends RestrictController
             $update = SF::get_callable(UserPreferencesSaveService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
-                "message"=> __("{0} successfully saved", __("User permission")),
+                "message"=> __("{0} successfully saved", __("User preference")),
                 "result" => $result,
             ])->show();
         }
