@@ -32,7 +32,7 @@ export class FormUserPreferencesUpdate extends LitElement {
   _on_change(e){
     const id = this._get_id(el)
     if (!id) return
-    this[`_${id}`] = input.value
+    this[`_${id}`] = e.value
   }
 
   _get_id(el){
@@ -45,14 +45,14 @@ export class FormUserPreferencesUpdate extends LitElement {
   _get_grid_idx = id => id.split("_").pop()
 
   _get_grid_item = el => {
-    const id = this._get_id(el.target)
+    const id = this._get_id(el)
     const idx = this._get_grid_idx(id)
-    const obj = [`id_${idx}`,`pref_key_${idx}`,`pref_value_${idx}`]
-                  .map( id => ({id: this._$get(id)}))
-                  .reduce((p,c, i) => {
-
+    const row = [`id_${idx}`,`pref_key_${idx}`,`pref_value_${idx}`]
+                  .map( id => ({id: this._$get(id)}) )
+                  .reduce((p, obc) => {
+                    return  {...p, ...obc}
                   }, {})
-    return obj
+    return row
   }
 
   async _on_insert(e) {
@@ -107,8 +107,9 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._issending = true
     this._btnsend = this.texts.tr01
 
-    const row = this._get_grid_item(e)
-
+    console.log("e.target",e.target)
+    const row = this._get_grid_item(e.target)
+    console.log(row,"row")
     const response = await injson.put(
       URL_UPDATE.replace(":uuid", this.useruuid), {
         _action: ACTION,
@@ -245,10 +246,10 @@ export class FormUserPreferencesUpdate extends LitElement {
                 <input type="text" id="pref_key_${i}" value=${row.pref_value} class="form-control" maxlength="2000">
               </td>
               <td>
-                <button type="button" @click="${this._on_update}" class="btn btn-info">
+                <button type="button" id="update_${i}" @click="${this._on_update}" class="btn btn-info">
                   <i class="las la-pen"></i>up
                 </button>
-                <button type="button" @click="${this._on_delete}" class="btn btn-danger">
+                <button type="button" id="delete_${i}" @click="${this._on_delete}" class="btn btn-danger">
                   <i class="las la-trash"></i>del
                 </button>
               </td>
