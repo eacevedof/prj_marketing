@@ -11,7 +11,7 @@ namespace App\Restrict\Users\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\UserPreferencess\Application\UserPreferencessUpdateService;
+use App\Restrict\Users\Application\UserPreferencesDeleteService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -20,7 +20,7 @@ use \Exception;
 final class UsersPreferencesDeleteController extends RestrictController
 {
     //@delete
-    public function update(string $uuid): void
+    public function delete(string $uuid): void
     {
         if (!$this->request->is_accept_json())
             $this->_get_json()
@@ -36,7 +36,7 @@ final class UsersPreferencesDeleteController extends RestrictController
 
         try {
             $request = ["_useruuid"=>$uuid] + $this->request->get_post();
-            $delete = SF::get_callable(UserPreferencessUpdateService::class, $request);
+            $delete = SF::get_callable(UserPreferencesDeleteService::class, $request);
             $result = $delete();
             $this->_get_json()->set_payload([
                 "message"=> __("{0} successfully deleted", __("User preference")),
