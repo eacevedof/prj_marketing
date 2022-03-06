@@ -31,9 +31,10 @@ export class FormUserPreferencesUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _on_change(ev){
-    const id = this._get_id(ev.target)
+    const input = ev.target
+    const id = this._get_id(input)
     if (!id) return
-    this[`_${id}`] = ev.value
+    this[`_${id}`] = input.value
   }
 
   _get_id(el){
