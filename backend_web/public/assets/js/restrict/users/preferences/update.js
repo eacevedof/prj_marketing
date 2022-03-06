@@ -9,6 +9,7 @@ import {selector} from "/assets/js/common/shadowroot/shadowroot.js"
 
 const URL_INSERT = "/restrict/users/:uuid/preferences/update"
 const URL_UPDATE = "/restrict/users/:uuid/preferences/update"
+const URL_DELETE = "/restrict/users/:uuid/preferences/delete"
 
 const ACTION = "userpreferences.update"
 
@@ -47,13 +48,15 @@ export class FormUserPreferencesUpdate extends LitElement {
   _get_row_value = el => {
     const id = this._get_id(el)
     const idx = this._get_grid_idx(id)
-    return [`id_${idx}`,`pref_key_${idx}`,`pref_value_${idx}`]
+    const row = [`id_${idx}`,`pref_key_${idx}`,`pref_value_${idx}`]
                   .map( id => {
                     const tmp = {}
                     tmp[id.replace(`_${idx}`,"")] = this._$get(id)?.value
                     return tmp
                   })
                   .reduce((p, obc) => ({...p, ...obc}), {})
+    row["_idx"] = idx
+    return row
   }
 
   async _on_insert(e) {
@@ -93,14 +96,13 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._pref_key = ""
     this._pref_value = ""
 
-    console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
     this._$get("pref_key").focus()
 
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
       .set_inner(this.texts.tr04)
       .show()
-  }
+  }// on_insert
 
   async _on_update(e) {
     e.preventDefault()
@@ -110,14 +112,13 @@ export class FormUserPreferencesUpdate extends LitElement {
 
     const row = this._get_row_value(e.target)
 
-    const response = await injson.put(
-      URL_UPDATE.replace(":uuid", this.useruuid), {
+    const response = await injson.del(
+      URL_DELETE.replace(":uuid", this.useruuid), {
         _action: ACTION,
         _csrf: this.csrf,
 
         id: row.id,
-        pref_key: row.pref_key,
-        pref_value: row.pref_value,
+        pref_key: row.pref_key
       })
 
     this._issending = false
@@ -135,19 +136,54 @@ export class FormUserPreferencesUpdate extends LitElement {
     }
 
     this._list = response.result
-    this._pref_key = ""
-    this._pref_value = ""
-    console.log("insert:", "-pref-key",this._pref_key,"-pref-value", this._pref_value, "-list",this._list)
+    this._$get(`pref_key_${row._idx}`)?.focus()
 
-    this._$get("pref_key").focus()
+    window.snack.set_time(4)
+      .set_color(SNACK.SUCCESS)
+      .set_inner(this.texts.tr04)
+      .show()
+  }// on_update
+
+  async _on_delete(e) {
+    e.preventDefault()
+
+    this._issending = true
+    this._btnsend = this.texts.tr01
+
+    const row = this._get_row_value(e.target)
+
+    const response = await injson.put(
+      URL_DELETE.replace(":uuid", this.useruuid), {
+        _action: ACTION,
+        _csrf: this.csrf,
+
+        id: row.id,
+        pref_key: row.pref_key
+      })
+
+    this._issending = false
+    this._btnsend = this.texts.tr00
+
+    if(response?.errors){
+      let errors = response.errors[0]?.fields_validation
+      if(errors) {
+        window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
+        return error.append(errors)
+      }
+
+      errors = response?.errors
+      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
+    }
+
+    this._list = []
+    this._list = response.result
+    this._$get(`pref_key_${row._idx}`)?.focus()
 
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
       .set_inner(this.texts.tr04)
       .show()
   }
-
-  _on_delete() {}
 
   //propiedades reactivas
   static properties = {
@@ -237,7 +273,7 @@ export class FormUserPreferencesUpdate extends LitElement {
       <table>
         ${this._list.map( (row, i) =>
           html`      
-            <tr>
+            <tr id="row_${i}">
               <td>
                 <input type="hidden" id="id_${i}" value="${row.id}" class="form-control">
                 <input type="text" id="pref_key_${i}" value=${row.pref_key} class="form-control" maxlength="250">
