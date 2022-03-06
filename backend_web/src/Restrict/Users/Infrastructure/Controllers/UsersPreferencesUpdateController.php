@@ -11,7 +11,7 @@ namespace App\Restrict\Users\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Users\Application\UserPreferencesSaveService;
+use App\Restrict\Users\Application\UserPreferencesDeleteService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -36,7 +36,7 @@ final class UsersPreferencesUpdateController extends RestrictController
 
         try {
             $request = ["_useruuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable(UserPreferencesSaveService::class, $request);
+            $update = SF::get_callable(UserPreferencesDeleteService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
                 "message"=> __("{0} successfully saved", __("User preference")),

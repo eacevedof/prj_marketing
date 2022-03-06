@@ -16,7 +16,7 @@ use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
-final class UserPreferencesSaveService extends AppService
+final class UserPreferencesDeleteService extends AppService
 {
     use RequestTrait;
 
@@ -60,19 +60,18 @@ final class UserPreferencesSaveService extends AppService
 
     private function _check_entity_permission(int $id): void
     {
-        if ($id) {
-            if(!$id = $this->repouserprefs->get_by_id_and_user($id, $this->iduser))
-                $this->_exception(
-                    __("{0} {1} does not exist", __("Preference"), $id),
-                    ExceptionType::CODE_BAD_REQUEST
-                );
-        }
+        if(!$id = $this->repouserprefs->get_by_id_and_user($id, $this->iduser))
+            $this->_exception(
+                __("{0} {1} does not exist", __("Preference"), $id),
+                ExceptionType::CODE_BAD_REQUEST
+            );
 
         if ($this->auth->is_root_super()) return;
 
         $permuser = $this->repouser->get_by_id($this->iduser);
         $idauthuser = (int) $this->authuser["id"];
-        if ($idauthuser === $this->iduser) return;
+        if ($idauthuser === $this->iduser)
+            $this->_exception(__("You are not allowed to change your own permissions"));
 
         //un root puede cambiar la pref de cualquiera (menos el de el mismo, if anterior)
         if ($this->auth->is_root()) return;
@@ -92,56 +91,7 @@ final class UserPreferencesSaveService extends AppService
         );
     }
 
-    private function _skip_validation_insert(): self
-    {
-        $this->validator
-            ->add_skip("id")
-            ->add_skip("id_user")
-        ;
-        return $this;
-    }
-
-    private function _add_rules(): FieldsValidator
-    {
-        $this->validator
-            ->add_rule("id", "id", function ($data) {
-                if ($data["data"]["_new"]) return false;
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("pref_key", "pref_key", function ($data) {
-                if ($data["data"]["_new"]) return false;
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("pref_value", "pref_value", function ($data) {
-                if ($data["data"]["_new"]) return false;
-                return $data["value"] ? false : __("Empty field is not allowed");
-            });
-        return $this->validator;
-    }
-
-    private function _insert(array $prefreq): array
-    {
-        $this->validator = VF::get($prefreq, $this->entityuserprefs);
-        if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
-            throw new FieldsException(__("Fields validation errors"));
-        }
-        $prefreq["id_user"] = $this->iduser;
-        $prefreq = $this->entityuserprefs->map_request($prefreq);
-        $this->entityuserprefs->add_sysinsert($prefreq, $this->authuser["id"]);
-        $this->repouserprefs->insert($prefreq);
-        $result = $this->repouserprefs->get_by_user($this->iduser);
-
-        return array_map(function ($row) {
-            return [
-                "id" => (int) $row["id"],
-                "pref_key" => $row["pref_key"],
-                "pref_value" => $row["pref_value"],
-            ];
-        }, $result);
-    }
-
-    private function _update(array $prefreq): array
+    private function _delete(array $prefreq): array
     {
         $this->validator = VF::get($prefreq, $this->entityuserprefs);
         if ($errors = $this->_add_rules()->get_errors()) {
@@ -169,11 +119,6 @@ final class UserPreferencesSaveService extends AppService
         if (!$prefreq = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        $prefreq["_new"] = true;
-        if($id = (int)($prefreq["id"] ?? "")) $prefreq["_new"] = false;
-
-        return $id
-            ? $this->_update($prefreq)
-            : $this->_insert($prefreq);
+        return $this->_delete($prefreq);
     }
 }
