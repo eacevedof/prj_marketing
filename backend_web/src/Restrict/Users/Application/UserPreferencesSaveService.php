@@ -68,14 +68,12 @@ final class UserPreferencesSaveService extends AppService
                 );
         }
 
-        if ($this->auth->is_root_super()) return;
+        if ($this->auth->is_root_super() || $this->auth->is_root()) return;
 
         $prefuser = $this->repouser->get_by_id($this->iduser);
         $idauthuser = (int) $this->authuser["id"];
         if ($idauthuser === $this->iduser) return;
 
-        //un root puede cambiar la pref de cualquiera (menos el de el mismo, if anterior)
-        if ($this->auth->is_root()) return;
 
         if ($this->auth->is_sysadmin() && $this->auth->is_business($prefuser["id_profile"])) return;
 
