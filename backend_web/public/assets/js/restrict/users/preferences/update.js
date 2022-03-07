@@ -94,6 +94,7 @@ export class FormUserPreferencesUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
+    this._list = []
     this._list = response.result
     this._pref_key = ""
     this._pref_value = ""
@@ -270,6 +271,10 @@ export class FormUserPreferencesUpdate extends LitElement {
     this._list = this.fields
   }
 
+  render_table() {
+
+  }
+
   //4
   render() {
     return html`
@@ -314,19 +319,19 @@ export class FormUserPreferencesUpdate extends LitElement {
       <table>
         ${this._list.map( (row, i) =>
           html`      
-            <tr id="row_${i}">
+            <tr id="row_${row.id}">
               <td>
-                <input type="hidden" id="id_${i}" value="${row.id}" class="form-control">
-                <input type="text" id="pref_key_${i}" value="${row.pref_key}" class="form-control" placeholder="key" maxlength="250">
+                <input type="hidden" id="id_${row.id}" value="${row.id}" class="form-control">
+                <input type="text" id="pref_key_${row.id}" value="${row.pref_key}" class="form-control" placeholder="key" maxlength="250">
               </td>
               <td>
-                <input type="text" id="pref_value_${i}" value="${row.pref_value}" class="form-control" placeholder="value" maxlength="2000">
+                <input type="text" id="pref_value_${row.id}" value="${row.pref_value}" class="form-control" placeholder="value" maxlength="2000">
               </td>
               <td>
-                <button type="button" id="update_${i}" @click="${this._on_update}" class="btn btn-info">
+                <button type="button" id="update_${row.id}" @click="${this._on_update}" class="btn btn-info">
                   <i class="las la-pen"></i>up
                 </button>
-                <button type="button" id="delete_${i}" @click="${this._on_delete}" class="btn btn-danger">
+                <button type="button" id="delete_${row.id}" @click="${this._on_delete}" class="btn btn-danger">
                   <i class="las la-trash"></i>del
                 </button>
               </td>
