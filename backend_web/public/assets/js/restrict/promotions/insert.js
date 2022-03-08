@@ -214,13 +214,21 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group">
             <label for="is_raffleable">${this.texts.f20}</label>
             <div id="field-is_raffleable">
-                <input type="text" id="is_raffleable" .value=${this._is_raffleable} class="form-control" maxlength="10">
+              <select id="is_raffleable" class="form-control" required>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
+                )}
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label for="is_cumulative">${this.texts.f21}</label>
             <div id="field-is_cumulative">
-                <input type="text" id="is_cumulative" .value=${this._is_cumulative} class="form-control" maxlength="10">
+              <select id="is_cumulative" class="form-control" required>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
+                )}
+              </select>
             </div>
           </div>
           <div class="form-group">
