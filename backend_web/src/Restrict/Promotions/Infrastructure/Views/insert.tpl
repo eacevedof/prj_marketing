@@ -5,7 +5,7 @@
  * @var string $h1
  * @var string $csrf
  * @var array $businessowners
- * @var array $promotions
+ * @var array $timezones
  * @var array $notoryes
  */
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
@@ -16,38 +16,40 @@ $datefrom = $date->set_date1(date("Y-m-d H:i:s"))->explode()->to_js()->get();
 $dateto = $date->set_date1(date("Y-m-d")." 23:59:00")->explode()->to_js()->get();
 
 $texts = [
-    "tr00" => __("send"),
-    "tr01" => __("Sending..."),
+    "tr00" => __("Save"),
+    "tr01" => __("Processing..."),
     "tr02" => __("Cancel"),
     "tr03" => __("Error"),
     "tr04" => __("<b>Data created</b>"),
 
+    "f00" => __("Nº"),
+    "f01" => __("Code"),
     "f02" => __("Owner"),
-    "f03" => __("External code"),
-    "f04" => __("Description"),
-    "f05" => __("Slug"),
-    "f06" => __("Date from"),
-    "f07" => __("Date to"),
-    "f08" => __("Content"),
-    "f09" => __("Bg color"),
-    "f10" => __("Bg image xs"),
-    "f11" => __("Bg image sm"),
-    "f12" => __("Bg image md"),
-    "f13" => __("Bg image lg"),
-    "f14" => __("Bg image xl"),
-    "f15" => __("Bg image xxl"),
-    "f16" => __("Enabled"),
-    "f17" => __("Invested"),
-    "f18" => __("Inv returned"),
-    "f19" => __("Max confirmed"),
-    "f20" => __("Notes"),
+    "f03" => __("Timezone"),
+    "f04" => __("External code"),
+    "f05" => __("Description"),
+    "f07" => __("Date from"),
+    "f08" => __("Date to"),
+    "f09" => __("Content"),
+    "f10" => __("Bg color"),
+    "f11" => __("Bg image xs"),
+    "f12" => __("Bg image sm"),
+    "f13" => __("Bg image md"),
+    "f14" => __("Bg image lg"),
+    "f15" => __("Bg image xl"),
+    "f16" => __("Bg image xxl"),
+    "f19" => __("Max. confirmed"),
+    "f20" => __("Raffleable"),
+    "f21" => __("Cumulative"),
+    "f22" => __("Tags"),
+    "f23" => __("Notes"),
 ];
 
 $result = [
     "id_owner" => "",
+    "id_tz" => 1,//la del us en sesion
     "code_erp" => "",
     "description" => "",
-    "slug" => "",
     "date_from" => $datefrom,
     "date_to" => $dateto,
     "content" => "",
@@ -58,13 +60,13 @@ $result = [
     "bgimage_lg" => "",
     "bgimage_xl" => "",
     "bgimage_xxl" => "",
-    "is_published" => "0",
-    "invested" => "0.00",
-    "returned" => "0.00",
     "max_confirmed" => "",
+    "is_raffleable" => 0,
+    "is_cumulative" => 0,
+    "tags" => "",
     "notes" => "",
 
-    "promotions" => $promotions,
+    "timezones" => $timezones ?? [],
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
@@ -74,7 +76,7 @@ $result = [
     <h4 class="card-title mb-1"><?=$h1?></h4>
   </div>
   <div class="card-body pt-0">
-    <form-promotion-create
+    <form-promotion-insert
       csrf=<?$this->_echo_js($csrf);?>
 
       texts="<?$this->_echo_jslit($texts);?>"
