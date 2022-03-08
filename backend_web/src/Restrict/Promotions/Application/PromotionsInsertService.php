@@ -125,7 +125,7 @@ final class PromotionsInsertService extends AppService
                 if (!$url) return __("Empty field is not allowed");
                 return filter_var($url, FILTER_VALIDATE_URL) ? false : __("Invalid url");
             })
-            ->add_rule("is_active", "is_active", function ($data) {
+            ->add_rule("is_published", "is_published", function ($data) {
                 return in_array($data["value"], ["0","1"]) ? false: __("Invalid value");
             });
 

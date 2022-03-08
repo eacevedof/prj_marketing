@@ -108,7 +108,7 @@ final class PromotionsUpdateService extends AppService
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })->add_rule("url_design", "url_design", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
-            })->add_rule("is_active", "is_active", function ($data) {
+            })->add_rule("is_published", "is_published", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");
             })->add_rule("invested", "invested", function ($data) {
                 return trim($data["value"]) ? false : __("Empty field is not allowed");

@@ -9,9 +9,9 @@
  */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
-use App\Restrict\Promotions\Application\PromotionsSearchService;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Promotions\Application\PromotionsSearchService;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;

@@ -62,9 +62,8 @@ final class PromotionsSearchService extends AppService
             ->add_column("id_type")->add_label(__("Type"))->add_tooltip(__("Type"))
             ->add_column("date_from")->add_label(__("Date from"))->add_tooltip(__("Date from"))
             ->add_column("date_to")->add_label(__("Date to"))->add_tooltip(__("Date to"))
-            ->add_column("url_social")->is_visible(false)->add_label(__("Url social"))->add_tooltip(__("Url social"))
-            ->add_column("url_design")->is_visible(false)->add_label(__("Url design"))->add_tooltip(__("Url design"))
-            ->add_column("is_active")->add_label(__("Enabled"))->add_tooltip(__("Enabled"))
+
+            ->add_column("is_published")->add_label(__("Published"))->add_tooltip(__("Published"))
             ->add_column("invested")->add_label(__("Invested"))->add_tooltip(__("Invested"))
             ->add_column("returned")->add_label(__("Inv returned"))->add_tooltip(__("Inv returned"))
             ->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
@@ -81,7 +80,9 @@ final class PromotionsSearchService extends AppService
         if($this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
             $dthelp->add_action("add")
                 ->add_action("edit")
-                ->add_action("del");
+                ->add_action("del")
+                ->add_action("show")
+            ;
 
         if($this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ))
             $dthelp->add_action("show");

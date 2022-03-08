@@ -58,7 +58,7 @@
           <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$promotion["slug"] ?? ""?></span></li>
           <li><b><?=__("Date from")?>:</b>&ensp;<span><?=$promotion["date_from"] ?? ""?></span></li>
           <li><b><?=__("Date to")?>:</b>&ensp;<span><?=$promotion["date_to"] ?? ""?></span></li>
-          <li><b><?=__("Enabled")?>:</b>&ensp;<span><?=$promotion["is_active"] ?? ""?></span></li>
+          <li><b><?=__("Enabled")?>:</b>&ensp;<span><?=$promotion["is_published"] ?? ""?></span></li>
           <li><b><?=__("Invested")?>:</b>&ensp;<span><?=$promotion["invested"] ?? ""?></span></li>
           <li><b><?=__("Inv returned")?>:</b>&ensp;<span><?=$promotion["returned"] ?? ""?></span></li>
           <li><b><?=__("Max confirmed")?>:</b>&ensp;<span><?=$promotion["max_confirmed"] ?? ""?></span></li>

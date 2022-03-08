@@ -92,7 +92,7 @@ final class PromotionRepository extends AppRepository
                 "m.bgimage_xl",
                 "m.bgimage_xxl",
                 */
-                "m.is_active",
+                "m.is_published",
                 "m.invested",
                 "m.returned",
                 "m.max_confirmed",
@@ -145,7 +145,7 @@ final class PromotionRepository extends AppRepository
                 "m.bgimage_lg",
                 "m.bgimage_xl",
                 "m.bgimage_xxl",
-                "m.is_active",
+                "m.is_published",
                 "m.invested",
                 "m.returned",
                 "m.max_confirmed",

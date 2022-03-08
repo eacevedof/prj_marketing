@@ -158,9 +158,9 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
-            "is_active" => [
+            "is_published" => [
                 "label" => __("Enabled"),
-                EntityType::REQUEST_KEY => "is_active",
+                EntityType::REQUEST_KEY => "is_published",
                 "config" => [
                     "type" => EntityType::INT,
                     "length" => 3,
