@@ -28,7 +28,7 @@ final class CreateAppPromotion extends AbsMigration
         ])
         ->addColumn("uuid", "string", [
             "limit" => 50,
-            "null" => true,
+            "null" => false,
         ])
         ->addColumn("id_owner", "integer", [
             "limit" => 11,
@@ -115,25 +115,32 @@ final class CreateAppPromotion extends AbsMigration
             "null" => false,
             "default" => 0,
         ])
-        ->addColumn("is_drawable", "integer", [
+        ->addColumn("is_raffleable", "integer", [
             "limit" => 2,
-            "null" => true,
+            "null" => false,
             "default" => 0,
         ])
         ->addColumn("is_cumulative", "integer", [
             "limit" => 2,
-            "null" => true,
+            "null" => false,
             "default" => 0,
         ])
         ->addColumn("tags", "string", [
             "limit" => 500,
             "null" => true,
             "default" => null,
+            "comment" => "palabras claves en los textos para poder hacer IA"
         ])
         ->addColumn("notes", "string", [
             "limit" => 300,
             "null" => true,
             "default" => null,
+            "comment" => "notas de usuario sobre la promocion"
+        ])
+        ->addColumn("is_published", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
         ])
         ->addColumn("num_viewed", "integer", [
             "limit" => 5,
