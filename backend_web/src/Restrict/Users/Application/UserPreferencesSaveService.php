@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Users\Application;
 
+use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
@@ -11,6 +12,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
 use App\Restrict\Users\Domain\UserPreferencesEntity;
 use App\Restrict\Users\Domain\UserPreferencesRepository;
+use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPreferenceType;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
@@ -25,6 +27,7 @@ final class UserPreferencesSaveService extends AppService
     private array $authuser;
 
     private UserRepository $repouser;
+    private ArrayRepository $repoapparray;
     private UserPreferencesRepository $repouserprefs;
     private FieldsValidator $validator;
     private UserPreferencesEntity $entityuserprefs;
@@ -45,6 +48,7 @@ final class UserPreferencesSaveService extends AppService
 
         $this->entityuserprefs = MF::get(UserPreferencesEntity::class);
         $this->repouserprefs = RF::get(UserPreferencesRepository::class)->set_model($this->entityuserprefs);
+        $this->repoapparray = RF::get(ArrayRepository::class);
         $this->authuser = $this->auth->get_user();
     }
 
@@ -117,8 +121,18 @@ final class UserPreferencesSaveService extends AppService
                 return false;
             })
             ->add_rule("pref_value", "pref_value", function ($data) {
-                //si la key es TZ recupera las TZ validas
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$prefvalue = $data["value"])
+                    return __("Empty field is not allowed");
+
+                if ($data["data"]["pref_key"]===UserPreferenceType::KEY_TZ) {
+                    if (!$this->repoapparray->get_timezone_id_by_description($prefvalue)) {
+                        $zones = $this->repoapparray->get_timezones();
+                        unset($zones[0]);
+                        $zones = implode("<br/>",array_column($zones, "value"));
+                        return __("Invalid timezone. Valid are: {0}", $zones);
+                    }
+                }
+                return false;
             });
         return $this->validator;
     }
