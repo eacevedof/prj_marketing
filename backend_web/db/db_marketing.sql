@@ -2,7 +2,8 @@
 SQLyog Community v12.1 (32 bit)
 MySQL - 10.5.8-MariaDB-1:10.5.8+maria~focal : Database - db_marketing
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -173,7 +174,7 @@ CREATE TABLE `app_promotion` (
   `invested` decimal(10,3) DEFAULT 0.000,
   `returned` decimal(10,3) DEFAULT 0.000,
   `max_confirmed` int(4) NOT NULL DEFAULT 0,
-  `is_drawable` int(2) DEFAULT 0,
+  `is_raffleable` int(2) DEFAULT 0,
   `is_cumulative` int(2) DEFAULT 0,
   `tags` varchar(500) DEFAULT NULL,
   `notes` varchar(300) DEFAULT NULL,
