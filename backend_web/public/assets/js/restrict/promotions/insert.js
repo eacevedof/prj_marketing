@@ -168,24 +168,29 @@ export class FormPromotionInsert extends LitElement {
                 <input type="color" id="bgcolor" .value=${this._bgcolor} class="form-control" maxlength="10">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group col-10">
             <label for="bgimage_xs">${this.texts.f11}</label>
             <div id="field-bgimage_xs">
               <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} class="form-control" maxlength="500">
             </div>
           </div>
-          <div class="form-group">
+        </div>
+        
+        <div class="flex-row">
+          <div class="form-group col-5">
             <label for="bgimage_sm">${this.texts.f12}</label>
             <div id="field-bgimage_sm">
                 <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} class="form-control" maxlength="500">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group col-5">
             <label for="bgimage_md">${this.texts.f13}</label>
             <div id="field-bgimage_md">
                 <input type="text" id="bgimage_md" .value=${this._bgimage_md} class="form-control" maxlength="500">
             </div>
           </div>
+        </div>
+        <div class="flex-row">
           <div class="form-group">
             <label for="bgimage_lg">${this.texts.f14}</label>
             <div id="field-bgimage_lg">
