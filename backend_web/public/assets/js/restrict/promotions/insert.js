@@ -140,71 +140,77 @@ export class FormPromotionInsert extends LitElement {
               <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
             </div>
           </div>
-          <div class="form-group">
-            <label for="id_tz">${this.texts.f03}</label>
-            <div id="field-id_tz">
-              <select id="id_tz" class="form-control" required>
-                ${this._timezones.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._id_tz}>${item.value}</option>`
-                )}
-              </select>
+          
+          <div class="flex-row">
+            <div class="form-group">
+              <label for="id_tz">${this.texts.f03}</label>
+              <div id="field-id_tz">
+                <select id="id_tz" class="form-control" required>
+                  ${this._timezones.map((item) =>
+                      html`<option value=${item.key} ?selected=${item.key===this._id_tz}>${item.value}</option>`
+                  )}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="date_from">${this.texts.f07}</label>
+              <div id="field-date_from">
+                <input type="datetime-local" id="date_from" .value=${this._date_from} class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="date_to">${this.texts.f08}</label>
+              <div id="field-date_to">
+                <input type="datetime-local" id="date_to" .value=${this._date_to} class="form-control">
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="date_from">${this.texts.f07}</label>
-            <div id="field-date_from">
-              <input type="datetime-local" id="date_from" .value=${this._date_from} class="form-control">
+
+          <div class="flex-row">
+            <div class="form-group">
+              <label for="bgcolor">${this.texts.f10}</label>
+              <div id="field-bgcolor">
+                  <input type="color" id="bgcolor" .value=${this._bgcolor} class="form-control" maxlength="10">
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="date_to">${this.texts.f08}</label>
-            <div id="field-date_to">
-              <input type="datetime-local" id="date_to" .value=${this._date_to} class="form-control">
+            <div class="form-group">
+              <label for="bgimage_xs">${this.texts.f11}</label>
+              <div id="field-bgimage_xs">
+                <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} class="form-control" maxlength="500">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bgimage_sm">${this.texts.f12}</label>
+              <div id="field-bgimage_sm">
+                  <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} class="form-control" maxlength="500">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bgimage_md">${this.texts.f13}</label>
+              <div id="field-bgimage_md">
+                  <input type="text" id="bgimage_md" .value=${this._bgimage_md} class="form-control" maxlength="500">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bgimage_lg">${this.texts.f14}</label>
+              <div id="field-bgimage_lg">
+                  <input type="text" id="bgimage_lg" .value=${this._bgimage_lg} class="form-control" maxlength="500">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bgimage_xl">${this.texts.f15}</label>
+              <div id="field-bgimage_xl">
+                  <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} class="form-control" maxlength="500">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bgimage_xxl">${this.texts.f16}</label>
+              <div id="field-bgimage_xxl">
+                  <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} class="form-control" maxlength="500">
+              </div>
             </div>
           </div>
           
-          <div class="form-group">
-            <label for="bgcolor">${this.texts.f10}</label>
-            <div id="field-bgcolor">
-                <input type="text" id="bgcolor" .value=${this._bgcolor} class="form-control" maxlength="10">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bgimage_xs">${this.texts.f11}</label>
-            <div id="field-bgimage_xs">
-              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} class="form-control" maxlength="500">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bgimage_sm">${this.texts.f12}</label>
-            <div id="field-bgimage_sm">
-                <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} class="form-control" maxlength="500">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bgimage_md">${this.texts.f13}</label>
-            <div id="field-bgimage_md">
-                <input type="text" id="bgimage_md" .value=${this._bgimage_md} class="form-control" maxlength="500">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bgimage_lg">${this.texts.f14}</label>
-            <div id="field-bgimage_lg">
-                <input type="text" id="bgimage_lg" .value=${this._bgimage_lg} class="form-control" maxlength="500">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bgimage_xl">${this.texts.f15}</label>
-            <div id="field-bgimage_xl">
-                <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} class="form-control" maxlength="500">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bgimage_xxl">${this.texts.f16}</label>
-            <div id="field-bgimage_xxl">
-                <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} class="form-control" maxlength="500">
-            </div>
-          </div>
           <div class="form-group">
             <label for="max_confirmed">${this.texts.f19}</label>
             <div id="field-max_confirmed">
@@ -238,7 +244,7 @@ export class FormPromotionInsert extends LitElement {
             </div>
           </div>
           <div class="form-group">
-            <label for="notes">${this.texts.f15}</label>
+            <label for="notes">${this.texts.f23}</label>
             <div id="field-notes">
               <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300"></textarea>
             </div>
