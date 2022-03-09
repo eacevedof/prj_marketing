@@ -134,13 +134,6 @@ export class FormPromotionInsert extends LitElement {
               <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
             </div>
           </div>
-          <div class="form-group">
-            <label for="content">${this.texts.f09}</label>
-            <div id="field-content">
-              <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
-            </div>
-          </div>
-          
           <div class="flex-row">
             <div class="form-group">
               <label for="id_tz">${this.texts.f03}</label>
@@ -214,7 +207,7 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group">
             <label for="max_confirmed">${this.texts.f19}</label>
             <div id="field-max_confirmed">
-                <input type="text" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
+                <input type="number" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
             </div>
           </div>
           <div class="form-group">
@@ -238,9 +231,15 @@ export class FormPromotionInsert extends LitElement {
             </div>
           </div>
           <div class="form-group">
+            <label for="content">${this.texts.f09}</label>
+            <div id="field-content">
+              <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="tags">${this.texts.f22}</label>
             <div id="field-tags">
-                <input type="text" id="tags" .value=${this._tags} class="form-control" maxlength="500">
+              <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
             </div>
           </div>
           <div class="form-group">
