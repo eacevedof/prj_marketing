@@ -203,46 +203,47 @@ export class FormPromotionInsert extends LitElement {
               </div>
             </div>
           </div>
-          
-          <div class="form-group">
-            <label for="max_confirmed">${this.texts.f19}</label>
-            <div id="field-max_confirmed">
-                <input type="number" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
+          <div class="flex-row">
+            <div class="form-group">
+              <label for="max_confirmed">${this.texts.f19}</label>
+              <div id="field-max_confirmed">
+                  <input type="number" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="is_raffleable">${this.texts.f20}</label>
+              <div id="field-is_raffleable">
+                <select id="is_raffleable" class="form-control" required>
+                  ${this._notoryes.map((item) =>
+                      html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
+                  )}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="is_cumulative">${this.texts.f21}</label>
+              <div id="field-is_cumulative">
+                <select id="is_cumulative" class="form-control" required>
+                  ${this._notoryes.map((item) =>
+                      html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
+                  )}
+                </select>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="is_raffleable">${this.texts.f20}</label>
-            <div id="field-is_raffleable">
-              <select id="is_raffleable" class="form-control" required>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
-                )}
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="is_cumulative">${this.texts.f21}</label>
-            <div id="field-is_cumulative">
-              <select id="is_cumulative" class="form-control" required>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
-                )}
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
+          <div class="flex-row">
             <label for="content">${this.texts.f09}</label>
             <div id="field-content">
               <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
             </div>
           </div>
-          <div class="form-group">
+          <div class="flex-row">
             <label for="tags">${this.texts.f22}</label>
             <div id="field-tags">
               <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
             </div>
           </div>
-          <div class="form-group">
+          <div class="flex-row">
             <label for="notes">${this.texts.f23}</label>
             <div id="field-notes">
               <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300"></textarea>
