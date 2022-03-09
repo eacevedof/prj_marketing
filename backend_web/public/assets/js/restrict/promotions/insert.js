@@ -134,6 +134,7 @@ export class FormPromotionInsert extends LitElement {
               <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
             </div>
           </div>
+          
           <div class="flex-row">
             <div class="form-group">
               <label for="id_tz">${this.texts.f03}</label>
@@ -203,6 +204,7 @@ export class FormPromotionInsert extends LitElement {
               </div>
             </div>
           </div>
+          
           <div class="flex-row">
             <div class="form-group">
               <label for="max_confirmed">${this.texts.f19}</label>
