@@ -34,6 +34,7 @@ export class FormPromotionInsert extends LitElement {
   //1
   constructor() {
     super()
+    this._issending = false
     this.texts = {}
     this.fields = {}
   }
@@ -96,7 +97,6 @@ export class FormPromotionInsert extends LitElement {
   //3 (aqui siempre hay datos)
   connectedCallback() {
     super.connectedCallback()
-    this._issending = false
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
 
