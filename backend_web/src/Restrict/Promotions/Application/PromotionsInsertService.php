@@ -84,27 +84,27 @@ final class PromotionsInsertService extends AppService
                 return false;
             })
             ->add_rule("description", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("content", "content", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_type", "id_type", function ($data) {
-                $id_type = (int) trim($data["value"]);
+                $id_type = (int) $data["value"];
                 if (!$id_type) return __("Empty field is not allowed");
                 $i = $this->repoapparray->exists($id_type, AppArrayType::PROMOTION);
                 if (!$i) return __("Invalid value");
                 return false;
             })
             ->add_rule("date_from", "date_from", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 return $this->datecomp->set_date1($date = $data["value"])->is_valid() ? false
                     : __("Invalid date {0}", $date);
             })
             ->add_rule("date_to", "date_to", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("date_to", "date_to", function ($data) {
                 return $this->datecomp->set_date1($date = $data["value"])->is_valid() ? false
@@ -116,12 +116,12 @@ final class PromotionsInsertService extends AppService
                     : false;
             })
             ->add_rule("url_social", "url_social", function ($data) {
-                $url = trim($data["value"]);
+                $url = $data["value"];
                 if (!$url) return false;
                 return filter_var($url, FILTER_VALIDATE_URL) ? false : __("Invalid url");
             })
             ->add_rule("url_design", "url_design", function ($data) {
-                $url = trim($data["value"]);
+                $url = $data["value"];
                 if (!$url) return __("Empty field is not allowed");
                 return filter_var($url, FILTER_VALIDATE_URL) ? false : __("Invalid url");
             })
