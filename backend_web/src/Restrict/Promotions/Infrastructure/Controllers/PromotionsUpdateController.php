@@ -72,6 +72,7 @@ final class PromotionsUpdateController extends RestrictController
                 ->render_nl();
         }
         catch (Exception $e) {
+            $this->logerr($e->getMessage(),"promotionupdate.controller");
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->add_var(PageType::H1, $e->getMessage())
                 ->set_foldertpl("Open/Errors/Infrastructure/Views")

@@ -121,7 +121,7 @@ final class PromotionRepository extends AppRepository
     public function get_info(string $uuid): array
     {
         $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $qb = $this->_get_qbuilder()
             ->set_comment("promotion.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -157,12 +157,11 @@ final class PromotionRepository extends AppRepository
                 "m.num_executed",
                 "m.notes",
                 "m.tags",
-                "ar1.description as e_is_published"
             ])
-            //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.uuid='$uuid'")
-            ->select()->sql()
         ;
+        $this->_add_joins($qb);
+        $sql = $qb->select()->sql();
         $r = $this->db->query($sql);
         if (!$r) return [];
 
