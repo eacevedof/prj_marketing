@@ -29,11 +29,13 @@ final class PromotionRepository extends AppRepository
         $this->joins = [
             "fields" => [
                 "u2.description"  => "e_deletedby",
-                //"ar1.description" => "e_language",
+                "u3.description"  => "e_owner",
+                "ar1.description" => "e_is_published",
             ],
             "on" => [
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                //"LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
+                "LEFT JOIN base_user u3 ON m.id_owner = u3.id",
+                "LEFT JOIN app_array ar1 ON m.is_published = ar1.id_pk AND ar1.type='bool'",
             ]
         ];
     }
@@ -97,7 +99,7 @@ final class PromotionRepository extends AppRepository
                 "m.returned",
                 "m.max_confirmed",
                 "m.notes",
-                "m.delete_date"
+                "m.delete_date",
             ])
             ->set_limit(25)
             ->set_orderby(["m.id"=>"DESC"])
@@ -149,7 +151,13 @@ final class PromotionRepository extends AppRepository
                 "m.invested",
                 "m.returned",
                 "m.max_confirmed",
-                "m.notes"
+                "m.num_viewed",
+                "m.num_subscribed",
+                "m.num_confirmed",
+                "m.num_executed",
+                "m.notes",
+                "m.tags",
+                "ar1.description as e_is_published"
             ])
             //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.uuid='$uuid'")

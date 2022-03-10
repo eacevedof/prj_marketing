@@ -55,14 +55,14 @@ final class PromotionsSearchService extends AppService
 
         $dthelp
             ->add_column("uuid")->add_label(__("Cod. Promo"))->add_tooltip(__("Cod. Promo"))
-            ->add_column("id_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"))
+            ->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"))
             ->add_column("description")->add_label(__("Description"))->add_tooltip(__("Description"))
             //->add_column("slug")->add_label(__("Slug"))->add_tooltip(__("Slug"))
             //->add_column("content")->add_label(__("Content"))->add_tooltip(__("Content"))
             ->add_column("date_from")->add_label(__("Date from"))->add_tooltip(__("Date from"))
             ->add_column("date_to")->add_label(__("Date to"))->add_tooltip(__("Date to"))
 
-            ->add_column("is_published")->add_label(__("Published"))->add_tooltip(__("Published"))
+            ->add_column("e_is_published")->add_label(__("Published"))->add_tooltip(__("Published"))
             ->add_column("invested")->add_label(__("Invested"))->add_tooltip(__("Invested"))
             ->add_column("returned")->add_label(__("Inv returned"))->add_tooltip(__("Inv returned"))
             //->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
