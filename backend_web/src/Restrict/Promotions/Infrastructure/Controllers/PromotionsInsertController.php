@@ -49,7 +49,7 @@ final class PromotionsInsertController extends RestrictController
         $this->set_template("insert")
             ->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1, __("New promotion"))
-            ->add_var("promotions", $this->picklist->get_promotion_types())
+            ->add_var("timezones", $this->picklist->get_timezones())
             ->add_var("businessowners", $businessowners)
             ->add_var("notoryes", $this->picklist->get_not_or_yes())
             ->render_nl();
