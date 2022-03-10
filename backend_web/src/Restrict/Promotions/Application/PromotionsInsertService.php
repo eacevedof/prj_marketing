@@ -71,7 +71,7 @@ final class PromotionsInsertService extends AppService
 
     private function _skip_validation(): self
     {
-        //$this->validator->add_skip("date_from")->add_skip("date_to");
+        $this->validator->add_skip("is_published");
         return $this;
     }
 
@@ -86,18 +86,8 @@ final class PromotionsInsertService extends AppService
             ->add_rule("description", "empty", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("content", "content", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
             ->add_rule("id_tz", "id_tz", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_type", "id_type", function ($data) {
-                $id_type = (int) $data["value"];
-                if (!$id_type) return __("Empty field is not allowed");
-                $i = $this->repoapparray->exists($id_type, AppArrayType::PROMOTION);
-                if (!$i) return __("Invalid value");
-                return false;
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
@@ -122,14 +112,6 @@ final class PromotionsInsertService extends AppService
                 $url = $data["value"];
                 if (!$url) return false;
                 return filter_var($url, FILTER_VALIDATE_URL) ? false : __("Invalid url");
-            })
-            ->add_rule("url_design", "url_design", function ($data) {
-                $url = $data["value"];
-                if (!$url) return __("Empty field is not allowed");
-                return filter_var($url, FILTER_VALIDATE_URL) ? false : __("Invalid url");
-            })
-            ->add_rule("is_published", "is_published", function ($data) {
-                return in_array($data["value"], ["0","1"]) ? false: __("Invalid value");
             });
 
         return $this->validator;
