@@ -59,7 +59,6 @@ final class PromotionsSearchService extends AppService
             ->add_column("description")->add_label(__("Description"))->add_tooltip(__("Description"))
             //->add_column("slug")->add_label(__("Slug"))->add_tooltip(__("Slug"))
             //->add_column("content")->add_label(__("Content"))->add_tooltip(__("Content"))
-            ->add_column("id_type")->add_label(__("Type"))->add_tooltip(__("Type"))
             ->add_column("date_from")->add_label(__("Date from"))->add_tooltip(__("Date from"))
             ->add_column("date_to")->add_label(__("Date to"))->add_tooltip(__("Date to"))
 
