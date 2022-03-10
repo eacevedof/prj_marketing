@@ -5,7 +5,7 @@
  * @var string $h1
  * @var string $csrf
  */
-
+dd("xxxx");
 $texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
@@ -73,6 +73,7 @@ $result = [
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
+dd($result);
 ?>
 <div class="modal-form">
   <div class="card-header">
