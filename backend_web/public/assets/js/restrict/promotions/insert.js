@@ -27,7 +27,7 @@ export class FormPromotionInsert extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["uuid","promotions","businessowners","notoryes"])}
+  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["timezones","businessowners","notoryes"])}
 
   _on_cancel() {window.modalraw.hide()}
 
@@ -89,19 +89,12 @@ export class FormPromotionInsert extends LitElement {
     _timezones: {type: Array, state:true},
   }
 
-  //2
-  requestUpdate() {
-    super.requestUpdate()
-  }
-
-  //3 (aqui siempre hay datos)
   connectedCallback() {
     super.connectedCallback()
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
 
     for(let p in this.fields) this["_".concat(p)] = this.fields[p]
-
   }
 
   //4
