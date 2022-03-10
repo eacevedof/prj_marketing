@@ -122,13 +122,13 @@ export class FormPromotionInsert extends LitElement {
               </div>`
               : null
           }
-          <div class="form-group">
+          <div class="form-group col-5">
             <label for="description">${this.texts.f05}</label>
             <div id="field-description">
               <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group col-2">
             <label for="code_erp">${this.texts.f04}</label>
             <div id="field-code_erp">
               <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
@@ -171,7 +171,7 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group col-10">
             <label for="bgimage_xs">${this.texts.f11}</label>
             <div id="field-bgimage_xs">
-              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} class="form-control" maxlength="500">
+              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
           </div>
         </div>
@@ -180,44 +180,45 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group col-5">
             <label for="bgimage_sm">${this.texts.f12}</label>
             <div id="field-bgimage_sm">
-                <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} class="form-control" maxlength="500">
+                <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
           </div>
           <div class="form-group col-5">
             <label for="bgimage_md">${this.texts.f13}</label>
             <div id="field-bgimage_md">
-                <input type="text" id="bgimage_md" .value=${this._bgimage_md} class="form-control" maxlength="500">
+                <input type="text" id="bgimage_md" .value=${this._bgimage_md} placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
           </div>
         </div>
         <div class="flex-row">
-          <div class="form-group">
+          <div class="form-group col-5">
             <label for="bgimage_lg">${this.texts.f14}</label>
             <div id="field-bgimage_lg">
-                <input type="text" id="bgimage_lg" .value=${this._bgimage_lg} class="form-control" maxlength="500">
+                <input type="text" id="bgimage_lg" .value=${this._bgimage_lg} placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group col-5">
             <label for="bgimage_xl">${this.texts.f15}</label>
             <div id="field-bgimage_xl">
-                <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} class="form-control" maxlength="500">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bgimage_xxl">${this.texts.f16}</label>
-            <div id="field-bgimage_xxl">
-                <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} class="form-control" maxlength="500">
+                <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
           </div>
         </div>
         
         <div class="flex-row">
+          <div class="form-group col-4">
+            <label for="bgimage_xxl">${this.texts.f16}</label>
+            <div id="field-bgimage_xxl">
+              <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+            </div>
+          </div>          
           <div class="form-group">
             <label for="max_confirmed">${this.texts.f19}</label>
             <div id="field-max_confirmed">
                 <input type="number" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
             </div>
           </div>
+          
           <div class="form-group">
             <label for="is_raffleable">${this.texts.f20}</label>
             <div id="field-is_raffleable">
@@ -228,6 +229,7 @@ export class FormPromotionInsert extends LitElement {
               </select>
             </div>
           </div>
+          
           <div class="form-group">
             <label for="is_cumulative">${this.texts.f21}</label>
             <div id="field-is_cumulative">
@@ -239,8 +241,9 @@ export class FormPromotionInsert extends LitElement {
             </div>
           </div>
         </div>
+        
         <div class="flex-row">
-          <div class="form-group">
+          <div class="form-group col-12">
             <label for="content">${this.texts.f09}</label>
             <div id="field-content">
               <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
@@ -248,15 +251,19 @@ export class FormPromotionInsert extends LitElement {
           </div>
         </div>
         <div class="flex-row">
-          <label for="tags">${this.texts.f22}</label>
-          <div id="field-tags">
-            <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
+          <div class="form-group col-12">
+            <label for="tags">${this.texts.f22}</label>
+            <div id="field-tags">
+              <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
+            </div>
           </div>
         </div>
         <div class="flex-row">
-          <label for="notes">${this.texts.f23}</label>
-          <div id="field-notes">
-            <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300"></textarea>
+          <div class="form-group col-12">
+            <label for="notes">${this.texts.f23}</label>
+            <div id="field-notes">
+              <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300"></textarea>
+            </div>
           </div>
         </div>
       </div><!--/flex-row-->
