@@ -54,9 +54,11 @@ final class PromotionsSearchService extends AppService
                 ->add_column("e_deletedby")->add_label(__("Deleted by"));
 
         $dthelp
-            ->add_column("uuid")->add_label(__("Cod. Promo"))->add_tooltip(__("Cod. Promo"))
-            ->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"))
-            ->add_column("description")->add_label(__("Description"))->add_tooltip(__("Description"))
+            ->add_column("uuid")->add_label(__("Cod. Promo"))->add_tooltip(__("Cod. Promo"));
+        if($this->auth->is_system())
+            $dthelp->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"));
+
+        $dthelp->add_column("description")->add_label(__("Description"))->add_tooltip(__("Description"))
             //->add_column("slug")->add_label(__("Slug"))->add_tooltip(__("Slug"))
             //->add_column("content")->add_label(__("Content"))->add_tooltip(__("Content"))
             ->add_column("date_from")->add_label(__("Date from"))->add_tooltip(__("Date from"))
