@@ -44,7 +44,7 @@ final class PromotionsInsertService extends AppService
         $this->entitypromotion = MF::get(PromotionEntity::class);
         $this->validator = VF::get($this->input, $this->entitypromotion);
 
-        $this->repopromotion = RF::get(PromotionRepository::class);
+        $this->repopromotion = RF::get(PromotionRepository::class)->set_model($this->entitypromotion);
         $this->repoapparray = RF::get(ArrayRepository::class);
         $this->authuser = $this->auth->get_user();
         $this->textformat = CF::get(TextComponent::class);
