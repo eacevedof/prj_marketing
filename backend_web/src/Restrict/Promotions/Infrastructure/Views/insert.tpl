@@ -47,7 +47,7 @@ $texts = [
 
 $result = [
     "id_owner" => "",
-    "id_tz" => 1,//la del us en sesion
+    "id_tz" => $authuser["id_tz"],
     "code_erp" => "",
     "description" => "",
     "date_from" => $datefrom,

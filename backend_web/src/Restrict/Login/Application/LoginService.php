@@ -11,6 +11,7 @@ use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Shared\Domain\Enums\SessionType;
 use App\Shared\Domain\Enums\UrlType;
 use App\Restrict\Users\Domain\Enums\UserPreferenceType;
+use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 
 final class LoginService extends AppService
@@ -53,6 +54,7 @@ final class LoginService extends AppService
         $tz = $this->repouserprefs->get_value_by_user_and_key($iduser, UserPreferenceType::KEY_TZ);
         if (!$tz) $tz = UserPreferenceType::DEFAULT_TZ;
         $aruser[SessionType::AUTH_USER_TZ] = $tz;
+        $aruser[SessionType::AUTH_USER_ID_TZ] = RF::get(ArrayRepository::class)->get_timezone_id_by_description($tz);
 
         $this->session
             ->add(SessionType::AUTH_USER, $aruser)

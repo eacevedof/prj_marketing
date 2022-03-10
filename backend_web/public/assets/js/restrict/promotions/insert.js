@@ -95,6 +95,7 @@ export class FormPromotionInsert extends LitElement {
     this._btncancel = this.texts.tr02
 
     for(let p in this.fields) this["_".concat(p)] = this.fields[p]
+    //console.log(this._id_tz,"TZ", this.fields)
   }
 
   //4
@@ -135,7 +136,7 @@ export class FormPromotionInsert extends LitElement {
             <div id="field-id_tz">
               <select id="id_tz" class="form-control" required>
                 ${this._timezones.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._id_tz}>${item.value}</option>`
+                    html`<option value=${item.key} ?selected=${parseInt(item.key)===parseInt(this._id_tz)}>${item.value}</option>`
                 )}
               </select>
             </div>
