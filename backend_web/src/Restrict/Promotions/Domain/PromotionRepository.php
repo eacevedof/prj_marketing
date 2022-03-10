@@ -134,6 +134,7 @@ final class PromotionRepository extends AppRepository
                 "m.id",
                 "m.uuid",
                 "m.id_owner",
+                "m.id_tz",
                 "m.code_erp",
                 "m.description",
                 "m.slug",
@@ -147,16 +148,17 @@ final class PromotionRepository extends AppRepository
                 "m.bgimage_lg",
                 "m.bgimage_xl",
                 "m.bgimage_xxl",
-                "m.is_published",
                 "m.invested",
                 "m.returned",
                 "m.max_confirmed",
+                "m.is_raffleable",
+                "m.is_cumulative",
+                "m.tags",
+                "m.notes",
                 "m.num_viewed",
                 "m.num_subscribed",
                 "m.num_confirmed",
-                "m.num_executed",
-                "m.notes",
-                "m.tags",
+                "m.num_executed"
             ])
             ->add_and("m.uuid='$uuid'")
         ;

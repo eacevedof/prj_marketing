@@ -10,7 +10,7 @@ import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js
 const URL_UPDATE = "/restrict/promotions/update"
 const ACTION = "promotions.update"
 
-export class FormPromotionEdit extends LitElement {
+export class FormPromotionUpdate extends LitElement {
   static get styles() {
     const globalStyle = css([get_cssrules([
       "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
@@ -98,123 +98,185 @@ export class FormPromotionEdit extends LitElement {
   //4
   render() {
     return html`
-    <form @submit=${this.on_submit}>
-      <div class="flex-row">
-          <div class="form-group">
-                    <label for="id">${this.texts.f00}</label>
-                    <div id="field-id">
-                        <input type="text" id="id" .value=${this._id} class="form-control" maxlength="10">
-                    </div>
+      <form @submit=${this.on_submit}>
+        <div class="flex-row">
+          ${this._businessowners.length > 0
+              ? html`<div class="form-group">
+                <label for="id_owner">${this.texts.f02}</label>
+                <div id="field-id_owner">
+                  <select id="id_owner" class="form-control">
+                  ${this._businessowners.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._id_parent}>${item.value}</option>`
+                  )}
+                  </select>
                 </div>
-<div class="form-group">
-                    <label for="uuid">${this.texts.f01}</label>
-                    <div id="field-uuid">
-                        <input type="text" id="uuid" .value=${this._uuid} class="form-control" maxlength="50">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="id_owner">${this.texts.f02}</label>
-                    <div id="field-id_owner">
-                        <input type="text" id="id_owner" .value=${this._id_owner} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="code_erp">${this.texts.f03}</label>
-                    <div id="field-code_erp">
-                        <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="description">${this.texts.f04}</label>
-                    <div id="field-description">
-                        <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="slug">${this.texts.f05}</label>
-                    <div id="field-slug">
-                        <input type="text" id="slug" .value=${this._slug} class="form-control" maxlength="250">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="content">${this.texts.f06}</label>
-                    <div id="field-content">
-                        <input type="text" id="content" .value=${this._content} class="form-control" maxlength="2000">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="id_type">${this.texts.f07}</label>
-                    <div id="field-id_type">
-                        <input type="text" id="id_type" .value=${this._id_type} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="date_from">${this.texts.f08}</label>
-                    <div id="field-date_from">
-                        <input type="text" id="date_from" .value=${this._date_from} class="form-control" maxlength="">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="date_to">${this.texts.f09}</label>
-                    <div id="field-date_to">
-                        <input type="text" id="date_to" .value=${this._date_to} class="form-control" maxlength="">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="url_social">${this.texts.f10}</label>
-                    <div id="field-url_social">
-                        <input type="text" id="url_social" .value=${this._url_social} class="form-control" maxlength="250">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="url_design">${this.texts.f11}</label>
-                    <div id="field-url_design">
-                        <input type="text" id="url_design" .value=${this._url_design} class="form-control" maxlength="250">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="is_active">${this.texts.f12}</label>
-                    <div id="field-is_active">
-                        <input type="text" id="is_active" .value=${this._is_active} class="form-control" maxlength="3">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="invested">${this.texts.f13}</label>
-                    <div id="field-invested">
-                        <input type="text" id="invested" .value=${this._invested} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="returned">${this.texts.f14}</label>
-                    <div id="field-returned">
-                        <input type="text" id="returned" .value=${this._returned} class="form-control" maxlength="10">
-                    </div>
-                </div>
-<div class="form-group">
-                    <label for="notes">${this.texts.f15}</label>
-                    <div id="field-notes">
-                        <input type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300">
-                    </div>
-                </div>
-      </div>
-    
-      <div class="form-group mb-0">
-        <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
-          ${this._btnsend}
-          ${this._issending
-            ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-            : html``
+              </div>`
+              : null
           }
-        </button>
-        <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
-        ${this._btncancel}
-        ${this._issending
-          ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-          : html``
-        }
-        </button>
-      </div>
-    </form>
+          <div class="form-group col-5">
+            <label for="description">${this.texts.f05}</label>
+            <div id="field-description">
+              <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
+            </div>
+          </div>
+          <div class="form-group col-2">
+            <label for="code_erp">${this.texts.f04}</label>
+            <div id="field-code_erp">
+              <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-row">
+          <div class="form-group">
+            <label for="id_tz">${this.texts.f03}</label>
+            <div id="field-id_tz">
+              <select id="id_tz" class="form-control" required>
+                ${this._timezones.map((item) =>
+                    html`<option value=${item.key} ?selected=${parseInt(item.key)===parseInt(this._id_tz)}>${item.value}</option>`
+                )}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="date_from">${this.texts.f07}</label>
+            <div id="field-date_from">
+              <input type="datetime-local" id="date_from" .value=${this._date_from} class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="date_to">${this.texts.f08}</label>
+            <div id="field-date_to">
+              <input type="datetime-local" id="date_to" .value=${this._date_to} class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-row">
+          <div class="form-group">
+            <label for="bgcolor">${this.texts.f10}</label>
+            <div id="field-bgcolor">
+              <input type="color" id="bgcolor" .value=${this._bgcolor} class="form-control" maxlength="10">
+            </div>
+          </div>
+          <div class="form-group col-10">
+            <label for="bgimage_xs">${this.texts.f11}</label>
+            <div id="field-bgimage_xs">
+              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-row">
+          <div class="form-group col-5">
+            <label for="bgimage_sm">${this.texts.f12}</label>
+            <div id="field-bgimage_sm">
+              <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+            </div>
+          </div>
+          <div class="form-group col-5">
+            <label for="bgimage_md">${this.texts.f13}</label>
+            <div id="field-bgimage_md">
+              <input type="text" id="bgimage_md" .value=${this._bgimage_md} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+            </div>
+          </div>
+        </div>
+        <div class="flex-row">
+          <div class="form-group col-5">
+            <label for="bgimage_lg">${this.texts.f14}</label>
+            <div id="field-bgimage_lg">
+              <input type="text" id="bgimage_lg" .value=${this._bgimage_lg} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+            </div>
+          </div>
+          <div class="form-group col-5">
+            <label for="bgimage_xl">${this.texts.f15}</label>
+            <div id="field-bgimage_xl">
+              <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-row">
+          <div class="form-group col-4">
+            <label for="bgimage_xxl">${this.texts.f16}</label>
+            <div id="field-bgimage_xxl">
+              <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="max_confirmed">${this.texts.f19}</label>
+            <div id="field-max_confirmed">
+              <input type="number" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="is_raffleable">${this.texts.f20}</label>
+            <div id="field-is_raffleable">
+              <select id="is_raffleable" class="form-control" required>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
+                )}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="is_cumulative">${this.texts.f21}</label>
+            <div id="field-is_cumulative">
+              <select id="is_cumulative" class="form-control" required>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
+                )}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-row">
+          <div class="form-group col-12">
+            <label for="content">${this.texts.f09}</label>
+            <div id="field-content">
+              <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="flex-row">
+          <div class="form-group col-12">
+            <label for="tags">${this.texts.f22}</label>
+            <div id="field-tags">
+              <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="flex-row">
+          <div class="form-group col-12">
+            <label for="notes">${this.texts.f23}</label>
+            <div id="field-notes">
+              <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300"></textarea>
+            </div>
+          </div>
+        </div>
+        </div><!--/flex-row-->
+
+        <div class="form-group">
+          <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
+            ${this._btnsend}
+            ${
+                this._issending
+                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                    : html``
+            }
+          </button>
+          <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
+            ${this._btncancel}
+            ${
+                this._issending
+                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                    : html``
+            }
+          </button>
+      </form>
     `
   }
 
@@ -277,5 +339,5 @@ export class FormPromotionEdit extends LitElement {
 
 }//FormEdit
 
-if (!customElements.get("form-promotion-edit"))
-  customElements.define("form-promotion-edit", FormPromotionEdit)
+if (!customElements.get("form-promotion-update"))
+  customElements.define("form-promotion-update", FormPromotionUpdate)
