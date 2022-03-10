@@ -65,7 +65,7 @@ final class PromotionsSearchService extends AppService
             ->add_column("is_published")->add_label(__("Published"))->add_tooltip(__("Published"))
             ->add_column("invested")->add_label(__("Invested"))->add_tooltip(__("Invested"))
             ->add_column("returned")->add_label(__("Inv returned"))->add_tooltip(__("Inv returned"))
-            ->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
+            //->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
         ;
 
         if($this->auth->is_root())
