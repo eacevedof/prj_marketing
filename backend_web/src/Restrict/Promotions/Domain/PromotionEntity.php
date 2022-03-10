@@ -26,7 +26,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "uuid" => [
-                "label" => __("Cod. Promo"),
+                "label" => __("Code"),
                 EntityType::REQUEST_KEY => "uuid",
                 "config" => [
                     "type" => EntityType::STRING,
@@ -37,6 +37,15 @@ final class PromotionEntity extends AppEntity
             "id_owner" => [
                 "label" => __("Owner"),
                 EntityType::REQUEST_KEY => "id_owner",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 10,
+                ]
+            ],
+
+            "id_tz" => [
+                "label" => __("Timezone"),
+                EntityType::REQUEST_KEY => "id_tz",
                 "config" => [
                     "type" => EntityType::INT,
                     "length" => 10,
@@ -75,6 +84,7 @@ final class PromotionEntity extends AppEntity
                 EntityType::REQUEST_KEY => "date_from",
                 "config" => [
                     "type" => EntityType::DATETIME,
+
                 ]
             ],
 
@@ -83,6 +93,7 @@ final class PromotionEntity extends AppEntity
                 EntityType::REQUEST_KEY => "date_to",
                 "config" => [
                     "type" => EntityType::DATETIME,
+
                 ]
             ],
 
@@ -158,15 +169,6 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
-            "is_published" => [
-                "label" => __("Enabled"),
-                EntityType::REQUEST_KEY => "is_published",
-                "config" => [
-                    "type" => EntityType::INT,
-                    "length" => 3,
-                ]
-            ],
-
             "invested" => [
                 "label" => __("Invested"),
                 EntityType::REQUEST_KEY => "invested",
@@ -186,11 +188,38 @@ final class PromotionEntity extends AppEntity
             ],
 
             "max_confirmed" => [
-                "label" => __("Max confirmed"),
+                "label" => __("Max. confirmed"),
                 EntityType::REQUEST_KEY => "max_confirmed",
                 "config" => [
                     "type" => EntityType::INT,
-                    "length" => 3,
+                    "length" => 10,
+                ]
+            ],
+
+            "is_raffleable" => [
+                "label" => __("Raffleable"),
+                EntityType::REQUEST_KEY => "is_raffleable",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 10,
+                ]
+            ],
+
+            "is_cumulative" => [
+                "label" => __("Cumulative"),
+                EntityType::REQUEST_KEY => "is_cumulative",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 10,
+                ]
+            ],
+
+            "tags" => [
+                "label" => __("Tags"),
+                EntityType::REQUEST_KEY => "tags",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 500,
                 ]
             ],
 
@@ -202,7 +231,43 @@ final class PromotionEntity extends AppEntity
                     "length" => 300,
                 ]
             ],
-       ];
+
+            "num_viewed" => [
+                "label" => __("Viewed"),
+                EntityType::REQUEST_KEY => "num_viewed",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 10,
+                ]
+            ],
+
+            "num_subscribed" => [
+                "label" => __("Subscribed"),
+                EntityType::REQUEST_KEY => "num_subscribed",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 10,
+                ]
+            ],
+
+            "num_confirmed" => [
+                "label" => __("Confirmed"),
+                EntityType::REQUEST_KEY => "num_confirmed",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 10,
+                ]
+            ],
+
+            "num_executed" => [
+                "label" => __("Executed"),
+                EntityType::REQUEST_KEY => "num_executed",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 10,
+                ]
+            ],
+        ];
 
         $this->pks = [
             "id", "uuid"

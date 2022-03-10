@@ -89,6 +89,9 @@ final class PromotionsInsertService extends AppService
             ->add_rule("content", "content", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
+            ->add_rule("id_tz", "id_tz", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })
             ->add_rule("id_type", "id_type", function ($data) {
                 $id_type = (int) $data["value"];
                 if (!$id_type) return __("Empty field is not allowed");
