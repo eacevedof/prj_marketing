@@ -67,7 +67,11 @@ $result = [
     "is_raffleable" => $result["is_raffleable"],
     "is_cumulative" => $result["is_cumulative"],
     "tags" => $result["tags"],
-    "notes" => $result["notes"]
+    "notes" => $result["notes"],
+
+    "timezones" => $timezones ?? [],
+    "notoryes" => $notoryes,
+    "businessowners" => $businessowners,
 ];
 ?>
 <div class="modal-form">

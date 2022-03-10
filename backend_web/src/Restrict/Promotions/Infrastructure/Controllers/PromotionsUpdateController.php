@@ -17,6 +17,7 @@ use App\Restrict\Promotions\Application\PromotionsInfoService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
@@ -47,6 +48,10 @@ final class PromotionsUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
+            $businessowners =  ($this->auth->is_system())
+                ? $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
+                : [];
+
             $edit = SF::get(PromotionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
             $this->set_template("update")
@@ -55,6 +60,9 @@ final class PromotionsUpdateController extends RestrictController
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
+                ->add_var("timezones", $this->picklist->get_timezones())
+                ->add_var("businessowners", $businessowners)
+                ->add_var("notoryes", $this->picklist->get_not_or_yes())
                 ->render_nl();
         }
         catch (NotFoundException $e) {
