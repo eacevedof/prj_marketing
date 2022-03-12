@@ -73,7 +73,7 @@ $result = [
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
-dd($result);
+
 ?>
 <div class="modal-form">
   <div class="card-header">
@@ -104,6 +104,7 @@ dd($result);
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
+
       <div id="main" class="tab-pane active">
         <form-promotion-update
           csrf=<?$this->_echo_js($csrf);?>
