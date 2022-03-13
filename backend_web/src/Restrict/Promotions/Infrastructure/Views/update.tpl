@@ -73,7 +73,6 @@ $result = [
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
-
 ?>
 <div class="modal-form">
   <div class="card-header">
