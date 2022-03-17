@@ -40,11 +40,12 @@ final class LoginController extends RestrictController
         try {
             $post = $this->request->get_post();
             $result = SF::get(LoginService::class, $post)->get_access();
+            $redirect = $this->request->get_redirect();
             $this->_get_json()
                 ->set_payload([
                     "message"=>__("auth ok"),
                     "lang" => $result["lang"],
-                    UserPreferenceType::URL_DEFAULT_MODULE => $result[UserPreferenceType::URL_DEFAULT_MODULE]
+                    UserPreferenceType::URL_DEFAULT_MODULE => $redirect?:$result[UserPreferenceType::URL_DEFAULT_MODULE]
                 ])->show();
         }
         catch (Exception $e)

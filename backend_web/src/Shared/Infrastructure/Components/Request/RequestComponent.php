@@ -66,6 +66,11 @@ final class RequestComponent
         return $_SERVER["REQUEST_URI"] ?? null;
     }
 
+    public function get_redirect(): ?string
+    {
+        return $this->get_get("redirect");
+    }
+
     public function is_accept_json(): bool
     {
         $accept = $this->get_header("accept");

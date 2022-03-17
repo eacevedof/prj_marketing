@@ -173,4 +173,30 @@ export const reqtxt = {
   },
 }
 
+export const get_get = function() {
+  const get_urldecoded = str => decodeURIComponent((str+"").replace(/\+/g, "%20"))
+
+
+
+  function transformToAssocArray( prmstr ) {
+    const params = {};
+    var prmarr = prmstr.split("&");
+    for ( let i = 0; i < prmarr.length; i++) {
+      var tmparr = prmarr[i].split("=");
+      params[tmparr[0]] = get_urldecoded(tmparr[1]);
+    }
+    return params;
+  }
+
+  const strquery = window.location.search.substr(1) ?? "";
+  if (!strquery) return ""
+
+  const objquery = {}
+  strquery.split("&").forEach(strkv => {
+    const parts = strkv.split("=")
+    objquery[parts[0]] = parts[1]
+  })
+
+}
+
 export default reqjs
