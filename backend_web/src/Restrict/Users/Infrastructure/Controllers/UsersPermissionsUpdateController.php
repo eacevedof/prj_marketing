@@ -23,6 +23,8 @@ final class UsersPermissionsUpdateController extends RestrictController
     //@patch
     public function update(string $uuid): void
     {
+        $this->_if_noauth_tologin();
+
         if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)

@@ -13,14 +13,12 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Login\Application\ModulesService;
 use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\UrlType;
 
 final class DashboardController extends RestrictController
 {
     public function index(): void
     {
-        if(!$this->auth->get_user())
-            $this->response->location(UrlType::ERROR_FORBIDDEN);
+        $this->_if_noauth_tologin();
 
         $modules = SF::get_callable(ModulesService::class);
         $this->add_var(PageType::TITLE, __("Dashboard x"))

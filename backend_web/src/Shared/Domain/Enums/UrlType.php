@@ -4,7 +4,7 @@ namespace App\Shared\Domain\Enums;
 
 abstract class UrlType
 {
-    const ON_LOGOUT = "/login";
+    const LOGIN_FORM = "/login";
     const RESTRICT = "/restrict";
     const ERROR_NOTFOUND = "/error/not-found-404";
     const ERROR_FORBIDDEN = "/error/forbidden-403";

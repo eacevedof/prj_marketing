@@ -18,6 +18,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Auth\Application\CsrfService;
 use App\Restrict\Login\Application\ModulesService;
+use App\Shared\Domain\Enums\UrlType;
 
 abstract class RestrictController extends AppController
 {
@@ -38,10 +39,10 @@ abstract class RestrictController extends AppController
         $this->_load_request();
         $this->_load_response();
 
-        $this->_load_view()->set_layout("restrict/restrict");
-
         $this->auth = SF::get_auth();
         $this->csrf = SF::get(CsrfService::class);
+
+        $this->_load_view()->set_layout("restrict/restrict");
         $this->add_var("authuser", $this->auth->get_user());
         $this->_add_topmenu();
     }
@@ -50,6 +51,15 @@ abstract class RestrictController extends AppController
     {
         $service = SF::get_callable(ModulesService::class);
         $this->add_var("topmenu", $service->get_menu());
+    }
+
+    /**
+     * Works only after __construct() execution
+     */
+    protected function _if_noauth_tologin(): void
+    {
+        if(!$this->auth->get_user())
+            $this->response->location(UrlType::LOGIN_FORM);
     }
 
 }//RestrictController

@@ -1,4 +1,5 @@
 ### To-Do
+- $this->_if_noauth_tologin(); prepararlo para la llamada desde API
 - gestion de horas UMT. Parsear a local según pais del usuario
 - si el codigo de la excepción es: 42S22 se debe disfrazar el error de bd que se manda al front
 - en el listado, si se va a visualizar un modal que no se ejecute la carga del grid

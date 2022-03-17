@@ -59,6 +59,6 @@ final class LoginController extends RestrictController
     public function logout(): void
     {
         $this->_load_session()->destroy();
-        $this->response->location(UrlType::ON_LOGOUT);
+        $this->response->location(UrlType::LOGIN_FORM);
     }
 }//LoginController
