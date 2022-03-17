@@ -85,52 +85,52 @@ final class PromotionsUpdateService extends AppService
     {
         $this->validator
             ->add_rule("id", "id", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("uuid", "uuid", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_owner", "id_owner", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("code_erp", "code_erp", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("description", "description", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("slug", "slug", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("content", "content", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_type", "id_type", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("date_from", "date_from", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("date_to", "date_to", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("url_social", "url_social", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("url_design", "url_design", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("is_published", "is_published", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("invested", "invested", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("returned", "returned", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("notes", "notes", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                return $data["value"] ? false : __("Empty field is not allowed");
             })
         ;
         return $this->validator;

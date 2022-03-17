@@ -26,7 +26,7 @@ export class FormPromotionUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
+    return get_formdata(this.shadowRoot)(this.fields)(["uuid","businessowners","notoryes","timezones"])
   }
 
   _on_cancel() {
@@ -122,7 +122,7 @@ export class FormPromotionUpdate extends LitElement {
                 <div id="field-id_owner">
                   <select id="id_owner" class="form-control">
                   ${this._businessowners.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._id_parent}>${item.value}</option>`
+                    html`<option value=${item.key} ?selected=${item.key===this._id_owner}>${item.value}</option>`
                   )}
                   </select>
                 </div>
