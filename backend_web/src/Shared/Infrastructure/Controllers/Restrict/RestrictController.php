@@ -58,8 +58,12 @@ abstract class RestrictController extends AppController
      */
     protected function _if_noauth_tologin(): void
     {
-        if(!$this->auth->get_user())
-            $this->response->location(UrlType::LOGIN_FORM);
+        if(!$this->auth->get_user()) {
+            $redirect = $this->request->get_request_uri();
+            $url = UrlType::LOGIN_FORM;
+            if (strstr($redirect, "/restrict")) $url = "$url?redirect=".urlencode($redirect);
+            $this->response->location($url);
+        }
     }
 
 }//RestrictController

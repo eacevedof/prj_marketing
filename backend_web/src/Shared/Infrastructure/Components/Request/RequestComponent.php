@@ -61,6 +61,11 @@ final class RequestComponent
         return $_SERVER["HTTP_REFERER"] ?? null;
     }
 
+    public function get_request_uri(): ?string
+    {
+        return $_SERVER["REQUEST_URI"] ?? null;
+    }
+
     public function is_accept_json(): bool
     {
         $accept = $this->get_header("accept");
