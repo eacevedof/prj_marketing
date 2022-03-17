@@ -5,7 +5,7 @@
  * @var string $h1
  * @var string $csrf
  */
-dd("xxxx");
+//dd($result);
 $texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
@@ -121,3 +121,6 @@ $result = [
   </div><!--card-body-->
 </div>
 <script type="module" src="/assets/js/restrict/promotions/update.js"></script>
+<?php
+$this->_element("restrict/elem-modal-launcher");
+?>

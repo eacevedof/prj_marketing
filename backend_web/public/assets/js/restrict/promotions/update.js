@@ -107,6 +107,8 @@ export class FormPromotionUpdate extends LitElement {
     this._btncancel = this.texts.tr02
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
+
+    console.log("_businessowners",this._businessowners)
   }
 
   //4

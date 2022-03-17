@@ -40,7 +40,6 @@ $this->_element_view("update/preferences-content");
 <script type="module" src="/assets/js/restrict/users/permissions/update.js"></script>
 <script type="module" src="/assets/js/restrict/users/businessdata/update.js"></script>
 <script type="module" src="/assets/js/restrict/users/preferences/update.js"></script>
-<script type="module">
-import {show_tab} from "/assets/js/common/modal-launcher.js"
-show_tab()
-</script>
+<?php
+$this->_element("restrict/elem-modal-launcher");
+?>
