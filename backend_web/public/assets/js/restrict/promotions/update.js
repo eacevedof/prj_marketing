@@ -134,6 +134,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-description">
               <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
             </div>
+            <b>${this.texts.f06}: </b><span>${this._slug}</span>
           </div>
           <div class="form-group col-2">
             <label for="code_erp">${this.texts.f04}</label>
@@ -299,7 +300,7 @@ export class FormPromotionUpdate extends LitElement {
   //5
   firstUpdated() {
     try {
-      this._$get("id").focus()
+      this._$get("description").focus()
     }
     catch (e) {
       console.log(e)
