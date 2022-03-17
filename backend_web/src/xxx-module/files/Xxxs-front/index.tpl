@@ -159,3 +159,6 @@ dt_render({
   ITEMS_PER_PAGE: <?$dthelp->show_perpage();?>,
 })
 </script>
+<?php
+$this->_element("restrict/elem-modal-launcher");
+?>

@@ -122,5 +122,5 @@ $result = [
 </div>
 <script type="module" src="/assets/js/restrict/promotions/update.js"></script>
 <?php
-$this->_element("restrict/elem-modal-launcher");
+$this->_element("restrict/elem-modal-launcher-showtab");
 ?>

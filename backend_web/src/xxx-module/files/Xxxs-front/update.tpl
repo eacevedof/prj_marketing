@@ -55,3 +55,6 @@ $result = [
   </div><!--card-body-->
 </div>
 <script type="module" src="/assets/js/restrict/xxxs/update.js"></script>
+<?php
+$this->_element("restrict/elem-modal-launcher-showtab");
+?>

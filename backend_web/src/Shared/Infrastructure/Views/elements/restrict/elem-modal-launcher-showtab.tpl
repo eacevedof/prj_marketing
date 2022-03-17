@@ -4,6 +4,6 @@
  */
 ?>
 <script type="module">
-import launch_modal from "/assets/js/common/modal-launcher.js"
-launch_modal()
+import {show_tab} from "/assets/js/common/modal-launcher.js"
+show_tab()
 </script>

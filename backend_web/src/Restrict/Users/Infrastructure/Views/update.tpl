@@ -41,5 +41,5 @@ $this->_element_view("update/preferences-content");
 <script type="module" src="/assets/js/restrict/users/businessdata/update.js"></script>
 <script type="module" src="/assets/js/restrict/users/preferences/update.js"></script>
 <?php
-$this->_element("restrict/elem-modal-launcher");
+$this->_element("restrict/elem-modal-launcher-showtab");
 ?>

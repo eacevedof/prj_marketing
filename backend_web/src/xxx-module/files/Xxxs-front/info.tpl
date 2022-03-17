@@ -93,3 +93,6 @@
     </div><!--tab-content-->
   </div><!--card-body-->
 </div>
+<?php
+$this->_element("restrict/elem-modal-launcher-showtab");
+?>

@@ -27,6 +27,7 @@ final class PromotionsSearchController extends RestrictController
     public function __construct()
     {
         parent::__construct();
+        $this->_if_noauth_tologin();
         $this->picklist = SF::get(PicklistService::class);
     }
 
