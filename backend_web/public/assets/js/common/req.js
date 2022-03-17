@@ -173,6 +173,8 @@ export const reqtxt = {
   },
 }
 
+/*
+esto me lleva la query al infinito
 export const get_urlparams = () => {
   const strquery = window.location.search.substr(1) ?? "";
   if (!strquery) return ""
@@ -186,5 +188,6 @@ export const get_urlparams = () => {
   })
   return objquery
 }
+*/
 
 export default reqjs
