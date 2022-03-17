@@ -2,9 +2,10 @@ import reqjs from "/assets/js/common/req.js"
 import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import get_cssrules from "/assets/js/common/cssrules.js"
 import set_cookie from "/assets/js/common/cookie.js"
-import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
+import {selector} from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL = "/login/access"
+const geturl = window.location.search.substr(1)
+const URL = "/login/access".concat(geturl.includes("redirect=") && geturl.includes("restrict") ? "?".concat(geturl) : "")
 
 export class FormLogin extends LitElement {
 
