@@ -201,7 +201,7 @@ final class PromotionEntity extends AppEntity
                 EntityType::REQUEST_KEY => "is_raffleable",
                 "config" => [
                     "type" => EntityType::INT,
-                    "length" => 10,
+                    "length" => 2,
                 ]
             ],
 
@@ -210,7 +210,16 @@ final class PromotionEntity extends AppEntity
                 EntityType::REQUEST_KEY => "is_cumulative",
                 "config" => [
                     "type" => EntityType::INT,
-                    "length" => 10,
+                    "length" => 2,
+                ]
+            ],
+
+            "is_published" => [
+                "label" => __("Published"),
+                EntityType::REQUEST_KEY => "is_published",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 2,
                 ]
             ],
 
