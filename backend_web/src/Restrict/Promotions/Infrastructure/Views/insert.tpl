@@ -60,7 +60,7 @@ $texts = [
 
 $result = [
     "id_owner" => "",
-    "id_tz" => $tzto,
+    "id_tz" => $authuser["id_tz"],
     "code_erp" => "",
     "description" => "",
     "date_from" => $datefrom,
