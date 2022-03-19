@@ -10,6 +10,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\TimezoneType;
 use App\Shared\Domain\Enums\ExceptionType;
 
 final class PromotionsInfoService extends AppService
@@ -80,8 +81,8 @@ final class PromotionsInfoService extends AppService
     {
         $utc = CF::get(UtcComponent::class);
         $tzto = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
-        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], "UTC", $tzto);
-        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], "UTZ", $tzto);
+        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], TimezoneType::UTC, $tzto);
+        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], TimezoneType::UTC, $tzto);
     }
 
     public function get_for_edit(): array
