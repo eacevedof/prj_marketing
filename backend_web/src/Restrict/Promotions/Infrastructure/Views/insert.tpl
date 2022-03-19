@@ -8,12 +8,25 @@
  * @var array $timezones
  * @var array $notoryes
  */
+
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
-$date = CF::get(DateComponent::class);
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
+$tzfrom = date_default_timezone_get();
+$tzto = $authuser["tz"];
 
-$datefrom = $date->set_date1(date("Y-m-d H:i:s"))->explode()->to_js()->get();
-$dateto = $date->set_date1(date("Y-m-d")." 23:59:00")->explode()->to_js()->get();
+$datefrom = date("Y-m-d H:i:s");
+$dateto = date("Y-m-d")." 23:59:59";
+
+$date = CF::get(DateComponent::class);
+if ($tzfrom !== $tzto) {
+  $utc = CF::get(UtcComponent::class);
+  $datefrom = $utc->get_dt_into_tz($datefrom, $tzfrom, $tzto);
+  $dateto = $utc->get_dt_into_tz($datefrom, $tzfrom, $tzto);
+}
+
+$datefrom = $date->get_jsdt($datefrom);
+$dateto = $date->get_jsdt($dateto);
 
 $texts = [
     "tr00" => __("Save"),

@@ -316,16 +316,16 @@ export class FormPromotionUpdate extends LitElement {
             ${this._btnsend}
             ${
                 this._issending
-                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                    : html``
+                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                  : null
             }
           </button>
           <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
             ${this._btncancel}
             ${
                 this._issending
-                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                    : html``
+                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                  : null
             }
           </button>
       </form>
