@@ -15,8 +15,8 @@ use App\Shared\Infrastructure\Components\Date\UtcComponent;
 $tzfrom = date_default_timezone_get();
 $tzto = $authuser["tz"];
 
-$datefrom = date("Y-m-d H:i:s");
-$dateto = date("Y-m-d")." 23:59:59";
+$datefrom = date("Y-m-d H:i");
+$dateto = date("Y-m-d")." 23:59";
 
 if ($tzfrom !== $tzto) {
   $utc = CF::get(UtcComponent::class);
