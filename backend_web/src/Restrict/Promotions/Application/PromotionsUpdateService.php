@@ -1,8 +1,10 @@
 <?php
 namespace App\Restrict\Promotions\Application;
 
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
@@ -113,7 +115,10 @@ final class PromotionsUpdateService extends AppService
 
     private function _map_entity(array &$entity): void
     {
-
+        $utc = CF::get(UtcComponent::class);
+        $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $entity["id_tz"]);
+        $entity["date_from"] = $utc->get_dt_into_tz($entity["date_from"], $tzfrom);
+        $entity["date_to"] = $utc->get_dt_into_tz($entity["date_to"], $tzfrom);
     }
 
     public function __invoke(): array
