@@ -153,6 +153,7 @@ final class PromotionRepository extends AppRepository
                 "m.max_confirmed",
                 "m.is_raffleable",
                 "m.is_cumulative",
+                "m.is_published",
                 "m.tags",
                 "m.notes",
                 "m.num_viewed",

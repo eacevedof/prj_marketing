@@ -82,6 +82,7 @@ export class FormPromotionUpdate extends LitElement {
     _max_confirmed: {type: String, state:true},
     _is_raffleable: {type: Boolean, state:true},
     _is_cumulative: {type: Boolean, state:true},
+    _is_published: {type: Boolean, state:true},
     _tags: {type: String, state:true},
     _notes: {type: String, state:true},
     _num_viewed: {type: String, state:true},
@@ -108,13 +109,22 @@ export class FormPromotionUpdate extends LitElement {
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
 
-    console.log("_businessowners",this._businessowners)
+    console.log("_businessowners", this._businessowners)
   }
 
   //4
   render() {
     return html`
       <form @submit=${this.on_submit}>
+        <div class="flex-row">
+          <div class="form-group">
+            <label>${this.texts.f00}</label>
+            <span>${this._id}</span> | 
+            <label>${this.texts.f01}</label>
+            <span>${this._uuid}</span>
+          </div>
+        </div>
+        
         <div class="flex-row">
           ${this._businessowners.length > 0
               ? html`<div class="form-group">
@@ -134,7 +144,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-description">
               <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
             </div>
-            <b>${this.texts.f06}: </b><span>${this._slug}</span>
+            <label>${this.texts.f06}: </label><span>${this._slug}</span>
           </div>
           <div class="form-group col-2">
             <label for="code_erp">${this.texts.f04}</label>
@@ -249,7 +259,33 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
-
+        
+        <div class="flex-row">
+          <div class="form-group">
+            <label for="invested">${this.texts.f17}</label>
+            <div id="field-invested">
+              <input type="number" step="any" id="invested" .value=${this._invested} class="form-control" maxlength="10">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="returned">${this.texts.f18}</label>
+            <div id="field-returned">
+              <input type="number" step="any" id="returned" .value=${this._returned} class="form-control" maxlength="10">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="is_published">${this.texts.f28}</label>
+            <div id="field-is_published">
+              <select id="is_published" class="form-control" required>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._is_published}>${item.value}</option>`
+                )}
+              </select>
+            </div>
+          </div>          
+          
+        </div>
+        
         <div class="flex-row">
           <div class="form-group col-12">
             <label for="content">${this.texts.f09}</label>

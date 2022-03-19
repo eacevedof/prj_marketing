@@ -5,7 +5,12 @@
  * @var string $h1
  * @var string $csrf
  */
-//dd($result);
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Shared\Infrastructure\Components\Date\DateComponent;
+$date = CF::get(DateComponent::class);
+$datefrom = $date->get_jsdt($result["date_from"]);
+$dateto = $date->get_jsdt($result["date_to"]);
+
 $texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
@@ -41,6 +46,7 @@ $texts = [
     "f25" => __("Subscribed"),
     "f26" => __("Confirmed"),
     "f27" => __("Executed"),
+    "f28" => __("Published"),
 ];
 
 $result = [
@@ -51,8 +57,8 @@ $result = [
     "code_erp" => $result["code_erp"],
     "description" => $result["description"],
     "slug" => $result["slug"],
-    "date_from" => $result["date_from"],
-    "date_to" => $result["date_to"],
+    "date_from" => $datefrom,
+    "date_to" => $dateto,
     "content" => $result["content"],
     "bgcolor" => $result["bgcolor"],
     "bgimage_xs" => $result["bgimage_xs"],
@@ -66,6 +72,7 @@ $result = [
     "max_confirmed" => $result["max_confirmed"],
     "is_raffleable" => $result["is_raffleable"],
     "is_cumulative" => $result["is_cumulative"],
+    "is_published" => $result["is_published"],
     "tags" => $result["tags"],
     "notes" => $result["notes"],
 
@@ -73,6 +80,7 @@ $result = [
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
+//dd($result);
 ?>
 <div class="modal-form">
   <div class="card-header">
