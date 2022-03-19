@@ -18,13 +18,13 @@ $tzto = $authuser["tz"];
 $datefrom = date("Y-m-d H:i:s");
 $dateto = date("Y-m-d")." 23:59:59";
 
-$date = CF::get(DateComponent::class);
 if ($tzfrom !== $tzto) {
   $utc = CF::get(UtcComponent::class);
   $datefrom = $utc->get_dt_into_tz($datefrom, $tzfrom, $tzto);
   $dateto = $utc->get_dt_into_tz($datefrom, $tzfrom, $tzto);
 }
 
+$date = CF::get(DateComponent::class);
 $datefrom = $date->get_jsdt($datefrom);
 $dateto = $date->get_jsdt($dateto);
 
@@ -60,7 +60,7 @@ $texts = [
 
 $result = [
     "id_owner" => "",
-    "id_tz" => $authuser["id_tz"],
+    "id_tz" => $tzto,
     "code_erp" => "",
     "description" => "",
     "date_from" => $datefrom,
