@@ -102,6 +102,9 @@ final class PromotionsUpdateService extends AppService
             ->add_rule("date_to", "date_to", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
+            ->add_rule("id_tz", "id_tz", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })
         ;
         return $this->validator;
     }
