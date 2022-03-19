@@ -144,8 +144,13 @@ final class DateComponent
 
     public function get_parts(): array {return $this->parts;}
 
-    public function get_jsdt(string $dt): string
+    public function get_jsdt(string $dbdt): string
     {
-        return str_replace(" ","T", $dt);
+        return str_replace(" ","T", $dbdt);
+    }
+
+    public function get_dbdt(string $jsdt): string
+    {
+        return str_replace("T"," ", $jsdt);
     }
 }
