@@ -32,6 +32,7 @@ final class PromotionsUpdateService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
+        dd($input);
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
