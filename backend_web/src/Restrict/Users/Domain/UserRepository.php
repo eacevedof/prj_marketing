@@ -236,7 +236,7 @@ final class UserRepository extends AppRepository
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id=$iduser")
-            ->and_and("m.id_profile=$idprofile")
+            ->add_and("m.id_profile=$idprofile")
             ->select()->sql()
         ;
         return (bool) $this->db->query($sql,0,0);

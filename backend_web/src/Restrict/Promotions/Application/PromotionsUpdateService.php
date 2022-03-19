@@ -14,6 +14,8 @@ use App\Restrict\Promotions\Domain\PromotionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Users\Domain\UserRepository;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
+use App\Shared\Infrastructure\Components\Date\DateComponent;
+use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Restrict\Users\Domain\Enums\UserProfileType;
@@ -29,12 +31,16 @@ final class PromotionsUpdateService extends AppService
     private PromotionRepository $repopromotion;
     private FieldsValidator $validator;
     private PromotionEntity $entitypromotion;
+    private TextComponent $textformat;
+    private DateComponent $datecomp;
 
     public function __construct(array $input)
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
 
+        $this->datecomp = CF::get(DateComponent::class);
+        $this->_map_dates($input);
         $this->input = $input;
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
@@ -44,6 +50,7 @@ final class PromotionsUpdateService extends AppService
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotion->set_model($this->entitypromotion);
         $this->authuser = $this->auth->get_user();
+        $this->textformat = CF::get(TextComponent::class);
     }
 
     private function _check_permission(): void
@@ -53,6 +60,16 @@ final class PromotionsUpdateService extends AppService
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+    }
+
+    private function _map_dates(array &$input): void
+    {
+        $date = $input["date_from"] ?? "";
+        $date = $this->datecomp->get_dbdt($date);
+        $input["date_from"] = $date;
+        $date = $input["date_to"] ?? "";
+        $date = $this->datecomp->get_dbdt($date);
+        $input["date_to"] = $date;
     }
 
     private function _check_entity_permission(array $promotion): void
@@ -98,10 +115,16 @@ final class PromotionsUpdateService extends AppService
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("date_from", "date_from", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
+                if ($value>$data["data"]["date_to"]) return __("Date from is greater than Date to");
+                return false;
             })
             ->add_rule("date_to", "date_to", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
+                if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
+                return false;
             })
             ->add_rule("id_tz", "id_tz", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
@@ -117,6 +140,7 @@ final class PromotionsUpdateService extends AppService
     {
         $utc = CF::get(UtcComponent::class);
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug();
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
     }

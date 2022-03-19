@@ -73,6 +73,14 @@ abstract class AppEntity
         return "";
     }
 
+    private function _get_dt_sanitized(string $dt): string
+    {
+        if (strlen($dt)==16) $dt = "$dt:00";
+        if (strstr($dt,"T"))
+            $dt = str_replace("T"," ", $dt);
+        return $dt;
+    }
+
     public function map_request(array $request): array
     {
         $reqkeys = array_keys($request);
@@ -89,8 +97,8 @@ abstract class AppEntity
             $dbtype = $this->get_type($dbfield);
             if($dbfield) {
                 $value = trim($request[$requestkey]);
-                if ($dbtype === EntityType::DATETIME && strstr($value,"T"))
-                    $value = str_replace("T"," ", $value);
+                if ($dbtype === EntityType::DATETIME)
+                    $value = $this->_get_dt_sanitized($value);
                 $mapped[$dbfield] = $value;
             }
             

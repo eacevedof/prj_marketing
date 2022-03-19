@@ -51,16 +51,6 @@ final class PromotionsInsertService extends AppService
         $this->textformat = CF::get(TextComponent::class);
     }
 
-    private function _map_dates(array &$input): void
-    {
-        $date = $input["date_from"] ?? "";
-        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
-        $input["date_from"] = $date;
-        $date = $input["date_to"] ?? "";
-        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
-        $input["date_to"] = $date;
-    }
-
     private function _check_permission(): void
     {
         if(!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
@@ -68,6 +58,16 @@ final class PromotionsInsertService extends AppService
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+    }
+
+    private function _map_dates(array &$input): void
+    {
+        $date = $input["date_from"] ?? "";
+        $date = $this->datecomp->get_dbdt($date);
+        $input["date_from"] = $date;
+        $date = $input["date_to"] ?? "";
+        $date = $this->datecomp->get_dbdt($date);
+        $input["date_to"] = $date;
     }
 
     private function _skip_validation(): self
@@ -91,28 +91,16 @@ final class PromotionsInsertService extends AppService
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("date_from", "date_from", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("date_from", "date_from", function ($data) {
-                return $this->datecomp->set_date1($date = $data["value"])->is_valid() ? false
-                    : __("Invalid date {0}", $date);
-            })
-            ->add_rule("date_to", "date_to", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
+                if ($value>$data["data"]["date_to"]) return __("Date from is greater than Date to");
+                return false;
             })
             ->add_rule("date_to", "date_to", function ($data) {
-                return $this->datecomp->set_date1($date = $data["value"])->is_valid() ? false
-                    : __("Invalid date {0}", $date);
-            })
-            ->add_rule("date_to", "date_to", function ($data) {
-                return ($this->datecomp->set_date1($data["data"]["date_from"])->set_date2($data["value"])->is_greater())
-                    ? __("Date to should be larger or equal to date from.")
-                    : false;
-            })
-            ->add_rule("url_social", "url_social", function ($data) {
-                $url = $data["value"];
-                if (!$url) return false;
-                return filter_var($url, FILTER_VALIDATE_URL) ? false : __("Invalid url");
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
+                if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
+                return false;
             });
 
         return $this->validator;
@@ -120,6 +108,10 @@ final class PromotionsInsertService extends AppService
 
     private function _map_entity(array &$promotion): void
     {
+        if (!$this->auth->is_system()) $promotion["id_owner"] = $this->auth->get_idowner();
+        $this->entitypromotion->add_sysinsert($promotion, $this->authuser["id"]);
+        $promotion["uuid"] = uniqid();
+        $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug();
         $utc = CF::get(UtcComponent::class);
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
@@ -137,11 +129,6 @@ final class PromotionsInsertService extends AppService
         }
 
         $insert = $this->entitypromotion->map_request($insert);
-        $insert["uuid"] = uniqid();
-        $insert["slug"] = $this->textformat->set_text($insert["description"])->slug();
-        if (!$this->auth->is_system()) $insert["id_owner"] = $this->auth->get_idowner();
-
-        $this->entitypromotion->add_sysinsert($insert, $this->authuser["id"]);
         $this->_map_entity($insert);
         $id = $this->repopromotion->insert($insert);
 

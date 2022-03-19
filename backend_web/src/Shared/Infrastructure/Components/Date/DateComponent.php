@@ -146,11 +146,17 @@ final class DateComponent
 
     public function get_jsdt(string $dbdt): string
     {
+        if (!$dbdt) return $dbdt;
+        $dbdt = substr($dbdt, 0, 16);
         return str_replace(" ","T", $dbdt);
     }
 
     public function get_dbdt(string $jsdt): string
     {
-        return str_replace("T"," ", $jsdt);
+        if (!$jsdt) return $jsdt;
+        if (strlen($jsdt)==16) $jsdt = "$jsdt:00";
+        if (strstr($jsdt,"T"))
+            $jsdt = str_replace("T"," ", $jsdt);
+        return $jsdt;
     }
 }
