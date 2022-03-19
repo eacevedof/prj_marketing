@@ -55,21 +55,21 @@ final class PromotionsUpdateService extends AppService
             );
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _check_entity_permission(array $promotion): void
     {
-        $idpromotion = $this->repopromotion->get_id_by_uuid($entity["uuid"]);
+        $idpromotion = $this->repopromotion->get_id_by_uuid($promotion["uuid"]);
         $idauthuser = (int)$this->authuser["id"];
         if ($this->auth->is_root() || $idauthuser === $idpromotion) return;
 
         if ($this->auth->is_sysadmin()
-            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
+            && in_array($promotion["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
         )
             return;
 
         $identowner = $this->repopromotion->get_idowner($idpromotion);
         //si logado es propietario y el bm a modificar le pertenece
         if ($this->auth->is_business_owner()
-            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
+            && in_array($promotion["id_profile"], [UserProfileType::BUSINESS_MANAGER])
             && $idauthuser === $identowner
         )
             return;
@@ -113,12 +113,12 @@ final class PromotionsUpdateService extends AppService
         return $this->validator;
     }
 
-    private function _map_entity(array &$entity): void
+    private function _map_entity(array &$promotion): void
     {
         $utc = CF::get(UtcComponent::class);
-        $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $entity["id_tz"]);
-        $entity["date_from"] = $utc->get_dt_into_tz($entity["date_from"], $tzfrom);
-        $entity["date_to"] = $utc->get_dt_into_tz($entity["date_to"], $tzfrom);
+        $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
+        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
     }
 
     public function __invoke(): array

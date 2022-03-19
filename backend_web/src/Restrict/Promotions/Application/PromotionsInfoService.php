@@ -72,6 +72,9 @@ final class PromotionsInfoService extends AppService
         ];
     }
 
+    private function _map_entity(array &$promotion): void
+    {}
+
     public function get_for_edit(): array
     {
         $promotion = $this->repopromotion->get_info($this->input);
@@ -81,6 +84,7 @@ final class PromotionsInfoService extends AppService
                 ExceptionType::CODE_NOT_FOUND
             );
         $this->_check_entity_permission($promotion);
+        $this->_map_entity($promotion);
         return $promotion;
     }
 }
