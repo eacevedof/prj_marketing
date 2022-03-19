@@ -61,7 +61,7 @@ final class UserPreferencesRepository extends AppRepository
         return $r[0] ?? [];
     }
 
-    public function get_value_by_user_and_key(int $iduser, string $prefkey): string
+    public function get_value_by_user_and_key(int $iduser, string $prefkey): ?string
     {
         $qb = $this->_get_qbuilder()
             ->set_comment("userpreferences.get_value_by_user_and_key")
@@ -70,8 +70,7 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
             ->add_and("m.pref_key='$prefkey'");
-        $r = $this->db->query($qb->select()->sql());
-        return $r[0][0] ?? "";
+        return $this->db->query($qb->select()->sql(),0,0);
     }
 
     public function key_exists(int $iduser, string $prefkey): int

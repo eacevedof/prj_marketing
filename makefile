@@ -46,6 +46,10 @@ build-be: #fpm
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-be
 	make ps
 
+restart-docker: ## restart docker
+	# systemctl restart docker
+	killall Docker && open /Applications/Docker.app
+
 restart: ## restart the containers
 	docker-compose --env-file ./docker/.env stop
 	docker-compose --env-file ./docker/.env start
