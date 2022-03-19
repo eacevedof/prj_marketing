@@ -83,11 +83,15 @@ abstract class AppEntity
             EntityType::INT,
             EntityType::DECIMAL
         ];
+
         foreach ($reqkeys as $requestkey) {
             $dbfield = $this->get_field($requestkey);
             $dbtype = $this->get_type($dbfield);
             if($dbfield) {
-                $mapped[$dbfield] = ($value = trim($request[$requestkey]));
+                $value = trim($request[$requestkey]);
+                if ($dbtype === EntityType::DATETIME && strstr($value,"T"))
+                    $value = str_replace("T"," ", $value);
+                $mapped[$dbfield] = $value;
             }
             
             if(in_array($dbtype, $nullables) && $value==="")

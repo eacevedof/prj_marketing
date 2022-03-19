@@ -34,6 +34,7 @@ final class FieldsValidator
 
     private function _is_datetime_ok(string $datetime): bool
     {
+        $datetime = str_replace("T"," ", $datetime);
         return (date("Y-m-d H:i:s", strtotime($datetime)) == $datetime);
     }
 
