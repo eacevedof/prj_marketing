@@ -1,6 +1,9 @@
 <?php
 namespace App\Restrict\Promotions\Application;
 
+use App\Shared\Domain\Repositories\App\ArrayRepository;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -67,13 +70,19 @@ final class PromotionsInfoService extends AppService
             );
 
         $this->_check_entity_permission($promotion);
+        $this->_map_entity($promotion);
         return [
             "promotion" => $promotion
         ];
     }
 
     private function _map_entity(array &$promotion): void
-    {}
+    {
+        $utc = CF::get(UtcComponent::class);
+        $tzto = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], "UTC", $tzto);
+        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], "UTZ", $tzto);
+    }
 
     public function get_for_edit(): array
     {
