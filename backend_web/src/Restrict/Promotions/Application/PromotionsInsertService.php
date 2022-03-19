@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Promotions\Application;
 
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -117,6 +118,14 @@ final class PromotionsInsertService extends AppService
         return $this->validator;
     }
 
+    private function _map_entity(array &$promotion): void
+    {
+        $utc = CF::get(UtcComponent::class);
+        $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
+        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
+    }
+
     public function __invoke(): array
     {
         if (!$insert = $this->_get_req_without_ops($this->input))
@@ -133,6 +142,7 @@ final class PromotionsInsertService extends AppService
         if (!$this->auth->is_system()) $insert["id_owner"] = $this->auth->get_idowner();
 
         $this->entitypromotion->add_sysinsert($insert, $this->authuser["id"]);
+        $this->_map_entity($insert);
         $id = $this->repopromotion->insert($insert);
 
         return [

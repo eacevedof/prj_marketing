@@ -36,6 +36,7 @@ final class PromotionRepository extends AppRepository
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
                 "LEFT JOIN base_user u3 ON m.id_owner = u3.id",
                 "LEFT JOIN app_array ar1 ON m.is_published = ar1.id_pk AND ar1.type='bool'",
+                "LEFT JOIN app_array ar2 ON m.id_tz = ar2.id_pk AND ar2.type='tz'",
             ]
         ];
     }
@@ -82,8 +83,10 @@ final class PromotionRepository extends AppRepository
                 "m.code_erp",
                 "m.description",
                 "m.slug",
-                "m.date_from",
-                "m.date_to",
+                //"m.date_from",
+                "CONVERT_TZ(m.date_from, 'UTC', COALESCE(TRIM(ar2.description),'UTC')) date_from",
+                //"m.date_to",
+                "CONVERT_TZ(m.date_to, 'UTC', COALESCE(TRIM(ar2.description),'UTC')) date_to",
                 "m.content",
                 /*
                 "m.bgcolor",
