@@ -12,13 +12,11 @@ final class DateComponent
     public const DATE = "date";
     public const DATETIME = "datetime";
 
-
     private string $date1 = "";
     private string $date2 = "";
 
     private array $parts = ["date"=>[], "time"=>""];
     private string $result = "";
-
 
     public function is_greater(int $which=1): bool
     {
