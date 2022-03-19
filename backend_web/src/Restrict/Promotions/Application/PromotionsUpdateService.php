@@ -76,6 +76,12 @@ final class PromotionsUpdateService extends AppService
     {
         if ($this->auth->is_system()) return;
 
+        if (!$this->repopromotion->get_id_by_uuid($uuid = $promotion["uuid"]))
+            $this->_exception(
+                __("{0} {1} does not exist", __("Promotion"), $uuid),
+                ExceptionType::CODE_BAD_REQUEST
+            );
+
         $idauthuser = (int) $this->authuser["id"];
         $identowner = (int) $promotion["id_owner"];
         //si el logado es propietario de la promocion
