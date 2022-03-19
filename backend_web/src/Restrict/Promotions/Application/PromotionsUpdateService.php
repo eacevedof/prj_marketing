@@ -10,6 +10,8 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Promotions\Domain\PromotionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Restrict\Users\Domain\UserRepository;
+use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Restrict\Users\Domain\Enums\UserProfileType;
@@ -32,7 +34,6 @@ final class PromotionsUpdateService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        dd($input);
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
@@ -76,25 +77,22 @@ final class PromotionsUpdateService extends AppService
         );
     }
 
-    private function _skip_validation(): self
-    {
-        $this->validator->add_skip("id");
-        return $this;
-    }
-
     private function _add_rules(): FieldsValidator
     {
         $this->validator
+            ->add_rule("id", "id", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })
             ->add_rule("uuid", "uuid", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_owner", "id_owner", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!RF::get(UserRepository::class)->is_owner((int) $value))
+                    return __("Invalid owner");
+                return false;
             })
             ->add_rule("description", "description", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("content", "content", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("date_from", "date_from", function ($data) {
@@ -104,10 +102,18 @@ final class PromotionsUpdateService extends AppService
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_tz", "id_tz", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!RF::get(ArrayRepository::class)->get_timezone_description_by_id($value))
+                    return __("Invalid timezone");
+                return false;
             })
         ;
         return $this->validator;
+    }
+
+    private function _map_entity(array &$entity): void
+    {
+
     }
 
     public function __invoke(): array
@@ -115,13 +121,14 @@ final class PromotionsUpdateService extends AppService
         if (!$update = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
+        if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
 
         $update = $this->entitypromotion->map_request($update);
         $this->_check_entity_permission($update);
+        $this->_map_entity($update);
         $this->entitypromotion->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repopromotion->update($update);

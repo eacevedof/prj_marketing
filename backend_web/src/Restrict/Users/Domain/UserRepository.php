@@ -12,12 +12,11 @@ namespace App\Restrict\Users\Domain;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Components\Hierarchy\HierarchyComponent;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
 use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
 
 final class UserRepository extends AppRepository
 {
@@ -225,6 +224,22 @@ final class UserRepository extends AppRepository
          */
         $hier = CF::get(HierarchyComponent::class);
         return $hier->get_childs($iduser, $this->get_all_hierarchy());
+    }
+
+    public function is_owner(int $iduser): bool
+    {
+        $idprofile = UserProfileType::BUSINESS_OWNER;
+        $sql = $this->_get_qbuilder()
+            ->set_comment("user.is_owner")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.is_enabled=1")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id=$iduser")
+            ->and_and("m.id_profile=$idprofile")
+            ->select()->sql()
+        ;
+        return (bool) $this->db->query($sql,0,0);
     }
 
 }//UserRepository

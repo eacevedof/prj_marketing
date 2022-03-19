@@ -26,7 +26,7 @@ export class FormPromotionUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid","businessowners","notoryes","timezones"])
+    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","businessowners","notoryes","timezones"])
   }
 
   _on_cancel() {
@@ -108,8 +108,7 @@ export class FormPromotionUpdate extends LitElement {
     this._btncancel = this.texts.tr02
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
-
-    console.log("_businessowners", this._businessowners)
+    console.log("FIELDS:",this.fields)
   }
 
   //4
@@ -363,6 +362,7 @@ export class FormPromotionUpdate extends LitElement {
         URL_UPDATE.concat(`/${this.fields.uuid}`), {
           _action: ACTION,
           _csrf: this.csrf,
+          id: this.fields.id,
           uuid: this.fields.uuid,
           ...this._get_data()
         })
