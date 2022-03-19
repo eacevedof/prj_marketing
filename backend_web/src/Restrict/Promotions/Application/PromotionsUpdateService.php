@@ -74,22 +74,14 @@ final class PromotionsUpdateService extends AppService
 
     private function _check_entity_permission(array $promotion): void
     {
-        $idpromotion = $this->repopromotion->get_id_by_uuid($promotion["uuid"]);
-        $idauthuser = (int)$this->authuser["id"];
-        if ($this->auth->is_root() || $idauthuser === $idpromotion) return;
+        if ($this->auth->is_system()) return;
 
-        if ($this->auth->is_sysadmin()
-            && in_array($promotion["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
-        )
-            return;
-
-        $identowner = $this->repopromotion->get_idowner($idpromotion);
-        //si logado es propietario y el bm a modificar le pertenece
-        if ($this->auth->is_business_owner()
-            && in_array($promotion["id_profile"], [UserProfileType::BUSINESS_MANAGER])
-            && $idauthuser === $identowner
-        )
-            return;
+        $idauthuser = (int) $this->authuser["id"];
+        $identowner = (int) $promotion["id_owner"];
+        //si el logado es propietario de la promocion
+        if ($idauthuser===$identowner) return;
+        //si el logado tiene el mismo owner que la promo
+        if (RF::get(UserRepository::class)->get_idowner($idauthuser) === $identowner) return;
 
         $this->_exception(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
