@@ -3,7 +3,6 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-dd($result);
 if (is_null($preferences = $result["preferences"])) return;
 $iduser = $result["user"]["id"];
 
