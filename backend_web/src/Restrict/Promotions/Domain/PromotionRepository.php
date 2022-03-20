@@ -58,14 +58,14 @@ final class PromotionRepository extends AppRepository
         //como no es root no puede ver borrados o desactivados
         $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
 
-        $autuser = $this->auth->get_user();
+        $authuser = $this->auth->get_user();
         if($this->auth->is_business_owner()) {
-            $qb->add_andoper("m.id_owner", $autuser["id"]);
+            $qb->add_andoper("m.id_owner", $authuser["id"]);
             return;
         }
 
         if($this->auth->is_business_manager()) {
-            $idparent = $autuser["id_parent"];
+            $idparent = $authuser["id_parent"];
             $qb->add_andoper("m.id_owner", $idparent);
         }
     }

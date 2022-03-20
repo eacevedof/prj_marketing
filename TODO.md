@@ -1,12 +1,12 @@
+### Errors
+- alta de usuario con bow permite dar de alta otro bow
 ### To-Do
 - $this->_if_noauth_tologin(); prepararlo para la llamada desde API
-- gestion de horas UMT. Parsear a local según pais del usuario
 - si el codigo de la excepción es: 42S22 se debe disfrazar el error de bd que se manda al front
 - en el listado, si se va a visualizar un modal que no se ejecute la carga del grid
 - promocion flags de captura (??)
 - sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
 - tabla de acciones para promociones? permitiria sacar un informe más granular
-- url modal launcher view=xxx&uuid=xxx&tab=xxx
 - platform console y emular auth user en console
 - Authservice inyectado desde el controlador a los servicios?
   - puede que si, habrá que probar el comportamiento singleton
@@ -35,6 +35,8 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~gestion de horas UMT. Parsear a local según pais del usuario~~
+- ~~url modal launcher view=xxx&uuid=xxx&tab=xxx~~
 - ~~metricas en promocion (viewed, subscribed, confirmed, executed)~~
 - ~~pestaña permisos en usuarios~~
   - ~~edicion~~
