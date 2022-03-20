@@ -12,6 +12,7 @@ if (!isset($ismodal)) $ismodal = 0;
   <?
   if(!$ismodal){
     if($urlback) echo "<a class=\"btn btn-outline-danger\" href=\"<?=$urlback?>\">Back to Home</a>";
+    if($authuser) echo "<a class=\"btn btn-outline-danger\" href=\"/restrict\">".__("Dashboard")."</a>";
   }
   ?>
 </div>
