@@ -4,7 +4,6 @@
  * @var array $result
  */
 if (is_null($result["businessdata"])) return;
-
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\BusinessDataHelper;
 $helper = HF::get(BusinessDataHelper::class);
@@ -67,8 +66,13 @@ $helper = HF::get(BusinessDataHelper::class);
     <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$businessdata["insert_date"] ?? ""?></span></li>
     <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$businessdata["update_user"] ?? ""?></span></li>
     <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$businessdata["update_date"] ?? ""?></span></li>
-
-    <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$businessdata["delete_user"] ?? ""?></span></li>
-    <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$businessdata["delete_date"] ?? ""?></span></li>
+    <?php
+    if ($issystem):
+    ?>
+      <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$profile["delete_user"] ?? ""?></span></li>
+      <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$profile["delete_date"] ?? ""?></span></li>
+    <?php
+    endif;
+    ?>
   </ul>
 </div><!-- businessdata -->
