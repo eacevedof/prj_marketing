@@ -70,7 +70,8 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
             ->add_and("m.pref_key='$prefkey'");
-        return $this->db->query($qb->select()->sql(),0,0);
+        $r = $this->db->query($qb->select()->sql());
+        return $r[0]["pref_value"] ?? null;
     }
 
     public function key_exists(int $iduser, string $prefkey): int

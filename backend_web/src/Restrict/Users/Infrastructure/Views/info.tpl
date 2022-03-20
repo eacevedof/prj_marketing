@@ -5,6 +5,7 @@
  * @var ?string $uuid
  * @var array $result
  */
+
 ?>
 <div>
   <div class="card-header">
@@ -57,9 +58,14 @@ $this->_element_view("info/businessdata-tab");
           <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$profile["insert_date"] ?? ""?></span></li>
           <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$profile["update_user"] ?? ""?></span></li>
           <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$profile["update_date"] ?? ""?></span></li>
-
+          <?php
+          if ($issystem):
+          ?>
           <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$profile["delete_user"] ?? ""?></span></li>
           <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$profile["delete_date"] ?? ""?></span></li>
+          <?php
+          endif;
+          ?>
         </ul>
       </div><!-- profile -->
 <?php

@@ -42,6 +42,7 @@ final class XxxsInfoController extends RestrictController
             $result = $info();
             $this->add_var("uuid", $uuid)
                 ->add_var("result", $result)
+                ->add_var("issystem", $this->auth->is_system())
                 ->render_nl();
         }
         catch (NotFoundException $e) {

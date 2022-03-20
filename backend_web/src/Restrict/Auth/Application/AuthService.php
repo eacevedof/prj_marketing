@@ -4,6 +4,7 @@ namespace App\Restrict\Auth\Application;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Restrict\Users\Domain\UserRepository;
 use App\Shared\Domain\Enums\SessionType;
 use App\Restrict\Users\Domain\Enums\UserProfileType;
 

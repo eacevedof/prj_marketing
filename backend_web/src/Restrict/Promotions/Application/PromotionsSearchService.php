@@ -53,8 +53,7 @@ final class PromotionsSearchService extends AppService
                 ->add_column("delete_date")->add_label(__("Deleted at"))
                 ->add_column("e_deletedby")->add_label(__("Deleted by"));
 
-        $dthelp
-            ->add_column("uuid")->add_label(__("Cod. Promo"))->add_tooltip(__("Cod. Promo"));
+        $dthelp->add_column("uuid")->add_label(__("Cod. Promo"))->add_tooltip(__("Cod. Promo"));
         if($this->auth->is_system())
             $dthelp->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"));
 

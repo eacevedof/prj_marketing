@@ -15,8 +15,13 @@ $permissions = $result["permissions"];
     <li><b><?=__("Created at")?>:</b>&ensp;<span><?=$permissions["insert_date"] ?? ""?></span></li>
     <li><b><?=__("Modified by")?>:</b>&ensp;<span><?=$permissions["update_user"] ?? ""?></span></li>
     <li><b><?=__("Modified at")?>:</b>&ensp;<span><?=$permissions["update_date"] ?? ""?></span></li>
-
+    <?php
+    if ($issystem):
+    ?>
     <li><b><?=__("Deleted by")?>:</b>&ensp;<span><?=$permissions["delete_user"] ?? ""?></span></li>
     <li><b><?=__("Deleted at")?>:</b>&ensp;<span><?=$permissions["delete_date"] ?? ""?></span></li>
+    <?php
+    endif;
+    ?>
   </ul>
 </div><!--permissions-->

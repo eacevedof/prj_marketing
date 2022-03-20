@@ -147,7 +147,6 @@ final class PromotionsUpdateService extends AppService
     {
         if (!$update = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
