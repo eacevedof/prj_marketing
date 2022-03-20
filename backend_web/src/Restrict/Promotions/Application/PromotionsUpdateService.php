@@ -104,7 +104,9 @@ final class PromotionsUpdateService extends AppService
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_owner", "id_owner", function ($data) {
-                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                //si no es de sistemas este campo no se puede cambiar
+                if (!$this->auth->is_system()) return false;
+                if (!($value = $data["value"])) return __("Empty field is not allowed");
                 if (!RF::get(UserRepository::class)->is_owner((int) $value))
                     return __("Invalid owner");
                 return false;
@@ -138,6 +140,7 @@ final class PromotionsUpdateService extends AppService
     {
         $utc = CF::get(UtcComponent::class);
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        if (!$this->auth->is_system()) unset($promotion["id_owner"]);
         $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug();
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);

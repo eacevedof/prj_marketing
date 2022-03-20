@@ -26,7 +26,7 @@ export class FormPromotionUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","businessowners","notoryes","timezones"])
+    return get_formdata(this.shadowRoot)(this.fields)(["id","id_owner","uuid","businessowners","notoryes","timezones"])
   }
 
   _on_cancel() {
@@ -364,6 +364,9 @@ export class FormPromotionUpdate extends LitElement {
           _csrf: this.csrf,
           id: this.fields.id,
           uuid: this.fields.uuid,
+          //to-do esto no puede estar fijo pq cuando se muestra el select y se escoge
+          //el owner deberia refrescarse. Tengo que hacer el doble binding en el onchange
+          id_owner: this.fields.id_owner,
           ...this._get_data()
         })
 
