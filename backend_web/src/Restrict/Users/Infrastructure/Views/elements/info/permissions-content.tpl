@@ -3,12 +3,11 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($result["permissions"])) return;
-$permissions = $result["permissions"];
+if (is_null($permissions = $result["permissions"])) return;
 ?>
 <div id="permissions" class="tab-pane">
   <b><?=__("Policies")?>:</b>
-  <pre><?=$permissions["json_rw"]?></pre>
+  <pre><?=$permissions["json_rw"] ?? "[]"?></pre>
   <br/>
   <ul>
     <li><b><?=__("Created by")?>:</b>&ensp;<span><?=$permissions["insert_user"] ?? ""?></span></li>
