@@ -365,7 +365,7 @@ export class FormPromotionUpdate extends LitElement {
           id: this.fields.id,
           uuid: this.fields.uuid,
           //to-do esto no puede estar fijo pq cuando se muestra el select y se escoge
-          //el owner deberia refrescarse. Tengo que hacer el doble binding en el onchange
+          //el owner deberia refrescarse. Tengo que hacer el doble binding en el onchange (quitarlo de la exclusion)
           id_owner: this.fields.id_owner,
           ...this._get_data()
         })
