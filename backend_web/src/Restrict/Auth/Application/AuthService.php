@@ -60,7 +60,7 @@ final class AuthService
                     "write" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_WRITE),
                     "read" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_READ),
                 ];
-                break;
+            break;
             case UserPolicyType::MODULE_BUSINESSDATA:
                 $permission = [
                     "write" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE),

@@ -3,11 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
 */
-use App\Restrict\Users\Domain\Enums\UserProfileType;
-if (is_null($result["businessdata"]) ||
-    $result["user"]["id_profile"] != UserProfileType::BUSINESS_OWNER
-)
-  return;
+if (is_null($result["businessdata"])) return;
 ?>
 <li>
   <a href="#businessdata" data-bs-toggle="tab" aria-expanded="false">

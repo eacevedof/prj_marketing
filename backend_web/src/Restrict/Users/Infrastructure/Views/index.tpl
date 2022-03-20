@@ -145,6 +145,16 @@ dtcolumn.add_column({
   }
 })
 
+dtcolumn.add_column({
+  data: "email",
+  render: (v,t,row) => {
+    let cls = ""
+    if (row.id_profile === auth.PROFILES.BUSINESS_OWNER) cls = `style="color:#30B131"`
+    let tpl = `<span ${cls}>${v}</span>`
+    return tpl
+  }
+})
+
 rowswal.set_texts({
   delswal: {
     error: <?$this->_echo_js(__("<b>Error on delete</b>"));?>,

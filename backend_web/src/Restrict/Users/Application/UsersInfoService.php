@@ -94,11 +94,11 @@ final class UsersInfoService extends AppService
 
         $isbusinessdata = $this->auth->get_module_permissions(
                 UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
-            )[0];
+            )[0] && $this->auth->is_business_owner($user["id_profile"]);
 
         $ispreferences = $this->auth->get_module_permissions(
             UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::READ
-        )[0] && $this->auth->is_business_owner($user["id_profile"]);
+        )[0];
 
         return [
             "user" => $this->_get_with_sysdata($user, $tz = $this->auth->get_tz()),
