@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Users\Application;
 
+use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -36,9 +37,9 @@ final class UsersInsertService extends AppService
         $this->auth = SF::get_auth();
         $this->_check_permission();
         $this->input = $input;
+
         $this->entityuser = MF::get(UserEntity::class);
-        $this->validator = VF::get($this->input, $this->entityuser);
-        $this->repouser = RF::get(UserRepository::class);
+        $this->repouser = RF::get(UserRepository::class)->set_model($this->entityuser);
         $this->repouserprefs = RF::get(UserPreferencesRepository::class);
         $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
@@ -113,6 +114,7 @@ final class UsersInsertService extends AppService
         if (!$insert)
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
+        $this->validator = VF::get($insert, $this->entityuser);
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
@@ -124,20 +126,22 @@ final class UsersInsertService extends AppService
         $insert["uuid"] = uniqid();
         $this->entityuser->add_sysinsert($insert, $this->authuser["id"]);
 
+        //save user
         $id = $this->repouser->insert($insert);
         $prefs = [
             "id_user" => $id,
             "pref_key" => UserPreferenceType::URL_DEFAULT_MODULE,
-            "pref_value" => "/restrict"
+            "pref_value" => UrlType::RESTRICT
         ];
 
         $this->entityuser->add_sysinsert($prefs, $this->authuser["id"]);
         $this->repouserprefs->insert($prefs);
 
+        $this->_load_request();
         $tz = CF::get(UtcComponent::class)->get_timezone_by_ip($this->request->get_remote_ip());
         $prefs = [
             "id_user" => $id,
-            "pref_key" => UserPreferenceType::TZ,
+            "pref_key" => UserPreferenceType::KEY_TZ,
             "pref_value" => $tz
         ];
         $this->repouserprefs->insert($prefs);
