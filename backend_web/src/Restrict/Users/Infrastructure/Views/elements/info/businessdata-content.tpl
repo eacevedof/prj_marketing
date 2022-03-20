@@ -3,7 +3,11 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($businessdata = $result["businessdata"])) return;
+use App\Restrict\Users\Domain\Enums\UserProfileType;
+if (is_null($businessdata = $result["businessdata"]) ||
+  $result["user"]["id_profile"] != UserProfileType::BUSINESS_OWNER
+)
+  return;
 
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\BusinessDataHelper;

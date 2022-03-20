@@ -3,8 +3,8 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($result["preferences"])) return;
-$preferences = $result["preferences"];
+dd($result);
+if (is_null($preferences = $result["preferences"])) return;
 $iduser = $result["user"]["id"];
 
 $texts = [
