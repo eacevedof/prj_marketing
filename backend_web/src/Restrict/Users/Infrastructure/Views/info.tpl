@@ -5,7 +5,6 @@
  * @var ?string $uuid
  * @var array $result
  */
-
 ?>
 <div>
   <div class="card-header">

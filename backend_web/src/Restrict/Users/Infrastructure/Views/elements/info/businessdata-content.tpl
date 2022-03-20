@@ -3,15 +3,13 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($result["businessdata"])) return;
+if (is_null($businessdata = $result["businessdata"])) return;
+
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\BusinessDataHelper;
 $helper = HF::get(BusinessDataHelper::class);
 ?>
 <div id="businessdata" class="tab-pane">
-  <?php
-  $businessdata = $result["businessdata"] ?? [];
-  ?>
   <ol>
     <li><b><?=__("Business name")?>:</b>&ensp;<span><?=$businessdata["business_name"] ?? ""?></span></li>
     <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$helper->get_link_domain($businessdata, "slug")?></li>
