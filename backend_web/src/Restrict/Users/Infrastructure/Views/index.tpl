@@ -150,6 +150,9 @@ dtcolumn.add_column({
   render: (v,t,row) => {
     let cls = ""
     if (row.id_profile === auth.PROFILES.BUSINESS_OWNER) cls = `style="color:#30B131"`
+    if (row.id_profile === auth.PROFILES.BUSINESS_MANAGER) cls = `style="color:#07a5c1"`
+    if (row.id_profile === auth.PROFILES.SYS_ADMIN) cls = `style="color:#d6690a"`
+    if (row.id_profile === auth.PROFILES.ROOT) cls = `style="color:#bf074e"`
     let tpl = `<span ${cls}>${v}</span>`
     return tpl
   }
