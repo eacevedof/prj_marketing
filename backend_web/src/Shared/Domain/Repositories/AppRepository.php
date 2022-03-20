@@ -19,9 +19,9 @@ abstract class AppRepository
 {
     use LogTrait;
 
-    protected AppEntity $entity;
-    protected ComponentMysql $db;
-    protected string $table;
+    protected ?AppEntity $entity = null;
+    protected ?ComponentMysql $db = null;
+    protected string $table = "";
 
     protected function _get_sanitized(string $value): string
     {
