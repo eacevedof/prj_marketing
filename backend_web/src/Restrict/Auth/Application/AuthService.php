@@ -72,6 +72,7 @@ final class AuthService
                     "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE),
                     "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_READ),
                 ];
+            break;
             default:
                 $permission = [
                     "write" => false,
