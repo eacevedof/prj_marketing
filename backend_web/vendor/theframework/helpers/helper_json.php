@@ -112,45 +112,10 @@ final class HelperJson
         $this->arResponse["payload"]["errors"] = [];
         $this->arResponse["payload"]["data"] = $arPayload;
         $this->arResponse["payload"]["included"] = [];
-        $this->load_codes();
-        return $this;
+        $this->_load_codes();
     }
 
-    private function _send_cors_headers()
-    {
-        if(isset($_SERVER["HTTP_ORIGIN"]))
-        {
-            //No 'Access-Control-Allow-Origin' header is present on the requested resource.
-            //should do a check here to match $_SERVER["HTTP_ORIGIN"] to a
-            //whitelist of safe domains
-            header("Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}");
-            header("Access-Control-Allow-Credentials: true");
-            header("Access-Control-Max-Age: 86400");// cache for 1 day
-            //header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization');
-        }
-    }
-
-    public function show($isExit=1)
-    {
-        // clear the old headers
-        header_remove();
-
-        $this->_send_cors_headers();
-        // set the actual code
-        http_response_code($this->arResponse["header"]["http"]["code"]);
-        // set the header to make sure cache is forced
-        header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
-        // treat this as json
-        header("Content-Type: application/json");
-        // ok, validation error, or failure
-        header("Status: {$this->arResponse["header"]["http"]["message"]}");        
-
-        $sJson = json_encode($this->arResponse["payload"]);
-        echo $sJson;
-        if($isExit) exit();
-    }
-
-    private function load_codes()
+    private function _load_codes()
     {
         /**
          * Content from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -233,31 +198,62 @@ final class HelperJson
             511 => "Network Authentication Required", // RFC 6585
             598 => "Network read timeout error", // Unknown
             599 => "Network connect timeout error", // Unknown
-        ];        
+        ];
     }
-  
-    //**********************************
-    //             SETS
-    //**********************************
-    public function set_payload($arData)
+
+    private function _send_cors_headers()
+    {
+        if(isset($_SERVER["HTTP_ORIGIN"]))
+        {
+            //No 'Access-Control-Allow-Origin' header is present on the requested resource.
+            //should do a check here to match $_SERVER["HTTP_ORIGIN"] to a
+            //whitelist of safe domains
+            header("Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}");
+            header("Access-Control-Allow-Credentials: true");
+            header("Access-Control-Max-Age: 86400");// cache for 1 day
+            //header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization');
+        }
+    }
+
+    public function show(bool $exit=true): void
+    {
+        // clear the old headers
+        header_remove();
+
+        $this->_send_cors_headers();
+        // set the actual code
+        http_response_code($this->arResponse["header"]["http"]["code"]);
+        // set the header to make sure cache is forced
+        header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+        // treat this as json
+        header("Content-Type: application/json");
+        // ok, validation error, or failure
+        header("Status: {$this->arResponse["header"]["http"]["message"]}");        
+
+        $sJson = json_encode($this->arResponse["payload"]);
+        echo $sJson;
+        if($exit) exit();
+    }
+
+    public function set_payload($arData): self
     {
         $this->arResponse["payload"]["data"] = $arData;
         return $this;
     }
 
-    public function set_links($arLinks)
+    public function set_links($arLinks): self
     {
         $this->arResponse["payload"]["links"] = $arLinks;
         return $this;
     }
 
-    public function set_error(array $errors)
+    public function set_error(array $errors): self
     {
         $this->arResponse["payload"]["errors"] = $errors;
         return $this;
     }        
 
-    public function set_code($iCode)
+    public function set_code($iCode): self
     {
         if (!is_numeric($iCode)) $iCode = 500;
         $this->arResponse["payload"]["status"] = ($iCode<300);
@@ -273,9 +269,5 @@ final class HelperJson
         $this->arResponse["payload"]["message"] = $message ?? $this->arResponse["header"]["http"]["message"];
         return $this;        
     }
-
-    //**********************************
-    //             GETS
-    //**********************************
 
 }//HelperJson
