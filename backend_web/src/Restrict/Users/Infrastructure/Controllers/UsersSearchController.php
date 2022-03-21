@@ -59,6 +59,12 @@ final class UsersSearchController extends RestrictController
     //@get
     public function search(): void
     {
+        if (!$this->auth->get_user())
+            $this->_get_json()
+                ->set_code(ResponseType::UNAUTHORIZED)
+                ->set_error([__("Your session has finished please re-login")])
+                ->show();
+
         if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
