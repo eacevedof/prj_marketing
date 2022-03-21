@@ -358,6 +358,7 @@ export class FormPromotionUpdate extends LitElement {
     this._btnsend = this.texts.tr01
     error.clear()
 
+    console.log("promotions.update to-do handle id_owner")
     const response = await injson.put(
         URL_UPDATE.concat(`/${this.fields.uuid}`), {
           _action: ACTION,
