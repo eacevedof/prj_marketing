@@ -141,7 +141,7 @@ final class HelperJson
         // set the header to make sure cache is forced
         header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
         // treat this as json
-        header('Content-Type: application/json');
+        header("Content-Type: application/json");
         // ok, validation error, or failure
         header("Status: {$this->arResponse["header"]["http"]["message"]}");        
 
@@ -251,9 +251,9 @@ final class HelperJson
         return $this;
     }
 
-    public function set_error($arErrors)
+    public function set_error(array $errors)
     {
-        $this->arResponse["payload"]["errors"] = $arErrors;
+        $this->arResponse["payload"]["errors"] = $errors;
         return $this;
     }        
 
@@ -261,14 +261,16 @@ final class HelperJson
     {
         if (!is_numeric($iCode)) $iCode = 500;
         $this->arResponse["payload"]["status"] = ($iCode<300);
+        $this->arResponse["payload"]["code"] = $iCode;
+
         $this->arResponse["header"]["http"]["code"] = $iCode;
         $this->arResponse["header"]["http"]["message"] = "$iCode {$this->arCodes[$iCode]}";
         return $this;
     }
 
-    public function set_message($sErrMessage)
+    public function set_message(?string $message): self
     {
-        $this->arResponse["payload"]["message"] = $sErrMessage?? $this->arResponse["header"]["http"]["message"];
+        $this->arResponse["payload"]["message"] = $message ?? $this->arResponse["header"]["http"]["message"];
         return $this;        
     }
 

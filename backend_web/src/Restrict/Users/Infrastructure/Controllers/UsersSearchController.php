@@ -27,12 +27,12 @@ final class UsersSearchController extends RestrictController
     public function __construct()
     {
         parent::__construct();
-        $this->_if_noauth_tologin();
         $this->picklist = SF::get(PicklistService::class);
     }
 
     public function index(?string $page=null): void
     {
+        $this->_if_noauth_tologin();
         try {
             $search = SF::get(UsersSearchService::class);
 

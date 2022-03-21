@@ -1,5 +1,5 @@
 import req from "/assets/js/common/req.js"
-import {load_asset_css} from "/assets/js/common/utils.js"
+import {load_asset_css, debounce} from "/assets/js/common/utils.js"
 import {
   add_page_to_url, get_page_from_url, get_url_with_params
 } from "/assets/js/common/url.js"
