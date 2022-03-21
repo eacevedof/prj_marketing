@@ -136,7 +136,9 @@ final class UserPermissionsSaveService extends AppService
                 }
                 if (!$invalid) return false;
                 $invalid = implode(", ",$invalid);
-                $valid = implode("<br/>", $allpolicies);
+                //cuidado con esto. Un servicio no deberia deovlver html solo texto plano
+                //para los casos en los que es consumido por otra interfaz
+                $valid = "\"".implode("\",<br/>\"", $allpolicies)."\"";
                 return __("Invalid policies: {0} <br/>Valid are:<br/>{1}", $invalid, $valid);
             })
         ;
