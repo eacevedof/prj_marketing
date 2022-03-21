@@ -147,7 +147,7 @@ final class DateComponent
     public function get_jsdt(string $dbdt): string
     {
         if (!$dbdt) return $dbdt;
-        $dbdt = substr($dbdt, 0, 16);
+        //$dbdt = substr($dbdt, 0, 16);
         return str_replace(" ","T", $dbdt);
     }
 

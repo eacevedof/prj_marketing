@@ -167,13 +167,13 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group">
             <label for="date_from">${this.texts.f07}</label>
             <div id="field-date_from">
-              <input type="datetime-local" id="date_from" .value=${this._date_from} class="form-control">
+              <input type="datetime-local" step="1" id="date_from" .value=${this._date_from} class="form-control">
             </div>
           </div>
           <div class="form-group">
             <label for="date_to">${this.texts.f08}</label>
             <div id="field-date_to">
-              <input type="datetime-local" id="date_to" .value=${this._date_to} class="form-control">
+              <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control">
             </div>
           </div>
         </div>
@@ -229,10 +229,11 @@ export class FormPromotionUpdate extends LitElement {
               <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
           </div>
+          
           <div class="form-group">
             <label for="max_confirmed">${this.texts.f19}</label>
             <div id="field-max_confirmed">
-              <input type="number" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
+              <input type="number" min="-1"  id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
             </div>
           </div>
 
@@ -263,13 +264,13 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group">
             <label for="invested">${this.texts.f17}</label>
             <div id="field-invested">
-              <input type="number" step="any" id="invested" .value=${this._invested} class="form-control" maxlength="10">
+              <input type="number" min="0"  step="any" id="invested" .value=${this._invested} class="form-control" maxlength="10">
             </div>
           </div>
           <div class="form-group">
             <label for="returned">${this.texts.f18}</label>
             <div id="field-returned">
-              <input type="number" step="any" id="returned" .value=${this._returned} class="form-control" maxlength="10">
+              <input type="number" min="0" step="any" id="returned" .value=${this._returned} class="form-control" maxlength="10">
             </div>
           </div>
           <div class="form-group">

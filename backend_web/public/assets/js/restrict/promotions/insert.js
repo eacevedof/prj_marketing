@@ -144,13 +144,13 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group">
             <label for="date_from">${this.texts.f07}</label>
             <div id="field-date_from">
-              <input type="datetime-local" id="date_from" .value=${this._date_from} class="form-control">
+              <input type="datetime-local" step="1" id="date_from" .value=${this._date_from} class="form-control">
             </div>
           </div>
           <div class="form-group">
             <label for="date_to">${this.texts.f08}</label>
             <div id="field-date_to">
-              <input type="datetime-local" id="date_to" .value=${this._date_to} class="form-control">
+              <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control">
             </div>
           </div>
         </div>

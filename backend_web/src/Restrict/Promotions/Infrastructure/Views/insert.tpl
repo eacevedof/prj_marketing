@@ -15,14 +15,12 @@ use App\Shared\Infrastructure\Components\Date\UtcComponent;
 $tzfrom = date_default_timezone_get();
 $tzto = $authuser["tz"];
 
-$datefrom = date("Y-m-d H:i");
-$dateto = date("Y-m-d")." 23:59";
+$datefrom = date("Y-m-d H:i:s");
+$dateto = date("Y-m-d")." 23:59:59";
 
-if ($tzfrom !== $tzto) {
-  $utc = CF::get(UtcComponent::class);
-  $datefrom = $utc->get_dt_into_tz($datefrom, $tzfrom, $tzto);
-  $dateto = $utc->get_dt_into_tz($datefrom, $tzfrom, $tzto);
-}
+if ($tzfrom !== $tzto)
+  $datefrom = CF::get(UtcComponent::class)->get_dt_into_tz($datefrom, $tzfrom, $tzto);
+
 
 $date = CF::get(DateComponent::class);
 $datefrom = $date->get_jsdt($datefrom);
