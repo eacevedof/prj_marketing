@@ -71,6 +71,7 @@ tooltip.css
 
 ### connect db_marketing
 ```sh
+# conecta con cont-mariadb-univ
 mysql -u root -p'1234' \
         -h host.docker.internal -P 3306 \
         -D db_marketing
