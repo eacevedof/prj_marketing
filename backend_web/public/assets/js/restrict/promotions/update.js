@@ -5,6 +5,7 @@ import error from "/assets/js/common/fielderrors.js"
 import { SNACK } from "/assets/js/common/snackbar.js"
 import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
+import {csstooltip} from "/assets/js/common/tooltip-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
 const URL_UPDATE = "/restrict/promotions/update"
@@ -19,7 +20,8 @@ export class FormPromotionUpdate extends LitElement {
     return [
       globalStyle,
       cssformflex,
-      cssfielderror
+      cssfielderror,
+      csstooltip
     ];
   }
 
@@ -140,6 +142,12 @@ export class FormPromotionUpdate extends LitElement {
           }
           <div class="form-group col-5">
             <label for="description">${this.texts.f05}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Description will not be editable after first publish
+              </p>
+            </div>
             <div id="field-description">
               <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
             </div>
@@ -275,6 +283,12 @@ export class FormPromotionUpdate extends LitElement {
           </div>
           <div class="form-group">
             <label for="is_published">${this.texts.f28}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Once this promotion is published some fields will become readonly
+              </p>
+            </div>
             <div id="field-is_published">
               <select id="is_published" class="form-control" required>
                 ${this._notoryes.map((item) =>
@@ -297,6 +311,12 @@ export class FormPromotionUpdate extends LitElement {
         <div class="flex-row">
           <div class="form-group col-12">
             <label for="tags">${this.texts.f22}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Used to group your promotions while searching
+              </p>
+            </div>
             <div id="field-tags">
               <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
             </div>
@@ -305,6 +325,12 @@ export class FormPromotionUpdate extends LitElement {
         <div class="flex-row">
           <div class="form-group col-12">
             <label for="notes">${this.texts.f23}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                User observations about this promotion
+              </p>
+            </div>
             <div id="field-notes">
               <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300"></textarea>
             </div>

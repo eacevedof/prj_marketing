@@ -157,6 +157,7 @@ final class PromotionRepository extends AppRepository
                 "m.is_raffleable",
                 "m.is_cumulative",
                 "m.is_published",
+                "m.is_launched",
                 "m.tags",
                 "m.notes",
                 "m.num_viewed",
