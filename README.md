@@ -69,6 +69,13 @@ tooltip.css
 </div>
 ```
 
+### connect db_marketing
+```sh
+mysql -u root -p'1234' \
+        -h host.docker.internal -P 3306 \
+        -D db_marketing
+```
+
 ### Errores
 - cargaba dos veces el html una como document y la otra como html/text
 - phpunit
