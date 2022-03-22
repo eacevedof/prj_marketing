@@ -142,6 +142,12 @@ final class CreateAppPromotion extends AbsMigration
             "null" => false,
             "default" => 0,
         ])
+        ->addColumn("is_launched", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+            "comment" => "si ya se ha publicado al menos una vez no se deberia poder editar cierta configuracion"
+        ])
         ->addColumn("num_viewed", "integer", [
             "limit" => 5,
             "null" => false,
