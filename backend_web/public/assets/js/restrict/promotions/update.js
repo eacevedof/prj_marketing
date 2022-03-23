@@ -85,6 +85,7 @@ export class FormPromotionUpdate extends LitElement {
     _is_raffleable: {type: Boolean, state:true},
     _is_cumulative: {type: Boolean, state:true},
     _is_published: {type: Boolean, state:true},
+    _is_launched: {type: Boolean, state:true},
     _tags: {type: String, state:true},
     _notes: {type: String, state:true},
     _num_viewed: {type: String, state:true},
@@ -110,7 +111,7 @@ export class FormPromotionUpdate extends LitElement {
     this._btncancel = this.texts.tr02
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
-    console.log("FIELDS:",this.fields)
+    //this._is_launched = parseInt(this._is_launched)
   }
 
   //4
@@ -131,7 +132,7 @@ export class FormPromotionUpdate extends LitElement {
               ? html`<div class="form-group">
                 <label for="id_owner">${this.texts.f02}</label>
                 <div id="field-id_owner">
-                  <select id="id_owner" class="form-control">
+                  <select id="id_owner" class="form-control" ?disabled=${this._is_launched!==0}>
                   ${this._businessowners.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._id_owner}>${item.value}</option>`
                   )}
@@ -149,12 +150,18 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-description">
-              <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
+              <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required ?disabled=${this._is_launched!==0}>
             </div>
             <label>${this.texts.f06}: </label><span>${this._slug}</span>
           </div>
           <div class="form-group col-2">
             <label for="code_erp">${this.texts.f04}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Optional code for your promotion. 
+              </p>
+            </div>
             <div id="field-code_erp">
               <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
             </div>
@@ -164,8 +171,14 @@ export class FormPromotionUpdate extends LitElement {
         <div class="flex-row">
           <div class="form-group">
             <label for="id_tz">${this.texts.f03}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Read only after first publish
+              </p>
+            </div>            
             <div id="field-id_tz">
-              <select id="id_tz" class="form-control" required>
+              <select id="id_tz" class="form-control" required ?disabled=${this._is_launched!==0}>
                 ${this._timezones.map((item) =>
                     html`<option value=${item.key} ?selected=${parseInt(item.key)===parseInt(this._id_tz)}>${item.value}</option>`
                 )}
@@ -174,14 +187,26 @@ export class FormPromotionUpdate extends LitElement {
           </div>
           <div class="form-group">
             <label for="date_from">${this.texts.f07}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Date and time when promotion starts. Read only after first publish
+              </p>
+            </div>            
             <div id="field-date_from">
-              <input type="datetime-local" step="1" id="date_from" .value=${this._date_from} class="form-control">
+              <input type="datetime-local" step="1" id="date_from" .value=${this._date_from} class="form-control" ?disabled=${this._is_launched!==0}>
             </div>
           </div>
           <div class="form-group">
             <label for="date_to">${this.texts.f08}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Date and time when promotion ends. Read only after first publish
+              </p>
+            </div>
             <div id="field-date_to">
-              <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control">
+              <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control" ?disabled=${this._is_launched!==0}>
             </div>
           </div>
         </div>
@@ -240,15 +265,27 @@ export class FormPromotionUpdate extends LitElement {
           
           <div class="form-group">
             <label for="max_confirmed">${this.texts.f19}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Max number of subscribers that have confirmed their subscription. -1 means no limit. 0 disable your promotion.
+              </p>
+            </div>            
             <div id="field-max_confirmed">
-              <input type="number" min="-1"  id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
+              <input type="number" min="-1" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
             </div>
           </div>
 
           <div class="form-group">
             <label for="is_raffleable">${this.texts.f20}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                In case you want subscribers with acquisition to gather points for a future gift raffle
+              </p>
+            </div>
             <div id="field-is_raffleable">
-              <select id="is_raffleable" class="form-control" required>
+              <select id="is_raffleable" class="form-control" required ?disabled=${this._is_launched!==0}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
                 )}
@@ -258,8 +295,14 @@ export class FormPromotionUpdate extends LitElement {
 
           <div class="form-group">
             <label for="is_cumulative">${this.texts.f21}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                In case you want subscribers with acquisition to gather points for a future confirmed gift
+              </p>
+            </div>
             <div id="field-is_cumulative">
-              <select id="is_cumulative" class="form-control" required>
+              <select id="is_cumulative" class="form-control" required ?disabled=${this._is_launched!==0}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
                 )}
@@ -272,7 +315,7 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group">
             <label for="invested">${this.texts.f17}</label>
             <div id="field-invested">
-              <input type="number" min="0"  step="any" id="invested" .value=${this._invested} class="form-control" maxlength="10">
+              <input type="number" min="0" step="any" id="invested" .value=${this._invested} class="form-control" maxlength="10">
             </div>
           </div>
           <div class="form-group">
@@ -304,7 +347,7 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group col-12">
             <label for="content">${this.texts.f09}</label>
             <div id="field-content">
-              <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000"></textarea>
+              <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000" ?disabled=${this._is_launched!==0}></textarea>
             </div>
           </div>
         </div>

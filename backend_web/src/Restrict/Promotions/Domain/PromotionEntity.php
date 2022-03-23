@@ -223,6 +223,15 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
+            "is_launched" => [
+                "label" => __("Launched"),
+                EntityType::REQUEST_KEY => "is_launched",
+                "config" => [
+                    "type" => EntityType::INT,
+                    "length" => 2,
+                ]
+            ],
+
             "tags" => [
                 "label" => __("Tags"),
                 EntityType::REQUEST_KEY => "tags",

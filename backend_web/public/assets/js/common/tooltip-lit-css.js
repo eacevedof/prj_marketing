@@ -9,7 +9,7 @@ export const csstooltip = css`
 
 .tt-tooltip .tt-tooltiptext {
     visibility: hidden;
-    width: 400px;
+    width: 300px;
     background-color: #2366C9;
     color: #fff;
     padding: 1px 5px;
@@ -27,10 +27,11 @@ export const csstooltip = css`
 
 .tt-span {
     font-size: 12px;
-    height: 12px;
-    width: 12px;
+    font-weight:bold;
+    height: 14px;
+    width: 14px;
     padding-top: 1px;
-    padding-left: 3px;
+    padding-left: 4px;
     border-radius: 50%;
     background: #2366C9;
     color: white;

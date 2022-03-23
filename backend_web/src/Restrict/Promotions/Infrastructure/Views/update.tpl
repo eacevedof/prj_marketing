@@ -47,6 +47,7 @@ $texts = [
     "f26" => __("Confirmed"),
     "f27" => __("Executed"),
     "f28" => __("Published"),
+    "f29" => __("Launched"),
 ];
 
 $result = [
@@ -73,6 +74,7 @@ $result = [
     "is_raffleable" => $result["is_raffleable"],
     "is_cumulative" => $result["is_cumulative"],
     "is_published" => $result["is_published"],
+    "is_launched" => $result["is_launched"],
     "tags" => $result["tags"],
     "notes" => $result["notes"],
 

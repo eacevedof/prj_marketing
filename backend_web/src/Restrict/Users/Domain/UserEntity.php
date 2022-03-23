@@ -58,7 +58,14 @@ final class UserEntity extends AppEntity
                     "length" => 100
                 ]
             ],
-
+            "description" => [
+                "label" => __("Description"),
+                EntityType::REQUEST_KEY => "description",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 250
+                ]
+            ],
             "address" => [
                 "label" => __("Address"),
                 EntityType::REQUEST_KEY => "address",
