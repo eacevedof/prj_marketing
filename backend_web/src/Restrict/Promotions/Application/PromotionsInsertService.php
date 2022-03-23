@@ -111,7 +111,10 @@ final class PromotionsInsertService extends AppService
         if (!$this->auth->is_system()) $promotion["id_owner"] = $this->auth->get_idowner();
         $this->entitypromotion->add_sysinsert($promotion, $this->authuser["id"]);
         $promotion["uuid"] = uniqid();
-        $promotion["is_launched"] = 0;
+        unset(
+            $promotion["slug"], $promotion["is_published"],$promotion["is_launched"],$promotion["slug"],$promotion["is_raffleable"],
+            $promotion["is_cumulative"], $promotion["max_confirmed"], $promotion["invested"], $promotion["returned"]
+        );
         $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug();
         $utc = CF::get(UtcComponent::class);
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
@@ -121,7 +124,6 @@ final class PromotionsInsertService extends AppService
 
     public function __invoke(): array
     {
-        dd("xxx");
         if (!$insert = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
@@ -132,7 +134,6 @@ final class PromotionsInsertService extends AppService
 
         $insert = $this->entitypromotion->map_request($insert);
         $this->_map_entity($insert);
-        dd($insert);
         $id = $this->repopromotion->insert($insert);
 
         return [
