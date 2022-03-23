@@ -140,10 +140,23 @@ final class PromotionsUpdateService extends AppService
     {
         $utc = CF::get(UtcComponent::class);
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        unset($promotion["slug"]);
         if (!$this->auth->is_system()) unset($promotion["id_owner"]);
+
+
         $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug();
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
+
+        unset($promotion["is_launched"]);
+        if ($this->repopromotion->is_launched_by_uuid($promotion["uuid"])) {
+            unset(
+                $promotion["id_owner"], $promotion["description"], $promotion["description"], $promotion["slug"],
+                $promotion["id_tz"], $promotion["date_from"], $promotion["date_to"], $promotion["is_raffleable"],
+                $promotion["is_cumulative"], $promotion["content"]
+            );
+        }
+        if ($promotion["is_published"]) $promotion["is_launched"] = 1;
     }
 
     public function __invoke(): array
