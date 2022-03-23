@@ -260,7 +260,8 @@ final class HelperJson
         $this->arResponse["payload"]["code"] = $iCode;
 
         $this->arResponse["header"]["http"]["code"] = $iCode;
-        $this->arResponse["header"]["http"]["message"] = "$iCode {$this->arCodes[$iCode]}";
+        $message = $this->arCodes[$iCode] ?? "Unknown";
+        $this->arResponse["header"]["http"]["message"] = "$iCode $message";
         return $this;
     }
 

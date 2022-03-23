@@ -111,7 +111,7 @@ export class FormPromotionUpdate extends LitElement {
     this._btncancel = this.texts.tr02
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
-    //this._is_launched = parseInt(this._is_launched)
+    this._is_launched = parseInt(this._is_launched)
   }
 
   //4

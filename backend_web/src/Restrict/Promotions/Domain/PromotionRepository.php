@@ -183,4 +183,16 @@ final class PromotionRepository extends AppRepository
         return $this;
     }
 
-}//PromotionRepository
+    public function is_launched_by_uuid(string $uuid): bool
+    {
+        $uuid = $this->_get_sanitized($uuid);
+        $qb = $this->_get_qbuilder()
+            ->set_comment("promotion.is_launched_by_uuid")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.is_launched",])
+            ->add_and("m.uuid='$uuid'");
+        $sql = $qb->select()->sql();
+        $r = $this->db->query($sql);
+        return (bool) $r[0]["is_launched"];
+    }
+}

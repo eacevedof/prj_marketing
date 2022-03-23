@@ -18,7 +18,7 @@ use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
+//use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
