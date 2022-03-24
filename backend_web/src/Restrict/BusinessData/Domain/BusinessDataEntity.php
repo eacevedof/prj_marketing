@@ -132,7 +132,7 @@ final class BusinessDataEntity extends AppEntity
                 "length" => 100,
             ]
         ],
-       
+
         "body_bgcolor" => [
             "label" => __("Body bg color"),
             EntityType::REQUEST_KEY => "body_bgcolor",
