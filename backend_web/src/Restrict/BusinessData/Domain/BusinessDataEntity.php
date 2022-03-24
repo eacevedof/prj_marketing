@@ -129,7 +129,7 @@ final class BusinessDataEntity extends AppEntity
             EntityType::REQUEST_KEY => "head_bgimage",
             "config" => [
                 "type" => EntityType::STRING,
-                "length" => 10,
+                "length" => 100,
             ]
         ],
        

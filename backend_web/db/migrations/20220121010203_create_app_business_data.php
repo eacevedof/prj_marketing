@@ -78,7 +78,7 @@ final class CreateAppBusinessData extends AbsMigration
             "default" => null,
         ])
         ->addColumn("head_bgimage", "string", [
-            "limit" => 10,
+            "limit" => 100,
             "null" => true,
             "default" => null,
         ])

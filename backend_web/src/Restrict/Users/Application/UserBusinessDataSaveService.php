@@ -8,6 +8,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Checker\Application\CheckerService;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Restrict\Users\Domain\UserRepository;
@@ -126,90 +127,72 @@ final class UserBusinessDataSaveService extends AppService
             })
             ->add_rule("user_logo_1", "user_logo_1", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("user_logo_2", "user_logo_2", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("user_logo_3", "user_logo_3", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
 
             ->add_rule("url_favicon", "url_favicon", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
 
             ->add_rule("head_bgcolor", "head_bgcolor", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
+                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("head_color", "head_color", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
+                
+                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("head_bgimage", "head_bgimage", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("body_bgcolor", "body_bgcolor", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
+                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("body_color", "body_color", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_color($value) ? __("Invalid hex color"): false;
+                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("body_bgimage", "body_bgimage", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_business", "url_business", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_fb", "url_social_fb", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_ig", "url_social_ig", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_twitter", "url_social_twitter", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
             ->add_rule("url_social_tiktok", "url_social_tiktok", function ($data) {
                 if (!$value = $data["value"]) return false;
-                return !$this->is_valid_url($value) ? __("Invalid url value") : false;
+                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
         ;
         
         return $this->validator;
     }
 
-    private function is_valid_url($value): bool
-    {
-        $proto = substr( $value, 0, 8);
-        if (!(strstr($proto, "http://") || strstr($proto, "https://")))
-            return false;
-        
-        return filter_var($value, FILTER_VALIDATE_URL);
-    }
-
-    private function is_valid_color(string $hexcolor): bool
-    {
-        $hexcolor = ltrim($hexcolor, "#");
-        if (
-            ctype_xdigit($hexcolor) &&
-            (strlen($hexcolor) == 6 || strlen($hexcolor) == 3))
-            return true;
-        return false;
-    }
-    
     private function _update(array $update, array $permissions): array
     {
         unset($update["business_name"]);

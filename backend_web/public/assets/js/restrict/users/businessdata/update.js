@@ -219,7 +219,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-head_bgimage">
             <input type="text" id="head_bgimage" .value=${this._head_bgimage}
                   @keyup=${e => this._handle_keyup(e, "_head_bgimage")}
-                  class="form-control" maxlength="10">
+                  class="form-control" maxlength="100">
           </div>
           ${this._get_img_link(this._head_bgimage, this.texts.f11)}
         </div>        
@@ -298,7 +298,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           ${this._get_link(this._url_social_tiktok, this.texts.f15)}
         </div>
       </div>
-    
+      
       <div class="form-group mb-0">
         <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
           ${this._btnsend}
