@@ -116,27 +116,27 @@ final class PromotionsUpdateService extends AppService
             })
             ->add_rule("bgimage_xs", "bgimage_xs", function ($data) {
                 if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
             ->add_rule("bgimage_sm", "bgimage_sm", function ($data) {
                 if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
             ->add_rule("bgimage_md", "bgimage_md", function ($data) {
                 if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
             ->add_rule("bgimage_lg", "bgimage_lg", function ($data) {
                 if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
             ->add_rule("bgimage_xl", "bgimage_xl", function ($data) {
                 if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
             ->add_rule("bgimage_xxl", "bgimage_xxl", function ($data) {
                 if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
@@ -187,6 +187,7 @@ final class PromotionsUpdateService extends AppService
     {
         if (!$update = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
