@@ -10,6 +10,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
+use App\Checker\Application\CheckerService;
 use App\Restrict\Promotions\Domain\PromotionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Users\Domain\UserRepository;
@@ -18,7 +19,6 @@ use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-//use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
@@ -113,6 +113,30 @@ final class PromotionsUpdateService extends AppService
             })
             ->add_rule("description", "description", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
+            })
+            ->add_rule("bgimage_xs", "bgimage_xs", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+            })
+            ->add_rule("bgimage_sm", "bgimage_sm", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+            })
+            ->add_rule("bgimage_md", "bgimage_md", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+            })
+            ->add_rule("bgimage_lg", "bgimage_lg", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+            })
+            ->add_rule("bgimage_xl", "bgimage_xl", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
+            })
+            ->add_rule("bgimage_xxl", "bgimage_xxl", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) __("Invalid url format");
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
