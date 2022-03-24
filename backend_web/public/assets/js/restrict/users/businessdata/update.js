@@ -6,6 +6,7 @@ import { SNACK } from "/assets/js/common/snackbar.js"
 import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
+import {get_link, get_img_link} from "/assets/js/common/html/link.js"
 
 const URL_UPDATE = "/restrict/users/:uuid/business-data/update"
 const ACTION = "businessdata.update"
@@ -104,24 +105,6 @@ export class FormUserBusinessDataUpdate extends LitElement {
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
   }
 
-  _get_link(urlhref, text) {
-    const url = urlhref.trim()
-    if (!url) return html ``
-    if (!(url.includes("https://") || url.includes("http://"))) return html ``
-
-    return html `<a href="${url}" target="_blank" class="link-info">${text}</a>`
-  }
-
-  _get_img_link(urlhref) {
-    const url = urlhref.trim()
-    if (!url) return html ``
-    if (!(url.includes("https://") || url.includes("http://"))) return html ``
-
-    return html `<a href="${url}" target="_blank" class="link-info">
-      <img src="${url}" class="img-thumbnail wd-30p">
-    </a>`
-  }
-
   _handle_keyup(e, field) {
     const value = e.target.value
     this[field] = value
@@ -149,7 +132,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div class="form-group">
             <label for="slug">${this.texts.f04}</label>
             <div id="field-slug">${this._slug}</div>
-            ${this._get_link(urlslug.concat("?mode=test"), this.texts.f50)}
+            ${html([get_link(urlslug.concat("?mode=test"), this.texts.f50)])}
           </div>  
           `
           : html``
@@ -171,7 +154,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
               @keyup=${e => this._handle_keyup(e, "_user_logo_1")}
               placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
-        ${this._get_img_link(this._user_logo_1, this.texts.f05)}
+        ${html([
+          get_img_link(this._user_logo_1, this.texts.f05)
+        ])}
       </div>
       <div class="form-group">
         <label for="user_logo_2">${this.texts.f06}</label>
@@ -180,7 +165,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                @keyup=${e => this._handle_keyup(e, "_user_logo_2")}
                placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
-        ${this._get_img_link(this._user_logo_2, this.texts.f06)}
+        ${html([
+          get_img_link(this._user_logo_2, this.texts.f06)
+        ])}
       </div>
       <div class="form-group">
         <label for="user_logo_3">${this.texts.f07}</label>
@@ -189,7 +176,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                  @keyup=${e => this._handle_keyup(e, "_user_logo_3")}    
                  placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
-        ${this._get_img_link(this._user_logo_3, this.texts.f07)}
+        ${html([
+          get_img_link(this._user_logo_3, this.texts.f07)
+        ])}        
       </div>
       <div class="form-group">
         <label for="url_favicon">${this.texts.f08}</label>
@@ -198,7 +187,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                  @keyup=${e => this._handle_keyup(e, "_url_favicon")}
                  placeholder="link cloudinary" class="form-control" maxlength="100">
         </div>
-        ${this._get_img_link(this._url_favicon, this.texts.f08)}
+        ${html([
+          get_img_link(this._url_favicon, this.texts.f08)
+        ])}
       </div>        
 
       <div class="flex-row">
@@ -221,7 +212,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                   @keyup=${e => this._handle_keyup(e, "_head_bgimage")}
                   class="form-control" maxlength="100">
           </div>
-          ${this._get_img_link(this._head_bgimage, this.texts.f11)}
+          ${html([
+            get_img_link(this._head_bgimage, this.texts.f11)
+          ])}
         </div>        
       </div>
 
@@ -246,7 +239,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                    @keyup=${e => this._handle_keyup(e, "_body_bgimage")}
                    class="form-control" maxlength="100">
           </div>
-          ${this._get_img_link(this._body_bgimage, this.texts.f14)}
+          ${html([
+            get_img_link(this._body_bgimage, this.texts.f14)
+          ])}
         </div>  
       </div>
 
@@ -259,7 +254,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                    @keyup=${e => this._handle_keyup(e, "_url_business")}
                    class="form-control" maxlength="100">
           </div>
-          ${this._get_link(this._url_business, this.texts.f15)}
+          ${html([
+            get_link(this._url_business, this.texts.f15)
+          ])}
         </div>        
         <div class="form-group">
           <label for="url_social_fb">${this.texts.f16}</label>
@@ -268,7 +265,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                    @keyup=${e => this._handle_keyup(e, "_url_social_fb")}
                    class="form-control" maxlength="100">
           </div>
-          ${this._get_link(this._url_social_fb, this.texts.f15)}
+          ${html([
+            get_link(this._url_social_fb, this.texts.f15)
+          ])}          
         </div>
         <div class="form-group">
           <label for="url_social_ig">${this.texts.f17}</label>
@@ -277,7 +276,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                    @keyup=${e => this._handle_keyup(e, "_url_social_ig")}
                    class="form-control" maxlength="100">
           </div>
-          ${this._get_link(this._url_social_ig, this.texts.f15)}
+          ${html([
+            get_link(this._url_social_ig, this.texts.f15)
+          ])}
         </div>
         <div class="form-group">
           <label for="url_social_twitter">${this.texts.f18}</label>
@@ -286,7 +287,9 @@ export class FormUserBusinessDataUpdate extends LitElement {
                    @keyup=${e => this._handle_keyup(e, "_url_social_twitter")}
                    class="form-control" maxlength="100">
           </div>
-          ${this._get_link(this._url_social_twitter, this.texts.f15)}
+          ${html([
+            get_link(this._url_social_twitter, this.texts.f15)
+          ])}
         </div>
         <div class="form-group">
           <label for="url_social_tiktok">${this.texts.f19}</label>
@@ -295,24 +298,26 @@ export class FormUserBusinessDataUpdate extends LitElement {
                    @keyup=${e => this._handle_keyup(e, "_url_social_tiktok")}
                    class="form-control" maxlength="100">
           </div>
-          ${this._get_link(this._url_social_tiktok, this.texts.f15)}
+          ${html([
+            get_link(this._url_social_tiktok, this.texts.f15)
+          ])}
         </div>
       </div>
       
       <div class="form-group mb-0">
         <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
           ${this._btnsend}
-          ${this._issending
-          ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-          : html``
-          }
+            ${this._issending
+              ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
+              : html``
+            }
         </button>
         <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
           ${this._btncancel}
-          ${this._issending
-          ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-          : html``
-          }
+            ${this._issending
+              ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
+              : html``
+            }
         </button>
       </div>
     </form>

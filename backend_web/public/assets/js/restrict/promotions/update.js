@@ -7,6 +7,7 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {csstooltip} from "/assets/js/common/tooltip-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
+import {get_link, get_img_link} from "/assets/js/common/html/link.js"
 
 const URL_UPDATE = "/restrict/promotions/update"
 const ACTION = "promotions.update"
