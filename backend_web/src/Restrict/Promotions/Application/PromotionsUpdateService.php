@@ -199,9 +199,16 @@ final class PromotionsUpdateService extends AppService
         $this->entitypromotion->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->repopromotion->update($update);
+        $promotion = $this->repopromotion->get_by_id($update["id"]);
         return [
             "affected" => $affected,
-            "uuid" => $update["uuid"]
+            "promotion" => [
+                "id" => $promotion["id"],
+                "uuid" => $promotion["uuid"],
+                "is_launched" => $promotion["is_launched"],
+                "slug" => $promotion["slug"],
+                "is_published" => $promotion["is_published"],
+            ]
         ];
     }
 }

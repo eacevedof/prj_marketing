@@ -6,6 +6,7 @@ import {SNACK} from "/assets/js/common/snackbar.js"
 import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
+import {get_link, get_img_link} from "/assets/js/common/html/link.js"
 
 const URL_POST = "/restrict/promotions/insert"
 const ACTION = "promotions.insert"
@@ -98,6 +99,11 @@ export class FormPromotionInsert extends LitElement {
     //console.log(this._id_tz,"TZ", this.fields)
   }
 
+  _handle_keyup(e, field) {
+    const value = e.target.value
+    this[field] = value
+  }
+
   //4
   render() {
     return html`
@@ -135,8 +141,8 @@ export class FormPromotionInsert extends LitElement {
             <label for="id_tz">${this.texts.f03}</label>
             <div id="field-id_tz">
               <select id="id_tz" class="form-control" required>
-                ${this._timezones.map((item) =>
-                    html`<option value=${item.key} ?selected=${parseInt(item.key)===parseInt(this._id_tz)}>${item.value}</option>`
+                ${this._timezones.map((item) => 
+                  html`<option value=${item.key} ?selected=${parseInt(item.key)===parseInt(this._id_tz)}>${item.value}</option>`
                 )}
               </select>
             </div>
@@ -165,8 +171,13 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group col-10">
             <label for="bgimage_xs">${this.texts.f11}</label>
             <div id="field-bgimage_xs">
-              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs}
+                     @change=${e => this._handle_keyup(e, "_bgimage_xs")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_xs)
+            ])}
           </div>
         </div>
         
@@ -174,28 +185,48 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group col-5">
             <label for="bgimage_sm">${this.texts.f12}</label>
             <div id="field-bgimage_sm">
-                <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+                <input type="text" id="bgimage_sm" .value=${this._bgimage_sm}
+                       @change=${e => this._handle_keyup(e, "_bgimage_sm")}
+                       placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_sm)
+            ])}
           </div>
           <div class="form-group col-5">
             <label for="bgimage_md">${this.texts.f13}</label>
             <div id="field-bgimage_md">
-                <input type="text" id="bgimage_md" .value=${this._bgimage_md} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+                <input type="text" id="bgimage_md" .value=${this._bgimage_md}
+                       @change=${e => this._handle_keyup(e, "_bgimage_md")}
+                       placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_md)
+            ])}
           </div>
         </div>
         <div class="flex-row">
           <div class="form-group col-5">
             <label for="bgimage_lg">${this.texts.f14}</label>
             <div id="field-bgimage_lg">
-                <input type="text" id="bgimage_lg" .value=${this._bgimage_lg} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_lg" .value=${this._bgimage_lg}
+                     @change=${e => this._handle_keyup(e, "_bgimage_lg")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_lg)
+            ])}            
           </div>
           <div class="form-group col-5">
             <label for="bgimage_xl">${this.texts.f15}</label>
             <div id="field-bgimage_xl">
-                <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_xl" .value=${this._bgimage_xl}
+                     @change=${e => this._handle_keyup(e, "_bgimage_xl")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_xl)
+            ])}
           </div>
         </div>
         
@@ -203,8 +234,13 @@ export class FormPromotionInsert extends LitElement {
           <div class="form-group col-4">
             <label for="bgimage_xxl">${this.texts.f16}</label>
             <div id="field-bgimage_xxl">
-              <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl}
+                     @change=${e => this._handle_keyup(e, "_bgimage_xxl")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_xxl)
+            ])}
           </div>          
           <div class="form-group">
             <label for="max_confirmed">${this.texts.f19}</label>
@@ -218,7 +254,7 @@ export class FormPromotionInsert extends LitElement {
             <div id="field-is_raffleable">
               <select id="is_raffleable" class="form-control" required>
                 ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
+                  html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
                 )}
               </select>
             </div>
@@ -229,7 +265,7 @@ export class FormPromotionInsert extends LitElement {
             <div id="field-is_cumulative">
               <select id="is_cumulative" class="form-control" required>
                 ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
+                  html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
                 )}
               </select>
             </div>

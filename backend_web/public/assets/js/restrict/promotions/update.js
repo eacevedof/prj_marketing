@@ -115,6 +115,11 @@ export class FormPromotionUpdate extends LitElement {
     this._is_launched = parseInt(this._is_launched)
   }
 
+  _handle_keyup(e, field) {
+    const value = e.target.value
+    this[field] = value
+  }
+
   //4
   render() {
     return html`
@@ -222,8 +227,13 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group col-10">
             <label for="bgimage_xs">${this.texts.f11}</label>
             <div id="field-bgimage_xs">
-              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_xs" .value=${this._bgimage_xs}
+                     @change=${e => this._handle_keyup(e, "_bgimage_xs")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_xs)
+            ])}
           </div>
         </div>
 
@@ -231,28 +241,48 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group col-5">
             <label for="bgimage_sm">${this.texts.f12}</label>
             <div id="field-bgimage_sm">
-              <input type="text" id="bgimage_sm" .value=${this._bgimage_sm} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_sm" .value=${this._bgimage_sm}
+                     @change=${e => this._handle_keyup(e, "_bgimage_sm")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_sm)
+            ])}         
           </div>
           <div class="form-group col-5">
             <label for="bgimage_md">${this.texts.f13}</label>
             <div id="field-bgimage_md">
-              <input type="text" id="bgimage_md" .value=${this._bgimage_md} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_md" .value=${this._bgimage_md}
+                     @change=${e => this._handle_keyup(e, "_bgimage_md")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_md)
+            ])}
           </div>
         </div>
         <div class="flex-row">
           <div class="form-group col-5">
             <label for="bgimage_lg">${this.texts.f14}</label>
             <div id="field-bgimage_lg">
-              <input type="text" id="bgimage_lg" .value=${this._bgimage_lg} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_lg" .value=${this._bgimage_lg}
+                     @change=${e => this._handle_keyup(e, "_bgimage_lg")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_lg)
+            ])}            
           </div>
           <div class="form-group col-5">
             <label for="bgimage_xl">${this.texts.f15}</label>
             <div id="field-bgimage_xl">
-              <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} placeholder="cloudinary.com link"
+                     @change=${e => this._handle_keyup(e, "_bgimage_xl")}
+                     class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_xl)
+            ])}            
           </div>
         </div>
 
@@ -260,8 +290,13 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group col-4">
             <label for="bgimage_xxl">${this.texts.f16}</label>
             <div id="field-bgimage_xxl">
-              <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl} placeholder="cloudinary.com link" class="form-control" maxlength="500">
+              <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl}
+                     @change=${e => this._handle_keyup(e, "_bgimage_xxl")}
+                     placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
+            ${html([
+              get_img_link(this._bgimage_xxl)
+            ])}            
           </div>
           
           <div class="form-group">
@@ -418,6 +453,11 @@ export class FormPromotionUpdate extends LitElement {
     //aqui se deberia des setear la prpiedad despues de una llamada async
   }
 
+  load_response(result) {
+    this._is_published = result.promotion.is_published
+    this._is_launched = result.promotion.id_launched
+  }
+
   async on_submit(e) {
     e.preventDefault()
     error.config({
@@ -458,6 +498,7 @@ export class FormPromotionUpdate extends LitElement {
 
     const $dt = document.getElementById("table-datatable")
     if ($dt) $($dt).DataTable().ajax.reload()
+    this.load_response(response.result)
     window.snack.set_time(4)
         .set_color(SNACK.SUCCESS)
         .set_inner(this.texts.tr04)
