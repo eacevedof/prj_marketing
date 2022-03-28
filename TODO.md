@@ -1,8 +1,9 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
-- $this->_if_noauth_tologin(); prepararlo para la llamada desde API
 - si el codigo de la excepción es: 42S22 se debe disfrazar el error de bd que se manda al front
+- configurar respuestas en login
+- $this->_if_noauth_tologin(); prepararlo para la llamada desde API
 - en el listado, si se va a visualizar un modal que no se ejecute la carga del grid
 - promocion flags de captura (??)
 - sweetalert2@11:1 SweetAlert2: Unknown parameter "closeOnCancel"
