@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Promotions\Application;
 
+use App\Checker\Application\CheckerService;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
@@ -86,6 +87,30 @@ final class PromotionsInsertService extends AppService
             })
             ->add_rule("description", "empty", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
+            })
+            ->add_rule("bgimage_xs", "bgimage_xs", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
+            })
+            ->add_rule("bgimage_sm", "bgimage_sm", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
+            })
+            ->add_rule("bgimage_md", "bgimage_md", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
+            })
+            ->add_rule("bgimage_lg", "bgimage_lg", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
+            })
+            ->add_rule("bgimage_xl", "bgimage_xl", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
+            })
+            ->add_rule("bgimage_xxl", "bgimage_xxl", function ($data) {
+                if (!$value = $data["value"]) return false;
+                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
             ->add_rule("id_tz", "id_tz", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
