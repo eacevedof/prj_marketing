@@ -36,6 +36,16 @@ export class FormPromotionUpdate extends LitElement {
     window.modalraw.hide()
   }
 
+  _load_response(result) {
+    this._is_published = parseInt(result.promotion.is_published)
+    this._is_launched = parseInt(result.promotion.is_launched)
+  }
+
+  _handle_keyup(e, field) {
+    const value = e.target.value
+    this[field] = value
+  }
+
   //1
   constructor() {
     super()
@@ -113,11 +123,6 @@ export class FormPromotionUpdate extends LitElement {
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
     this._is_launched = parseInt(this._is_launched)
-  }
-
-  _handle_keyup(e, field) {
-    const value = e.target.value
-    this[field] = value
   }
 
   //4
@@ -448,16 +453,6 @@ export class FormPromotionUpdate extends LitElement {
     }
   }
 
-  //6
-  updated() {
-    //aqui se deberia des setear la prpiedad despues de una llamada async
-  }
-
-  load_response(result) {
-    this._is_published = parseInt(result.promotion.is_published)
-    this._is_launched = parseInt(result.promotion.is_launched)
-  }
-
   async on_submit(e) {
     e.preventDefault()
     error.config({
@@ -498,7 +493,7 @@ export class FormPromotionUpdate extends LitElement {
 
     const $dt = document.getElementById("table-datatable")
     if ($dt) $($dt).DataTable().ajax.reload()
-    this.load_response(response.result)
+    this._load_response(response.result)
     window.snack.set_time(4)
         .set_color(SNACK.SUCCESS)
         .set_inner(this.texts.tr04)
