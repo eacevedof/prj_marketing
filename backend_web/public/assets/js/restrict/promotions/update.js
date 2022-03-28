@@ -454,8 +454,8 @@ export class FormPromotionUpdate extends LitElement {
   }
 
   load_response(result) {
-    this._is_published = result.promotion.is_published
-    this._is_launched = result.promotion.id_launched
+    this._is_published = parseInt(result.promotion.is_published)
+    this._is_launched = parseInt(result.promotion.is_launched)
   }
 
   async on_submit(e) {
