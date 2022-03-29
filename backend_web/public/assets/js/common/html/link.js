@@ -1,3 +1,10 @@
+export const get_link_local = (urlhref, text) => {
+  const url = urlhref.trim()
+  if (!url) return ""
+
+  return `<a href="/${url}" target="_blank" class="link-info">${text}</a>`
+}
+
 export const get_link = (urlhref, text) => {
   const url = urlhref.trim()
   if (!url) return ""

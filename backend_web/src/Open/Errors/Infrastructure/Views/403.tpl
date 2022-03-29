@@ -12,7 +12,7 @@ if (!isset($ismodal)) $ismodal = 0;
   <h6>Contact the site admin to request for access</h6>
   <?
   if(!$ismodal){
-    if($urlback) echo "<a class=\"btn btn-outline-danger\" href=\"<?=$urlback?>\">Back to Home</a>";
+    if($urlback) echo "<a class=\"btn btn-outline-danger\" href=\"$urlback\">".__("Back to home")."</a>";
     if($authuser) echo "<a class=\"btn btn-outline-danger\" href=\"/restrict\">".__("Dashboard")."</a>";
   }
   ?>

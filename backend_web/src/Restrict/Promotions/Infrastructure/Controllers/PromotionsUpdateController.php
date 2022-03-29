@@ -14,6 +14,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Promotions\Application\PromotionsUpdateService;
 use App\Restrict\Promotions\Application\PromotionsInfoService;
+use App\Restrict\BusinessData\Application\BusinessDataInfoService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
@@ -55,12 +56,15 @@ final class PromotionsUpdateController extends RestrictController
 
             $edit = SF::get(PromotionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
+            $slug = SF::get(BusinessDataInfoService::class)->get_by_id_user($result["id_owner"])["slug"] ?? "";
+
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
+                ->add_var("businessslug", $slug)
                 ->add_var("timezones", $this->picklist->get_timezones())
                 ->add_var("businessowners", $businessowners)
                 ->add_var("notoryes", $this->picklist->get_not_or_yes())

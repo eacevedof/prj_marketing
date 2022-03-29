@@ -160,7 +160,7 @@ final class PromotionsInsertService extends AppService
         $insert = $this->entitypromotion->map_request($insert);
         $this->_map_entity($insert);
         $id = $this->repopromotion->insert($insert);
-
+        $this->repopromotion->update_slug_with_id($id);
         return [
             "id" => $id,
             "uuid" => $insert["uuid"]

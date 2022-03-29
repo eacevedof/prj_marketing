@@ -78,6 +78,7 @@ $result = [
     "tags" => $result["tags"],
     "notes" => $result["notes"],
 
+    "businessslug" => $businessslug,
     "timezones" => $timezones ?? [],
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,

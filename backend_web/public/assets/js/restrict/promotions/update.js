@@ -7,7 +7,7 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {csstooltip} from "/assets/js/common/tooltip-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
-import {get_link, get_img_link} from "/assets/js/common/html/link.js"
+import {get_link_local, get_img_link} from "/assets/js/common/html/link.js"
 
 const URL_UPDATE = "/restrict/promotions/update"
 const ACTION = "promotions.update"
@@ -29,7 +29,9 @@ export class FormPromotionUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["id","id_owner","uuid","businessowners","notoryes","timezones"])
+    return get_formdata(this.shadowRoot)(this.fields)([
+        "id","id_owner","uuid","businessowners","notoryes","timezones","businessslug"
+    ])
   }
 
   _on_cancel() {
@@ -39,6 +41,7 @@ export class FormPromotionUpdate extends LitElement {
   _load_response(result) {
     this._is_published = parseInt(result.promotion.is_published)
     this._is_launched = parseInt(result.promotion.is_launched)
+    this._slug = result.promotion.slug
   }
 
   _handle_keyup(e, field) {
@@ -163,7 +166,12 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-description">
               <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required ?disabled=${this._is_launched!==0}>
             </div>
-            <label>${this.texts.f06}: </label><span>${this._slug}</span>
+            <label>${this.texts.f06}: </label>
+            <span>
+            ${html([
+              get_link_local("promotion/"+this._businessslug.concat("/") + this._slug.concat("?mode=test"), this._slug)
+            ])}
+            </span>
           </div>
           <div class="form-group col-2">
             <label for="code_erp">${this.texts.f04}</label>

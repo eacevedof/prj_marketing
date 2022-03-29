@@ -195,4 +195,10 @@ final class PromotionRepository extends AppRepository
         $r = $this->db->query($sql);
         return (bool) $r[0]["is_launched"];
     }
+
+    public function update_slug_with_id(int $id): void
+    {
+        $sql = "UPDATE $this->table SET slug=CONCAT(slug,'-', id) WHERE id=$id";
+        $this->db->exec($sql);
+    }
 }
