@@ -1,6 +1,8 @@
 <?php
 return [
     ["url"=>"/account/:slug","controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController","method"=>"index"],
+    ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\Business\Infrastructure\Controllers\PromotionsController","method"=>"index"],
+
     ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
     
     ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index"],
