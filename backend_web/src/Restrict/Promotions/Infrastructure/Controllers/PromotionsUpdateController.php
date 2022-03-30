@@ -39,14 +39,13 @@ final class PromotionsUpdateController extends RestrictController
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)) {
+        if (!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
                 ->set_foldertpl("Open/Errors/Infrastructure/Views")
                 ->set_template("403")
                 ->render_nl();
-        }
 
         $this->add_var("ismodal",1);
         try {
