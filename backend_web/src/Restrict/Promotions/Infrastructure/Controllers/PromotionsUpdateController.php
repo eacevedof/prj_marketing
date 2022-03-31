@@ -57,6 +57,7 @@ final class PromotionsUpdateController extends RestrictController
             $result = $edit->get_for_edit();
             $slug = SF::get(BusinessDataInfoService::class)->get_by_id_user($result["id_owner"])["slug"] ?? "";
 
+
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit promotion {0}", $uuid))

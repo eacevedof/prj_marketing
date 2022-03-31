@@ -465,3 +465,54 @@ msgstr "Nombre de negocio"
 
 msgid "You can not add permissions to this user"
 msgstr "No puedes agregar permisos a este usuario"
+
+msgid "Email position"
+msgstr "Email position"
+
+msgid "First name"
+msgstr "First name"
+
+msgid "First name position"
+msgstr "First name position"
+
+msgid "Last name"
+msgstr "Last name"
+
+msgid "Last name position"
+msgstr "Last name position"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Language position"
+msgstr "Language position"
+
+msgid "Country"
+msgstr "Country"
+
+msgid "Country position"
+msgstr "Country position"
+
+msgid "Mobile number"
+msgstr "Mobile number"
+
+msgid "Mobile number position"
+msgstr "Mobile number position"
+
+msgid "Birthdate"
+msgstr "Birthdate"
+
+msgid "Birthdate position"
+msgstr "Birthdate position"
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Gender position"
+msgstr "Gender position"
+
+msgid "Address"
+msgstr "Address"
+
+msgid "Address position"
+msgstr "Address position"
