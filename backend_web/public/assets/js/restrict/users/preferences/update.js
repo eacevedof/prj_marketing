@@ -288,6 +288,7 @@ export class FormUserPreferencesUpdate extends LitElement {
           <td>
             <div id="field-pref_key">
               <input type="text" id="pref_key" .value=${this._pref_key} @change=${this._on_change} class="form-control" maxlength="250">
+              
             </div>
           </td>
           <td>

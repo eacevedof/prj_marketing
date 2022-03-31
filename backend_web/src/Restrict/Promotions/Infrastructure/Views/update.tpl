@@ -90,48 +90,25 @@ $result = [
     <h4 class="card-title mb-1"><?=$h1?></h4>
   </div>
   <div class="card-body p-2 pt-0">
-    <div class="tabs-menu ">
+    <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
-        <li>
-          <a href="#main" data-bs-toggle="tab" class="active" aria-expanded="true">
-            <span class="visible-xs">
-              <i class="las la-promotion-circle tx-16 me-1"></i>
-            </span>
-            <span class="hidden-xs">
-              <?=__("Promotion")?>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="#promotionui" data-bs-toggle="tab" aria-expanded="false">
-            <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-            <span class="hidden-xs">
-              <?=__("UI")?>
-            </span>
-          </a>
-        </li>
+        <?php
+        $this->_element_view("update/main-tab");
+        $this->_element_view("update/ui-tab");
+        ?>
       </ul>
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
-
-      <div id="main" class="tab-pane active">
-        <form-promotion-update
-          csrf=<?$this->_echo_js($csrf);?>
-
-          texts="<?$this->_echo_jslit($texts);?>"
-
-          fields="<?$this->_echo_jslit($result);?>"
-        />
-      </div>
-
-      <div id="promotionui" class="tab-pane">
-      </div>
+      <?php
+      $this->_element_view("update/main-content");
+      $this->_element_view("update/ui-content");
+      ?>
     </div><!--tab-content-->
-
   </div><!--card-body-->
 </div>
 <script type="module" src="/assets/js/restrict/promotions/update.js"></script>
+<script type="module" src="/assets/js/restrict/promotions/ui/update.js"></script>
 <?php
 $this->_element("restrict/elem-modal-launcher-showtab");
 ?>
