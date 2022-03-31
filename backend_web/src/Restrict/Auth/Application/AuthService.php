@@ -76,7 +76,7 @@ final class AuthService
             case UserPolicyType::MODULE_PROMOTIONS_UI:
                 $permission = [
                     "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_READ,
+                    "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_READ),
                 ];
             break;
             default:
