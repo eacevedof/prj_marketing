@@ -1,9 +1,9 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
- * @var array $result
+ * @var array $user
 */
-if (is_null($result["user"])) return;
+if (empty($user)) return;
 ?>
 <li>
   <a href="#main" class="active" data-bs-toggle="tab" aria-expanded="false">

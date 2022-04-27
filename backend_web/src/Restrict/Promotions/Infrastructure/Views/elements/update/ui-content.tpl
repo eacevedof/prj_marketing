@@ -3,7 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($ui = $result["ui"])) return;
+if (is_null($ui = ($result["ui"] ?? null))) return;
 $iduser = $result["user"]["id"];
 
 $texts = [

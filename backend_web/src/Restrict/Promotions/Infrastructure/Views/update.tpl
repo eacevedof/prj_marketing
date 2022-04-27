@@ -7,6 +7,7 @@
  */
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
+
 $date = CF::get(DateComponent::class);
 $datefrom = $date->get_jsdt($result["date_from"]);
 $dateto = $date->get_jsdt($result["date_to"]);
@@ -94,7 +95,7 @@ $result = [
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <?php
         $this->_element_view("update/main-tab");
-        $this->_element_view("update/ui-tab");
+        //$this->_element_view("update/ui-tab");
         ?>
       </ul>
     </div><!--nav-->
@@ -102,7 +103,7 @@ $result = [
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <?php
       $this->_element_view("update/main-content");
-      $this->_element_view("update/ui-content");
+      //$this->_element_view("update/ui-content");
       ?>
     </div><!--tab-content-->
   </div><!--card-body-->
