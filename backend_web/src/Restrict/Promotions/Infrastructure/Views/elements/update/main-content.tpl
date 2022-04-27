@@ -70,7 +70,7 @@ $result = [
 ];
 ?>
 <div id="main" class="tab-pane active">
-  <form-promotion-ui-update
+  <form-promotion-update
       csrf=<?$this->_echo_js($csrf);?>
 
       texts="<?$this->_echo_jslit($texts);?>"
