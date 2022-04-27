@@ -3,8 +3,8 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-if (is_null($result["promotionui"] ?? null)) return;
-$promotion = $result["promotionui"];
+//if (is_null($result["promotionui"] ?? null)) return;
+//$promotion = $result["promotionui"];
 
 $texts = [
     "tr00" => __("Save"),
@@ -39,7 +39,7 @@ $texts = [
     "f23" => __("tr_pos_address"),
 ];
 
-$user = [
+$result = [
     "id" => $result["id"],
     "uuid" => $result["uuid"],
     "id_owner" => $result["id_owner"],

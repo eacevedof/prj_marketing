@@ -5,7 +5,7 @@ use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Promotion_uis\Domain\PromotionUiRepository;
+use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 
