@@ -3,7 +3,6 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $user
 */
-if (empty($user)) return;
 ?>
 <li>
   <a href="#main" class="active" data-bs-toggle="tab" aria-expanded="false">

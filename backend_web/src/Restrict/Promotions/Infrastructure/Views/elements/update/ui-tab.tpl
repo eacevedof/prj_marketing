@@ -3,7 +3,6 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
 */
-return;
 ?>
 <li>
   <a href="#ui" data-bs-toggle="tab" aria-expanded="false">
