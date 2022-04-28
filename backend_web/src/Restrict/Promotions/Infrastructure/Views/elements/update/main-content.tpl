@@ -1,9 +1,12 @@
 <?php
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
+
+$promotion = $result["promotion"];
+
 $date = CF::get(DateComponent::class);
-$datefrom = $date->get_jsdt($result["date_from"]);
-$dateto = $date->get_jsdt($result["date_to"]);
+$datefrom = $date->get_jsdt($promotion["date_from"]);
+$dateto = $date->get_jsdt($promotion["date_to"]);
 
 $texts = [
     "tr00" => __("Save"),
@@ -44,40 +47,40 @@ $texts = [
     "f29" => __("Launched"),
 ];
 
-$result = [
-    "id" => $result["id"],
-    "uuid" => $result["uuid"],
-    "id_owner" => $result["id_owner"],
-    "id_tz" => $result["id_tz"],
-    "code_erp" => $result["code_erp"],
-    "description" => $result["description"],
-    "slug" => $result["slug"],
+$promotion = [
+    "id" => $promotion["id"],
+    "uuid" => $promotion["uuid"],
+    "id_owner" => $promotion["id_owner"],
+    "id_tz" => $promotion["id_tz"],
+    "code_erp" => $promotion["code_erp"],
+    "description" => $promotion["description"],
+    "slug" => $promotion["slug"],
     "date_from" => $datefrom,
     "date_to" => $dateto,
-    "content" => $result["content"],
-    "bgcolor" => $result["bgcolor"],
-    "bgimage_xs" => $result["bgimage_xs"],
-    "bgimage_sm" => $result["bgimage_sm"],
-    "bgimage_md" => $result["bgimage_md"],
-    "bgimage_lg" => $result["bgimage_lg"],
-    "bgimage_xl" => $result["bgimage_xl"],
-    "bgimage_xxl" => $result["bgimage_xxl"],
-    "invested" => $result["invested"],
-    "returned" => $result["returned"],
-    "max_confirmed" => $result["max_confirmed"],
-    "is_raffleable" => $result["is_raffleable"],
-    "is_cumulative" => $result["is_cumulative"],
-    "is_published" => $result["is_published"],
-    "is_launched" => $result["is_launched"],
-    "tags" => $result["tags"],
-    "notes" => $result["notes"],
+    "content" => $promotion["content"],
+    "bgcolor" => $promotion["bgcolor"],
+    "bgimage_xs" => $promotion["bgimage_xs"],
+    "bgimage_sm" => $promotion["bgimage_sm"],
+    "bgimage_md" => $promotion["bgimage_md"],
+    "bgimage_lg" => $promotion["bgimage_lg"],
+    "bgimage_xl" => $promotion["bgimage_xl"],
+    "bgimage_xxl" => $promotion["bgimage_xxl"],
+    "invested" => $promotion["invested"],
+    "returned" => $promotion["returned"],
+    "max_confirmed" => $promotion["max_confirmed"],
+    "is_raffleable" => $promotion["is_raffleable"],
+    "is_cumulative" => $promotion["is_cumulative"],
+    "is_published" => $promotion["is_published"],
+    "is_launched" => $promotion["is_launched"],
+    "tags" => $promotion["tags"],
+    "notes" => $promotion["notes"],
 
     "businessslug" => $businessslug,
     "timezones" => $timezones ?? [],
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
-//dd($result);
+//dd($promotion);
 ?>
 <div id="main" class="tab-pane active">
   <form-promotion-update
@@ -85,7 +88,7 @@ $result = [
 
       texts="<?$this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($result);?>"
+      fields="<?$this->_echo_jslit($promotion);?>"
   />
 </div>
 

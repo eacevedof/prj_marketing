@@ -32,6 +32,7 @@ final class PromotionsInfoService extends AppService
 
         $this->authuser = $this->auth->get_user();
         $this->repopromotion = RF::get(PromotionRepository::class);
+        $this->repopromoui = RF::get(PromotionUiRepository::class);
     }
 
     private function _check_permission(): void

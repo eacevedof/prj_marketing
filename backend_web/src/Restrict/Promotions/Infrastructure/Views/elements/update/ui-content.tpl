@@ -3,8 +3,8 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-//if (is_null($result["promotionui"] ?? null)) return;
-//$promotion = $result["promotionui"];
+if (is_null($result["promotionui"])) return;
+$promotionui = $result["promotionui"];
 
 $texts = [
     "tr00" => __("Save"),
@@ -39,31 +39,31 @@ $texts = [
     "f23" => __("tr_pos_address"),
 ];
 
-$result = [
-    "id" => $result["id"],
-    "uuid" => $result["uuid"],
-    "id_owner" => $result["id_owner"],
-    "code_erp" => $result["code_erp"],
-    "description" => $result["description"],
-    "id_promotion" => $result["id_promotion"],
-    "input_email" => $result["input_email"],
-    "pos_email" => $result["pos_email"],
-    "input_name1" => $result["input_name1"],
-    "pos_name1" => $result["pos_name1"],
-    "input_name2" => $result["input_name2"],
-    "pos_name2" => $result["pos_name2"],
-    "input_language" => $result["input_language"],
-    "pos_language" => $result["pos_language"],
-    "input_country" => $result["input_country"],
-    "pos_country" => $result["pos_country"],
-    "input_phone1" => $result["input_phone1"],
-    "pos_phone1" => $result["pos_phone1"],
-    "input_birthdate" => $result["input_birthdate"],
-    "pos_birthdate" => $result["pos_birthdate"],
-    "input_gender" => $result["input_gender"],
-    "pos_gender" => $result["pos_gender"],
-    "input_address" => $result["input_address"],
-    "pos_address" => $result["pos_address"],
+$promotionui = [
+    "id" => $promotionui["id"] ?? "",
+    "uuid" => $promotionui["uuid"] ?? "",
+    "id_owner" => $promotionui["id_owner"] ?? "",
+    "code_erp" => $promotionui["code_erp"] ?? "",
+    "description" => $promotionui["description"] ?? "",
+    "id_promotion" => $promotionui["id_promotion"] ?? "",
+    "input_email" => $promotionui["input_email"] ?? "",
+    "pos_email" => $promotionui["pos_email"] ?? "",
+    "input_name1" => $promotionui["input_name1"] ?? "",
+    "pos_name1" => $promotionui["pos_name1"] ?? "",
+    "input_name2" => $promotionui["input_name2"] ?? "",
+    "pos_name2" => $promotionui["pos_name2"] ?? "",
+    "input_language" => $promotionui["input_language"] ?? "",
+    "pos_language" => $promotionui["pos_language"] ?? "",
+    "input_country" => $promotionui["input_country"] ?? "",
+    "pos_country" => $promotionui["pos_country"] ?? "",
+    "input_phone1" => $promotionui["input_phone1"] ?? "",
+    "pos_phone1" => $promotionui["pos_phone1"] ?? "",
+    "input_birthdate" => $promotionui["input_birthdate"] ?? "",
+    "pos_birthdate" => $promotionui["pos_birthdate"] ?? "",
+    "input_gender" => $promotionui["input_gender"] ?? "",
+    "pos_gender" => $promotionui["pos_gender"] ?? "",
+    "input_address" => $promotionui["input_address"] ?? "",
+    "pos_address" => $promotionui["pos_address"] ?? "",
 
     "notoryes" => $notoryes,
 ];
@@ -74,7 +74,7 @@ $result = [
 
       texts="<?$this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($result);?>"
+      fields="<?$this->_echo_jslit($promotionui);?>"
   />
 </div>
 
