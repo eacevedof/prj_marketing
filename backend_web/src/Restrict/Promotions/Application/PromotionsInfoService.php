@@ -9,6 +9,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\TimezoneType;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -17,7 +18,9 @@ final class PromotionsInfoService extends AppService
 {
     private AuthService $auth;
     private array $authuser;
+
     private PromotionRepository $repopromotion;
+    private PromotionUiRepository $repopromoui;
 
     public function __construct(array $input)
     {
@@ -95,6 +98,19 @@ final class PromotionsInfoService extends AppService
             );
         $this->_check_entity_permission($promotion);
         $this->_map_entity($promotion);
-        return $promotion;
+
+        $ispromotionui = $this->auth->get_module_permissions(
+            UserPolicyType::MODULE_PROMOTIONS_UI, UserPolicyType::WRITE
+        )[0];
+
+        return [
+            "promotion" => $promotion,
+            "promotionui" => $ispromotionui
+                ? $this->_get_with_sysdata(
+                    $this->repopromoui->get_by_promotion((int) $promotion["id"]),
+                    $this->auth->get_tz(),
+                )
+                : null,
+        ];
     }
 }

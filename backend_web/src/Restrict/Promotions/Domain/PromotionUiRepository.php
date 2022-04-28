@@ -75,29 +75,29 @@ final class PromotionUiRepository extends AppRepository
             ->calcfoundrows()
             ->set_getfields([
                 "m.id",
-"m.uuid",
-"m.id_owner",
-"m.code_erp",
-"m.description",
-"m.id_promotion",
-"m.input_email",
-"m.pos_email",
-"m.input_name1",
-"m.pos_name1",
-"m.input_name2",
-"m.pos_name2",
-"m.input_language",
-"m.pos_language",
-"m.input_country",
-"m.pos_country",
-"m.input_phone1",
-"m.pos_phone1",
-"m.input_birthdate",
-"m.pos_birthdate",
-"m.input_gender",
-"m.pos_gender",
-"m.input_address",
-"m.pos_address",
+                "m.uuid",
+                "m.id_owner",
+                "m.code_erp",
+                "m.description",
+                "m.id_promotion",
+                "m.input_email",
+                "m.pos_email",
+                "m.input_name1",
+                "m.pos_name1",
+                "m.input_name2",
+                "m.pos_name2",
+                "m.input_language",
+                "m.pos_language",
+                "m.input_country",
+                "m.pos_country",
+                "m.input_phone1",
+                "m.pos_phone1",
+                "m.input_birthdate",
+                "m.pos_birthdate",
+                "m.input_gender",
+                "m.pos_gender",
+                "m.input_address",
+                "m.pos_address",
                 "m.delete_date"
             ])
             ->set_limit(25, 0)
@@ -125,35 +125,35 @@ final class PromotionUiRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
-"m.insert_date",
-"m.update_user",
-"m.update_date",
-"m.delete_user",
-"m.delete_date",
-"m.id",
-"m.uuid",
-"m.id_owner",
-"m.code_erp",
-"m.description",
-"m.id_promotion",
-"m.input_email",
-"m.pos_email",
-"m.input_name1",
-"m.pos_name1",
-"m.input_name2",
-"m.pos_name2",
-"m.input_language",
-"m.pos_language",
-"m.input_country",
-"m.pos_country",
-"m.input_phone1",
-"m.pos_phone1",
-"m.input_birthdate",
-"m.pos_birthdate",
-"m.input_gender",
-"m.pos_gender",
-"m.input_address",
-"m.pos_address"
+                "m.insert_date",
+                "m.update_user",
+                "m.update_date",
+                "m.delete_user",
+                "m.delete_date",
+                "m.id",
+                "m.uuid",
+                "m.id_owner",
+                "m.code_erp",
+                "m.description",
+                "m.id_promotion",
+                "m.input_email",
+                "m.pos_email",
+                "m.input_name1",
+                "m.pos_name1",
+                "m.input_name2",
+                "m.pos_name2",
+                "m.input_language",
+                "m.pos_language",
+                "m.input_country",
+                "m.pos_country",
+                "m.input_phone1",
+                "m.pos_phone1",
+                "m.input_birthdate",
+                "m.pos_birthdate",
+                "m.input_gender",
+                "m.pos_gender",
+                "m.input_address",
+                "m.pos_address"
             ])
             //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.uuid='$uuid'")
@@ -173,4 +173,16 @@ final class PromotionUiRepository extends AppRepository
         return $this;
     }
 
+    public function get_by_promotion(int $idpromotion): array
+    {
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promotionuirepository.get_by_promotion")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.*"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_promotion=$idpromotion")
+            ->select()->sql()
+        ;
+        return $this->db->query($sql)[0] ?? [];
+    }
 }//PromotionUiRepository
