@@ -68,7 +68,7 @@ $promotionui = [
     "notoryes" => $notoryes,
 ];
 ?>
-<div id="main" class="tab-pane active">
+<div id="ui" class="tab-pane">
   <form-promotion-ui-update
       csrf=<?$this->_echo_js($csrf);?>
 
