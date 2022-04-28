@@ -134,7 +134,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f08}</td>
             <td>
-              <select id="input_name1" class="form-control" required >
+              <select id="input_name1" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name1}>${item.value}</option>`
                 )}
@@ -149,7 +149,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f16}</td>
             <td>
-              <select id="input_phone1" class="form-control" required >
+              <select id="input_phone1" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_phone1}>${item.value}</option>`
                 )}
@@ -164,7 +164,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f10}</td>
             <td>
-              <select id="input_name2" class="form-control" required >
+              <select id="input_name2" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name2}>${item.value}</option>`
                 )}
@@ -179,7 +179,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f12}</td>
             <td>
-              <select id="input_language" class="form-control" required >
+              <select id="input_language" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_language}>${item.value}</option>`
                 )}
@@ -194,7 +194,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f14}</td>
             <td>
-              <select id="input_country" class="form-control" required >
+              <select id="input_country" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_country}>${item.value}</option>`
                 )}
@@ -209,7 +209,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f18}</td>
             <td>
-              <select id="input_birthdate" class="form-control" required >
+              <select id="input_birthdate" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_birthdate}>${item.value}</option>`
                 )}
@@ -224,7 +224,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f20}</td>
             <td>
-              <select id="input_gender" class="form-control" required >
+              <select id="input_gender" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_gender}>${item.value}</option>`
                 )}
@@ -239,7 +239,7 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f22}</td>
             <td>
-              <select id="input_address" class="form-control" required >
+              <select id="input_address" class="form-control" required>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_address}>${item.value}</option>`
                 )}
