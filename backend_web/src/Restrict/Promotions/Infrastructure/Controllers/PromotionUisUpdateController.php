@@ -2,17 +2,17 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Restrict\Promotion_uis\Infrastructure\Controllers\Promotion_uisUpdateController
- * @file Promotion_uisUpdateController.php v1.0.0
+ * @name App\Restrict\Promotions\Infrastructure\Controllers\PromotionUisUpdateController
+ * @file PromotionUisUpdateController.php v1.0.0
  * @date %DATE% SPAIN
  * @observations
  */
-namespace App\Restrict\Promotion_uis\Infrastructure\Controllers;
+namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
-use App\Restrict\Promotion_uis\Application\Promotion_uisUpdateService;
+use App\Restrict\Promotions\Application\PromotionUiSaveService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -46,7 +46,7 @@ final class PromotionUisUpdateController extends RestrictController
 
         try {
             $request = ["uuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable(Promotion_uisUpdateService::class, $request);
+            $update = SF::get_callable(PromotionUiSaveService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
                 "message"=> __("{0} {1} successfully updated", __("Promotion_ui"), $uuid),
@@ -65,4 +65,4 @@ final class PromotionUisUpdateController extends RestrictController
         }
     }//update
 
-}//Promotion_uisUpdateController
+}//PromotionUisUpdateController

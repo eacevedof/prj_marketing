@@ -9,7 +9,6 @@
  */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
-use App\Restrict\Promotions\Application\PromotionUiInfoService;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
