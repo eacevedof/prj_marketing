@@ -85,6 +85,7 @@ $promotionui = [
 <div id="ui" class="tab-pane">
   <form-promotion-ui-update
       csrf=<?$this->_echo_js($csrf);?>
+      promotionuuid=<?$this->_echo_js($result["promotion"]["uuid"]);?>
 
       texts="<?$this->_echo_jslit($texts);?>"
 

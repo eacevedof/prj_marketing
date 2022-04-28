@@ -7,8 +7,8 @@ import { cssformflex } from "/assets/js/common/formflex-lit-css.js"
 import { cssfielderror } from "/assets/js/common/fielderrors-lit-css.js"
 import { selector, get_formdata } from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL_UPDATE = "/restrict/promotion_uis/update"
-const ACTION = "promotion_uis.update"
+const URL_UPDATE = "/restrict/promotions/:uuid/ui/update"
+const ACTION = "promotionuis.update"
 
 export class FormPromotionUiUpdate extends LitElement {
   static get styles() {
@@ -42,6 +42,8 @@ export class FormPromotionUiUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+    promotionuuid: {type:String},
+
     texts: {
       converter: (strjson) => {
         if (strjson) return JSON.parse(strjson)

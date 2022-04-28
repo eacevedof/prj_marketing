@@ -39,6 +39,9 @@ return [
     ["url"=>"/restrict/promotions/?int:page","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"index"],
     ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"search"],
 
+    //@promotions-tabs
+    ["url"=>"/restrict/promotions/:uuid/ui/update","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUisUpdateController", "method"=>"update", "allowed"=>["put"]],
+
     //@business data
     ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInfoController", "method"=>"info"],
     ["url"=>"/restrict/promotions/create","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInsertController", "method"=>"create"],
