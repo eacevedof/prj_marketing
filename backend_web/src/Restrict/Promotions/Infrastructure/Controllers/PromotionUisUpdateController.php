@@ -32,6 +32,7 @@ final class PromotionUisUpdateController extends RestrictController
     //@patch
     public function update(string $uuid): void
     {
+        dd($uuid,"promouuid");
         if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)

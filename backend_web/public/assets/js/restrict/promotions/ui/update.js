@@ -301,12 +301,12 @@ export class FormPromotionUiUpdate extends LitElement {
     error.clear()
 
     const response = await injson.put(
-      URL_UPDATE.concat(`/${this.fields.uuid}`), {
-      _action: ACTION,
-      _csrf: this.csrf,
-      uuid: this.fields.uuid,
-      ...this._get_data()
-    })
+      URL_UPDATE.replace(":uuid", this.promotionuuid), {
+        _action: ACTION,
+        _csrf: this.csrf,
+        uuid: this.fields.uuid,
+        ...this._get_data()
+      })
 
     this._issending = false
     this._btnsend = this.texts.tr00
