@@ -499,9 +499,6 @@ msgstr "Mobile number"
 msgid "Mobile number position"
 msgstr "Mobile number position"
 
-msgid "Birthdate"
-msgstr "Birthdate"
-
 msgid "Birthdate position"
 msgstr "Birthdate position"
 
