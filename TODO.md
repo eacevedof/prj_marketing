@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- crear eventhandler para autogeneración de tablas hijas
 - si el codigo de la excepción es: 42S22 se debe disfrazar el error de bd que se manda al front
 - configurar respuestas en login
 - $this->_if_noauth_tologin(); prepararlo para la llamada desde API
