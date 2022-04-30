@@ -3,22 +3,22 @@ namespace App\Restrict\UserPreferences\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
-
-use App\Restrict\Users\Domain\UserPreferencesEntity;
-use App\Restrict\Users\Domain\UserPreferencesRepository;
-
-use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Users\Domain\Enums\UserPreferenceType;
-use App\Restrict\Users\Domain\Events\UserWasCreated;
 use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Auth\Application\AuthService;
+use App\Restrict\Users\Domain\UserPreferencesEntity;
+use App\Restrict\Users\Domain\UserPreferencesRepository;
+use App\Restrict\Users\Domain\Enums\UserPreferenceType;
+use App\Restrict\Users\Domain\Events\UserWasCreated;
+use App\Shared\Domain\Enums\UrlType;
 
 final class UserPreferencesInsertService extends AppService implements IEventSubscriber
 {
     private AuthService $auth;
+    private UserPreferencesEntity $userppref;
+    private UserPreferencesRepository $repouserprefs;
 
     public function __construct()
     {
