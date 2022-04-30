@@ -47,7 +47,7 @@ abstract class AbsEvent implements IEvent
 
     public function aggregate_id(): int
     {
-        return $this->aggregateId;
+        return $this->aggregateid;
     }
 
     public function event_id(): string

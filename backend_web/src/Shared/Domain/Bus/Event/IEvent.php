@@ -4,7 +4,7 @@ namespace App\Shared\Domain\Bus\Event;
 interface IEvent
 {
     public static function from_primitives(
-        int $aggregateId,
+        int $aggregateid,
         array $body,
         string $eventId,
         int $occurredon,

@@ -4,6 +4,8 @@ namespace App\Restrict\UserPreferences\Application;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -13,9 +15,12 @@ use App\Restrict\Users\Domain\UserPreferencesRepository;
 use App\Restrict\Users\Domain\Enums\UserPreferenceType;
 use App\Restrict\Users\Domain\Events\UserWasCreated;
 use App\Shared\Domain\Enums\UrlType;
+use App\Shared\Infrastructure\Traits\RequestTrait;
 
 final class UserPreferencesInsertService extends AppService implements IEventSubscriber
 {
+    use RequestTrait;
+
     private AuthService $auth;
     private UserPreferencesEntity $userppref;
     private UserPreferencesRepository $repouserprefs;
@@ -29,7 +34,6 @@ final class UserPreferencesInsertService extends AppService implements IEventSub
 
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        return $this;
         if(get_class($domevent)!==UserWasCreated::class) return $this;
 
         $prefs = [
@@ -40,6 +44,16 @@ final class UserPreferencesInsertService extends AppService implements IEventSub
 
         $this->userppref->add_sysinsert($prefs, $this->auth->get_user()["id"]);
         $this->repouserprefs->insert($prefs);
+
+        $this->_load_request();
+        $tz = CF::get(UtcComponent::class)->get_timezone_by_ip($this->request->get_remote_ip());
+        $prefs = [
+            "id_user" => $domevent->aggregate_id(),
+            "pref_key" => UserPreferenceType::KEY_TZ,
+            "pref_value" => $tz
+        ];
+        $this->repouserprefs->insert($prefs);
+
         return $this;
     }
 }
