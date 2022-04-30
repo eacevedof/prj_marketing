@@ -2,8 +2,8 @@
 namespace Boot;
 
 include_once "../vendor/autoload.php";
-include_once "../boot/appbootstrap.php";
 include_once "../vendor/theframework/bootstrap.php";
+include_once "../boot/appbootstrap.php";
 
 use \ReflectionClass;
 use \ReflectionMethod;

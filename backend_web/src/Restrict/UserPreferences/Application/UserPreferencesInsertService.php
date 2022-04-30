@@ -29,6 +29,7 @@ final class UserPreferencesInsertService extends AppService implements IEventSub
 
     public function on_event(IEvent $domevent): IEventSubscriber
     {
+        return $this;
         if(get_class($domevent)!==UserWasCreated::class) return $this;
 
         $prefs = [
