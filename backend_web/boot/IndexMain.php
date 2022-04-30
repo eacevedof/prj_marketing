@@ -10,7 +10,7 @@ use \Throwable;
 
 final class IndexMain
 {
-    private $routes;
+    private array $routes;
 
     public function __construct()
     {
