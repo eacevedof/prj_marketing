@@ -1,7 +1,7 @@
 <?php
 namespace App\Restrict\Users\Application;
 
-use App\Restrict\Users\Domain\Events\UserWasCreated;
+use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -9,14 +9,14 @@ use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\UserEntity;
-use App\Shared\Infrastructure\Services\AppService;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
+use App\Shared\Infrastructure\Bus\EventBus;
+use App\Restrict\Users\Domain\Events\UserWasCreated;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
-use App\Shared\Infrastructure\Bus\EventBus;
 
 final class UsersInsertService extends AppService
 {
