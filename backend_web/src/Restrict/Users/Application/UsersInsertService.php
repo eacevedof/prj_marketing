@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Users\Application;
 
+use App\Restrict\Users\Domain\Events\UserWasCreated;
 use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -20,6 +21,7 @@ use App\Shared\Domain\Enums\ExceptionType;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Restrict\Users\Domain\Enums\UserPreferenceType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
+use App\Shared\Infrastructure\Bus\EventBus;
 
 final class UsersInsertService extends AppService
 {
@@ -128,6 +130,15 @@ final class UsersInsertService extends AppService
 
         //save user
         $id = $this->repouser->insert($insert);
+        $insert = $this->repouser->get_by_id((string) $id);
+        EventBus::instance()->publish(...[new UserWasCreated(
+            $id,
+            $insert["uuid"],
+            $insert["email"],
+            (int) $insert["id_parent"],
+            (int) $insert["id_profile"],
+        )]);
+
         $prefs = [
             "id_user" => $id,
             "pref_key" => UserPreferenceType::URL_DEFAULT_MODULE,
