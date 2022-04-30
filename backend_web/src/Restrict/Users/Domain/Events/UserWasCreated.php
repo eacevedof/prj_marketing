@@ -38,10 +38,10 @@ final class UserWasCreated extends AbsEvent
     public static function from_primitives(
         int $aggregateId,
         array $body,
-        string $eventId,
-        int $occurredon,
-        string $correlationid,
-        string $causationid
+        ?string $eventId = null,
+        ?int $occurredon = null,
+        ?string $correlationid = null,
+        ?string $causationid = null
     ): AbsEvent
     {
         return new self(
