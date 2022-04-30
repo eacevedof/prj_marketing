@@ -52,6 +52,7 @@ final class UserPreferencesInsertService extends AppService implements IEventSub
             "pref_key" => UserPreferenceType::KEY_TZ,
             "pref_value" => $tz
         ];
+        $this->userppref->add_sysinsert($prefs, $this->auth->get_user()["id"]);
         $this->repouserprefs->insert($prefs);
 
         return $this;
