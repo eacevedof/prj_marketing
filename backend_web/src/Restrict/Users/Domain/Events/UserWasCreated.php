@@ -7,16 +7,16 @@ final class UserWasCreated extends AbsEvent
 {
     private string $uuid;
     private string $email;
-    private int $idparent;
     private int $idprofile;
+    private ?int $idparent;
 
     public function __construct(
         int $iduser,
         string $uuid,
         string $email,
-        int $idparent,
         int $idprofile,
 
+        ?int $idparent = null,
         ?string $eventid = null,
         ?int $occuredon = null,
         ?string $correlationid = null,
@@ -26,8 +26,8 @@ final class UserWasCreated extends AbsEvent
         parent::__construct($iduser, $eventid, $occuredon, $correlationid, $causationid);
         $this->uuid = $uuid;
         $this->email = $email;
-        $this->idparent = $idparent;
         $this->idprofile = $idprofile;
+        $this->idparent = $idparent;
     }
 
     public static function event_name(): string
@@ -48,8 +48,8 @@ final class UserWasCreated extends AbsEvent
             $aggregateId,
             $body["uuid"],
             $body["email"],
-            $body["id_parent"],
             $body["id_profile"],
+            $body["id_parent"],
             $eventId,
             $occurredon,
             $correlationid,

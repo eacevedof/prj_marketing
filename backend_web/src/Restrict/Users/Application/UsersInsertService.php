@@ -132,7 +132,7 @@ final class UsersInsertService extends AppService
         $id = $this->repouser->insert($insert);
         $insert = $this->repouser->get_by_id((string) $id);
         EventBus::instance()->publish(...[
-            UserWasCreated::from_primitives($id, $insert)
+            UserWasCreated::from_primitives((int) $id, $insert)
         ]);
 
         $prefs = [
