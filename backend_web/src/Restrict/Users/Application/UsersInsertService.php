@@ -135,15 +135,6 @@ final class UsersInsertService extends AppService
             UserWasCreated::from_primitives((int) $id, $insert)
         ]);
 
-        $prefs = [
-            "id_user" => $id,
-            "pref_key" => UserPreferenceType::URL_DEFAULT_MODULE,
-            "pref_value" => UrlType::RESTRICT
-        ];
-
-        $this->entityuser->add_sysinsert($prefs, $this->authuser["id"]);
-        $this->repouserprefs->insert($prefs);
-
         $this->_load_request();
         $tz = CF::get(UtcComponent::class)->get_timezone_by_ip($this->request->get_remote_ip());
         $prefs = [
