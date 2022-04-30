@@ -2,24 +2,19 @@
 namespace App\Restrict\Users\Application;
 
 use App\Restrict\Users\Domain\Events\UserWasCreated;
-use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\UserEntity;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
-use App\Restrict\Users\Domain\UserPreferencesRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Restrict\Users\Domain\Enums\UserPreferenceType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Shared\Infrastructure\Bus\EventBus;
 
@@ -42,7 +37,6 @@ final class UsersInsertService extends AppService
 
         $this->entityuser = MF::get(UserEntity::class);
         $this->repouser = RF::get(UserRepository::class)->set_model($this->entityuser);
-        $this->repouserprefs = RF::get(UserPreferencesRepository::class);
         $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
