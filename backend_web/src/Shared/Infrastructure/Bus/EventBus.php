@@ -43,7 +43,7 @@ final class EventBus implements IEventBus
         foreach ($domainEvents as $event) {
             //(new EventStoreRepository())->append($event);
             foreach($this->subscribers as $subscriber) {
-                $subscriber->onDomainEvent($event);
+                $subscriber->on_event($event);
             }
         }
     }
