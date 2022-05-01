@@ -14,5 +14,6 @@ foreach ($promotionui as $field => $value) {
     $mapped[$input] = $promotionui["pos_$input"];
 }
 asort($mapped);
+$mapped = array_keys($mapped);
 print_r($mapped);
 ?>

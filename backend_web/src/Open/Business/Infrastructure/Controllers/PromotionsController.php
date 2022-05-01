@@ -31,9 +31,12 @@ final class PromotionsController extends OpenController
             $business = $business();
 
             $this->set_layout("open/business")
-                ->add_var(PageType::TITLE, $title =($business["promotion"]["description"] ?? $businessslug))
+                ->add_var(PageType::TITLE, $title = htmlentities($business["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
                 ->add_var("business", $business)
+                ->add_var( "languages", [])
+                ->add_var( "genders", [])
+                ->add_var( "countries", [])
                 ->render();
         }
         catch (NotFoundException $e) {
