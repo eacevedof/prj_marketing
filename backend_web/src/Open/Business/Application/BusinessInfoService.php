@@ -58,11 +58,18 @@ final class BusinessInfoService extends AppService
             $this->_exception(__("Promotion {$promotionslug} not found!"), ExceptionType::CODE_NOT_FOUND);
     }
 
+    private function _load_promotionui(): array
+    {
+        $this->promotionui = $this->repopromotionui->get_by_promotion((int) $this->promotion["id"]);
+        if (!$this->promotionui)
+            $this->_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
+    }
 
     public function __invoke(): array
     {
         $this->_load_businessdata();
         $this->_load_promotion();
+        $this->_load_promotionui();
 
         return [
             "businessdata" => $this->businesssdata,
