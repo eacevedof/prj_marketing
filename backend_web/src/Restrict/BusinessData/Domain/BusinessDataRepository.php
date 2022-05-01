@@ -178,4 +178,21 @@ final class BusinessDataRepository extends AppRepository
         ;
         return $this->db->query($sql)[0] ?? [];
     }
-}//BusinessDataRepository
+
+    public function get_by_slug(string $slug): array
+    {
+        $slug = $this->get_sanitized($slug);
+        $type = AppArrayType::TIMEZONE;
+        $sql = $this->_get_qbuilder()
+            ->set_comment("businessdata.get_by_slug")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.*"])
+            ->add_join("LEFT JOIN app_array ar1 ON m.id_tz = ar1.id_pk AND ar1.type='$type'")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.slug='$slug'")
+            ->set_limit(1)
+            ->select()->sql()
+        ;
+        return $this->db->query($sql)[0] ?? [];
+    }
+}

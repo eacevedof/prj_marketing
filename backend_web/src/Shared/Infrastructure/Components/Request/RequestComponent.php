@@ -4,22 +4,22 @@ namespace App\Shared\Infrastructure\Components\Request;
 
 final class RequestComponent
 {
-    public function get_post($sKey=null)
+    public function get_post($sKey=null, $default=null)
     {
         if(!$sKey) return $_POST ?? [];
-        return $_POST[$sKey] ??  null;
+        return $_POST[$sKey] ?? $default;
+    }
+
+    public function get_get($sKey=null, $default=null)
+    {
+        if(!$sKey) return $_GET ?? [];
+        return $_GET[$sKey] ?? $default;
     }
 
     public function get_files($sKey=null)
     {
         if(!$sKey) return $_FILES ?? [];
         return $_FILES[$sKey] ?? null;
-    }
-
-    public function get_get($sKey=null)
-    {
-        if(!$sKey) return $_GET ?? [];
-        return $_GET[$sKey] ?? null;
     }
 
     public function get_remote_ip(): string

@@ -22,13 +22,15 @@ final class PromotionsController extends OpenController
 {
     public function index(string $businessslug, string $promotionslug): void
     {
-        dd($this->request->get_get());
         try {
             $business = SF::get_callable(BusinessInfoService::class, [
-                "slug" => $businessslug,
-                "mode" => $this->request->get_get("mode")
+                "businessslug" => trim($businessslug),
+                "promotionslug" => trim($promotionslug),
+                "mode" => $this->request->get_get("mode", "")
             ]);
             $business = $business();
+
+
             $this->set_layout("open/business")
                 ->add_var(PageType::TITLE, $title =($business["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
