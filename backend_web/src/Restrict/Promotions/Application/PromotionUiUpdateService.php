@@ -39,9 +39,13 @@ final class PromotionUiUpdateService extends AppService
             $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
 
         $this->repopromotion = RF::get(PromotionRepository::class);
-        if (!$this->idpromotion = $this->repopromotion->get_id_by_uuid($promouuid))
+        if (!$promotion = $this->repopromotion->get_by_uuid($promouuid))
             $this->_exception(__("{0} with code {1} not found", __("Promotion"), $promouuid));
-   
+
+        if ($promotion["is_launched"])
+            $this->_exception(__("{0} with code {1} is not editable", __("Promotion"), $promouuid));
+
+        $this->idpromotion = $promotion["id"];
         $this->entitypromotionui = MF::get(PromotionUiEntity::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class)->set_model($this->entitypromotionui);
         $this->authuser = $this->auth->get_user();
