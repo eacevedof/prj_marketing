@@ -2,10 +2,6 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Restrict\Promotions\Infrastructure\Controllers\PromotionUisUpdateController
- * @file PromotionUisUpdateController.php v1.0.0
- * @date %DATE% SPAIN
- * @observations
  */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
