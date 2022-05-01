@@ -30,7 +30,6 @@ final class PromotionsController extends OpenController
             ]);
             $business = $business();
 
-
             $this->set_layout("open/business")
                 ->add_var(PageType::TITLE, $title =($business["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
