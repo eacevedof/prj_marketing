@@ -20,7 +20,7 @@ export class FormPromotionCapInsert extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["timezones","businessowners","notoryes"])}
+  _get_data() {return get_formdata(this.shadowRoot)(this.fields)(["languages","genders","countries"])}
 
   _on_cancel() {window.modalraw.hide()}
 
@@ -32,52 +32,57 @@ export class FormPromotionCapInsert extends LitElement {
     this.fields = {}
   }
 
-  inputs = {
-    email: {
-      label: html `<label for="input-email">${this.texts.f06}</label>`,
-      input: html `<input type="email" id="input-email" maxlength="100" required>`
-    },
-    name1: {
-      label: html `<label for="input-name1">${this.texts.f06}</label>`,
-      input: html `<input type="text" id="input-name1" maxlength="15" required>`
-    },
-    name2: {
-      label: html `<label for="input-name2">${this.texts.f06}</label>`,
-      input: html `<input type="text" id="input-name2" maxlength="15" required>`
-    },
-    country: {
-      label: html `<label for="input-country">${this.texts.f06}</label>`,
-      input: html `
-        <select id="input-country" class="form-control" required>
-        ${this._countries.map(item => html`<option value=${item.key}>${item.value}</option>`)}
-        </select>`
-    },
-    gender: {
-      label: html `<label for="input-gender">${this.texts.f06}</label>`,
-      input: html `
-        <select id="input-gender" class="form-control" required>
-        ${this._genders.map(item => html`<option value=${item.key}>${item.value}</option>`)}
-        </select>`
-    },
-    language: {
-      label: html `<label for="input-language">${this.texts.f06}</label>`,
-      input: html `
-        <select id="input-language" class="form-control" required>
-        ${this._languages.map(item => html`<option value=${item.key}>${item.value}</option>`)}
-        </select>`
-    },
-    phone1: {
-      label: html `<label for="input-phone1">${this.texts.f06}</label>`,
-      input: html `<input type="text" id="input-phone1" maxlength="20" required>`
-    },
-    birthdate: {
-      label: html `<label for="input-birthdate">${this.texts.f06}</label>`,
-      input: html `<input type="date" id="input-birthdate" required>`
-    },
-    address: {
-      label: html `<label for="input-address">${this.texts.f06}</label>`,
-      input: html `<input type="text" id="input-address" maxlength="100" required>`
-    },
+  get_inputs() {
+    return {
+      email: {
+        label: html`<label for="input-email">${this.texts.email}</label>`,
+        input: html`<input type="email" id="input-email" maxlength="100" required>`
+      },
+      name1: {
+        label: html`<label for="input-name1">${this.texts.name1}</label>`,
+        input: html`<input type="text" id="input-name1" maxlength="15" required>`
+      },
+      name2: {
+        label: html`<label for="input-name2">${this.texts.name2}</label>`,
+        input: html`<input type="text" id="input-name2" maxlength="15" required>`
+      },
+      country: {
+        label: html`<label for="input-country">${this.texts.country}</label>`,
+        input: html`
+          <select id="input-country" class="form-control" required>
+            ${this._countries.map(item => html`
+              <option value=${item.key}>${item.value}</option>`)}
+          </select>`
+      },
+      gender: {
+        label: html`<label for="input-gender">${this.texts.gender}</label>`,
+        input: html`
+          <select id="input-gender" class="form-control" required>
+            ${this._genders.map(item => html`
+              <option value=${item.key}>${item.value}</option>`)}
+          </select>`
+      },
+      language: {
+        label: html`<label for="input-language">${this.texts.language}</label>`,
+        input: html`
+          <select id="input-language" class="form-control" required>
+            ${this._languages.map(item => html`
+              <option value=${item.key}>${item.value}</option>`)}
+          </select>`
+      },
+      phone1: {
+        label: html`<label for="input-phone1">${this.texts.phone1}</label>`,
+        input: html`<input type="text" id="input-phone1" maxlength="20" required>`
+      },
+      birthdate: {
+        label: html`<label for="input-birthdate">${this.texts.birthdate}</label>`,
+        input: html`<input type="date" id="input-birthdate" required>`
+      },
+      address: {
+        label: html`<label for="input-address">${this.texts.address}</label>`,
+        input: html`<input type="text" id="input-address" maxlength="100" required>`
+      },
+    }
   }
 
   static properties = {
@@ -120,7 +125,7 @@ export class FormPromotionCapInsert extends LitElement {
 
   //4
   render() {
-    const inputs = this.fields.map(field => this.inputs[field])
+    const inputs = this._inputs.map(field => this.get_inputs()[field])
     return html`
       <form @submit=${this.on_submit}>
         ${inputs.map(obj => html`
