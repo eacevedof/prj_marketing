@@ -84,6 +84,7 @@ $promotionui = [
   <form-promotion-ui-update
       csrf=<?$this->_echo_js($csrf);?>
       promotionuuid=<?$this->_echo_js($result["promotion"]["uuid"]);?>
+      promoislaunched=<?$this->_echo_js($result["promotion"]["is_launched"]);?>
 
       texts="<?$this->_echo_jslit($texts);?>"
 
