@@ -28,8 +28,11 @@ final class BusinessInfoService extends AppService
 
     public function __construct(array $input)
     {
-        if (!$input["businessslug"]) $this->_exception(__("No business space provided"));
-        if (!$input["promotionslug"]) $this->_exception(__("No promotion provided"));
+        if (!$input["businessslug"])
+            $this->_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
+
+        if (!$input["promotionslug"])
+            $this->_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->input = $input;
 
@@ -39,18 +42,36 @@ final class BusinessInfoService extends AppService
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
     }
 
-    private function _get_businessdata_by_slug(): array
+    private function _load_businessdata(): array
     {
         $businessslug = $this->input["businessslug"];
-
+        $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
+        if (!$this->businesssdata)
+            $this->_exception(__("Business account {$businessslug} not found!"), ExceptionType::CODE_NOT_FOUND);
     }
+
+    private function _load_promotion(): array
+    {
+        $promotionslug = $this->input["promotionslug"];
+        $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
+        if (!$this->promotion)
+            $this->_exception(__("Promotion {$promotionslug} not found!"), ExceptionType::CODE_NOT_FOUND);
+    }
+
 
     public function __invoke(): array
     {
+        $this->_load_businessdata();
+        $this->_load_promotion();
+
         return [
-            "promotion" => [],
-            "businessdata" => [],
-            "metadata" => [], //depende si es test o no
+            "businessdata" => $this->businesssdata,
+            "promotion" => $this->promotion,
+            "promotionui" => $this->promotionui,
+
+            "metadata" => [
+
+            ], //depende si es test o no
         ];
     }
 }

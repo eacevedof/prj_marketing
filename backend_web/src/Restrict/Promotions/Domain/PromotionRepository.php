@@ -8,6 +8,7 @@
  */
 namespace App\Restrict\Promotions\Domain;
 
+use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -200,5 +201,20 @@ final class PromotionRepository extends AppRepository
     {
         $sql = "UPDATE $this->table SET slug=CONCAT(slug,'-', id) WHERE id=$id";
         $this->db->exec($sql);
+    }
+
+    public function get_by_slug(string $slug): array
+    {
+        $slug = $this->get_sanitized($slug);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promotion.get_by_slug")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.*"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.slug='$slug'")
+            ->set_limit(1)
+            ->select()->sql()
+        ;
+        return $this->db->query($sql)[0] ?? [];
     }
 }
