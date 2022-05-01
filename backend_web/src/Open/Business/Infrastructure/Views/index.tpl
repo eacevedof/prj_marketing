@@ -20,7 +20,13 @@ $promotionui = $business["promotionui"];
     <h1><?= $h1 ?></h1>
     <section>
       <?php
-      $this->_element_view("inputs", ["promotionui"=>$promotionui]);
+      $this->_element_view("inputs", [
+        "promotionui"=>$promotionui,
+        "promotionuuid" => $promotion["uuid"],
+        "languages" => $languages,
+        "countries" => $countries,
+        "genders" => $genders,
+      ]);
       ?>
     </section>
   </main>

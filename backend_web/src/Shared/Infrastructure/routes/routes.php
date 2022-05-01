@@ -1,7 +1,9 @@
 <?php
 return [
     ["url"=>"/account/:slug","controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController","method"=>"index"],
+
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\Business\Infrastructure\Controllers\PromotionsController","method"=>"index"],
+
     ["url"=>"/open/promotionscap/insert","controller"=>"App\Open\PromotionsCaps\Infrastructure\Controllers\PromotionsCapsInsertController", "method"=>"insert", "allowed"=>["post"]],
 
     ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
@@ -9,6 +11,7 @@ return [
     ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"access", "allowed"=>["post"]],
 
+//RESTRICT:
     ["url"=>"/restrict/logout","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"logout"],
     ["url"=>"/restrict","controller"=>"App\Restrict\Dashboard\Infrastructure\Controllers\DashboardController", "method"=>"index"],
 

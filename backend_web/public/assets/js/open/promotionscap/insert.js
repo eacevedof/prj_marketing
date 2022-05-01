@@ -120,17 +120,17 @@ export class FormPromotionCapInsert extends LitElement {
 
   //4
   render() {
-    const inputs = []
+    const inputs = this.fields.map(field => this.inputs[field])
     return html`
       <form @submit=${this.on_submit}>
-        <div class="flex-row">
-          <div class="form-group">
+        ${inputs.map(obj => html`
+          <div class="flex-row">
+            <div class="form-group">
 
             </div>
           </div>
-        </div>
-        
-  
+          </div>
+        `)}
 <!-- botones -->
         <div class="form-group">
           <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
