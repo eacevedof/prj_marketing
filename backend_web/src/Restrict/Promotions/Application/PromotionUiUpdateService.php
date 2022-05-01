@@ -82,6 +82,15 @@ final class PromotionUiUpdateService extends AppService
 
     private function _add_rules(): FieldsValidator
     {
+        $fn_isvalidbool = function (string $value){
+            return in_array($value, ["0", "1"]);
+        };
+
+        $fn_validint = function (string $value){
+            $value = (int) $value;
+            return ($value > -1 && $value < 10);
+        };
+
         $this->validator
             ->add_rule("id", "id", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
@@ -92,19 +101,31 @@ final class PromotionUiUpdateService extends AppService
             ->add_rule("id_owner", "id_owner", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("json_rw", "json_rw", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
+            ->add_rule("input_email", "input_email", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_email", "pos_email", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-1000");
             })
         ;
         
         return $this->validator;
     }
 
+    private function _remove_readonly(array &$promotionui): void
+    {
+        $remove = [
+            "uuid","id_owner","id_promotion"
+        ];
+        foreach ($remove as $field)
+            unset($promotionui[$field]);
+    }
+
     private function _update(array $update, array $promotionui): array
     {
         if ($promotionui["id"] !== $update["id"])
             $this->_exception(
-                __("This permission does not belong to user {0}", $this->input["_promouuid"]),
+                __("This permission does not belong to user {0}", $this->input["_promotionuuid"]),
                 ExceptionType::CODE_BAD_REQUEST
             );
 
@@ -117,6 +138,7 @@ final class PromotionUiUpdateService extends AppService
         $update = $this->entitypromotionui->map_request($update);
         $this->_check_entity_permission();
         $this->entitypromotionui->add_sysupdate($update, $this->authuser["id"]);
+        $this->_remove_readonly($update);
         $this->repopromotionui->update($update);
         return [
             "id" => $promotionui["id"],
