@@ -106,6 +106,54 @@ final class PromotionUiUpdateService extends AppService
             ->add_rule("pos_email", "pos_email", function ($data) use ($fn_validint) {
                 return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
             })
+            ->add_rule("input_gender", "input_gender", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_gender", "pos_gender", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_language", "input_language", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_language", "pos_language", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_name1", "input_name1", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_name1", "pos_name1", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_name2", "input_name2", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_name2", "pos_name2", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_phone1", "input_phone1", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_phone1", "pos_phone1", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_address", "input_address", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_address", "pos_address", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_birthdate", "input_birthdate", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_birthdate", "pos_birthdate", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_country", "input_country", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_country", "pos_country", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
         ;
         
         return $this->validator;
