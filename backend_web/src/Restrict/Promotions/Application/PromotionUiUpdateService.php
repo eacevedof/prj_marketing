@@ -88,7 +88,7 @@ final class PromotionUiUpdateService extends AppService
 
         $fn_validint = function (string $value){
             $value = (int) $value;
-            return ($value > -1 && $value < 10);
+            return ($value > -1 && $value < 101);
         };
 
         $this->validator
@@ -105,7 +105,7 @@ final class PromotionUiUpdateService extends AppService
                 return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
             })
             ->add_rule("pos_email", "pos_email", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-1000");
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
             })
         ;
         
@@ -142,7 +142,7 @@ final class PromotionUiUpdateService extends AppService
         $this->repopromotionui->update($promouireq);
         return [
             "id" => $promotionui["id"],
-            "uuid" => $promouireq["uuid"]
+            "uuid" => $promotionui["uuid"]
         ];
     }
 
