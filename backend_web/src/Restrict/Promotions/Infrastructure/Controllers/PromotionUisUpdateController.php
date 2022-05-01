@@ -12,7 +12,7 @@ namespace App\Restrict\Promotions\Infrastructure\Controllers;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
-use App\Restrict\Promotions\Application\PromotionUiSaveService;
+use App\Restrict\Promotions\Application\PromotionUiUpdateService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -32,7 +32,6 @@ final class PromotionUisUpdateController extends RestrictController
     //@patch
     public function update(string $uuid): void
     {
-        dd($uuid,"promouuid");
         if (!$this->request->is_accept_json())
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
@@ -47,7 +46,7 @@ final class PromotionUisUpdateController extends RestrictController
 
         try {
             $request = ["uuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable(PromotionUiSaveService::class, $request);
+            $update = SF::get_callable(PromotionUiUpdateService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
                 "message"=> __("{0} {1} successfully updated", __("Promotion_ui"), $uuid),

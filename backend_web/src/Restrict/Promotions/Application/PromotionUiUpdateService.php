@@ -17,7 +17,7 @@ use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
-final class PromotionUiSaveService extends AppService
+final class PromotionUiUpdateService extends AppService
 {
     use RequestTrait;
 
