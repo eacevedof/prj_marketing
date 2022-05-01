@@ -37,7 +37,7 @@ final class BusinessInfoService extends AppService
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
     }
 
-    private function _load_businessdata(): array
+    private function _load_businessdata(): void
     {
         $businessslug = $this->input["businessslug"];
         $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
@@ -45,7 +45,7 @@ final class BusinessInfoService extends AppService
             $this->_exception(__("Business account {$businessslug} not found!"), ExceptionType::CODE_NOT_FOUND);
     }
 
-    private function _load_promotion(): array
+    private function _load_promotion(): void
     {
         $promotionslug = $this->input["promotionslug"];
         $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
@@ -53,7 +53,7 @@ final class BusinessInfoService extends AppService
             $this->_exception(__("Promotion {$promotionslug} not found!"), ExceptionType::CODE_NOT_FOUND);
     }
 
-    private function _load_promotionui(): array
+    private function _load_promotionui(): void
     {
         $this->promotionui = $this->repopromotionui->get_by_promotion((int) $this->promotion["id"]);
         if (!$this->promotionui)
