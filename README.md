@@ -39,6 +39,9 @@ run-test
 - business manager
   - Ve ciertos módulos y CRUD dependiendo de permisos.
   
+### Ejemplo carga de tab:
+- [http://localhost:900/restrict/promotions/1?uuid=626e89da5d8ac&view=edit&tab=ui](http://localhost:900/restrict/promotions/1?uuid=626e89da5d8ac&view=edit&tab=ui)
+
 ### Ejemplo dttable
 ```js
 button.add_topbtn({

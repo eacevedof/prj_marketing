@@ -5,7 +5,7 @@
  */
 if (is_null($result["promotionui"])) return;
 $promotionui = $result["promotionui"];
-
+//dd($promotionui);
 $texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
@@ -47,8 +47,6 @@ $promotionui = [
     "id" => $promotionui["id"] ?? "",
     "uuid" => $promotionui["uuid"] ?? "",
     "id_owner" => $promotionui["id_owner"] ?? "",
-    "code_erp" => $promotionui["code_erp"] ?? "",
-    "description" => $promotionui["description"] ?? "",
     "id_promotion" => $promotionui["id_promotion"] ?? $result["promotion"]["id"],
 
     "input_email" => $promotionui["input_email"] ?? "1",

@@ -28,7 +28,7 @@ final class PromotionUiUpdateService extends AppService
     private PromotionUiRepository $repopromotionui;
     private FieldsValidator $validator;
     private PromotionUiEntity $entitypromotionui;
-    private int $iduser;
+    private int $idpromotion;
 
     public function __construct(array $input)
     {
@@ -36,15 +36,13 @@ final class PromotionUiUpdateService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        if (!$useruuid = $this->input["_useruuid"])
+        if (!$promouuid = $this->input["_promotionuuid"])
             $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
 
         $this->repopromotion = RF::get(PromotionRepository::class);
-        if (!$this->iduser = $this->repopromotion->get_id_by_uuid($useruuid))
-            $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
-        if ($this->iduser === 1)
-            $this->_exception(__("You can not add permissions to this user"));
-
+        if (!$this->idpromotion = $this->repopromotion->get_id_by_uuid($promouuid))
+            $this->_exception(__("{0} with code {1} not found", __("Promotion"), $promouuid));
+   
         $this->entitypromotionui = MF::get(PromotionUiEntity::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class)->set_model($this->entitypromotionui);
         $this->authuser = $this->auth->get_user();
@@ -66,97 +64,47 @@ final class PromotionUiUpdateService extends AppService
         //si es super puede interactuar con la entidad
         if ($this->auth->is_root_super()) return;
 
-        //si el us en sesion se quiere agregar permisos
-        $permuser = $this->repopromotion->get_by_id($this->iduser);
-        $idauthuser = (int) $this->authuser["id"];
-        if ($idauthuser === $this->iduser)
-            $this->_exception(__("You are not allowed to change your own permissions"));
-
-        //un root puede cambiar el de cualquiera (menos el de el mismo, if anterior)
+        //un root puede cambiar la entidad de cualquiera
         if ($this->auth->is_root()) return;
 
-        //un sysadmin puede cambiar solo a los que tiene debajo
-        if ($this->auth->is_sysadmin() && $this->auth->is_business($permuser["id_profile"])) return;
+        //un sysadmin puede cambiar los de cualquiera
+        if ($this->auth->is_sysadmin()) return;
 
-        $identowner = $this->repopromotion->get_idowner($this->iduser);
-        //si logado es propietario y el bm a modificar le pertenece
-        if ($this->auth->is_business_owner()
-            && $this->auth->is_business_manager($permuser["id_profile"])
-            && ((int) $this->authuser["id"]) === $identowner
-        )
+        $identowner = $this->repopromotion->get_by_id($this->idpromotion)["id_owner"];
+        //si es bow o bm y su idwoner es el de la ui
+        if ($this->auth->get_idowner() === $identowner)
             return;
-
-        //to-do, solo se pueden agregar los permisos que tiene el owner ninguno más
 
         $this->_exception(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
         );
     }
 
-    private function _skip_validation_insert(): self
-    {
-        $this->validator
-            ->add_skip("id")
-            ->add_skip("uuid")
-            ->add_skip("id_user")
-        ;
-        return $this;
-    }
-
     private function _add_rules(): FieldsValidator
     {
         $this->validator
             ->add_rule("id", "id", function ($data) {
-                if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("uuid", "uuid", function ($data) {
-                if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("id_user", "id_user", function ($data) {
-                if ($data["data"]["_new"]) return false;
+            ->add_rule("id_owner", "id_owner", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
             ->add_rule("json_rw", "json_rw", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("json_rw", "valid_json", function ($data){
-                return $this->_is_valid_json($data["value"]) ? false : __("Invalid Json document");
-            })
-            ->add_rule("json_rw", "valid rules", function ($data){
-                $values = json_decode($data["value"], 1);
-                if (!$values) return false;
-
-                $allpolicies = UserPolicyType::get_all();
-                $invalid = [];
-                foreach ($values as $policy){
-                    if (!in_array($policy, $allpolicies))
-                        $invalid[] = $policy;
-                }
-                if (!$invalid) return false;
-                $invalid = implode(", ",$invalid);
-                //cuidado con esto. Un servicio no deberia deovlver html solo texto plano
-                //para los casos en los que es consumido por otra interfaz
-                $valid = "\"".implode("\",<br/>\"", $allpolicies)."\"";
-                return __("Invalid policies: {0} <br/>Valid are:<br/>{1}", $invalid, $valid);
             })
         ;
         
         return $this->validator;
     }
 
-    private function _is_valid_json(string $string): bool
+    private function _update(array $update, array $promotionui): array
     {
-        json_decode($string);
-        return json_last_error() === JSON_ERROR_NONE;
-    }
-
-    private function _update(array $update, array $permissions): array
-    {
-        if ($permissions["id"] !== $update["id"])
+        if ($promotionui["id"] !== $update["id"])
             $this->_exception(
-                __("This permission does not belong to user {0}", $this->input["_useruuid"]),
+                __("This permission does not belong to user {0}", $this->input["_promouuid"]),
                 ExceptionType::CODE_BAD_REQUEST
             );
 
@@ -171,26 +119,7 @@ final class PromotionUiUpdateService extends AppService
         $this->entitypromotionui->add_sysupdate($update, $this->authuser["id"]);
         $this->repopromotionui->update($update);
         return [
-            "id" => $permissions["id"],
-            "uuid" => $update["uuid"]
-        ];
-    }
-    
-    private function _insert(array $update): array
-    {
-        $update["_new"] = true;
-        $this->validator = VF::get($update, $this->entitypromotionui);
-        if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
-            throw new FieldsException(__("Fields validation errors"));
-        }
-        $update["id_user"] = $this->iduser;
-        $update["uuid"] = uniqid();
-        $update = $this->entitypromotionui->map_request($update);
-        $this->entitypromotionui->add_sysinsert($update, $this->authuser["id"]);
-        $id = $this->repopromotionui->insert($update);
-        return [
-            "id" => $id,
+            "id" => $promotionui["id"],
             "uuid" => $update["uuid"]
         ];
     }
@@ -201,12 +130,10 @@ final class PromotionUiUpdateService extends AppService
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->_check_entity_permission();
-
-        $update["_new"] = false;
         $this->validator = VF::get($update, $this->entitypromotionui);
 
-        return ($permissions = $this->repopromotionui->get_by_user($this->iduser))
-            ? $this->_update($update, $permissions)
-            : $this->_insert($update);
+        return ($promotionui = $this->repopromotionui->get_by_id($this->idpromotion))
+            ? $this->_update($update, $promotionui)
+            : [];
     }
 }

@@ -8,7 +8,7 @@ import { cssfielderror } from "/assets/js/common/fielderrors-lit-css.js"
 import { selector, get_formdata } from "/assets/js/common/shadowroot/shadowroot.js"
 
 const URL_UPDATE = "/restrict/promotions/:uuid/ui/update"
-const ACTION = "promotionuis.update"
+const ACTION = "promotionui.update"
 
 export class FormPromotionUiUpdate extends LitElement {
   static get styles() {
@@ -26,7 +26,7 @@ export class FormPromotionUiUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid"])
+    return get_formdata(this.shadowRoot)(this.fields)(["uuid","id","id_promotion","id_owner","notoryes"])
   }
 
   _on_cancel() {
@@ -65,8 +65,6 @@ export class FormPromotionUiUpdate extends LitElement {
     _id: { type: String, state: true },
     _uuid: { type: String, state: true },
     _id_owner: { type: String, state: true },
-    _code_erp: { type: String, state: true },
-    _description: { type: String, state: true },
     _id_promotion: { type: String, state: true },
     _input_email: { type: String, state: true },
     _pos_email: { type: String, state: true },
@@ -306,7 +304,8 @@ export class FormPromotionUiUpdate extends LitElement {
         _csrf: this.csrf,
         uuid: this.fields.uuid,
         ...this._get_data()
-      })
+      }
+    )
 
     this._issending = false
     this._btnsend = this.texts.tr00

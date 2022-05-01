@@ -41,7 +41,7 @@ final class PromotionUisUpdateController extends RestrictController
                 ->show();
 
         try {
-            $request = ["uuid"=>$uuid] + $this->request->get_post();
+            $request = ["_promotionuuid"=>$uuid] + $this->request->get_post();
             $update = SF::get_callable(PromotionUiUpdateService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
