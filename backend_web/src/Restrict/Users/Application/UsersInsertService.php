@@ -13,7 +13,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserRepository;
 use TheFramework\Components\Session\ComponentEncdecrypt;
 use App\Shared\Infrastructure\Bus\EventBus;
-use App\Restrict\Users\Domain\Events\UserWasCreated;
+use App\Restrict\Users\Domain\Events\UserWasCreatedEvent;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -126,7 +126,7 @@ final class UsersInsertService extends AppService
         $id = $this->repouser->insert($insert);
         $insert = $this->repouser->get_by_id((string) $id);
         EventBus::instance()->publish(...[
-            UserWasCreated::from_primitives($id, $insert)
+            UserWasCreatedEvent::from_primitives($id, $insert)
         ]);
 
         return [

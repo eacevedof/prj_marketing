@@ -11,7 +11,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserPermissionsEntity;
 use App\Restrict\Users\Domain\UserPermissionsRepository;
 use App\Restrict\Users\Domain\Enums\UserPermissionType;
-use App\Restrict\Users\Domain\Events\UserWasCreated;
+use App\Restrict\Users\Domain\Events\UserWasCreatedEvent;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 
 final class UserPermissionsInsertService extends AppService implements IEventSubscriber
@@ -31,7 +31,7 @@ final class UserPermissionsInsertService extends AppService implements IEventSub
 
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if(get_class($domevent)!==UserWasCreated::class) return $this;
+        if(get_class($domevent)!==UserWasCreatedEvent::class) return $this;
 
         $permission = [
             "id_user" => $domevent->aggregate_id(),

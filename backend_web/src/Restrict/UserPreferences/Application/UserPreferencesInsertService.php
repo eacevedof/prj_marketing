@@ -13,7 +13,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\UserPreferencesEntity;
 use App\Restrict\Users\Domain\UserPreferencesRepository;
 use App\Restrict\Users\Domain\Enums\UserPreferenceType;
-use App\Restrict\Users\Domain\Events\UserWasCreated;
+use App\Restrict\Users\Domain\Events\UserWasCreatedEvent;
 use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 
@@ -34,7 +34,7 @@ final class UserPreferencesInsertService extends AppService implements IEventSub
 
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if(get_class($domevent)!==UserWasCreated::class) return $this;
+        if(get_class($domevent)!==UserWasCreatedEvent::class) return $this;
 
         $prefs = [
             "id_user" => $domevent->aggregate_id(),

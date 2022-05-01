@@ -2,6 +2,8 @@
 namespace App\Restrict\Promotions\Application;
 
 use App\Checker\Application\CheckerService;
+use App\Restrict\Promotions\Domain\Events\PromotionWasCreatedEvent;
+use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
@@ -161,6 +163,11 @@ final class PromotionsInsertService extends AppService
         $this->_map_entity($insert);
         $id = $this->repopromotion->insert($insert);
         $this->repopromotion->update_slug_with_id($id);
+        $promotion = $this->repopromotion->get_by_id($id);
+        EventBus::instance()->publish(...[
+            PromotionWasCreatedEvent::from_primitives($id, $promotion)
+        ]);
+
         return [
             "id" => $id,
             "uuid" => $insert["uuid"]

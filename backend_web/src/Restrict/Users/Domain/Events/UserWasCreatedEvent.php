@@ -3,7 +3,7 @@ namespace App\Restrict\Users\Domain\Events;
 
 use App\Shared\Infrastructure\Bus\AbsEvent;
 
-final class UserWasCreated extends AbsEvent
+final class UserWasCreatedEvent extends AbsEvent
 {
     private string $uuid;
     private string $email;
