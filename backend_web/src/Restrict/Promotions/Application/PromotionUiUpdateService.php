@@ -121,11 +121,11 @@ final class PromotionUiUpdateService extends AppService
             unset($promotionui[$field]);
     }
 
-    private function _update(array $update, array $promotionui): array
+    private function _update(array $promouireq, array $promotionui): array
     {
-        if ($promotionui["id"] !== $update["id"])
+        if ($promouireq["id"] !== $promotionui["id"])
             $this->_exception(
-                __("This permission does not belong to user {0}", $this->input["_promotionuuid"]),
+                __("This promotion UI does not belong to promotion {0}", $this->input["_promotionuuid"]),
                 ExceptionType::CODE_BAD_REQUEST
             );
 
@@ -135,27 +135,29 @@ final class PromotionUiUpdateService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entitypromotionui->map_request($update);
+        $promouireq = $this->entitypromotionui->map_request($promouireq);
         $this->_check_entity_permission();
-        $this->entitypromotionui->add_sysupdate($update, $this->authuser["id"]);
-        $this->_remove_readonly($update);
-        $this->repopromotionui->update($update);
+        $this->entitypromotionui->add_sysupdate($promouireq, $this->authuser["id"]);
+        $this->_remove_readonly($promouireq);
+        $this->repopromotionui->update($promouireq);
         return [
             "id" => $promotionui["id"],
-            "uuid" => $update["uuid"]
+            "uuid" => $promouireq["uuid"]
         ];
     }
 
     public function __invoke(): array
     {
-        if (!$update = $this->_get_req_without_ops($this->input))
+        if (!$promouireq = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->_check_entity_permission();
-        $this->validator = VF::get($update, $this->entitypromotionui);
+        $this->validator = VF::get($promouireq, $this->entitypromotionui);
 
-        return ($promotionui = $this->repopromotionui->get_by_id($this->idpromotion))
-            ? $this->_update($update, $promotionui)
-            : [];
+        $promotionui = $this->repopromotionui->get_by_promotion($this->idpromotion);
+        if (!$promotionui)
+            $this->_exception(__("{0} not found!", __("Promotion UI")), ExceptionType::CODE_NOT_FOUND);
+
+        return $this->_update($promouireq, $promotionui);
     }
 }

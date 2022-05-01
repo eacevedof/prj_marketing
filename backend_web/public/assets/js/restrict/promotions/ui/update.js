@@ -26,7 +26,7 @@ export class FormPromotionUiUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid","id","id_promotion","id_owner","notoryes"])
+    return get_formdata(this.shadowRoot)(this.fields)(["uuid", "id", "id_promotion", "id_owner","notoryes"])
   }
 
   _on_cancel() {
@@ -302,7 +302,10 @@ export class FormPromotionUiUpdate extends LitElement {
       URL_UPDATE.replace(":uuid", this.promotionuuid), {
         _action: ACTION,
         _csrf: this.csrf,
+        id: this.fields.id,
         uuid: this.fields.uuid,
+        id_owner: this.fields.id_owner,
+
         ...this._get_data()
       }
     )
