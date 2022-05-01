@@ -1,17 +1,16 @@
 import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
-import get_cssrules from "/assets/js/common/cssrules.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
 import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
-import {get_link, get_img_link} from "/assets/js/common/html/link.js"
+
 
 const URL_POST = "/open/promotionscap/insert"
 const ACTION = "promotionscap.insert"
 
-export class FormPromotionInsert extends LitElement {
+export class FormPromotionCapInsert extends LitElement {
   static get styles() {
     return [
       cssformflex,
@@ -33,14 +32,53 @@ export class FormPromotionInsert extends LitElement {
     this.fields = {}
   }
 
-  inputs = [
-      {
-        email: {
-          label: html `<label for="input-email">${this.texts.f06}</label>`,
-          input: html `<input type="email" id="input-email">`
-        }
+  inputs = {
+    email: {
+      label: html `<label for="input-email">${this.texts.f06}</label>`,
+      input: html `<input type="email" id="input-email" maxlength="100" required>`
     },
-  ]
+    name1: {
+      label: html `<label for="input-name1">${this.texts.f06}</label>`,
+      input: html `<input type="text" id="input-name1" maxlength="15" required>`
+    },
+    name2: {
+      label: html `<label for="input-name2">${this.texts.f06}</label>`,
+      input: html `<input type="text" id="input-name2" maxlength="15" required>`
+    },
+    country: {
+      label: html `<label for="input-country">${this.texts.f06}</label>`,
+      input: html `
+        <select id="input-country" class="form-control" required>
+        ${this._countries.map(item => html`<option value=${item.key}>${item.value}</option>`)}
+        </select>`
+    },
+    gender: {
+      label: html `<label for="input-gender">${this.texts.f06}</label>`,
+      input: html `
+        <select id="input-gender" class="form-control" required>
+        ${this._genders.map(item => html`<option value=${item.key}>${item.value}</option>`)}
+        </select>`
+    },
+    language: {
+      label: html `<label for="input-language">${this.texts.f06}</label>`,
+      input: html `
+        <select id="input-language" class="form-control" required>
+        ${this._languages.map(item => html`<option value=${item.key}>${item.value}</option>`)}
+        </select>`
+    },
+    phone1: {
+      label: html `<label for="input-phone1">${this.texts.f06}</label>`,
+      input: html `<input type="text" id="input-phone1" maxlength="20" required>`
+    },
+    birthdate: {
+      label: html `<label for="input-birthdate">${this.texts.f06}</label>`,
+      input: html `<input type="date" id="input-birthdate" required>`
+    },
+    address: {
+      label: html `<label for="input-address">${this.texts.f06}</label>`,
+      input: html `<input type="text" id="input-address" maxlength="100" required>`
+    },
+  }
 
   static properties = {
     csrf: {type: String},
@@ -299,10 +337,10 @@ export class FormPromotionInsert extends LitElement {
   //5
   firstUpdated(changedProperties) {
     try {
-      this._$get("description").focus()
+      this._$get("input-email").focus()
     }
     catch(e) {
-      console.log("description no focusable",e)
+      console.log("input-email no focusable",e)
     }
   }
 
@@ -349,7 +387,7 @@ export class FormPromotionInsert extends LitElement {
 
   }//on_submit
 
-}//FormCreate
+}//
 
-if (!customElements.get("form-promotion-insert"))
-  customElements.define("form-promotion-insert", FormPromotionInsert)
+if (!customElements.get("form-promotion-cap-insert"))
+  customElements.define("form-promotion-cap-insert", FormPromotionCapInsert)
