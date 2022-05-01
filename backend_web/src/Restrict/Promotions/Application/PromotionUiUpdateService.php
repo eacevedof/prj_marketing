@@ -10,7 +10,6 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Restrict\Promotions\Domain\PromotionEntity;
 use App\Restrict\Promotions\Domain\PromotionUiEntity;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
@@ -115,7 +114,7 @@ final class PromotionUiUpdateService extends AppService
     private function _remove_readonly(array &$promotionui): void
     {
         $remove = [
-            "uuid","id_owner","id_promotion"
+            "uuid", "id_owner", "id_promotion"
         ];
         foreach ($remove as $field)
             unset($promotionui[$field]);
@@ -129,7 +128,6 @@ final class PromotionUiUpdateService extends AppService
                 ExceptionType::CODE_BAD_REQUEST
             );
 
-        //no se hace skip pq se tiene que cumplir todo
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
