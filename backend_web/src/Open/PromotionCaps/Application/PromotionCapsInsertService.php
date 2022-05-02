@@ -130,6 +130,14 @@ final class PromotionCapsInsertService extends AppService
                 });
             }
 
+            if ($field === PromotionCapUserType::INPUT_PHONE) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::name_format($data["value"])
+                        ? false
+                        : __("Wrong first name format. (Only letters allowed)");
+                });
+            }
+
             if ($field === PromotionCapUserType::INPUT_ADDRESS) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     return CheckerService::address_format($data["value"])
@@ -137,63 +145,21 @@ final class PromotionCapsInsertService extends AppService
                         : __("Wrong address format. Only letters allowed");
                 });
             }
+
+            if ($field === PromotionCapUserType::INPUT_BIRTHDATE) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::is_valid_date($data["value"])
+                        ? false
+                        : __("Wrong birthdate value");
+                });
+            }
+
         }
 
         $toskip = array_diff($fields, PromotionCapUserType::get_all());
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);
 
-
-/*
-        $this->validator
-            ->add_rule("id_owner", "empty", function ($data) {
-                if ($this->auth->is_system() && !trim($data["value"]))
-                    return __("Empty field is not allowed");
-                return false;
-            })
-            ->add_rule("description", "empty", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("bgimage_xs", "bgimage_xs", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_sm", "bgimage_sm", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_md", "bgimage_md", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_lg", "bgimage_lg", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_xl", "bgimage_xl", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_xxl", "bgimage_xxl", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("id_tz", "id_tz", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("date_from", "date_from", function ($data) {
-                if (!$value = $data["value"]) return __("Empty field is not allowed");
-                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
-                if ($value>$data["data"]["date_to"]) return __("Date from is greater than Date to");
-                return false;
-            })
-            ->add_rule("date_to", "date_to", function ($data) {
-                if (!$value = $data["value"]) return __("Empty field is not allowed");
-                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
-                if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
-                return false;
-            });
-*/
         return $this->validator;
     }
     public function __invoke(): array

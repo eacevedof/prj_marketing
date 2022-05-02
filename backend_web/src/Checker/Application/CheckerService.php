@@ -52,4 +52,16 @@ final class CheckerService
         preg_match(self::ADDRESS_PATTERN, $address, $matches);
         return (bool) ($matches[0] ?? "");
     }
+
+    public static function is_valid_date(string $date): bool
+    {
+        if (strlen($date)!=10) return false;
+        $date = explode("-",$date);
+        return checkdate(
+            (int)$date[0],
+            (int)($date[1] ?? ""),
+            (int)($date[2] ?? "")
+        );
+    }
+
 }
