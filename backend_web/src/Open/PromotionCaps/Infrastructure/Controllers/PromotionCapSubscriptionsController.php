@@ -1,10 +1,10 @@
 <?php
 /**
+ * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  */
-namespace App\Open\PromotionsCaps\Infrastructure\Controllers;
+namespace App\Open\PromotionCaps\Infrastructure\Controllers;
 
-use App\Restrict\Users\Application\UsersInfoService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
@@ -13,9 +13,9 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\Business\Application\BusinessInfoService;
 use App\Shared\Domain\Enums\PageType;
 
-final class PromotionsCapsController extends OpenController
+final class PromotionCapSubscriptionsController extends OpenController
 {
-    public function insert(string $promotionuuid): void
+    public function index(string $businessslug, string $promotionslug): void
     {
         try {
             $business = SF::get_callable(BusinessInfoService::class, [
@@ -25,7 +25,7 @@ final class PromotionsCapsController extends OpenController
             ]);
             $business = $business();
 
-            $this->set_layout("open/business")
+            $this->set_layout("open/promotioncaps")
                 ->add_var(PageType::TITLE, $title = htmlentities($business["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
                 ->add_var("business", $business)

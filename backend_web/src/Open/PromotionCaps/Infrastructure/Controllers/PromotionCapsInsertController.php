@@ -1,15 +1,9 @@
 <?php
 /**
- * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Open\Business\Infrastructure\Controllers\PromotionsController
- * @file PromotionsController.php v1.0.0
- * @date 30-10-2021 14:33 SPAIN
- * @observations
  */
-namespace App\Open\Business\Infrastructure\Controllers;
+namespace App\Open\PromotionCaps\Infrastructure\Controllers;
 
-use App\Restrict\Users\Application\UsersInfoService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
@@ -18,9 +12,9 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\Business\Application\BusinessInfoService;
 use App\Shared\Domain\Enums\PageType;
 
-final class PromotionsController extends OpenController
+final class PromotionCapsInsertController extends OpenController
 {
-    public function index(string $businessslug, string $promotionslug): void
+    public function insert(string $promotionuuid): void
     {
         try {
             $business = SF::get_callable(BusinessInfoService::class, [

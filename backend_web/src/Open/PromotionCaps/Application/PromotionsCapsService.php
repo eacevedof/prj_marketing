@@ -1,5 +1,5 @@
 <?php
-namespace App\Open\Business\Application;
+namespace App\Open\PromotionCaps\Application;
 
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;

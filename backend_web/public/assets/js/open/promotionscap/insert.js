@@ -1,4 +1,5 @@
 import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
+import get_cssrules from "/assets/js/common/cssrules.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
@@ -6,16 +7,20 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-
 const URL_POST = "/open/promotionscap/insert"
 const ACTION = "promotionscap.insert"
 
 export class FormPromotionCapInsert extends LitElement {
   static get styles() {
+    const globalStyle = css([get_cssrules([
+      "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
+      "/themes/valex/assets/css/style.css",
+    ])])
     return [
+      globalStyle,
       cssformflex,
       cssfielderror
-    ]
+    ];
   }
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
