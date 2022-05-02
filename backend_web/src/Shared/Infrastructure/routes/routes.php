@@ -1,7 +1,7 @@
 <?php
 return [
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapSubscriptionsController","method"=>"index"],
-    ["url"=>"/open/promotionscap/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsInsertController", "method"=>"insert", "allowed"=>["post"]],
+    ["url"=>"/open/promotionscap/:uuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsInsertController", "method"=>"insert", "allowed"=>["post"]],
 
     ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"access", "allowed"=>["post"]],
