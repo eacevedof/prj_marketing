@@ -51,12 +51,18 @@ final class PromotionCapsInsertService extends AppService
         if (!$this->promotion["is_published"])
             $this->_exception(__("This promotion is paused"), ExceptionType::CODE_UNAUTHORIZED);
 
-
         $utc = new UtcComponent();
         $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $this->promotion["id_tz"]);
         $utcfrom = $utc->get_dt_into_tz($this->promotion["date_from"], $promotz);
         $utcto = $utc->get_dt_into_tz($this->promotion["date_to"], $promotz);
         $utcnow = $utc->get_dt_by_tz();
+        $dt = new DateComponent();
+        $seconds = $dt->get_seconds_between($utcfrom, $utcnow);
+        if($seconds<0)
+            $this->_exception(__("Sorry but this promotion has not started yet"));
+        $seconds = $dt->get_seconds_between($utcnow, $utcto);
+        if($seconds<0)
+            $this->_exception(__("Sorry but this promotion has finished"));
 
     }
 
