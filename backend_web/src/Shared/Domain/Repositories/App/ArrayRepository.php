@@ -170,4 +170,4 @@ final class ArrayRepository extends AppRepository
         return (bool) $this->db->query($sql, 0, 0);
     }
 
-}//ArrayRepository
+}

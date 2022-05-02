@@ -18,6 +18,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 
@@ -34,6 +35,7 @@ final class PromotionCapsInsertService extends AppService
     private PromotionUiRepository $repopromotionui;
     private PromotionCapSubscriptionsRepository $reposubscription;
     private PromotionCapUsersRepository $repopromocapuser;
+    private ArrayRepository $repoarray;
 
     private array $businesssdata;
     private array $promotion;
@@ -47,7 +49,7 @@ final class PromotionCapsInsertService extends AppService
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
         $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
-        //$this->repobusinessdata = RF::get(BusinessDataRepository::class);
+        $this->repoarray = RF::get(ArrayRepository::class);
         $this->_load_request();
     }
 
@@ -156,13 +158,29 @@ final class PromotionCapsInsertService extends AppService
 
             if ($field === PromotionCapUserType::INPUT_COUNTRY) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::is_valid_date($data["value"])
+                    return $this->repoarray->exists((int)$data["value"], AppArrayType::COUNTRY, "id_pk")
                         ? false
-                        : __("Wrong birthdate value");
+                        : __("Unrecognized country");
                 });
             }
 
-        }
+            if ($field === PromotionCapUserType::INPUT_LANGUAGE) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return $this->repoarray->exists((int)$data["value"], AppArrayType::LANGUAGE, "id_pk")
+                        ? false
+                        : __("Unrecognized language");
+                });
+            }
+
+            if ($field === PromotionCapUserType::INPUT_GENDER) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return $this->repoarray->exists((int)$data["value"], AppArrayType::GENDER, "id_pk")
+                        ? false
+                        : __("Unrecognized gender");
+                });
+            }
+
+        }//foreach
 
         $toskip = array_diff($fields, PromotionCapUserType::get_all());
         foreach ($toskip as $skip)
