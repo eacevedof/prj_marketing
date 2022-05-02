@@ -33,10 +33,11 @@ final class PromotionCapSubscriptionsController extends OpenController
                 ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $result)
-                ->add_var("languages", $this->picklist->get_languages())
-                ->add_var("genders", $this->picklist->get_profiles())
-                ->add_var("countries", $this->picklist->get_countries())
-                ->render();
+                ->add_var("languages", $picklist->get_languages())
+                ->add_var("genders", $picklist->get_genders())
+                ->add_var("countries", $picklist->get_countries());
+            unset($business, $result, $title);
+            $this->view->render();
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
