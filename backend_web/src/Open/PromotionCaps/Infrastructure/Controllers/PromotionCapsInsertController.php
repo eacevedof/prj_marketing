@@ -15,10 +15,10 @@ use App\Shared\Domain\Enums\PageType;
 final class PromotionCapsInsertController extends OpenController
 {
 
-    public function insert(string $uuid): void
+    public function insert(string $promouuid): void
     {
         try {
-            dd($uuid);
+            die($promouuid);
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)

@@ -7,7 +7,7 @@ import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
-const URL_POST = "/open/promotionscap/:uuid/insert"
+const URL_POST = "/open/promotionscap/:promouuid/insert"
 const ACTION = "promotionscap.insert"
 
 export class FormPromotionCapInsert extends LitElement {
@@ -193,7 +193,7 @@ export class FormPromotionCapInsert extends LitElement {
     error.clear()
 
     const response = await injson.post(
-      URL_POST.replace(":uuid", this.promotionuuid), {
+      URL_POST.replace(":promouuid", this.promotionuuid), {
         _action: ACTION,
         _csrf: this.csrf,
         ...this._get_data()
