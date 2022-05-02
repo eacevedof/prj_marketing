@@ -30,4 +30,9 @@ final class CheckerService
             return true;
         return false;
     }
+
+    public static function is_valid_email(string $email): bool
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
 }

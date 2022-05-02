@@ -173,7 +173,7 @@ final class PromotionUiRepository extends AppRepository
         return $this;
     }
 
-    public function get_by_promotion(int $idpromotion): array
+    public function get_by_promotion(int $idpromotion, array $fields = []): array
     {
         $sql = $this->_get_qbuilder()
             ->set_comment("promotionuirepository.get_by_promotion")
@@ -181,8 +181,31 @@ final class PromotionUiRepository extends AppRepository
             ->set_getfields(["m.*"])
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_promotion=$idpromotion")
-            ->select()->sql()
         ;
+        if ($fields) $sql->set_getfields($fields);
+        $sql = $sql->select()->sql();
         return $this->db->query($sql)[0] ?? [];
+    }
+
+    public function get_active_fields(int $idpromotion): array
+    {
+        $promotionui = $this->get_by_promotion($idpromotion, [
+            "input_email","pos_email","input_name1","pos_name1","input_name2","pos_name2","input_language","pos_language",
+            "input_country","pos_country","input_phone1","pos_phone1","input_birthdate","pos_birthdate","input_gender",
+            "pos_gender","input_address","pos_address"
+        ]);
+
+        $mapped = [];
+        foreach ($promotionui as $field => $value) {
+            $parts = explode("_", $field);
+            $prefix = $parts[0];
+            if ($prefix!=="input") continue;
+            if (!$value) continue;
+            $input = $parts[1];
+            $mapped[$input] = $promotionui["pos_$input"];
+        }
+        asort($mapped);
+        $mapped = array_keys($mapped);
+        return $mapped;
     }
 }//PromotionUiRepository

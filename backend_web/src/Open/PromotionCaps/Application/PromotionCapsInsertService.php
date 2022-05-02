@@ -2,6 +2,7 @@
 namespace App\Open\PromotionCaps\Application;
 
 use App\Checker\Application\CheckerService;
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapUserType;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
@@ -93,10 +94,32 @@ final class PromotionCapsInsertService extends AppService
             $this->_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
     }
 
-    private function _add_rules(): FieldsValidator
+    private function _add_rules_by_ui(): FieldsValidator
     {
-        $this->validator = VF::get($this->input, $capuser = MF::get(PromotionCapUsersEntity::class));
+        $promocapuser = MF::get(PromotionCapUsersEntity::class);
+        $this->validator = VF::get($this->input, $promocapuser);
 
+        $fields = $this->repopromotionui->get_active_fields($this->promotion["id"]);
+        foreach ($fields as $field) {
+            $this->validator->add_rule($field, "empty", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            });
+
+            if ($field === PromotionCapUserType::INPUT_EMAIL) {
+                $this->validator->add_rule($field, "empty", function ($data) {
+                    return CheckerService::is_valid_email($data["value"])
+                        ? false
+                        : __("Wrong email format");
+                });
+            }
+        }
+
+        $toskip = array_diff($fields, PromotionCapUserType::get_all());
+        foreach ($toskip as $skip)
+            $this->validator->add_skip($skip);
+
+
+/*
         $this->validator
             ->add_rule("id_owner", "empty", function ($data) {
                 if ($this->auth->is_system() && !trim($data["value"]))
@@ -145,7 +168,7 @@ final class PromotionCapsInsertService extends AppService
                 if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
                 return false;
             });
-
+*/
         return $this->validator;
     }
     public function __invoke(): array
