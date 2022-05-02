@@ -42,3 +42,4 @@ $this->_template();
   </div>
 </body>
 </html>
+<!-- open.tpl -->

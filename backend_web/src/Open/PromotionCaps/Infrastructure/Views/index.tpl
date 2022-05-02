@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var App\Shared\Infrastructure\Views\AppView $this
+ * @var array $result
+ */
+$promotion = $result["promotion"];
+$promotionui = $result["promotionui"];
+?>
 <body>
   <header></header>
   <main>

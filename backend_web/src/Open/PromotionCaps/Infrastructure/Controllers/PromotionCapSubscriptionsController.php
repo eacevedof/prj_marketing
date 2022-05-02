@@ -23,12 +23,12 @@ final class PromotionCapSubscriptionsController extends OpenController
                 "promotionslug" => trim($promotionslug),
                 "mode" => $this->request->get_get("mode", "")
             ]);
-            $business = $business();
+            $result = $business();
 
             $this->set_layout("open/promotioncaps")
-                ->add_var(PageType::TITLE, $title = htmlentities($business["promotion"]["description"] ?? $businessslug))
+                ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
-                ->add_var("business", $business)
+                ->add_var("result", $result)
                 ->add_var( "languages", [])
                 ->add_var( "genders", [])
                 ->add_var( "countries", [])

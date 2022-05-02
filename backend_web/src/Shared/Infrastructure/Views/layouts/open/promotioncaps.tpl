@@ -25,3 +25,4 @@ $this->_template();
 </div>
 </body>
 </html>
+<!-- promotioncaps.tpl -->
