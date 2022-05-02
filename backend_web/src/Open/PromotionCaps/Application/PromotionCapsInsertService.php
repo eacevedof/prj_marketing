@@ -9,7 +9,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 
-final class PromotionsCapsService extends AppService
+final class PromotionCapsInsertService extends AppService
 {
     private AuthService $auth;
     private array $authuser;

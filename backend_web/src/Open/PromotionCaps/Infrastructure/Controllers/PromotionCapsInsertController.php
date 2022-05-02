@@ -9,37 +9,54 @@ use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Open\Business\Application\BusinessInfoService;
+use App\Open\PromotionCaps\Application\PromotionCapsInsertService;
+
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Shared\Domain\Enums\PageType;
 
 final class PromotionCapsInsertController extends OpenController
 {
-
     public function insert(string $promouuid): void
     {
+        if (!$promouuid)
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("No promotion code provided")])
+                ->show();
+
+        if (!$this->request->is_accept_json())
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("Only type json for accept header is allowed")])
+                ->show();
+
+        $post = $this->request->get_post();
+        if (($post["_action"] ?? "") !== PromotionCapActionType::PROMOTIONCAP_INSERT)
+            $this->_get_json()
+                ->set_code(ResponseType::BAD_REQUEST)
+                ->set_error([__("Wrong action")])
+                ->show();
+
         try {
-            die($promouuid);
+            $post = ["_promotionuuid"=>$promouuid] + $post;
+            $insert = SF::get_callable(PromotionCapsInsertService::class, $post);
+            $result = $insert();
+            $this->_get_json()->set_payload([
+                "message" => __("You have succesfully subscribed to {0}", $result["description"]),
+                "result" => $result,
+            ])->show();
         }
-        catch (NotFoundException $e) {
-            $this->add_header(ResponseType::NOT_FOUND)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("404")
-                ->render_nl();
-        }
-        catch (ForbiddenException $e) {
-            $this->add_header(ResponseType::FORBIDDEN)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
+        catch (FieldsException $e) {
+            $this->_get_json()->set_code($e->getCode())
+                ->set_error([
+                    ["fields_validation" => $insert->get_errors()]
+                ])
+                ->show();
         }
         catch (Exception $e) {
-            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+            $this->_get_json()->set_code($e->getCode())
+                ->set_error([$e->getMessage()])
+                ->show();
         }
     }
 }
