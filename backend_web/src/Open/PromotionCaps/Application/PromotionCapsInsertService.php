@@ -93,6 +93,9 @@ final class PromotionCapsInsertService extends AppService
             $this->_exception(__("Sorry but this promotion has finished", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
         $this->promotion["max_confirmed"] = (int) $this->promotion["max_confirmed"];
+        if($this->promotion["max_confirmed"]===0)
+            $this->_exception(__("This promotion is disabled", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+
         if($this->promotion["max_confirmed"]!=-1 && $this->promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($this->promotion["id"]))
             $this->_exception(__("Sorry but this promotion has reached the max number of subscriptions", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
