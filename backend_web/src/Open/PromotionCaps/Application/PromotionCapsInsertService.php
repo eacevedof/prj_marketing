@@ -84,6 +84,7 @@ final class PromotionCapsInsertService extends AppService
         $utcfrom = $utc->get_dt_into_tz($this->promotion["date_from"], $promotz);
         $utcto = $utc->get_dt_into_tz($this->promotion["date_to"], $promotz);
         $utcnow = $utc->get_dt_by_tz();
+
         $dt = new DateComponent();
         $seconds = $dt->get_seconds_between($utcfrom, $utcnow);
         if($seconds<0)

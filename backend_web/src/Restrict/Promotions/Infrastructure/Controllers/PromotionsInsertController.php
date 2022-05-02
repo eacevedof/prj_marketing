@@ -42,6 +42,7 @@ final class PromotionsInsertController extends RestrictController
                 ->render_nl();
         }
 
+        //to-do business owners que tengan businessdata
         $businessowners =  ($this->auth->is_root() || $this->auth->is_sysadmin())
             ? $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
             : [];
