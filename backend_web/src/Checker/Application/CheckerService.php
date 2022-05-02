@@ -11,6 +11,9 @@ namespace App\Checker\Application;
 
 final class CheckerService
 {
+    private const NAME_PATTERN = "/^[A-Za-zñÑ]+([A-Za-zñÑ]|\s[A-Za-zñÑ]+|\-[A-Za-zñÑ]+)*[a-z]$/";
+    private const ADDRESS_PATTERN = "/^[A-Za-zñÑ]+[A-Za-zñÑ\-\.\s\dº]*[A-Za-z\d]+$/";
+
     public static function is_valid_url(string $value): bool
     {
         $proto = substr($value, 0, 8);
@@ -34,5 +37,19 @@ final class CheckerService
     public static function is_valid_email(string $email): bool
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function name_format(string $name): bool
+    {
+        $matches = [];
+        preg_match(self::NAME_PATTERN, $name, $matches);
+        return (bool) ($matches[0] ?? "");
+    }
+
+    public static function address_format(string $address): bool
+    {
+        $matches = [];
+        preg_match(self::ADDRESS_PATTERN, $address, $matches);
+        return (bool) ($matches[0] ?? "");
     }
 }

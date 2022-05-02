@@ -28,6 +28,7 @@ final class PromotionCapsInsertService extends AppService
     private AuthService $auth;
     private array $authuser;
 
+    private FieldsValidator $validator;
     private BusinessDataRepository $repobusinessdata;
     private PromotionRepository $repopromotion;
     private PromotionUiRepository $repopromotionui;
@@ -106,10 +107,34 @@ final class PromotionCapsInsertService extends AppService
             });
 
             if ($field === PromotionCapUserType::INPUT_EMAIL) {
-                $this->validator->add_rule($field, "empty", function ($data) {
+                $this->validator->add_rule($field, "format", function ($data) {
                     return CheckerService::is_valid_email($data["value"])
                         ? false
                         : __("Wrong email format");
+                });
+            }
+
+            if ($field === PromotionCapUserType::INPUT_NAME1) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::name_format($data["value"])
+                        ? false
+                        : __("Wrong first name format. (Only letters allowed)");
+                });
+            }
+
+            if ($field === PromotionCapUserType::INPUT_NAME2) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::name_format($data["value"])
+                        ? false
+                        : __("Wrong last name format. Only letters allowed.");
+                });
+            }
+
+            if ($field === PromotionCapUserType::INPUT_ADDRESS) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::address_format($data["value"])
+                        ? false
+                        : __("Wrong address format. Only letters allowed");
                 });
             }
         }
