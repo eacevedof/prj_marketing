@@ -168,4 +168,9 @@ final class FieldsValidator
         return $this;
     }
 
+    public function get_skip(): array
+    {
+        return $this->skip;
+    }
+
 }//FieldsValidator

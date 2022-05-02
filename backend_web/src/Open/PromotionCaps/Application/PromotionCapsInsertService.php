@@ -11,6 +11,7 @@ use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
@@ -24,33 +25,36 @@ use App\Shared\Infrastructure\Components\Date\DateComponent;
 
 final class PromotionCapsInsertService extends AppService
 {
-    use RequestTrait;
-
     private AuthService $auth;
     private array $authuser;
 
     private FieldsValidator $validator;
-    private BusinessDataRepository $repobusinessdata;
     private PromotionRepository $repopromotion;
     private PromotionUiRepository $repopromotionui;
     private PromotionCapSubscriptionsRepository $reposubscription;
     private PromotionCapUsersRepository $repopromocapuser;
     private ArrayRepository $repoarray;
 
-    private array $businesssdata;
     private array $promotion;
     private array $promotionui;
     
 
     public function __construct(array $input)
     {
-        $this->input = $input;
+        $this->_load_input($input);
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
         $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
         $this->repoarray = RF::get(ArrayRepository::class);
-        $this->_load_request();
+    }
+
+    private function _load_input(array $input): void
+    {
+        foreach ($input as $key=>$value) {
+            $key = str_replace("input-", "", $key);
+            $this->input[$key] = $value;
+        }
     }
 
     private function _load_promotion(): void
@@ -188,13 +192,31 @@ final class PromotionCapsInsertService extends AppService
 
         return $this->validator;
     }
+
+    private function _map_entity(array &$promocapuser): void
+    {
+        $skip = $this->validator->get_skip();
+        foreach ($skip as $field) unset($promocapuser[$field]);
+
+    }
+
     public function __invoke(): array
     {
+        if (!$promocapuser = $this->_get_req_without_ops($this->input))
+            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
         $this->_load_promotion();
         $this->_load_promotionui();
 
-        return [
+        if ($errors = $this->_add_rules_by_ui()->get_errors()) {
+            $this->_set_errors($errors);
+            throw new FieldsException(__("Fields validation errors"));
+        }
 
-        ];
+        $entitypromouser = MF::get(PromotionCapUsersEntity::class);
+        $promocapuser = $entitypromouser->map_request($promocapuser);
+        $this->_map_entity();
+        $this->repopromocapuser->insert($promocapuser);
+        return [];
     }
 }
