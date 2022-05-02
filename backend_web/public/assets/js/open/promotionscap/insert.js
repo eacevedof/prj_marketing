@@ -131,7 +131,8 @@ export class FormPromotionCapInsert extends LitElement {
         ${inputs.map(obj => html`
           <div class="flex-row">
             <div class="form-group">
-
+              ${obj.label}
+              ${obj.input}
             </div>
           </div>
           </div>
