@@ -1,6 +1,7 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
+use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
@@ -23,6 +24,7 @@ final class PromotionCapsInsertService extends AppService
     private BusinessDataRepository $repobusinessdata;
     private PromotionRepository $repopromotion;
     private PromotionUiRepository $repopromotionui;
+    private PromotionCapSubscriptionsRepository $reposubscription;
 
     private array $businesssdata;
     private array $promotion;
@@ -33,10 +35,10 @@ final class PromotionCapsInsertService extends AppService
         $this->input = $input;
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
+        $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
         //$this->repobusinessdata = RF::get(BusinessDataRepository::class);
         $this->_load_request();
     }
-
 
     private function _load_promotion(): void
     {
@@ -48,6 +50,7 @@ final class PromotionCapsInsertService extends AppService
         if (!$this->promotion || $this->promotion["delete_date"])
             $this->_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
 
+        $this->promotion["id"] = (int) $this->promotion["id"];
         if (!$this->promotion["is_published"])
             $this->_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
 
@@ -64,11 +67,13 @@ final class PromotionCapsInsertService extends AppService
         if($seconds<0)
             $this->_exception(__("Sorry but this promotion has finished", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
-        if($this->promotion["max_confirmed"] <= $promoconfirmed)
-            $this->_exception(__("Sorry but this promotion has reached the max limit", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+        $this->promotion["max_confirmed"] = (int) $this->promotion["max_confirmed"];
+        if($this->promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($this->promotion["id"]))
+            $this->_exception(__("Sorry but this promotion has reached the max number of subscriptions", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
         if($this->promotion["max_confirmed"] <= ($this->input["email"] ?? ""))
             $this->_exception(__("You are already subscribed"), ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS);
+
     }
 
     private function _load_promotionui(): void
