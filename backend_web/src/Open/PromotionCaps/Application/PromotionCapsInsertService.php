@@ -2,6 +2,7 @@
 namespace App\Open\PromotionCaps\Application;
 
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
+use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
@@ -25,10 +26,12 @@ final class PromotionCapsInsertService extends AppService
     private PromotionRepository $repopromotion;
     private PromotionUiRepository $repopromotionui;
     private PromotionCapSubscriptionsRepository $reposubscription;
+    private PromotionCapUsersRepository $repopromocapuser;
 
     private array $businesssdata;
     private array $promotion;
     private array $promotionui;
+    
 
     public function __construct(array $input)
     {
@@ -36,6 +39,7 @@ final class PromotionCapsInsertService extends AppService
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
+        $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
         //$this->repobusinessdata = RF::get(BusinessDataRepository::class);
         $this->_load_request();
     }
@@ -71,8 +75,9 @@ final class PromotionCapsInsertService extends AppService
         if($this->promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($this->promotion["id"]))
             $this->_exception(__("Sorry but this promotion has reached the max number of subscriptions", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
-        if($this->promotion["max_confirmed"] <= ($this->input["email"] ?? ""))
-            $this->_exception(__("You are already subscribed"), ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS);
+        $email = trim($this->input["email"] ?? "");
+        if ($email && $this->repopromocapuser->is_subscribed_by_email($this->promotion["id"], $email))
+            $this->_exception(__("Sorry but you can only subscribe once.", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
     }
 
