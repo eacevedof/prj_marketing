@@ -15,24 +15,10 @@ use App\Shared\Domain\Enums\PageType;
 final class PromotionCapsInsertController extends OpenController
 {
 
-    public function insert(string $promotionuuid): void
+    public function insert(string $uuid): void
     {
         try {
-            $business = SF::get_callable(BusinessInfoService::class, [
-                "businessslug" => trim($businessslug),
-                "promotionslug" => trim($promotionslug),
-                "mode" => $this->request->get_get("mode", "")
-            ]);
-            $business = $business();
-
-            $this->set_layout("open/business")
-                ->add_var(PageType::TITLE, $title = htmlentities($business["promotion"]["description"] ?? $businessslug))
-                ->add_var(PageType::H1, $title)
-                ->add_var("business", $business)
-                ->add_var( "languages", [])
-                ->add_var( "genders", [])
-                ->add_var( "countries", [])
-                ->render();
+            dd($uuid);
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)

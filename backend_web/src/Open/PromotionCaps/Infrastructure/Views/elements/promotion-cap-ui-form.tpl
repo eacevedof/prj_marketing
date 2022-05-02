@@ -41,6 +41,8 @@ $result = [
     "genders" => $genders,
 ];
 ?>
+
+
 <div class="card-body pt-0">
     <form-promotion-cap-insert
         promotionuuid="<?=$promotionuuid?>"
