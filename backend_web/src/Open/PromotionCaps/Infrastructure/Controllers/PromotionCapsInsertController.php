@@ -14,6 +14,7 @@ use App\Shared\Domain\Enums\PageType;
 
 final class PromotionCapsInsertController extends OpenController
 {
+
     public function insert(string $promotionuuid): void
     {
         try {

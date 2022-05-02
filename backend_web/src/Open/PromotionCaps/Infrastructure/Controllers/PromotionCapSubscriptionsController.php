@@ -5,6 +5,7 @@
  */
 namespace App\Open\PromotionCaps\Infrastructure\Controllers;
 
+use App\Picklist\Application\PicklistService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
@@ -15,8 +16,11 @@ use App\Shared\Domain\Enums\PageType;
 
 final class PromotionCapSubscriptionsController extends OpenController
 {
+    private PicklistService $picklist;
+
     public function index(string $businessslug, string $promotionslug): void
     {
+        $picklist = SF::get(PicklistService::class);
         try {
             $business = SF::get_callable(BusinessInfoService::class, [
                 "businessslug" => trim($businessslug),
@@ -29,9 +33,9 @@ final class PromotionCapSubscriptionsController extends OpenController
                 ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $result)
-                ->add_var( "languages", [])
-                ->add_var( "genders", [])
-                ->add_var( "countries", [])
+                ->add_var("languages", $this->picklist->get_languages())
+                ->add_var("genders", $this->picklist->get_profiles())
+                ->add_var("countries", $this->picklist->get_countries())
                 ->render();
         }
         catch (NotFoundException $e) {

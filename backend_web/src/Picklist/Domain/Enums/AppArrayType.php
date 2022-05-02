@@ -8,4 +8,5 @@ abstract class AppArrayType
     const LANGUAGE = "language";
     const PROMOTION = "promotion";
     const TIMEZONE = "tz";
+    const GENDER = "gender";
 }

@@ -36,6 +36,11 @@ final class PicklistService extends AppService
         return $this->repoapparray->get_languages();
     }
 
+    public function get_genders(): array
+    {
+        return $this->repoapparray->get_genders();
+    }
+
     public function get_timezones(): array
     {
         return $this->repoapparray->get_timezones();
