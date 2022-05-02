@@ -13,6 +13,7 @@ final class CheckerService
 {
     private const NAME_PATTERN = "/^[A-Za-zñÑ]+([A-Za-zñÑ]|\s[A-Za-zñÑ]+|\-[A-Za-zñÑ]+)*[a-z]$/";
     private const ADDRESS_PATTERN = "/^[A-Za-zñÑ]+[A-Za-zñÑ\-\.\s\dº]*[A-Za-z\d]+$/";
+    private const PHONE_PATTERN = "/^[\d\(\)\+\s]+$/";
 
     public static function is_valid_url(string $value): bool
     {
@@ -50,6 +51,13 @@ final class CheckerService
     {
         $matches = [];
         preg_match(self::ADDRESS_PATTERN, $address, $matches);
+        return (bool) ($matches[0] ?? "");
+    }
+
+    public static function phone_format(string $phone): bool
+    {
+        $matches = [];
+        preg_match(self::PHONE_PATTERN, $phone, $matches);
         return (bool) ($matches[0] ?? "");
     }
 
