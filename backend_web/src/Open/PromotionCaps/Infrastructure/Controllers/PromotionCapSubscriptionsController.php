@@ -16,8 +16,6 @@ use App\Shared\Domain\Enums\PageType;
 
 final class PromotionCapSubscriptionsController extends OpenController
 {
-    private PicklistService $picklist;
-
     public function index(string $businessslug, string $promotionslug): void
     {
         $picklist = SF::get(PicklistService::class);
@@ -36,7 +34,7 @@ final class PromotionCapSubscriptionsController extends OpenController
                 ->add_var("languages", $picklist->get_languages())
                 ->add_var("genders", $picklist->get_genders())
                 ->add_var("countries", $picklist->get_countries());
-            unset($business, $result, $title);
+            unset($business, $result, $title, $picklist, $businessslug, $promotionslug);
             $this->view->render();
         }
         catch (NotFoundException $e) {
