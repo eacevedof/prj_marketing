@@ -47,8 +47,8 @@ final class CreateAppPromotioncapUsers extends AbsMigration
         ])
         ->addColumn("email", "string", [
             "limit" => 100,
-            "null" => true,
-            "default" => null,
+            "null" => false,
+            "comment" => "siempre obligatorio",
         ])
         ->addColumn("birthdate", "datetime", [
             "null" => true,
@@ -66,8 +66,8 @@ final class CreateAppPromotioncapUsers extends AbsMigration
         ])
         ->addColumn("id_gender", "integer", [
             "limit" => 2,
-            "null" => false,
-            "default" => 1,
+            "null" => true,
+            "default" => null,
             "comment" => "app_array.type=gender, id_pk:0: female, 1: male, 2:neutral",
         ])
         ->addColumn("address", "string", [

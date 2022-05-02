@@ -51,8 +51,14 @@ final class PromotionCapsInsertService extends AppService
 
     private function _load_input(array $input): void
     {
+        $tofks = [
+            PromotionCapUserType::INPUT_GENDER,
+            PromotionCapUserType::INPUT_LANGUAGE,
+            PromotionCapUserType::INPUT_COUNTRY
+        ];
         foreach ($input as $key=>$value) {
             $key = str_replace("input-", "", $key);
+            if (in_array($key, $tofks)) $key = "id_$key";
             $this->input[$key] = $value;
         }
     }
@@ -61,7 +67,8 @@ final class PromotionCapsInsertService extends AppService
     {
         $promotionuuid = $this->input["_promotionuuid"];
         $this->promotion = $this->repopromotion->get_by_uuid($promotionuuid, [
-            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz", "date_from", "date_to"
+            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz", "date_from", "date_to",
+            "id_owner"
         ]);
 
         if (!$this->promotion || $this->promotion["delete_date"])
@@ -197,7 +204,9 @@ final class PromotionCapsInsertService extends AppService
     {
         $skip = $this->validator->get_skip();
         foreach ($skip as $field) unset($promocapuser[$field]);
-
+        $promocapuser["uuid"] = uniqid();
+        $promocapuser["id_owner"] = $this->promotion["id_owner"];
+        $promocapuser["id_promotion"] = $this->promotion["id"];
     }
 
     public function __invoke(): array
@@ -215,7 +224,7 @@ final class PromotionCapsInsertService extends AppService
 
         $entitypromouser = MF::get(PromotionCapUsersEntity::class);
         $promocapuser = $entitypromouser->map_request($promocapuser);
-        $this->_map_entity();
+        $this->_map_entity($promocapuser);
         $this->repopromocapuser->insert($promocapuser);
         return [];
     }
