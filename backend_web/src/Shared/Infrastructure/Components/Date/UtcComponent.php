@@ -22,20 +22,32 @@ final class UtcComponent
     }
 
     /**
+     * de UTC a TZx
      * @param string $utcdt "2022-01-03 10:11:22"
      * @param string $targettz user-timezone
      * @param string $format "Y-m-d H:i:s",
      * @return string
      * @throws \Exception
      */
-    public function get_utcdt_in_tz(string $utcdt, string $targettz=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
+    public function get_utcdt_in_tz(
+        string $utcdt,
+        string $targettz=self::DEFAULT_TZ,
+        string $format=self::DEFAULT_DT_FORMAT
+    ): string
     {
         $source = new DateTime($utcdt, new DateTimeZone(self::DEFAULT_TZ));
         $source->setTimezone(new DateTimeZone($targettz));
         return $source->format($format);
     }
 
-    public function get_dt_by_tz(string $timezone, string $format=self::DEFAULT_DT_FORMAT): string
+    /**
+     * current datetime in TZx (default UTC)
+     * @param string $timezone
+     * @param string $format
+     * @return string
+     * @throws \Exception
+     */
+    public function get_dt_by_tz(string $timezone=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
     {
         $dt = new DateTime("now", new DateTimeZone($timezone));
         return $dt->format($format);
@@ -43,7 +55,7 @@ final class UtcComponent
 
     /**
      * Por defecto va de UI => BD. De UTCx a UTC0
-     *
+     * de TZx a UTC
      * @param string $sourcedt "2022-01-03 10:11:22"
      * @param string $sourcetz "Europe/Madrid"
      * @param string $targettz "UTC"
@@ -51,7 +63,12 @@ final class UtcComponent
      * @return string
      * @throws \Exception
      */
-    public function get_dt_into_tz(string $sourcedt, string $sourcetz, string $targettz=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
+    public function get_dt_into_tz(
+        string $sourcedt,
+        string $sourcetz,
+        string $targettz=self::DEFAULT_TZ,
+        string $format=self::DEFAULT_DT_FORMAT
+    ): string
     {
         $source = new DateTime($sourcedt, new DateTimeZone($sourcetz));
         $source->setTimezone(new DateTimeZone($targettz));
@@ -69,6 +86,13 @@ final class UtcComponent
         if ($ip === "127.0.0.1") return self::DEFAULT_TZ;
         $info = file_get_contents("http://ip-api.com/json/{$ip}");
         $info = json_decode($info, 1);
+        /*
+         * para que esto funcione hay que instalar una extension
+        $info = geoip_record_by_name($ip);
+        $timezone = geoip_time_zone_by_country_and_region($info["country_code"], $info["region"]);
+        $info["timezone"] = $timezone;
+        */
+
         return ($info["timezone"] ?? self::DEFAULT_TZ);
     }
 }

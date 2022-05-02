@@ -2,6 +2,8 @@
 
 namespace App\Shared\Infrastructure\Components\Date;
 
+use \DateTimeImmutable;
+
 final class DateComponent
 {
     public const SOURCE_YMD = "ymd";
@@ -27,6 +29,14 @@ final class DateComponent
             ? strtotime($d1) > strtotime($d2)
             : strtotime($d2) > strtotime($d1)
         ;
+    }
+
+    public function get_seconds_between(string $dtlt, string $dtgt): int
+    {
+        if ($dtlt === $dtgt) return 0;
+        $dt1 = (new DateTimeImmutable($dtlt))->getTimestamp();
+        $dt2 = (new DateTimeImmutable($dtgt))->getTimestamp();
+        return (($dt2 - $dt1)/1000);
     }
 
     public function get_date_only(string $date): string

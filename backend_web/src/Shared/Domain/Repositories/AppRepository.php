@@ -188,7 +188,7 @@ abstract class AppRepository
         return intval($r[0]["id"] ?? 0);
     }
 
-    public function get_by_id(string $id): array
+    public function get_by_id(string $id, array $fields=[]): array
     {
         $id = (int) $id;
         $sql = $this->_get_qbuilder()
@@ -196,13 +196,14 @@ abstract class AppRepository
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.id=$id")
-            ->select()->sql()
         ;
+        if ($fields) $sql->set_getfields($fields);
+        $sql = $sql->select()->sql();
         $r = $this->db->query($sql);
         return $r[0] ?? [];
     }
 
-    public function get_by_uuid(string $uuid): array
+    public function get_by_uuid(string $uuid, array $fields=[]): array
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_qbuilder()
@@ -210,8 +211,9 @@ abstract class AppRepository
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.uuid='$uuid'")
-            ->select()->sql()
         ;
+        if ($fields) $sql->set_getfields($fields);
+        $sql = $sql->select()->sql();
         $r = $this->db->query($sql);
         return $r[0] ?? [];
     }

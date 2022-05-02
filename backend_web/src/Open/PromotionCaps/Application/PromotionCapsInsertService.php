@@ -3,14 +3,20 @@ namespace App\Open\PromotionCaps\Application;
 
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
+use App\Shared\Domain\Repositories\App\ArrayRepository;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Shared\Infrastructure\Components\Date\DateComponent;
 
 final class PromotionCapsInsertService extends AppService
 {
+    use RequestTrait;
+
     private AuthService $auth;
     private array $authuser;
 
@@ -24,33 +30,34 @@ final class PromotionCapsInsertService extends AppService
 
     public function __construct(array $input)
     {
-        if (!$input["businessslug"])
-            $this->_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
-
-        if (!$input["promotionslug"])
-            $this->_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
-
         $this->input = $input;
-
-        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
+        //$this->repobusinessdata = RF::get(BusinessDataRepository::class);
+        $this->_load_request();
     }
 
-    private function _load_businessdata(): void
-    {
-        $businessslug = $this->input["businessslug"];
-        $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
-        if (!$this->businesssdata)
-            $this->_exception(__("Business account {$businessslug} not found!"), ExceptionType::CODE_NOT_FOUND);
-    }
 
     private function _load_promotion(): void
     {
-        $promotionslug = $this->input["promotionslug"];
-        $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
-        if (!$this->promotion)
-            $this->_exception(__("Promotion {$promotionslug} not found!"), ExceptionType::CODE_NOT_FOUND);
+        $promotionuuid = $this->input["_promotionuuid"];
+        $this->promotion = $this->repopromotion->get_by_uuid($promotionuuid, [
+            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz", "date_from", "date_to"
+        ]);
+
+        if (!$this->promotion || $this->promotion["delete_date"])
+            $this->_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
+
+        if (!$this->promotion["is_published"])
+            $this->_exception(__("This promotion is paused"), ExceptionType::CODE_UNAUTHORIZED);
+
+
+        $utc = new UtcComponent();
+        $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $this->promotion["id_tz"]);
+        $utcfrom = $utc->get_dt_into_tz($this->promotion["date_from"], $promotz);
+        $utcto = $utc->get_dt_into_tz($this->promotion["date_to"], $promotz);
+        $utcnow = $utc->get_dt_by_tz();
+
     }
 
     private function _load_promotionui(): void
@@ -60,9 +67,16 @@ final class PromotionCapsInsertService extends AppService
             $this->_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
     }
 
+    private function _validate(): void
+    {
+        //que este publicada
+        //que el email no este suscrito
+        //que este en hora
+
+    }
+
     public function __invoke(): array
     {
-        $this->_load_businessdata();
         $this->_load_promotion();
         $this->_load_promotionui();
 
