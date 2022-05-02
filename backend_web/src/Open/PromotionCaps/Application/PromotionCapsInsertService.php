@@ -193,7 +193,9 @@ final class PromotionCapsInsertService extends AppService
 
         }//foreach
 
+        //to-do pasr fks
         $toskip = array_diff($fields, PromotionCapUserType::get_all());
+        $toskip = $toskip + ["uuid", "id_owner", "id_promotion"];
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);
 

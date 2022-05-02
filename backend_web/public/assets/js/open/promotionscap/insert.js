@@ -8,7 +8,7 @@ import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
 const URL_POST = "/open/promotionscap/:promouuid/insert"
-const ACTION = "promotionscap.insert"
+const ACTION = "promotioncap.insert"
 
 export class FormPromotionCapInsert extends LitElement {
   static get styles() {
