@@ -217,4 +217,5 @@ final class PromotionRepository extends AppRepository
         ;
         return $this->db->query($sql)[0] ?? [];
     }
+
 }

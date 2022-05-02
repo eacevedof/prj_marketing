@@ -49,7 +49,7 @@ final class PromotionCapsInsertService extends AppService
             $this->_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
 
         if (!$this->promotion["is_published"])
-            $this->_exception(__("This promotion is paused"), ExceptionType::CODE_UNAUTHORIZED);
+            $this->_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
 
         $utc = new UtcComponent();
         $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $this->promotion["id_tz"]);
@@ -59,11 +59,16 @@ final class PromotionCapsInsertService extends AppService
         $dt = new DateComponent();
         $seconds = $dt->get_seconds_between($utcfrom, $utcnow);
         if($seconds<0)
-            $this->_exception(__("Sorry but this promotion has not started yet"));
+            $this->_exception(__("Sorry but this promotion has not started yet", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
         $seconds = $dt->get_seconds_between($utcnow, $utcto);
         if($seconds<0)
-            $this->_exception(__("Sorry but this promotion has finished"));
+            $this->_exception(__("Sorry but this promotion has finished", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
+        if($this->promotion["max_confirmed"] <= $promoconfirmed)
+            $this->_exception(__("Sorry but this promotion has reached the max limit", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+
+        if($this->promotion["max_confirmed"] <= ($this->input["email"] ?? ""))
+            $this->_exception(__("You are already subscribed"), ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS);
     }
 
     private function _load_promotionui(): void
@@ -73,13 +78,6 @@ final class PromotionCapsInsertService extends AppService
             $this->_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
     }
 
-    private function _validate(): void
-    {
-        //que este publicada
-        //que el email no este suscrito
-        //que este en hora
-
-    }
 
     public function __invoke(): array
     {
