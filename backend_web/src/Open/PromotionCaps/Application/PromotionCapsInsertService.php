@@ -25,6 +25,8 @@ use App\Shared\Infrastructure\Components\Date\DateComponent;
 
 final class PromotionCapsInsertService extends AppService
 {
+    use RequestTrait;
+
     private AuthService $auth;
     private array $authuser;
 
@@ -213,6 +215,7 @@ final class PromotionCapsInsertService extends AppService
 
     public function __invoke(): array
     {
+        $this->_load_request();
         if (!$promocapuser = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
