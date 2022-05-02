@@ -39,7 +39,6 @@ final class PromotionCapsInsertService extends AppService
 
     private array $promotion;
     private array $promotionui;
-    
 
     public function __construct(array $input)
     {
@@ -94,7 +93,7 @@ final class PromotionCapsInsertService extends AppService
             $this->_exception(__("Sorry but this promotion has finished", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
         $this->promotion["max_confirmed"] = (int) $this->promotion["max_confirmed"];
-        if($this->promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($this->promotion["id"]))
+        if($this->promotion["max_confirmed"]!=-1 && $this->promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($this->promotion["id"]))
             $this->_exception(__("Sorry but this promotion has reached the max number of subscriptions", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
         $email = trim($this->input["email"] ?? "");
