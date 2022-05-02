@@ -1,6 +1,8 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- al configurar una promocion no coge el valor de max confirmed
+- al seleccionar owners en la promocion deben ser owners con businessdata sino no funciona el slug
 - crear eventhandler para autogeneración de tablas hijas
 - si el codigo de la excepción es: 42S22 se debe disfrazar el error de bd que se manda al front
 - configurar respuestas en login
