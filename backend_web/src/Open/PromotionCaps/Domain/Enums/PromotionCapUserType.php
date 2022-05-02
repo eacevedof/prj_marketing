@@ -9,7 +9,7 @@ abstract class PromotionCapUserType
     const INPUT_NAME2 = "name2";
     const INPUT_LANGUAGE = "language";
     const INPUT_COUNTRY = "country";
-    const INPUT_PHONE = "phone1";
+    const INPUT_PHONE1 = "phone1";
     const INPUT_BIRTHDATE = "birthdate";
     const INPUT_GENDER = "gender";
     const INPUT_ADDRESS = "address";
@@ -22,7 +22,7 @@ abstract class PromotionCapUserType
             self::INPUT_NAME2,
             self::INPUT_LANGUAGE,
             self::INPUT_COUNTRY,
-            self::INPUT_PHONE,
+            self::INPUT_PHONE1,
             self::INPUT_BIRTHDATE,
             self::INPUT_GENDER,
             self::INPUT_ADDRESS,

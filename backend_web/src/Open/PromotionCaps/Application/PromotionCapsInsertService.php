@@ -118,7 +118,7 @@ final class PromotionCapsInsertService extends AppService
                 $this->validator->add_rule($field, "format", function ($data) {
                     return CheckerService::name_format($data["value"])
                         ? false
-                        : __("Wrong first name format. (Only letters allowed)");
+                        : __("Wrong first name format. Only letters allowed.");
                 });
             }
 
@@ -130,11 +130,11 @@ final class PromotionCapsInsertService extends AppService
                 });
             }
 
-            if ($field === PromotionCapUserType::INPUT_PHONE) {
+            if ($field === PromotionCapUserType::INPUT_PHONE1) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::name_format($data["value"])
+                    return CheckerService::phone_format($data["value"])
                         ? false
-                        : __("Wrong first name format. (Only letters allowed)");
+                        : __("Wrong mobile format. Use only numbers and white space please");
                 });
             }
 
@@ -147,6 +147,14 @@ final class PromotionCapsInsertService extends AppService
             }
 
             if ($field === PromotionCapUserType::INPUT_BIRTHDATE) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::is_valid_date($data["value"])
+                        ? false
+                        : __("Wrong birthdate value");
+                });
+            }
+
+            if ($field === PromotionCapUserType::INPUT_COUNTRY) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     return CheckerService::is_valid_date($data["value"])
                         ? false
