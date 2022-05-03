@@ -106,6 +106,9 @@ final class PromotionCapsInsertService extends AppService
                     return CheckerService::is_valid_email($data["value"])
                         ? false
                         : __("Wrong email format");
+                })
+                ->add_rule($field, "exist", function ($data) {
+                    //comprobar si el email existe
                 });
             }
 
