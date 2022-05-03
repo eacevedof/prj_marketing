@@ -206,6 +206,11 @@ final class PromotionUiRepository extends AppRepository
         }
         asort($mapped);
         $mapped = array_keys($mapped);
+
+        $fks = ["language","country","gender"];
+        $mapped = array_map(function (string $field) use ($fks) {
+            return in_array($field, $fks) ? "id_$field" : $field;
+        }, $mapped);
         return $mapped;
     }
 }//PromotionUiRepository

@@ -20,7 +20,6 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Open\PromotionCaps\Application\PromotionCapCheckService;
 
 final class PromotionCapsInsertService extends AppService
 {
@@ -94,6 +93,7 @@ final class PromotionCapsInsertService extends AppService
         $this->validator = VF::get($this->input, $promocapuser);
 
         $fields = $this->repopromotionui->get_active_fields($this->promotion["id"]);
+
         foreach ($fields as $field) {
             $this->validator->add_rule($field, "empty", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
@@ -209,6 +209,8 @@ final class PromotionCapsInsertService extends AppService
         $promocapuser = $entitypromouser->map_request($promocapuser);
         $this->_map_entity($promocapuser);
         $this->repopromocapuser->insert($promocapuser);
-        return [];
+        return [
+            "description" => __("You have successfully subscribed. Please check your email to confirm your subscription!")
+        ];
     }
 }

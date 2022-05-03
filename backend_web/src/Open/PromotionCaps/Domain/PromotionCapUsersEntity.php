@@ -17,7 +17,7 @@ final class PromotionCapUsersEntity extends AppEntity
     {
         $this->fields = [
         "id" => [
-            "label" => __("tr_id"),
+            "label" => __("Nº"),
             EntityType::REQUEST_KEY => "id",
             "config" => [
                 "type" => EntityType::INT,
@@ -26,7 +26,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "uuid" => [
-            "label" => __("tr_uuid"),
+            "label" => __("Code"),
             EntityType::REQUEST_KEY => "uuid",
             "config" => [
                 "type" => EntityType::STRING,
@@ -35,7 +35,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "id_owner" => [
-            "label" => __("tr_id_owner"),
+            "label" => __("Owner"),
             EntityType::REQUEST_KEY => "id_owner",
             "config" => [
                 "type" => EntityType::INT,
@@ -44,7 +44,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "code_erp" => [
-            "label" => __("tr_code_erp"),
+            "label" => __("External code"),
             EntityType::REQUEST_KEY => "code_erp",
             "config" => [
                 "type" => EntityType::STRING,
@@ -53,7 +53,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "description" => [
-            "label" => __("tr_description"),
+            "label" => __("Description"),
             EntityType::REQUEST_KEY => "description",
             "config" => [
                 "type" => EntityType::STRING,
@@ -62,7 +62,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "id_promotion" => [
-            "label" => __("tr_id_promotion"),
+            "label" => __("Promotion"),
             EntityType::REQUEST_KEY => "id_promotion",
             "config" => [
                 "type" => EntityType::INT,
@@ -71,7 +71,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "id_language" => [
-            "label" => __("tr_id_language"),
+            "label" => __("Language"),
             EntityType::REQUEST_KEY => "id_language",
             "config" => [
                 "type" => EntityType::INT,
@@ -80,7 +80,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "id_country" => [
-            "label" => __("tr_id_country"),
+            "label" => __("Country"),
             EntityType::REQUEST_KEY => "id_country",
             "config" => [
                 "type" => EntityType::INT,
@@ -89,7 +89,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "phone1" => [
-            "label" => __("tr_phone1"),
+            "label" => __("Mobile"),
             EntityType::REQUEST_KEY => "phone1",
             "config" => [
                 "type" => EntityType::STRING,
@@ -98,7 +98,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "email" => [
-            "label" => __("tr_email"),
+            "label" => __("Email"),
             EntityType::REQUEST_KEY => "email",
             "config" => [
                 "type" => EntityType::STRING,
@@ -107,16 +107,16 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "birthdate" => [
-            "label" => __("tr_birthdate"),
+            "label" => __("Birthdate"),
             EntityType::REQUEST_KEY => "birthdate",
             "config" => [
-                "type" => EntityType::DATETIME,
+                "type" => EntityType::DATE,
                 
             ]
         ],
        
         "name1" => [
-            "label" => __("tr_name1"),
+            "label" => __("First name"),
             EntityType::REQUEST_KEY => "name1",
             "config" => [
                 "type" => EntityType::STRING,
@@ -125,7 +125,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "name2" => [
-            "label" => __("tr_name2"),
+            "label" => __("Last name"),
             EntityType::REQUEST_KEY => "name2",
             "config" => [
                 "type" => EntityType::STRING,
@@ -134,7 +134,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "id_gender" => [
-            "label" => __("tr_id_gender"),
+            "label" => __("Gender"),
             EntityType::REQUEST_KEY => "id_gender",
             "config" => [
                 "type" => EntityType::INT,
@@ -143,7 +143,7 @@ final class PromotionCapUsersEntity extends AppEntity
         ],
        
         "address" => [
-            "label" => __("tr_address"),
+            "label" => __("Address"),
             EntityType::REQUEST_KEY => "address",
             "config" => [
                 "type" => EntityType::STRING,

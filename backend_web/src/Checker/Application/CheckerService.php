@@ -66,9 +66,9 @@ final class CheckerService
         if (strlen($date)!=10) return false;
         $date = explode("-",$date);
         return checkdate(
-            (int)$date[0],
             (int)($date[1] ?? ""),
-            (int)($date[2] ?? "")
+            (int)($date[2] ?? ""),
+            (int)$date[0]
         );
     }
 
