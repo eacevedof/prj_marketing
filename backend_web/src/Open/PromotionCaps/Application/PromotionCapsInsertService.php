@@ -8,8 +8,10 @@ use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUserWasCreatedEvent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
+use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -208,7 +210,12 @@ final class PromotionCapsInsertService extends AppService
         $entitypromouser = MF::get(PromotionCapUsersEntity::class);
         $promocapuser = $entitypromouser->map_request($promocapuser);
         $this->_map_entity($promocapuser);
-        $this->repopromocapuser->insert($promocapuser);
+        $id = $this->repopromocapuser->insert($promocapuser);
+
+        EventBus::instance()->publish(...[
+            PromotionCapUserWasCreatedEvent::from_primitives($id, $promocapuser)
+        ]);
+
         return [
             "description" => __("You have successfully subscribed. Please check your email to confirm your subscription!")
         ];
