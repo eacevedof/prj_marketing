@@ -40,7 +40,7 @@ final class PromotionCapCreateController extends OpenController
         catch (PromotionCapException $e) {
             $this->set_layout("open/promotioncaps")
                 ->add_header($e->getCode())
-                ->add_var(PageType::H1, __("Error!"))
+                ->add_var(PageType::H1, __("Warning!"))
                 ->add_var("error", $e->getMessage())
                 ->render();
         }
