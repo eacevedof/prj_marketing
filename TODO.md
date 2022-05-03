@@ -1,8 +1,8 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- en la navegacion entre modals refrecar la url del nav
 - al configurar una promocion no coge el valor de max confirmed
-- al seleccionar owners en la promocion deben ser owners con businessdata sino no funciona el slug
 - crear eventhandler para autogeneración de tablas hijas
 - si el codigo de la excepción es: 42S22 se debe disfrazar el error de bd que se manda al front
 - configurar respuestas en login
@@ -39,6 +39,7 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~al seleccionar owners en la promocion deben ser owners con businessdata sino no funciona el slug~~
 - ~~gestion de horas UMT. Parsear a local según pais del usuario~~
 - ~~url modal launcher view=xxx&uuid=xxx&tab=xxx~~
 - ~~metricas en promocion (viewed, subscribed, confirmed, executed)~~
