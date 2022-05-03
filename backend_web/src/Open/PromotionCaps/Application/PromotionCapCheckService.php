@@ -28,7 +28,7 @@ final class PromotionCapCheckService extends AppService
         $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
     }
 
-    protected function _exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
+    private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
     {
         throw new PromotionCapException($message, $code);
     }
@@ -37,11 +37,11 @@ final class PromotionCapCheckService extends AppService
     {
         $promotion = $this->promotion;
         if (!$promotion || $promotion["delete_date"])
-            $this->_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
 
         $promotion["id"] = (int) $promotion["id"];
         if (!$promotion["is_published"])
-            $this->_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
+            $this->_promocap_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
 
         $utc = CF::get(UtcComponent::class);
         $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
@@ -52,20 +52,20 @@ final class PromotionCapCheckService extends AppService
         $dt = CF::get(DateComponent::class);
         $seconds = $dt->get_seconds_between($utcfrom, $utcnow);
         if($seconds<0)
-            $this->_exception(__("Sorry but this promotion has not started yet", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+            $this->_promocap_exception(__("Sorry but this promotion has not started yet", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
         $seconds = $dt->get_seconds_between($utcnow, $utcto);
         if($seconds<0)
-            $this->_exception(__("Sorry but this promotion has finished", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+            $this->_promocap_exception(__("Sorry but this promotion has finished", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
         $promotion["max_confirmed"] = (int) $promotion["max_confirmed"];
         if($promotion["max_confirmed"]===0)
-            $this->_exception(__("This promotion is disabled", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+            $this->_promocap_exception(__("This promotion is disabled", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
         if($promotion["max_confirmed"]!=-1 && $promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($promotion["id"]))
-            $this->_exception(__("Sorry but this promotion has reached the max number of subscriptions", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+            $this->_promocap_exception(__("Sorry but this promotion has reached the max number of subscriptions", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
 
         $email = trim($this->email ?? "");
         if ($email && $this->repopromocapuser->is_subscribed_by_email($promotion["id"], $email))
-            $this->_exception(__("Sorry but you can only subscribe once.", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
+            $this->_promocap_exception(__("Sorry but you can only subscribe once.", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
     }
 }

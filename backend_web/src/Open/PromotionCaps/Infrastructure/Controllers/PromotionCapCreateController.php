@@ -11,16 +11,17 @@ use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Open\Business\Application\BusinessInfoService;
+use App\Open\PromotionCaps\Application\PromotionCapInfoService;
 use App\Shared\Domain\Enums\PageType;
+use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
 final class PromotionCapCreateController extends OpenController
 {
-    public function index(string $businessslug, string $promotionslug): void
+    public function create(string $businessslug, string $promotionslug): void
     {
         $picklist = SF::get(PicklistService::class);
         try {
-            $business = SF::get_callable(BusinessInfoService::class, [
+            $business = SF::get_callable(PromotionCapInfoService::class, [
                 "businessslug" => trim($businessslug),
                 "promotionslug" => trim($promotionslug),
                 "mode" => $this->request->get_get("mode", "")
@@ -34,8 +35,16 @@ final class PromotionCapCreateController extends OpenController
                 ->add_var("languages", $picklist->get_languages())
                 ->add_var("genders", $picklist->get_genders())
                 ->add_var("countries", $picklist->get_countries());
+
             unset($business, $result, $title, $picklist, $businessslug, $promotionslug);
             $this->view->render();
+        }
+        catch (PromotionCapException $e) {
+            $this->set_layout("open/promotioncaps")
+                ->add_header($e->getCode())
+                ->add_var(PageType::H1, __("Error!"))
+                ->add_var("error", $e->getMessage())
+                ->render();
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
