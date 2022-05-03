@@ -7,11 +7,13 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
 {
     private string $uuid;
     private string $email;
+    private int $idpromotion;
 
     public function __construct(
         int $idcapuser,
         string $uuid,
         string $email,
+        /*to -do idowner, idpromotion*/
 
         ?string $eventid = null,
         ?int $occuredon = null,
