@@ -179,7 +179,7 @@ final class BusinessDataRepository extends AppRepository
         return $this->db->query($sql)[0] ?? [];
     }
 
-    public function get_by_slug(string $slug): array
+    public function get_by_slug(string $slug, array $fields=[]): array
     {
         $slug = $this->get_sanitized($slug);
         $type = AppArrayType::TIMEZONE;
@@ -190,9 +190,9 @@ final class BusinessDataRepository extends AppRepository
             ->add_join("LEFT JOIN app_array ar1 ON m.id_tz = ar1.id_pk AND ar1.type='$type'")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.slug='$slug'")
-            ->set_limit(1)
-            ->select()->sql()
-        ;
+            ->set_limit(1);
+        if ($fields) $sql->set_getfields($fields);
+        $sql = $sql->select()->sql();
         return $this->db->query($sql)[0] ?? [];
     }
 }

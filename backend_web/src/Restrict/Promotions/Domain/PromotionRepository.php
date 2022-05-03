@@ -203,7 +203,7 @@ final class PromotionRepository extends AppRepository
         $this->db->exec($sql);
     }
 
-    public function get_by_slug(string $slug): array
+    public function get_by_slug(string $slug, array $fields=[]): array
     {
         $slug = $this->get_sanitized($slug);
         $sql = $this->_get_qbuilder()
@@ -213,8 +213,9 @@ final class PromotionRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.slug='$slug'")
             ->set_limit(1)
-            ->select()->sql()
         ;
+        if ($fields) $sql->set_getfields($fields);
+        $sql = $sql->select()->sql();
         return $this->db->query($sql)[0] ?? [];
     }
 

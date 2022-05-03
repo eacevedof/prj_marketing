@@ -5,15 +5,14 @@ use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Open\PromotionCaps\Application\PromotionCapCheckService;
 
 final class BusinessInfoService extends AppService
 {
-    private AuthService $auth;
-    private array $authuser;
-
     private BusinessDataRepository $repobusinessdata;
     private PromotionRepository $repopromotion;
     private PromotionUiRepository $repopromotionui;
@@ -49,8 +48,12 @@ final class BusinessInfoService extends AppService
     {
         $promotionslug = $this->input["promotionslug"];
         $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
-        if (!$this->promotion)
-            $this->_exception(__("Promotion {$promotionslug} not found!"), ExceptionType::CODE_NOT_FOUND);
+        SF::get(
+            PromotionCapCheckService::class,
+            [
+                "promotion" => $this->promotion,
+            ]
+        )->is_suitable_or_fail();
     }
 
     private function _load_promotionui(): void
@@ -71,9 +74,7 @@ final class BusinessInfoService extends AppService
             "promotion" => $this->promotion,
             "promotionui" => $this->promotionui,
 
-            "metadata" => [
-
-            ], //depende si es test o no
+            "metadata" => [],
         ];
     }
 }

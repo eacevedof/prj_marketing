@@ -14,7 +14,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\Business\Application\BusinessInfoService;
 use App\Shared\Domain\Enums\PageType;
 
-final class PromotionCapSubscriptionsController extends OpenController
+final class PromotionCapCreateController extends OpenController
 {
     public function index(string $businessslug, string $promotionslug): void
     {

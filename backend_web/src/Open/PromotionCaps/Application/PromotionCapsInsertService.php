@@ -10,18 +10,17 @@ use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
-use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Shared\Infrastructure\Components\Date\DateComponent;
+use App\Open\PromotionCaps\Application\PromotionCapCheckService;
 
 final class PromotionCapsInsertService extends AppService
 {
@@ -68,42 +67,18 @@ final class PromotionCapsInsertService extends AppService
     {
         $promotionuuid = $this->input["_promotionuuid"];
         $this->promotion = $this->repopromotion->get_by_uuid($promotionuuid, [
-            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz", "date_from", "date_to",
-            "id_owner"
+            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz",
+            "date_from", "date_to", "id_owner"
         ]);
 
-        if (!$this->promotion || $this->promotion["delete_date"])
-            $this->_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
-
-        $this->promotion["id"] = (int) $this->promotion["id"];
-        if (!$this->promotion["is_published"])
-            $this->_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
-
-        $utc = new UtcComponent();
-        $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $this->promotion["id_tz"]);
-        $utcfrom = $utc->get_dt_into_tz($this->promotion["date_from"], $promotz);
-        $utcto = $utc->get_dt_into_tz($this->promotion["date_to"], $promotz);
-        $utcnow = $utc->get_dt_by_tz();
-
-        $dt = new DateComponent();
-        $seconds = $dt->get_seconds_between($utcfrom, $utcnow);
-        if($seconds<0)
-            $this->_exception(__("Sorry but this promotion has not started yet", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
-        $seconds = $dt->get_seconds_between($utcnow, $utcto);
-        if($seconds<0)
-            $this->_exception(__("Sorry but this promotion has finished", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
-
-        $this->promotion["max_confirmed"] = (int) $this->promotion["max_confirmed"];
-        if($this->promotion["max_confirmed"]===0)
-            $this->_exception(__("This promotion is disabled", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
-
-        if($this->promotion["max_confirmed"]!=-1 && $this->promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($this->promotion["id"]))
-            $this->_exception(__("Sorry but this promotion has reached the max number of subscriptions", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
-
-        $email = trim($this->input["email"] ?? "");
-        if ($email && $this->repopromocapuser->is_subscribed_by_email($this->promotion["id"], $email))
-            $this->_exception(__("Sorry but you can only subscribe once.", ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS));
-
+        SF::get(
+            PromotionCapCheckService::class,
+            [
+                "email" => ($this->input["email"] ?? ""),
+                "promotion" => $this->promotion,
+            ]
+        )
+        ->is_suitable_or_fail();
     }
 
     private function _load_promotionui(): void
