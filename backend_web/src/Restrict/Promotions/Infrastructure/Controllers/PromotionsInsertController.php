@@ -22,14 +22,6 @@ use \Exception;
 
 final class PromotionsInsertController extends RestrictController
 {
-    private PicklistService $picklist;
-    
-    public function __construct()
-    {
-        parent::__construct();
-        $this->picklist = SF::get(PicklistService::class);
-    }
-
     //@modal (creation form)
     public function create(): void
     {
@@ -42,17 +34,18 @@ final class PromotionsInsertController extends RestrictController
                 ->render_nl();
         }
 
+        $picklist = SF::get(PicklistService::class);
         //to-do business owners que tengan businessdata
         $businessowners =  ($this->auth->is_root() || $this->auth->is_sysadmin())
-            ? $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
+            ? $picklist->get_business_owners()
             : [];
 
         $this->set_template("insert")
             ->add_var(PageType::CSRF, $this->csrf->get_token())
             ->add_var(PageType::H1, __("New promotion"))
-            ->add_var("timezones", $this->picklist->get_timezones())
+            ->add_var("timezones", $picklist->get_timezones())
             ->add_var("businessowners", $businessowners)
-            ->add_var("notoryes", $this->picklist->get_not_or_yes())
+            ->add_var("notoryes", $picklist->get_not_or_yes())
             ->render_nl();
     }
 

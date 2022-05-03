@@ -108,6 +108,11 @@ final class PicklistService extends AppService
         return $users;
     }
 
+    public function get_business_owners(): array
+    {
+        return $this->repopicklist->get_business_owners();
+    }
+
     public function get_users(?string $notid=null): array
     {
         $users = $this->repopicklist->get_users();
