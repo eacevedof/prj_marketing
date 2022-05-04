@@ -5,15 +5,11 @@ use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 
 final class PromotionCapsService extends AppService
 {
-    private AuthService $auth;
-    private array $authuser;
-
     private BusinessDataRepository $repobusinessdata;
     private PromotionRepository $repopromotion;
     private PromotionUiRepository $repopromotionui;
