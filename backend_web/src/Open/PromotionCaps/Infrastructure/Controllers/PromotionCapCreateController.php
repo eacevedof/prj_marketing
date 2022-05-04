@@ -36,6 +36,7 @@ final class PromotionCapCreateController extends OpenController
 
             unset($business, $result, $title, $picklist, $businessslug, $promotionslug);
             $this->view->render();
+            $r="xx";
         }
         catch (PromotionCapException $e) {
             $this->set_layout("open/promotioncaps")
