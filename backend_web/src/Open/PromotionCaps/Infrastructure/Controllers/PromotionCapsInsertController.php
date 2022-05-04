@@ -11,7 +11,7 @@ use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\PromotionCaps\Application\PromotionCapsInsertService;
 
-use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\Enums\RequestActionType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
@@ -32,7 +32,7 @@ final class PromotionCapsInsertController extends OpenController
                 ->show();
 
         $post = $this->request->get_post();
-        if (($post["_action"] ?? "") !== PromotionCapActionType::PROMOTIONCAP_INSERT)
+        if (($post["_action"] ?? "") !== RequestActionType::PROMOTIONCAP_INSERT)
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("Wrong action")])

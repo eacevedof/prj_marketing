@@ -4,12 +4,18 @@ namespace App\Open\PromotionCaps\Domain\Enums;
 
 abstract class PromotionCapActionType
 {
-    const PROMOTIONCAP_INSERT = "promotioncap.insert";
+    public const VIEWED = 0;
+    public const SUBSCRIBED = 1;
+    public const CONFIRMED = 2;
+    public const EXECUTED = 3;
 
     public static function get_all(): array
     {
         return [
-            self::PROMOTIONCAP_INSERT,
+            self::VIEWED,
+            self::SUBSCRIBED,
+            self::CONFIRMED,
+            self::EXECUTED,
         ];
     }
 }
