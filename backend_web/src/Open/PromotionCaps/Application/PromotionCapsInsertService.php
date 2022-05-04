@@ -108,7 +108,11 @@ final class PromotionCapsInsertService extends AppService
                         : __("Wrong email format");
                 })
                 ->add_rule($field, "exist", function ($data) {
-                    //comprobar si el email existe
+                    $idpromotion = $this->promotion["id"];
+                    $email = $data["value"];
+                    return !$this->repopromocapuser->is_subscribed_by_email($idpromotion, $email)
+                        ? false
+                        : __("You are already subscribed");
                 });
             }
 

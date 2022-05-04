@@ -156,7 +156,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_comment("promotioncapsubscriptions.is_subscribed")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
-            ->add_and("m.id=$idpromotion")
+            ->add_and("m.id_promotion=$idpromotion")
             ->add_and("m.email='$email'")
             ->add_and("m.delete_date IS NULL")
             ->select()->sql()
@@ -164,4 +164,5 @@ final class PromotionCapUsersRepository extends AppRepository
         $r = $this->db->query($sql);
         return (bool) ($r[0]["id"] ?? null);
     }
+
 }

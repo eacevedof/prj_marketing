@@ -13,6 +13,7 @@ use App\Open\PromotionCaps\Application\PromotionCapsInsertService;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Shared\Domain\Enums\PageType;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class PromotionCapsInsertController extends OpenController
 {
@@ -37,13 +38,13 @@ final class PromotionCapsInsertController extends OpenController
                 ->set_error([__("Wrong action")])
                 ->show();
 
+        $post = ["_promotionuuid"=>$promouuid] + $post;
+        $insert = SF::get_callable(PromotionCapsInsertService::class, $post);
         try {
-            $post = ["_promotionuuid"=>$promouuid] + $post;
-            $insert = SF::get_callable(PromotionCapsInsertService::class, $post);
             $result = $insert();
             $this->_get_json()->set_payload([
-                "message" => __("You have succesfully subscribed to {0}", $result["description"]),
-                "result" => $result,
+                "message" => $result["description"],
+                //"result" => $result,
             ])->show();
         }
         catch (FieldsException $e) {
