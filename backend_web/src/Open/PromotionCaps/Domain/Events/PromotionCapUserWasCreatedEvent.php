@@ -9,13 +9,18 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
     private string $email;
     private int $idowner;
     private int $idpromotion;
+    private string $remoteip;
+    private string $datesubscription;
 
     public function __construct(
         int $idcapuser,
+
         string $uuid,
         string $email,
         int $idowner,
         int $idpromotion,
+        string $remoteip,
+        string $datesubscription,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -28,6 +33,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
         $this->email = $email;
         $this->idowner = $idowner;
         $this->idpromotion = $idpromotion;
+        $this->remoteip = $remoteip;
+        $this->datesubscription = $datesubscription;
     }
 
     public static function event_name(): string
@@ -50,6 +57,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
             $body["email"],
             $body["id_owner"],
             $body["id_promotion"],
+            $body["remote_ip"],
+            $body["date_subscription"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -64,6 +73,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
             "email" => $this->email,
             "id_owner" => $this->idowner,
             "id_promotion" => $this->idpromotion,
+            "remote_ip" => $this->remoteip,
+            "date_subscription" => $this->datesubscription,
         ];
     }
 
@@ -85,5 +96,15 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
     public function id_promotion(): int
     {
         return $this->idpromotion;
+    }
+
+    public function remote_ip(): string
+    {
+        return $this->remoteip;
+    }
+
+    public function date_subscription(): string
+    {
+        return $this->datesubscription;
     }
 }

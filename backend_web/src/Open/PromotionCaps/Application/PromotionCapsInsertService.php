@@ -219,10 +219,10 @@ final class PromotionCapsInsertService extends AppService
         $this->_map_entity($promocapuser);
         $id = $this->repopromocapuser->insert($promocapuser);
 
+        $promocapuser["remote_ip"] = $this->request->get_remote_ip();
+        $promocapuser["date_subscription"] = date("Y-m-d H:i:s");
         EventBus::instance()->publish(...[
-            PromotionCapUserWasCreatedEvent::from_primitives($id, [
-
-            ])
+            PromotionCapUserWasCreatedEvent::from_primitives($id, $promocapuser)
         ]);
 
         return [
