@@ -7,13 +7,15 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
 {
     private string $uuid;
     private string $email;
+    private int $idowner;
     private int $idpromotion;
 
     public function __construct(
         int $idcapuser,
         string $uuid,
         string $email,
-        /*to -do idowner, idpromotion*/
+        int $idowner,
+        int $idpromotion,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -24,6 +26,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
         parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
         $this->uuid = $uuid;
         $this->email = $email;
+        $this->idowner = $idowner;
+        $this->idpromotion = $idpromotion;
     }
 
     public static function event_name(): string
@@ -44,6 +48,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
             $aggregateId,
             $body["uuid"],
             $body["email"],
+            $body["idowner"],
+            $body["idpromotion"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -56,6 +62,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
         return [
             "uuid" => $this->uuid,
             "email" => $this->email,
+            "idowner" => $this->idowner,
+            "idpromotion" => $this->idpromotion,
         ];
     }
 
@@ -67,5 +75,15 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
     public function email(): string
     {
         return $this->email;
+    }
+
+    public function id_owner(): int
+    {
+        return $this->idowner;
+    }
+
+    public function id_promotion(): int
+    {
+        return $this->idpromotion;
     }
 }
