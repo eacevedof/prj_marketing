@@ -5,22 +5,20 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 
 final class PromotionCapActionWasCreatedEvent extends AbsEvent
 {
-    private string $uuid;
-    private string $email;
-    private int $idowner;
     private int $idpromotion;
+    private int $idcapuser;
+    private int $idtype;
+    private string $urlreq;
+    private string $urlref;
     private string $remoteip;
-    private string $datesubscription;
 
     public function __construct(
-        int $idcapuser,
-
-        string $uuid,
-        string $email,
-        int $idowner,
         int $idpromotion,
+        int $idcapuser,
+        int $idtype,
+        string $urlreq,
+        string $urlref,
         string $remoteip,
-        string $datesubscription,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -29,17 +27,18 @@ final class PromotionCapActionWasCreatedEvent extends AbsEvent
     )
     {
         parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->uuid = $uuid;
-        $this->email = $email;
-        $this->idowner = $idowner;
+
         $this->idpromotion = $idpromotion;
+        $this->idcapuser = $idcapuser;
+        $this->idtype = $idtype;
+        $this->urlreq = $urlreq;
+        $this->urlref = $urlref;
         $this->remoteip = $remoteip;
-        $this->datesubscription = $datesubscription;
     }
 
     public static function event_name(): string
     {
-        return "promotioncapuser.created";
+        return "promotioncapaction.created";
     }
 
     public static function from_primitives(
@@ -53,12 +52,12 @@ final class PromotionCapActionWasCreatedEvent extends AbsEvent
     {
         return new self(
             $aggregateId,
-            $body["uuid"],
-            $body["email"],
-            $body["id_owner"],
             $body["id_promotion"],
+            $body["id_promouser"],
+            $body["id_type"],
+            $body["url_req"],
+            $body["url_ref"],
             $body["remote_ip"],
-            $body["date_subscription"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -69,28 +68,13 @@ final class PromotionCapActionWasCreatedEvent extends AbsEvent
     public function to_primitives(): array
     {
         return [
-            "uuid" => $this->uuid,
-            "email" => $this->email,
-            "id_owner" => $this->idowner,
             "id_promotion" => $this->idpromotion,
+            "id_promouser" => $this->idcapuser,
+            "id_type" => $this->idtype,
+            "url_req" => $this->urlreq,
+            "url_ref" => $this->urlref,
             "remote_ip" => $this->remoteip,
-            "date_subscription" => $this->datesubscription,
         ];
-    }
-
-    public function uuid(): string
-    {
-        return $this->uuid;
-    }
-
-    public function email(): string
-    {
-        return $this->email;
-    }
-
-    public function id_owner(): int
-    {
-        return $this->idowner;
     }
 
     public function id_promotion(): int
@@ -98,13 +82,28 @@ final class PromotionCapActionWasCreatedEvent extends AbsEvent
         return $this->idpromotion;
     }
 
+    public function id_capuser(): int
+    {
+        return $this->idcapuser;
+    }
+
+    public function id_type(): int
+    {
+        return $this->idtype;
+    }
+
+    public function url_req(): string
+    {
+        return $this->urlreq;
+    }
+
+    public function url_ref(): string
+    {
+        return $this->urlref;
+    }
+
     public function remote_ip(): string
     {
         return $this->remoteip;
-    }
-
-    public function date_subscription(): string
-    {
-        return $this->datesubscription;
     }
 }
