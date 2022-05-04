@@ -3,7 +3,7 @@ namespace App\Open\PromotionCaps\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasCreatedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapActionsRepository;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
@@ -12,7 +12,7 @@ final class PromotionCapActionEventHandler extends AppService implements IEventS
 {
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if(get_class($domevent)!==PromotionCapActionWasCreatedEvent::class) return $this;
+        if(get_class($domevent)!==PromotionCapActionWasExecutedEvent::class) return $this;
 
         $action = [
             "id_promotion" => $domevent->id_promotion(),

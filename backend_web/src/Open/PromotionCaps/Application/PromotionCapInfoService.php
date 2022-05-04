@@ -1,17 +1,23 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
+use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
+use App\Shared\Infrastructure\Traits\RequestTrait;
 
 final class PromotionCapInfoService extends AppService
 {
+    use RequestTrait;
+
     private BusinessDataRepository $repobusinessdata;
     private PromotionRepository $repopromotion;
     private PromotionUiRepository $repopromotionui;
@@ -52,6 +58,17 @@ final class PromotionCapInfoService extends AppService
     {
         $promotionslug = $this->input["promotionslug"];
         $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
+        $this->_load_request();
+        EventBus::instance()->publish(...[
+            PromotionCapActionWasExecutedEvent::from_primitives(-1, [
+                "id_promotion" => $this->promotion["id"] ?? -1,
+                "id_promouser" => -1,
+                "id_type" => PromotionCapActionType::VIEWED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip()
+            ])
+        ]);
         SF::get(
             PromotionCapCheckService::class,
             [

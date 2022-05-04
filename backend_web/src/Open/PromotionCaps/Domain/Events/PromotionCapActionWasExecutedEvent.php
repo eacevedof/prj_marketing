@@ -3,7 +3,7 @@ namespace App\Open\PromotionCaps\Domain\Events;
 
 use App\Shared\Infrastructure\Bus\AbsEvent;
 
-final class PromotionCapActionWasCreatedEvent extends AbsEvent
+final class PromotionCapActionWasExecutedEvent extends AbsEvent
 {
     private int $idpromotion;
     private int $idcapuser;
@@ -58,6 +58,7 @@ final class PromotionCapActionWasCreatedEvent extends AbsEvent
             $body["url_req"],
             $body["url_ref"],
             $body["remote_ip"],
+
             $eventId,
             $occurredon,
             $correlationid,
