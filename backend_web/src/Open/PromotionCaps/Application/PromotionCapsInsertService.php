@@ -220,7 +220,9 @@ final class PromotionCapsInsertService extends AppService
         $id = $this->repopromocapuser->insert($promocapuser);
 
         EventBus::instance()->publish(...[
-            PromotionCapUserWasCreatedEvent::from_primitives($id, $promocapuser)
+            PromotionCapUserWasCreatedEvent::from_primitives($id, [
+
+            ])
         ]);
 
         return [

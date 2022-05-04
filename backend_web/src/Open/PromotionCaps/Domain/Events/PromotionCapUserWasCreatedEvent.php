@@ -48,8 +48,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
             $aggregateId,
             $body["uuid"],
             $body["email"],
-            $body["idowner"],
-            $body["idpromotion"],
+            $body["id_owner"],
+            $body["id_promotion"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -62,8 +62,8 @@ final class PromotionCapUserWasCreatedEvent extends AbsEvent
         return [
             "uuid" => $this->uuid,
             "email" => $this->email,
-            "idowner" => $this->idowner,
-            "idpromotion" => $this->idpromotion,
+            "id_owner" => $this->idowner,
+            "id_promotion" => $this->idpromotion,
         ];
     }
 
