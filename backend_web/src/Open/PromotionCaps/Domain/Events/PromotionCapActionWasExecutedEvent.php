@@ -13,6 +13,8 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
     private string $remoteip;
 
     public function __construct(
+        int $idaggregate,
+
         int $idpromotion,
         int $idcapuser,
         int $idtype,
@@ -26,7 +28,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
         ?string $causationid = null
     )
     {
-        parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
+        parent::__construct($idaggregate, $eventid, $occuredon, $correlationid, $causationid);
 
         $this->idpromotion = $idpromotion;
         $this->idcapuser = $idcapuser;

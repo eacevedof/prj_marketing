@@ -59,14 +59,15 @@ final class PromotionCapInfoService extends AppService
         $promotionslug = $this->input["promotionslug"];
         $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
         $this->_load_request();
+        $ip = $this->request->get_remote_ip();
         EventBus::instance()->publish(...[
             PromotionCapActionWasExecutedEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"] ?? -1,
                 "id_promouser" => -1,
                 "id_type" => PromotionCapActionType::VIEWED,
                 "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip()
+                "url_ref" => $this->request->get_referer() ?? "",
+                "remote_ip" => $ip
             ])
         ]);
         SF::get(
