@@ -1,7 +1,7 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserWasCreatedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasCreatedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Restrict\Auth\Application\AuthService;
@@ -15,9 +15,9 @@ final class PromotionCapActionEventHandler extends AppService implements IEventS
 {
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
+        if(get_class($domevent)!==PromotionCapActionWasCreatedEvent::class) return $this;
 
-        $subscription = [
+        $action = [
             "id_promouser" => $domevent->aggregate_id(),
             "uuid" => uniqid(),
             "id_owner" => $domevent->id_owner(),
