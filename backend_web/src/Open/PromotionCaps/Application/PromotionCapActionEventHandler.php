@@ -1,15 +1,12 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasCreatedEvent;
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
-use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasCreatedEvent;
+use App\Open\PromotionCaps\Domain\PromotionCapActionsRepository;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 
 final class PromotionCapActionEventHandler extends AppService implements IEventSubscriber
 {
@@ -18,18 +15,15 @@ final class PromotionCapActionEventHandler extends AppService implements IEventS
         if(get_class($domevent)!==PromotionCapActionWasCreatedEvent::class) return $this;
 
         $action = [
-            "id_promouser" => $domevent->aggregate_id(),
-            "uuid" => uniqid(),
-            "id_owner" => $domevent->id_owner(),
             "id_promotion" => $domevent->id_promotion(),
-            "remote_ip" => $domevent->remote_ip(),
-            "date_subscription" => $domevent->date_subscription(),
-            "code_execution" => uniqid()
+            "id_promouser" => $domevent->id_capuser(),
+            "id_type" => $domevent->id_type(),
+            "url_req" => $domevent->url_req(),
+            "url_ref" => $domevent->url_ref(),
+            "remote_ip" => $domevent->remote_ip()
         ];
 
-        $iduser = AuthService::getme()->get_user()["id"] ?? -1;
-        MF::get(PromotionCapSubscriptionEntity::class)->add_sysinsert($subscription, $iduser);
-        RF::get(PromotionCapSubscriptionsRepository::class)->insert($subscription);
+        RF::get(PromotionCapActionsRepository::class)->insert($action);
         return $this;
     }
 }
