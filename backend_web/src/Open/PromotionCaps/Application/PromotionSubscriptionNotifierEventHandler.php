@@ -12,6 +12,7 @@ use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
+use App\Shared\Infrastructure\Components\Email\FromTemplate;
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
@@ -20,6 +21,14 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     {
         if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
 
+        $pathtpl = realpath(__DIR__."infrastructure/Views/email/subscription.tpl");
+        $html = FromTemplate::get_content($pathtpl, ["data"=>[
+            "business" => "",
+            "user" => "",
+            "promotion" => "",
+            "promocode" => "",
+            "confirm_link" => "",
+        ]]);
         /**
          * @var FuncEmailComponent $email
          */
@@ -27,7 +36,10 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         //$email = new FuncEmailComponent();
         $email
             ->set_from("eaf@yahoo.es")
-            ->add_to()
+            ->add_to("eaf@yahoo.es")
+            ->set_subject(__("Promotion subscription {0}", "promo uuid"))
+            ->set_content($html)
+            ->send()
         ;
 
 
