@@ -21,9 +21,9 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     {
         if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
 
-        $path = __DIR__."infrastructure/Views/email/subscription.tpl";
+        $path = __DIR__."/../Infrastructure/Views/email/subscription.tpl";
         $pathtpl = realpath($path);
-        if (!is_file()) throw new \Exception("bad path $path");
+        if (!is_file($pathtpl)) throw new \Exception("bad path $path");
         $html = FromTemplate::get_content($pathtpl, ["data"=>[
             "business" => "bb",
             "user" => "uu",
@@ -31,10 +31,11 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             "promocode" => "ccod",
             "confirm_link" => "lllink",
         ]]);
+        print_r($html);
         /**
          * @var FuncEmailComponent $email
          */
-        //$email = CF::get(FuncEmailComponent::class);
+        $email = CF::get(FuncEmailComponent::class);
         //$email = new FuncEmailComponent();
         $email
             ->set_from("eaf@yahoo.es")
@@ -43,11 +44,6 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->set_content($html)
             ->send()
         ;
-
-
-        $iduser = AuthService::getme()->get_user()["id"] ?? -1;
-        MF::get(PromotionCapSubscriptionEntity::class)->add_sysinsert($subscription, $iduser);
-        RF::get(PromotionCapSubscriptionsRepository::class)->insert($subscription);
         return $this;
     }
 }
