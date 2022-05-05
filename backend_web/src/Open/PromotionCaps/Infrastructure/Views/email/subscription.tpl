@@ -1,6 +1,6 @@
 <?php
 /**
- * @var array $result
+ * @var array $data
  */
 ?>
 <table>

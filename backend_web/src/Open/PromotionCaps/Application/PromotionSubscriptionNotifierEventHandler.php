@@ -31,12 +31,11 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             "promocode" => "ccod",
             "confirm_link" => "lllink",
         ]]);
-        print_r($html);
+
         /**
          * @var FuncEmailComponent $email
          */
         $email = CF::get(FuncEmailComponent::class);
-        //$email = new FuncEmailComponent();
         $email
             ->set_from("eaf@yahoo.es")
             ->add_to("eaf@yahoo.es")
