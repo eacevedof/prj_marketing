@@ -1,5 +1,5 @@
 <?php
-namespace App\Open\PromotionCaps\Application;
+namespace App\Restrict\Promotions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Restrict\Promotions\Domain\PromotionRepository;

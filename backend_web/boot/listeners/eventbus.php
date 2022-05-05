@@ -8,7 +8,7 @@ use App\Restrict\UserPermissions\Application\UserPermissionsInsertService;
 use App\Restrict\PromotionsUi\Application\PromotionUiInsertService;
 use App\Open\PromotionCaps\Application\PromotionCapSubscriptionEventHandler;
 use App\Open\PromotionCaps\Application\PromotionCapActionEventHandler;
-use App\Open\PromotionCaps\Application\PromotionCountersEventHandler;
+use App\Restrict\Promotions\Application\PromotionCountersEventHandler;
 
 $bus = EventBus::instance();
 $bus->subscribe(new UserPreferencesInsertService());
