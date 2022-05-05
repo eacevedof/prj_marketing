@@ -1,11 +1,10 @@
 <?php
 namespace App\Shared\Infrastructure\Components\Email;
 
-final class FuncEmail extends AEmail
+final class FuncEmail extends AbsEmail
 {
-
-    private $title_from;
-    private $boundary = "";
+    private string $titlefrom = "";
+    private string $boundary = "";
 
     private function _boundary()
     {
@@ -37,7 +36,7 @@ final class FuncEmail extends AEmail
 
     private function _header_from()
     {
-        $this->headers[] = "From: $this->title_from <$this->email_from>";
+        $this->headers[] = "From: $this->titlefrom <$this->email_from>";
         $this->headers[] = "Return-Path: <$this->email_from>";
         $this->headers[] = "X-Sender: $this->email_from";
         return $this;
@@ -141,7 +140,7 @@ final class FuncEmail extends AEmail
         }
     }
 
-    public function set_title_from(string $title){$this->title_from = $title; return $this;}
+    public function set_title_from(string $title){$this->titlefrom = $title; return $this;}
 
     private function logpr(){}
 
