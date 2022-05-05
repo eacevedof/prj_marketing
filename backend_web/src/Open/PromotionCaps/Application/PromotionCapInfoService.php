@@ -66,7 +66,7 @@ final class PromotionCapInfoService extends AppService
                 "id_promouser" => -1,
                 "id_type" => PromotionCapActionType::VIEWED,
                 "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer() ?? "",
+                "url_ref" => $this->request->get_referer(),
                 "remote_ip" => $this->request->get_remote_ip()
             ])
         ]);
