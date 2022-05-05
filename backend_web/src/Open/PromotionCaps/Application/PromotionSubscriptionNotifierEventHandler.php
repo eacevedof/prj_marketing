@@ -10,22 +10,25 @@ use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 
-final class PromotionCapNotifierEventHandler extends AppService implements IEventSubscriber
+final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
     public function on_event(IEvent $domevent): IEventSubscriber
     {
         if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
 
-        $subscription = [
-            "id_promouser" => $domevent->aggregate_id(),
-            "uuid" => uniqid(),
-            "id_owner" => $domevent->id_owner(),
-            "id_promotion" => $domevent->id_promotion(),
-            "remote_ip" => $domevent->remote_ip(),
-            "date_subscription" => $domevent->date_subscription(),
-            "code_execution" => uniqid()
-        ];
+        /**
+         * @type FuncEmailComponent
+         */
+        //$email = CF::get(FuncEmailComponent::class);
+        $email = new FuncEmailComponent();
+        $email
+            ->set_from("eacevedf@gmail.com")
+            ->add_to()
+        ;
+
 
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
         MF::get(PromotionCapSubscriptionEntity::class)->add_sysinsert($subscription, $iduser);

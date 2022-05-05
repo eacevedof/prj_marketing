@@ -1,7 +1,7 @@
 <?php
 namespace App\Shared\Infrastructure\Components\Email;
 
-final class FuncEmail extends AbsEmail
+final class FuncEmailComponent extends AbsEmail
 {
     private string $titlefrom = "";
     private string $boundary = "";
