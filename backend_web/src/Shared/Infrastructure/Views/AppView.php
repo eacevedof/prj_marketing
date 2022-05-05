@@ -273,7 +273,7 @@ final class AppView
 
     public function render(array $vars = []): void
     {
-        //$this->_cache_exit();
+        $this->_cache_exit();
         $this->locals = $vars;
         
         if(!is_file($this->pathtpl["layout"]))
@@ -282,17 +282,14 @@ final class AppView
         $this->_load_pathtemplate();
         if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
 
-        //esto publica para el layout más no para el template ya que
-        //el $this->_template() no ve estas variables y se llama dentro de pathlayout
-
         foreach ($this->globals as $name => $value)
             $$name = $value;
 
         foreach ($this->locals as $name => $value)
             $$name = $value;
-die;//esto me recarga todo ??? pq ???
+
         include_once($this->pathtpl["layout"]);
-die;
+
         $this->_flush_and_exit();
     }
 

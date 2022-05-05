@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Shared\Infrastructure\Views\AppView $this
+ * @var \App\Shared\Infrastructure\Views\AppView $this
  */
 
 ?>
