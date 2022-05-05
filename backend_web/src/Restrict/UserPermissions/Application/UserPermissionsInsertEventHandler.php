@@ -14,7 +14,7 @@ use App\Restrict\Users\Domain\Enums\UserPermissionType;
 use App\Restrict\Users\Domain\Events\UserWasCreatedEvent;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 
-final class UserPermissionsInsertService extends AppService implements IEventSubscriber
+final class UserPermissionsInsertEventHandler extends AppService implements IEventSubscriber
 {
     use RequestTrait;
 

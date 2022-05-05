@@ -21,13 +21,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     {
         if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
 
-        $pathtpl = realpath(__DIR__."infrastructure/Views/email/subscription.tpl");
+        $path = __DIR__."infrastructure/Views/email/subscription.tpl";
+        $pathtpl = realpath($path);
+        if (!is_file()) throw new \Exception("bad path $path");
         $html = FromTemplate::get_content($pathtpl, ["data"=>[
-            "business" => "",
-            "user" => "",
-            "promotion" => "",
-            "promocode" => "",
-            "confirm_link" => "",
+            "business" => "bb",
+            "user" => "uu",
+            "promotion" => "pppp",
+            "promocode" => "ccod",
+            "confirm_link" => "lllink",
         ]]);
         /**
          * @var FuncEmailComponent $email

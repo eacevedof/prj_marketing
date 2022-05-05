@@ -17,7 +17,7 @@ use App\Restrict\Users\Domain\Events\UserWasCreatedEvent;
 use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 
-final class UserPreferencesInsertService extends AppService implements IEventSubscriber
+final class UserPreferencesInsertEventHandler extends AppService implements IEventSubscriber
 {
     use RequestTrait;
 
