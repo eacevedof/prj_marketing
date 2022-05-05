@@ -1,6 +1,7 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -14,16 +15,22 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
     {
         if(get_class($domevent)!==PromotionCapActionWasExecutedEvent::class) return $this;
 
-        $action = [
-            "id_promotion" => $domevent->id_promotion(),
-            "id_promouser" => $domevent->id_capuser(),
-            "id_type" => $domevent->id_type(),
-            "url_req" => $domevent->url_req(),
-            "url_ref" => $domevent->url_ref(),
-            "remote_ip" => $domevent->remote_ip()
-        ];
+        $repopromo = RF::get(PromotionRepository::class);
+        switch ($domevent->id_type()) {
+            case PromotionCapActionType::VIEWED:
+                $repopromo->increase_viewed($domevent->id_promotion());
+            break;
+            case PromotionCapActionType::SUBSCRIBED:
+                $repopromo->increase_subscribed($domevent->id_promotion());
+            break;
+            case PromotionCapActionType::CONFIRMED:
+                $repopromo->increase_confirmed($domevent->id_promotion());
+            break;
+            case PromotionCapActionType::EXECUTED:
+                $repopromo->increase_executed($domevent->id_promotion());
+            break;
+        }
 
-        RF::get(PromotionRepository::class)->insert($action);
         return $this;
     }
 }
