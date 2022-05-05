@@ -20,12 +20,12 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
 
         /**
-         * @type FuncEmailComponent
+         * @var FuncEmailComponent $email
          */
         //$email = CF::get(FuncEmailComponent::class);
-        $email = new FuncEmailComponent();
+        //$email = new FuncEmailComponent();
         $email
-            ->set_from("eacevedf@gmail.com")
+            ->set_from("eaf@yahoo.es")
             ->add_to()
         ;
 
