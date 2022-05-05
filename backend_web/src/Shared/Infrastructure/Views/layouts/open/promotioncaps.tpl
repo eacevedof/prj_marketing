@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="#">
-  <title><?=$pagetitle ?? ""?></title>
+  <title><?=($pagetitle ?? "")?></title>
   <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
   <!-- js -->
   <?= $this->_asset_js([
@@ -19,7 +19,7 @@
 </head>
 <body class="main-body">
 <div class="page">
-<?
+<?php
 $this->_template();
 ?>
 </div>
