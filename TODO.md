@@ -39,6 +39,7 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~la redirección me estaba dando error por el favicon !! llegaba a pintarse y volvia a cargar la misma ur con href=#~~
 - ~~al seleccionar owners en la promocion deben ser owners con businessdata sino no funciona el slug~~
 - ~~gestion de horas UMT. Parsear a local según pais del usuario~~
 - ~~url modal launcher view=xxx&uuid=xxx&tab=xxx~~

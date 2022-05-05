@@ -2,7 +2,9 @@
 namespace App\Open\PromotionCaps\Application;
 
 use App\Checker\Application\CheckerService;
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapUserType;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
@@ -221,8 +223,17 @@ final class PromotionCapsInsertService extends AppService
 
         $promocapuser["remote_ip"] = $this->request->get_remote_ip();
         $promocapuser["date_subscription"] = date("Y-m-d H:i:s");
+
         EventBus::instance()->publish(...[
-            PromotionCapUserWasCreatedEvent::from_primitives($id, $promocapuser)
+            PromotionCapUserWasCreatedEvent::from_primitives($id, $promocapuser),
+            PromotionCapActionWasExecutedEvent::from_primitives(-1, [
+                "id_promotion" => $this->promotion["id"],
+                "id_promouser" => $id,
+                "id_type" => PromotionCapActionType::SUBSCRIBED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip()
+            ])
         ]);
 
         return [
