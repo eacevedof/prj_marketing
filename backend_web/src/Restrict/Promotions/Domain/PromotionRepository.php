@@ -219,4 +219,27 @@ final class PromotionRepository extends AppRepository
         return $this->db->query($sql)[0] ?? [];
     }
 
+    public function increase_viewed(int $id): void
+    {
+        $sql = "UPDATE {$this->table} SET num_viewed=num_viewed + 1 WHERE 1 AND id={$id}";
+        $this->db->exec($sql);
+    }
+
+    public function increase_subscribed(int $id): void
+    {
+        $sql = "UPDATE {$this->table} SET num_subscribed=num_subscribed + 1 WHERE 1 AND id={$id}";
+        $this->db->exec($sql);
+    }
+
+    public function increase_confirmed(int $id): void
+    {
+        $sql = "UPDATE {$this->table} SET num_confirmed=num_confirmed + 1 WHERE 1 AND id={$id}";
+        $this->db->exec($sql);
+    }
+
+    public function increase_executed(int $id): void
+    {
+        $sql = "UPDATE {$this->table} SET num_executed=num_executed + 1 WHERE 1 AND id={$id}";
+        $this->db->exec($sql);
+    }
 }
