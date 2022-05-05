@@ -15,6 +15,7 @@ use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
+
     public function on_event(IEvent $domevent): IEventSubscriber
     {
         if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
