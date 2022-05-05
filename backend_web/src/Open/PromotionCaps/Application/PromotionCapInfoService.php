@@ -63,7 +63,7 @@ final class PromotionCapInfoService extends AppService
         EventBus::instance()->publish(...[
             PromotionCapActionWasExecutedEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"] ?? -1,
-                "id_promouser" => -1,
+                "id_promouser" => null,
                 "id_type" => PromotionCapActionType::VIEWED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),

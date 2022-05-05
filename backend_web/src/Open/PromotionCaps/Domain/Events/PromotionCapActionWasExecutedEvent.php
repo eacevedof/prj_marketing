@@ -6,20 +6,20 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 final class PromotionCapActionWasExecutedEvent extends AbsEvent
 {
     private int $idpromotion;
-    private int $idcapuser;
+    private ?int $idcapuser;
     private int $idtype;
     private string $urlreq;
-    private string $urlref;
+    private ?string $urlref;
     private string $remoteip;
 
     public function __construct(
         int $idaggregate,
 
         int $idpromotion,
-        int $idcapuser,
+        ?int $idcapuser,
         int $idtype,
         string $urlreq,
-        string $urlref,
+        ?string $urlref,
         string $remoteip,
 
         ?string $eventid = null,
@@ -85,7 +85,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
         return $this->idpromotion;
     }
 
-    public function id_capuser(): int
+    public function id_capuser(): ?int
     {
         return $this->idcapuser;
     }
@@ -100,7 +100,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
         return $this->urlreq;
     }
 
-    public function url_ref(): string
+    public function url_ref(): ?string
     {
         return $this->urlref;
     }
