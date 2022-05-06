@@ -1,8 +1,8 @@
 <?php
 return [
-    ["url"=>"/promotion/:promotionuuid/confirm/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsConfirmController","method"=>"confirm", "allowed"=>["get"]],
+    ["url"=>"/promotion/:promotionuuid/confirm/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController","method"=>"confirm", "allowed"=>["get"]],
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"create"],
-    ["url"=>"/open/promotionscap/:promouuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsInsertController", "method"=>"insert", "allowed"=>["post"]],
+    ["url"=>"/open/promotionscap/:promouuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapInsertController", "method"=>"insert", "allowed"=>["post"]],
 
     ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"access", "allowed"=>["post"]],

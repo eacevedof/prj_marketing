@@ -15,7 +15,7 @@ use App\Shared\Domain\Enums\PageType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
-final class PromotionCapsConfirmController extends OpenController
+final class PromotionCapConfirmController extends OpenController
 {
     public function confirm(string $promotionuuid, string $subscriptionuuid): void
     {

@@ -15,7 +15,7 @@ use App\Open\PromotionCaps\Domain\Enums\RequestActionType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
-final class PromotionCapsInsertController extends OpenController
+final class PromotionCapInsertController extends OpenController
 {
     public function insert(string $promouuid): void
     {
