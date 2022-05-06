@@ -32,12 +32,9 @@ final class PromotionCapsConfirmService extends AppService
     private AuthService $auth;
     private array $authuser;
 
-    private FieldsValidator $validator;
     private PromotionRepository $repopromotion;
-    private PromotionUiRepository $repopromotionui;
     private PromotionCapSubscriptionsRepository $reposubscription;
     private PromotionCapUsersRepository $repopromocapuser;
-    private ArrayRepository $repoarray;
 
     private array $promotion;
     private array $promotionui;
@@ -46,7 +43,7 @@ final class PromotionCapsConfirmService extends AppService
     {
         $this->input = $input;
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
-
+        $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
     }
 
     private function _load_promotion(): void

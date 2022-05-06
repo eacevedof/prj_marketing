@@ -53,13 +53,13 @@ final class PromotionCapCheckService extends AppService
         $seconds = $dt->get_seconds_between($utcfrom, $utcnow);
         if($seconds<0)
             $this->_promocap_exception(
-                __("Sorry but this promotion has not started yet"),
+                __("Sorry but this promotion has not started yet or is paused. Please try again later."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
         $seconds = $dt->get_seconds_between($utcnow, $utcto);
         if($seconds<0)
             $this->_promocap_exception(
-                __("Sorry but this promotion has finished"),
+                __("Sorry but this promotion has expired."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
 
