@@ -44,11 +44,12 @@ final class PromotionCapsConfirmService extends AppService
         $this->input = $input;
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
         $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
+        $this->repopromotion = RF::get(PromotionRepository::class);
     }
 
     private function _load_promotion(): void
     {
-        $promotionuuid = $this->input["_promotionuuid"];
+        $promotionuuid = $this->input["promotionuuid"];
         $this->promotion = $this->repopromotion->get_by_uuid($promotionuuid, [
             "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz",
             "date_from", "date_to", "id_owner"
@@ -68,12 +69,6 @@ final class PromotionCapsConfirmService extends AppService
     {
         $this->_load_request();
         $this->_load_promotion();
-
-
-        if ($errors = $this->_add_rules_by_ui()->get_errors()) {
-            $this->_set_errors($errors);
-            throw new FieldsException(__("Fields validation errors"));
-        }
 
         $entitypromouser = MF::get(PromotionCapUsersEntity::class);
         $promocapuser = $entitypromouser->map_request($promocapuser);

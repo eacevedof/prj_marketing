@@ -17,9 +17,9 @@ use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
 final class PromotionCapsConfirmController extends OpenController
 {
-    public function confirm(string $promouuid, string $subsuuid): void
+    public function confirm(string $promotionuuid, string $subscriptionuuid): void
     {
-        if (!($promouuid && $subsuuid))
+        if (!($promotionuuid && $subscriptionuuid))
             $this->set_layout("open/empty")
                 ->add_header(ResponseType::BAD_REQUEST)
                 ->add_var(PageType::H1, __("Bad Request"))
@@ -29,14 +29,14 @@ final class PromotionCapsConfirmController extends OpenController
                 ->render();
         try {
             $insert = SF::get_callable(PromotionCapsConfirmService::class, [
-                "promouuid" => $promouuid,
-                "subsuuid" => $subsuuid
+                "promotionuuid" => $promotionuuid,
+                "subscriptionuuid" => $subscriptionuuid
             ]);
             $result = $insert();
             $this->add_var(PageType::H1, htmlentities($result["promotion"]))
                 ->add_var("result", $result);
 
-            unset($insert, $result, $promouuid, $subsuuid);
+            unset($insert, $result, $promotionuuid, $subscriptionuuid);
             $this->view->render_nl();
         }
         catch (PromotionCapException $e) {
