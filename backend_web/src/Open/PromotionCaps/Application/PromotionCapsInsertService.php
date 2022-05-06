@@ -197,7 +197,7 @@ final class PromotionCapsInsertService extends AppService
     {
         $skip = $this->validator->get_skip();
         foreach ($skip as $field) unset($promocapuser[$field]);
-        $promocapuser["uuid"] = uniqid();
+        $promocapuser["uuid"] = "us".uniqid();
         $promocapuser["id_owner"] = $this->promotion["id_owner"];
         $promocapuser["id_promotion"] = $this->promotion["id"];
     }

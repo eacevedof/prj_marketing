@@ -2,6 +2,7 @@
 namespace App\Open\PromotionCaps\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
@@ -54,6 +55,14 @@ final class PromotionCapsConfirmService extends AppService
             ]
         )
         ->is_suitable_or_fail();
+    }
+
+    private function _load_subscription(): void
+    {
+        $subscriptionuuid = $this->input["subscriptionuuid"];
+        $promocapuser = $this->repopromocapuser->get_by_uuid($subscriptionuuid, ["id"]);
+        if(!$promocapuser)
+            throw new PromotionCapException(__("No subscription found"));
     }
 
     public function __invoke(): array

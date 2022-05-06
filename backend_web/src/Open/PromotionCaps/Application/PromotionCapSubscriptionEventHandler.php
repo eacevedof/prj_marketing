@@ -19,7 +19,7 @@ final class PromotionCapSubscriptionEventHandler extends AppService implements I
 
         $subscription = [
             "id_promouser" => $domevent->aggregate_id(),
-            "uuid" => uniqid(),
+            "uuid" => "pr".uniqid(),
             "id_owner" => $domevent->id_owner(),
             "id_promotion" => $domevent->id_promotion(),
             "remote_ip" => $domevent->remote_ip(),
