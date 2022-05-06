@@ -164,7 +164,7 @@ final class PromotionCapUsersRepository extends AppRepository
         $r = $this->db->query($sql);
         return (bool) ($r[0]["id"] ?? null);
     }
-    public function get_data_for_mail(int $idpromouser): array
+    public function get_subscription_data(int $idpromouser): array
     {
         $sql = $this->_get_qbuilder()
             ->set_comment("promotioncapsubscriptions.get_num_confirmed")
@@ -172,7 +172,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_getfields([
                 "bd.business_name AS business, pu.id AS idcapuser, pu.name1 AS user, pu.email, p.description AS promotion, p.uuid AS promocode",
                 "bd.slug AS businessslug, p.slug AS promoslug",
-                "ps.id AS subsid, ps.uuid AS subscode"
+                "ps.id AS subsid, ps.uuid AS subscode, ps.date_confirm, ps.date_execution"
             ])
             ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps
             ON pu.id = ps.id_promouser

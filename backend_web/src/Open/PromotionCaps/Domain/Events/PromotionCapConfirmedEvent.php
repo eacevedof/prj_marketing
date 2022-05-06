@@ -5,22 +5,16 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 
 final class PromotionCapConfirmedEvent extends AbsEvent
 {
-    private string $uuid;
+    private string $subsuuid;
     private string $email;
-    private int $idowner;
-    private int $idpromotion;
-    private string $remoteip;
-    private string $dateconfirmation;
+    private string $dateconfirm;
 
     public function __construct(
         int $idcapuser,
 
-        string $uuid,
+        string $subsuuid,
         string $email,
-        int $idowner,
-        int $idpromotion,
-        string $remoteip,
-        string $dateconfirmation,
+        string $dateconfirm,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -29,12 +23,9 @@ final class PromotionCapConfirmedEvent extends AbsEvent
     )
     {
         parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->uuid = $uuid;
+        $this->subsuuid = $subsuuid;
         $this->email = $email;
-        $this->idowner = $idowner;
-        $this->idpromotion = $idpromotion;
-        $this->remoteip = $remoteip;
-        $this->dateconfirmation = $dateconfirmation;
+        $this->dateconfirm = $dateconfirm;
     }
 
     public static function event_name(): string
@@ -53,12 +44,9 @@ final class PromotionCapConfirmedEvent extends AbsEvent
     {
         return new self(
             $aggregateId,
-            $body["uuid"],
+            $body["subsuuid"],
             $body["email"],
-            $body["id_owner"],
-            $body["id_promotion"],
-            $body["remote_ip"],
-            $body["date_subscription"],
+            $body["date_confirm"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -69,42 +57,24 @@ final class PromotionCapConfirmedEvent extends AbsEvent
     public function to_primitives(): array
     {
         return [
-            "uuid" => $this->uuid,
+            "subsuuid" => $this->subsuuid,
             "email" => $this->email,
-            "id_owner" => $this->idowner,
-            "id_promotion" => $this->idpromotion,
-            "remote_ip" => $this->remoteip,
-            "date_subscription" => $this->dateconfirmation,
+            "date_confirm" => $this->dateconfirm,
         ];
     }
 
-    public function uuid(): string
+    public function subscription_uuid(): string
     {
-        return $this->uuid;
+        return $this->subsuuid;
     }
 
     public function email(): string
     {
         return $this->email;
     }
-
-    public function id_owner(): int
+    
+    public function date_confirm(): string
     {
-        return $this->idowner;
-    }
-
-    public function id_promotion(): int
-    {
-        return $this->idpromotion;
-    }
-
-    public function remote_ip(): string
-    {
-        return $this->remoteip;
-    }
-
-    public function date_confirmation(): string
-    {
-        return $this->dateconfirmation;
+        return $this->dateconfirm;
     }
 }

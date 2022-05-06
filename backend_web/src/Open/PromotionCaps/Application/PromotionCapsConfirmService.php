@@ -62,12 +62,15 @@ final class PromotionCapsConfirmService extends AppService
         if(!$promosubscription)
             $this->_promocap_exception(__("No subscription found"), ExceptionType::CODE_NOT_FOUND);
 
-        $this->subscriptiondata = $this->repopromocapuser->get_data_for_mail($promosubscription["id_promouser"]);
+        $this->subscriptiondata = $this->repopromocapuser->get_subscription_data($promosubscription["id_promouser"]);
         if (!$this->subscriptiondata)
             $this->_promocap_exception(__("No subscription data found"), ExceptionType::CODE_NOT_FOUND);
 
         if ($this->subscriptiondata["promocode"]!==$this->promotion["uuid"])
             $this->_promocap_exception(__("Promotion code does not match for this subscription"), ExceptionType::CODE_BAD_REQUEST);
+
+        if ($this->subscriptiondata["date_confirm"] || $this->subscriptiondata["date_execution"])
+            $this->_promocap_exception(__("You have already confirmed your subscription"), ExceptionType::CODE_BAD_REQUEST);
     }
 
     private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
@@ -84,17 +87,23 @@ final class PromotionCapsConfirmService extends AppService
         $confirm = [
             "id"=>$this->subscriptiondata["subsid"],
             "uuid"=>$this->subscriptiondata["subscode"],
-            "date_confirm"=> date("Y-m-d H:i:s"),
+            "date_confirm"=> $date = date("Y-m-d H:i:s"),
+            "subs_status" => PromotionCapActionType::CONFIRMED
         ];
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
         $entitysubs->add_sysupdate($confirm, $iduser);
         $this->repopromocapsubscription->update($confirm);
 
         EventBus::instance()->publish(...[
-            PromotionCapConfirmedEvent::from_primitives($id, $promocapuser = $this->subscriptiondata["idcapuser"]),
+            PromotionCapConfirmedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
+                "subsuuid" => $this->subscriptiondata["subscode"],
+                "email" => $this->subscriptiondata["email"],
+                "email" => $date,
+            ]),
+
             PromotionCapActionWasExecutedEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
-                "id_promouser" => $promocapuser,
+                "id_promouser" => $idcapuser,
                 "id_type" => PromotionCapActionType::CONFIRMED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
