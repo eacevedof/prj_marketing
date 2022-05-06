@@ -88,6 +88,7 @@ final class PromotionCapsConfirmService extends AppService
             "id"=>$this->subscriptiondata["subsid"],
             "uuid"=>$this->subscriptiondata["subscode"],
             "date_confirm"=> $date = date("Y-m-d H:i:s"),
+            "exec_code" => "",
             "subs_status" => PromotionCapActionType::CONFIRMED
         ];
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
