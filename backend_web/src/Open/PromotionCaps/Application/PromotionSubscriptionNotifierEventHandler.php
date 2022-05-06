@@ -2,14 +2,9 @@
 namespace App\Open\PromotionCaps\Application;
 
 use App\Open\PromotionCaps\Domain\Events\PromotionCapUserWasCreatedEvent;
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
-use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
@@ -26,15 +21,9 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $pathtpl = realpath($path);
         if (!is_file($pathtpl)) throw new \Exception("bad path $path");
 
-        $html = FromTemplate::get_content($pathtpl, ["data"=>[
-            "business" => "bb",
-            "user" => "uu",
-            "email" => "",
-            "promotion" => "pppp",
-            "promocode" => "ccod",
-            "confirm_link" => "lllink",
-        ]]);
-
+        $data = RF::get(PromotionCapUsersRepository::class)->get_data_for_mail($domevent->aggregate_id());
+        $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
+        print_r($html);
         /**
          * @var FuncEmailComponent $email
          */
@@ -47,11 +36,5 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->send()
         ;
         return $this;
-    }
-
-    private function _get_promotion(PromotionCapUserWasCreatedEvent $event): array
-    {
-        $r = RF::get(PromotionCapSubscriptionsRepository::class)->get_confirm_email($event->id_promotion());
-        return $r;
     }
 }
