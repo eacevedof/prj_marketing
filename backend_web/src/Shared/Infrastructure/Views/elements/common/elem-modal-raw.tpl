@@ -1,6 +1,6 @@
 <?php
 /**
-* @var \App\Shared\Infrastructure\Views\AppView $this
+* @var App\Shared\Infrastructure\Views\AppView $this
 */
 ?>
 <div id="modal-global" class="mod-overlay mod-hide">
