@@ -17,7 +17,7 @@ $hello = $data["user"] ?: $data["email"];
         <tr><td>
             <h3><?=__("Hello {0}!!", $hello) ?></h3>
             <p>
-              <?=__("You have subscribed to promotion: <b>&ldquo;{0}&rdquo;</b> of <b>{1}</b>", $data["promotion"], $data["business"])?>&nbsp;
+              <?=__("You have subscribed to promotion: <b>&ldquo;{0}&rdquo;</b> published by <b>{1}</b>", $data["promotion"], $data["business"])?>&nbsp;
               <br/>
               <?=__("Thanks for participating.") ?>
             </p>
@@ -28,8 +28,9 @@ $hello = $data["user"] ?: $data["email"];
             <p>
               <?=__("Remember to use this email in all of your future subscriptions in order to accumulate points") ?>
             </p>
-            <p style="color: #ccc">
+            <p style="color:#efefef">
               <small><code><?=__("Promotion code: {0}", $data["promocode"])?></code></small>
+              <small><code><?=__("Subscription code: {0}", $data["subscode"])?></code></small>
             </p>
         </td></tr>
       </table>
