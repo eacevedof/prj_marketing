@@ -9,7 +9,7 @@ use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Open\PromotionCaps\Application\PromotionCapsInsertService;
+use App\Open\PromotionCaps\Application\PromotionCapsConfirmService;
 
 use App\Open\PromotionCaps\Domain\Enums\RequestActionType;
 use App\Shared\Domain\Enums\PageType;
@@ -39,7 +39,7 @@ final class PromotionCapsConfirmController extends OpenController
                 ->show();
 
         $post = ["_promotionuuid"=>$promouuid] + $post;
-        $insert = SF::get_callable(PromotionCapsInsertService::class, $post);
+        $insert = SF::get_callable(PromotionCapsConfirmService::class, $post);
         try {
             $result = $insert();
             $this->_get_json()->set_payload([
