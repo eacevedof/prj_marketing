@@ -6,7 +6,9 @@ $hello = $data["user"] ?: $data["email"];
 ?>
 <table>
   <tr>
-    <td></td><td><h1><?=$data["business"]?></h1></td><td></td>
+    <td></td>
+    <td><h1><?=$data["business"]?></h1></td>
+    <td></td>
   </tr>
   <tr>
     <td></td>
