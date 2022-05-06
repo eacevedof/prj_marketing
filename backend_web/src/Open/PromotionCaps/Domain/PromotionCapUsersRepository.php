@@ -170,7 +170,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_comment("promotioncapsubscriptions.get_num_confirmed")
             ->set_table("$this->table as pu")
             ->set_getfields([
-                "m.bd.business_name, pu.name1, pu.email, p.description AS promotion, p.uuid promocode, ps.uuid AS promolink"
+                "bd.business_name, pu.name1, pu.email, p.description AS promotion, p.uuid promocode, ps.uuid AS promolink"
             ])
             ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps
             ON pu.id = ps.id_promouser
