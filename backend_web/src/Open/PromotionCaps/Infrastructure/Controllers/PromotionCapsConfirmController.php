@@ -41,7 +41,7 @@ final class PromotionCapsConfirmController extends OpenController
         }
         catch (PromotionCapException $e) {
             $this->add_header($e->getCode())
-                ->add_var(PageType::H1, __("Warning!"))
+                ->add_var(PageType::H1, __("Whoops!"))
                 ->add_var("error", $e->getMessage())
                 ->render_nl();
         }
