@@ -26,10 +26,10 @@ $hello = $data["user"] ?: $data["email"];
               <?=__("to finish your subscription.") ?>
             </p>
             <p>
-              <?=__("Remember to use the same email in all your future subscriptions in order to accumulate points for future surprises") ?>
+              <?=__("Remember to use this email in all of your future subscriptions in order to accumulate points") ?>
             </p>
             <p>
-              <small><code><?=$data["promocode"]?></code></small>
+              <small><code><?=__("Promotion code: {0}", $data["promocode"])?></code></small>
             </p>
         </td></tr>
       </table>
