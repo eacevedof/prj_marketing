@@ -7,7 +7,7 @@
 <main>
 <?php
 if (isset($error)) {
-  echo "<h1>$error</h1>";
+  $this->_element("common/elem-error", ["title"=>$h1, "description"=>$description]);
   return;
 }
 ?>
