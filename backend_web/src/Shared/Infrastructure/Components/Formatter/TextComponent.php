@@ -44,7 +44,7 @@ final class TextComponent
 
         $word = [];
         for($i=0; $i<$charlen; $i++) {
-            $word[] = (($i%2)===0) ? array_rand($chars) : array_rand($vocals);
+            $word[] = (($i%2)===0) ? $chars[array_rand($chars)] : $vocals[array_rand($vocals)];
         }
 
         if(!$numbers) return strtoupper(implode("", $word));

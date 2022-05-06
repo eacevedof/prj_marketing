@@ -15,8 +15,10 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 
 final class PromotionCapsConfirmService extends AppService
 {
@@ -88,9 +90,10 @@ final class PromotionCapsConfirmService extends AppService
             "id"=>$this->subscriptiondata["subsid"],
             "uuid"=>$this->subscriptiondata["subscode"],
             "date_confirm"=> $date = date("Y-m-d H:i:s"),
-            "exec_code" => "",
+            "code_execution" => CF::get(TextComponent::class)->get_random_word(4, 2),
             "subs_status" => PromotionCapActionType::CONFIRMED
         ];
+        dd($confirm);
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
         $entitysubs->add_sysupdate($confirm, $iduser);
         $this->repopromocapsubscription->update($confirm);
