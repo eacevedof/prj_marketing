@@ -21,6 +21,7 @@ $hello = $data["user"] ?: $data["email"];
             </p>
             <p>
               <?=__("Please, click this")?>&nbsp;<a href="<?=$data["confirm_link"]?>"><?=__("confirmation link")?></a>
+              <br/><br/>
               <?=__("to finish your subscription") ?>
             </p>
             <p>

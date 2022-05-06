@@ -164,7 +164,7 @@ final class PromotionCapUsersRepository extends AppRepository
         $r = $this->db->query($sql);
         return (bool) ($r[0]["id"] ?? null);
     }
-    public function get_data_for_mail(int $idpromouser): int
+    public function get_data_for_mail(int $idpromouser): array
     {
         $sql = $this->_get_qbuilder()
             ->set_comment("promotioncapsubscriptions.get_num_confirmed")
@@ -184,6 +184,6 @@ final class PromotionCapUsersRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->db->query($sql);
-        return (int) ($r[0]["num_confirmed"] ?? 0);
+        return $r[0] ?? [];
     }
 }
