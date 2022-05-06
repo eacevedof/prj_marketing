@@ -49,7 +49,6 @@ final class PromotionCapsConfirmService extends AppService
 
     }
 
-
     private function _load_promotion(): void
     {
         $promotionuuid = $this->input["_promotionuuid"];
