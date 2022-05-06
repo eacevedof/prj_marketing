@@ -3,14 +3,14 @@ namespace App\Open\PromotionCaps\Domain\Events;
 
 use App\Shared\Infrastructure\Bus\AbsEvent;
 
-final class PromotionCapUserConfirmedEvent extends AbsEvent
+final class PromotionCapConfirmedEvent extends AbsEvent
 {
     private string $uuid;
     private string $email;
     private int $idowner;
     private int $idpromotion;
     private string $remoteip;
-    private string $datesubscription;
+    private string $dateconfirmation;
 
     public function __construct(
         int $idcapuser,
@@ -20,7 +20,7 @@ final class PromotionCapUserConfirmedEvent extends AbsEvent
         int $idowner,
         int $idpromotion,
         string $remoteip,
-        string $datesubscription,
+        string $dateconfirmation,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -34,7 +34,7 @@ final class PromotionCapUserConfirmedEvent extends AbsEvent
         $this->idowner = $idowner;
         $this->idpromotion = $idpromotion;
         $this->remoteip = $remoteip;
-        $this->datesubscription = $datesubscription;
+        $this->dateconfirmation = $dateconfirmation;
     }
 
     public static function event_name(): string
@@ -74,7 +74,7 @@ final class PromotionCapUserConfirmedEvent extends AbsEvent
             "id_owner" => $this->idowner,
             "id_promotion" => $this->idpromotion,
             "remote_ip" => $this->remoteip,
-            "date_subscription" => $this->datesubscription,
+            "date_subscription" => $this->dateconfirmation,
         ];
     }
 
@@ -103,8 +103,8 @@ final class PromotionCapUserConfirmedEvent extends AbsEvent
         return $this->remoteip;
     }
 
-    public function date_subscription(): string
+    public function date_confirmation(): string
     {
-        return $this->datesubscription;
+        return $this->dateconfirmation;
     }
 }

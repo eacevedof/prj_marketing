@@ -4,7 +4,7 @@ namespace App\Open\PromotionCaps\Application;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserConfirmedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
@@ -86,18 +86,18 @@ final class PromotionCapsConfirmService extends AppService
         $confirm = [
             "id"=>$this->subscriptiondata["subsid"],
             "uuid"=>$this->subscriptiondata["subscode"],
-            "date_confirm"=>$date = date("Y-m-d H:i:s"),
+            "date_confirm"=> date("Y-m-d H:i:s"),
         ];
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
         $entitysubs->add_sysupdate($confirm, $iduser);
         $this->repopromocapsubscription->update($confirm);
 
         EventBus::instance()->publish(...[
-            PromotionCapUserConfirmedEvent::from_primitives($id, $promocapuser),
+            PromotionCapConfirmedEvent::from_primitives($id, $promocapuser = $this->subscriptiondata["idcapuser"]),
             PromotionCapActionWasExecutedEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
-                "id_promouser" => $id,
-                "id_type" => PromotionCapActionType::SUBSCRIBED,
+                "id_promouser" => $promocapuser,
+                "id_type" => PromotionCapActionType::CONFIRMED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
                 "remote_ip" => $this->request->get_remote_ip()
