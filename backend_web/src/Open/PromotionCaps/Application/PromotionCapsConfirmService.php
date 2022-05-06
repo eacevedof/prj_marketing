@@ -101,6 +101,7 @@ final class PromotionCapsConfirmService extends AppService
                 "remote_ip" => $this->request->get_remote_ip()
             ])
         ]);
+
         return $this->subscriptiondata;
     }
 }
