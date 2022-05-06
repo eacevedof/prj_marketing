@@ -23,6 +23,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new \Exception("bad path $path");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_for_mail($domevent->aggregate_id());
+        $data["confirm_link"] = "http://localhost:900/promotion/confirm/{$data["subscode"]}";
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         print_r($html);
         /**
