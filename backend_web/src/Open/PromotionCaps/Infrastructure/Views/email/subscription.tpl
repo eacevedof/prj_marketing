@@ -17,7 +17,7 @@ $hello = $data["user"] ?: $data["email"];
         <tr><td>
             <h3><?=__("Hello {0}!!", $hello) ?></h3>
             <p>
-              <?=__("You have subscribed to promotion: <b>{0}</b>", $data["promotion"]) ?>.&nbsp;
+              <?=__("You have subscribed to promotion: <b>&ldquo;{0}&ldquo;</b>", $data["promotion"]) ?>&nbsp;
               <?=__("with code <code>{0}</code>", $data["promocode"]) ?>
               <br/>
               <?=__("Thank you for your participation.") ?>
