@@ -164,34 +164,23 @@ final class PromotionCapUsersRepository extends AppRepository
         $r = $this->db->query($sql);
         return (bool) ($r[0]["id"] ?? null);
     }
-    public function get_data_for_mail(int $id): int
+    public function get_data_for_mail(int $idpromouser): int
     {
-        $sql = "
-        SELECT bd.business_name, pu.name1, pu.email, p.description AS promotion, p.uuid promocode, ps.uuid AS promolink
-        FROM app_promotioncap_users AS pu
-        
-        INNER JOIN app_promotioncap_subscriptions AS ps
-        ON pu.id = ps.id_promouser
-        AND ps.id_promotion = pu.id_promotion
-        
-        INNER JOIN app_promotion AS p
-        ON pu.id_promotion = p.id
-        
-        INNER JOIN app_business_data AS bd
-        ON p.id_owner = bd.id_user
-        
-        WHERE 1
-        AND pu.id = $id
-        ";
         $sql = $this->_get_qbuilder()
             ->set_comment("promotioncapsubscriptions.get_num_confirmed")
-            ->set_table("$this->table as m")
+            ->set_table("$this->table as pu")
             ->set_getfields([
-                "m."
+                "m.bd.business_name, pu.name1, pu.email, p.description AS promotion, p.uuid promocode, ps.uuid AS promolink"
             ])
-            ->add_and("m.id=$idpromotion")
-            ->add_and("m.delete_date IS NULL")
-            ->add_and("m.date_confirm IS NOT NULL")
+            ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps
+            ON pu.id = ps.id_promouser
+            AND ps.id_promotion = pu.id_promotion")
+            ->add_join("INNER JOIN app_promotion AS p
+            ON pu.id_promotion = p.id")
+            ->add_join(" INNER JOIN app_business_data AS bd
+            ON p.id_owner = bd.id_user")
+            ->add_and("pu.id=$idpromouser")
+            ->add_and("pu.delete_date IS NULL")
             ->select()->sql()
         ;
         $r = $this->db->query($sql);

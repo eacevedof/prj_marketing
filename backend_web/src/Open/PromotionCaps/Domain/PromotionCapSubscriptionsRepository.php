@@ -158,4 +158,19 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $r = $this->db->query($sql);
         return (int) ($r[0]["num_confirmed"] ?? 0);
     }
+
+    public function is_confirmed(int $idpromouser): bool
+    {
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promotioncapsubscriptions.is_confirmed")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.id_promosuer=$idpromouser")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.date_confirm IS NULL")
+            ->select()->sql()
+        ;
+        $r = $this->db->query($sql);
+        return (bool) ($r[0]["id"] ?? 0);
+    }
 }
