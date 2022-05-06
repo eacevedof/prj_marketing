@@ -62,7 +62,7 @@ final class IndexMain
         $arrundata = $router->get_rundata();
         $this->routes = []; unset($router);
         
-        if($methods = $arrundata["allowed"] ?? []) {
+        if($methods = ($arrundata["allowed"] ?? [])) {
             if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods))
                 throw new \Exception("request method {$method} not allowed");
         }

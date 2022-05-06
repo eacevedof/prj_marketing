@@ -17,29 +17,15 @@ use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class PromotionCapsConfirmController extends OpenController
 {
-    public function confirm(string $promouuid): void
+    public function confirm(string $promouuid, string $subsuuid): void
     {
-        if (!$promouuid)
+        if (!($subsuuid && $promouuid))
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("No promotion code provided")])
+                ->set_error([__("No {0} code provided", __("subscription"))])
                 ->show();
 
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
-                ->show();
-
-        $post = $this->request->get_post();
-        if (($post["_action"] ?? "") !== RequestActionType::PROMOTIONCAP_INSERT)
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Wrong action")])
-                ->show();
-
-        $post = ["_promotionuuid"=>$promouuid] + $post;
-        $insert = SF::get_callable(PromotionCapsConfirmService::class, $post);
+        $insert = SF::get_callable(PromotionCapsConfirmService::class, ["uuid"=>$subsuuid]);
         try {
             $result = $insert();
             $this->_get_json()->set_payload([

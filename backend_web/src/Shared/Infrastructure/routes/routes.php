@@ -1,6 +1,6 @@
 <?php
 return [
-    ["url"=>"/promotion/confirm/:subsuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsConfirmController","method"=>"confirm", "allowed"=>"get"],
+    ["url"=>"/promotion/:promouuid/confirm/:subsuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsConfirmController","method"=>"confirm", "allowed"=>["get"]],
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"create"],
     ["url"=>"/open/promotionscap/:promouuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsInsertController", "method"=>"insert", "allowed"=>["post"]],
 
