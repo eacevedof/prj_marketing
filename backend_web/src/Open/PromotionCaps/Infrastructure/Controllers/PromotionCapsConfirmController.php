@@ -28,8 +28,8 @@ final class PromotionCapsConfirmController extends OpenController
 
         try {
             $insert = SF::get_callable(PromotionCapsConfirmService::class, [
-                "promouuid"=>$promouuid,
-                "subsuuid"=>$subsuuid
+                "promouuid" => $promouuid,
+                "subsuuid" => $subsuuid
             ]);
             $result = $insert();
             $this->set_layout("open/empty")
