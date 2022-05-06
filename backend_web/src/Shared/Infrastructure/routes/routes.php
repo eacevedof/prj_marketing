@@ -1,5 +1,6 @@
 <?php
 return [
+    ["url"=>"/promotion/confirm/:subsuuid","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"xxx"],
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"create"],
     ["url"=>"/open/promotionscap/:promouuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapsInsertController", "method"=>"insert", "allowed"=>["post"]],
 

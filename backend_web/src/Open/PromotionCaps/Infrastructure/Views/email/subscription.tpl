@@ -6,23 +6,23 @@ $hello = $data["user"] ?: $data["email"];
 ?>
 <table>
   <tr>
-    <td></td><td><?=$data["business"]?></td><td></td>
+    <td></td><td><h1><?=$data["business"]?></h1></td><td></td>
   </tr>
   <tr>
     <td></td>
     <td>
       <table>
         <tr><td>
-            <h3><?=__("Hello!! {0}", $hello) ?></h3>
+            <h3><?=__("Hello {0}!!", $hello) ?></h3>
             <p>
-              <?=__("You have subscribed to promotion: {0}", $data["promotion"]) ?>&nbsp;
-              <?=__("with code {0}", $data["promocode"]) ?>&nbsp;
+              <?=__("You have subscribed to promotion: <b>{0}</b>", $data["promotion"]) ?>&nbsp;
+              <?=__("with code <small>{0}</small>", $data["promocode"]) ?>&nbsp;
+              <br/>
               <?=__("Thank you for your participation.") ?>
             </p>
             <p>
               <?=__("Please, click this")?>&nbsp;<a href="<?=$data["confirm_link"]?>"><?=__("confirmation link")?></a>
-              <br/><br/>
-              <?=__("to finish your subscription") ?>
+              <?=__("to finish your subscription.") ?>
             </p>
             <p>
               <?=__("Remember to use the same email in all your future subscriptions in order to accumulate points for future surprises") ?>
