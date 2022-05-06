@@ -3,7 +3,7 @@ namespace App\Open\PromotionCaps\Domain\Events;
 
 use App\Shared\Infrastructure\Bus\AbsEvent;
 
-final class PromotionCapUserWasCreatedEvent extends AbsEvent
+final class PromotionCapUserSubscribedEvent extends AbsEvent
 {
     private string $uuid;
     private string $email;

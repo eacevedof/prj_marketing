@@ -1,7 +1,7 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserWasCreatedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
@@ -16,7 +16,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if(get_class($domevent)!==PromotionCapUserWasCreatedEvent::class) return $this;
+        if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return $this;
 
         $path = __DIR__."/../Infrastructure/Views/email/subscription.tpl";
         $pathtpl = realpath($path);

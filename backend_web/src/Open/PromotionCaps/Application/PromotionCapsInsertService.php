@@ -10,7 +10,7 @@ use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserWasCreatedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
@@ -225,7 +225,7 @@ final class PromotionCapsInsertService extends AppService
         $promocapuser["date_subscription"] = date("Y-m-d H:i:s");
 
         EventBus::instance()->publish(...[
-            PromotionCapUserWasCreatedEvent::from_primitives($id, $promocapuser),
+            PromotionCapUserSubscribedEvent::from_primitives($id, $promocapuser),
             PromotionCapActionWasExecutedEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
                 "id_promouser" => $id,
