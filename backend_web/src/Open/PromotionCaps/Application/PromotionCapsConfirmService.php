@@ -83,7 +83,9 @@ final class PromotionCapsConfirmService extends AppService
         $this->_load_request();
         $this->_load_promotion();
         $this->_load_subscription();
-        
+        $this->repopromocapsubscription->update([
+            ""
+        ]);
         //$this->repopromocapsubscription->update()
     }
 }
