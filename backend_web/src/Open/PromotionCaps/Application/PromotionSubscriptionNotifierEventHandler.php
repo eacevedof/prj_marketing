@@ -5,6 +5,7 @@ use App\Open\PromotionCaps\Domain\Events\PromotionCapUserWasCreatedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Restrict\Auth\Application\AuthService;
+use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
@@ -24,9 +25,11 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $path = __DIR__."/../Infrastructure/Views/email/subscription.tpl";
         $pathtpl = realpath($path);
         if (!is_file($pathtpl)) throw new \Exception("bad path $path");
+
         $html = FromTemplate::get_content($pathtpl, ["data"=>[
             "business" => "bb",
             "user" => "uu",
+            "email" => "",
             "promotion" => "pppp",
             "promocode" => "ccod",
             "confirm_link" => "lllink",
@@ -44,5 +47,11 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->send()
         ;
         return $this;
+    }
+
+    private function _get_promotion(PromotionCapUserWasCreatedEvent $event): array
+    {
+        $r = RF::get(PromotionCapSubscriptionsRepository::class)->get_confirm_email($event->id_promotion());
+        return $r;
     }
 }

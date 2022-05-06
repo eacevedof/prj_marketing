@@ -2,6 +2,7 @@
 /**
  * @var array $data
  */
+$hello = $data["user"] ?: $data["email"];
 ?>
 <table>
   <tr>
@@ -12,7 +13,7 @@
     <td>
       <table>
         <tr><td>
-            <h3><?=__("Hello!! {0}", $data["user"]) ?></h3>
+            <h3><?=__("Hello!! {0}", $hello) ?></h3>
             <p>
               <?=__("You have subscribed to promotion: {0}", $data["promotion"]) ?>&nbsp;
               <?=__("with code {0}", $data["promocode"]) ?>&nbsp;
