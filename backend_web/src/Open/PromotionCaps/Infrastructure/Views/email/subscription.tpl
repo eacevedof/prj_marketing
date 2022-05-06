@@ -15,13 +15,13 @@ $hello = $data["user"] ?: $data["email"];
         <tr><td>
             <h3><?=__("Hello {0}!!", $hello) ?></h3>
             <p>
-              <?=__("You have subscribed to promotion: <b>{0}</b>", $data["promotion"]) ?>&nbsp;
-              <?=__("with code <small>{0}</small>", $data["promocode"]) ?>&nbsp;
+              <?=__("You have subscribed to promotion: <b>{0}</b>", $data["promotion"]) ?>.&nbsp;
+              <?=__("with code <code>{0}</code>", $data["promocode"]) ?>
               <br/>
               <?=__("Thank you for your participation.") ?>
             </p>
             <p>
-              <?=__("Please, click this")?>&nbsp;<a href="<?=$data["confirm_link"]?>"><?=__("confirmation link")?></a>
+              <?=__("Please, click on")?>&nbsp;<a href="<?=$data["confirm_link"]?>"><?=__("this confirmation link")?></a>
               <?=__("to finish your subscription.") ?>
             </p>
             <p>
