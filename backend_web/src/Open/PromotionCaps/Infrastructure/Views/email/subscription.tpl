@@ -28,7 +28,7 @@ $hello = $data["user"] ?: $data["email"];
             <p>
               <?=__("Remember to use this email in all of your future subscriptions in order to accumulate points") ?>
             </p>
-            <p>
+            <p style="color: #ccc">
               <small><code><?=__("Promotion code: {0}", $data["promocode"])?></code></small>
             </p>
         </td></tr>
