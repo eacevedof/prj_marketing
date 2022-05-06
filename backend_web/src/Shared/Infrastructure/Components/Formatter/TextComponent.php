@@ -34,4 +34,23 @@ final class TextComponent
     {
         return $this->result;
     }
+
+    public function get_random_word(int $charlen=4, int $numbers=2): string
+    {
+        $chars = "bcdfghjklmnpqrstvxyz";
+        $chars = str_split($chars);
+        $vocals = "aeiou";
+        $vocals = str_split($vocals);
+
+        $word = [];
+        for($i=0; $i<$charlen; $i++) {
+            $word[] = (($i%2)===0) ? array_rand($chars) : array_rand($vocals);
+        }
+
+        if(!$numbers) return strtoupper(implode("", $word));
+        for($i=0; $i<$numbers; $i++){
+            $word[] = rand(0, 9);
+        }
+        return strtoupper(implode("", $word));
+    }
 }
