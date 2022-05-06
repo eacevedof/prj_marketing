@@ -4,6 +4,7 @@ namespace App\Open\PromotionCaps\Application;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUserConfirmedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
@@ -22,9 +23,6 @@ use App\Shared\Infrastructure\Traits\RequestTrait;
 final class PromotionCapsConfirmService extends AppService
 {
     use RequestTrait;
-
-    private AuthService $auth;
-    private array $authuser;
 
     private PromotionRepository $repopromotion;
     private PromotionCapSubscriptionsRepository $repopromocapsubscription;
@@ -84,13 +82,27 @@ final class PromotionCapsConfirmService extends AppService
         $this->_load_request();
         $this->_load_promotion();
         $this->_load_subscription();
-        $this->repopromocapsubscription->set_model(MF::get(PromotionCapSubscriptionEntity::class));
-        $this->repopromocapsubscription->update([
+        $this->repopromocapsubscription->set_model($entitysubs = MF::get(PromotionCapSubscriptionEntity::class));
+        $confirm = [
             "id"=>$this->subscriptiondata["subsid"],
             "uuid"=>$this->subscriptiondata["subscode"],
             "date_confirm"=>$date = date("Y-m-d H:i:s"),
-        ]);
+        ];
+        $iduser = AuthService::getme()->get_user()["id"] ?? -1;
+        $entitysubs->add_sysupdate($confirm, $iduser);
+        $this->repopromocapsubscription->update($confirm);
 
+        EventBus::instance()->publish(...[
+            PromotionCapUserConfirmedEvent::from_primitives($id, $promocapuser),
+            PromotionCapActionWasExecutedEvent::from_primitives(-1, [
+                "id_promotion" => $this->promotion["id"],
+                "id_promouser" => $id,
+                "id_type" => PromotionCapActionType::SUBSCRIBED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip()
+            ])
+        ]);
         return $this->subscriptiondata;
     }
 }
