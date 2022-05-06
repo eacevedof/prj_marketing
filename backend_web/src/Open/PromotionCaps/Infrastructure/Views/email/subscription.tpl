@@ -17,10 +17,9 @@ $hello = $data["user"] ?: $data["email"];
         <tr><td>
             <h3><?=__("Hello {0}!!", $hello) ?></h3>
             <p>
-              <?=__("You have subscribed to promotion: <b>&ldquo;{0}&rdquo;</b>", $data["promotion"]) ?>&nbsp;
-              <?=__("with code <code>{0}</code>", $data["promocode"]) ?>
+              <?=__("You have subscribed to promotion: <b>&ldquo;{0}&rdquo;</b> of <b>{1}</b>", $data["promotion"], $data["business"])?>&nbsp;
               <br/>
-              <?=__("Thank you for your participation.") ?>
+              <?=__("Thanks for participating.") ?>
             </p>
             <p>
               <?=__("Please, click on")?>&nbsp;<a href="<?=$data["confirm_link"]?>"><?=__("this confirmation link")?></a>
@@ -28,6 +27,9 @@ $hello = $data["user"] ?: $data["email"];
             </p>
             <p>
               <?=__("Remember to use the same email in all your future subscriptions in order to accumulate points for future surprises") ?>
+            </p>
+            <p>
+              <small><code><?=$data["promocode"]?></code></small>
             </p>
         </td></tr>
       </table>
