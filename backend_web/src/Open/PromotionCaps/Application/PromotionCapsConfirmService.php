@@ -4,6 +4,7 @@ namespace App\Open\PromotionCaps\Application;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
+use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
@@ -83,9 +84,13 @@ final class PromotionCapsConfirmService extends AppService
         $this->_load_request();
         $this->_load_promotion();
         $this->_load_subscription();
+        $this->repopromocapsubscription->set_model(MF::get(PromotionCapSubscriptionEntity::class));
         $this->repopromocapsubscription->update([
-            ""
+            "id"=>$this->subscriptiondata["subsid"],
+            "uuid"=>$this->subscriptiondata["subscode"],
+            "date_confirm"=>$date = date("Y-m-d H:i:s"),
         ]);
-        //$this->repopromocapsubscription->update()
+
+        return $this->subscriptiondata;
     }
 }
