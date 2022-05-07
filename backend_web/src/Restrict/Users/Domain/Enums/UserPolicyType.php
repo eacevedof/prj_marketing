@@ -34,6 +34,10 @@ abstract class UserPolicyType
     const PROMOTIONS_UI_READ = "promotionsui:read";
     const PROMOTIONS_UI_WRITE = "promotionsui:write";
 
+    //subscriptions
+    const SUBSCRIPTIONS_READ = "subscriptions:read";
+    const SUBSCRIPTIONS_WRITE = "subscriptions:write";
+
     const WRITE = "write";
     const READ = "read";
 
@@ -53,6 +57,8 @@ abstract class UserPolicyType
             self::PROMOTIONS_WRITE,
             self::PROMOTIONS_UI_READ,
             self::PROMOTIONS_UI_WRITE,
+            self::SUBSCRIPTIONS_READ,
+            self::SUBSCRIPTIONS_WRITE
         ];
     }
 }
