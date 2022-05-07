@@ -11,9 +11,12 @@ use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
+use App\Shared\Infrastructure\Traits\LogTrait;
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
+    use LogTrait;
+
     private function _on_subscription(IEvent $domevent): void
     {
         if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return;
@@ -25,7 +28,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
         $data["confirm_link"] = "http://localhost:900/promotion/{$data["promocode"]}/confirm/{$data["subscode"]}";
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
-        print_r($html);
+        $this->log($html,"_on_subscription");
         /**
          * @var FuncEmailComponent $email
          */
@@ -50,7 +53,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
         $data["points_link"] = "http://localhost:900/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
-        print_r($html);
+        $this->log($html,"on_confirmation");
         /**
          * @var FuncEmailComponent $email
          */
