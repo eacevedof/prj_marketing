@@ -167,7 +167,7 @@ final class PromotionCapUsersRepository extends AppRepository
     public function get_subscription_data(int $idpromouser): array
     {
         $sql = $this->_get_qbuilder()
-            ->set_comment("promotioncapsubscriptions.get_num_confirmed")
+            ->set_comment("promotioncapsubscriptions.get_subscription_data")
             ->set_table("$this->table as pu")
             ->set_getfields([
                 "pu.id AS idcapuser, pu.uuid AS capusercode, pu.email, pu.name1 AS username",
