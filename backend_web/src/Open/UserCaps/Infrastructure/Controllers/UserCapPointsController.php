@@ -9,7 +9,7 @@ use App\Picklist\Application\PicklistService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Open\PromotionCaps\Application\PromotionCapInfoService;
+use App\Open\UserCaps\Application\UserCapPointsService;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
@@ -19,7 +19,7 @@ final class UserCapPointsController extends OpenController
     {
         $picklist = SF::get(PicklistService::class);
         try {
-            $business = SF::get_callable(PromotionCapInfoService::class, [
+            $business = SF::get_callable(UserCapPointsService::class, [
                 "businessslug" => trim($businessuuid),
                 "promotionslug" => trim($capuseruuid),
                 "mode" => $this->request->get_get("mode", "")
