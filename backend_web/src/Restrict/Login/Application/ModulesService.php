@@ -45,6 +45,18 @@ final class ModulesService
                     ],
                 ]
             ],
+            "subscriptions" => [
+                "title" => __("Subscriptions"),
+                "icon" => "la-gift",
+                "actions" => [
+                    "search" => [
+                        "url" => "/restrict/subscriptions",
+                    ],
+                    "execute" => [
+                        "url" => "/restrict/subscriptions/execute",
+                    ],
+                ]
+            ],
         ];
 
     }// _load_modules
