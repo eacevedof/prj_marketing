@@ -28,11 +28,11 @@ final class UserCapPointsService extends AppService
 
     public function __construct(array $input)
     {
-        if (!$input["businessslug"])
+        if (!$input["businessuuid"])
             $this->_promocap_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
 
-        if (!$input["promotionslug"])
-            $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
+        if (!$input["capuseruuid"])
+            $this->_promocap_exception(__("No user provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->input = $input;
 
@@ -48,16 +48,16 @@ final class UserCapPointsService extends AppService
 
     private function _load_businessdata(): void
     {
-        $businessslug = $this->input["businessslug"];
-        $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
+        $businessuuid = $this->input["businessuuid"];
+        $this->businesssdata = $this->repobusinessdata->get_by_slug($businessuuid);
         if (!$this->businesssdata)
-            $this->_promocap_exception(__("Business account {$businessslug} not found!"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("Business account {$businessuuid} not found!"), ExceptionType::CODE_NOT_FOUND);
     }
 
     private function _load_promotion(): void
     {
-        $promotionslug = $this->input["promotionslug"];
-        $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
+        $capuseruuid = $this->input["capuseruuid"];
+        $this->promotion = $this->repopromotion->get_by_slug($capuseruuid);
         $this->_load_request();
 
         EventBus::instance()->publish(...[
