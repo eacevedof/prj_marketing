@@ -18,11 +18,15 @@ $hello = $data["username"] ?: $data["email"];
             <h3><?=__("Hello {0}!!", $hello) ?></h3>
             <p>
               <?=__("You have confirmed your subscription to: <b>&ldquo;{0}&rdquo;</b> published by <b>{1}</b>", $data["promotion"], $data["business"])?>&nbsp;
-              <br/>
-              <?=__("Show this code when you want to make effective this voucher") ?>
+            </p>
+            <p>
+              <?=__("Show this code as you wish to make effective this voucher") ?>
             </p>
             <p>
               <b><code><?=$data["execode"]?></code></b>
+            </p>
+            <p>
+              <?=__("Keep in mind this code expires today!")?>
             </p>
             <p>
               <?=__("Please, click on")?>&nbsp;<a href="<?=$data["points_link"]?>"><?=__("this link")?></a>&nbsp;
