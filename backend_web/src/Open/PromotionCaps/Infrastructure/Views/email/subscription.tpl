@@ -2,7 +2,7 @@
 /**
  * @var array $data
  */
-$hello = $data["user"] ?: $data["email"];
+$hello = $data["username"] ?: $data["email"];
 ?>
 <table>
   <tr>

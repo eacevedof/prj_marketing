@@ -2,7 +2,7 @@
 /**
  * @var array $data
  */
-$hello = $data["user"] ?: $data["email"];
+$hello = $data["username"] ?: $data["email"];
 ?>
 <table>
   <tr>
@@ -22,11 +22,11 @@ $hello = $data["user"] ?: $data["email"];
               <?=__("Show this code when you want to make effective this voucher") ?>
             </p>
             <p>
-              <code><?=$data["execode"]?></code>
+              <b><code><?=$data["execode"]?></code></b>
             </p>
             <p>
-              <?=__("Please, click on")?>&nbsp;<a href="<?=$data["confirm_link"]?>"><?=__("this confirmation link")?></a>
-              <?=__("to finish your subscription.") ?>
+              <?=__("Please, click on")?>&nbsp;<a href="<?=$data["points_link"]?>"><?=__("this link")?></a>&nbsp;
+              <?=__("to check out your accumulated points at {0}", $data["business"]) ?>
             </p>
         </td></tr>
       </table>
