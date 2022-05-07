@@ -13,7 +13,7 @@ if (isset($error))
 ?>
   <h1><?=$business = $result["business"];?></h1>
   <p>
-    <?=__("{0} have confirmed your subscription to <b>&ldquo;{1}&rdquo;</b>", $result["user"], $result["promotion"])?>
+    <?=__("{0} have confirmed your subscription to <b>&ldquo;{1}&rdquo;</b>", $result["username"], $result["promotion"])?>
   </p>
   <p>
     <?=__("Please check your email inbox. You will receive a subscription code you have to show at <b>{0}</b>", $business)?>
