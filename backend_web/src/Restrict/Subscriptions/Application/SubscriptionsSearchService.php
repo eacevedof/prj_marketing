@@ -7,7 +7,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Restrict\Subscriptions\Domain\PromotionRepository;
 use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;

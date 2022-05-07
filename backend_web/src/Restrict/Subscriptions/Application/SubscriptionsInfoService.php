@@ -1,5 +1,5 @@
 <?php
-namespace App\Restrict\Promotions\Application;
+namespace App\Restrict\Subscriptions\Application;
 
 use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
@@ -8,13 +8,13 @@ use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Promotions\Domain\PromotionRepository;
-use App\Restrict\Promotions\Domain\PromotionUiRepository;
+use App\Restrict\Subscriptions\Domain\PromotionRepository;
+use App\Restrict\Subscriptions\Domain\PromotionUiRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\TimezoneType;
 use App\Shared\Domain\Enums\ExceptionType;
 
-final class PromotionsInfoService extends AppService
+final class SubscriptionsInfoService extends AppService
 {
     private AuthService $auth;
     private array $authuser;

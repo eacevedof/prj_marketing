@@ -2,18 +2,18 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController
- * @file PromotionsUpdateController.php v1.0.0
+ * @name App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController
+ * @file SubscriptionsUpdateController.php v1.0.0
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
-namespace App\Restrict\Promotions\Infrastructure\Controllers;
+namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
-use App\Restrict\Promotions\Application\PromotionsUpdateService;
-use App\Restrict\Promotions\Application\PromotionsInfoService;
+use App\Restrict\Subscriptions\Application\SubscriptionsUpdateService;
+use App\Restrict\Subscriptions\Application\SubscriptionsInfoService;
 use App\Restrict\BusinessData\Application\BusinessDataInfoService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
@@ -25,7 +25,7 @@ use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
 
-final class PromotionsUpdateController extends RestrictController
+final class SubscriptionsUpdateController extends RestrictController
 {
     private PicklistService $picklist;
     
@@ -53,7 +53,7 @@ final class PromotionsUpdateController extends RestrictController
                 ? $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
                 : [];
 
-            $edit = SF::get(PromotionsInfoService::class, [$uuid]);
+            $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
             $slug = SF::get(BusinessDataInfoService::class)->get_by_id_user(
                         $result["promotion"]["id_owner"]
@@ -114,7 +114,7 @@ final class PromotionsUpdateController extends RestrictController
 
         try {
             $request = ["uuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable(PromotionsUpdateService::class, $request);
+            $update = SF::get_callable(SubscriptionsUpdateService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
                 "message"=> __("{0} {1} successfully updated", __("Promotion"), $uuid),
@@ -133,4 +133,4 @@ final class PromotionsUpdateController extends RestrictController
         }
     }//update
 
-}//PromotionsUpdateController
+}//SubscriptionsUpdateController

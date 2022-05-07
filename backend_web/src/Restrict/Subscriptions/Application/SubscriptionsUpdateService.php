@@ -1,5 +1,5 @@
 <?php
-namespace App\Restrict\Promotions\Application;
+namespace App\Restrict\Subscriptions\Application;
 
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
@@ -11,8 +11,8 @@ use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Checker\Application\CheckerService;
-use App\Restrict\Promotions\Domain\PromotionEntity;
-use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Restrict\Subscriptions\Domain\PromotionEntity;
+use App\Restrict\Subscriptions\Domain\PromotionRepository;
 use App\Restrict\Users\Domain\UserRepository;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
@@ -22,7 +22,7 @@ use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
-final class PromotionsUpdateService extends AppService
+final class SubscriptionsUpdateService extends AppService
 {
     use RequestTrait;
 

@@ -6,7 +6,7 @@ namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Promotions\Application\PromotionsSearchService;
+use App\Restrict\Subscriptions\Application\SubscriptionsSearchService;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
@@ -29,10 +29,10 @@ final class SubscriptionsSearchController extends RestrictController
     {
         $this->_if_noauth_tologin();
         try {
-            $search = SF::get(PromotionsSearchService::class);
+            $search = SF::get(SubscriptionsSearchService::class);
 
-            $this->add_var(PageType::TITLE, __("Promotions"))
-                ->add_var(PageType::H1, __("Promotions"))
+            $this->add_var(PageType::TITLE, __("Subscriptions"))
+                ->add_var(PageType::H1, __("Subscriptions"))
                 ->add_var("dthelp", $search->get_datatable())
                 ->add_var("idowner", $this->auth->get_idowner())
                 ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ))
@@ -65,7 +65,7 @@ final class SubscriptionsSearchController extends RestrictController
                 ->show();
 
         try {
-            $search = SF::get_callable(PromotionsSearchService::class, $this->request->get_get());
+            $search = SF::get_callable(SubscriptionsSearchService::class, $this->request->get_get());
             $result = $search();
             $this->_get_json()->set_payload([
                 "message"  => __("auth ok"),
@@ -81,4 +81,4 @@ final class SubscriptionsSearchController extends RestrictController
         }
     }//search
 
-}//PromotionsSearchController
+}//SubscriptionsSearchController
