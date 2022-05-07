@@ -93,7 +93,6 @@ final class PromotionCapsConfirmService extends AppService
             "code_execution" => CF::get(TextComponent::class)->get_random_word(4, 2),
             "subs_status" => PromotionCapActionType::CONFIRMED
         ];
-        dd($confirm);
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
         $entitysubs->add_sysupdate($confirm, $iduser);
         $this->repopromocapsubscription->update($confirm);
@@ -102,7 +101,7 @@ final class PromotionCapsConfirmService extends AppService
             PromotionCapConfirmedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
                 "subsuuid" => $this->subscriptiondata["subscode"],
                 "email" => $this->subscriptiondata["email"],
-                "email" => $date,
+                "date_confirm" => $date,
             ]),
 
             PromotionCapActionWasExecutedEvent::from_primitives(-1, [

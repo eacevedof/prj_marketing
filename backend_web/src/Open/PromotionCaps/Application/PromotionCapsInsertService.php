@@ -91,10 +91,10 @@ final class PromotionCapsInsertService extends AppService
             $this->_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
     }
 
-    private function _add_rules_by_ui(): FieldsValidator
+    private function _add_rules_by_ui(array $input): FieldsValidator
     {
         $promocapuser = MF::get(PromotionCapUsersEntity::class);
-        $this->validator = VF::get($this->input, $promocapuser);
+        $this->validator = VF::get($input, $promocapuser);
 
         $fields = $this->repopromotionui->get_active_fields($this->promotion["id"]);
 
@@ -211,7 +211,7 @@ final class PromotionCapsInsertService extends AppService
         $this->_load_promotion();
         $this->_load_promotionui();
 
-        if ($errors = $this->_add_rules_by_ui()->get_errors()) {
+        if ($errors = $this->_add_rules_by_ui($promocapuser)->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
