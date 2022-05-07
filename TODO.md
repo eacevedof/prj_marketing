@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- configuracion de bow delegado (para empresas de marketing)
 - no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
   el % del fee de la plataforma. No debería ser menos de 7
   - de 7 a 15 = 6% (0,42 - 0,9)
