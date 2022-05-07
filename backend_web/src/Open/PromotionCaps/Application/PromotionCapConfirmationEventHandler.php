@@ -17,19 +17,19 @@ final class PromotionCapConfirmationEventHandler extends AppService implements I
     {
         if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return $this;
 
-        $subscription = [
+        $capsubscription = [
             "id_promouser" => $domevent->aggregate_id(),
             "uuid" => uniqid(),
             "id_owner" => $domevent->id_owner(),
             "id_promotion" => $domevent->id_promotion(),
             "remote_ip" => $domevent->remote_ip(),
             "date_subscription" => $domevent->date_subscription(),
-            "code_execution" => uniqid()
+            "code_execution" => ""
         ];
 
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
-        MF::get(PromotionCapSubscriptionEntity::class)->add_sysinsert($subscription, $iduser);
-        RF::get(PromotionCapSubscriptionsRepository::class)->insert($subscription);
+        MF::get(PromotionCapSubscriptionEntity::class)->add_sysinsert($capsubscription, $iduser);
+        RF::get(PromotionCapSubscriptionsRepository::class)->insert($capsubscription);
         return $this;
     }
 }
