@@ -1,14 +1,11 @@
 <?php
 namespace App\Open\UserCaps\Application;
 
-use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
+use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
@@ -19,12 +16,10 @@ final class UserCapPointsService extends AppService
     use RequestTrait;
 
     private BusinessDataRepository $repobusinessdata;
-    private PromotionRepository $repopromotion;
-    private PromotionUiRepository $repopromotionui;
+    private PromotionCapUsersRepository $repopromocapuser;
 
     private array $businesssdata;
-    private array $promotion;
-    private array $promotionui;
+    private array $promocapuser;
 
     public function __construct(array $input)
     {
@@ -37,8 +32,7 @@ final class UserCapPointsService extends AppService
         $this->input = $input;
 
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
-        $this->repopromotion = RF::get(PromotionRepository::class);
-        $this->repopromotionui = RF::get(PromotionUiRepository::class);
+        $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
     }
 
     private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
@@ -49,55 +43,26 @@ final class UserCapPointsService extends AppService
     private function _load_businessdata(): void
     {
         $businessuuid = $this->input["businessuuid"];
-        $this->businesssdata = $this->repobusinessdata->get_by_slug($businessuuid);
+        $this->businesssdata = $this->repobusinessdata->get_by_uuid($businessuuid, ["id", "id_user"]);
         if (!$this->businesssdata)
             $this->_promocap_exception(__("Business account {$businessuuid} not found!"), ExceptionType::CODE_NOT_FOUND);
     }
 
-    private function _load_promotion(): void
+    private function _load_promocapuser(): void
     {
         $capuseruuid = $this->input["capuseruuid"];
-        $this->promotion = $this->repopromotion->get_by_slug($capuseruuid);
-        $this->_load_request();
+        $this->promocapuser = $this->repopromocapuser->get_by_uuid($capuseruuid, ["id", "id_owner", "email", "name1"]);
+        if (!$this->promocapuser)
+            $this->_promocap_exception(__("User {$capuseruuid} not found!"), ExceptionType::CODE_NOT_FOUND);
 
-        EventBus::instance()->publish(...[
-            PromotionCapActionWasExecutedEvent::from_primitives(-1, [
-                "id_promotion" => $this->promotion["id"] ?? -1,
-                "id_promouser" => null,
-                "id_type" => PromotionCapActionType::VIEWED,
-                "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip()
-            ])
-        ]);
-
-        SF::get(
-            PromotionCapCheckService::class,
-            [
-                "promotion" => $this->promotion,
-            ]
-        )->is_suitable_or_fail();
-    }
-
-    private function _load_promotionui(): void
-    {
-        $this->promotionui = $this->repopromotionui->get_by_promotion((int) $this->promotion["id"]);
-        if (!$this->promotionui)
-            $this->_promocap_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
+        if ($this->businesssdata["id_user"] !== $this->promocapuser["id_owner"])
+            $this->_promocap_exception(__("These codes are not congruent!"), ExceptionType::CODE_BAD_REQUEST);
     }
 
     public function __invoke(): array
     {
         $this->_load_businessdata();
-        $this->_load_promotion();
-        $this->_load_promotionui();
+        $this->_load_promocapuser();
 
-        return [
-            "businessdata" => $this->businesssdata,
-            "promotion" => $this->promotion,
-            "promotionui" => $this->promotionui,
-
-            "metadata" => [],
-        ];
     }
 }
