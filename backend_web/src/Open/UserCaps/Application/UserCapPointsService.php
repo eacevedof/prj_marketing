@@ -62,6 +62,7 @@ final class UserCapPointsService extends AppService
         $this->_load_businessdata();
         $this->_load_promocapuser();
         return [
+            "username" => $this->promocapuser["name1"],
             "business_name" => $this->businesssdata["business_name"],
             "result" => $this->repopromocapuser->get_points_by_email_in_account($this->promocapuser["email"], $this->businesssdata["id_user"])
         ];

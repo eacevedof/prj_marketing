@@ -27,6 +27,7 @@ final class UserCapPointsController extends OpenController
             $this->set_layout("open/promotioncaps")
                 ->add_var(PageType::TITLE, $title = htmlentities($result["business_name"] ?? ""))
                 ->add_var(PageType::H1, $title)
+                ->add_var("username", $result["username"])
                 ->add_var("result", $result["result"]);
 
             unset($business, $result, $title, $businessuuid, $capuseruuid);
