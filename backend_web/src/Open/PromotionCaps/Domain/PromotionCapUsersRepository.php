@@ -200,13 +200,13 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_getfields(["p.description, ps.date_confirm, 1 AS p"])
             ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps ON m.id = ps.id_promouser")
             ->add_join("LEFT JOIN app_promotion AS p ON ps.id_promotion = p.id")
-            ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_owner=$idowner")
             ->add_and("m.email='$email'")
             ->add_and("p.id_owner=$idowner")
             ->add_and("ps.date_execution IS NOT NULL")
             ->add_and("ps.description NOT LIKE '%consumed%'")
+            ->add_orderby("ps.date_execution","DESC")
             ->select()->sql()
         ;
         return $this->db->query($sql);

@@ -14,7 +14,7 @@
   <h1><?=$h1;?></h1>
   <?php
   if (!$result) {
-    echo "<p></p>";
+    echo "<p>".__("You have no accumulated points yet")."</p>";
     return;
   }
   ?>
