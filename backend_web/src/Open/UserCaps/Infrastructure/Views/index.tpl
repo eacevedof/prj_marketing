@@ -2,10 +2,23 @@
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
+ * @var string $h1
+ * @var string $error
  */
 ?>
-<div>
+<main>
+  <?php
+  if (isset($error))
+    return $this->_element("common/elem-error", ["title"=>$h1, "description"=>$error]);
+  ?>
+  <h1><?=$h1;?></h1>
+  <?php
+  if (!$result) {
+    echo "<p></p>";
+    return;
+  }
+  ?>
   <table>
-    hola table
+    <td></td>
   </table>
-</div>
+</main>
