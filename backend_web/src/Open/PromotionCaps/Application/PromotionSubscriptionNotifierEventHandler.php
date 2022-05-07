@@ -13,10 +13,9 @@ use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
-
-    public function on_event(IEvent $domevent): IEventSubscriber
+    private function _on_subscription(IEvent $domevent): void
     {
-        if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return $this;
+        if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return;
 
         $path = __DIR__."/../Infrastructure/Views/email/subscription.tpl";
         $pathtpl = realpath($path);
@@ -37,6 +36,11 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->set_content($html)
             ->send()
         ;
+    }
+
+    public function on_event(IEvent $domevent): IEventSubscriber
+    {
+        $this->_on_subscription($domevent);
         return $this;
     }
 }
