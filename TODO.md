@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- hay que añadir fecha máxima de consumo de la promoción
 - en la navegacion entre modals refrecar la url del nav
 - al configurar una promocion no coge el valor de max confirmed
 - crear eventhandler para autogeneración de tablas hijas

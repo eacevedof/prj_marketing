@@ -24,7 +24,7 @@ final class PromotionCapSubscriptionEventHandler extends AppService implements I
             "id_promotion" => $domevent->id_promotion(),
             "remote_ip" => $domevent->remote_ip(),
             "date_subscription" => $domevent->date_subscription(),
-            "code_execution" => uniqid()
+            "code_execution" => ""
         ];
 
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
