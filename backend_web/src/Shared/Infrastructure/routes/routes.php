@@ -2,7 +2,7 @@
 return [
     ["url"=>"/promotion/:promotionuuid/confirm/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController","method"=>"confirm", "allowed"=>["get"]],
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"create"],
-    ["url"=>"/points/:businessuuid/user/:capuseruuid","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"create"],
+    ["url"=>"/points/:businessuuid/user/:capuseruuid","controller"=>"App\Open\UserCaps\Infrastructure\Controllers\UserCapPointsController","method"=>"index", "allowed"=>["get"]],
     ["url"=>"/open/promotionscap/:promouuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapInsertController", "method"=>"insert", "allowed"=>["post"]],
 
     ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index"],
