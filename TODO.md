@@ -1,6 +1,12 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
+  el % del fee de la plataforma. No debería ser menos de 7
+  - de 7 a 15 = 6% (0,42 - 0,9)
+  - 16 a 30 = 4% (0,64 - 1,2)
+  - 31 a 49 = 3.5% (1,09 - 1,72)
+  - 50 a n = 3% (1.5 - 3)
 - configurador de planes por puntos y su reseteo a nivel de cliente. por ejemplo 10 puntos en 15 dias regalo botella de vino.
 - hay que añadir fecha máxima de consumo de la promoción ya que de lo contrario puedo hacerla efectiva a un año vista despues
   de haberme suscrito
