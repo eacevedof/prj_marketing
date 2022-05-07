@@ -170,7 +170,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_comment("promotioncapsubscriptions.get_num_confirmed")
             ->set_table("$this->table as pu")
             ->set_getfields([
-                "pu.id AS idcapuser, p.uuid AS capusercode, pu.email, pu.name1 AS username",
+                "pu.id AS idcapuser, pu.uuid AS capusercode, pu.email, pu.name1 AS username",
                 "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business",
                 "p.uuid AS promocode, p.slug AS promoslug, p.description AS promotion",
                 "ps.id AS subsid, ps.uuid AS subscode, ps.date_confirm, ps.date_execution, ps.code_execution AS execode"
