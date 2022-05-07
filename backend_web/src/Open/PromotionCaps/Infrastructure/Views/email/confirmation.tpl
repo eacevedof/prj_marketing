@@ -19,18 +19,14 @@ $hello = $data["user"] ?: $data["email"];
             <p>
               <?=__("You have confirmed your subscription to: <b>&ldquo;{0}&rdquo;</b> published by <b>{1}</b>", $data["promotion"], $data["business"])?>&nbsp;
               <br/>
-              <?=__("Show this code when you claim for") ?>
+              <?=__("Show this code when you want to make effective this voucher") ?>
+            </p>
+            <p>
+              <code><?=$data["execode"]?></code>
             </p>
             <p>
               <?=__("Please, click on")?>&nbsp;<a href="<?=$data["confirm_link"]?>"><?=__("this confirmation link")?></a>
               <?=__("to finish your subscription.") ?>
-            </p>
-            <p>
-              <?=__("Remember to use this email in all of your future subscriptions in order to accumulate points") ?>
-            </p>
-            <p style="color:#efefef">
-              <small><code><?=__("Promotion code: {0}", $data["promocode"])?></code></small>
-              <small><code><?=__("Subscription code: {0}", $data["subscode"])?></code></small>
             </p>
         </td></tr>
       </table>
