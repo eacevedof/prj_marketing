@@ -70,7 +70,7 @@ final class PromotionCapUsersRepository extends AppRepository
     public function search(array $search): array
     {
         $qb = $this->_get_qbuilder()
-            ->set_comment("promotioncap_users.search")
+            ->set_comment("promocapusers.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
             ->set_getfields([
@@ -112,7 +112,7 @@ final class PromotionCapUsersRepository extends AppRepository
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_qbuilder()
-            ->set_comment("promotioncap_users.get_info(uuid)")
+            ->set_comment("promocapusers.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
@@ -153,7 +153,7 @@ final class PromotionCapUsersRepository extends AppRepository
     {
         $email = $this->get_sanitized($email);
         $sql = $this->_get_qbuilder()
-            ->set_comment("promotioncapsubscriptions.is_subscribed")
+            ->set_comment("promocapusers.is_subscribed")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.id_promotion=$idpromotion")
@@ -167,7 +167,7 @@ final class PromotionCapUsersRepository extends AppRepository
     public function get_subscription_data(int $idpromouser): array
     {
         $sql = $this->_get_qbuilder()
-            ->set_comment("promotioncapsubscriptions.get_subscription_data")
+            ->set_comment("promocapusers.get_subscription_data")
             ->set_table("$this->table as pu")
             ->set_getfields([
                 "pu.id AS idcapuser, pu.uuid AS capusercode, pu.email, pu.name1 AS username",
@@ -188,5 +188,27 @@ final class PromotionCapUsersRepository extends AppRepository
         ;
         $r = $this->db->query($sql);
         return $r[0] ?? [];
+    }
+
+    public function get_points_by_email_in_account(string $email, int $idowner): array
+    {
+        $email = $this->get_sanitized($email);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promocapusers.get_points_by_email_in_account")
+            ->set_table("$this->table as m")
+            ->distinct()
+            ->set_getfields(["p.description, ps.date_confirm, 1 AS p"])
+            ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps ON m.id = ps.id_promouser")
+            ->add_join("LEFT JOIN app_promotion AS p ON ps.id_promotion = p.id")
+            ->add_and("m.is_enabled=1")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_owner=$idowner")
+            ->add_and("m.email='$email'")
+            ->add_and("p.id_owner=$idowner")
+            ->add_and("ps.date_execution IS NOT NULL")
+            ->add_and("ps.description NOT LIKE '%consumed%'")
+            ->select()->sql()
+        ;
+        return $this->db->query($sql);
     }
 }
