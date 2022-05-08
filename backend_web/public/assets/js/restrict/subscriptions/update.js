@@ -68,6 +68,9 @@ export class FormSubscriptionUpdate extends LitElement {
       },
     },
 
+    _subs_status: { type: Boolean, state: true},
+    _exec_code: {type: String},
+
     _issending: { type: Boolean, state: true},
     _btnsend: { type: String, state: true},
     _btncancel: { type: String, state: true},
@@ -91,7 +94,7 @@ export class FormSubscriptionUpdate extends LitElement {
           <div class="form-group col-4">
             <label for="exec_code">${this.texts.f00}</label>
             <div id="field-exec_code">
-              <input type="text" id="exec_code" .value=${this._exec_code} class="form-control" maxlength="15">
+              <input type="text" id="exec_code" .value=${this._exec_code} required class="form-control" maxlength="15">
             </div>
           </div>
         </div>

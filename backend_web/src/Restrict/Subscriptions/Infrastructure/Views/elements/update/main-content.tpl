@@ -1,4 +1,6 @@
 <?php
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+
 $texts = [
   "tr00" => __("Save"),
   "tr01" => __("Processing..."),
@@ -9,8 +11,12 @@ $texts = [
   "f00" => "",
 ];
 $subscription = $result["subscription"];
+$status = $subscription["subs_status"];
+switch ($status) {
+
+}
 $subscription = [
-  "subs_status" => $subscription["subs_status"],
+  "subs_status" => $status,
   "capuseruuid" => $subscription["e_usercode"],
   "exec_code" => "",
 ];
@@ -24,6 +30,13 @@ $subscription = [
     <li><?=__("Promotion")?>: <?$this->_echo($result["subscription"]["e_promotion"])?></li>
     <li><?=__("For")?>: <?$this->_echo($result["subscription"]["e_username"] . " / " . $result["subscription"]["e_usercode"])?></li>
   </ul>
+  <?php
+  if (in_array($status, ["2", "3"])):
+  ?>
+  <p><?=__("Subscription already validated or cancelled")?></p>
+  <?php
+  else:
+  ?>
   <form-subscription-update
       csrf=<?$this->_echo_js($csrf);?>
 
@@ -31,5 +44,8 @@ $subscription = [
 
       fields="<?$this->_echo_jslit($subscription);?>"
   />
+  <?php
+  endif;
+  ?>
 </div>
 
