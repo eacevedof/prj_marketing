@@ -21,6 +21,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $this->table = "app_promotioncap_subscriptions";
         $this->joins = [
             "fields" => [
+                "u1.description" => "e_owner",
                 "u2.description"  => "e_deletedby",
                 "pu.uuid" => "e_usercode",
                 "pu.name1" => "e_username",
@@ -31,6 +32,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "ar1.description"=>"e_status"
             ],
             "on" => [
+                "LEFT JOIN base_user u1 ON m.id_owner = u1.id_owner",
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
                 "INNER JOIN app_promotioncap_users pu ON m.id_promouser = pu.id",
                 "INNER JOIN app_promotion p ON m.id_promotion = p.id",
