@@ -47,11 +47,11 @@ final class SubscriptionsInfoService extends AppService
         $idauthuser = (int) $this->authuser["id"];
         $identowner = (int) $entitycapsubs["id_owner"];
         //si el owner logado es propietario de la entidad
-        if ($this->auth->is_business_owner() && $idauthuser === $identowner)
+        if ($this->auth->is_business_owner() && ($idauthuser === $identowner))
             return;
 
         $idauthowner = $this->auth->get_idowner();
-        if ($this->auth->is_business_manager() && $idauthowner === $identowner)
+        if ($this->auth->is_business_manager() && ($idauthowner === $identowner))
             return;
 
         $this->_exception(
@@ -68,27 +68,20 @@ final class SubscriptionsInfoService extends AppService
             );
 
         $this->_check_entity_permission($capsubscription);
-        $this->_map_entity($capsubscription);
         return [
             "subscription" => $capsubscription
         ];
     }
 
-    private function _map_entity(array &$capsubscription): void
-    {
-
-    }
-
     public function get_for_edit(): array
     {
-        $capsubscription = $this->repocapsubscription->get_info($this->input);
+        $capsubscription = $this->repocapsubscription->get_info_for_execute_date($this->input);
         if(!$capsubscription)
             $this->_exception(
                 __("{0} with code {1} not found", __("Promotion"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
         $this->_check_entity_permission($capsubscription);
-        $this->_map_entity($capsubscription);
 
         return [
             "subscription" => $capsubscription,

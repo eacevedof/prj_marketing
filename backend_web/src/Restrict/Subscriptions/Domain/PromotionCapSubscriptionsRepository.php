@@ -120,7 +120,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_qbuilder()
-            ->set_comment("promotiocapsusbscriptions.get_info(uuid)")
+            ->set_comment("promotiocapsusbscriptions.get_info")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
@@ -155,6 +155,26 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
 
         return array_merge($r, $sysdata);
+    }
+
+    public function get_info_for_execute_date(string $uuid, array $fields = []): array
+    {
+        $uuid = $this->_get_sanitized($uuid);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promotiocapsusbscriptions.get_info_for_execute_date")
+            ->set_table("$this->table as m")
+            ->set_getfields([
+                "m.uuid",
+                "m.id_owner"
+            ])
+            ->add_and("m.uuid='$uuid'")
+        ;
+        if ($fields) $sql->set_getfields($fields);
+        $this->_add_joins($sql);
+
+        $sql = $sql->select()->sql();
+        $r = $this->db->query($sql);
+        return $r[0] ?? [];
     }
 
     public function set_auth(AuthService $auth): self
