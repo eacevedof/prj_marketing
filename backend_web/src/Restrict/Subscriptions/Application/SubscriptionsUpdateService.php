@@ -105,7 +105,6 @@ final class SubscriptionsUpdateService extends AppService
         return $this->validator;
     }
 
-
     public function __invoke(): array
     {
         if (!$subscription = $this->_get_req_without_ops($this->input))
@@ -120,16 +119,14 @@ final class SubscriptionsUpdateService extends AppService
         $this->entitysubscription->add_sysupdate($subscription, $this->authuser["id"]);
 
         $affected = $this->reposubscription->update($subscription);
-        $subscription = $this->reposubscription->get_by_id($subscription["id"]);
+        $subscription = $this->reposubscription->get_by_id(
+            $subscription["id"],
+            ["id", "date_confirm", "date_execution", "subs_status"]
+        );
+
         return [
             "affected" => $affected,
-            "promotion" => [
-                "id" => $subscription["id"],
-                "uuid" => $subscription["uuid"],
-                "is_launched" => $subscription["is_launched"],
-                "slug" => $subscription["slug"],
-                "is_published" => $subscription["is_published"],
-            ]
+            "promotion" => $subscription
         ];
     }
 }
