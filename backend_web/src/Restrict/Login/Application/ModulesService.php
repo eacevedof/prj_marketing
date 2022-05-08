@@ -55,8 +55,8 @@ final class ModulesService
                     "search" => [
                         "url" => "/restrict/subscriptions",
                     ],
-                    "execute" => [
-                        "url" => "/restrict/subscriptions/execute",
+                    "edit" => [
+                        "url" => "/restrict/subscriptions/update",
                     ],
                 ]
             ],
@@ -74,8 +74,10 @@ final class ModulesService
         $tmp = $modules;
         foreach ($tmp as $module => $config) {
             $policy = "$module:write";
-            if (!$this->_has_policy($policy))
+            if (!$this->_has_policy($policy)) {
                 unset($tmp[$module]["actions"]["create"]);
+                unset($tmp[$module]["actions"]["edit"]);
+            }
         }
         $modules = $tmp;
     }

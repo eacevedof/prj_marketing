@@ -12,6 +12,7 @@
     $icon = $config["icon"];
     $search = $config["actions"]["search"]["url"] ?? "";
     $create = $config["actions"]["create"]["url"] ?? "";
+    $edit = $config["actions"]["edit"]["url"] ?? "";
   ?>
   <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12" module="<?=$module?>">
     <div class="card">
@@ -26,6 +27,9 @@
           <?endif;?>
           <?if ($create):?>
           <button href="<?=$create?>" class="btn btn-success btn-block" approle="add-item"><?=__("Add")?></button>
+          <?endif;?>
+          <?if ($edit):?>
+            <button href="<?=$edit?>" class="btn btn-success btn-block" approle="add-item"><?=__("Edit")?></button>
           <?endif;?>
         </div>
       </div>
