@@ -22,7 +22,7 @@ final class SubscriptionsInfoService extends AppService
         $this->_check_permission();
 
         if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No {0} code provided", __("promotion")), ExceptionType::CODE_BAD_REQUEST);
+            $this->_exception(__("No {0} code provided", __("subscription")), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
         $this->repocapsubscription = RF::get(PromotionCapSubscriptionsRepository::class);
@@ -70,7 +70,7 @@ final class SubscriptionsInfoService extends AppService
         $this->_check_entity_permission($capsubscription);
         $this->_map_entity($capsubscription);
         return [
-            "promotion" => $capsubscription
+            "subscription" => $capsubscription
         ];
     }
 
