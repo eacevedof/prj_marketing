@@ -22,12 +22,12 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $this->joins = [
             "fields" => [
                 "u2.description"  => "e_deletedby",
-                "pu.description" => "e_language",
                 "pu.uuid" => "e_usercode",
+                "pu.name1" => "e_username",
                 "pu.email" => "e_email",
                 "p.description" => "e_promotion",
                 "p.uuid"=>"e_promocode",
-                "bd.description"=>"e_business",
+                "bd.business_name"=>"e_business",
                 "ar1.description"=>"e_status"
             ],
             "on" => [

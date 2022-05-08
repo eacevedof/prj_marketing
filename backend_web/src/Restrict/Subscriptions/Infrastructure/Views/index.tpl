@@ -153,7 +153,7 @@ rowswal.set_texts({
 })
 
 dt_render({
-  URL_MODULE: "/restrict/promotions",
+  URL_MODULE: "/restrict/subscriptions",
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dthelp->show_perpage();?>,
 })
