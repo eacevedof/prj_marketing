@@ -105,6 +105,7 @@ final class AuthService
 
     public function is_root_super(): bool
     {
+        if (!self::$authuser) return false;
         return (
             self::$authuser["uuid"] === UserProfileType::ROOT_SUPER_UUID &&
             ((int) self::$authuser["id"])=== UserProfileType::ROOT_SUPER_ID
