@@ -15,7 +15,6 @@
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <?php
         $this->_element_view("update/main-tab");
-        $this->_element_view("update/ui-tab");
         ?>
       </ul>
     </div><!--nav-->
@@ -23,13 +22,11 @@
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <?php
       $this->_element_view("update/main-content");
-      $this->_element_view("update/ui-content");
       ?>
     </div><!--tab-content-->
   </div><!--card-body-->
 </div>
-<script type="module" src="/assets/js/restrict/promotions/update.js"></script>
-<script type="module" src="/assets/js/restrict/promotions/ui/update.js"></script>
+<script type="module" src="/assets/js/restrict/subscriptions/update.js"></script>
 <?php
 $this->_element("restrict/elem-modal-launcher-showtab");
 ?>

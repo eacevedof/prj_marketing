@@ -19,13 +19,10 @@ use \Exception;
 
 final class SubscriptionsUpdateController extends RestrictController
 {
-    private PicklistService $picklist;
-    
     public function __construct()
     {
         parent::__construct();
         $this->_if_noauth_tologin();
-        $this->picklist = SF::get(PicklistService::class);
     }
 
     //@modal
@@ -41,28 +38,29 @@ final class SubscriptionsUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $businessowners =  ($this->auth->is_system())
-                ? $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
+            $picklist = SF::get(PicklistService::class);
+            $businessowners = ($this->auth->is_system())
+                ? $picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
                 : [];
 
             $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
             $slug = SF::get(BusinessDataInfoService::class)->get_by_id_user(
-                        $result["promotion"]["id_owner"]
+                        $result["subscription"]["id_owner"]
                     )["slug"] ?? "";
 
             $this->set_template("update")
-                ->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
-                ->add_var(PageType::H1, __("Edit promotion {0}", $uuid))
+                ->add_var(PageType::TITLE, __("Edit subscription {0}", $uuid))
+                ->add_var(PageType::H1, __("Edit subscription {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("user", $this->auth->get_user())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
                 ->add_var("businessslug", $slug)
-                ->add_var("timezones", $this->picklist->get_timezones())
+                ->add_var("timezones", $picklist->get_timezones())
                 ->add_var("businessowners", $businessowners)
-                ->add_var("notoryes", $this->picklist->get_not_or_yes())
-                ->render_nl();
+                ->add_var("notoryes", $picklist->get_not_or_yes());
+            $this->view->render_nl();
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
@@ -79,7 +77,7 @@ final class SubscriptionsUpdateController extends RestrictController
                 ->render_nl();
         }
         catch (Exception $e) {
-            $this->logerr($e->getMessage(),"promotionupdate.controller");
+            $this->logerr($e->getMessage(),"subscriptionupdate.controller");
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->add_var(PageType::H1, $e->getMessage())
                 ->set_foldertpl("Open/Errors/Infrastructure/Views")
@@ -108,7 +106,7 @@ final class SubscriptionsUpdateController extends RestrictController
             $update = SF::get_callable(SubscriptionsUpdateService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
-                "message"=> __("{0} {1} successfully updated", __("Promotion"), $uuid),
+                "message"=> __("{0} {1} successfully updated", __("Subscription"), $uuid),
                 "result" => $result,
             ])->show();
         }
