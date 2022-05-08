@@ -117,7 +117,6 @@ final class SubscriptionsUpdateService extends AppService
         }
 
         $this->_check_entity_permission($update);
-        $this->_map_entity($update);
         $this->entitysubscription->add_sysupdate($update, $this->authuser["id"]);
 
         $affected = $this->reposubscription->update($update);
