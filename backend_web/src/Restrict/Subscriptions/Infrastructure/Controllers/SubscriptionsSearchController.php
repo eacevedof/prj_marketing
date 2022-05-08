@@ -1,13 +1,9 @@
 <?php
-/**
- * @link eduardoaf.com
- */
 namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Subscriptions\Application\SubscriptionsSearchService;
-use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
@@ -17,13 +13,6 @@ use \Exception;
 
 final class SubscriptionsSearchController extends RestrictController
 {
-    private PicklistService $picklist;
-    
-    public function __construct()
-    {
-        parent::__construct();
-        $this->picklist = SF::get(PicklistService::class);
-    }
 
     public function index(?string $page=null): void
     {
