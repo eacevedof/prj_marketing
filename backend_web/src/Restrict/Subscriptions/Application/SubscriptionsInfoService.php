@@ -8,8 +8,7 @@ use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Subscriptions\Domain\PromotionRepository;
-use App\Restrict\Subscriptions\Domain\PromotionUiRepository;
+use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\TimezoneType;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -19,8 +18,7 @@ final class SubscriptionsInfoService extends AppService
     private AuthService $auth;
     private array $authuser;
 
-    private PromotionRepository $repopromotion;
-    private PromotionUiRepository $repopromoui;
+    private PromotionCapSubscriptionsRepository $repocapsubscription;
 
     public function __construct(array $input)
     {
@@ -31,15 +29,14 @@ final class SubscriptionsInfoService extends AppService
             $this->_exception(__("No {0} code provided", __("promotion")), ExceptionType::CODE_BAD_REQUEST);
 
         $this->authuser = $this->auth->get_user();
-        $this->repopromotion = RF::get(PromotionRepository::class);
-        $this->repopromoui = RF::get(PromotionUiRepository::class);
+        $this->repocapsubscription = RF::get(PromotionCapSubscriptionsRepository::class);
     }
 
     private function _check_permission(): void
     {
         if(!(
-            $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)
+            $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ)
+            || $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE)
         ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
@@ -68,7 +65,7 @@ final class SubscriptionsInfoService extends AppService
 
     public function __invoke(): array
     {
-        if(!$promotion = $this->repopromotion->get_info($this->input))
+        if(!$promotion = $this->repocapsubscription->get_info($this->input))
             $this->_exception(
                 __("{0} with code {1} not found", __("Promotion"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
@@ -91,7 +88,7 @@ final class SubscriptionsInfoService extends AppService
 
     public function get_for_edit(): array
     {
-        $promotion = $this->repopromotion->get_info($this->input);
+        $promotion = $this->repocapsubscription->get_info($this->input);
         if(!$promotion)
             $this->_exception(
                 __("{0} with code {1} not found", __("Promotion"), $this->input),

@@ -29,8 +29,8 @@ final class SubscriptionsSearchService extends AppService
     private function _check_permission(): void
     {
         if(!(
-            $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)
+            $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ)
+            || $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE)
         ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),

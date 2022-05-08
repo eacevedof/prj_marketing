@@ -1,12 +1,4 @@
 <?php
-/**
- * @author Eduardo Acevedo Farje.
- * @link eduardoaf.com
- * @name App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController
- * @file SubscriptionsUpdateController.php v1.0.0
- * @date 23-01-2022 10:22 SPAIN
- * @observations
- */
 namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
@@ -39,7 +31,7 @@ final class SubscriptionsUpdateController extends RestrictController
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
+        if (!$this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
             $this->add_var(PageType::TITLE, __("Unauthorized"))
                 ->add_var(PageType::H1, __("Unauthorized"))
                 ->add_var("ismodal",1)
@@ -59,7 +51,6 @@ final class SubscriptionsUpdateController extends RestrictController
                         $result["promotion"]["id_owner"]
                     )["slug"] ?? "";
 
-            //dd($result);
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit promotion {0}", $uuid))
