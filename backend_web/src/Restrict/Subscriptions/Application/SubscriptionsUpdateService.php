@@ -31,19 +31,18 @@ final class SubscriptionsUpdateService extends AppService
     private PromotionRepository $repopromotion;
     private FieldsValidator $validator;
     private PromotionEntity $entitypromotion;
-    private TextComponent $textformat;
-    private DateComponent $datecomp;
 
     public function __construct(array $input)
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
 
-        $this->datecomp = CF::get(DateComponent::class);
-        $this->_map_dates($input);
-        $this->input = $input;
-        if (!$this->input["uuid"])
+        $this->input = $this->_map_input($input);
+
+        if (!$this->input["_capuseruuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$this->input["exec_code"])
+            $this->_exception(__("Empty voucher code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->entitypromotion = MF::get(PromotionEntity::class);
         $this->validator = VF::get($this->input, $this->entitypromotion);
@@ -62,14 +61,12 @@ final class SubscriptionsUpdateService extends AppService
             );
     }
 
-    private function _map_dates(array &$input): void
+    private function _map_input(array $input): array
     {
-        $date = $input["date_from"] ?? "";
-        $date = $this->datecomp->get_dbdt($date);
-        $input["date_from"] = $date;
-        $date = $input["date_to"] ?? "";
-        $date = $this->datecomp->get_dbdt($date);
-        $input["date_to"] = $date;
+        return [
+            "_capuseruuid" => trim($input["capuseruuid"] ?? ""),
+            "exec_code" => trim($input["exec_code"] ?? ""),
+        ];
     }
 
     private function _check_entity_permission(array $promotion): void

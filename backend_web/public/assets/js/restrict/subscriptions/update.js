@@ -9,7 +9,7 @@ import {csstooltip} from "/assets/js/common/tooltip-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 
 const URL_UPDATE = "/restrict/subscriptions/update"
-const ACTION = "subscriptions.update"
+const ACTION = "subscriptions.status.update"
 
 export class FormSubscriptionUpdate extends LitElement {
   static get styles() {
@@ -28,7 +28,7 @@ export class FormSubscriptionUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["capuseruuid"])
+    return get_formdata(this.shadowRoot)(this.fields)(["capuseruuid","subs_status"])
   }
 
   _on_cancel() {
@@ -145,7 +145,7 @@ export class FormSubscriptionUpdate extends LitElement {
     const response = await injson.put(URL_UPDATE, {
       _action: ACTION,
       _csrf: this.csrf,
-      subscriptionuuid: this.fields.subscriptionuuid,
+      capuseruuid: this.fields.capuseruuid,
       ...this._get_data()
     })
 
