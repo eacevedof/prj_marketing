@@ -33,11 +33,11 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ],
             "on" => [
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                "INNER JOIN app_promotioncap_users pu ON m.id_promouser = pu.id",
-                "INNER JOIN app_promotion p ON m.id_promotion = p.id",
+                "INNER JOIN app_promotioncap_users pu ON m.id_promouser = pu.id AND m.id_promotion = pu.id_promotion",
+                "INNER JOIN app_promotion p ON m.id_promotion = p.id AND pu.id_promotion = p.id",
                 "LEFT JOIN base_user u1 ON p.id_owner = u1.id",
                 "INNER JOIN app_business_data bd ON p.id_owner = bd.id_user",
-                "LEFT JOIN app_array ar1 ON m.subs_status = ar1.id_pk"
+                "LEFT JOIN app_array ar1 ON m.subs_status = ar1.id_pk AND ar1.type='subs_status'"
             ]
         ];
     }

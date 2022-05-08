@@ -57,16 +57,15 @@ final class SubscriptionsSearchService extends AppService
         if($this->auth->is_system())
             $dthelp->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"));
 
-        $dthelp->add_column("description")->add_label(__("Description"))->add_tooltip(__("Description"))
-            //->add_column("slug")->add_label(__("Slug"))->add_tooltip(__("Slug"))
-            //->add_column("content")->add_label(__("Content"))->add_tooltip(__("Content"))
-            ->add_column("date_from")->add_label(__("Date from"))->add_tooltip(__("Date from"))
-            ->add_column("date_to")->add_label(__("Date to"))->add_tooltip(__("Date to"))
+        if($this->auth->is_system())
+            $dthelp->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"));
 
-            ->add_column("e_is_published")->add_label(__("Published"))->add_tooltip(__("Published"))
-            ->add_column("invested")->add_label(__("Invested"))->add_tooltip(__("Invested"))
-            ->add_column("returned")->add_label(__("Inv returned"))->add_tooltip(__("Inv returned"))
-            //->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
+        $dthelp
+            ->add_column("e_promotion")->add_label(__("Promotion"))->add_tooltip(__("Promotion"))
+            ->add_column("e_usercode")->add_label(__("Cod. User"))->add_tooltip(__("Cod. User"))
+            ->add_column("e_username")->add_label(__("Name"))->add_tooltip(__("Name"))
+            ->add_column("e_status")->add_label(__("Status"))->add_tooltip(__("Status"))
+            ->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
         ;
 
         if($this->auth->is_root())
