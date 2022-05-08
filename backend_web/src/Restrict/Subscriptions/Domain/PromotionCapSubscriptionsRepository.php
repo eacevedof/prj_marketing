@@ -22,11 +22,18 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $this->joins = [
             "fields" => [
                 "u2.description"  => "e_deletedby",
-                //"ar1.description" => "e_language",
+                "pu.description" => "e_language",
+                "pu.uuid" => "e_usercode",
+                "pu.email" => "e_email",
+                "p.description" => "e_promotion",
+                "p.uuid"=>"e_promocode",
+                "bd.description"=>"e_business"
             ],
             "on" => [
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                //"LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
+                "INNER JOIN app_promotioncap_users pu ON m.id_promouser = pu.id",
+                "INNER JOIN app_promotion p ON m.id_promotion = p.id",
+                "INNER JOIN app_business_data bd ON p.id_owner = bd.id_user",
             ]
         ];
     }
