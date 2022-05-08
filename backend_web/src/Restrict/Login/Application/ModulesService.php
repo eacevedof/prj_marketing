@@ -16,7 +16,7 @@ final class ModulesService
     {
         $this->auth = SF::get_auth();
         $this->permissions = $this->auth->get_user()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
-        if ($this->auth->is_root())
+        if ($this->auth->is_root_super())
             $this->permissions = UserPolicyType::get_all();
         $this->_load_modules();
     }
