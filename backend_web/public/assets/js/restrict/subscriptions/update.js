@@ -28,7 +28,7 @@ export class FormSubscriptionUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["subsuuid"])
+    return get_formdata(this.shadowRoot)(this.fields)(["capuseruuid"])
   }
 
   _on_cancel() {
@@ -145,7 +145,7 @@ export class FormSubscriptionUpdate extends LitElement {
     const response = await injson.put(URL_UPDATE, {
       _action: ACTION,
       _csrf: this.csrf,
-      subscriptionuuid: this.subscriptionuuid,
+      subscriptionuuid: this.fields.subscriptionuuid,
       ...this._get_data()
     })
 
