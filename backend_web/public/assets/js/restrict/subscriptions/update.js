@@ -36,9 +36,7 @@ export class FormSubscriptionUpdate extends LitElement {
   }
 
   _load_response(result) {
-    this._is_published = parseInt(result.promotion.is_published)
-    this._is_launched = parseInt(result.promotion.is_launched)
-    this._slug = result.promotion.slug
+
   }
 
   _handle_keyup(e, field) {
@@ -55,6 +53,7 @@ export class FormSubscriptionUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+
     texts: {
       converter: (strjson) => {
         if (strjson) return JSON.parse(strjson)
@@ -72,9 +71,6 @@ export class FormSubscriptionUpdate extends LitElement {
     _issending: { type: Boolean, state: true},
     _btnsend: { type: String, state: true},
     _btncancel: { type: String, state: true},
-    
-    _num_confirmed: {type: String, state:true},
-    _exec_code: {type: String, state:true},
   }
 
   //3 (aqui siempre hay datos)
@@ -92,10 +88,10 @@ export class FormSubscriptionUpdate extends LitElement {
     return html`
       <form @submit=${this.on_submit}>
         <div class="flex-row">
-          <div class="form-group col-2">
-            <label for="exec_code">${this.texts.f04}</label>
+          <div class="form-group col-4">
+            <label for="exec_code">${this.texts.f00}</label>
             <div id="field-exec_code">
-              <input type="text" id="exec_code" .value=${this._exec_code} class="form-control" maxlength="25">
+              <input type="text" id="exec_code" .value=${this._exec_code} class="form-control" maxlength="15">
             </div>
           </div>
         </div>

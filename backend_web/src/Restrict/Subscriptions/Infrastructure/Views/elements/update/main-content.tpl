@@ -1,6 +1,4 @@
 <?php
-$subscription = $result["subscription"];
-
 $texts = [
   "tr00" => __("Save"),
   "tr01" => __("Processing..."),
@@ -8,24 +6,30 @@ $texts = [
   "tr03" => __("Error"),
   "tr04" => __("<b>Data updated</b>"),
 
-  "f00" => __("Nº"),
-  "f01" => __("Code"),
-  "f02" => __("Owner"),
-  "f03" => __("Timezone"),
+  "f00" => "",
 ];
-
+$subscription = $result["subscription"];
 $subscription = [
-  "description" => $subscription["description"],
+  "subs_status" => $subscription["subs_status"],
+  "capuseruuid" => $subscription["e_usercode"],
+  "exec_code" => "",
 ];
 
 ?>
 <div id="main" class="tab-pane active">
-    <form-subscription-update
-        csrf=<?$this->_echo_js($csrf);?>
+  <h4><?=__("Vaucher code validation")?></h4>
+  <br>
+  <ul>
+    <li><?=__("Business")?>: <?$this->_echo($result["subscription"]["e_business"])?></li>
+    <li><?=__("Promotion")?>: <?$this->_echo($result["subscription"]["e_promotion"])?></li>
+    <li><?=__("For")?>: <?$this->_echo($result["subscription"]["e_username"] . " / " . $result["subscription"]["e_usercode"])?></li>
+  </ul>
+  <form-subscription-update
+      csrf=<?$this->_echo_js($csrf);?>
 
-        texts="<?$this->_echo_jslit($texts);?>"
+      texts="<?$this->_echo_jslit($texts);?>"
 
-        fields="<?$this->_echo_jslit($subscription);?>"
-    />
+      fields="<?$this->_echo_jslit($subscription);?>"
+  />
 </div>
 

@@ -73,7 +73,7 @@ final class SubscriptionsInfoService extends AppService
         ];
     }
 
-    public function get_for_edit(): array
+    public function get_info_for_execute_date(): array
     {
         $capsubscription = $this->repocapsubscription->get_info_for_execute_date($this->input);
         if(!$capsubscription)

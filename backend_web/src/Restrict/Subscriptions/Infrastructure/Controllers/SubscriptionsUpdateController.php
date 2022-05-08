@@ -39,7 +39,7 @@ final class SubscriptionsUpdateController extends RestrictController
         $this->add_var("ismodal",1);
         try {
             $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
-            $result = $edit->get_for_edit();
+            $result = $edit->get_info_for_execute_date();
 
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit subscription {0}", $uuid))

@@ -165,7 +165,8 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.uuid",
-                "m.id_owner"
+                "m.id_owner",
+                "m.subs_status"
             ])
             ->add_and("m.uuid='$uuid'")
         ;
