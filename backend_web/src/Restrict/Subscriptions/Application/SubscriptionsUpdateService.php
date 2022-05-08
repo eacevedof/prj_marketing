@@ -2,6 +2,7 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
@@ -121,10 +122,12 @@ final class SubscriptionsUpdateService extends AppService
 
         $affected = $this->reposubscription->update($subscription);
         $subscription = $this->reposubscription->get_by_id(
-            $subscription["id"],
+            $id = $subscription["id"],
             ["id", "date_confirm", "date_execution", "subs_status"]
         );
-        //EventBus::instance()->publish();
+        EventBus::instance()->publish(...[
+            SubscriptionExecutedEvent::from_primitives($id, $subscription)
+        ]);
 
         return [
             "affected" => $affected,
