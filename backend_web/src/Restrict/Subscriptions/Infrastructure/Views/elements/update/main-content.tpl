@@ -15,8 +15,9 @@ $status = $subscription["subs_status"];
 
 $validable = "";
 switch ($status) {
-  case Status::CONFIRMED: $validable = "<p><b>".__("Already confirmed")."</b></p>"; break;
+  case Status::EXECUTED: $validable = "<p><b>".__("Already validated")."</b></p>"; break;
   case Status::CANCELLED: $validable = "<p><b>".__("Cancelled")."</b></p>"; break;
+  case Status::SUBSCRIBED: $validable = "<p><b>".__("Not confirmed")."</b></p>"; break;
 }
 
 $subscription = [
