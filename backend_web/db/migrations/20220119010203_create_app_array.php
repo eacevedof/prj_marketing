@@ -941,10 +941,10 @@ final class CreateAppArray extends AbsMigration
             "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','bool','0','No');",
             "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','bool','1','Yes');",
 
-            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','0','subscribed');",
-            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','1','confirmed');",
-            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','2','executed');",
-            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','3','cancelled');",
+            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','1','subscribed');",
+            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','2','confirmed');",
+            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','3','executed');",
+            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','4','cancelled');",
         ];
 
         foreach ($sqls as $sql)
