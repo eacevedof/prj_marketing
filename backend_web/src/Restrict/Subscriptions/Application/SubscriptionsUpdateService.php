@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Subscriptions\Application;
 
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
@@ -88,15 +89,22 @@ final class SubscriptionsUpdateService extends AppService
         $this->validator
             ->add_rule("exec_code", "exec_code", function ($data) {
                 $code = $data["value"];
-
+                $subscription = $this->reposubscription->get_by_uuid(
+                    $this->input["uuid"],
+                    ["exec_code", "date_confirm", "date_execution", "subs_status"]
+                );
+                if (!$subscription["date_confirm"]) return __("Subscription not confirmed");
+                if ($subscription["date_execution"]) return __("Voucher already validated");
+                if ($subscription["subs_status"] === PromotionCapActionType::CANCELLED)
+                    return __("Promotion cancelled");
+                if ($subscription["exec_code"] !== $code)
+                    return __("Invalid code");
+                return false;
             })
         ;
         return $this->validator;
     }
 
-    private function _map_entity(array &$subscription): void
-    {
-    }
 
     public function __invoke(): array
     {
@@ -108,7 +116,6 @@ final class SubscriptionsUpdateService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entitysubscription->map_request($update);
         $this->_check_entity_permission($update);
         $this->_map_entity($update);
         $this->entitysubscription->add_sysupdate($update, $this->authuser["id"]);
