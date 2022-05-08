@@ -108,7 +108,7 @@ final class SubscriptionsUpdateService extends AppService
 
     public function __invoke(): array
     {
-        if (!$update = $this->_get_req_without_ops($this->input))
+        if (!$subscription = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         if ($errors = $this->_add_rules()->get_errors()) {
@@ -116,11 +116,11 @@ final class SubscriptionsUpdateService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $this->_check_entity_permission($update);
-        $this->entitysubscription->add_sysupdate($update, $this->authuser["id"]);
+        $this->_check_entity_permission($subscription);
+        $this->entitysubscription->add_sysupdate($subscription, $this->authuser["id"]);
 
-        $affected = $this->reposubscription->update($update);
-        $subscription = $this->reposubscription->get_by_id($update["id"]);
+        $affected = $this->reposubscription->update($subscription);
+        $subscription = $this->reposubscription->get_by_id($subscription["id"]);
         return [
             "affected" => $affected,
             "promotion" => [
