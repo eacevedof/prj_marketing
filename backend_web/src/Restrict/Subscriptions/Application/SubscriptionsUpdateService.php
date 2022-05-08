@@ -32,7 +32,6 @@ final class SubscriptionsUpdateService extends AppService
         $this->_check_permission();
 
         $this->input = $this->_map_input($input);
-
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
         if (!$this->input["exec_code"])
