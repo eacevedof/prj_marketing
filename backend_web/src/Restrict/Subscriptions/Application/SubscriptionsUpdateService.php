@@ -10,13 +10,8 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Checker\Application\CheckerService;
-use App\Restrict\Subscriptions\Domain\PromotionEntity;
-use App\Restrict\Subscriptions\Domain\PromotionRepository;
+use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
 use App\Restrict\Users\Domain\UserRepository;
-use App\Shared\Domain\Repositories\App\ArrayRepository;
-use App\Shared\Infrastructure\Components\Date\DateComponent;
-use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -28,7 +23,7 @@ final class SubscriptionsUpdateService extends AppService
 
     private AuthService $auth;
     private array $authuser;
-    private PromotionRepository $repopromotion;
+    private PromotionCapSubscriptionsRepository $repopromotion;
     private FieldsValidator $validator;
     private PromotionEntity $entitypromotion;
 
@@ -49,7 +44,6 @@ final class SubscriptionsUpdateService extends AppService
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotion->set_model($this->entitypromotion);
         $this->authuser = $this->auth->get_user();
-        $this->textformat = CF::get(TextComponent::class);
     }
 
     private function _check_permission(): void
@@ -94,64 +88,9 @@ final class SubscriptionsUpdateService extends AppService
     private function _add_rules(): FieldsValidator
     {
         $this->validator
-            ->add_rule("id", "id", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("uuid", "uuid", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_owner", "id_owner", function ($data) {
-                //si no es de sistemas este campo no se puede cambiar
-                if (!$this->auth->is_system()) return false;
-                if (!($value = $data["value"])) return __("Empty field is not allowed");
-                if (!RF::get(UserRepository::class)->is_owner((int) $value))
-                    return __("Invalid owner");
-                return false;
-            })
-            ->add_rule("description", "description", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("bgimage_xs", "bgimage_xs", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_sm", "bgimage_sm", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_md", "bgimage_md", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_lg", "bgimage_lg", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_xl", "bgimage_xl", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("bgimage_xxl", "bgimage_xxl", function ($data) {
-                if (!$value = $data["value"]) return false;
-                if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
-            })
-            ->add_rule("date_from", "date_from", function ($data) {
-                if (!$value = $data["value"]) return __("Empty field is not allowed");
-                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
-                if ($value>$data["data"]["date_to"]) return __("Date from is greater than Date to");
-                return false;
-            })
-            ->add_rule("date_to", "date_to", function ($data) {
-                if (!$value = $data["value"]) return __("Empty field is not allowed");
-                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
-                if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
-                return false;
-            })
-            ->add_rule("id_tz", "id_tz", function ($data) {
-                if (!$value = $data["value"]) return __("Empty field is not allowed");
-                if (!RF::get(ArrayRepository::class)->get_timezone_description_by_id($value))
-                    return __("Invalid timezone");
-                return false;
+            ->add_rule("exec_code", "exec_code", function ($data) {
+                $code = $data["value"];
+
             })
         ;
         return $this->validator;
@@ -159,25 +98,6 @@ final class SubscriptionsUpdateService extends AppService
 
     private function _map_entity(array &$promotion): void
     {
-        $utc = CF::get(UtcComponent::class);
-        $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
-        unset($promotion["slug"]);
-        if (!$this->auth->is_system()) unset($promotion["id_owner"]);
-
-
-        $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug()."-".$promotion["id"];
-        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
-        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
-
-        unset($promotion["is_launched"]);
-        if ($this->repopromotion->is_launched_by_uuid($promotion["uuid"])) {
-            unset(
-                $promotion["id_owner"], $promotion["description"], $promotion["description"], $promotion["slug"],
-                $promotion["id_tz"], $promotion["date_from"], $promotion["date_to"], $promotion["is_raffleable"],
-                $promotion["is_cumulative"], $promotion["content"]
-            );
-        }
-        if ($promotion["is_published"]) $promotion["is_launched"] = 1;
     }
 
     public function __invoke(): array
