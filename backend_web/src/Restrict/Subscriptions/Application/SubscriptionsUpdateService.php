@@ -2,6 +2,7 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
@@ -123,6 +124,7 @@ final class SubscriptionsUpdateService extends AppService
             $subscription["id"],
             ["id", "date_confirm", "date_execution", "subs_status"]
         );
+        //EventBus::instance()->publish();
 
         return [
             "affected" => $affected,
