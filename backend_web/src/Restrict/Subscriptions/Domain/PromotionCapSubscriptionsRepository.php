@@ -116,7 +116,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         ];
     }
 
-    public function get_info(string $uuid): array
+    public function get_info(string $uuid, array $fields = []): array
     {
         $uuid = $this->_get_sanitized($uuid);
         $sql = $this->_get_qbuilder()
@@ -145,10 +145,10 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.remote_ip",
                 "m.notes"
             ])
-            //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.uuid='$uuid'")
-            ->select()->sql()
         ;
+        if ($fields) $sql->set_getfields($fields);
+        $sql = $sql->select()->sql();
         $r = $this->db->query($sql);
         if (!$r) return [];
 
