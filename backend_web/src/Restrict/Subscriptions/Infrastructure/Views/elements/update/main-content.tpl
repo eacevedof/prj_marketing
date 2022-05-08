@@ -1,5 +1,5 @@
 <?php
-use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType as Status;
 
 $texts = [
   "tr00" => __("Save"),
@@ -12,9 +12,13 @@ $texts = [
 ];
 $subscription = $result["subscription"];
 $status = $subscription["subs_status"];
-switch ($status) {
 
+$validable = "";
+switch ($status) {
+  case Status::CONFIRMED: $validable = "<p><b>".__("Already confirmed")."</b></p>"; break;
+  case Status::CANCELLED: $validable = "<p><b>".__("Cancelled")."</b></p>"; break;
 }
+
 $subscription = [
   "subs_status" => $status,
   "capuseruuid" => $subscription["e_usercode"],
@@ -31,10 +35,8 @@ $subscription = [
     <li><?=__("For")?>: <?$this->_echo($result["subscription"]["e_username"] . " / " . $result["subscription"]["e_usercode"])?></li>
   </ul>
   <?php
-  if (in_array($status, ["2", "3"])):
-  ?>
-  <p><?=__("Subscription already validated or cancelled")?></p>
-  <?php
+  if ($validable):
+    echo $validable;
   else:
   ?>
   <form-subscription-update
