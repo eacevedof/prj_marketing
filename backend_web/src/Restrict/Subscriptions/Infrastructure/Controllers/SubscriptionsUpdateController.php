@@ -38,16 +38,8 @@ final class SubscriptionsUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $picklist = SF::get(PicklistService::class);
-            $businessowners = ($this->auth->is_system())
-                ? $picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
-                : [];
-
             $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
-            $slug = SF::get(BusinessDataInfoService::class)->get_by_id_user(
-                        $result["subscription"]["id_owner"]
-                    )["slug"] ?? "";
 
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit subscription {0}", $uuid))
@@ -55,11 +47,7 @@ final class SubscriptionsUpdateController extends RestrictController
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
                 ->add_var("user", $this->auth->get_user())
                 ->add_var("uuid", $uuid)
-                ->add_var("result", $result)
-                ->add_var("businessslug", $slug)
-                ->add_var("timezones", $picklist->get_timezones())
-                ->add_var("businessowners", $businessowners)
-                ->add_var("notoryes", $picklist->get_not_or_yes());
+                ->add_var("result", $result);
             $this->view->render_nl();
         }
         catch (NotFoundException $e) {
