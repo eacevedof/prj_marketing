@@ -22,7 +22,7 @@ switch ($status) {
 
 $subscription = [
   "subs_status" => $status,
-  "capuseruuid" => $subscription["e_usercode"],
+  "uuid" => $subscription["uuid"],
   "exec_code" => "",
 ];
 

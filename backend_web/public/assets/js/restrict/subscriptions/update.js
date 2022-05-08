@@ -68,8 +68,9 @@ export class FormSubscriptionUpdate extends LitElement {
       },
     },
 
+    _uuid: {type: String, state:true},
     _subs_status: { type: Boolean, state: true},
-    _exec_code: {type: String},
+    _exec_code: {type: String, state:true},
 
     _issending: { type: Boolean, state: true},
     _btnsend: { type: String, state: true},
@@ -145,7 +146,7 @@ export class FormSubscriptionUpdate extends LitElement {
     const response = await injson.put(URL_UPDATE, {
       _action: ACTION,
       _csrf: this.csrf,
-      capuseruuid: this.fields.capuseruuid,
+      uuid: this.fields.uuid,
       ...this._get_data()
     })
 
