@@ -137,12 +137,12 @@ ips: ## get ips of containers
 	echo "php-marketing-be"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-be
 	echo "php-marketing-db"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-db
 
-tail-error:
+log-error: ## logs error
 	cd ./backend_web/logs/error; \
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
 
-tail-sql:
+log-sql: ## log queries
 	cd ./backend_web/logs/sql; \
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;

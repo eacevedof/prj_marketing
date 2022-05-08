@@ -32,10 +32,10 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "ar1.description"=>"e_status"
             ],
             "on" => [
-                "LEFT JOIN base_user u1 ON m.id_owner = u1.id_owner",
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
                 "INNER JOIN app_promotioncap_users pu ON m.id_promouser = pu.id",
                 "INNER JOIN app_promotion p ON m.id_promotion = p.id",
+                "LEFT JOIN base_user u1 ON p.id_owner = u1.id",
                 "INNER JOIN app_business_data bd ON p.id_owner = bd.id_user",
                 "LEFT JOIN app_array ar1 ON m.subs_status = ar1.id_pk"
             ]
