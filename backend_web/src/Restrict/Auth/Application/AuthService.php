@@ -79,6 +79,12 @@ final class AuthService
                     "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_READ),
                 ];
             break;
+            case UserPolicyType::MODULE_SUBSCRIPTIONS:
+                $permission = [
+                    "write" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE),
+                    "read" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ),
+                ];
+                break;
             default:
                 $permission = [
                     "write" => false,

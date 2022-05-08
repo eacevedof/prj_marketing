@@ -11,6 +11,7 @@ abstract class UserPolicyType
     const MODULE_BUSINESSDATA = "businessdata";
     const MODULE_PROMOTIONS = "promotions";
     const MODULE_PROMOTIONS_UI = "promotionsui";
+    const MODULE_SUBSCRIPTIONS = "subscriptions";
 
     //politicas
     const DASHBOARD_READ = "dashboard:read";
