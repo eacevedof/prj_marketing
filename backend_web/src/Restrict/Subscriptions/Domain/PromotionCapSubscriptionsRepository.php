@@ -96,7 +96,11 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.delete_date"
             ])
             ->set_limit(25, 0)
-            ->set_orderby(["m.id"=>"DESC"])
+            ->set_orderby([
+                "m.date_execution"=>"DESC",
+                "m.date_confirm"=>"DESC",
+                "m.date_subscription"=>"DESC"
+            ])
         ;
         $this->_add_joins($qb);
         $this->_add_search_filter($qb, $search);

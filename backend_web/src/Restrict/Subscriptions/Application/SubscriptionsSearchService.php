@@ -74,6 +74,9 @@ final class SubscriptionsSearchService extends AppService
         if($this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ))
             $dthelp->add_action("show");
 
+        if ($this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
+            $dthelp->add_action("edit");
+
         return $dthelp;
     }
 }
