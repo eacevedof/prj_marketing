@@ -91,7 +91,7 @@ final class SubscriptionsUpdateService extends AppService
         );
     }
 
-    private function _load_susbscription(): void
+    private function _check_promotion(): void
     {
         $this->dbsubscription = $this->reposubscription->get_by_uuid(
             $uuid = $this->input["uuid"],
@@ -115,7 +115,7 @@ final class SubscriptionsUpdateService extends AppService
         if($seconds<0) {
             //EventBus::instance()->publish(...[]);
             $this->_promocap_exception(
-                __("Sorry but this promotion has finished."),
+                __("Sorry but you can not validate this voucher because this promotion has finished."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
         }
@@ -147,7 +147,7 @@ final class SubscriptionsUpdateService extends AppService
         if (!$subscription = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->_load_susbscription();
+        $this->_check_promotion();
 
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
