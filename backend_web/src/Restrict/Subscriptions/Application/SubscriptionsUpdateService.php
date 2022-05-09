@@ -7,21 +7,17 @@ use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionFinishedEvent;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
-use App\Shared\Domain\Repositories\App\PicklistRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Open\SubscriptionCaps\Domain\SubscriptionCapSubscriptionEntity;
-use App\Restrict\Subscriptions\Domain\SubscriptionCapSubscriptionsRepository;
 use App\Restrict\Users\Domain\UserRepository;
+use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -29,12 +25,9 @@ use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class SubscriptionsUpdateService extends AppService
 {
-    use RequestTrait;
-
-    private AuthService $auth;
     private array $authuser;
-    private SubscriptionCapSubscriptionsRepository $reposubscription;
-    private SubscriptionCapSubscriptionEntity $entitysubscription;
+    private PromotionCapSubscriptionsRepository $reposubscription;
+    private PromotionCapSubscriptionEntity $entitysubscription;
     private array $dbsubscription;
 
     public function __construct(array $input)
@@ -51,17 +44,18 @@ final class SubscriptionsUpdateService extends AppService
         $this->_map_input($input);
 
         $this->entitysubscription = MF::get(PromotionCapSubscriptionEntity::class);
-        $this->reposubscription = RF::get(SubscriptionRepository::class);
+        $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
         $this->reposubscription->set_model($this->entitysubscription);
 
         $this->authuser = SF::get_auth()->get_user();
     }
 
-    private function _map_input(array $input): array
+    private function _map_input(array $input): void
     {
         $this->input =  [
             "uuid" => trim($input["uuid"] ?? ""),
             "exec_code" => trim($input["exec_code"] ?? ""),
+            "notes" => trim($input["notes"] ?? ""),
         ];
 
         if (!$this->input["uuid"])
