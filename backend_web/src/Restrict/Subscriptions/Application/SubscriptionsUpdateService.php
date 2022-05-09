@@ -92,10 +92,11 @@ final class SubscriptionsUpdateService extends AppService
             ["id", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion"]
         );
 
-        $this->_exception(
-            __("{0} {1} does not exist", __("Subscription"), $uuid),
-            ExceptionType::CODE_NOT_FOUND
-        );
+        if (!$this->dbsubscription)
+            $this->_exception(
+                __("{0} {1} does not exist", __("Subscription"), $uuid),
+                ExceptionType::CODE_NOT_FOUND
+            );
     }
 
     private function _check_promotion(): void
