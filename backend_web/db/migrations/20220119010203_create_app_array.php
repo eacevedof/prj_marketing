@@ -945,7 +945,7 @@ final class CreateAppArray extends AbsMigration
             "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','2','confirmed');",
             "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','3','executed');",
             "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','4','cancelled');",
-            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','5','expired');",
+            "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','subs_status','5','finished');",
         ];
 
         foreach ($sqls as $sql)

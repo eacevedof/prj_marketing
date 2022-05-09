@@ -3,6 +3,7 @@ namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
+use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Services\AppService;
@@ -28,6 +29,7 @@ final class SubscriptionsUpdateService extends AppService
     private array $authuser;
     private SubscriptionCapSubscriptionsRepository $reposubscription;
     private SubscriptionCapSubscriptionEntity $entitysubscription;
+    private array $dbsubscription;
 
     public function __construct(array $input)
     {
@@ -65,15 +67,6 @@ final class SubscriptionsUpdateService extends AppService
 
     private function _check_entity_permission(array $subscription): void
     {
-        if (!$dbsubscription = $this->reposubscription->get_by_uuid(
-            $uuid = $subscription["uuid"],
-            ["id", "id_owner"]
-        ))
-            $this->_exception(
-                __("{0} {1} does not exist", __("Subscription"), $uuid),
-                ExceptionType::CODE_NOT_FOUND
-            );
-
         if ($this->auth->is_system()) return;
 
         $idauthuser = (int) $this->authuser["id"];
@@ -88,20 +81,36 @@ final class SubscriptionsUpdateService extends AppService
         );
     }
 
+    private function _load_susbscription(): void
+    {
+        $this->dbsubscription = $this->reposubscription->get_by_uuid(
+            $uuid = $this->input["uuid"],
+            ["id", "id_owner", "exec_code", "date_confirm", "date_execution", "subs_status", "id_promotion"]
+        );
+        $this->_exception(
+            __("{0} {1} does not exist", __("Subscription"), $uuid),
+            ExceptionType::CODE_NOT_FOUND
+        );
+        $promotion = RF::get(PromotionRepository::class)->get_by_id(
+            $this->dbsubscription["id_promotion"],
+            [""]
+        );
+
+    }
+
     private function _add_rules(): FieldsValidator
     {
         $validator = VF::get($this->input, $this->entitysubscription);
         $validator
             ->add_rule("exec_code", "exec_code", function ($data) {
                 $code = $data["value"];
-                $subscription = $this->reposubscription->get_by_uuid(
-                    $this->input["uuid"],
-                    ["exec_code", "date_confirm", "date_execution", "subs_status"]
-                );
+
                 if (!$subscription["date_confirm"]) return __("Subscription not confirmed");
                 if ($subscription["date_execution"]) return __("Voucher already validated");
                 if ($subscription["subs_status"] === PromotionCapActionType::CANCELLED)
                     return __("Promotion cancelled");
+                if ($subscription["subs_status"] === PromotionCapActionType::FINISHED)
+                    return __("Promotion expired");
                 if ($subscription["exec_code"] !== $code)
                     return __("Invalid code");
                 return false;
@@ -114,6 +123,8 @@ final class SubscriptionsUpdateService extends AppService
     {
         if (!$subscription = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
+        $this->_load_susbscription();
 
         if ($errors = $this->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
