@@ -47,24 +47,26 @@ final class SubscriptionsUpdateService extends AppService
                 ExceptionType::CODE_FORBIDDEN
             );
 
-        $this->input = $this->_map_input($input);
-        if (!$this->input["uuid"])
-            $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
-        if (!$this->input["exec_code"])
-            $this->_exception(__("Empty voucher code"),ExceptionType::CODE_BAD_REQUEST);
+        $this->_map_input($input);
 
         $this->entitysubscription = MF::get(PromotionCapSubscriptionEntity::class);
         $this->reposubscription = RF::get(SubscriptionRepository::class);
         $this->reposubscription->set_model($this->entitysubscription);
+
         $this->authuser = SF::get_auth()->get_user();
     }
 
     private function _map_input(array $input): array
     {
-        return [
+        $this->input =  [
             "uuid" => trim($input["uuid"] ?? ""),
             "exec_code" => trim($input["exec_code"] ?? ""),
         ];
+
+        if (!$this->input["uuid"])
+            $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$this->input["exec_code"])
+            $this->_exception(__("Empty voucher code"),ExceptionType::CODE_BAD_REQUEST);
     }
 
     private function _check_entity_permission(array $subscription): void
