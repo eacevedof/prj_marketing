@@ -74,8 +74,9 @@ final class BusinessDataInfoService extends AppService
         return $this->repobusinessdata->get_by_user($id);
     }
 
-    public function get_slug_by_id_user(int $iduser): array
+    public function get_slug_by_id_user(int $iduser): string
     {
-        return $this->repobusinessdata->get_by_user($iduser);
+        $r = $this->repobusinessdata->get_by_user($iduser, ["m.slug"]);
+        return $r["slug"] ?? "";
     }
 }

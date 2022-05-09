@@ -55,9 +55,9 @@ final class PromotionsUpdateController extends RestrictController
 
             $edit = SF::get(PromotionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
-            $slug = SF::get(BusinessDataInfoService::class)->get_by_id_user(
+            $slug = SF::get(BusinessDataInfoService::class)->get_slug_by_id_user(
                         $result["promotion"]["id_owner"]
-                    )["slug"] ?? "";
+                    );
 
             //dd($result);
             $this->set_template("update")
