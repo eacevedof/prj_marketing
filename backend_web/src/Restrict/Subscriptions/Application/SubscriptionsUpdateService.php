@@ -38,8 +38,14 @@ final class SubscriptionsUpdateService extends AppService
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        if (!$input) 
+            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
+        if(!SF::get_auth()->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
+            $this->_exception(
+                __("You are not allowed to perform this operation"),
+                ExceptionType::CODE_FORBIDDEN
+            );
 
         $this->input = $this->_map_input($input);
         if (!$this->input["uuid"])
@@ -50,21 +56,7 @@ final class SubscriptionsUpdateService extends AppService
         $this->entitysubscription = MF::get(PromotionCapSubscriptionEntity::class);
         $this->reposubscription = RF::get(SubscriptionRepository::class);
         $this->reposubscription->set_model($this->entitysubscription);
-        $this->authuser = $this->auth->get_user();
-    }
-
-    private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
-    {
-        throw new PromotionCapException($message, $code);
-    }
-
-    private function _check_permission(): void
-    {
-        if(!$this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
-            $this->_exception(
-                __("You are not allowed to perform this operation"),
-                ExceptionType::CODE_FORBIDDEN
-            );
+        $this->authuser = SF::get_auth()->get_user();
     }
 
     private function _map_input(array $input): array
@@ -77,7 +69,7 @@ final class SubscriptionsUpdateService extends AppService
 
     private function _check_entity_permission(array $subscription): void
     {
-        if ($this->auth->is_system()) return;
+        if (SF::get_auth()->is_system()) return;
 
         $idauthuser = (int) $this->authuser["id"];
         $identowner = (int) $this->dbsubscription["id_owner"];
@@ -89,6 +81,11 @@ final class SubscriptionsUpdateService extends AppService
         $this->_exception(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
         );
+    }
+
+    private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
+    {
+        throw new PromotionCapException($message, $code);
     }
 
     private function _check_promotion(): void
@@ -144,9 +141,6 @@ final class SubscriptionsUpdateService extends AppService
 
     public function __invoke(): array
     {
-        if (!$subscription = $this->_get_req_without_ops($this->input))
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
         $this->_check_promotion();
 
         if ($errors = $this->_add_rules()->get_errors()) {
