@@ -125,6 +125,7 @@ final class SubscriptionsUpdateService extends AppService
     {
         $validator = VF::get($this->input, $this->entitysubscription);
         $validator
+            ->add_skip("exec_code")
             ->add_rule("exec_code", "exec_code", function ($data) {
                 $code = $data["value"];
                 $subscription = $this->dbsubscription;
