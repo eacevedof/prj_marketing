@@ -9,6 +9,7 @@ $texts = [
   "tr04" => __("<b>Data updated</b>"),
 
   "f00" => "",
+  "f01" => __("Notes"),
 ];
 $subscription = $result["subscription"];
 $status = $subscription["subs_status"];
@@ -25,6 +26,7 @@ $subscription = [
   "subs_status" => $status,
   "uuid" => $subscription["uuid"],
   "exec_code" => "",
+  "notes" => "",
 ];
 
 ?>

@@ -99,6 +99,14 @@ export class FormSubscriptionUpdate extends LitElement {
             </div>
           </div>
         </div>
+        <div class="flex-row">
+          <div class="form-group col-8">
+            <label for="notes">${this.texts.f01}</label>
+            <div id="field-notes">
+              <textarea id="notes" .value=${this._notes} class="form-control" maxlength="300" rows="3"></textarea>
+            </div>
+          </div>          
+        </div>
 
         <div class="form-group">
           <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
