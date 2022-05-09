@@ -62,7 +62,7 @@ final class PicklistService extends AppService
 
         if ($this->auth->is_business_owner()) {
             $profiles = array_filter($profiles, function ($profile){
-                $notin = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER];
+                $notin = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN];
                 return !in_array($profile["key"], $notin);
             });
             return array_values($profiles);
