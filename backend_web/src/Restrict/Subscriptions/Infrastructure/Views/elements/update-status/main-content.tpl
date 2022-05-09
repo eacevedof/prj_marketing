@@ -35,8 +35,8 @@ $subscription = [
   <br>
   <ul>
     <li><?=__("Business")?>: <?$this->_echo($result["subscription"]["e_business"])?></li>
-    <li><?=__("Promotion")?>: <?$this->_echo($result["subscription"]["e_promotion"])?></li>
-    <li><?=__("For")?>: <?$this->_echo($result["subscription"]["e_username"] . " / " . $result["subscription"]["e_usercode"])?></li>
+    <li><?=__("Promotion")?>: <b><?$this->_echo($result["subscription"]["e_promotion"])?></b></li>
+    <li><?=__("For")?>: <?$this->_echo($result["subscription"]["e_username"] . " / <small>" . $result["subscription"]["e_usercode"]. "</small>")?></li>
   </ul>
   <?php
   if ($validable):
