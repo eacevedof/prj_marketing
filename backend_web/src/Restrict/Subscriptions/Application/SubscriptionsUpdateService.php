@@ -136,9 +136,9 @@ final class SubscriptionsUpdateService extends AppService
                 if (!$subscription["date_confirm"]) return __("Subscription not confirmed");
                 if ($subscription["date_execution"]) return __("Voucher already validated");
                 if ($subscription["subs_status"] === PromotionCapActionType::CANCELLED)
-                    return __("Promotion cancelled");
+                    return __("Subscription cancelled");
                 if ($subscription["subs_status"] === PromotionCapActionType::FINISHED)
-                    return __("Promotion finished");
+                    return __("Promotion has finished");
                 if ($subscription["exec_code"] !== $code)
                     return __("Invalid code");
                 return false;
@@ -158,8 +158,13 @@ final class SubscriptionsUpdateService extends AppService
         }
 
         $this->_check_entity_permission();
-        $subscription = $this->dbsubscription;
 
+        $subscription = [
+            "id" => $this->dbsubscription["id"],
+            "uuid" => $this->dbsubscription["uuid"],
+            "date_execution" => date("Y-m-d H:i:s"),
+            "exec_status" => PromotionCapActionType::EXECUTED,
+        ];
         $this->entitysubscription->add_sysupdate($subscription, $this->authuser["id"]);
 
         $affected = $this->reposubscription->update($subscription);
@@ -173,7 +178,7 @@ final class SubscriptionsUpdateService extends AppService
 
         return [
             "affected" => $affected,
-            "promotion" => $subscription
+            "subscription" => $subscription
         ];
     }
 }
