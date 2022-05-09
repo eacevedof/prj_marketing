@@ -163,7 +163,8 @@ final class SubscriptionsUpdateService extends AppService
             "id" => $this->dbsubscription["id"],
             "uuid" => $this->dbsubscription["uuid"],
             "date_execution" => date("Y-m-d H:i:s"),
-            "exec_status" => PromotionCapActionType::EXECUTED,
+            "subs_status" => PromotionCapActionType::EXECUTED,
+            "exec_user" => $this->authuser["id"],
         ];
         $this->entitysubscription->add_sysupdate($subscription, $this->authuser["id"]);
 
