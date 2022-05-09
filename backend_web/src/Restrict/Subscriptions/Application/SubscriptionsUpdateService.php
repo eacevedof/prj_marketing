@@ -5,6 +5,7 @@ use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
+use App\Restrict\Subscriptions\Domain\Events\SubscriptionFinishedEvent;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Domain\Repositories\App\PicklistRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
@@ -69,7 +70,7 @@ final class SubscriptionsUpdateService extends AppService
             $this->_exception(__("Empty voucher code"),ExceptionType::CODE_BAD_REQUEST);
     }
 
-    private function _check_entity_permission(array $subscription): void
+    private function _check_entity_permission(): void
     {
         if (SF::get_auth()->is_system()) return;
 
@@ -90,16 +91,21 @@ final class SubscriptionsUpdateService extends AppService
         throw new PromotionCapException($message, $code);
     }
 
-    private function _check_promotion(): void
+    private function _load_dbsubscription(): void
     {
         $this->dbsubscription = $this->reposubscription->get_by_uuid(
             $uuid = $this->input["uuid"],
-            ["id", "id_owner", "exec_code", "date_confirm", "date_execution", "subs_status", "id_promotion"]
+            ["id", "uuid", "id_owner", "exec_code", "date_confirm", "date_execution", "subs_status", "id_promotion"]
         );
+
         $this->_exception(
             __("{0} {1} does not exist", __("Subscription"), $uuid),
             ExceptionType::CODE_NOT_FOUND
         );
+    }
+
+    private function _check_promotion(): void
+    {
         $promotion = RF::get(PromotionRepository::class)->get_by_id(
             $this->dbsubscription["id_promotion"],
             ["date_to", "id_tz"]
@@ -112,7 +118,7 @@ final class SubscriptionsUpdateService extends AppService
         $utcnow = $utc->get_dt_by_tz();
         $seconds = $dt->get_seconds_between($utcnow, $utcto);
         if($seconds<0) {
-            //EventBus::instance()->publish(...[]);
+            //EventBus::instance()->publish(...[SubscriptionFinishedEvent::from_primitives($id, $subscription)]);
             $this->_promocap_exception(
                 __("Sorry but you can not validate this voucher because this promotion has finished."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
@@ -143,6 +149,7 @@ final class SubscriptionsUpdateService extends AppService
 
     public function __invoke(): array
     {
+        $this->_load_dbsubscription();
         $this->_check_promotion();
 
         if ($errors = $this->_add_rules()->get_errors()) {
@@ -150,7 +157,9 @@ final class SubscriptionsUpdateService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $this->_check_entity_permission($subscription);
+        $this->_check_entity_permission();
+        $subscription = $this->dbsubscription;
+
         $this->entitysubscription->add_sysupdate($subscription, $this->authuser["id"]);
 
         $affected = $this->reposubscription->update($subscription);
