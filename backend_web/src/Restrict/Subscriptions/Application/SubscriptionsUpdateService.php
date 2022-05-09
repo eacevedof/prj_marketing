@@ -173,9 +173,11 @@ final class SubscriptionsUpdateService extends AppService
             $id = $subscription["id"],
             ["id", "date_confirm", "date_execution", "subs_status"]
         );
+        /*
         EventBus::instance()->publish(...[
             SubscriptionExecutedEvent::from_primitives($id, $subscription)
         ]);
+        */
 
         return [
             "affected" => $affected,
