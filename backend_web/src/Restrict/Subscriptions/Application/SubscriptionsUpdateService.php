@@ -5,13 +5,17 @@ use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
+use App\Shared\Domain\Repositories\App\ArrayRepository;
+use App\Shared\Domain\Repositories\App\PicklistRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Open\SubscriptionCaps\Domain\SubscriptionCapSubscriptionEntity;
 use App\Restrict\Subscriptions\Domain\SubscriptionCapSubscriptionsRepository;
@@ -70,7 +74,7 @@ final class SubscriptionsUpdateService extends AppService
         if ($this->auth->is_system()) return;
 
         $idauthuser = (int) $this->authuser["id"];
-        $identowner = (int) $dbsubscription["id_owner"];
+        $identowner = (int) $this->dbsubscription["id_owner"];
         //si el logado es propietario de la promocion
         if ($idauthuser===$identowner) return;
         //si el logado tiene el mismo owner que la promo
@@ -93,8 +97,11 @@ final class SubscriptionsUpdateService extends AppService
         );
         $promotion = RF::get(PromotionRepository::class)->get_by_id(
             $this->dbsubscription["id_promotion"],
-            [""]
+            ["date_to", "id_tz"]
         );
+        $tz = RF::get(ArrayRepository::class)->get_timezone_description_by_id($promotion["id_tz"]);
+        $utc = CF::get(UtcComponent::class)->;
+        $dateto = $utc->get
 
     }
 
@@ -104,7 +111,7 @@ final class SubscriptionsUpdateService extends AppService
         $validator
             ->add_rule("exec_code", "exec_code", function ($data) {
                 $code = $data["value"];
-
+                $subscription = $this->dbsubscription;
                 if (!$subscription["date_confirm"]) return __("Subscription not confirmed");
                 if ($subscription["date_execution"]) return __("Voucher already validated");
                 if ($subscription["subs_status"] === PromotionCapActionType::CANCELLED)

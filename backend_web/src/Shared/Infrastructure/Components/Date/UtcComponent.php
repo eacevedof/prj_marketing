@@ -41,21 +41,8 @@ final class UtcComponent
     }
 
     /**
-     * current datetime in TZx (default UTC)
-     * @param string $timezone
-     * @param string $format
-     * @return string
-     * @throws \Exception
-     */
-    public function get_dt_by_tz(string $timezone=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
-    {
-        $dt = new DateTime("now", new DateTimeZone($timezone));
-        return $dt->format($format);
-    }
-
-    /**
-     * Por defecto va de UI => BD. De UTCx a UTC0
      * de TZx a UTC
+     * Por defecto va de UI => BD. De UTCx a UTC0
      * @param string $sourcedt "2022-01-03 10:11:22"
      * @param string $sourcetz "Europe/Madrid"
      * @param string $targettz "UTC"
@@ -74,6 +61,20 @@ final class UtcComponent
         $source->setTimezone(new DateTimeZone($targettz));
         return $source->format($format);
     }
+
+    /**
+     * current datetime in TZx (default UTC)
+     * @param string $timezone
+     * @param string $format
+     * @return string
+     * @throws \Exception
+     */
+    public function get_dt_by_tz(string $timezone=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
+    {
+        $dt = new DateTime("now", new DateTimeZone($timezone));
+        return $dt->format($format);
+    }
+
 
     private function get_dt_by_ip(string $ip, string $format=self::DEFAULT_DT_FORMAT): string
     {
