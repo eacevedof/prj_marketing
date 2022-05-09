@@ -151,7 +151,9 @@ export class FormSubscriptionUpdate extends LitElement {
     this._btnsend = this.texts.tr01
     error.clear()
     
-    const response = await injson.put(URL_UPDATE.replace(":uuid", this.fields.uuid), {
+    const response = await injson.put(
+      URL_UPDATE.replace(":uuid", this.fields.uuid),
+      {
       _action: ACTION,
       _csrf: this.csrf,
       ...this._get_data()
