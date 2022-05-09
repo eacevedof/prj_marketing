@@ -89,7 +89,7 @@ final class SubscriptionsUpdateService extends AppService
     {
         $this->dbsubscription = $this->reposubscription->get_by_uuid(
             $uuid = $this->input["uuid"],
-            ["id", "uuid", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion"]
+            ["id", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion"]
         );
 
         $this->_exception(
@@ -155,7 +155,7 @@ final class SubscriptionsUpdateService extends AppService
 
         $subscription = [
             "id" => $this->dbsubscription["id"],
-            "uuid" => $this->dbsubscription["uuid"],
+            "uuid" => $this->input["uuid"],
             "date_execution" => date("Y-m-d H:i:s"),
             "subs_status" => PromotionCapActionType::EXECUTED,
             "exec_user" => $this->authuser["id"],
