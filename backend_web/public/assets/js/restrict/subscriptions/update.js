@@ -154,7 +154,6 @@ export class FormSubscriptionUpdate extends LitElement {
     const response = await injson.put(URL_UPDATE.replace(":uuid", this.fields.uuid), {
       _action: ACTION,
       _csrf: this.csrf,
-      uuid: this.fields.uuid,
       ...this._get_data()
     })
 
