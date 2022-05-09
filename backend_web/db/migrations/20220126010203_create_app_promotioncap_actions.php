@@ -36,7 +36,7 @@ final class CreateAppPromotioncapActions extends AbsMigration
         ->addColumn("id_type", "integer", [
             "limit" => 2,
             "null" => false,
-            "comment" => "app_array.type='promotion-steps' viewed, subscribed, confirmed, executed",
+            "comment" => "app_array.type='promotion-steps' viewed, subscribed, confirmed, executed, expired",
         ])
         ->addColumn("url_req", "string", [
             "limit" => 300,

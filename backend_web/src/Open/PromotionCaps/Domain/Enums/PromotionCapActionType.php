@@ -9,6 +9,7 @@ abstract class PromotionCapActionType
     public const CONFIRMED = 2;
     public const EXECUTED = 3;
     public const CANCELLED = 4;
+    public const EXPIRED = 5;
 
     public static function get_all(): array
     {
@@ -18,6 +19,7 @@ abstract class PromotionCapActionType
             self::CONFIRMED,
             self::EXECUTED,
             self::CANCELLED,
+            self::EXPIRED,
         ];
     }
 }

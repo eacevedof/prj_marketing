@@ -2,6 +2,7 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Services\AppService;
@@ -40,7 +41,7 @@ final class SubscriptionsUpdateService extends AppService
         if (!$this->input["exec_code"])
             $this->_exception(__("Empty voucher code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->entitysubscription = MF::get(SubscriptionEntity::class);
+        $this->entitysubscription = MF::get(PromotionCapSubscriptionEntity::class);
         $this->validator = VF::get($this->input, $this->entitysubscription);
         $this->reposubscription = RF::get(SubscriptionRepository::class);
         $this->reposubscription->set_model($this->entitysubscription);
