@@ -89,7 +89,7 @@ final class SubscriptionsUpdateService extends AppService
     {
         $this->dbsubscription = $this->reposubscription->get_by_uuid(
             $uuid = $this->input["uuid"],
-            ["id", "uuid", "id_owner", "exec_code", "date_confirm", "date_execution", "subs_status", "id_promotion"]
+            ["id", "uuid", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion"]
         );
 
         $this->_exception(
@@ -133,7 +133,7 @@ final class SubscriptionsUpdateService extends AppService
                     return __("Subscription cancelled");
                 if ($subscription["subs_status"] === PromotionCapActionType::FINISHED)
                     return __("Promotion has finished");
-                if ($subscription["exec_code"] !== $code)
+                if ($subscription["code_execution"] !== $code)
                     return __("Invalid code");
                 return false;
             })
