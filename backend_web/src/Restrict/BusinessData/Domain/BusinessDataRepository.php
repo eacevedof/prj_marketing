@@ -164,7 +164,7 @@ final class BusinessDataRepository extends AppRepository
         return $this;
     }
 
-    public function get_by_user(int $iduser): array
+    public function get_by_user(int $iduser, array $fields=[]): array
     {
         $type = AppArrayType::TIMEZONE;
         $sql = $this->_get_qbuilder()
@@ -174,8 +174,10 @@ final class BusinessDataRepository extends AppRepository
             ->add_join("LEFT JOIN app_array ar1 ON m.id_tz = ar1.id_pk AND ar1.type='$type'")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
-            ->select()->sql()
         ;
+        if ($fields) $sql->set_getfields($fields);
+
+        $sql = $sql->select()->sql();
         return $this->db->query($sql)[0] ?? [];
     }
 

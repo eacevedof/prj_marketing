@@ -73,4 +73,9 @@ final class BusinessDataInfoService extends AppService
         $this->_check_entity_permission($id);
         return $this->repobusinessdata->get_by_user($id);
     }
+
+    public function get_slug_by_id_user(int $iduser): array
+    {
+        return $this->repobusinessdata->get_by_user($iduser);
+    }
 }
