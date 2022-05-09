@@ -18,6 +18,7 @@ switch ($status) {
   case Status::EXECUTED: $validable = "<p><b>".__("Already validated")."</b></p>"; break;
   case Status::CANCELLED: $validable = "<p><b>".__("Cancelled")."</b></p>"; break;
   case Status::SUBSCRIBED: $validable = "<p><b>".__("Not confirmed")."</b></p>"; break;
+  case Status::FINISHED: $validable = "<p><b>".__("Not allowed to validate because this promotion has finished")."</b></p>"; break;
 }
 
 $subscription = [

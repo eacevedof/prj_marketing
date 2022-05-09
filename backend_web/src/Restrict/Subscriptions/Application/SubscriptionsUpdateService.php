@@ -8,6 +8,7 @@ use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Domain\Repositories\App\PicklistRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
+use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
@@ -50,6 +51,11 @@ final class SubscriptionsUpdateService extends AppService
         $this->reposubscription = RF::get(SubscriptionRepository::class);
         $this->reposubscription->set_model($this->entitysubscription);
         $this->authuser = $this->auth->get_user();
+    }
+
+    private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
+    {
+        throw new PromotionCapException($message, $code);
     }
 
     private function _check_permission(): void
@@ -100,9 +106,19 @@ final class SubscriptionsUpdateService extends AppService
             ["date_to", "id_tz"]
         );
         $tz = RF::get(ArrayRepository::class)->get_timezone_description_by_id($promotion["id_tz"]);
-        $utc = CF::get(UtcComponent::class)->;
-        $dateto = $utc->get
+        $utc = CF::get(UtcComponent::class);
+        $dt = CF::get(DateComponent::class);
 
+        $utcto = $utc->get_dt_into_tz($promotion["date_to"], $tz);
+        $utcnow = $utc->get_dt_by_tz();
+        $seconds = $dt->get_seconds_between($utcnow, $utcto);
+        if($seconds<0) {
+            //EventBus::instance()->publish(...[]);
+            $this->_promocap_exception(
+                __("Sorry but this promotion has finished."),
+                ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
+            );
+        }
     }
 
     private function _add_rules(): FieldsValidator
@@ -117,7 +133,7 @@ final class SubscriptionsUpdateService extends AppService
                 if ($subscription["subs_status"] === PromotionCapActionType::CANCELLED)
                     return __("Promotion cancelled");
                 if ($subscription["subs_status"] === PromotionCapActionType::FINISHED)
-                    return __("Promotion expired");
+                    return __("Promotion finished");
                 if ($subscription["exec_code"] !== $code)
                     return __("Invalid code");
                 return false;
