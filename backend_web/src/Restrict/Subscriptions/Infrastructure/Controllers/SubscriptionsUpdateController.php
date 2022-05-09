@@ -41,7 +41,7 @@ final class SubscriptionsUpdateController extends RestrictController
             $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
             $result = $edit->get_info_for_execute_date();
 
-            $this->set_template("update")
+            $this->set_template("update-status")
                 ->add_var(PageType::TITLE, __("Edit subscription {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit subscription {0}", $uuid))
                 ->add_var(PageType::CSRF, $this->csrf->get_token())
@@ -75,7 +75,7 @@ final class SubscriptionsUpdateController extends RestrictController
     }//edit
 
     //@patch
-    public function update(string $uuid): void
+    public function update_status(string $uuid): void
     {
         if (!$this->request->is_accept_json())
             $this->_get_json()
