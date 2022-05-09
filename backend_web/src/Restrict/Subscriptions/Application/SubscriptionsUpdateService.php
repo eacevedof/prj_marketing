@@ -27,7 +27,6 @@ final class SubscriptionsUpdateService extends AppService
     private AuthService $auth;
     private array $authuser;
     private SubscriptionCapSubscriptionsRepository $reposubscription;
-    private FieldsValidator $validator;
     private SubscriptionCapSubscriptionEntity $entitysubscription;
 
     public function __construct(array $input)
@@ -42,7 +41,6 @@ final class SubscriptionsUpdateService extends AppService
             $this->_exception(__("Empty voucher code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->entitysubscription = MF::get(PromotionCapSubscriptionEntity::class);
-        $this->validator = VF::get($this->input, $this->entitysubscription);
         $this->reposubscription = RF::get(SubscriptionRepository::class);
         $this->reposubscription->set_model($this->entitysubscription);
         $this->authuser = $this->auth->get_user();
@@ -67,7 +65,10 @@ final class SubscriptionsUpdateService extends AppService
 
     private function _check_entity_permission(array $subscription): void
     {
-        if (!$this->reposubscription->get_id_by_uuid($uuid = $subscription["uuid"]))
+        if (!$dbsubscription = $this->reposubscription->get_by_uuid(
+            $uuid = $subscription["uuid"],
+            ["id", "id_owner"]
+        ))
             $this->_exception(
                 __("{0} {1} does not exist", __("Subscription"), $uuid),
                 ExceptionType::CODE_NOT_FOUND
@@ -76,7 +77,7 @@ final class SubscriptionsUpdateService extends AppService
         if ($this->auth->is_system()) return;
 
         $idauthuser = (int) $this->authuser["id"];
-        $identowner = (int) $subscription["id_owner"];
+        $identowner = (int) $dbsubscription["id_owner"];
         //si el logado es propietario de la promocion
         if ($idauthuser===$identowner) return;
         //si el logado tiene el mismo owner que la promo
@@ -89,7 +90,8 @@ final class SubscriptionsUpdateService extends AppService
 
     private function _add_rules(): FieldsValidator
     {
-        $this->validator
+        $validator = VF::get($this->input, $this->entitysubscription);
+        $validator
             ->add_rule("exec_code", "exec_code", function ($data) {
                 $code = $data["value"];
                 $subscription = $this->reposubscription->get_by_uuid(
@@ -105,7 +107,7 @@ final class SubscriptionsUpdateService extends AppService
                 return false;
             })
         ;
-        return $this->validator;
+        return $validator;
     }
 
     public function __invoke(): array
