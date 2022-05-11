@@ -20,8 +20,6 @@ final class BusinessDataInfoService extends AppService
     public function __construct()
     {
         $this->auth = SF::get_auth();
-        $this->_check_permission();
-
         $this->authuser = $this->auth->get_user();
         $this->repouser = RF::get(UserRepository::class);
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
@@ -61,6 +59,7 @@ final class BusinessDataInfoService extends AppService
 
     public function get_for_edit_by_user(string $uuid): array
     {
+        $this->_check_permission();
         if (!$id = $this->repouser->get_id_by_uuid($uuid))
             $this->_exception("{0} with code {1} not found", __("User"), $uuid);
 
@@ -70,11 +69,12 @@ final class BusinessDataInfoService extends AppService
 
     public function get_by_id_user(int $id): array
     {
+        $this->_check_permission();
         $this->_check_entity_permission($id);
         return $this->repobusinessdata->get_by_user($id);
     }
 
-    public static function get_slug_by_id_user(int $iduser): string
+    public function get_slug_by_id_user(int $iduser): string
     {
         $r = RF::get(BusinessDataRepository::class)->get_by_user($iduser, ["m.slug"]);
         return $r["slug"] ?? "";
