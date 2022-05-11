@@ -36,7 +36,6 @@ abstract class UserPolicyType
     const PROMOTIONS_UI_WRITE = "promotionsui:write";
 
     const PROMOTION_STATS_READ = "promotionsstats:read";
-    const PROMOTION_STATS_WRITE = "promotionsstats:write";
 
     //subscriptions
     const SUBSCRIPTIONS_READ = "subscriptions:read";
@@ -61,7 +60,6 @@ abstract class UserPolicyType
             self::PROMOTIONS_WRITE,
             self::PROMOTIONS_UI_READ,
             self::PROMOTION_STATS_READ,
-            self::PROMOTION_STATS_WRITE,
             self::PROMOTIONS_UI_WRITE,
             self::SUBSCRIPTIONS_READ,
             self::SUBSCRIPTIONS_WRITE

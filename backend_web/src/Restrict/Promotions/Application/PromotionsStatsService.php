@@ -16,12 +16,9 @@ final class PromotionsStatsService extends AppService
 
     public function __invoke(): ?array
     {
-        $auth = SF::get_auth();
-        if(!(
-            $auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ)
-            || $auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_WRITE)
-        ))
+        if(!SF::get_auth()->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ))
             return null;
+
         $stats = RF::get(PromotionRepository::class)->get_statistics_by_uuid($this->input["uuid"]);
         return [
             "viewed" => 0,
