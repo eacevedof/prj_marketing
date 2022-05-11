@@ -60,6 +60,8 @@ abstract class UserPolicyType
             self::PROMOTIONS_READ,
             self::PROMOTIONS_WRITE,
             self::PROMOTIONS_UI_READ,
+            self::PROMOTION_STATS_READ,
+            self::PROMOTION_STATS_WRITE,
             self::PROMOTIONS_UI_WRITE,
             self::SUBSCRIPTIONS_READ,
             self::SUBSCRIPTIONS_WRITE

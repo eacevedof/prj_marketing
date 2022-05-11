@@ -26,22 +26,28 @@
       $this->_element_view("update/ui-content");
       ?>
     </div><!--tab-content-->
+    <?php
+    if (is_array($statistics)):
+    ?>
     <br/>
     <div class="row">
       <div class="col-3">
-        <b><?=__("Viewed")?>:</b>&nbsp;<span><?="10"?></span>
+        <b><?=__("Viewed")?>:</b>&nbsp;<span><?=$statistics["viewed"]?></span>
       </div>
       <div class="col-3">
-        <b><?=__("Subscribed")?>:</b>&nbsp;<span><?="10"?></span>
+        <b><?=__("Subscribed")?>:</b>&nbsp;<span><?=$statistics["subscribed"]?></span>
       </div>
       <div class="col-3">
-        <b><?=__("Confirmed")?>:</b>&nbsp;<span><?="10"?></span>
+        <b><?=__("Confirmed")?>:</b>&nbsp;<span><?=$statistics["confirmed"]?></span>
       </div>
       <div class="col-3">
-        <b><?=__("Executed")?>:</b>&nbsp;<span><?="10"?></span>
+        <b><?=__("Executed")?>:</b>&nbsp;<span><?=$statistics["executed"]?></span>
       </div>
     </div>
     <br/>
+    <?php
+    endif;
+    ?>
   </div><!--card-body-->
 </div>
 <script type="module" src="/assets/js/restrict/promotions/update.js"></script>

@@ -9,6 +9,7 @@
  */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
+use App\Restrict\Promotions\Application\PromotionsStatsService;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
@@ -69,6 +70,7 @@ final class PromotionsUpdateController extends RestrictController
                 ->add_var("timezones", $this->picklist->get_timezones())
                 ->add_var("businessowners", $businessowners)
                 ->add_var("notoryes", $this->picklist->get_not_or_yes())
+                ->add_var("statistics", SF::get(PromotionsStatsService::class, ["uuid"=>$uuid])())
                 ->render_nl();
         }
         catch (NotFoundException $e) {

@@ -18,8 +18,8 @@ final class PromotionsStatsService extends AppService
     {
         $auth = SF::get_auth();
         if(!(
-            $auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ)
-            || $auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)
+            $auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ)
+            || $auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_WRITE)
         ))
             return null;
         $stats = RF::get(PromotionRepository::class)->get_statistics_by_uuid($this->input["uuid"]);
