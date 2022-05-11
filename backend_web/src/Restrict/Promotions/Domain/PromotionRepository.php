@@ -242,4 +242,10 @@ final class PromotionRepository extends AppRepository
         $sql = "UPDATE {$this->table} SET num_executed=num_executed + 1 WHERE 1 AND id={$id}";
         $this->db->exec($sql);
     }
+
+    public function get_statistics_by_uuid(string $uuid): array
+    {
+        $sql = "";
+        return [];
+    }
 }

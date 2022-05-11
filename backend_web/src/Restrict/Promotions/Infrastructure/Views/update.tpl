@@ -26,6 +26,22 @@
       $this->_element_view("update/ui-content");
       ?>
     </div><!--tab-content-->
+    <br/>
+    <div class="row">
+      <div class="col-3">
+        <b><?=__("Viewed")?>:</b>&nbsp;<span><?="10"?></span>
+      </div>
+      <div class="col-3">
+        <b><?=__("Subscribed")?>:</b>&nbsp;<span><?="10"?></span>
+      </div>
+      <div class="col-3">
+        <b><?=__("Confirmed")?>:</b>&nbsp;<span><?="10"?></span>
+      </div>
+      <div class="col-3">
+        <b><?=__("Executed")?>:</b>&nbsp;<span><?="10"?></span>
+      </div>
+    </div>
+    <br/>
   </div><!--card-body-->
 </div>
 <script type="module" src="/assets/js/restrict/promotions/update.js"></script>
