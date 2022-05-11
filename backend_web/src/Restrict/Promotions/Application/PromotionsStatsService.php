@@ -20,11 +20,16 @@ final class PromotionsStatsService extends AppService
             return null;
 
         $stats = RF::get(PromotionRepository::class)->get_statistics_by_uuid($this->input["uuid"]);
-        return [
-            "viewed" => 0,
-            "subscribed" => 10,
-            "confirmed" => 5,
-            "executed" => 2,
-        ];
+
+        $final = [];
+        foreach (array_column($stats, "viewed") as $type) {
+            foreach ($stats as $row) {
+                if ($row["viewed"] === $type) {
+                    $final[$type] = $row["n"];
+                }
+            }
+        }
+
+        return $final;
     }
 }

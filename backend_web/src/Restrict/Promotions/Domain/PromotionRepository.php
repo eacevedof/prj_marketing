@@ -246,6 +246,7 @@ final class PromotionRepository extends AppRepository
 
     public function get_statistics_by_uuid(string $uuid): array
     {
+        if (!$id = $this->get_id_by_uuid($uuid)) return [];
 
         list($v, $s, $c, $e) = PromotionCapActionType::get_all();
 
@@ -253,8 +254,8 @@ final class PromotionRepository extends AppRepository
         SELECT COUNT(id) n, 'viewed'
         FROM app_promotioncap_actions pa
         WHERE 1
-        AND id_type = 0
-        AND id_promotion = $v
+        AND id_type = $v
+        AND id_promotion = $id
         AND url_req NOT LIKE '%mode=test%'
         
         UNION
@@ -263,7 +264,7 @@ final class PromotionRepository extends AppRepository
         FROM app_promotioncap_actions pa
         WHERE 1
         AND id_type = $s
-        AND id_promotion = 5
+        AND id_promotion = $id
         
         UNION 
         
@@ -271,7 +272,7 @@ final class PromotionRepository extends AppRepository
         FROM app_promotioncap_actions pa
         WHERE 1
         AND id_type = $c
-        AND id_promotion = 5
+        AND id_promotion = $id
         
         UNION 
         
@@ -279,9 +280,8 @@ final class PromotionRepository extends AppRepository
         FROM app_promotioncap_actions pa
         WHERE 1
         AND id_type = $e
-        AND id_promotion = 5
+        AND id_promotion = $id
         ";
-        $r = $this->query($sql);
-        return [];
+        return $this->query($sql);
     }
 }
