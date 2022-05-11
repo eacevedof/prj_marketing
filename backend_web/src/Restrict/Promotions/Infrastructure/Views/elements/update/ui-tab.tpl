@@ -3,6 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
 */
+if (is_null($result["promotionui"])) return;
 ?>
 <li>
   <a href="#ui" data-bs-toggle="tab" aria-expanded="false">
