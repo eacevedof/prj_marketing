@@ -35,7 +35,7 @@ abstract class UserPolicyType
     const PROMOTIONS_UI_READ = "promotionsui:read";
     const PROMOTIONS_UI_WRITE = "promotionsui:write";
 
-    const PROMOTION_STATS_READ = "promotionsstats:read";
+    const PROMOTION_STATS_READ = "promotionstats:read";
 
     //subscriptions
     const SUBSCRIPTIONS_READ = "subscriptions:read";
