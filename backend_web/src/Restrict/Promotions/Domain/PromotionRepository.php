@@ -8,6 +8,7 @@
  */
 namespace App\Restrict\Promotions\Domain;
 
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
@@ -245,7 +246,42 @@ final class PromotionRepository extends AppRepository
 
     public function get_statistics_by_uuid(string $uuid): array
     {
-        $sql = "";
+
+        list($v, $s, $c, $e) = PromotionCapActionType::get_all();
+
+        $sql = "
+        SELECT COUNT(id) n, 'viewed'
+        FROM app_promotioncap_actions pa
+        WHERE 1
+        AND id_type = 0
+        AND id_promotion = $v
+        AND url_req NOT LIKE '%mode=test%'
+        
+        UNION
+        
+        SELECT COUNT(id), 'subscribed'
+        FROM app_promotioncap_actions pa
+        WHERE 1
+        AND id_type = $s
+        AND id_promotion = 5
+        
+        UNION 
+        
+        SELECT COUNT(id), 'confirmed'
+        FROM app_promotioncap_actions pa
+        WHERE 1
+        AND id_type = $c
+        AND id_promotion = 5
+        
+        UNION 
+        
+        SELECT COUNT(id), 'executed'
+        FROM app_promotioncap_actions pa
+        WHERE 1
+        AND id_type = $e
+        AND id_promotion = 5
+        ";
+        $r = $this->query($sql);
         return [];
     }
 }
