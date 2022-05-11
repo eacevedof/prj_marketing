@@ -256,7 +256,7 @@ final class PromotionRepository extends AppRepository
         WHERE 1
         AND id_type = $v
         AND id_promotion = $id
-        AND url_req NOT LIKE '%mode=test%'
+        -- AND url_req NOT LIKE '%mode=test%'
         
         UNION
         
