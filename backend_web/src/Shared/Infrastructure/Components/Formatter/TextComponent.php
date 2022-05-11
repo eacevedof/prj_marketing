@@ -67,6 +67,6 @@ final class TextComponent
 
         $parts = array_filter($parts);
         $parts = array_unique($parts);
-        return implode(",", $parts);
+        return implode(", ", $parts);
     }
 }
