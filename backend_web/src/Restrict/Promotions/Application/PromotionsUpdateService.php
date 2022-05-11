@@ -70,6 +70,7 @@ final class PromotionsUpdateService extends AppService
         $date = $input["date_to"] ?? "";
         $date = $this->datecomp->get_dbdt($date);
         $input["date_to"] = $date;
+        $input["tags"] = CF::get(TextComponent::class)->get_csv_cleaned($input["tags"]);
     }
 
     private function _check_entity_permission(array $promotion): void

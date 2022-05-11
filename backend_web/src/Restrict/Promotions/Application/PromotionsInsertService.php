@@ -71,6 +71,7 @@ final class PromotionsInsertService extends AppService
         $date = $input["date_to"] ?? "";
         $date = $this->datecomp->get_dbdt($date);
         $input["date_to"] = $date;
+        $input["tags"] = $input["tags"] = CF::get(TextComponent::class)->get_csv_cleaned($input["tags"]);
     }
 
     private function _skip_validation(): self

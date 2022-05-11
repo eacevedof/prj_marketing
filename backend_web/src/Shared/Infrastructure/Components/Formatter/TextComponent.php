@@ -53,4 +53,20 @@ final class TextComponent
         }
         return strtoupper(implode("", $word));
     }
+
+    public function get_csv_cleaned(string $csv): string
+    {
+        $csv = trim(strtolower($csv));
+        if (!strstr($csv, ",")) return $csv;
+
+        $parts = explode(",", $csv);
+        $parts = array_map(function (string $string) {
+            $string = trim($string);
+            return !$string ? null : $string;
+        }, $parts);
+
+        $parts = array_filter($parts);
+        $parts = array_unique($parts);
+        return implode(",", $parts);
+    }
 }
