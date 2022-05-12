@@ -30,12 +30,14 @@ final class PromotionCapsConfirmService extends AppService
 
     private array $promotion;
     private array $subscriptiondata;
+    private int $istest;
 
     public function __construct(array $input)
     {
         //"promotionuuid" => $promotionuuid,
         //"subscriptionuuid" => $subscriptionuuid
         $this->input = $input;
+        $this->istest = (int) ($input["_test_mode"] ?? 0);
         $this->repopromocapsubscription = RF::get(PromotionCapSubscriptionsRepository::class);
         $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
         $this->repopromotion = RF::get(PromotionRepository::class);
@@ -110,7 +112,8 @@ final class PromotionCapsConfirmService extends AppService
                 "id_type" => PromotionCapActionType::CONFIRMED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip()
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $this->istest,
             ])
         ]);
 
