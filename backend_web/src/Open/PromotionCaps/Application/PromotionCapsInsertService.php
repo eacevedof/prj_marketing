@@ -225,6 +225,7 @@ final class PromotionCapsInsertService extends AppService
 
         $promocapuser["remote_ip"] = $this->request->get_remote_ip();
         $promocapuser["date_subscription"] = date("Y-m-d H:i:s");
+        $promocapuser["is_test"] = $this->testmode;
 
         EventBus::instance()->publish(...[
             PromotionCapUserSubscribedEvent::from_primitives($id, $promocapuser),
