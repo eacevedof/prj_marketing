@@ -6,7 +6,9 @@ import {SNACK} from "/assets/js/common/snackbar.js"
 import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
+import {get_parameter} from "/assets/js/common/url.js"
 
+const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
 const URL_POST = "/open/promotionscap/:promouuid/insert"
 const ACTION = "promotioncap.insert"
 
@@ -196,6 +198,7 @@ export class FormPromotionCapInsert extends LitElement {
       URL_POST.replace(":promouuid", this.promotionuuid), {
         _action: ACTION,
         _csrf: this.csrf,
+        _test_mode: IS_TEST_MODE,
         ...this._get_data()
       })
 
@@ -221,9 +224,9 @@ export class FormPromotionCapInsert extends LitElement {
       .set_inner(this.texts.tr04)
       .show()
 
-  }//on_submit
+  }
 
-}//
+}
 
 if (!customElements.get("form-promotion-cap-insert"))
   customElements.define("form-promotion-cap-insert", FormPromotionCapInsert)
