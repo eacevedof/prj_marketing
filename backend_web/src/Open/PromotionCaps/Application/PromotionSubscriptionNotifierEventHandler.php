@@ -26,7 +26,9 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new \Exception("bad path $path");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
-        $data["confirm_link"] = "http://localhost:900/promotion/{$data["promocode"]}/confirm/{$data["subscode"]}";
+        $link = "http://localhost:900/promotion/{$data["promocode"]}/confirm/{$data["subscode"]}";
+        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $data["confirm_link"] = $link;
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"_on_subscription");
         /**
@@ -51,7 +53,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new \Exception("bad path $path");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
-        $data["points_link"] = "http://localhost:900/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
+        $link = "http://localhost:900/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
+        $data["points_link"] = $link;
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"on_confirmation");
         /**

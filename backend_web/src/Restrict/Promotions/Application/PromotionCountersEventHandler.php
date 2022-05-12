@@ -13,7 +13,9 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
 {
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if(get_class($domevent)!==PromotionCapActionWasExecutedEvent::class) return $this;
+        if (get_class($domevent)!==PromotionCapActionWasExecutedEvent::class) return $this;
+
+        if ($domevent->is_test()) return $this;
 
         $repopromo = RF::get(PromotionRepository::class);
         switch ($domevent->id_type()) {
