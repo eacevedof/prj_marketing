@@ -62,7 +62,7 @@ final class PromotionCapsInsertService extends AppService
         foreach ($input as $key=>$value) {
             $key = str_replace("input-", "", $key);
             if (in_array($key, $tofks)) $key = "id_$key";
-            $this->input[$key] = $value;
+            $this->input[$key] = trim($value);
         }
     }
 

@@ -50,4 +50,4 @@ $result = [
         fields="<?$this->_echo_jslit($result);?>"
     />
 </div>
-<script type="module" src="/assets/js/open/promotionscap/insert.js"></script>
+<script type="module" src="/assets/js/open/promotioncap/insert.js"></script>
