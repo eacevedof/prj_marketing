@@ -18,7 +18,7 @@
     $promotionui = $result["promotionui"];
 
     $this->_element_view("promotion-cap-ui-form", [
-      "promotionui"=>$promotionui,
+      "promotionui" => $promotionui,
       "promotionuuid" => $promotion["uuid"],
       "languages" => $languages,
       "countries" => $countries,
