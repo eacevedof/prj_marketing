@@ -20,7 +20,8 @@ final class PromotionCapActionEventHandler extends AppService implements IEventS
             "id_type" => $domevent->id_type(),
             "url_req" => $domevent->url_req(),
             "url_ref" => $domevent->url_ref(),
-            "remote_ip" => $domevent->remote_ip()
+            "remote_ip" => $domevent->remote_ip(),
+            "is_test" => $domevent->is_test(),
         ];
 
         RF::get(PromotionCapActionsRepository::class)->insert($action);
