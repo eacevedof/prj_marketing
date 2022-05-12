@@ -41,10 +41,12 @@ final class PromotionCapsInsertService extends AppService
 
     private array $promotion;
     private array $promotionui;
+    private int $testmode;
 
     public function __construct(array $input)
     {
         $this->_load_input($input);
+        $this->testmode = (int) ($input["_test_mode"] ?? 0);
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);

@@ -60,6 +60,12 @@ final class CreateAppPromotioncapSubscriptions extends AbsMigration
             "default" => 1,
             "comment" => "0:subscribed,1:confirmed,2:executed,3:canceled"
         ])
+        ->addColumn("is_test", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+            "comment" => "0:No, 1:Yes"
+        ])
         ->addColumn("remote_ip", "string", [
             "limit" => 15,
             "null" => true,
