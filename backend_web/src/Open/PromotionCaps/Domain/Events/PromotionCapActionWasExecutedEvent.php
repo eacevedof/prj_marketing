@@ -11,6 +11,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
     private string $urlreq;
     private ?string $urlref;
     private string $remoteip;
+    private int $istest;
 
     public function __construct(
         int $idaggregate,
@@ -21,6 +22,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
         string $urlreq,
         ?string $urlref,
         string $remoteip,
+        int $istest,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -36,6 +38,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
         $this->urlreq = $urlreq;
         $this->urlref = $urlref;
         $this->remoteip = $remoteip;
+        $this->istest = $istest;
     }
 
     public static function event_name(): string
@@ -60,6 +63,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
             $body["url_req"],
             $body["url_ref"],
             $body["remote_ip"],
+            $body["is_test"],
 
             $eventId,
             $occurredon,
@@ -77,6 +81,7 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
             "url_req" => $this->urlreq,
             "url_ref" => $this->urlref,
             "remote_ip" => $this->remoteip,
+            "is_test" => $this->istest,
         ];
     }
 
@@ -108,5 +113,10 @@ final class PromotionCapActionWasExecutedEvent extends AbsEvent
     public function remote_ip(): string
     {
         return $this->remoteip;
+    }
+
+    public function is_test(): int
+    {
+        return $this->istest;
     }
 }

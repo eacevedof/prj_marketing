@@ -41,12 +41,12 @@ final class PromotionCapsInsertService extends AppService
 
     private array $promotion;
     private array $promotionui;
-    private int $testmode;
+    private int $istest;
 
     public function __construct(array $input)
     {
         $this->_load_input($input);
-        $this->testmode = (int) ($input["_test_mode"] ?? 0);
+        $this->istest = (int) ($input["_test_mode"] ?? 0);
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
@@ -225,7 +225,7 @@ final class PromotionCapsInsertService extends AppService
 
         $promocapuser["remote_ip"] = $this->request->get_remote_ip();
         $promocapuser["date_subscription"] = date("Y-m-d H:i:s");
-        $promocapuser["is_test"] = $this->testmode;
+        $promocapuser["is_test"] = $this->istest;
 
         EventBus::instance()->publish(...[
             PromotionCapUserSubscribedEvent::from_primitives($id, $promocapuser),
@@ -235,7 +235,8 @@ final class PromotionCapsInsertService extends AppService
                 "id_type" => PromotionCapActionType::SUBSCRIBED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip()
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $this->istest,
             ])
         ]);
 
