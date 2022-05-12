@@ -25,6 +25,7 @@ final class PromotionCapInfoService extends AppService
     private array $businesssdata;
     private array $promotion;
     private array $promotionui;
+    private int $istest;
 
     public function __construct(array $input)
     {
@@ -35,6 +36,7 @@ final class PromotionCapInfoService extends AppService
             $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->input = $input;
+        $this->istest = (int) ($input["_test_mode"] ?? 0);
 
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
         $this->repopromotion = RF::get(PromotionRepository::class);
@@ -67,7 +69,8 @@ final class PromotionCapInfoService extends AppService
                 "id_type" => PromotionCapActionType::VIEWED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip()
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $this->istest,
             ])
         ]);
 
