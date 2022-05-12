@@ -48,6 +48,12 @@ final class CreateAppPromotioncapActions extends AbsMigration
             "null" => true,
             "default" => null
         ])
+        ->addColumn("is_test", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+            "comment" => "0:No, 1:Yes"
+        ])
         ->addColumn("remote_ip", "string", [
             "limit" => 15,
             "null" => true,
