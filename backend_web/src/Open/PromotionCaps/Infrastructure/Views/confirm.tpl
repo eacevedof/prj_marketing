@@ -16,6 +16,6 @@ if (isset($error))
     <?=__("{0} you have confirmed your subscription to <b>&ldquo;{1}&rdquo;</b>", $result["username"], $result["promotion"])?>
   </p>
   <p>
-    <?=__("Please check your email inbox. You will receive a subscription code you have to show at <b>{0}</b>", $business)?>
+    <?=__("Please check your email inbox. You will receive a subscription code in order to show it at <b>{0}</b>", $business)?>
   </p>
 </main>
