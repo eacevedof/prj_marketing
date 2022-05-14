@@ -10,6 +10,7 @@ use App\Open\PromotionCaps\Application\PromotionCapSubscriptionEventHandler;
 use App\Open\PromotionCaps\Application\PromotionCapActionEventHandler;
 use App\Restrict\Promotions\Application\PromotionCountersEventHandler;
 use App\Open\PromotionCaps\Application\PromotionSubscriptionNotifierEventHandler;
+use App\Open\PromotionCaps\Application\PromotionCapFinishedEventHandler;
 
 $bus = EventBus::instance();
 $bus->subscribe(new UserPreferencesInsertEventHandler());
@@ -19,3 +20,4 @@ $bus->subscribe(new PromotionCapSubscriptionEventHandler());
 $bus->subscribe(new PromotionCapActionEventHandler());
 $bus->subscribe(new PromotionCountersEventHandler());
 $bus->subscribe(new PromotionSubscriptionNotifierEventHandler());
+$bus->subscribe(new PromotionCapFinishedEventHandler());

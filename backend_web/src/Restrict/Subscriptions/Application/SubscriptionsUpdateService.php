@@ -79,11 +79,6 @@ final class SubscriptionsUpdateService extends AppService
         );
     }
 
-    private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
-    {
-        throw new PromotionCapException($message, $code);
-    }
-
     private function _load_dbsubscription(): void
     {
         $this->dbsubscription = $this->reposubscription->get_by_uuid(
@@ -113,7 +108,7 @@ final class SubscriptionsUpdateService extends AppService
         $seconds = $dt->get_seconds_between($utcnow, $utcto);
         if($seconds<0) {
             EventBus::instance()->publish(...[PromotionHasFinishedEvent::from_primitives($idpromotion, $this->dbsubscription)]);
-            $this->_promocap_exception(
+            $this->_exception(
                 __("Sorry but you can not validate this voucher because this promotion has finished."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
