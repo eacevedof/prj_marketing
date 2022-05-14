@@ -9,7 +9,7 @@
  */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
-use App\Restrict\Promotions\Application\PromotionsStatsService;
+
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
@@ -71,6 +71,7 @@ final class PromotionsUpdateController extends RestrictController
                 ->add_var("businessowners", $businessowners)
                 ->add_var("notoryes", $this->picklist->get_not_or_yes())
                 //->add_var("statistics", SF::get(PromotionsStatsService::class, ["uuid"=>$uuid])())
+                ->add_var("statspermission", $this->auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ))
                 ->render_nl();
         }
         catch (NotFoundException $e) {

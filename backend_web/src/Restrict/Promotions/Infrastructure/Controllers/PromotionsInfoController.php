@@ -9,6 +9,7 @@
  */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
@@ -41,6 +42,7 @@ final class PromotionsInfoController extends RestrictController
             $result = $info();
             $this->add_var("uuid", $uuid)
                 ->add_var("result", $result)
+                ->add_var("statspermission", $this->auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ))
                 ->render_nl();
         }
         catch (NotFoundException $e) {

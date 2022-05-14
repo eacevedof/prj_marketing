@@ -94,6 +94,9 @@
         </ol>
       </div><!--tab-conditions-->
 
+      <?php
+      $this->_element_view("statistics");
+      ?>
     </div><!--tab-content-->
   </div><!--card-body-->
 </div>
