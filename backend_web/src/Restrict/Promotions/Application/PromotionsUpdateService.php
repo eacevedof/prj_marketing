@@ -139,6 +139,10 @@ final class PromotionsUpdateService extends AppService
                 if (!$value = $data["value"]) return false;
                 if (!CheckerService::is_valid_url($value)) return __("Invalid url format");
             })
+            ->add_rule("max_confirmed", "max_confirmed", function ($data) {
+                $ispublished = (int) $data["data"]["is_published"];
+                if ($ispublished && !$data["value"]) return __("0 confirmed is not valid for publishing");
+            })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
@@ -167,7 +171,6 @@ final class PromotionsUpdateService extends AppService
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
         unset($promotion["slug"]);
         if (!$this->auth->is_system()) unset($promotion["id_owner"]);
-
 
         $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug()."-".$promotion["id"];
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
