@@ -13,7 +13,6 @@ $texts = [
 ];
 $subscription = $result["subscription"];
 $status = $subscription["subs_status"];
-
 $validable = "";
 switch ($status) {
   case Status::EXECUTED: $validable = "<p><b>".__("Already validated")."</b></p>"; break;
