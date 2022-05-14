@@ -181,9 +181,19 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         return $r[0] ?? [];
     }
 
-    private function is_test_mode_by_id_capuser(int $idcapuser): bool
+    public function is_test_mode_by_id_capuser(int $idcapuser): bool
     {
-
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promotiocapsusbscriptions.is_test_mode_by_id_capuser")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id_promouser=$idcapuser")
+            ->add_and("m.is_test=1")
+        ;
+        $sql = $sql->select()->sql();
+        $r = $this->query($sql);
+        return (bool)($r[0]["id"]);
     }
 
     public function set_auth(AuthService $auth): self
