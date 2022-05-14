@@ -141,6 +141,16 @@ dtcolumn.add_column({
   }
 })
 
+dtcolumn.add_column({
+  data: "e_promotion",
+  render: (v,t,row) => {
+    let tpl = `<span>${v}</span>`
+    if (row.is_test)
+      tpl = `<span class="tx-gray-500">${v}</span>`
+    return tpl
+  }
+})
+
 rowswal.set_texts({
   delswal: {
     error: <?$this->_echo_js(__("<b>Error on delete</b>"));?>,
