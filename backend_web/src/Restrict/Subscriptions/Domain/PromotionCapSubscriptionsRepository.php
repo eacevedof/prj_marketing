@@ -95,7 +95,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.exec_user",
                 "m.subs_status",
                 "m.remote_ip",
-                "m.is_testx",
+                "m.is_test",
                 "m.notes",
                 "m.delete_date"
             ])
@@ -151,7 +151,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         ;
         if ($fields) $sql->set_getfields($fields);
         $sql = $sql->select()->sql();
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
@@ -177,7 +177,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $this->_add_joins($sql);
 
         $sql = $sql->select()->sql();
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return $r[0] ?? [];
     }
 
