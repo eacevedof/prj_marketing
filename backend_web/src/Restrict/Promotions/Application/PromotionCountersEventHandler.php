@@ -12,17 +12,12 @@ use App\Shared\Domain\Bus\Event\IEvent;
 
 final class PromotionCountersEventHandler extends AppService implements IEventSubscriber
 {
-
-    private function _is_test_mode_subscription(int $idcapuser): bool
-    {
-        return RF::get(PromotionCapSubscriptionsRepository::class)->is_test_mode_by_id_capuser($idcapuser);
-    }
-
     public function on_event(IEvent $domevent): IEventSubscriber
     {
         if (get_class($domevent)!==PromotionCapActionHasOccurredEvent::class) return $this;
 
-        if ($this->_is_test_mode_subscription($domevent->id_capuser())) return $this;
+        if (RF::get(PromotionCapSubscriptionsRepository::class)->is_test_mode_by_id_capuser($domevent->id_capuser()))
+            return $this;
 
         $repopromo = RF::get(PromotionRepository::class);
         switch ($domevent->id_type()) {
