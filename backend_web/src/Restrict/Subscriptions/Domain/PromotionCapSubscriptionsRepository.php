@@ -181,6 +181,11 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         return $r[0] ?? [];
     }
 
+    private function is_test_mode_by_id_capuser(int $idcapuser): bool
+    {
+
+    }
+
     public function set_auth(AuthService $auth): self
     {
         $this->auth = $auth;
