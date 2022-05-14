@@ -154,7 +154,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_getfields(["m.id"])
             ->add_join("INNER JOIN app_promotioncap_subscriptions ps ON m.id = ps.id_promouser")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.is_test=0")
+            ->add_and("ps.is_test=0")
             ->add_and("m.id_promotion=$idpromotion")
             ->add_and("m.email='$email'")
             ->select()->sql()
