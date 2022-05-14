@@ -93,6 +93,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.subs_status",
                 "m.remote_ip",
                 "m.is_test",
+                "CASE m.is_test WHEN 0 THEN 'No' ELSE 'Yes' END c_is_test",
                 "m.notes",
                 "m.delete_date"
             ])

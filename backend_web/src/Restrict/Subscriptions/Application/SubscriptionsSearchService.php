@@ -61,6 +61,7 @@ final class SubscriptionsSearchService extends AppService
             $dthelp->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"));
 
         $dthelp
+            ->add_column("c_is_test")->add_label(__("Test"))->add_tooltip(__("Test"))
             ->add_column("e_promotion")->add_label(__("Promotion"))->add_tooltip(__("Promotion"))
             ->add_column("e_usercode")->add_label(__("Cod. User"))->add_tooltip(__("Cod. User"))
             ->add_column("e_username")->add_label(__("Name"))->add_tooltip(__("Name"))
