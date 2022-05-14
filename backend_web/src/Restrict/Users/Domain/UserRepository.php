@@ -111,12 +111,8 @@ final class UserRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
+        $r = $this->query_with_count($sqlcount, $sql);
+        return $r;
     }
 
     public function get_by_email(string $email): array
@@ -136,7 +132,7 @@ final class UserRepository extends AppRepository
             ->add_and("m.email='$email'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         if(count($r)>1 || !$r) return [];
         return $r[0];
     }
@@ -151,7 +147,7 @@ final class UserRepository extends AppRepository
             ->add_and("m.email='$email'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return intval($r[0]["id"] ?? 0);
     }
 
@@ -180,7 +176,7 @@ final class UserRepository extends AppRepository
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return $r[0] ?? [];
     }
 
@@ -192,7 +188,7 @@ final class UserRepository extends AppRepository
             ->set_getfields(["m.id", "m.id_parent"])
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return $r;
     }
 
@@ -239,7 +235,7 @@ final class UserRepository extends AppRepository
             ->add_and("m.id_profile=$idprofile")
             ->select()->sql()
         ;
-        return (bool) $this->db->query($sql,0,0);
+        return (bool) $this->query($sql,0,0);
     }
 
 }//UserRepository

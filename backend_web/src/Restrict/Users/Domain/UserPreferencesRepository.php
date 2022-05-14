@@ -30,7 +30,7 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.id_user=$iduser")
             ->add_orderby("id", "DESC")
         ;
-        return $this->db->query($qb->select()->sql());
+        return $this->query($qb->select()->sql());
     }
 
     public function get_by_id_and_user(int $id, int $iduser): int
@@ -43,7 +43,7 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.id = $id")
             ->add_and("m.id_user=$iduser")
         ;
-        $r = $this->db->query($qb->select()->sql());
+        $r = $this->query($qb->select()->sql());
         return (int) ($r[0]["id"] ?? "");
     }
 
@@ -57,7 +57,7 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.id = $id")
             ->add_and("m.id_user=$iduser")
         ;
-        $r = $this->db->query($qb->select()->sql());
+        $r = $this->query($qb->select()->sql());
         return $r[0] ?? [];
     }
 
@@ -70,7 +70,7 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
             ->add_and("m.pref_key='$prefkey'");
-        $r = $this->db->query($qb->select()->sql());
+        $r = $this->query($qb->select()->sql());
         return $r[0]["pref_value"] ?? null;
     }
 
@@ -83,7 +83,7 @@ final class UserPreferencesRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_user=$iduser")
             ->add_and("m.pref_key='$prefkey'");
-        $r = $this->db->query($qb->select()->sql());
+        $r = $this->query($qb->select()->sql());
         return (int) ($r[0]["id"] ?? 0);
     }
 

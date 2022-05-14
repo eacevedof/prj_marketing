@@ -115,12 +115,8 @@ final class PromotionRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
+        $r = $this->query_with_count($sqlcount, $sql);
+        return $r;
     }
 
     public function get_info(string $uuid): array
@@ -171,7 +167,7 @@ final class PromotionRepository extends AppRepository
         ;
         $this->_add_joins($qb);
         $sql = $qb->select()->sql();
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
@@ -194,14 +190,14 @@ final class PromotionRepository extends AppRepository
             ->set_getfields(["m.is_launched",])
             ->add_and("m.uuid='$uuid'");
         $sql = $qb->select()->sql();
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return (bool) $r[0]["is_launched"];
     }
 
     public function update_slug_with_id(int $id): void
     {
         $sql = "UPDATE $this->table SET slug=CONCAT(slug,'-', id) WHERE id=$id";
-        $this->db->exec($sql);
+        $this->exec($sql);
     }
 
     public function get_by_slug(string $slug, array $fields=[]): array
@@ -217,31 +213,31 @@ final class PromotionRepository extends AppRepository
         ;
         if ($fields) $sql->set_getfields($fields);
         $sql = $sql->select()->sql();
-        return $this->db->query($sql)[0] ?? [];
+        return $this->query($sql)[0] ?? [];
     }
 
     public function increase_viewed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_viewed=num_viewed + 1 WHERE 1 AND id={$id}";
-        $this->db->exec($sql);
+        $this->exec($sql);
     }
 
     public function increase_subscribed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_subscribed=num_subscribed + 1 WHERE 1 AND id={$id}";
-        $this->db->exec($sql);
+        $this->exec($sql);
     }
 
     public function increase_confirmed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_confirmed=num_confirmed + 1 WHERE 1 AND id={$id}";
-        $this->db->exec($sql);
+        $this->exec($sql);
     }
 
     public function increase_executed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_executed=num_executed + 1 WHERE 1 AND id={$id}";
-        $this->db->exec($sql);
+        $this->exec($sql);
     }
 
     public function get_statistics_by_uuid(string $uuid): array

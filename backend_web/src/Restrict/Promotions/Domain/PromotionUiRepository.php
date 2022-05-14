@@ -109,12 +109,8 @@ final class PromotionUiRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
+        $r = $this->query_with_count($sqlcount, $sql);
+        return $r;
     }
 
     public function get_info(string $uuid): array
@@ -159,7 +155,7 @@ final class PromotionUiRepository extends AppRepository
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
@@ -184,7 +180,7 @@ final class PromotionUiRepository extends AppRepository
         ;
         if ($fields) $sql->set_getfields($fields);
         $sql = $sql->select()->sql();
-        return $this->db->query($sql)[0] ?? [];
+        return $this->query($sql)[0] ?? [];
     }
 
     public function get_active_fields(int $idpromotion): array

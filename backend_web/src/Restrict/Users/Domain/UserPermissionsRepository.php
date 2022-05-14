@@ -30,6 +30,6 @@ final class UserPermissionsRepository extends AppRepository
             ->add_and("m.id_user=$iduser")
             ->select()->sql()
         ;
-        return $this->db->query($sql)[0] ?? [];
+        return $this->query($sql)[0] ?? [];
     }
 }
