@@ -47,7 +47,7 @@ final class PromotionCapCheckService extends AppService
         $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
         $utcfrom = $utc->get_dt_into_tz($promotion["date_from"], $promotz);
         $utcto = $utc->get_dt_into_tz($promotion["date_to"], $promotz);
-        $utcnow = $utc->get_dt_by_tz();
+        $utcnow = $utc->get_nowdt_in_timezone();
 
         $dt = CF::get(DateComponent::class);
         $seconds = $dt->get_seconds_between($utcfrom, $utcnow);

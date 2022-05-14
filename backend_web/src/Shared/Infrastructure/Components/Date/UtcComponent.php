@@ -69,17 +69,16 @@ final class UtcComponent
      * @return string
      * @throws \Exception
      */
-    public function get_dt_by_tz(string $timezone=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
+    public function get_nowdt_in_timezone(string $timezone=self::DEFAULT_TZ, string $format=self::DEFAULT_DT_FORMAT): string
     {
         $dt = new DateTime("now", new DateTimeZone($timezone));
         return $dt->format($format);
     }
-
-
+    
     private function get_dt_by_ip(string $ip, string $format=self::DEFAULT_DT_FORMAT): string
     {
         $timezone = $this->get_timezone_by_ip($ip);
-        return $this->get_dt_by_tz($timezone, $format);
+        return $this->get_nowdt_in_timezone($timezone, $format);
     }
 
     public function get_timezone_by_ip(string $ip): string
@@ -95,5 +94,12 @@ final class UtcComponent
         */
 
         return ($info["timezone"] ?? self::DEFAULT_TZ);
+    }
+    
+    public function get_utcdt_to_iptz(string $utcdt, string $ip, string $format=self::DEFAULT_DT_FORMAT): string
+    {
+        $timezone = $this->get_timezone_by_ip($ip);
+        if ($timezone === self::DEFAULT_TZ) return date($format, strtotime($utcdt));
+        return $this->get_dt_into_tz($utcdt, self::DEFAULT_TZ, $timezone, $format);
     }
 }

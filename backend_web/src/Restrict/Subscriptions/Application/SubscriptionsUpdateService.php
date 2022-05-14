@@ -110,7 +110,7 @@ final class SubscriptionsUpdateService extends AppService
         $dt = CF::get(DateComponent::class);
 
         $utcto = $utc->get_dt_into_tz($promotion["date_to"], $tz);
-        $utcnow = $utc->get_dt_by_tz();
+        $utcnow = $utc->get_nowdt_in_timezone();
         $seconds = $dt->get_seconds_between($utcnow, $utcto);
         if($seconds<0) {
             //EventBus::instance()->publish(...[SubscriptionFinishedEvent::from_primitives($id, $subscription)]);
