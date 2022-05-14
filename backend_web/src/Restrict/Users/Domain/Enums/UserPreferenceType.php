@@ -7,5 +7,5 @@ abstract class UserPreferenceType
     const URL_DEFAULT_MODULE = "url_default_module";
     const KEY_TZ = "tz";
 
-    const DEFAULT_TZ = "UTC";
+    const TZ_UTC = "UTC";
 }

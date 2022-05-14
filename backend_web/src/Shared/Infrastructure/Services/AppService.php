@@ -70,7 +70,7 @@ abstract class AppService
         return $encdec;
     }
 
-    protected function _get_with_sysdata(array $row, string $tz=UtcComponent::DEFAULT_TZ): array
+    protected function _get_with_sysdata(array $row, string $tz=UtcComponent::TZ_UTC): array
     {
         $datefields = ["insert_date", "update_date", "delete_date"];
         $utc = CF::get(UtcComponent::class);
