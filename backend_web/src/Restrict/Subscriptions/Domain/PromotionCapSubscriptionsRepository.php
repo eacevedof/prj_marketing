@@ -210,6 +210,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->add_and("delete_date IS NULL")
             ->add_and("date_execution IS NULL")
         ;
+        $sql = $sql->update()->sql();
         $this->execute($sql);
     }
 
