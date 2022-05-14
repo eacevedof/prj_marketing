@@ -19,6 +19,9 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
     {
         $this->db = DbF::get_by_default();
         $this->table = "app_promotioncap_subscriptions";
+        $this->calcfields = [
+            "CASE m.is_test WHEN 0 THEN 'No' ELSE 'Yes' END" => "c_is_test"
+        ];
         $this->joins = [
             "fields" => [
                 "u1.description" => "e_owner",
@@ -29,7 +32,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "p.description" => "e_promotion",
                 "p.uuid"=>"e_promocode",
                 "bd.business_name"=>"e_business",
-                "ar1.description"=>"e_status"
+                "ar1.description"=>"e_status",
             ],
             "on" => [
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
@@ -93,7 +96,6 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.subs_status",
                 "m.remote_ip",
                 "m.is_test",
-                "CASE m.is_test WHEN 0 THEN 'No' ELSE 'Yes' END c_is_test",
                 "m.notes",
                 "m.delete_date"
             ])
@@ -104,6 +106,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.date_subscription"=>"DESC"
             ])
         ;
+        $this->_add_calcfields($qb);
         $this->_add_joins($qb);
         $this->_add_search_filter($qb, $search);
         $this->_add_auth_condition($qb);

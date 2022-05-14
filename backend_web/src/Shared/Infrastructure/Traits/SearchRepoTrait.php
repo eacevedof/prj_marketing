@@ -14,6 +14,7 @@ use TheFramework\Components\Db\ComponentQB;
 
 trait SearchRepoTrait
 {
+    private array $calcfields = [];
     private array $joins = [
         "fields" => [],
         "on" => [],
@@ -30,6 +31,13 @@ trait SearchRepoTrait
     private function _get_join_field(string $field): string
     {
         $key = array_search($field, $this->joins["fields"]);
+        if ($key===false) return "";
+        return $key;
+    }
+
+    private function _get_calc_field(string $field): string
+    {
+        $key = array_search($field, $this->calcfields);
         if ($key===false) return "m.$field";
         return $key;
     }
@@ -37,8 +45,9 @@ trait SearchRepoTrait
     private function _get_condition(string $field, string $value): string
     {
         $value = $this->get_sanitized($value);
-        $field = $this->_get_join_field($field);
-        return "$field LIKE '%$value%'";
+        $found = $this->_get_join_field($field);
+        if (!$found) $found = $this->_get_calc_field($field);
+        return "$found LIKE '%$value%'";
     }
 
     private function _add_joins(ComponentQB $qb): void
@@ -48,6 +57,12 @@ trait SearchRepoTrait
 
         foreach ($this->joins["on"] as $join)
             $qb->add_join($join);
+    }
+
+    private function _add_calcfields(ComponentQB $qb): void
+    {
+        foreach ($this->calcfields as $calc => $field)
+            $qb->add_getfield("$calc as $field");
     }
 
     private function _add_search_filter(ComponentQB $qb, array $search): void
@@ -63,6 +78,7 @@ trait SearchRepoTrait
 
         if($order = $search["order"]) {
             $field = $this->_get_join_field($order["field"]);
+            if (!$field) $field = $this->_get_calc_field($order["field"]);
             $qb->set_orderby([$field => "{$order["dir"]}"]);
         }
 
