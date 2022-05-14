@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Subscriptions\Domain;
 
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -194,6 +195,22 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $sql = $sql->select()->sql();
         $r = $this->query($sql);
         return (bool)($r[0]["id"] ?? 0);
+    }
+
+    public function mark_finished_by_id_promotion(int $idpromotion): void
+    {
+        $iduser = $this->auth->get_user()["id"] ?? -1;
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promotiocapsusbscriptions.mark_finished_by_id_promotion")
+            ->set_table($this->table)
+            ->add_update_fv("update_date", date("Y-m-d H:i:s"))
+            ->add_update_fv("update_user", $iduser)
+            ->add_update_fv("subs_status", PromotionCapActionType::FINISHED)
+            ->add_and("id_promotion=$idpromotion")
+            ->add_and("delete_date IS NULL")
+            ->add_and("date_execution IS NULL")
+        ;
+        $this->execute($sql);
     }
 
     public function set_auth(AuthService $auth): self

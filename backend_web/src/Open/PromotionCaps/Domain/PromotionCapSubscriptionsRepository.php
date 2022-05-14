@@ -19,82 +19,6 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
     {
         $this->db = DbF::get_by_default();
         $this->table = "app_promotioncap_subscriptions";
-        $this->joins = [
-            "fields" => [
-                "u2.description"  => "e_deletedby",
-                //"ar1.description" => "e_language",
-            ],
-            "on" => [
-                "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                //"LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
-            ]
-        ];
-    }
-
-    private function _add_auth_condition(ComponentQB $qb): void
-    {
-        if (!$this->auth->get_user()) {
-            $qb->add_and("1 = 0");
-            return;
-        }
-
-        if($this->auth->is_root()) {
-            $qb->add_getfield("m.delete_user")
-                ->add_getfield("m.insert_date")
-                ->add_getfield("m.insert_user");
-            return;
-        }
-
-        //como no es root no puede ver borrados o desactivados
-        $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
-
-        $autuser = $this->auth->get_user();
-        if($this->auth->is_business_owner()) {
-            $qb->add_andoper("m.id_owner", $autuser["id"]);
-            return;
-        }
-
-        if($this->auth->is_business_manager()) {
-            $idparent = $autuser["id_parent"];
-            $qb->add_andoper("m.id_owner", $idparent);
-        }
-    }
-
-    public function search(array $search): array
-    {
-        $qb = $this->_get_qbuilder()
-            ->set_comment("promotioncap_subscriptions.search")
-            ->set_table("$this->table as m")
-            ->calcfoundrows()
-            ->set_getfields([
-                "m.id",
-"m.uuid",
-"m.id_owner",
-"m.code_erp",
-"m.description",
-"m.id_promotion",
-"m.id_promouser",
-"m.date_subscription",
-"m.date_confirm",
-"m.date_execution",
-"m.code_execution",
-"m.exec_user",
-"m.subs_status",
-"m.remote_ip",
-"m.notes",
-                "m.delete_date"
-            ])
-            ->set_limit(25, 0)
-            ->set_orderby(["m.id"=>"DESC"])
-        ;
-        $this->_add_joins($qb);
-        $this->_add_search_filter($qb, $search);
-        $this->_add_auth_condition($qb);
-
-        $sql = $qb->select()->sql();
-        $sqlcount = $qb->sqlcount();
-        $r = $this->query_with_count($sqlcount, $sql);
-        return $r;
     }
 
     public function get_info(string $uuid): array
@@ -105,68 +29,34 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
-"m.insert_date",
-"m.update_user",
-"m.update_date",
-"m.delete_user",
-"m.delete_date",
-"m.id",
-"m.uuid",
-"m.id_owner",
-"m.code_erp",
-"m.description",
-"m.id_promotion",
-"m.id_promouser",
-"m.date_subscription",
-"m.date_confirm",
-"m.date_execution",
-"m.code_execution",
-"m.exec_user",
-"m.subs_status",
-"m.remote_ip",
-"m.notes"
+                "m.insert_date",
+                "m.update_user",
+                "m.update_date",
+                "m.delete_user",
+                "m.delete_date",
+                "m.id",
+                "m.uuid",
+                "m.id_owner",
+                "m.code_erp",
+                "m.description",
+                "m.id_promotion",
+                "m.id_promouser",
+                "m.date_subscription",
+                "m.date_confirm",
+                "m.date_execution",
+                "m.code_execution",
+                "m.exec_user",
+                "m.subs_status",
+                "m.remote_ip",
+                "m.notes"
             ])
-            //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
         $r = $this->query($sql);
         if (!$r) return [];
-
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-
         return array_merge($r, $sysdata);
     }
 
-    public function get_num_confirmed(int $idpromotion): int
-    {
-        $sql = $this->_get_qbuilder()
-            ->set_comment("promotioncapsubscriptions.get_num_confirmed")
-            ->set_table("$this->table as m")
-            ->set_getfields([
-                "COUNT(m.id) num_confirmed"
-            ])
-            ->add_and("m.id=$idpromotion")
-            ->add_and("m.delete_date IS NULL")
-            ->add_and("m.date_confirm IS NOT NULL")
-            ->select()->sql()
-        ;
-        $r = $this->query($sql);
-        return (int) ($r[0]["num_confirmed"] ?? 0);
-    }
-
-    public function is_confirmed(int $idpromouser): bool
-    {
-        $sql = $this->_get_qbuilder()
-            ->set_comment("promotioncapsubscriptions.is_confirmed")
-            ->set_table("$this->table as m")
-            ->set_getfields(["m.id"])
-            ->add_and("m.id_promosuer=$idpromouser")
-            ->add_and("m.delete_date IS NULL")
-            ->add_and("m.date_confirm IS NULL")
-            ->select()->sql()
-        ;
-        $r = $this->query($sql);
-        return (bool) ($r[0]["id"] ?? 0);
-    }
 }
