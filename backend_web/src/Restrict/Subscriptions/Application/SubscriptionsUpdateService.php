@@ -4,8 +4,7 @@ namespace App\Restrict\Subscriptions\Application;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
-use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
-use App\Restrict\Subscriptions\Domain\Events\SubscriptionFinishedEvent;
+use App\Restrict\Subscriptions\Domain\Events\PromotionHasFinishedEvent;
 use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
@@ -102,7 +101,7 @@ final class SubscriptionsUpdateService extends AppService
     private function _check_promotion(): void
     {
         $promotion = RF::get(PromotionRepository::class)->get_by_id(
-            $this->dbsubscription["id_promotion"],
+            $idpromotion = $this->dbsubscription["id_promotion"],
             ["date_to", "id_tz"]
         );
         $tz = RF::get(ArrayRepository::class)->get_timezone_description_by_id($promotion["id_tz"]);
@@ -113,7 +112,7 @@ final class SubscriptionsUpdateService extends AppService
         $utcnow = $utc->get_nowdt_in_timezone();
         $seconds = $dt->get_seconds_between($utcnow, $utcto);
         if($seconds<0) {
-            //EventBus::instance()->publish(...[SubscriptionFinishedEvent::from_primitives($id, $subscription)]);
+            EventBus::instance()->publish(...[PromotionHasFinishedEvent::from_primitives($idpromotion, $this->dbsubscription)]);
             $this->_promocap_exception(
                 __("Sorry but you can not validate this voucher because this promotion has finished."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
