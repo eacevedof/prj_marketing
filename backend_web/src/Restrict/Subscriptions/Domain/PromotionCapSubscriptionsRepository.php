@@ -95,7 +95,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.exec_user",
                 "m.subs_status",
                 "m.remote_ip",
-                "m.is_test",
+                "m.is_testx",
                 "m.notes",
                 "m.delete_date"
             ])
@@ -113,12 +113,8 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
+        $r = $this->query_with_count($sqlcount, $sql);
+        return $r;
     }
 
     public function get_info(string $uuid, array $fields = []): array
