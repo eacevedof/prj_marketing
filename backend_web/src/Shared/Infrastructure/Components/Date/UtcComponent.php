@@ -96,7 +96,7 @@ final class UtcComponent
         return ($info["timezone"] ?? self::DEFAULT_TZ);
     }
     
-    public function get_utcdt_to_iptz(string $utcdt, string $ip, string $format=self::DEFAULT_DT_FORMAT): string
+    public function get_utcdt_into_iptz(string $utcdt, string $ip, string $format=self::DEFAULT_DT_FORMAT): string
     {
         $timezone = $this->get_timezone_by_ip($ip);
         if ($timezone === self::DEFAULT_TZ) return date($format, strtotime($utcdt));
