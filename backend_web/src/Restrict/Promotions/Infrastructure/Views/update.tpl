@@ -32,16 +32,16 @@
     <br/>
     <div class="row">
       <div class="col-3">
-        <b><?=__("Viewed")?>:</b>&nbsp;<span><?=$statistics["viewed"]?></span>
+        <b><?=__("Viewed")?>:</b>&nbsp;<span><?=$result["promotion"]["num_viewed"]?></span>
       </div>
       <div class="col-3">
-        <b><?=__("Subscribed")?>:</b>&nbsp;<span><?=$statistics["subscribed"]?></span>
+        <b><?=__("Subscribed")?>:</b>&nbsp;<span><?=$result["promotion"]["num_subscribed"]?></span>
       </div>
       <div class="col-3">
-        <b><?=__("Confirmed")?>:</b>&nbsp;<span><?=$statistics["confirmed"]?></span>
+        <b><?=__("Confirmed")?>:</b>&nbsp;<span><?=$result["promotion"]["num_confirmed"]?></span>
       </div>
       <div class="col-3">
-        <b><?=__("Executed")?>:</b>&nbsp;<span><?=$statistics["executed"]?></span>
+        <b><?=__("Executed")?>:</b>&nbsp;<span><?=$result["promotion"]["num_executed"]?></span>
       </div>
     </div>
     <br/>

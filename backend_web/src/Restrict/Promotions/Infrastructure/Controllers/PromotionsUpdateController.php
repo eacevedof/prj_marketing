@@ -70,7 +70,7 @@ final class PromotionsUpdateController extends RestrictController
                 ->add_var("timezones", $this->picklist->get_timezones())
                 ->add_var("businessowners", $businessowners)
                 ->add_var("notoryes", $this->picklist->get_not_or_yes())
-                ->add_var("statistics", SF::get(PromotionsStatsService::class, ["uuid"=>$uuid])())
+                //->add_var("statistics", SF::get(PromotionsStatsService::class, ["uuid"=>$uuid])())
                 ->render_nl();
         }
         catch (NotFoundException $e) {
