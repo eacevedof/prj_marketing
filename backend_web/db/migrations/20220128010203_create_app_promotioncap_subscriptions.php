@@ -47,8 +47,9 @@ final class CreateAppPromotioncapSubscriptions extends AbsMigration
             "comment" => "fecha-hora en la que se ejecuta",
         ])
         ->addColumn("code_execution", "string", [
-            "limit" => 15,
-            "null" => false
+            "limit" => 35,
+            "null" => true,
+            "comment" => "posible md5"
         ])
         ->addColumn("exec_user", "integer", [
             "null" => true,
