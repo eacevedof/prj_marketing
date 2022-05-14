@@ -3,7 +3,7 @@ namespace App\Open\UserCaps\Application;
 
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Components\Date\UtcComponent;
+use App\Shared\Infrastructure\Components\Date\UtcComponent as UTC;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
@@ -69,11 +69,11 @@ final class UserCapPointsService extends AppService
 
         $remoteip = $this->_load_request()->get_remote_ip();
         $result = $this->repopromocapuser->get_points_by_email_in_account($this->promocapuser["email"], $this->businesssdata["id_user"]);
-        $utc = CF::get(UtcComponent::class);
+        $utc = CF::get(UTC::class);
         $result = array_map(function (array $row) use($utc, $remoteip) {
             return [
                 "description" => $row["description"],
-                "date_execution" => $utc->get_utcdt_into_iptz($row["date_execution"], $remoteip, UtcComponent::FORMAT_ONLY_DATE),
+                "date_execution" => $utc->get_utcdt_into_iptz($row["date_execution"], $remoteip, UTC::FORMAT_ONLY_DATE),
                 "p" => $row["p"],
             ];
         }, $result);
