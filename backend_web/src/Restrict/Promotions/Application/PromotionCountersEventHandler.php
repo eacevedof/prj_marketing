@@ -5,7 +5,7 @@ use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
 
@@ -13,7 +13,7 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
 {
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if (get_class($domevent)!==PromotionCapActionWasExecutedEvent::class) return $this;
+        if (get_class($domevent)!==PromotionCapActionHasOccurredEvent::class) return $this;
 
         if ($domevent->is_test()) return $this;
 

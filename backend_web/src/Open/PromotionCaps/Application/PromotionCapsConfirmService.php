@@ -3,7 +3,7 @@ namespace App\Open\PromotionCaps\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
@@ -106,7 +106,7 @@ final class PromotionCapsConfirmService extends AppService
                 "date_confirm" => $date,
             ]),
 
-            PromotionCapActionWasExecutedEvent::from_primitives(-1, [
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
                 "id_promouser" => $idcapuser,
                 "id_type" => PromotionCapActionType::CONFIRMED,

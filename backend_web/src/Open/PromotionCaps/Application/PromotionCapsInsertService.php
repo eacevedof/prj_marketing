@@ -4,7 +4,7 @@ namespace App\Open\PromotionCaps\Application;
 use App\Checker\Application\CheckerService;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapUserType;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
@@ -229,7 +229,7 @@ final class PromotionCapsInsertService extends AppService
 
         EventBus::instance()->publish(...[
             PromotionCapUserSubscribedEvent::from_primitives($id, $promocapuser),
-            PromotionCapActionWasExecutedEvent::from_primitives(-1, [
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
                 "id_promouser" => $id,
                 "id_type" => PromotionCapActionType::SUBSCRIBED,

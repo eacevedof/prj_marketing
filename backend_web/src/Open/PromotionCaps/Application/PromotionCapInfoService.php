@@ -2,7 +2,7 @@
 namespace App\Open\PromotionCaps\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionWasExecutedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
@@ -63,7 +63,7 @@ final class PromotionCapInfoService extends AppService
         $this->_load_request();
 
         EventBus::instance()->publish(...[
-            PromotionCapActionWasExecutedEvent::from_primitives(-1, [
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"] ?? -1,
                 "id_promouser" => null,
                 "id_type" => PromotionCapActionType::VIEWED,

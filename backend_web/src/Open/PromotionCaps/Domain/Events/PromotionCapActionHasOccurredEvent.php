@@ -3,7 +3,7 @@ namespace App\Open\PromotionCaps\Domain\Events;
 
 use App\Shared\Infrastructure\Bus\AbsEvent;
 
-final class PromotionCapActionWasExecutedEvent extends AbsEvent
+final class PromotionCapActionHasOccurredEvent extends AbsEvent
 {
     private int $idpromotion;
     private ?int $idcapuser;
