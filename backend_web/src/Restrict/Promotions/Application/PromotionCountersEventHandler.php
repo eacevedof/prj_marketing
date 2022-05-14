@@ -16,6 +16,9 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
     {
         if (get_class($domevent)!==PromotionCapActionHasOccurredEvent::class) return $this;
 
+        if ($domevent->is_test()) return $this;
+
+        //si se esta visualizando no llega idcapuser
         if (RF::get(PromotionCapSubscriptionsRepository::class)->is_test_mode_by_id_capuser($domevent->id_capuser()))
             return $this;
 
