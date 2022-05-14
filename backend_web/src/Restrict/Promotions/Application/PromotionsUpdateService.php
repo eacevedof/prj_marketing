@@ -143,6 +143,11 @@ final class PromotionsUpdateService extends AppService
                 $ispublished = (int) $data["data"]["is_published"];
                 if ($ispublished && !$data["value"]) return __("0 confirmed is not valid for publishing");
             })
+            ->add_rule("invested", "invested", function ($data) {
+                $ispublished = (int) $data["data"]["is_published"];
+                $invested = (float) $data["data"]["invested"];
+                if ($ispublished && ($invested<1)) return __("Must be greater than 1 for publishing");
+            })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
