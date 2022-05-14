@@ -5,8 +5,6 @@
  * @var string $h1
  * @var string $error
  */
-use App\Shared\Infrastructure\Components\Date\UtcComponent as UTC;
-
 ?>
 <main>
   <?php
