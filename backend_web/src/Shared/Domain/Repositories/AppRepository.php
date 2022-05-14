@@ -68,13 +68,25 @@ abstract class AppRepository
         return $this;
     }
 
-    public function query(?string $sql, ?int $col=null, ?int $row=null)
+    public function query(?string $sql, ?int $col=null, ?int $row=null): array
     {
         try {
             $mxRet = $this->db->query($sql, $col, $row);
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query");
+            $this->_exception(__("Error reading data"));
+        }
+        return $mxRet;
+    }
+
+    public function query_with_count(string $sqlcount, ?string $sql): array
+    {
+        try {
+            $mxRet = $this->db->set_sqlcount($sqlcount)->query($sql);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query-wiht-count");
             $this->_exception(__("Error reading data"));
         }
         return $mxRet;
