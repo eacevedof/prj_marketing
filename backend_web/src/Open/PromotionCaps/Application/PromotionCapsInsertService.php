@@ -73,7 +73,7 @@ final class PromotionCapsInsertService extends AppService
         $promotionuuid = $this->input["_promotionuuid"];
         $this->promotion = $this->repopromotion->get_by_uuid($promotionuuid, [
             "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz",
-            "date_from", "date_to", "id_owner"
+            "date_from", "date_to", "id_owner", "num_confirmed"
         ]);
 
         SF::get(

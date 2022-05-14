@@ -63,11 +63,7 @@ final class PromotionCapCheckService extends AppService
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
 
-        $promotion["max_confirmed"] = (int) $promotion["max_confirmed"];
-        if($promotion["max_confirmed"]===0)
-            $this->_promocap_exception(__("This promotion is disabled"), ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS);
-
-        if($promotion["max_confirmed"]!=-1 && $promotion["max_confirmed"] <= $this->reposubscription->get_num_confirmed($promotion["id"]))
+        if($promotion["max_confirmed"]!=-1 && ($promotion["max_confirmed"] <= $promotion["num_confirmed"]))
             $this->_promocap_exception(
                 __("Sorry but this promotion has reached the max number of subscriptions"),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
