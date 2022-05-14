@@ -168,7 +168,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->set_getfields([
                 "m.uuid",
                 "m.id_owner",
-                "m.id_test",
+                "m.is_test",
                 "m.subs_status"
             ])
             ->add_and("m.uuid='$uuid'")
