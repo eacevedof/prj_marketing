@@ -12,7 +12,7 @@ use App\Shared\Infrastructure\Traits\LogTrait;
 use App\Shared\Domain\Entities\AppEntity;
 use TheFramework\Components\Db\ComponentQB;
 use TheFramework\Components\Db\ComponentMysql;
-use App\Shared\Domain\Enums\ExceptionType;
+use App\Shared\Infrastructure\Exceptions\RepositoryException;
 use \Exception;
 
 abstract class AppRepository
@@ -33,10 +33,9 @@ abstract class AppRepository
         return new ComponentQB();
     }
 
-    protected function _exception(string $message, int $code=500): void
+    protected function _exception(string $message, int $code=ExceptionType::CODE_REQUESTED_RANGE_NOT_SATISFIABLE): void
     {
-        $this->logerr($message,"apprepository.exception");
-        throw new Exception($message, $code);
+        throw new RepositoryException($message, $code);
     }
 
     private function _get_pks($arData)
@@ -71,13 +70,26 @@ abstract class AppRepository
 
     public function query(?string $sql, ?int $col=null, ?int $row=null)
     {
-        $mxRet = $this->db->query($sql, $col, $row);
+        try {
+            $mxRet = $this->db->query($sql, $col, $row);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query");
+            $this->_exception(__("Error reading data"));
+        }
         return $mxRet;
     }
 
     public function execute(?string $sql)
     {
-        $mxRet = $this->db->exec($sql);
+        try {
+            $mxRet = $this->db->exec($sql);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-execute");
+            $this->_exception(__("Error persiting data"));
+        }
+
         return $mxRet;
     }
 
@@ -93,7 +105,14 @@ abstract class AppRepository
             $qb->add_insert_fv($field, $value);
         }
 
-        $qb->insert()->exec($qb::WRITE);
+        try {
+            $qb->insert()->exec($qb::WRITE);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-insert");
+            $this->_exception(__("Error persiting data"));
+        }
+
         return $this->db->get_lastid();
     }//insert
 
@@ -123,7 +142,14 @@ abstract class AppRepository
             $qb->add_pk_fv($fieldname, $sValue);
         }
 
-        $qb->update()->exec($qb::WRITE);
+        try {
+            $qb->update()->exec($qb::WRITE);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-update");
+            $this->_exception(__("Error updating data"));
+        }
+
         return $this->db->get_affected();
     }//update
 
@@ -143,7 +169,14 @@ abstract class AppRepository
             $qb->add_pk_fv($fieldname, $sValue);
         }
 
-        $qb->delete()->exec($qb::WRITE);
+        try {
+            $qb->delete()->exec($qb::WRITE);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-delete");
+            $this->_exception(__("Error deleting data"));
+        }
+
         return $this->db->get_affected();
     }//delete
 
@@ -162,7 +195,13 @@ abstract class AppRepository
             $qb->add_pk_fv($fieldname, $sValue);
 
         $sql = $qb->select()->sql();
-        $r = $this->db->query($sql);
+        try {
+            $r = $this->db->query($sql);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-sysdata");
+            $this->_exception(__("Error reading sysdata"));
+        }
         return $r[0]["update_date"] ?? "";
     }
 
@@ -184,7 +223,13 @@ abstract class AppRepository
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        try {
+            $r = $this->db->query($sql);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-id-by-uuid");
+            $this->_exception(__("Error reading data"));
+        }
         return intval($r[0]["id"] ?? 0);
     }
 
@@ -199,7 +244,13 @@ abstract class AppRepository
         ;
         if ($fields) $sql->set_getfields($fields);
         $sql = $sql->select()->sql();
-        $r = $this->db->query($sql);
+        try {
+            $r = $this->db->query($sql);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-id");
+            $this->_exception(__("Error reading data"));
+        }
         return $r[0] ?? [];
     }
 
@@ -214,7 +265,13 @@ abstract class AppRepository
         ;
         if ($fields) $sql->set_getfields($fields);
         $sql = $sql->select()->sql();
-        $r = $this->db->query($sql);
+        try {
+            $r = $this->db->query($sql);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-uuid");
+            $this->_exception(__("Error reading data"));
+        }
         return $r[0] ?? [];
     }
 
@@ -228,7 +285,13 @@ abstract class AppRepository
             ->add_and("m.id=$id")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        try {
+            $r = $this->db->query($sql);
+        }
+        catch (Exception $ex) {
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-is-deleted");
+            $this->_exception(__("Error reading data"));
+        }
         return (bool) ($r[0]["delete_date"] ?? "");
     }
 
