@@ -31,7 +31,7 @@ final class PromotionCapConfirmController extends OpenController
             $insert = SF::get_callable(PromotionCapsConfirmService::class, [
                 "promotionuuid" => $promotionuuid,
                 "subscriptionuuid" => $subscriptionuuid,
-                "_test_mode" => $this->request->get_get("mode", 0) ? 1 : 0,
+                "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $result = $insert();
             $this->add_var(PageType::H1, htmlentities($result["promotion"]))

@@ -22,7 +22,7 @@ final class PromotionCapCreateController extends OpenController
             $business = SF::get_callable(PromotionCapInfoService::class, [
                 "businessslug" => trim($businessslug),
                 "promotionslug" => trim($promotionslug),
-                "mode" => $this->request->get_get("mode", "")
+                "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $result = $business();
 

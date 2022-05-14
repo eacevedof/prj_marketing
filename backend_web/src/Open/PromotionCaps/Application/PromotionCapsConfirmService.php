@@ -37,7 +37,7 @@ final class PromotionCapsConfirmService extends AppService
         //"promotionuuid" => $promotionuuid,
         //"subscriptionuuid" => $subscriptionuuid
         $this->input = $input;
-        $this->istest = (int) ($input["_test_mode"] ?? 0);
+        $this->istest = (int) $input["_test_mode"];
         $this->repopromocapsubscription = RF::get(PromotionCapSubscriptionsRepository::class);
         $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
         $this->repopromotion = RF::get(PromotionRepository::class);

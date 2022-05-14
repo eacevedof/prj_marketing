@@ -36,7 +36,7 @@ final class PromotionCapInfoService extends AppService
             $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->input = $input;
-        $this->istest = (int) ($input["_test_mode"] ?? 0);
+        $this->istest = (int)$input["_test_mode"];
 
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
         $this->repopromotion = RF::get(PromotionRepository::class);
