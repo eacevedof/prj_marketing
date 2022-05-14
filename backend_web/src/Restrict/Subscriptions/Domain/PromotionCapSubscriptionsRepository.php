@@ -92,6 +92,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.exec_user",
                 "m.subs_status",
                 "m.remote_ip",
+                "m.is_test",
                 "m.notes",
                 "m.delete_date"
             ])
@@ -143,6 +144,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
                 "m.exec_user",
                 "m.subs_status",
                 "m.remote_ip",
+                "m.is_test",
                 "m.notes"
             ])
             ->add_and("m.uuid='$uuid'")
@@ -166,6 +168,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->set_getfields([
                 "m.uuid",
                 "m.id_owner",
+                "m.id_test",
                 "m.subs_status"
             ])
             ->add_and("m.uuid='$uuid'")
