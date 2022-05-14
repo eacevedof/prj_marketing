@@ -198,11 +198,15 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_table("$this->table as m")
             ->distinct()
             ->set_getfields(["p.description, ps.date_execution, 1 AS p"])
-            ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps ON m.id = ps.id_promouser")
+            ->add_join("
+            INNER JOIN app_promotioncap_subscriptions AS ps 
+            ON m.id = ps.id_promouser AND m.id_promotion = ps.id_promotion
+            ")
             ->add_join("LEFT JOIN app_promotion AS p ON ps.id_promotion = p.id")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id_owner=$idowner")
             ->add_and("m.email='$email'")
+            ->add_and("ps.is_test=0")
             ->add_and("p.id_owner=$idowner")
             ->add_and("ps.date_execution IS NOT NULL")
             ->add_and("COALESCE(ps.description,'') NOT LIKE '%consumed%'")
