@@ -197,7 +197,7 @@ final class PromotionRepository extends AppRepository
     public function update_slug_with_id(int $id): void
     {
         $sql = "UPDATE $this->table SET slug=CONCAT(slug,'-', id) WHERE id=$id";
-        $this->exec($sql);
+        $this->execute($sql);
     }
 
     public function get_by_slug(string $slug, array $fields=[]): array
@@ -219,25 +219,25 @@ final class PromotionRepository extends AppRepository
     public function increase_viewed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_viewed=num_viewed + 1 WHERE 1 AND id={$id}";
-        $this->exec($sql);
+        $this->execute($sql);
     }
 
     public function increase_subscribed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_subscribed=num_subscribed + 1 WHERE 1 AND id={$id}";
-        $this->exec($sql);
+        $this->execute($sql);
     }
 
     public function increase_confirmed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_confirmed=num_confirmed + 1 WHERE 1 AND id={$id}";
-        $this->exec($sql);
+        $this->execute($sql);
     }
 
     public function increase_executed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_executed=num_executed + 1 WHERE 1 AND id={$id}";
-        $this->exec($sql);
+        $this->execute($sql);
     }
 
     public function get_statistics_by_uuid(string $uuid): array
