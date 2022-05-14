@@ -69,7 +69,7 @@ abstract class AppRepository
         return $this;
     }
 
-    public function query(?string $sql, ?int $col=null, ?int $row=null): array
+    public function query(?string $sql, ?int $col=null, ?int $row=null): array|string|null
     {
         try {
             $mxRet = $this->db->query($sql, $col, $row);
