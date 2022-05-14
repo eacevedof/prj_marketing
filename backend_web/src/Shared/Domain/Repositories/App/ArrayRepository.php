@@ -41,7 +41,7 @@ final class ArrayRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -60,7 +60,7 @@ final class ArrayRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -79,7 +79,7 @@ final class ArrayRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -98,7 +98,7 @@ final class ArrayRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -117,7 +117,7 @@ final class ArrayRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -135,7 +135,7 @@ final class ArrayRepository extends AppRepository
             ->add_and("m.id_owner=-1")
             ->select()->sql()
         ;
-        return (int) $this->db->query($sql, 0, 0);
+        return (int) $this->query($sql, 0, 0);
     }
 
     public function get_timezone_description_by_id(int $idpk): ?string
@@ -152,7 +152,7 @@ final class ArrayRepository extends AppRepository
             ->add_and("m.id_owner=-1")
             ->select()->sql()
         ;
-        return $this->db->query($sql, 0, 0);
+        return $this->query($sql, 0, 0);
     }
 
     public function exists(int $id, string $type, string $pk="id"): bool
@@ -167,7 +167,7 @@ final class ArrayRepository extends AppRepository
             ->add_and("m.type='$type'")
             ->select()->sql()
         ;
-        return (bool) $this->db->query($sql, 0, 0);
+        return (bool) $this->query($sql, 0, 0);
     }
 
 }

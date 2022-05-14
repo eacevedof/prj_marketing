@@ -35,7 +35,7 @@ final class PicklistRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -51,7 +51,7 @@ final class PicklistRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -68,7 +68,7 @@ final class PicklistRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
+        $this->result = $this->query($sql);
         return $this->_get_associative(["id","description"]);
     }
 
