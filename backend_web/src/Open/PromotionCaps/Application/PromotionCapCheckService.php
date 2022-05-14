@@ -44,19 +44,20 @@ final class PromotionCapCheckService extends AppService
             $this->_promocap_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
 
         $utc = CF::get(UtcComponent::class);
-        $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
-        $utcfrom = $utc->get_dt_into_tz($promotion["date_from"], $promotz);
-        $utcto = $utc->get_dt_into_tz($promotion["date_to"], $promotz);
-        $utcnow = $utc->get_nowdt_in_timezone();
+        //$promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
 
+        //$utcfrom = $utc->get_dt_into_tz($promotion["date_from"], UtcComponent::TZ_UTC, $promotz);
+        //$utcto = $utc->get_dt_into_tz($promotion["date_to"], UtcComponent::TZ_UTC, $promotz);
+
+        //$utcnow = $utc->get_nowdt_in_timezone();
         $dt = CF::get(DateComponent::class);
-        $seconds = $dt->get_seconds_between($utcfrom, $utcnow);
+        $seconds = $dt->get_seconds_between($promotion["date_from"], $utcnow = $utc->get_nowdt_in_timezone());
         if($seconds<0)
             $this->_promocap_exception(
                 __("Sorry but this promotion has not started yet or is paused. Please try again later."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
-        $seconds = $dt->get_seconds_between($utcnow, $utcto);
+        $seconds = $dt->get_seconds_between($utcnow, $promotion["date_to"]);
         if($seconds<0)
             $this->_promocap_exception(
                 __("Sorry but this promotion has finished."),
