@@ -100,12 +100,8 @@ final class PromotionCapUsersRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
+        $r = $this->query_with_count($sqlcount, $sql);
+        return $r;
     }
 
     public function get_info(string $uuid): array
@@ -141,7 +137,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
@@ -161,7 +157,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return (bool) ($r[0]["id"] ?? null);
     }
     public function get_subscription_data(int $idpromouser): array
@@ -186,7 +182,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_and("pu.delete_date IS NULL")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return $r[0] ?? [];
     }
 
@@ -213,6 +209,6 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_orderby("ps.date_execution","DESC")
             ->select()->sql()
         ;
-        return $this->db->query($sql);
+        return $this->query($sql);
     }
 }

@@ -93,12 +93,8 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
+        $r = $this->query_with_count($sqlcount, $sql);
+        return $r;
     }
 
     public function get_info(string $uuid): array
@@ -134,7 +130,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
@@ -155,7 +151,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->add_and("m.date_confirm IS NOT NULL")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return (int) ($r[0]["num_confirmed"] ?? 0);
     }
 
@@ -170,7 +166,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->add_and("m.date_confirm IS NULL")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         return (bool) ($r[0]["id"] ?? 0);
     }
 }

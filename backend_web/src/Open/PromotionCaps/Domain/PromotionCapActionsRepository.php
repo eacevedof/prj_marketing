@@ -85,12 +85,8 @@ final class PromotionCapActionsRepository extends AppRepository
 
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
-
-        return [
-            "result" => $r,
-            "total" => $this->db->get_foundrows()
-        ];
+        $r = $this->query_with_count($sqlcount, $sql);
+        return $r;
     }
 
     public function get_info(string $uuid): array
@@ -113,7 +109,7 @@ final class PromotionCapActionsRepository extends AppRepository
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
+        $r = $this->query($sql);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
