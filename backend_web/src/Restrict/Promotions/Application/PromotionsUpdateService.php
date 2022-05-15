@@ -163,7 +163,8 @@ final class PromotionsUpdateService extends AppService
             ->add_rule("date_execution", "date_execution", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
-                if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
+                if ($this->datecomp->add_time($data["data"]["date_to"],3600) < $value)
+                    return __("Value must be at least 1 hour after Date to");
             })
             ->add_rule("id_tz", "id_tz", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");

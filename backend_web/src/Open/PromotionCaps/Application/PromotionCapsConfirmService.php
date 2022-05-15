@@ -47,7 +47,7 @@ final class PromotionCapsConfirmService extends AppService
     {
         $this->promotion = $this->repopromotion->get_by_uuid($this->input["promotionuuid"], [
             "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz",
-            "date_from", "date_to", "id_owner", "num_confirmed"
+            "date_from", "date_to", "date_execution", "id_owner", "num_confirmed"
         ]);
 
         SF::get(
