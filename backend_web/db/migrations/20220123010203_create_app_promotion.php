@@ -61,6 +61,7 @@ final class CreateAppPromotion extends AbsMigration
         ])
         ->addColumn("date_execution", "datetime", [
             "null" => false,
+            "comment" => "día y hora limite para validar el codigo",
         ])
         ->addColumn("content", "string", [
             "limit" => 2000,
