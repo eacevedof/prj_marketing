@@ -145,8 +145,8 @@ final class PromotionsUpdateService extends AppService
             })
             ->add_rule("returned", "returned", function ($data) {
                 $ispublished = (int) $data["data"]["is_published"];
-                $invested = (float) $data["data"]["invested"];
-                if ($ispublished && ($invested<1)) return __("Must be greater than 1 for publishing");
+                $returned = (float) $data["data"]["returned"];
+                if ($ispublished && ($returned<1)) return __("Must be greater than 1 for publishing");
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
