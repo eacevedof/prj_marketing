@@ -7,6 +7,7 @@ $promotion = $result["promotion"];
 $date = CF::get(DateComponent::class);
 $datefrom = $date->get_jsdt($promotion["date_from"]);
 $dateto = $date->get_jsdt($promotion["date_to"]);
+$dateexecution = $date->get_jsdt($promotion["date_execution"]);
 
 $texts = [
     "tr00" => __("Save"),
@@ -45,6 +46,7 @@ $texts = [
     "f27" => __("Executed"),
     "f28" => __("Published"),
     "f29" => __("Launched"),
+    "f30" => __("Date limit"),
 ];
 
 $promotion = [
@@ -57,6 +59,7 @@ $promotion = [
     "slug" => $promotion["slug"],
     "date_from" => $datefrom,
     "date_to" => $dateto,
+    "date_execution" => $dateexecution,
     "content" => $promotion["content"],
     "bgcolor" => $promotion["bgcolor"],
     "bgimage_xs" => $promotion["bgimage_xs"],

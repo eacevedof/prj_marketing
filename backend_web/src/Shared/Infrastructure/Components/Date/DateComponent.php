@@ -14,22 +14,8 @@ final class DateComponent
     public const DATE = "date";
     public const DATETIME = "datetime";
 
-    private string $date1 = "";
-    private string $date2 = "";
 
     private array $parts = ["date"=>[], "time"=>""];
-    private string $result = "";
-
-    public function is_greater(int $which=1): bool
-    {
-        $d1 = trim($this->date1);
-        $d2 = trim($this->date2);
-
-        return ($which===1)
-            ? strtotime($d1) > strtotime($d2)
-            : strtotime($d2) > strtotime($d1)
-        ;
-    }
 
     public function get_seconds_between(string $dtlt, string $dtgt): int
     {
@@ -47,35 +33,23 @@ final class DateComponent
         return $parts[0] ?? "";
     }
 
-    public function is_valid(): bool
+    public function is_valid(string $date): bool
     {
-        if (!$this->result = $this->get_date_only($this->date1))
+        if (!$dateonly = $this->get_date_only($date))
             return false;
 
-        list($y, $m, $d) = explode("-", $this->result);
+        list($y, $m, $d) = explode("-", $dateonly);
         return checkdate($m, $d, $y);
     }
 
-    public function set_date1(string $date): self
+    public function explode(string $date, string $format=self::SOURCE_YMD): array
     {
-        $this->date1 = $date;
-        return $this;
-    }
-
-    public function set_date2(string $date): self
-    {
-        $this->date2 = $date;
-        return $this;
-    }
-
-    public function explode(string $format=self::SOURCE_YMD): self
-    {
-        $sep = strstr($this->date1, "T") ? "T" : " ";
-        $parts = explode($sep, $this->date1);
+        $sep = strstr($date, "T") ? "T" : " ";
+        $parts = explode($sep, $date);
         $date = $parts[0];
         $time = $parts[1] ?? "";
 
-        $sep = strstr($this->date1, "/") ? "/" : "-";
+        $sep = strstr($date, "/") ? "/" : "-";
         $parts = explode($sep, $date);
 
         $ymd = $date;
@@ -100,59 +74,31 @@ final class DateComponent
                 "d" => $parts[1],
             ];
 
-        $this->parts = [
+        $return = [
             "date"=> $ymd,
         ];
 
         $time = explode(":", $time);
-        $this->parts["time"] = [
+        $return["time"] = [
             "h" => $time[0] ?? "00",
             "i" => $time[1] ?? "00",
             "s" => $time[2] ?? "00",
         ];
 
-        return $this;
+        return $return;
     }
 
-    public function to_db(string $format=self::DATETIME): self
+    public function to_db(string $date, string $format=self::DATETIME): string
     {
-        $date = ["y" => $this->parts["date"]["y"], "m" => $this->parts["date"]["m"], "d" => $this->parts["date"]["d"]];
+        $clean = str_replace(" ","T", $date);
+        $seconds = strtotime($clean);
         switch ($format) {
-            case self::DATETIME:
-                $this->result = implode("-", $date)." ".implode(":",$this->parts["time"]);
-            break;
-            case self::DATE:
-                $this->result = implode("-", $date);
-            break;
-            case self::TIME:
-                $this->result = implode(":", $this->parts["time"]);
-            break;
+            case self::DATETIME: return date("Y-m-d H:i:s", $seconds);
+            case self::DATE: return date("Y-m-d", $seconds);
+            case self::TIME: return date("H:i:s", $seconds);
         }
-        return $this;
+        return $clean;
     }
-
-    public function to_js(string $format=self::DATETIME): self
-    {
-        //"Y-m-d\TH:i:s"
-        switch ($format) {
-            case self::DATETIME:
-                $time = $this->parts["time"];
-                unset($time["s"]);
-                $this->result = implode("-", $this->parts["date"])."T".implode(":",$time);
-            break;
-            case self::DATE:
-                $this->result = implode("-", $this->parts["date"]);
-            break;
-            case self::TIME:
-                $this->result = implode("-", $this->parts["time"]);
-            break;
-        }
-        return $this;
-    }
-
-    public function get(): string {return $this->result;}
-
-    public function get_parts(): array {return $this->parts;}
 
     public function get_jsdt(string $dbdt): string
     {

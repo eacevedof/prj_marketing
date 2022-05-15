@@ -160,6 +160,11 @@ final class PromotionsUpdateService extends AppService
                 if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
                 return false;
             })
+            ->add_rule("date_execution", "date_execution", function ($data) {
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
+                if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
+            })
             ->add_rule("id_tz", "id_tz", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!RF::get(ArrayRepository::class)->get_timezone_description_by_id($value))
@@ -178,6 +183,7 @@ final class PromotionsUpdateService extends AppService
         if (!$this->auth->is_system()) unset($promotion["id_owner"]);
 
         $promotion["slug"] = $this->textformat->slug($promotion["description"])."-".$promotion["id"];
+        //paso a UTC
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
 

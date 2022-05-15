@@ -85,6 +85,7 @@ export class FormPromotionUpdate extends LitElement {
     _slug: {type: String, state:true},
     _date_from: {type: String, state:true},
     _date_to: {type: String, state:true},
+    _date_execution: {type: String, state:true},
     _content: {type: String, state:true},
     _bgcolor: {type: String, state:true},
     _bgimage_xs: {type: String, state:true},
@@ -110,11 +111,6 @@ export class FormPromotionUpdate extends LitElement {
     _businessowners: {type: Array, state:true},
     _notoryes: {type: Array, state:true},
     _timezones: {type: Array, state:true},
-  }
-
-  //2
-  requestUpdate() {
-    super.requestUpdate()
   }
 
   //3 (aqui siempre hay datos)
@@ -228,6 +224,18 @@ export class FormPromotionUpdate extends LitElement {
               <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control" ?disabled=${this._is_launched!==0}>
             </div>
           </div>
+          <div class="form-group">
+            <label for="date_to">${this.texts.f30}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Limit time to validate a confirmed subscription (voucher validation).
+              </p>
+            </div>
+            <div id="field-date_execution">
+              <input type="datetime-local" step="1" id="date_execution" .value=${this._date_execution} class="form-control" ?disabled=${this._is_launched!==0}>
+            </div>
+          </div>          
         </div>
 
         <div class="flex-row">
