@@ -29,11 +29,9 @@ final class PromotionCapUsersRepository extends AppRepository
         $this->joins = [
             "fields" => [
                 "u2.description"  => "e_deletedby",
-                //"ar1.description" => "e_language",
             ],
             "on" => [
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                //"LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'",
             ]
         ];
     }
@@ -75,20 +73,20 @@ final class PromotionCapUsersRepository extends AppRepository
             ->calcfoundrows()
             ->set_getfields([
                 "m.id",
-"m.uuid",
-"m.id_owner",
-"m.code_erp",
-"m.description",
-"m.id_promotion",
-"m.id_language",
-"m.id_country",
-"m.phone1",
-"m.email",
-"m.birthdate",
-"m.name1",
-"m.name2",
-"m.id_gender",
-"m.address",
+                "m.uuid",
+                "m.id_owner",
+                "m.code_erp",
+                "m.description",
+                "m.id_promotion",
+                "m.id_language",
+                "m.id_country",
+                "m.phone1",
+                "m.email",
+                "m.birthdate",
+                "m.name1",
+                "m.name2",
+                "m.id_gender",
+                "m.address",
                 "m.delete_date"
             ])
             ->set_limit(25, 0)
@@ -112,28 +110,27 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
-"m.insert_date",
-"m.update_user",
-"m.update_date",
-"m.delete_user",
-"m.delete_date",
-"m.id",
-"m.uuid",
-"m.id_owner",
-"m.code_erp",
-"m.description",
-"m.id_promotion",
-"m.id_language",
-"m.id_country",
-"m.phone1",
-"m.email",
-"m.birthdate",
-"m.name1",
-"m.name2",
-"m.id_gender",
-"m.address"
+                "m.insert_date",
+                "m.update_user",
+                "m.update_date",
+                "m.delete_user",
+                "m.delete_date",
+                "m.id",
+                "m.uuid",
+                "m.id_owner",
+                "m.code_erp",
+                "m.description",
+                "m.id_promotion",
+                "m.id_language",
+                "m.id_country",
+                "m.phone1",
+                "m.email",
+                "m.birthdate",
+                "m.name1",
+                "m.name2",
+                "m.id_gender",
+                "m.address"
             ])
-            //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
             ->add_and("m.uuid='$uuid'")
             ->select()->sql()
         ;
