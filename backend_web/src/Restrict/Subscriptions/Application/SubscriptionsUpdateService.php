@@ -2,7 +2,8 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
+use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
+use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\PromotionHasFinishedEvent;
@@ -161,11 +162,11 @@ final class SubscriptionsUpdateService extends AppService
         $affected = $this->reposubscription->update($subscription);
         $subscription = $this->reposubscription->get_by_id(
             $subscription["id"],
-            ["id", "date_confirm", "date_execution", "subs_status", "id_promouser", "id_promotion", "is_test"]
+            ["id", "uuid", "date_confirm", "date_execution", "subs_status", "id_promouser", "id_promotion", "is_test"]
         );
 
         EventBus::instance()->publish(...[
-            //to-do: hay que lanzar el evento has executed para poder notificar el link de puntos acumulados
+            SubscriptionExecutedEvent::from_primitives($subscription["id"], $subscription),
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $subscription["id_promotion"],
                 "id_promouser" => $subscription["id_promouser"],

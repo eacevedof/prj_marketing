@@ -5,16 +5,14 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 
 final class SubscriptionExecutedEvent extends AbsEvent
 {
-    private string $subsuuid;
-    private string $email;
-    private string $dateconfirm;
+    private string $uuid;
+    private string $dateexecution;
 
     public function __construct(
-        int $idcapuser,
+        int $idsubscription,
 
-        string $subsuuid,
-        string $email,
-        string $dateconfirm,
+        string $uuid,
+        string $dateexecution,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -22,10 +20,9 @@ final class SubscriptionExecutedEvent extends AbsEvent
         ?string $causationid = null
     )
     {
-        parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->subsuuid = $subsuuid;
-        $this->email = $email;
-        $this->dateconfirm = $dateconfirm;
+        parent::__construct($idsubscription, $eventid, $occuredon, $correlationid, $causationid);
+        $this->uuid = $uuid;
+        $this->dateexecution = $dateexecution;
     }
 
     public static function event_name(): string
@@ -44,9 +41,8 @@ final class SubscriptionExecutedEvent extends AbsEvent
     {
         return new self(
             $aggregateId,
-            $body["subsuuid"],
-            $body["email"],
-            $body["date_confirm"],
+            $body["uuid"], //app_promotioncap.uuid
+            $body["date_execution"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -57,24 +53,18 @@ final class SubscriptionExecutedEvent extends AbsEvent
     public function to_primitives(): array
     {
         return [
-            "subsuuid" => $this->subsuuid,
-            "email" => $this->email,
-            "date_confirm" => $this->dateconfirm,
+            "uuid" => $this->uuid,
+            "date_execution" => $this->dateexecution,
         ];
     }
 
-    public function subscription_uuid(): string
+    public function uuid(): string
     {
-        return $this->subsuuid;
+        return $this->uuid;
     }
 
-    public function email(): string
+    public function date_execution(): string
     {
-        return $this->email;
-    }
-    
-    public function date_confirm(): string
-    {
-        return $this->dateconfirm;
+        return $this->dateexecution;
     }
 }
