@@ -29,15 +29,13 @@ final class BusinessDataInsertService extends AppService
     private FieldsValidator $validator;
     private BusinessDataEntity $entitybusinessdata;
     private TextComponent $textformat;
-    private DateComponent $datecomp;
     private ArrayRepository $repoapparray;
 
     public function __construct(array $input)
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
-
-        $this->datecomp = CF::get(DateComponent::class);
+        
         $this->_map_dates($input);
         $this->input = $input;
         $this->entitybusinessdata = MF::get(BusinessDataEntity::class);
@@ -51,11 +49,12 @@ final class BusinessDataInsertService extends AppService
 
     private function _map_dates(array &$input): void
     {
+        $dt = CF::get(DateComponent::class);
         $date = $input["date_from"] ?? "";
-        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
+        $date = $dt->to_db($date);
         $input["date_from"] = $date;
         $date = $input["date_to"] ?? "";
-        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
+        $date = $dt->to_db($date);
         $input["date_to"] = $date;
     }
 
