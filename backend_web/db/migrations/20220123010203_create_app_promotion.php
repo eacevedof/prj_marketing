@@ -59,6 +59,9 @@ final class CreateAppPromotion extends AbsMigration
         ->addColumn("date_to", "datetime", [
             "null" => false,
         ])
+        ->addColumn("date_execution", "datetime", [
+            "null" => false,
+        ])
         ->addColumn("content", "string", [
             "limit" => 2000,
             "null" => false,
