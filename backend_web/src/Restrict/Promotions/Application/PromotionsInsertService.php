@@ -148,8 +148,8 @@ final class PromotionsInsertService extends AppService
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
         //paso fechas a utc
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
-        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
-        $promotion["date_execution"] =
+        $promotion["date_to"] = $dateto = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
+        $promotion["date_execution"] = $this->datecomp->add_time($dateto, 3600);
     }
 
     public function __invoke(): array
