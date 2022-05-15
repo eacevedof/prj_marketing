@@ -221,17 +221,17 @@ final class PromotionCapsInsertService extends AppService
         $entitypromouser = MF::get(PromotionCapUsersEntity::class);
         $promocapuser = $entitypromouser->map_request($promocapuser);
         $this->_map_entity($promocapuser);
-        $id = $this->repopromocapuser->insert($promocapuser);
+        $idcapuser = $this->repopromocapuser->insert($promocapuser);
 
         $promocapuser["remote_ip"] = $this->request->get_remote_ip();
         $promocapuser["date_subscription"] = date("Y-m-d H:i:s");
         $promocapuser["is_test"] = $this->istest;
 
         EventBus::instance()->publish(...[
-            PromotionCapUserSubscribedEvent::from_primitives($id, $promocapuser),
+            PromotionCapUserSubscribedEvent::from_primitives($idcapuser, $promocapuser),
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
-                "id_promouser" => $id,
+                "id_promouser" => $idcapuser,
                 "id_type" => PromotionCapActionType::SUBSCRIBED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
