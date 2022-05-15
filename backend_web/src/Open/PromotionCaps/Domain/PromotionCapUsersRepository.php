@@ -159,6 +159,7 @@ final class PromotionCapUsersRepository extends AppRepository
         $r = $this->query($sql);
         return (bool) ($r[0]["id"] ?? null);
     }
+
     public function get_subscription_data(int $idpromouser): array
     {
         $sql = $this->_get_qbuilder()
