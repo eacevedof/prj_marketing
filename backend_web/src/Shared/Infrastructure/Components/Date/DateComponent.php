@@ -14,9 +14,6 @@ final class DateComponent
     public const DATE = "date";
     public const DATETIME = "datetime";
 
-
-    private array $parts = ["date"=>[], "time"=>""];
-
     public function get_seconds_between(string $dtlt, string $dtgt): int
     {
         if ($dtlt === $dtgt) return 0;
