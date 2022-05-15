@@ -4,13 +4,11 @@ namespace App\Shared\Infrastructure\Components\Formatter;
 
 final class TextComponent
 {
-    private string $text = "";
-    private string $result = "";
-
-    public function slug(): string
+    public function slug(string $toslug): string
     {
+        $toslug = $this->_remove_accents($toslug);
         $divider = "-";
-        $text = preg_replace("~[^\pL\d]+~u", $divider, $this->text);
+        $text = preg_replace("~[^\pL\d]+~u", $divider, $toslug);
         // transliterate
         $text = iconv("utf-8", "us-ascii//TRANSLIT", $text);
         // remove unwanted characters
@@ -20,60 +18,50 @@ final class TextComponent
         $text = preg_replace("~-+~", $divider, $text);
         // lowercase
         $text = strtolower($text);
-        $this->result = $text;
-        return $this->result;
+        return $text;
     }
 
-    private function _remove_accents(string &$cadena): void
+    private function _remove_accents(string $withaccents): string
     {
         //Reemplazamos la A y a
-        $cadena = str_replace(
-            array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
-            array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
-            $cadena
+        $withaccents = str_replace(
+            ["Á", "À", "Â", "Ä", "á", "à", "ä", "â", "ª"],
+            ["A", "A", "A", "A", "a", "a", "a", "a", "a"],
+            $withaccents
         );
 
         //Reemplazamos la E y e
-        $cadena = str_replace(
-            array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
-            array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
-            $cadena );
+        $withaccents = str_replace(
+            ["É", "È", "Ê", "Ë", "é", "è", "ë", "ê"],
+            ["E", "E", "E", "E", "e", "e", "e", "e"],
+            $withaccents );
 
         //Reemplazamos la I y i
-        $cadena = str_replace(
-            array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
-            array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
-            $cadena );
+        $withaccents = str_replace(
+            ["Í", "Ì", "Ï", "Î", "í", "ì", "ï", "î"],
+            ["I", "I", "I", "I", "i", "i", "i", "i"],
+            $withaccents );
 
         //Reemplazamos la O y o
-        $cadena = str_replace(
-            array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
-            array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
-            $cadena );
+        $withaccents = str_replace(
+            ["Ó", "Ò", "Ö", "Ô", "ó", "ò", "ö", "ô"],
+            ["O", "O", "O", "O", "o", "o", "o", "o"],
+            $withaccents );
 
         //Reemplazamos la U y u
-        $cadena = str_replace(
-            array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
-            array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
-            $cadena );
+        $withaccents = str_replace(
+            ["Ú", "Ù", "Û", "Ü", "ú", "ù", "ü", "û"],
+            ["U", "U", "U", "U", "u", "u", "u", "u"],
+            $withaccents );
 
         //Reemplazamos la N, n, C y c
-        $cadena = str_replace(
-            array('Ñ', 'ñ', 'Ç', 'ç'),
-            array('N', 'n', 'C', 'c'),
-            $cadena
+        $withaccents = str_replace(
+            ["Ñ", "ñ", "Ç", "ç"],
+            ["N", "n", "C", "c"],
+            $withaccents
         );
-    }
 
-    public function set_text(string $text): self
-    {
-        $this->text = $text;
-        return $this;
-    }
-
-    public function get(): string
-    {
-        return $this->result;
+        return $withaccents;
     }
 
     public function get_random_word(int $charlen=4, int $numbers=2): string

@@ -177,7 +177,7 @@ final class PromotionsUpdateService extends AppService
         unset($promotion["slug"]);
         if (!$this->auth->is_system()) unset($promotion["id_owner"]);
 
-        $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug()."-".$promotion["id"];
+        $promotion["slug"] = $this->textformat->slug($promotion["description"])."-".$promotion["id"];
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
 

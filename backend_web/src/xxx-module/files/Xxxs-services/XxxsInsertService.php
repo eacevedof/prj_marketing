@@ -94,7 +94,7 @@ final class XxxsInsertService extends AppService
 
         $insert = $this->entityxxx->map_request($insert);
         $insert["uuid"] = uniqid();
-        $insert["slug"] = $this->textformat->set_text($insert["description"])->slug();
+        $insert["slug"] = $this->textformat->slug($insert["description"]);
         if (!$this->auth->is_system()) $insert["id_owner"] = $this->auth->get_idowner();
 
         $this->entityxxx->add_sysinsert($insert, $this->authuser["id"]);
