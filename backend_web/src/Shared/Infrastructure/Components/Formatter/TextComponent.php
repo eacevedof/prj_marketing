@@ -7,6 +7,7 @@ final class TextComponent
     public function slug(string $toslug): string
     {
         $toslug = trim($toslug);
+        $toslug = preg_replace("/\s+/", " ",$toslug);
         $toslug = $this->_remove_accents($toslug);
         $divider = "-";
         $text = preg_replace("~[^\pL\d]+~u", $divider, $toslug);
