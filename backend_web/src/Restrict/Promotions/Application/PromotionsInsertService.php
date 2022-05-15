@@ -76,7 +76,10 @@ final class PromotionsInsertService extends AppService
 
     private function _skip_validation(): self
     {
-        $this->validator->add_skip("is_published")->add_skip("is_launched");
+        $this->validator
+            ->add_skip("is_published")
+            ->add_skip("is_launched")
+            ->add_skip("date_execution");
         return $this;
     }
 
