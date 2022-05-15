@@ -22,9 +22,9 @@ if ($tzfrom !== $tzto)
   $datefrom = CF::get(UtcComponent::class)->get_dt_into_tz($datefrom, $tzfrom, $tzto);
 
 
-$date = CF::get(DateComponent::class);
-$datefrom = $date->get_jsdt($datefrom);
-$dateto = $date->get_jsdt($dateto);
+$dt = CF::get(DateComponent::class);
+$datefrom = $dt->get_jsdt($datefrom);
+$dateto = $dt->get_jsdt($dateto);
 
 $texts = [
     "tr00" => __("Save"),
