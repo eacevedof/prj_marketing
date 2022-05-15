@@ -215,26 +215,26 @@ final class PromotionCapUsersRepository extends AppRepository
     public function get_data_by_subsuuid(string $subsuuid): array
     {
         $sql = $this->_get_qbuilder()
-            ->set_comment("promocapusers.get_points_by_email_in_account")
-            ->set_table("$this->table as m")
-            ->distinct()
+            ->set_comment("promocapusers.get_subscription_data")
+            ->set_table("$this->table as pu")
             ->set_getfields([
-                "m.email, m.name1, m.id_language",
-                "p.description AS promotion",
-                "bd.description AS business"
+                "pu.id AS idcapuser, pu.uuid AS capusercode, pu.email, pu.name1 AS username",
+                "ps.id AS subsid, ps.uuid AS subscode, ps.date_confirm, ps.date_execution, ps.code_execution AS execode",
+                "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business",
+                "p.uuid AS promocode, p.slug AS promoslug, p.description AS promotion",
             ])
-            ->add_join("
-            INNER JOIN app_promotioncap_subscriptions AS ps 
-            ON m.id = ps.id_promouser AND m.id_promotion = ps.id_promotion
-            ")
-            ->add_join("INNER JOIN app_promotion AS p ON ps.id_promotion = p.id")
-            ->add_join("INNER JOIN app_business_data AS bd ON bd.id_owner = p.id_owner")
-            ->add_and("m.delete_date IS NULL")
-            ->add_and("p.delete_date IS NULL")
-            ->add_and("ps.delete_date IS NULL")
+            ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps
+            ON pu.id = ps.id_promouser
+            AND ps.id_promotion = pu.id_promotion")
+            ->add_join("INNER JOIN app_promotion AS p
+            ON pu.id_promotion = p.id")
+            ->add_join(" INNER JOIN app_business_data AS bd
+            ON p.id_owner = bd.id_user")
             ->add_and("ps.uuid='$subsuuid'")
+            ->add_and("pu.delete_date IS NULL")
             ->select()->sql()
-            ;
-        return $this->query($sql);
+        ;
+        $r = $this->query($sql);
+        return $r[0] ?? [];
     }
 }
