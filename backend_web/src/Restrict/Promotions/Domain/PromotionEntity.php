@@ -97,6 +97,14 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
+            "date_execution" => [
+                "label" => __("Date limit"),
+                EntityType::REQUEST_KEY => "date_execution",
+                "config" => [
+                    "type" => EntityType::DATETIME,
+                ]
+            ],
+
             "content" => [
                 "label" => __("Content"),
                 EntityType::REQUEST_KEY => "content",
