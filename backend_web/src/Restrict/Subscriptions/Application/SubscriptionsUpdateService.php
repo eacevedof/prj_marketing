@@ -2,12 +2,12 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
-use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\PromotionHasFinishedEvent;
 use App\Shared\Infrastructure\Bus\EventBus;
+use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
@@ -26,6 +26,7 @@ use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class SubscriptionsUpdateService extends AppService
 {
+    use RequestTrait;
     private array $authuser;
     private PromotionCapSubscriptionsRepository $reposubscription;
     private PromotionCapSubscriptionEntity $entitysubscription;
@@ -164,6 +165,8 @@ final class SubscriptionsUpdateService extends AppService
             $subscription["id"],
             ["id", "uuid", "date_confirm", "date_execution", "subs_status", "id_promouser", "id_promotion", "is_test"]
         );
+
+        $this->_load_request();
 
         EventBus::instance()->publish(...[
             SubscriptionExecutedEvent::from_primitives($subscription["id"], $subscription),
