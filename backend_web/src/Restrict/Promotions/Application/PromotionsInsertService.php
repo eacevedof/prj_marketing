@@ -123,13 +123,13 @@ final class PromotionsInsertService extends AppService
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
-                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
+                if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
                 if ($value>$data["data"]["date_to"]) return __("Date from is greater than Date to");
                 return false;
             })
             ->add_rule("date_to", "date_to", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
-                if (!$this->datecomp->set_date1($value)->is_valid()) return __("Invalid date {0}", $value);
+                if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
                 if ($value<$data["data"]["date_from"]) return __("Date to is lower than Date from");
                 return false;
             });
