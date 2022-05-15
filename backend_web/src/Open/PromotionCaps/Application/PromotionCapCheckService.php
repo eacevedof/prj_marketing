@@ -4,7 +4,6 @@ namespace App\Open\PromotionCaps\Application;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Shared\Domain\Enums\ExceptionType;
-use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
@@ -44,19 +43,22 @@ final class PromotionCapCheckService extends AppService
             $this->_promocap_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
 
         $utc = CF::get(UtcComponent::class);
-        //$promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
-
-        //$utcfrom = $utc->get_dt_into_tz($promotion["date_from"], UtcComponent::TZ_UTC, $promotz);
-        //$utcto = $utc->get_dt_into_tz($promotion["date_to"], UtcComponent::TZ_UTC, $promotz);
-
-        //$utcnow = $utc->get_nowdt_in_timezone();
         $dt = CF::get(DateComponent::class);
-        $seconds = $dt->get_seconds_between($promotion["date_from"], $utcnow = $utc->get_nowdt_in_timezone());
+
+        $seconds = $dt->get_seconds_between($utcnow = $utc->get_nowdt_in_timezone(), $promotion["date_execution"]);
+        if($seconds<0)
+            $this->_promocap_exception(
+                __("Sorry but this promotion has finished."),
+                ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
+            );
+
+        $seconds = $dt->get_seconds_between($promotion["date_from"], $utcnow);
         if($seconds<0)
             $this->_promocap_exception(
                 __("Sorry but this promotion has not started yet or is paused. Please try again later."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
+
         $seconds = $dt->get_seconds_between($utcnow, $promotion["date_to"]);
         if($seconds<0)
             $this->_promocap_exception(
