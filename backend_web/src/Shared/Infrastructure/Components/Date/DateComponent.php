@@ -169,4 +169,10 @@ final class DateComponent
             $jsdt = str_replace("T"," ", $jsdt);
         return $jsdt;
     }
+
+    public function add_time(string $dt, int $seconds): string
+    {
+        $newdate = strtotime($dt) + $seconds;
+        return date("Y-m-d H:i:s", $newdate);
+    }
 }

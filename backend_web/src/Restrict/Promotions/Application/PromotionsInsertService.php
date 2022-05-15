@@ -141,13 +141,15 @@ final class PromotionsInsertService extends AppService
         $promotion["uuid"] = uniqid();
         unset(
             $promotion["slug"], $promotion["is_published"],$promotion["is_launched"],$promotion["slug"],$promotion["is_raffleable"],
-            $promotion["is_cumulative"], $promotion["max_confirmed"], $promotion["invested"], $promotion["returned"]
+            $promotion["is_cumulative"], $promotion["max_confirmed"], $promotion["invested"], $promotion["returned"], $promotion["date_execution"]
         );
         $promotion["slug"] = $this->textformat->set_text($promotion["description"])->slug();
         $utc = CF::get(UtcComponent::class);
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        //paso fechas a utc
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
+        $promotion["date_execution"] =
     }
 
     public function __invoke(): array
