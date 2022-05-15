@@ -69,9 +69,9 @@ final class SubscriptionsUpdateService extends AppService
 
         $idauthuser = (int) $this->authuser["id"];
         $identowner = (int) $this->dbsubscription["id_owner"];
-        //si el logado es propietario de la promocion
+        //si el logado es propietario de la suscripcion
         if ($idauthuser===$identowner) return;
-        //si el logado tiene el mismo owner que la promo
+        //si el logado tiene el mismo owner que la suscripcion
         if (RF::get(UserRepository::class)->get_idowner($idauthuser) === $identowner) return;
 
         $this->_exception(
@@ -97,19 +97,17 @@ final class SubscriptionsUpdateService extends AppService
     {
         $promotion = RF::get(PromotionRepository::class)->get_by_id(
             $idpromotion = $this->dbsubscription["id_promotion"],
-            ["date_to", "id_tz"]
+            ["date_execution", "id_tz"]
         );
-        $tz = RF::get(ArrayRepository::class)->get_timezone_description_by_id($promotion["id_tz"]);
+
         $utc = CF::get(UtcComponent::class);
         $dt = CF::get(DateComponent::class);
 
-        $utcto = $utc->get_dt_into_tz($promotion["date_to"], $tz);
-        $utcnow = $utc->get_nowdt_in_timezone();
-        $seconds = $dt->get_seconds_between($utcnow, $utcto);
-        if($seconds<0) {
+        $seconds = $dt->get_seconds_between($utc->get_nowdt_in_timezone(), $promotion["date_execution"]);
+        if ($seconds<0) {
             EventBus::instance()->publish(...[PromotionHasFinishedEvent::from_primitives($idpromotion, $this->dbsubscription)]);
-            $this->_exception(
-                __("Sorry but you can not validate this voucher because this promotion has finished."),
+            $this->_promocap_exception(
+                __("Sorry but this promotion has finished."),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
         }
