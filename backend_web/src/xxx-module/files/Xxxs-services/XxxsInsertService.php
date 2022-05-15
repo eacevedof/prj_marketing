@@ -52,10 +52,10 @@ final class XxxsInsertService extends AppService
     private function _map_dates(array &$input): void
     {
         $date = $input["date_from"] ?? "";
-        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
+        $date = $this->datecomp->to_db($date);
         $input["date_from"] = $date;
         $date = $input["date_to"] ?? "";
-        $date = $this->datecomp->set_date1($date)->explode(DateComponent::SOURCE_YMD)->to_db()->get();
+        $date = $this->datecomp->to_db($date);
         $input["date_to"] = $date;
     }
 
