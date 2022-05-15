@@ -211,4 +211,30 @@ final class PromotionCapUsersRepository extends AppRepository
         ;
         return $this->query($sql);
     }
+
+    public function get_data_by_subsuuid(string $subsuuid): array
+    {
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promocapusers.get_points_by_email_in_account")
+            ->set_table("$this->table as m")
+            ->distinct()
+            ->set_getfields([
+                "m.email, m.name1, m.id_language",
+                "p.description AS promotion",
+                "bd.description AS business"
+            ])
+            ->add_join("
+            INNER JOIN app_promotioncap_subscriptions AS ps 
+            ON m.id = ps.id_promouser AND m.id_promotion = ps.id_promotion
+            ")
+            ->add_join("INNER JOIN app_promotion AS p ON ps.id_promotion = p.id")
+            ->add_join("INNER JOIN app_business_data AS bd ON bd.id_owner = p.id_owner")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("p.delete_date IS NULL")
+            ->add_and("ps.delete_date IS NULL")
+            ->add_and("ps.uuid='$subsuuid'")
+            ->select()->sql()
+            ;
+        return $this->query($sql);
+    }
 }
