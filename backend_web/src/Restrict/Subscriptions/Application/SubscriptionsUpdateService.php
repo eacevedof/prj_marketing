@@ -2,10 +2,10 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\PromotionHasFinishedEvent;
-use App\Shared\Domain\Repositories\App\ArrayRepository;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
@@ -15,6 +15,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
 use App\Restrict\Users\Domain\UserRepository;
 use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
 use App\Shared\Domain\Entities\FieldsValidator;
@@ -159,14 +160,22 @@ final class SubscriptionsUpdateService extends AppService
 
         $affected = $this->reposubscription->update($subscription);
         $subscription = $this->reposubscription->get_by_id(
-            $id = $subscription["id"],
-            ["id", "date_confirm", "date_execution", "subs_status"]
+            $subscription["id"],
+            ["id", "date_confirm", "date_execution", "subs_status", "id_promouser", "id_promotion", "is_test"]
         );
-        /*
+
         EventBus::instance()->publish(...[
-            SubscriptionExecutedEvent::from_primitives($id, $subscription)
+            //to-do: hay que lanzar el evento has executed para poder notificar el link de puntos acumulados
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
+                "id_promotion" => $subscription["id_promotion"],
+                "id_promouser" => $subscription["id_promouser"],
+                "id_type" => PromotionCapActionType::EXECUTED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $subscription["is_test"],
+            ])
         ]);
-        */
 
         return [
             "affected" => $affected,
