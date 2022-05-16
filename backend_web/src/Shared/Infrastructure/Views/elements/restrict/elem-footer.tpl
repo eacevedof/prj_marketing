@@ -7,7 +7,7 @@ $ip = $_SERVER["REMOTE_ADDR"];
         <span>Copyright © <?=$y?> <a href="https://twitter.com/eacevedof" target="_blank">Eduardo A. F.</a>.
         Designed by <a href="https://test.eduardoaf.com" target="_blank">eduardoaf.com</a>
         All rights reserved.
-        </span>
+        </span>&nbsp;|&nbsp;
         <small><?=$ip?></small>
     </div>
 </div>
