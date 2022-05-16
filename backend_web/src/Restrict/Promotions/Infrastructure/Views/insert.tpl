@@ -12,11 +12,11 @@
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
-$tzto = $authuser["tz"];
 
 $tzfrom = date_default_timezone_get();
 $utcfrom = date("Y-m-d H:i:s");
-$utcto = date("Y-m-d")." 23:59:59";
+
+$tzto = $authuser["tz"];
 
 if ($tzfrom !== $tzto)
   $dtfrom = CF::get(UtcComponent::class)->get_dt_into_tz($utcfrom, $tzfrom, $tzto);

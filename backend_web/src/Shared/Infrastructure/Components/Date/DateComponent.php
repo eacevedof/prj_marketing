@@ -118,4 +118,11 @@ final class DateComponent
         $newdate = strtotime($dt) + $seconds;
         return date("Y-m-d H:i:s", $newdate);
     }
+
+    public function get_last_hour(string $dt): string
+    {
+        $sep = strstr($dt, "T") ? "T" : " ";
+        $date = explode($sep, $dt)[0];
+        return "{$date}{$sep}23:59:59";
+    }
 }
