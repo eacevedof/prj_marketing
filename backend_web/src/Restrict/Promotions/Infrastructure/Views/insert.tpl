@@ -17,14 +17,11 @@ $tzfrom = date_default_timezone_get();
 $utcfrom = date("Y-m-d H:i:s");
 
 $tzto = $authuser["tz"];
-
-if ($tzfrom !== $tzto)
-  $dtfrom = CF::get(UtcComponent::class)->get_dt_into_tz($utcfrom, $tzfrom, $tzto);
-
+$dtfrom = ($tzfrom !== $tzto) ? CF::get(UtcComponent::class)->get_dt_into_tz($utcfrom, $tzfrom, $tzto) : $utcfrom;
 
 $dt = CF::get(DateComponent::class);
 $dtfrom = $dt->get_jsdt($dtfrom);
-$dtto = $dt->get_jsdt($utcto);
+$dtto = $dt->get_last_hour($dtfrom);
 
 $texts = [
     "tr00" => __("Save"),
