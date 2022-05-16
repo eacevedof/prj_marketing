@@ -1,7 +1,7 @@
 <?php
 namespace App\Restrict\Billings\Application;
 
-use App\Restrict\Billings\Domain\PromotionCapBillingsRepository;
+use App\Restrict\Billings\Domain\BillingsRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -12,10 +12,10 @@ use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 
-final class BillingsSearchService extends AppService
+final class BillingSearchService extends AppService
 {
     private AuthService $auth;
-    private PromotionCapBillingsRepository $repopromotion;
+    private BillingsRepository $repopromotion;
 
     public function __construct(array $input)
     {
@@ -23,15 +23,12 @@ final class BillingsSearchService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        $this->repopromotion = RF::get(PromotionCapBillingsRepository::class);
+        $this->repopromotion = RF::get(BillingsRepository::class);
     }
 
     private function _check_permission(): void
     {
-        if(!(
-            $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE)
-        ))
+        if(!$this->auth->is_user_allowed(UserPolicyType::BILLING_READ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -72,11 +69,8 @@ final class BillingsSearchService extends AppService
         if($this->auth->is_root())
             $dthelp->add_action("show");
 
-        if($this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ))
+        if($this->auth->is_user_allowed(UserPolicyType::BILLING_READ))
             $dthelp->add_action("show");
-
-        if ($this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
-            $dthelp->add_action("edit");
 
         return $dthelp;
     }

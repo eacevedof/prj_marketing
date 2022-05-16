@@ -7,7 +7,7 @@ use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 use App\Restrict\Auth\Application\AuthService;
 use TheFramework\Components\Db\ComponentQB;
 
-final class PromotionCapBillingsRepository extends AppRepository
+final class BillingsRepository extends AppRepository
 {
     use SearchRepoTrait;
 
