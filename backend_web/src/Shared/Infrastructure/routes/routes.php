@@ -63,6 +63,9 @@ return [
     ["url"=>"/restrict/subscriptions/?int:page","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"index"],
     ["url"=>"/restrict/subscriptions/search","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"search"],
 
+    //@billings
+    ["url"=>"/restrict/billings/search","controller"=>"App\Restrict\Billings\Infrastructure\Controllers\BillingsSearchController", "method"=>"search"],
+
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
 // APIFY
