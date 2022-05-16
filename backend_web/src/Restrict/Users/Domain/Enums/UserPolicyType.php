@@ -11,6 +11,7 @@ abstract class UserPolicyType
     const MODULE_BUSINESSDATA = "businessdata";
     const MODULE_PROMOTIONS = "promotions";
     const MODULE_PROMOTIONS_UI = "promotionsui";
+    const MODULE_PROMOTIONS_BILLING = "promotionsbilling";
     const MODULE_SUBSCRIPTIONS = "subscriptions";
 
     //politicas
@@ -41,6 +42,9 @@ abstract class UserPolicyType
     const SUBSCRIPTIONS_READ = "subscriptions:read";
     const SUBSCRIPTIONS_WRITE = "subscriptions:write";
 
+    //billing
+    const BILLING_READ = "billing:read";
+
     const WRITE = "write";
     const READ = "read";
 
@@ -62,7 +66,8 @@ abstract class UserPolicyType
             self::PROMOTION_STATS_READ,
             self::PROMOTIONS_UI_WRITE,
             self::SUBSCRIPTIONS_READ,
-            self::SUBSCRIPTIONS_WRITE
+            self::SUBSCRIPTIONS_WRITE,
+            self::BILLING_READ
         ];
     }
 }
