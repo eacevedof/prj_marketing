@@ -12,19 +12,19 @@
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
-$tzfrom = date_default_timezone_get();
 $tzto = $authuser["tz"];
 
-$datefrom = date("Y-m-d H:i:s");
-$dateto = date("Y-m-d")." 23:59:59";
+$tzfrom = date_default_timezone_get();
+$utcfrom = date("Y-m-d H:i:s");
+$utcto = date("Y-m-d")." 23:59:59";
 
 if ($tzfrom !== $tzto)
-  $datefrom = CF::get(UtcComponent::class)->get_dt_into_tz($datefrom, $tzfrom, $tzto);
+  $dtfrom = CF::get(UtcComponent::class)->get_dt_into_tz($utcfrom, $tzfrom, $tzto);
 
 
 $dt = CF::get(DateComponent::class);
-$datefrom = $dt->get_jsdt($datefrom);
-$dateto = $dt->get_jsdt($dateto);
+$dtfrom = $dt->get_jsdt($dtfrom);
+$dtto = $dt->get_jsdt($utcto);
 
 $texts = [
     "tr00" => __("Save"),
@@ -61,8 +61,8 @@ $result = [
     "id_tz" => $authuser["id_tz"],
     "code_erp" => "",
     "description" => "",
-    "date_from" => $datefrom,
-    "date_to" => $dateto,
+    "date_from" => $dtfrom,
+    "date_to" => $dtto,
     "content" => "",
     "bgcolor" => "#ffffff",
     "bgimage_xs" => "",
