@@ -51,7 +51,7 @@ $this->_element("common/elem-nav-menu");
     ?>
     </div>
   </div>
-  <?=$this->_element("common/elem-footer")?>
+  <?=$this->_element("restrict/elem-footer")?>
   <a href="#top" id="back-to-top" style="display: block;"><i class="las la-angle-double-up"></i></a>
 </div>
 <div class="main-navbar-backdrop"></div>
