@@ -83,8 +83,9 @@ final class PromotionsInfoService extends AppService
 
     private function _map_entity(array &$promotion): void
     {
-        $utc = CF::get(UtcComponent::class);
         $tzto = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        if ($tzto === TimezoneType::UTC) return;
+        $utc = CF::get(UtcComponent::class);
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], TimezoneType::UTC, $tzto);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], TimezoneType::UTC, $tzto);
     }
