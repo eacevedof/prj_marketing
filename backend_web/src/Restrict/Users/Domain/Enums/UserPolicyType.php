@@ -43,7 +43,7 @@ abstract class UserPolicyType
     const SUBSCRIPTIONS_WRITE = "subscriptions:write";
 
     //billing
-    const BILLING_READ = "billing:read";
+    const BILLINGS_READ = "billings:read";
 
     const WRITE = "write";
     const READ = "read";
@@ -67,7 +67,7 @@ abstract class UserPolicyType
             self::PROMOTIONS_UI_WRITE,
             self::SUBSCRIPTIONS_READ,
             self::SUBSCRIPTIONS_WRITE,
-            self::BILLING_READ
+            self::BILLINGS_READ
         ];
     }
 }

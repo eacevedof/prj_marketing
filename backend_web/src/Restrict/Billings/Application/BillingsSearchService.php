@@ -28,7 +28,7 @@ final class BillingsSearchService extends AppService
 
     private function _check_permission(): void
     {
-        if(!$this->auth->is_user_allowed(UserPolicyType::BILLING_READ))
+        if(!$this->auth->is_user_allowed(UserPolicyType::BILLINGS_READ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -69,7 +69,7 @@ final class BillingsSearchService extends AppService
         if($this->auth->is_root())
             $dthelp->add_action("show");
 
-        if($this->auth->is_user_allowed(UserPolicyType::BILLING_READ))
+        if($this->auth->is_user_allowed(UserPolicyType::BILLINGS_READ))
             $dthelp->add_action("show");
 
         return $dthelp;
