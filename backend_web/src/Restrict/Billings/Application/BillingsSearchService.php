@@ -12,7 +12,7 @@ use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 
-final class BillingSearchService extends AppService
+final class BillingsSearchService extends AppService
 {
     private AuthService $auth;
     private BillingsRepository $repopromotion;

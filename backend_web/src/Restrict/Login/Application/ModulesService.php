@@ -56,7 +56,16 @@ final class ModulesService
                         "url" => "/restrict/subscriptions",
                     ],
                     "edit" => [
-                        "url" => "/restrict/subscriptions/update",
+                        //"url" => "/restrict/subscriptions/update",
+                    ],
+                ]
+            ],
+            "billing" => [
+                "title" => __("Billing"),
+                "icon" => "la-gift",
+                "actions" => [
+                    "search" => [
+                        "url" => "/restrict/billings",
                     ],
                 ]
             ],
