@@ -6,4 +6,3 @@
       </span>
     </div>
 </div>
-<a href="#top" id="back-to-top" style="display: block;"><i class="las la-angle-double-up"></i></a>
