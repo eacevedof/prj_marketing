@@ -43,14 +43,14 @@
 <?
 $this->_element("common/elem-nav-menu");
 ?>
-<div class="main-content horizontal-content">
-  <div class="container">
-<?
-$this->_element("restrict/elem-breadscrumb");
-$this->_template();
-?>
+  <div class="main-content horizontal-content">
+    <div class="container">
+    <?
+    $this->_element("restrict/elem-breadscrumb");
+    $this->_template();
+    ?>
+    </div>
   </div>
-</div>
   <div class="main-footer ht-40">
     <div class="container-fluid pd-t-0-f ht-100p">
       <span>Copyright © 2022 <a href="https://twitter.com/eacevedof" target="_blank">Eduardo A. F.</a>.
