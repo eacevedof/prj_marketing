@@ -60,8 +60,8 @@ final class ModulesService
                     ],
                 ]
             ],
-            "billing" => [
-                "title" => __("Billing"),
+            "billings" => [
+                "title" => __("Billings"),
                 "icon" => "la-gift",
                 "actions" => [
                     "search" => [
