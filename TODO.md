@@ -1,8 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
-- big bug en permisos de pestañas
-- tabla de ejecución de premios
+- tabla de ejecución de premios ???
 - configuracion de bow delegado (para empresas de marketing)
 - no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
   el % del fee de la plataforma. No debería ser menos de 7
@@ -11,8 +10,6 @@
   - 31 a 49 = 3.5% (1,09 - 1,72)
   - 50 a n = 3% (1.5 - 3)
 - configurador de planes por puntos y su reseteo a nivel de cliente. por ejemplo 10 puntos en 15 dias regalo botella de vino.
-- hay que añadir fecha máxima de consumo de la promoción ya que de lo contrario puedo hacerla efectiva a un año vista despues
-  de haberme suscrito
 - en la navegacion entre modals refrecar la url del nav
 - al configurar una promocion no coge el valor de max confirmed
 - crear eventhandler para autogeneración de tablas hijas
@@ -51,6 +48,9 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~hay que añadir fecha máxima de consumo de la promoción ya que de lo contrario puedo hacerla efectiva a un año vista despues
+  de haberme suscrito~~
+- ~~big bug en permisos de pestañas~~
 - ~~la redirección me estaba dando error por el favicon !! llegaba a pintarse y volvia a cargar la misma ur con href=#~~
 - ~~al seleccionar owners en la promocion deben ser owners con businessdata sino no funciona el slug~~
 - ~~gestion de horas UMT. Parsear a local según pais del usuario~~
