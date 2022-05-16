@@ -1,16 +1,13 @@
 <?php
-namespace App\Restrict\Subscriptions\Domain;
+namespace App\Restrict\Billings\Domain;
 
-use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
 use TheFramework\Components\Db\ComponentQB;
 
-final class PromotionCapSubscriptionsRepository extends AppRepository
+final class PromotionCapBillingsRepository extends AppRepository
 {
     use SearchRepoTrait;
 
@@ -118,101 +115,6 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         return $r;
     }
 
-    public function get_info(string $uuid, array $fields = []): array
-    {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
-            ->set_comment("promotiocapsusbscriptions.get_info")
-            ->set_table("$this->table as m")
-            ->set_getfields([
-                "m.insert_user",
-                "m.insert_date",
-                "m.update_user",
-                "m.update_date",
-                "m.delete_user",
-                "m.delete_date",
-                "m.id",
-                "m.uuid",
-                "m.id_owner",
-                "m.code_erp",
-                "m.description",
-                "m.id_promotion",
-                "m.id_promouser",
-                "m.date_subscription",
-                "m.date_confirm",
-                "m.date_execution",
-                "m.code_execution",
-                "m.exec_user",
-                "m.subs_status",
-                "m.remote_ip",
-                "m.is_test",
-                "m.notes"
-            ])
-            ->add_and("m.uuid='$uuid'")
-        ;
-        if ($fields) $sql->set_getfields($fields);
-        $sql = $sql->select()->sql();
-        $r = $this->query($sql);
-        if (!$r) return [];
-
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-
-        return array_merge($r, $sysdata);
-    }
-
-    public function get_info_for_execute_date(string $uuid, array $fields = []): array
-    {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
-            ->set_comment("promotiocapsusbscriptions.get_info_for_execute_date")
-            ->set_table("$this->table as m")
-            ->set_getfields([
-                "m.uuid",
-                "m.id_owner",
-                "m.is_test",
-                "m.subs_status"
-            ])
-            ->add_and("m.uuid='$uuid'")
-        ;
-        if ($fields) $sql->set_getfields($fields);
-        $this->_add_joins($sql);
-
-        $sql = $sql->select()->sql();
-        $r = $this->query($sql);
-        return $r[0] ?? [];
-    }
-
-    public function is_test_mode_by_id_capuser(int $idcapuser): bool
-    {
-        $sql = $this->_get_qbuilder()
-            ->set_comment("promotiocapsusbscriptions.is_test_mode_by_id_capuser")
-            ->set_table("$this->table as m")
-            ->set_getfields(["m.id"])
-            ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_promouser=$idcapuser")
-            ->add_and("m.is_test=1")
-        ;
-        $sql = $sql->select()->sql();
-        $r = $this->query($sql);
-        return (bool)($r[0]["id"] ?? 0);
-    }
-
-    public function mark_finished_by_id_promotion(int $idpromotion): void
-    {
-        $iduser = $this->auth->get_user()["id"] ?? -1;
-        $sql = $this->_get_qbuilder()
-            ->set_comment("promotiocapsusbscriptions.mark_finished_by_id_promotion")
-            ->set_table($this->table)
-            ->add_update_fv("update_date", date("Y-m-d H:i:s"))
-            ->add_update_fv("update_user", $iduser)
-            ->add_update_fv("subs_status", PromotionCapActionType::FINISHED)
-            ->add_and("id_promotion=$idpromotion")
-            ->add_and("delete_date IS NULL")
-            ->add_and("date_execution IS NULL")
-        ;
-        $sql = $sql->update()->sql();
-        $this->execute($sql);
-    }
 
     public function set_auth(AuthService $auth): self
     {

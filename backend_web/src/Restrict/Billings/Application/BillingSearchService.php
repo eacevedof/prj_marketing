@@ -1,7 +1,7 @@
 <?php
-namespace App\Restrict\Subscriptions\Application;
+namespace App\Restrict\Billings\Application;
 
-use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
+use App\Restrict\Billings\Domain\PromotionCapBillingsRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -12,10 +12,10 @@ use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 
-final class SubscriptionsSearchService extends AppService
+final class BillingsSearchService extends AppService
 {
     private AuthService $auth;
-    private PromotionCapSubscriptionsRepository $repopromotion;
+    private PromotionCapBillingsRepository $repopromotion;
 
     public function __construct(array $input)
     {
@@ -23,7 +23,7 @@ final class SubscriptionsSearchService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        $this->repopromotion = RF::get(PromotionCapSubscriptionsRepository::class);
+        $this->repopromotion = RF::get(PromotionCapBillingsRepository::class);
     }
 
     private function _check_permission(): void

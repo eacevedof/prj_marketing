@@ -1,9 +1,9 @@
 <?php
-namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
+namespace App\Restrict\Billings\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Subscriptions\Application\SubscriptionsSearchService;
+use App\Restrict\Billings\Application\BillingsSearchService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
@@ -11,17 +11,17 @@ use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use \Exception;
 
-final class SubscriptionsSearchController extends RestrictController
+final class BillingsSearchController extends RestrictController
 {
 
     public function index(?string $page=null): void
     {
         $this->_if_noauth_tologin();
         try {
-            $search = SF::get(SubscriptionsSearchService::class);
+            $search = SF::get(BillingsSearchService::class);
 
-            $this->add_var(PageType::TITLE, __("Subscriptions"))
-                ->add_var(PageType::H1, __("Subscriptions"))
+            $this->add_var(PageType::TITLE, __("Billings"))
+                ->add_var(PageType::H1, __("Billings"))
                 ->add_var("dthelp", $search->get_datatable())
                 ->add_var("idowner", $this->auth->get_idowner())
                 ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ))
@@ -54,7 +54,7 @@ final class SubscriptionsSearchController extends RestrictController
                 ->show();
 
         try {
-            $search = SF::get_callable(SubscriptionsSearchService::class, $this->request->get_get());
+            $search = SF::get_callable(BillingsSearchService::class, $this->request->get_get());
             $result = $search();
             $this->_get_json()->set_payload([
                 "message"  => __("auth ok"),
@@ -70,4 +70,4 @@ final class SubscriptionsSearchController extends RestrictController
         }
     }//search
 
-}//SubscriptionsSearchController
+}//BillingsSearchController
