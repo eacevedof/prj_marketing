@@ -15,6 +15,8 @@ final class PromotionCapCheckService extends AppService
 {
     private string $email;
     private array $promotion;
+    private int $istest;
+    private array $user;
 
     private PromotionCapSubscriptionsRepository $reposubscription;
     private PromotionCapUsersRepository $repopromocapuser;
@@ -23,8 +25,8 @@ final class PromotionCapCheckService extends AppService
     {
         $this->promotion = $input["promotion"] ?? [];
         $this->email = $input["email"] ?? "";
-        $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
-        $this->repopromocapuser = RF::get(PromotionCapUsersRepository::class);
+        $this->istest = (int)($input["is_test"] ?? 0);
+        $this->user = $input["user"] ?? [];
     }
 
     private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
@@ -37,6 +39,9 @@ final class PromotionCapCheckService extends AppService
         $promotion = $this->promotion;
         if (!$promotion || $promotion["delete_date"])
             $this->_promocap_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
+
+        if ($promotion["disabled_date"])
+            $this->_promocap_exception(__("Sorry but this promotion is disabled"), ExceptionType::CODE_LOCKED);
 
         $promotion["id"] = (int) $promotion["id"];
         if (!$promotion["is_published"])
@@ -73,7 +78,7 @@ final class PromotionCapCheckService extends AppService
             );
 
         $email = trim($this->email ?? "");
-        if ($email && $this->repopromocapuser->is_subscribed_by_email($promotion["id"], $email))
+        if ($email && RF::get(PromotionCapUsersRepository::class)->is_subscribed_by_email($promotion["id"], $email))
             $this->_promocap_exception(
                 __("You are already subscribed. Check your subscription email"),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS

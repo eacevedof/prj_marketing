@@ -279,4 +279,5 @@ final class PromotionRepository extends AppRepository
         ";
         return $this->query($sql);
     }
+
 }

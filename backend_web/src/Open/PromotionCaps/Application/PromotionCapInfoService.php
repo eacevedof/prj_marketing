@@ -66,11 +66,8 @@ final class PromotionCapInfoService extends AppService
     {
         $promotionslug = $this->input["promotionslug"];
         $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
-        if (!$this->promotion)
-            $this->_promocap_exception("{0} not found!", __("Promotion"));
 
         $this->_load_request();
-
         EventBus::instance()->publish(...[
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"] ?? -1,
@@ -83,12 +80,11 @@ final class PromotionCapInfoService extends AppService
             ])
         ]);
 
-        SF::get(
-            PromotionCapCheckService::class,
-            [
-                "promotion" => $this->promotion,
-            ]
-        )->is_suitable_or_fail();
+        SF::get(PromotionCapCheckService::class, [
+            "promotion" => $this->promotion,
+            "is_test" => $this->istest,
+            "user" => SF::get_auth()->get_user(),
+        ])->is_suitable_or_fail();
     }
 
     private function _load_promotionui(): void
