@@ -2,6 +2,9 @@
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
 - crear parametro extra a mode=test, force=publish para auth users
+  - mode=test no cuenta metricas permite duplicar emails
+  - puede q no haga falta force=publish con mode=test que furece la pub
+  
 - url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
 - tratar cuenta desabilitada
 - business-data disabled, disabled_by, disabled_date, disabled-why

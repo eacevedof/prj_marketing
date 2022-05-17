@@ -122,6 +122,28 @@ final class CreateAppBusinessData extends AbsMigration
             "null" => true,
             "default" => null,
         ])
+        ->addColumn("disabled_platform", "string", [
+            "limit" => 3,
+            "default" => 1,
+            "null" => true,
+            "comment" => "base_array.type=platform (id_pk) desde que plataforma se ha realizado la creacion, mobile, web, api",
+        ])
+        ->addColumn("disabled_platform", "string", [
+            "limit" => 3,
+            "default" => 1,
+            "null" => true,
+            "comment" => "base_array.type=platform (id_pk) desde que plataforma se ha realizado la creacion, mobile, web, api",
+        ])
+        ->addColumn("disabled_user", "string", [
+            "limit" => 15,
+            "default" => null,
+            "null" => true,
+            "comment" => "deshabilitador (no necesariamente en base_user) puede ser un proceso ETL",
+        ])
+        ->addColumn("disabled_date", "datetime", [
+            "null" => true,
+            "comment" => "datetime de la deshabilitacion",
+        ])
         ->create();
     }
 
