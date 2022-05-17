@@ -18,9 +18,6 @@ final class PromotionCapCheckService extends AppService
     private int $istest;
     private array $user;
 
-    private PromotionCapSubscriptionsRepository $reposubscription;
-    private PromotionCapUsersRepository $repopromocapuser;
-
     public function __construct(array $input)
     {
         $this->promotion = $input["promotion"] ?? [];
