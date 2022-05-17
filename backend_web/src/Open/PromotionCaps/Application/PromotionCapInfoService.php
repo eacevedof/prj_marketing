@@ -66,6 +66,9 @@ final class PromotionCapInfoService extends AppService
     {
         $promotionslug = $this->input["promotionslug"];
         $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
+        if (!$this->promotion)
+            $this->_promocap_exception("{0} not found!");
+
         $this->_load_request();
 
         EventBus::instance()->publish(...[
