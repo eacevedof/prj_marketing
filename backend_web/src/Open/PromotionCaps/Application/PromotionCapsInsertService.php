@@ -76,14 +76,12 @@ final class PromotionCapsInsertService extends AppService
             "date_from", "date_to", "date_execution", "id_owner", "num_confirmed"
         ]);
 
-        SF::get(
-            PromotionCapCheckService::class,
-            [
-                "email" => ($this->input["email"] ?? ""),
-                "promotion" => $this->promotion,
-            ]
-        )
-        ->is_suitable_or_fail();
+        SF::get(PromotionCapCheckService::class, [
+            "email" => ($this->input["email"] ?? ""),
+            "promotion" => $this->promotion,
+            "is_test" => $this->istest,
+            "user" => SF::get_auth()->get_user(),
+        ])->is_suitable_or_fail();
     }
 
     private function _load_promotionui(): void
