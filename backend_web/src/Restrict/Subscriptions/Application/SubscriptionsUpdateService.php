@@ -2,6 +2,7 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
@@ -86,14 +87,21 @@ final class SubscriptionsUpdateService extends AppService
     {
         $this->dbsubscription = $this->reposubscription->get_by_uuid(
             $uuid = $this->input["uuid"],
-            ["id", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion"]
+            ["id", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion", "disabled_date", "delete_date"]
         );
 
-        if (!$this->dbsubscription)
+        if (!$this->dbsubscription || $this->dbsubscription["delete_date"])
             $this->_exception(
                 __("{0} {1} does not exist", __("Subscription"), $uuid),
                 ExceptionType::CODE_NOT_FOUND
             );
+
+        if (RF::get(BusinessDataRepository::class)->is_disabled_by_iduser($this->dbsubscription["id_owner"]))
+            $this->_promocap_exception(__("Business account deisabled"));
+
+        $promotion = RF::get(PromotionRepository::class)->get_by_id($this->dbsubscription["id_promotion"], ["disabled_date"]);
+        if ($promotion["disabled_date"])
+            $this->_promocap_exception(__("Promotion disabled"), ExceptionType::CODE_LOCKED);
     }
 
     private function _check_promotion(): void
