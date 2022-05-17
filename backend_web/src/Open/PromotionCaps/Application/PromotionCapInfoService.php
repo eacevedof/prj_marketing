@@ -29,18 +29,24 @@ final class PromotionCapInfoService extends AppService
 
     public function __construct(array $input)
     {
-        if (!$input["businessslug"])
+        $this->_load_input($input);
+        if (!($input["businessslug"] ?? ""))
             $this->_promocap_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
 
-        if (!$input["promotionslug"])
+        if (!($input["promotionslug"] ?? ""))
             $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
 
-        $this->input = $input;
-        $this->istest = (int)$input["_test_mode"];
+        $this->istest = (int)($input["_test_mode"] ?? "");
 
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
+    }
+
+    private function _load_input(array $input): array
+    {
+        foreach ($input as $k => $v)
+            $this->input[$k] = trim($v);
     }
 
     private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void

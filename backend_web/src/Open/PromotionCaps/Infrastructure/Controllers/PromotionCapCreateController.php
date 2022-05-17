@@ -20,8 +20,8 @@ final class PromotionCapCreateController extends OpenController
         $picklist = SF::get(PicklistService::class);
         try {
             $promotioncap = SF::get_callable(PromotionCapInfoService::class, [
-                "businessslug" => trim($businessslug),
-                "promotionslug" => trim($promotionslug),
+                "businessslug" => $businessslug,
+                "promotionslug" => $promotionslug,
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $result = $promotioncap();
