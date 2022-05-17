@@ -44,7 +44,7 @@ final class PromotionCapCheckService extends AppService
             $this->_promocap_exception(__("Sorry but this promotion is disabled"), ExceptionType::CODE_LOCKED);
 
         $promotion["id"] = (int) $promotion["id"];
-        if (!$promotion["is_published"])
+        if (!($promotion["is_published"] || ($this->istest && $this->user)))
             $this->_promocap_exception(__("This promotion is paused"), ExceptionType::CODE_FORBIDDEN);
 
         $utc = CF::get(UtcComponent::class);
