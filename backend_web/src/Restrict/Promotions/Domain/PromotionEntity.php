@@ -293,6 +293,32 @@ final class PromotionEntity extends AppEntity
                     "length" => 10,
                 ]
             ],
+
+            "disabled_date" => [
+                "label" => __("Disabled date"),
+                EntityType::REQUEST_KEY => "disabled_date",
+                "config" => [
+                    "type" => EntityType::DATETIME,
+                ]
+            ],
+
+            "disabled_user" => [
+                "label" => __("Disabled by"),
+                EntityType::REQUEST_KEY => "disabled_user",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 15,
+                ]
+            ],
+
+            "disabled_reason" => [
+                "label" => __("Disabled reason"),
+                EntityType::REQUEST_KEY => "disabled_reason",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 1000,
+                ]
+            ],
         ];
 
         $this->pks = [
