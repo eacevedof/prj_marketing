@@ -173,6 +173,20 @@ final class CreateAppPromotion extends AbsMigration
             "null" => false,
             "default" => 0
         ])
+        ->addColumn("disabled_date", "datetime", [
+            "null" => true,
+            "comment" => "datetime de la deshabilitacion",
+        ])
+        ->addColumn("disabled_user", "string", [
+            "limit" => 15,
+            "null" => true,
+            "comment" => "deshabilitador (no necesariamente en base_user) puede ser un proceso ETL",
+        ])
+        ->addColumn("disabled_reason", "string", [
+            "limit" => 1000,
+            "null" => true,
+            "comment" => "why is disabled",
+        ])
         ->create();
     }
 
