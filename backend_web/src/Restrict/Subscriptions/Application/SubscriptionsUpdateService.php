@@ -43,7 +43,7 @@ final class SubscriptionsUpdateService extends AppService
                 ExceptionType::CODE_FORBIDDEN
             );
 
-        $this->_map_input($input);
+        $this->_load_input($input);
 
         $this->entitysubscription = MF::get(PromotionCapSubscriptionEntity::class);
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
@@ -52,7 +52,7 @@ final class SubscriptionsUpdateService extends AppService
         $this->authuser = SF::get_auth()->get_user();
     }
 
-    private function _map_input(array $input): void
+    private function _load_input(array $input): void
     {
         $this->input =  [
             "uuid" => trim($input["uuid"] ?? ""),
