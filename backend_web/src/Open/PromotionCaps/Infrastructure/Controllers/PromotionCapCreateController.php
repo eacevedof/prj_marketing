@@ -19,12 +19,12 @@ final class PromotionCapCreateController extends OpenController
     {
         $picklist = SF::get(PicklistService::class);
         try {
-            $business = SF::get_callable(PromotionCapInfoService::class, [
+            $promotioncap = SF::get_callable(PromotionCapInfoService::class, [
                 "businessslug" => trim($businessslug),
                 "promotionslug" => trim($promotionslug),
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
-            $result = $business();
+            $result = $promotioncap();
 
             $this->set_layout("open/promotioncaps")
                 ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))
@@ -34,7 +34,7 @@ final class PromotionCapCreateController extends OpenController
                 ->add_var("genders", $picklist->get_genders())
                 ->add_var("countries", $picklist->get_countries());
 
-            unset($business, $result, $title, $picklist, $businessslug, $promotionslug);
+            unset($promotioncap, $result, $title, $picklist, $businessslug, $promotionslug);
             $this->view->render();
         }
         catch (PromotionCapException $e) {
