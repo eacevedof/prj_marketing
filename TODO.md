@@ -1,7 +1,10 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
-- tabla de ejecución de premios ???
+- crear parametro extra a mode=test, force=publish para auth users
+- url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
+- tratar cuenta desabilitada
+- business-data disabled, disabled_by, disabled_date, disabled-why
 - configuracion de bow delegado (para empresas de marketing)
 - no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
   el % del fee de la plataforma. No debería ser menos de 7
