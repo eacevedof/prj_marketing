@@ -3,6 +3,7 @@ namespace App\Open\PromotionCaps\Application;
 
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
@@ -36,6 +37,9 @@ final class PromotionCapCheckService extends AppService
         $promotion = $this->promotion;
         if (!$promotion || $promotion["delete_date"])
             $this->_promocap_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
+
+        if (RF::get(BusinessDataRepository::class)->is_disabled_by_iduser($promotion["id_owner"]))
+            $this->_promocap_exception(__("Sorry but this promotion is paused"));
 
         if ($promotion["disabled_date"])
             $this->_promocap_exception(__("Sorry but this promotion is disabled"), ExceptionType::CODE_LOCKED);
