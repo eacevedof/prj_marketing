@@ -9,7 +9,8 @@
  */
 if(!isset($authread)) $authread=false;
 if(!isset($authwrite)) $authwrite=false;
-echo $this->_element("common/elem-datatable-asset");
+$this->_element("restrict/elem-bowdisabled");
+$this->_element("common/elem-datatable-asset");
 ?>
 <div class="row row-sm">
   <div class="col-xl-12">

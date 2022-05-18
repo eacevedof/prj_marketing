@@ -5,7 +5,8 @@
  * @var array $authuser
  * @var string $h1
  */
-echo $this->_element("common/elem-datatable-asset");
+$this->_element("restrict/elem-bowdisabled");
+$this->_element("common/elem-datatable-asset");
 ?>
 <div class="row row-sm">
   <div class="col-xl-12">

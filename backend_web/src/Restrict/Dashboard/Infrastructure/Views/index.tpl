@@ -2,6 +2,7 @@
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
  */
+$this->_element("restrict/elem-bowdisabled");
 ?>
 <div id="dashboard" class="row row-sm">
   <?
