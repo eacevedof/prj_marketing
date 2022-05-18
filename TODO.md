@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- hay un bug al validar el vaucher. por algún motivo no cuenta como exec
 - disable fields en promocion
 - crear parametro extra a mode=test, force=publish para auth users
   - mode=test no cuenta metricas permite duplicar emails
