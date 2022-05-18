@@ -90,7 +90,7 @@ final class SubscriptionsUpdateService extends AppService
             $uuid = $this->input["uuid"],
             [
                 "id", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion",
-                "disabled_date", "delete_date"
+                "delete_date"
             ]
         );
 
@@ -100,11 +100,10 @@ final class SubscriptionsUpdateService extends AppService
                 ExceptionType::CODE_NOT_FOUND
             );
 
-
         if (SF::get(BusinessDataDisabledService::class)($this->dbsubscription["id_owner"]))
             $this->_promocap_exception(__("Business account disabled"));
 
-        $promotion = RF::get(PromotionRepository::class)->get_by_id($this->dbsubscription["id_promotion"], ["disabled_date","disabled_reason"]);
+        $promotion = RF::get(PromotionRepository::class)->get_by_id($this->dbsubscription["id_promotion"], ["disabled_date", "disabled_reason"]);
         if ($promotion["disabled_date"])
             $this->_promocap_exception(__("Promotion disabled. {0}", $promotion["disabled_reason"]), ExceptionType::CODE_LOCKED);
     }
