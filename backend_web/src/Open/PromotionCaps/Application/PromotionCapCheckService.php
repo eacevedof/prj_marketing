@@ -2,7 +2,6 @@
 namespace App\Open\PromotionCaps\Application;
 
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
-use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
