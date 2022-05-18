@@ -107,7 +107,7 @@ final class PromotionsInfoService extends AppService
         )[0];
 
         if (!$this->auth->is_root())
-            unset($promotion["disabled_date"],$promotion["disabled_user"],$promotion["disabled_reason"]);
+            unset($promotion["disabled_date"], $promotion["disabled_user"], $promotion["disabled_reason"]);
 
         return [
             "promotion" => $promotion,
