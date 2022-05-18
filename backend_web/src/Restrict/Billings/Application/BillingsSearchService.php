@@ -15,15 +15,12 @@ use App\Shared\Domain\Enums\ExceptionType;
 final class BillingsSearchService extends AppService
 {
     private AuthService $auth;
-    private BillingsRepository $repopromotion;
 
     public function __construct(array $input)
     {
         $this->auth = SF::get_auth();
         $this->_check_permission();
-
         $this->input = $input;
-        $this->repopromotion = RF::get(BillingsRepository::class);
     }
 
     private function _check_permission(): void
@@ -38,7 +35,7 @@ final class BillingsSearchService extends AppService
     public function __invoke(): array
     {
         $search = CF::get_datatable($this->input)->get_search();
-        return $this->repopromotion->set_auth($this->auth)->search($search);
+        return RF::get(BillingsRepository::class)->set_auth($this->auth)->search($search);
     }
 
     public function get_datatable(): DatatableHelper
@@ -59,7 +56,6 @@ final class BillingsSearchService extends AppService
             ->add_column("e_percent")->add_label(__("%"))->add_tooltip(__("%"))
             ->add_column("e_commission")->add_label(__("Billed"))->add_tooltip(__("Billed"))
         ;
-
         return $dthelp;
     }
 }
