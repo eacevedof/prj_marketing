@@ -56,7 +56,8 @@ final class BillingsSearchService extends AppService
         if ($this->auth->is_system())
             $dthelp->add_column("e_percent")->add_label(__("%"))->add_tooltip(__("%"));
 
-        $dthelp->add_column("e_commission")->add_label(__("Billed"))->add_tooltip(__("Billed"));
+        $dthelp->add_column("e_commission")->add_label(__("Bill"))->add_tooltip(__("Bill"));
+        $dthelp->add_column("e_invested")->add_label(__("Inv"))->add_tooltip(__("Inv"));
 
         if ($this->auth->is_system())
             $dthelp->add_column("e_b_earnings")->add_label(__("R. earn"))->add_tooltip(__("R. earn"));

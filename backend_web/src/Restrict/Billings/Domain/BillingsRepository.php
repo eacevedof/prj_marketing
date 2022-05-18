@@ -40,10 +40,10 @@ final class BillingsRepository extends AppRepository
                     num_executed, 
                     ROUND(returned,2) returned, 
                     ROUND(earned,2) earned, 
-                    percent,
+                    ROUND(percent,0) percent,
                     ROUND(percent/100,2) rate,
                     ROUND(earned * (percent/100),2) commission,
-                    invested,
+                    ROUND(invested, 2) invested,
                     ROUND(earned - ROUND(earned * (percent/100),2) - invested,2) b_earnings
                     FROM
                     (
