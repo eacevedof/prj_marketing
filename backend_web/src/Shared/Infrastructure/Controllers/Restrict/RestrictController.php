@@ -9,6 +9,7 @@
  */
 namespace App\Shared\Infrastructure\Controllers\Restrict;
 
+use App\Restrict\BusinessData\Application\BusinessDataDisabledService;
 use App\Shared\Infrastructure\Controllers\AppController;
 use App\Shared\Infrastructure\Traits\SessionTrait;
 use App\Shared\Infrastructure\Traits\RequestTrait;
@@ -64,6 +65,13 @@ abstract class RestrictController extends AppController
             if (strstr($redirect, "/restrict")) $url = "$url?redirect=".urlencode($redirect);
             $this->response->location($url);
         }
+    }
+
+    protected function _is_business_acc_disabled(): bool
+    {
+        if ($this->auth->is_system()) return true;
+        $idowner = $this->auth->get_idowner();
+        return SF::get(BusinessDataDisabledService::class)($idowner);
     }
 
 }//RestrictController
