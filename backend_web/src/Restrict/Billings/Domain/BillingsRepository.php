@@ -16,29 +16,57 @@ final class BillingsRepository extends AppRepository
     public function __construct()
     {
         $this->db = DbF::get_by_default();
-        $this->table = "app_promotioncap_subscriptions";
-        $this->calcfields = [
-            "CASE m.is_test WHEN 0 THEN 'No' ELSE 'Yes' END" => "c_is_test"
-        ];
+        $this->table = "app_promotion";
         $this->joins = [
             "fields" => [
                 "u1.description" => "e_owner",
                 "u2.description"  => "e_deletedby",
-                "pu.uuid" => "e_usercode",
-                "pu.name1" => "e_username",
-                "pu.email" => "e_email",
-                "p.description" => "e_promotion",
-                "p.uuid"=>"e_promocode",
                 "bd.business_name"=>"e_business",
-                "ar1.description"=>"e_status",
+                "bd.slug" => "e_business_slug",
+
+                //"billing.num_executed" => "e_num_executed",
+                "billing.returned" => "e_returned",
+                "billing.earned" => "e_earned",
+                "billing.percent" => "e_percent",
+                "billing.rate" => "e_rate",
+                "billing.commission" => "e_commission",
+                "billing.invested" => "e_invested",
+                "billing.b_earnings" => "e_b_earnings",
             ],
             "on" => [
-                "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
-                "INNER JOIN app_promotioncap_users pu ON m.id_promouser = pu.id AND m.id_promotion = pu.id_promotion",
-                "INNER JOIN app_promotion p ON m.id_promotion = p.id AND pu.id_promotion = p.id",
-                "LEFT JOIN base_user u1 ON p.id_owner = u1.id",
+                "LEFT JOIN base_user u1 ON p.id_owner = u1.id", //sacar el owner
+                "LEFT JOIN base_user u2 ON m.delete_user = u2.id", //scar el borrado
                 "INNER JOIN app_business_data bd ON p.id_owner = bd.id_user",
-                "LEFT JOIN app_array ar1 ON m.subs_status = ar1.id_pk AND ar1.type='subs_status'"
+                "INNER JOIN (
+                    SELECT id  AS id_promotion, 
+                    num_executed, 
+                    ROUND(returned,2) returned, 
+                    ROUND(earned,2) earned, 
+                    percent,
+                    ROUND(percent/100,2) rate,
+                    ROUND(earned * (percent/100),2) commission,
+                    invested,
+                    ROUND(earned - ROUND(earned * (percent/100),2) - invested,2) b_earnings
+                    FROM
+                    (
+                        SELECT id, invested, returned, num_executed
+                        , returned * num_executed earned
+                        , CASE 
+                            WHEN num_executed>=1 AND num_executed<7 THEN 8
+                            WHEN num_executed>=7 AND num_executed<16 THEN 6
+                            WHEN num_executed>=16 AND num_executed<31 THEN 4
+                            WHEN num_executed>=31 AND num_executed<50 THEN 3.5
+                            -- WHEN num_executed>=50 THEN 3
+                            ELSE 3 
+                        END AS percent
+                        FROM app_promotion p
+                        WHERE 1
+                        AND is_enabled=1
+                        AND delete_date IS NULL
+                    ) AS calc
+                ) billing
+                ON m.id = billing.id_promotion
+                "
             ]
         ];
     }
@@ -49,16 +77,6 @@ final class BillingsRepository extends AppRepository
             $qb->add_and("1 = 0");
             return;
         }
-
-        if($this->auth->is_root()) {
-            $qb->add_getfield("m.delete_user")
-                ->add_getfield("m.insert_date")
-                ->add_getfield("m.insert_user");
-            return;
-        }
-
-        //como no es root no puede ver borrados
-        $qb->add_and("m.delete_date IS NULL");
 
         $autuser = $this->auth->get_user();
         if($this->auth->is_business_owner()) {
@@ -84,27 +102,10 @@ final class BillingsRepository extends AppRepository
                 "m.id_owner",
                 "m.code_erp",
                 "m.description",
-                "m.id_promotion",
-                "m.id_promouser",
-                "m.date_subscription",
-                "m.date_confirm",
-                "m.date_execution",
-                "m.code_execution",
-                "m.exec_user",
-                "m.subs_status",
-                "m.remote_ip",
-                "m.is_test",
-                "m.notes",
-                "m.delete_date"
+                "m.slug"
             ])
             ->set_limit(25, 0)
-            ->set_orderby([
-                "m.date_execution"=>"DESC",
-                "m.date_confirm"=>"DESC",
-                "m.date_subscription"=>"DESC"
-            ])
         ;
-        $this->_add_calcfields($qb);
         $this->_add_joins($qb);
         $this->_add_search_filter($qb, $search);
         $this->_add_auth_condition($qb);
@@ -114,7 +115,6 @@ final class BillingsRepository extends AppRepository
         $r = $this->query_with_count($sqlcount, $sql);
         return $r;
     }
-
 
     public function set_auth(AuthService $auth): self
     {
