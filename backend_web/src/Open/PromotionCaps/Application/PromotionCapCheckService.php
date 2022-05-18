@@ -40,7 +40,7 @@ final class PromotionCapCheckService extends AppService
             $this->_promocap_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
 
         if (SF::get(BusinessDataDisabledService::class)($promotion["id_owner"]))
-            $this->_promocap_exception(__("Sorry but this promotion is paused"));
+            $this->_promocap_exception(__("Sorry but this promotion is paused (1)"));
 
         if ($promotion["disabled_date"])
             $this->_promocap_exception(__("Sorry but this promotion is disabled"), ExceptionType::CODE_LOCKED);

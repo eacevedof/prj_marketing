@@ -6,13 +6,9 @@ namespace App\Open\PromotionCaps\Infrastructure\Controllers;
 
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\PromotionCaps\Application\PromotionCapsConfirmService;
-use App\Open\PromotionCaps\Domain\Enums\RequestActionType;
 use App\Shared\Domain\Enums\PageType;
-use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
 final class PromotionCapConfirmController extends OpenController

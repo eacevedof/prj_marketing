@@ -47,17 +47,15 @@ final class PromotionCapsConfirmService extends AppService
     {
         $this->promotion = $this->repopromotion->get_by_uuid($this->input["promotionuuid"], [
             "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz",
-            "date_from", "date_to", "date_execution", "id_owner", "num_confirmed"
+            "date_from", "date_to", "date_execution", "id_owner", "num_confirmed", "disabled_date"
         ]);
 
-        SF::get(
-            PromotionCapCheckService::class,
-            [
-                "email" => ($this->input["email"] ?? ""),
-                "promotion" => $this->promotion,
-            ]
-        )
-        ->is_suitable_or_fail();
+        SF::get(PromotionCapCheckService::class, [
+            "email" => ($this->input["email"] ?? ""),
+            "promotion" => $this->promotion,
+            "is_test" => $this->istest,
+            "user" => AuthService::getme()->get_user()
+        ])->is_suitable_or_fail();
     }
 
     private function _load_subscription(): void
