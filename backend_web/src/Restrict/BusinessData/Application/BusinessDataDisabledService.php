@@ -11,4 +11,9 @@ final class BusinessDataDisabledService extends AppService
     {
         return RF::get(BusinessDataRepository::class)->is_disabled_by_iduser($idowner);
     }
+
+    public function get_disabled_data(int $idowner): array
+    {
+        return RF::get(BusinessDataRepository::class)->get_disabled_data_by_iduser($idowner);
+    }
 }

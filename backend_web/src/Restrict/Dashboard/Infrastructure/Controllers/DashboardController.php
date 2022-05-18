@@ -24,6 +24,7 @@ final class DashboardController extends RestrictController
         $this->add_var(PageType::TITLE, __("Dashboard x"))
             ->add_var(PageType::H1, __("Dashboard"))
             ->add_var("modules", $modules())
+            ->add_var("bowdisabled",)
             ->render();
     }
 

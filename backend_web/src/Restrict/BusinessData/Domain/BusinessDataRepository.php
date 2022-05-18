@@ -207,4 +207,18 @@ final class BusinessDataRepository extends AppRepository
         $sql = $sql->select()->sql();
         return (bool) ($this->query($sql)[0]["id"] ?? null);
     }
+
+    public function get_disabled_data_by_iduser(int $iduser): array
+    {
+        $sql = $this->_get_qbuilder()
+            ->set_comment("businessdata.get_disabled_data_by_iduser")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.disabled_date","m.disabled_user","m.disabled_reason"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.disabled_date IS NOT NULL")
+            ->add_and("m.id_user=$iduser")
+        ;
+        $sql = $sql->select()->sql();
+        return $this->query($sql)[0] ?? [];
+    }
 }
