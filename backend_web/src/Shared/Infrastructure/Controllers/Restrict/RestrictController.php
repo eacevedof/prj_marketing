@@ -70,9 +70,13 @@ abstract class RestrictController extends AppController
 
     protected function _add_bowdisabled(): void
     {
+        $this->add_var("bowdisabled", []);
+        if (!($iduser = $this->auth->get_user()["id"] ?? "")) return;
+        if ($this->auth->is_system()) return;
+
         $this->add_var(
             "bowdisabled",
-            SF::get(BusinessDataDisabledService::class)->get_disabled_data_by_iduser($this->auth->get_idowner())
+            SF::get(BusinessDataDisabledService::class)->get_disabled_data_by_user($this->auth->get_idowner($iduser))
         );
     }
 
