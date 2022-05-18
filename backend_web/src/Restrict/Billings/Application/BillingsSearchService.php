@@ -41,21 +41,25 @@ final class BillingsSearchService extends AppService
     public function get_datatable(): DatatableHelper
     {
         $dthelp = HF::get(DatatableHelper::class)->add_column("id")->is_visible(false);
-        if($this->auth->is_system())
+        if ($this->auth->is_system())
             $dthelp
                 ->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"))
-                ->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"))
-            ;
+                ->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"));
 
         $dthelp
             ->add_column("uuid")->add_label(__("Code"))->add_tooltip(__("Code"))
             ->add_column("description")->add_label(__("Promotion"))->add_tooltip(__("Promotion"))
             ->add_column("num_executed")->add_label(__("Exec"))->add_tooltip(__("Exec"))
             ->add_column("e_returned")->add_label(__("Ret"))->add_tooltip(__("Ret"))
-            ->add_column("e_earned")->add_label(__("Earn"))->add_tooltip(__("Earn"))
-            ->add_column("e_percent")->add_label(__("%"))->add_tooltip(__("%"))
-            ->add_column("e_commission")->add_label(__("Billed"))->add_tooltip(__("Billed"))
-        ;
+            ->add_column("e_earned")->add_label(__("Earn"))->add_tooltip(__("Earn"));
+
+        if ($this->auth->is_system())
+            $dthelp->add_column("e_percent")->add_label(__("%"))->add_tooltip(__("%"));
+
+        $dthelp->add_column("e_commission")->add_label(__("Billed"))->add_tooltip(__("Billed"));
+
+        if ($this->auth->is_system())
+            $dthelp->add_column("e_b_earnings")->add_label(__("R. earn"))->add_tooltip(__("R. earn"));
         return $dthelp;
     }
 }
