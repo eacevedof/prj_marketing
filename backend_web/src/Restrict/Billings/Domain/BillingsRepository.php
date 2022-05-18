@@ -50,11 +50,11 @@ final class BillingsRepository extends AppRepository
                         SELECT id, invested, returned, num_executed
                         , returned * num_executed earned
                         , CASE 
-                            WHEN num_executed>=1 AND num_executed<7 THEN 8
-                            WHEN num_executed>=7 AND num_executed<16 THEN 6
-                            WHEN num_executed>=16 AND num_executed<31 THEN 4
-                            WHEN num_executed>=31 AND num_executed<50 THEN 3.5
-                            -- WHEN num_executed>=50 THEN 3
+                            WHEN returned>=1 AND returned<7 THEN 8
+                            WHEN returned>=7 AND returned<16 THEN 6
+                            WHEN returned>=16 AND returned<31 THEN 4
+                            WHEN returned>=31 AND returned<50 THEN 3.5
+                            -- WHEN returned>=50 THEN 3
                             ELSE 3 
                         END AS percent
                         FROM app_promotion p
