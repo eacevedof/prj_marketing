@@ -1,15 +1,16 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Services\AppService;
+use App\Restrict\BusinessData\Application\BusinessDataDisabledService;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
 final class PromotionCapCheckService extends AppService
@@ -38,7 +39,7 @@ final class PromotionCapCheckService extends AppService
         if (!$promotion || $promotion["delete_date"])
             $this->_promocap_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
 
-        if (RF::get(BusinessDataRepository::class)->is_disabled_by_iduser($promotion["id_owner"]))
+        if (SF::get(BusinessDataDisabledService::class)($promotion["id_owner"]))
             $this->_promocap_exception(__("Sorry but this promotion is paused"));
 
         if ($promotion["disabled_date"])

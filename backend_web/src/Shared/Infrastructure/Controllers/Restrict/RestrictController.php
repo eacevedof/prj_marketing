@@ -46,6 +46,7 @@ abstract class RestrictController extends AppController
         $this->_load_view()->set_layout("restrict/restrict");
         $this->add_var("authuser", $this->auth->get_user());
         $this->_add_topmenu();
+        $this->_add_bowdisabled();
     }
 
     protected function _add_topmenu(): void
@@ -67,11 +68,12 @@ abstract class RestrictController extends AppController
         }
     }
 
-    protected function _is_business_acc_disabled(): bool
+    protected function _add_bowdisabled(): void
     {
-        if ($this->auth->is_system()) return true;
-        $idowner = $this->auth->get_idowner();
-        return SF::get(BusinessDataDisabledService::class)($idowner);
+        $this->add_var(
+            "bowdisabled",
+            SF::get(BusinessDataDisabledService::class)->get_disabled_data_by_iduser($this->auth->get_idowner())
+        );
     }
 
 }//RestrictController

@@ -2,6 +2,7 @@
 namespace App\Restrict\Subscriptions\Application;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Restrict\BusinessData\Application\BusinessDataDisabledService;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
@@ -99,7 +100,8 @@ final class SubscriptionsUpdateService extends AppService
                 ExceptionType::CODE_NOT_FOUND
             );
 
-        if (RF::get(BusinessDataRepository::class)->is_disabled_by_iduser($this->dbsubscription["id_owner"]))
+
+        if (SF::get(BusinessDataDisabledService::class)($this->dbsubscription["id_owner"]))
             $this->_promocap_exception(__("Business account disabled"));
 
         $promotion = RF::get(PromotionRepository::class)->get_by_id($this->dbsubscription["id_promotion"], ["disabled_date","disabled_reason"]);
