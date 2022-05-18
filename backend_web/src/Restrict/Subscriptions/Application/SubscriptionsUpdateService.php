@@ -87,7 +87,10 @@ final class SubscriptionsUpdateService extends AppService
     {
         $this->dbsubscription = $this->reposubscription->get_by_uuid(
             $uuid = $this->input["uuid"],
-            ["id", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion", "disabled_date", "delete_date"]
+            [
+                "id", "id_owner", "code_execution", "date_confirm", "date_execution", "subs_status", "id_promotion",
+                "disabled_date", "delete_date"
+            ]
         );
 
         if (!$this->dbsubscription || $this->dbsubscription["delete_date"])
@@ -97,11 +100,11 @@ final class SubscriptionsUpdateService extends AppService
             );
 
         if (RF::get(BusinessDataRepository::class)->is_disabled_by_iduser($this->dbsubscription["id_owner"]))
-            $this->_promocap_exception(__("Business account deisabled"));
+            $this->_promocap_exception(__("Business account disabled"));
 
-        $promotion = RF::get(PromotionRepository::class)->get_by_id($this->dbsubscription["id_promotion"], ["disabled_date"]);
+        $promotion = RF::get(PromotionRepository::class)->get_by_id($this->dbsubscription["id_promotion"], ["disabled_date","disabled_reason"]);
         if ($promotion["disabled_date"])
-            $this->_promocap_exception(__("Promotion disabled"), ExceptionType::CODE_LOCKED);
+            $this->_promocap_exception(__("Promotion disabled. {0}", $promotion["disabled_reason"]), ExceptionType::CODE_LOCKED);
     }
 
     private function _check_promotion(): void
