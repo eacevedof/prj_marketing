@@ -43,7 +43,7 @@ final class PromotionCapInfoService extends AppService
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
     }
 
-    private function _load_input(array $input): array
+    private function _load_input(array $input): void
     {
         foreach ($input as $k => $v)
             $this->input[$k] = trim($v);
