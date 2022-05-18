@@ -45,32 +45,19 @@ final class BillingsSearchService extends AppService
     {
         $dthelp = HF::get(DatatableHelper::class)->add_column("id")->is_visible(false);
 
-        if($this->auth->is_root())
+        $dthelp->add_column("uuid")->add_label(__("Code"))->add_tooltip(__("Code"));
+        if($this->auth->is_system())
             $dthelp
-                ->add_column("delete_date")->add_label(__("Deleted at"))
-                ->add_column("e_deletedby")->add_label(__("Deleted by"));
-
-        $dthelp->add_column("uuid")->add_label(__("Cod. Susbscription"))->add_tooltip(__("Cod. Susbscription"));
-        if($this->auth->is_system())
-            $dthelp->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"));
-
-        if($this->auth->is_system())
-            $dthelp->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"));
+                ->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"))
+                ->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"))
+            ;
 
         $dthelp
-            ->add_column("c_is_test")->add_label(__("Test"))->add_tooltip(__("Test"))
-            ->add_column("e_promotion")->add_label(__("Promotion"))->add_tooltip(__("Promotion"))
-            ->add_column("e_usercode")->add_label(__("Cod. User"))->add_tooltip(__("Cod. User"))
-            ->add_column("e_username")->add_label(__("Name"))->add_tooltip(__("Name"))
-            ->add_column("e_status")->add_label(__("Status"))->add_tooltip(__("Status"))
-            ->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
+            ->add_column("num_executed")->add_label(__("Executed"))->add_tooltip(__("Executed"))
+            ->add_column("e_returned")->add_label(__("Ret"))->add_tooltip(__("Ret"))
+            ->add_column("e_earned")->add_label(__("Earn"))->add_tooltip(__("Earn"))
+            ->add_column("e_percent")->add_label(__("%"))->add_tooltip(__("%"))
         ;
-
-        if($this->auth->is_root())
-            $dthelp->add_action("show");
-
-        if($this->auth->is_user_allowed(UserPolicyType::BILLINGS_READ))
-            $dthelp->add_action("show");
 
         return $dthelp;
     }

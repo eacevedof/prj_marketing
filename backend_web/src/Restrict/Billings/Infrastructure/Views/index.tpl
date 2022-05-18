@@ -68,65 +68,12 @@ const is_infoable = row => {
   return (auth.is_business_manager() && auth.have_sameowner(row.id_owner) && (auth.can_write() || auth.can_read()))
 }
 
-const is_editable = row => {
-  if (row.delete_date) return false
-  if (auth.is_system()) return true
-  if (auth.is_business_owner() && auth.have_sameowner(row.id_owner)) return true
-  return (auth.is_business_manager() && auth.have_sameowner(row.id_owner) && auth.can_write())
-}
-
-const is_deletable = row => {
-  if (row.delete_date) return false
-  if (auth.is_root()) return true
-  if (auth.is_sysadmin() && auth.can_write()) return true
-  if (auth.is_business_owner() && auth.have_sameowner(row.id_owner)) return true
-  return (auth.is_business_manager() && auth.have_sameowner(row.id_owner) && auth.can_write())
-}
-
-const is_restorable = row => {
-  if (!row.delete_date) return false
-  return auth.is_root()
-}
-
 dtcolumn.add_rowbtn({
   btnid: "rowbtn-show",
   render: (v,t,row) => {
     if (is_infoable(row)) return `<button type="button" btnid="rowbtn-show" uuid="${row?.uuid ?? ""}" class="btn btn-dark" title="info">
     <i class="mdi mdi-account-card-details"></i>
   </button>`
-    return ""
-  }
-})
-
-dtcolumn.add_rowbtn({
-  btnid: "rowbtn-edit",
-  render: (v,t,row) => {
-    if (is_editable(row))
-      return `<button type="button" btnid="rowbtn-edit" uuid="${row?.uuid ?? ""}" class="btn btn-info" title="edit">
-      <i class="las la-pen"></i>
-    </button>`
-    return ""
-  }
-})
-
-dtcolumn.add_rowbtn({
-  btnid: "rowbtn-del",
-  render: (v,t,row) => {
-    if (is_deletable(row))
-      return `<button type="button" btnid="rowbtn-del" uuid="${row?.uuid ?? ""}" class="btn btn-danger" title="remove">
-      <i class="las la-trash"></i>
-    </button>`
-    return ""
-  }
-})
-
-dtcolumn.add_rowbtn({
-  btnid: "rowbtn-undel",
-  render: (v,t,row) => {
-    if (is_restorable(row))
-      return `<button type="button" btnid="rowbtn-undel" uuid="${row?.uuid ?? ""}" class="btn btn-success" title="restore">
-      <i class="las la-undo-alt"></i>
-    </button>`
     return ""
   }
 })
@@ -150,19 +97,8 @@ dtcolumn.add_column({
   }
 })
 
-rowswal.set_texts({
-  delswal: {
-    error: <?$this->_echo_js(__("<b>Error on delete</b>"));?>,
-    success: <?$this->_echo_js(__("Data successfully deleted"));?>
-  },
-  undelswal: {
-    error: <?$this->_echo_js(__("<b>Error on restore</b>"));?>,
-    success: <?$this->_echo_js(__("Data successfully restored"));?>
-  },
-})
-
 dt_render({
-  URL_MODULE: "/restrict/subscriptions",
+  URL_MODULE: "/restrict/billings",
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?$dthelp->show_perpage();?>,
 })

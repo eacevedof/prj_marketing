@@ -20,7 +20,6 @@ final class BillingsRepository extends AppRepository
         $this->joins = [
             "fields" => [
                 "u1.description" => "e_owner",
-                "u2.description"  => "e_deletedby",
                 "bd.business_name"=>"e_business",
                 "bd.slug" => "e_business_slug",
 
@@ -34,9 +33,8 @@ final class BillingsRepository extends AppRepository
                 "billing.b_earnings" => "e_b_earnings",
             ],
             "on" => [
-                "LEFT JOIN base_user u1 ON p.id_owner = u1.id", //sacar el owner
-                "LEFT JOIN base_user u2 ON m.delete_user = u2.id", //scar el borrado
-                "INNER JOIN app_business_data bd ON p.id_owner = bd.id_user",
+                "LEFT JOIN base_user u1 ON m.id_owner = u1.id", //sacar el owner
+                "INNER JOIN app_business_data bd ON m.id_owner = bd.id_user",
                 "INNER JOIN (
                     SELECT id  AS id_promotion, 
                     num_executed, 
@@ -93,7 +91,7 @@ final class BillingsRepository extends AppRepository
     public function search(array $search): array
     {
         $qb = $this->_get_qbuilder()
-            ->set_comment("promotiocapsusbscriptions.search")
+            ->set_comment("billings.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
             ->set_getfields([
