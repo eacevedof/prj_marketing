@@ -58,6 +58,7 @@ final class SysfieldRepository extends AppRepository
         if (isset($row["update_platform"])) $sys["update_platform"] = "";
         if (isset($row["delete_user"])) $sys["delete_user"] = "";
         if (isset($row["delete_platform"])) $sys["delete_platform"] = "";
+        if (isset($row["disabled_user"])) $sys["disabled_user"] = "";
 
         if (!$sys) return [];
 

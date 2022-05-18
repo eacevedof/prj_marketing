@@ -103,6 +103,7 @@ final class PromotionRepository extends AppRepository
                 "m.max_confirmed",
                 "m.notes",
                 "m.delete_date",
+                "m.disabled_date",
             ])
             ->set_limit(25)
             ->set_orderby(["m.id"=>"DESC"])
@@ -160,7 +161,10 @@ final class PromotionRepository extends AppRepository
                 "m.num_viewed",
                 "m.num_subscribed",
                 "m.num_confirmed",
-                "m.num_executed"
+                "m.num_executed",
+                "m.disabled_date",
+                "m.disabled_reason",
+                "m.disabled_user",
             ])
             ->add_and("m.uuid='$uuid'")
         ;

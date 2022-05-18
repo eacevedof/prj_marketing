@@ -70,7 +70,9 @@ final class PromotionsSearchService extends AppService
         ;
 
         if($this->auth->is_root())
-            $dthelp->add_action("show")
+            $dthelp
+                ->add_column("disabled_date")->add_label(__("Disabled date"))->add_tooltip(__("Disabled date"))
+                ->add_action("show")
                 ->add_action("add")
                 ->add_action("edit")
                 ->add_action("del")
