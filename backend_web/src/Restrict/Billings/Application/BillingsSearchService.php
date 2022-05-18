@@ -53,6 +53,7 @@ final class BillingsSearchService extends AppService
             ;
 
         $dthelp
+            ->add_column("description")->add_label(__("Promotion"))->add_tooltip(__("Promotion"))
             ->add_column("num_executed")->add_label(__("Executed"))->add_tooltip(__("Executed"))
             ->add_column("e_returned")->add_label(__("Ret"))->add_tooltip(__("Ret"))
             ->add_column("e_earned")->add_label(__("Earn"))->add_tooltip(__("Earn"))

@@ -100,7 +100,8 @@ final class BillingsRepository extends AppRepository
                 "m.id_owner",
                 "m.code_erp",
                 "m.description",
-                "m.slug"
+                "m.slug",
+                "m.num_executed",
             ])
             ->set_limit(25, 0)
         ;
