@@ -9,7 +9,6 @@ use App\Picklist\Application\PicklistService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\BusinessData\Application\BusinessDataInfoService;
 use App\Open\PromotionCaps\Application\PromotionCapInfoService;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
@@ -26,15 +25,11 @@ final class PromotionCapCreateController extends OpenController
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $promotioncap = $promotioncap();
-            $businessdata = SF::get(BusinessDataInfoService::class)->get_by_id_user_for_open($promotioncap["promotion"]["id_owner"]);
 
             $this->set_layout("open/promotioncaps")
                 ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
-                ->add_var("result", [
-                    "promotioncap" => $promotioncap,
-                    "businessdata" => $businessdata,
-                ])
+                ->add_var("result", $promotioncap)
                 ->add_var("languages", $picklist->get_languages())
                 ->add_var("genders", $picklist->get_genders())
                 ->add_var("countries", $picklist->get_countries());

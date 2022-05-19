@@ -79,7 +79,7 @@ final class BusinessDataInfoService extends AppService
         $r = $this->repobusinessdata->get_by_user($iduser, ["m.slug"]);
         return $r["slug"] ?? "";
     }
-
+/*
     public function get_by_id_user_for_open(int $iduser): array
     {
         return $this->repobusinessdata->get_by_user($iduser, [
@@ -89,4 +89,5 @@ final class BusinessDataInfoService extends AppService
             "url_social_tiktok"
         ]);
     }
+*/
 }
