@@ -19,7 +19,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
             "head_bgcolor" => "background-color",
         ],
         "body" => [
-            "body_bgcolor" => "background-image",
+            "body_bgimage" => "background-image",
             "body_color" => "color",
             "body_bgcolor" => "background-color",
         ],
