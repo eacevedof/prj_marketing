@@ -15,6 +15,10 @@ $bdhelp = HF::get(BH::class, $businessdata);
 $uihelp = HF::get(PH::class, $promotionui)
 ?>
 <style>
+body {
+  font-size: 15px;
+  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
+}
 .wrapper {
   min-height: 100%;
   border: 1px solid black;
