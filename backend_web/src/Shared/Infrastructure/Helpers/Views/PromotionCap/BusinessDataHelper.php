@@ -10,6 +10,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
 
     private const HEAD = "head";
     private const BODY = "body";
+    private const FOOTER = "footer";
 
     private array $mapping = [
         "head" => [
@@ -22,6 +23,10 @@ final class BusinessDataHelper extends AppHelper implements IHelper
             "body_color" => "color",
             "body_bgcolor" => "background-color",
         ],
+
+        "links" => [
+            "url_business", "url_social_fb", "url_social_ig", "url_social_twitter", "url_social_tiktok"
+        ]
     ];
 
 
@@ -52,5 +57,16 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         return $style ? implode("; ",$style): "";
     }
 
-
+    public function get_footer_links(): string
+    {
+        $links = [];
+        $part = $this->mapping[self::BODY];
+        foreach ($part as $field) {
+            if (!$value = trim($this->businessdata[$field])) continue;
+            $links[] = "<li><a href=\"{}\" target=\"_blank\" rel=\"nofollow\">{$value}</a></li>";
+        }
+        return $links
+            ? "<li>".implode(" ",$links)."</li>"
+            : "";
+    }
 }
