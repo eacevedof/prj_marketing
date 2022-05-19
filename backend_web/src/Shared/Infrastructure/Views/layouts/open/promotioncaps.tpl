@@ -22,10 +22,14 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
   <title><?=($pagetitle ?? "")?></title>
-  <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
+  <?= $this->_asset_css([
+      "vendor/normalize/normalize-8.0.1.min",
+      "vendor/snackbar/snackbar.min"
+  ])?>
   <!-- js -->
   <?= $this->_asset_js([
-      "vendor/jquery/jquery-3.6.0"
+      "vendor/jquery/jquery-3.6.0",
+      "vendor/snackbar/snackbar.min"
   ]) ?>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -35,6 +39,9 @@
 $this->_template();
 ?>
 </div>
+<script>
+  Snackbar.show({text: "hola mundo"})
+</script>
 </body>
 </html>
 <!-- promotioncaps.tpl -->
