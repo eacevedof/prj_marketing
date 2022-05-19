@@ -4,18 +4,6 @@
  * @var array $promotionui
  */
 
-$mapped = [];
-foreach ($promotionui as $field => $value) {
-    $parts = explode("_", $field);
-    $prefix = $parts[0];
-    if ($prefix!=="input") continue;
-    if (!$value) continue;
-    $input = $parts[1];
-    $mapped[$input] = $promotionui["pos_$input"];
-}
-asort($mapped);
-$mapped = array_keys($mapped);
-
 $texts = [
     "tr00" => __("Save"),
     "tr01" => __("Processing..."),
@@ -34,18 +22,15 @@ $texts = [
 ];
 
 $result = [
-    "inputs" => $mapped,
-
+    "inputs" => $uihelp->get_inputs(),
     "languages" => $languages,
     "countries" => $countries,
     "genders" => $genders,
 ];
 ?>
-<div class="card-body pt-0">
-    <form-promotion-cap-insert
-        promotionuuid="<?=$promotionuuid?>"
-        texts="<?$this->_echo_jslit($texts);?>"
-        fields="<?$this->_echo_jslit($result);?>"
-    />
-</div>
+<form-promotion-cap-insert
+    promotionuuid="<?=$promotionuuid?>"
+    texts="<?$this->_echo_jslit($texts);?>"
+    fields="<?$this->_echo_jslit($result);?>"
+/>
 <script type="module" src="/assets/js/open/promotioncap/insert.js"></script>

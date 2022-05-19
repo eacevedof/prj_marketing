@@ -13,4 +13,19 @@ final class PromotionUiHelper extends AppHelper implements IHelper
         $this->promotionui = $promotionui;
     }
 
+    public function get_inputs(): array
+    {
+        $mapped = [];
+        foreach ($this->promotionui as $field => $value) {
+            $parts = explode("_", $field);
+            $prefix = $parts[0];
+            if ($prefix!=="input") continue;
+            if (!$value) continue;
+            $input = $parts[1];
+            $mapped[$input] = $this->promotionui["pos_$input"];
+        }
+        asort($mapped);
+        $mapped = array_keys($mapped);
+        return $mapped;
+    }
 }

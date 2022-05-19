@@ -43,6 +43,7 @@ $uihelp = HF::get(PH::class, $promotionui)
     }
 
     $this->_element_view("promotion-cap-ui-form", [
+      "uihelp" => $uihelp,
       "promotionui" => $promotionui,
       "promotionuuid" => $promotion["uuid"],
       "languages" => $languages,
