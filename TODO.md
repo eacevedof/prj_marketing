@@ -2,14 +2,8 @@
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
 - hay un bug al validar el vaucher. por algún motivo no incrementa el contador en la promo
-- disable fields en promocion
-- crear parametro extra a mode=test, force=publish para auth users
-  - mode=test no cuenta metricas permite duplicar emails
-  - puede q no haga falta force=publish con mode=test que furece la pub
-  
+- disable modal para account y promoción
 - url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
-- tratar cuenta desabilitada
-- business-data disabled, disabled_by, disabled_date, disabled-why
 - configuracion de bow delegado (para empresas de marketing)
 - no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
   el % del fee de la plataforma. No debería ser menos de 7
@@ -56,6 +50,9 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~crear parametro extra a mode=test fuerza publicacion~~
+- ~~tratar cuenta desabilitada~~
+- ~~business-data disabled, disabled_by, disabled_date, disabled-why~~
 - ~~hay que añadir fecha máxima de consumo de la promoción ya que de lo contrario puedo hacerla efectiva a un año vista despues
   de haberme suscrito~~
 - ~~big bug en permisos de pestañas~~
