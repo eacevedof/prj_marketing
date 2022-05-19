@@ -51,4 +51,6 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         }
         return $style ? implode("; ",$style): "";
     }
+
+
 }

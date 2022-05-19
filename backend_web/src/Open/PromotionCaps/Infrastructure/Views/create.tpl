@@ -8,6 +8,7 @@ use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as B
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\PromotionUiHelper as PH;
 //dd($result);
 $businessdata = $result["businessdata"] ?? [];
+$promotion = $result["promotion"];
 $promotionui = $result["promotionui"] ?? [];
 
 $bd = HF::get(BH::class, $businessdata);
@@ -30,17 +31,16 @@ $ui = HF::get(PH::class, $promotionui)
 </style>
 <div class="wrapper">
   <header>
-    la cabecera con el logo de la empresa
+    <h2><? $this->_echo($businessdata["business_name"], false) ?></h2>
   </header>
   <main>
-    <h1><?= $h1 ?></h1>
+    <h1><? $this->_echo($promotion["description"], false) ?></h1>
     <section>
     <?php
     if (isset($error)) {
       echo "<p>$error</p>";
       return;
     }
-    $promotion = $result["promotion"];
 
     $this->_element_view("promotion-cap-ui-form", [
       "promotionui" => $promotionui,
