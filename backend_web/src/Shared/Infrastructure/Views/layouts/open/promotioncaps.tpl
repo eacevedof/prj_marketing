@@ -33,12 +33,10 @@
   ]) ?>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="main-body">
-<div class="page">
+<body>
 <?php
 $this->_template();
 ?>
-</div>
 <script>
 Snackbar.show({
   pos: "top-right",
