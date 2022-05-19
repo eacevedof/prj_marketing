@@ -13,4 +13,12 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         $this->businessdata = $businessdata;
     }
 
+    public function get_style(): string
+    {
+        $style = [];
+        if ($value = trim($this->businessdata["head_bgimage"]))
+            $style[] = "background-image:$value;";
+
+  background-image: url("<?=$businessdata["head_bgimage"]?>");
+    }
 }
