@@ -54,8 +54,7 @@ final class BillingsRepository extends AppRepository
                             WHEN returned>=10 AND returned<20 THEN 7
                             WHEN returned>=20 AND returned<30 THEN 6
                             WHEN returned>=30 AND returned<50 THEN 3.75
-                            -- WHEN returned>=50 THEN 3
-                            ELSE 3 
+                            ELSE 3.5
                         END AS percent
                         FROM app_promotion p
                         WHERE 1
