@@ -18,7 +18,6 @@ $uihelp = HF::get(PH::class, $promotionui)
 .wrapper {
 
 }
-
 .wrapper header{
   border: 1px solid green;
   <?=$bdhelp->get_style_header()?>
@@ -26,6 +25,12 @@ $uihelp = HF::get(PH::class, $promotionui)
 .wrapper main{
   border: 1px solid orange;
   <?=$bdhelp->get_style_body()?>
+}
+.wrapper main h1 {
+
+}
+.wrapper main section {
+
 }
 </style>
 <div class="wrapper">
