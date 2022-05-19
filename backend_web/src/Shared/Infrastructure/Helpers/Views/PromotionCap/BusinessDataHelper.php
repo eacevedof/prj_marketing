@@ -8,8 +8,8 @@ final class BusinessDataHelper extends AppHelper implements IHelper
 {
     private array $businessdata;
 
-    public const HEAD = "head";
-    public const BODY = "body";
+    private const HEAD = "head";
+    private const BODY = "body";
 
     private array $mapping = [
         "head" => [
@@ -30,10 +30,21 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         $this->businessdata = $businessdata;
     }
 
-    public function get_style(string $part=self::HEAD): string
+    public function get_style_header(): string
     {
         $style = [];
-        $part = $this->mapping[$part];
+        $part = $this->mapping[self::HEAD];
+        foreach ($part as $field => $css) {
+            if (!$value = trim($this->businessdata[$field])) continue;
+            $style[] = "{$css}: $value";
+        }
+        return $style ? implode("; ",$style): "";
+    }
+
+    public function get_style_body(): string
+    {
+        $style = [];
+        $part = $this->mapping[self::BODY];
         foreach ($part as $field => $css) {
             if (!$value = trim($this->businessdata[$field])) continue;
             $style[] = "{$css}: $value";

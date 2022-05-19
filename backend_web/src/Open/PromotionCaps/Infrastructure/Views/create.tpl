@@ -20,11 +20,11 @@ $ui = HF::get(PH::class, $promotionui)
 
 .wrapper header{
   border: 1px solid green;
-  <?=$bd->get_style()?>
+  <?=$bd->get_style_header()?>
 }
 .wrapper header{
   border: 1px solid orange;
-  <?=$bd->get_style(BH::BODY)?>
+  <?=$bd->get_style_body()?>
 }
 
 </style>
