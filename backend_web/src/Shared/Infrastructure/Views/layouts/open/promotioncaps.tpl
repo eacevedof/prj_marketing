@@ -40,7 +40,14 @@ $this->_template();
 ?>
 </div>
 <script>
-  Snackbar.show({text: "hola mundo"})
+Snackbar.show({
+  pos: "top-right",
+  backgroundColor: "yellow",
+  duration: 1500,
+  textColor: "green",
+
+  text: "hola mundo",
+})
 </script>
 </body>
 </html>
