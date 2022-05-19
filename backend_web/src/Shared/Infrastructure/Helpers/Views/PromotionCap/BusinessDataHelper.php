@@ -24,8 +24,8 @@ final class BusinessDataHelper extends AppHelper implements IHelper
             "body_bgcolor" => "background-color",
         ],
 
-        "links" => [
-            "url_business", "url_social_fb", "url_social_ig", "url_social_twitter", "url_social_tiktok"
+        "footer" => [
+            "url_social_fb", "url_social_ig", "url_social_twitter", "url_social_tiktok", "url_business",
         ]
     ];
 
@@ -60,13 +60,13 @@ final class BusinessDataHelper extends AppHelper implements IHelper
     public function get_footer_links(): string
     {
         $links = [];
-        $part = $this->mapping[self::BODY];
+        $part = $this->mapping[self::FOOTER];
         foreach ($part as $field) {
             if (!$value = trim($this->businessdata[$field])) continue;
-            $links[] = "<li><a href=\"{}\" target=\"_blank\" rel=\"nofollow\">{$value}</a></li>";
+            $links[] = "<li><a href=\"{$value}\" target=\"_blank\" rel=\"nofollow\">{$value}</a></li>";
         }
         return $links
-            ? "<li>".implode(" ",$links)."</li>"
+            ? "<ul>".implode(" ",$links)."</ul>"
             : "";
     }
 }

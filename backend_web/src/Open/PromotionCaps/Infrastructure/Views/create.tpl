@@ -11,8 +11,8 @@ $businessdata = $result["businessdata"] ?? [];
 $promotion = $result["promotion"];
 $promotionui = $result["promotionui"] ?? [];
 
-$bd = HF::get(BH::class, $businessdata);
-$ui = HF::get(PH::class, $promotionui)
+$bdhelp = HF::get(BH::class, $businessdata);
+$uihelp = HF::get(PH::class, $promotionui)
 ?>
 <style>
 .wrapper {
@@ -21,11 +21,11 @@ $ui = HF::get(PH::class, $promotionui)
 
 .wrapper header{
   border: 1px solid green;
-  <?=$bd->get_style_header()?>
+  <?=$bdhelp->get_style_header()?>
 }
 .wrapper main{
   border: 1px solid orange;
-  <?=$bd->get_style_body()?>
+  <?=$bdhelp->get_style_body()?>
 }
 
 </style>
@@ -53,6 +53,6 @@ $ui = HF::get(PH::class, $promotionui)
     </section>
   </main>
   <footer>
-    enlaces al las redes sociales del prop
+    <?=$bdhelp->get_footer_links()?>
   </footer>
 </div>
