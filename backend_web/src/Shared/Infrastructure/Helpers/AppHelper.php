@@ -21,6 +21,4 @@ abstract class AppHelper
     use LogTrait;
     use EnvTrait;
 
-    public function __construct(){;}
-
 }//AppHelper

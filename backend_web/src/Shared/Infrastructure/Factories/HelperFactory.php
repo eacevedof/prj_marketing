@@ -13,8 +13,8 @@ use App\Shared\Infrastructure\Helpers\IHelper;
 
 final class HelperFactory
 {
-    public static function get(string $helper): IHelper
+    public static function get(string $helper, ?array $input=null): IHelper
     {
-        return new $helper();
+        return $input ? new $helper($input) : new $helper();
     }
 }//HelperFactory
