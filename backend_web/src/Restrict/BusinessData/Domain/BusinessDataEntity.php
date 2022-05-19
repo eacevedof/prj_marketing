@@ -196,6 +196,15 @@ final class BusinessDataEntity extends AppEntity
                 ]
             ],
 
+            "url_social_tiktok" => [
+                "label" => __("Url Tik Tok"),
+                EntityType::REQUEST_KEY => "url_social_tiktok",
+                "config" => [
+                    "type" => EntityType::STRING,
+                    "length" => 100,
+                ]
+            ],
+
             "disabled_date" => [
                 "label" => __("Disabled date"),
                 EntityType::REQUEST_KEY => "disabled_date",
