@@ -6,7 +6,7 @@
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\PromotionUiHelper as PH;
-//dd($result);
+
 $businessdata = $result["businessdata"] ?? [];
 $promotion = $result["promotion"];
 $promotionui = $result["promotionui"] ?? [];
