@@ -50,8 +50,8 @@ final class BillingsRepository extends AppRepository
                         SELECT id, invested, returned, num_executed
                         , returned * num_executed earned
                         , CASE 
-                            WHEN returned>0 AND returned<10 THEN 10
-                            WHEN returned>=10 AND returned<20 THEN 7.75
+                            WHEN returned>0 AND returned<10 THEN 9
+                            WHEN returned>=10 AND returned<20 THEN 7
                             WHEN returned>=20 AND returned<30 THEN 6
                             WHEN returned>=30 AND returned<50 THEN 3.75
                             -- WHEN returned>=50 THEN 3
