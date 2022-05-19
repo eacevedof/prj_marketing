@@ -22,7 +22,7 @@ $ui = HF::get(PH::class, $promotionui)
   border: 1px solid green;
   <?=$bd->get_style_header()?>
 }
-.wrapper header{
+.wrapper main{
   border: 1px solid orange;
   <?=$bd->get_style_body()?>
 }
