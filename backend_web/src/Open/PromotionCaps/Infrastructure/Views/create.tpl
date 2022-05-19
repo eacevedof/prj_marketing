@@ -16,7 +16,8 @@ $uihelp = HF::get(PH::class, $promotionui)
 ?>
 <style>
 .wrapper {
-
+  min-height: 100%;
+  border: 1px solid black;
 }
 .wrapper header{
   border: 1px solid green;
@@ -30,6 +31,12 @@ $uihelp = HF::get(PH::class, $promotionui)
 
 }
 .wrapper main section {
+
+}
+.wrapper footer {
+
+}
+.wrapper footer ul {
 
 }
 </style>
