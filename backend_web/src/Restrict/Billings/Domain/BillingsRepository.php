@@ -40,7 +40,7 @@ final class BillingsRepository extends AppRepository
                     num_executed, 
                     ROUND(returned,2) returned, 
                     ROUND(earned,2) earned, 
-                    ROUND(percent,0) percent,
+                    ROUND(percent,2) percent,
                     ROUND(percent/100,2) rate,
                     ROUND(earned * (percent/100),2) commission,
                     ROUND(invested, 2) invested,
@@ -50,10 +50,10 @@ final class BillingsRepository extends AppRepository
                         SELECT id, invested, returned, num_executed
                         , returned * num_executed earned
                         , CASE 
-                            WHEN returned>=1 AND returned<7 THEN 8
-                            WHEN returned>=7 AND returned<16 THEN 6
-                            WHEN returned>=16 AND returned<31 THEN 4
-                            WHEN returned>=31 AND returned<50 THEN 3.5
+                            WHEN returned>0 AND returned<10 THEN 10
+                            WHEN returned>=10 AND returned<20 THEN 7.75
+                            WHEN returned>=20 AND returned<30 THEN 6
+                            WHEN returned>=30 AND returned<50 THEN 3.75
                             -- WHEN returned>=50 THEN 3
                             ELSE 3 
                         END AS percent
