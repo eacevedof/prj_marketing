@@ -27,7 +27,6 @@ $uihelp = HF::get(PH::class, $promotionui)
   border: 1px solid orange;
   <?=$bdhelp->get_style_body()?>
 }
-
 </style>
 <div class="wrapper">
   <header>
