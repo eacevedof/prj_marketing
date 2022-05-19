@@ -41,6 +41,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         $part = $this->mapping[self::HEAD];
         foreach ($part as $field => $css) {
             if (!$value = trim($this->businessdata[$field])) continue;
+            if (strstr($field,"bgimage")) $value = "url(\"$value\")";
             $style[] = "{$css}: $value";
         }
         return $style ? implode("; ",$style): "";
@@ -52,6 +53,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         $part = $this->mapping[self::BODY];
         foreach ($part as $field => $css) {
             if (!$value = trim($this->businessdata[$field])) continue;
+            if (strstr($field,"bgimage")) $value = "url(\"$value\")";
             $style[] = "{$css}: $value";
         }
         return $style ? implode("; ",$style): "";
