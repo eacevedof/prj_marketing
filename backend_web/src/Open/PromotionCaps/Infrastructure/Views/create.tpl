@@ -4,28 +4,31 @@
  * @var array $result
  */
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper;
-use App\Shared\Infrastructure\Helpers\Views\PromotionCap\PromotionUiHelper;
+use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
+use App\Shared\Infrastructure\Helpers\Views\PromotionCap\PromotionUiHelper as PH;
 //dd($result);
 $businessdata = $result["businessdata"] ?? [];
 $promotionui = $result["promotionui"] ?? [];
 
-$bd = HF::get(BusinessDataHelper::class, $businessdata);
-$ui = HF::get(PromotionUiHelper::class, $promotionui)
+$bd = HF::get(BH::class, $businessdata);
+$ui = HF::get(PH::class, $promotionui)
 ?>
 <style>
-.promotion-public {
+.wrapper {
 
 }
 
-.promotion-public header{
+.wrapper header{
   border: 1px solid green;
-  background-image: <?=$businessdata["head_bgimage"]?>;
-  background-image: url("<?=$businessdata["head_bgimage"]?>");
+  <?=$bd->get_style()?>
+}
+.wrapper header{
+  border: 1px solid orange;
+  <?=$bd->get_style(BH::BODY)?>
 }
 
 </style>
-<div class="promotion-public">
+<div class="wrapper">
   <header>
     la cabecera con el logo de la empresa
   </header>

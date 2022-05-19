@@ -8,17 +8,36 @@ final class BusinessDataHelper extends AppHelper implements IHelper
 {
     private array $businessdata;
 
+    public const HEAD = "head";
+    public const BODY = "body";
+
+    private array $mapping = [
+        "head" => [
+            "head_bgimage" => "background-image",
+            "head_color" => "color",
+            "head_bgcolor" => "background-color",
+        ],
+        "body" => [
+            "body_bgcolor" => "background-image",
+            "body_color" => "color",
+            "body_bgcolor" => "background-color",
+        ],
+    ];
+
+
     public function __construct(array $businessdata)
     {
         $this->businessdata = $businessdata;
     }
 
-    public function get_style(): string
+    public function get_style(string $part=self::HEAD): string
     {
         $style = [];
-        if ($value = trim($this->businessdata["head_bgimage"]))
-            $style[] = "background-image:$value;";
-
-  background-image: url("<?=$businessdata["head_bgimage"]?>");
+        $part = $this->mapping[$part];
+        foreach ($part as $field => $css) {
+            if (!$value = trim($this->businessdata[$field])) continue;
+            $style[] = "{$css}: $value";
+        }
+        return $style ? implode("; ",$style): "";
     }
 }
