@@ -26,7 +26,7 @@ final class PromotionCapCreateController extends OpenController
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $promotioncap = $promotioncap();
-            $businessdata = SF::get(BusinessDataInfoService::class)->get_by_promotion($promotioncap["id"]);
+            $businessdata = SF::get(BusinessDataInfoService::class)->get_by_id_user_for_open($promotioncap["promotion"]["id_owner"]);
 
             $this->set_layout("open/promotioncaps")
                 ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))

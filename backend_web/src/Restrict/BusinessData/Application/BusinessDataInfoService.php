@@ -80,9 +80,13 @@ final class BusinessDataInfoService extends AppService
         return $r["slug"] ?? "";
     }
 
-    public function get_by_id_user_for_open(int $iduser): string
+    public function get_by_id_user_for_open(int $iduser): array
     {
-        $r = $this->repobusinessdata->get_disabled_data_by_iduser($iduser);
-        return $r["slug"] ?? "";
+        return $this->repobusinessdata->get_by_user($iduser, [
+            "business_name","user_logo_1","user_logo_2","user_logo_3","url_favicon",
+            "head_bgcolor","head_color","head_bgimage","body_bgcolor","body_color",
+            "body_bgimage","url_business","url_social_fb","url_social_ig","url_social_twitter",
+            "url_social_tiktok"
+        ]);
     }
 }
