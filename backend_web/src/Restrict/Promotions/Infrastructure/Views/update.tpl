@@ -9,7 +9,7 @@
 <div class="modal-form">
   <div class="card-header">
     <h4 class="card-title mb-1"><?=$h1?></h4>
-
+    <?$this->_element_view("disabled");?>
   </div>
   <div class="card-body p-2 pt-0">
     <div class="tabs-menu">
