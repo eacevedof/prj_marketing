@@ -85,6 +85,7 @@ export class FormPromotionUiUpdate extends LitElement {
     _pos_gender: { type: String, state: true },
     _input_address: { type: String, state: true },
     _pos_address: { type: String, state: true },
+    _disabled_date: { type: String, state: true },
   }
 
   //2
@@ -127,7 +128,7 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>    
             </td>
             <td>
-              <input type="number" id="pos_email" .value=${this._pos_email} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_email" .value=${this._pos_email} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
           
@@ -135,14 +136,14 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f08}</td>
             <td>
-              <select id="input_name1" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_name1" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name1}>${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_name1" .value=${this._pos_name1} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_name1" .value=${this._pos_name1} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
 
@@ -150,14 +151,14 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f16}</td>
             <td>
-              <select id="input_phone1" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_phone1" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_phone1}>${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_phone1" .value=${this._pos_phone1} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_phone1" .value=${this._pos_phone1} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
           
@@ -165,14 +166,14 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f10}</td>
             <td>
-              <select id="input_name2" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_name2" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name2}>${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_name2" .value=${this._pos_name2} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_name2" .value=${this._pos_name2} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
           
@@ -180,14 +181,14 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f12}</td>
             <td>
-              <select id="input_language" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_language" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_language}>${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_language" .value=${this._pos_language} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_language" .value=${this._pos_language} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
 
@@ -195,14 +196,14 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f14}</td>
             <td>
-              <select id="input_country" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_country" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_country}>${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_country" .value=${this._pos_country} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_country" .value=${this._pos_country} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
           
@@ -210,14 +211,14 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f18}</td>
             <td>
-              <select id="input_birthdate" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_birthdate" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_birthdate}>${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_birthdate" .value=${this._pos_birthdate} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_birthdate" .value=${this._pos_birthdate} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
 
@@ -225,14 +226,14 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f20}</td>
             <td>
-              <select id="input_gender" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_gender" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_gender}>${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_gender" .value=${this._pos_gender} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_gender" .value=${this._pos_gender} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
 
@@ -240,35 +241,42 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f22}</td>
             <td>
-              <select id="input_address" class="form-control" required ?disabled=${this.promoislaunched==="1"}>
+              <select id="input_address" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_address} >${item.value}</option>`
                 )}
               </select>
             </td>
             <td>
-              <input type="number" id="pos_address" .value=${this._pos_address} ?disabled=${this.promoislaunched==="1"} min="1" max="100" class="form-control" maxlength="10">
+              <input type="number" id="pos_address" .value=${this._pos_address} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>        
         </tbody>
       </table>
    
-      <div class="form-group mb-0">
-        <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
-          ${this._btnsend}
-          ${this._issending
-        ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-        : html``
-      }
-        </button>
-        <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
-        ${this._btncancel}
-        ${this._issending
-        ? html`<img src="/assets/images/common/loading.png" width="25" height="25" />`
-        : html``
-      }
-        </button>
-      </div>
+    ${this._disabled_date
+        ? null
+        : html`
+          <div class="form-group">
+            <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
+              ${this._btnsend}
+              ${
+                  this._issending
+                      ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                      : null
+              }
+            </button>
+            <button type="button" ?disabled=${this._issending} @click=${this._on_cancel}
+                    class="btn btn-secondary mt-3 mb-0">
+              ${this._btncancel}
+              ${this._issending
+                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                  : null
+              }
+            </button>
+          </div>
+        `
+    }
     </form>
     `
   }

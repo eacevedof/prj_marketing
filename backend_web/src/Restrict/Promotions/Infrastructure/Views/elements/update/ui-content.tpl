@@ -77,6 +77,8 @@ $promotionui = [
     "pos_address" => $promotionui["pos_address"] ?? 90,
 
     "notoryes" => $notoryes,
+
+    "disabled_date" => $result["promotion"]["disabled_date"],
 ];
 //dd($notoryes);
 ?>
