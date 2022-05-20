@@ -82,7 +82,7 @@ $promotionui = [
 ];
 //dd($notoryes);
 ?>
-<div id="ui" class="tab-pane">
+<div id="ui" class="tab-pane mb-2">
   <form-promotion-ui-update
       csrf=<?$this->_echo_js($csrf);?>
       promotionuuid=<?$this->_echo_js($result["promotion"]["uuid"]);?>
