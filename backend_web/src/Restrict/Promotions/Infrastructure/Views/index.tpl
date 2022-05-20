@@ -53,6 +53,7 @@ $this->_element("common/elem-datatable-asset");
 import dt_render from "/assets/js/common/datatable/dttable.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
+import {get_link_local} from "/assets/js/common/html/link.js"
 import auth from "/assets/js/restrict/auth.js"
 
 auth.id_user = <?$this->_echo_js($authuser["id"]) ?>;
@@ -139,6 +140,14 @@ dtcolumn.add_column({
     if (row.delete_date)
       tpl = `<span class="tx-danger">${v}</span><sub style="color:#ccc">(${row.id})</sub>`
     return tpl
+  }
+})
+
+dtcolumn.add_column({
+  data: "description",
+  render: (v,t,row) => {
+    const url = `promotion/{el-chaln-peruvian-cousine-44}/${row.slug}?mode=test`
+    return get_link_local(url, v)
   }
 })
 

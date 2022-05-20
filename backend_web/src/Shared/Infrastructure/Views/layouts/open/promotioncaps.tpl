@@ -34,19 +34,38 @@
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+<style>
+body {
+  min-height: 100%;
+  font-size: 15px;
+  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
+}
+.wrapper {
+  min-height: 100%;
+  border: 1px solid black;
+}
+.wrapper header{
+  border: 1px solid green;
+}
+.wrapper main{
+  border: 1px solid orange;
+}
+.wrapper main h1 {
+
+}
+.wrapper main section {
+
+}
+.wrapper footer {
+
+}
+.wrapper footer ul {
+
+}
+</style>
 <?php
 $this->_template();
 ?>
-<script>
-Snackbar.show({
-  pos: "top-right",
-  backgroundColor: "yellow",
-  duration: 1500,
-  textColor: "green",
-
-  text: "hola mundo",
-})
-</script>
 </body>
 </html>
 <!-- promotioncaps.tpl -->

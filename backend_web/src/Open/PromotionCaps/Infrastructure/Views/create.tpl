@@ -3,6 +3,10 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
+if (isset($error)) {
+  echo "<p>$error</p>";
+  return;
+}
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\PromotionUiHelper as PH;
@@ -52,11 +56,6 @@ body {
     <h1><? $this->_echo($promotion["description"], false) ?></h1>
     <section>
     <?php
-    if (isset($error)) {
-      echo "<p>$error</p>";
-      return;
-    }
-
     $this->_element_view("promotion-cap-ui-form", [
       "uihelp" => $uihelp,
       "promotionuuid" => $promotion["uuid"],
@@ -71,3 +70,13 @@ body {
     <?=$bdhelp->get_footer_links()?>
   </footer>
 </div>
+<script type="module">
+Snackbar.show({
+  pos: "top-right",
+  backgroundColor: "yellow",
+  duration: 1500,
+  textColor: "green",
+
+  text: "hola mundo",
+})
+</script>
