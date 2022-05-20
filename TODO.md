@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- exportacion a csv en grid
 - hay un bug al validar el vaucher. por algún motivo no incrementa el contador en la promo
 - disable modal para account y promoción
 - url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
