@@ -33,12 +33,14 @@ final class PromotionRepository extends AppRepository
                 "u2.description"  => "e_deletedby",
                 "u3.description"  => "e_owner",
                 "ar1.description" => "e_is_published",
+                "bd.slug" => "e_business_slug"
             ],
             "on" => [
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
                 "LEFT JOIN base_user u3 ON m.id_owner = u3.id",
                 "LEFT JOIN app_array ar1 ON m.is_published = ar1.id_pk AND ar1.type='bool'",
                 "LEFT JOIN app_array ar2 ON m.id_tz = ar2.id_pk AND ar2.type='tz'",
+                "LEFT JOIN app_business_data bd ON m.id_owner = bd.id_user",
             ]
         ];
     }

@@ -146,7 +146,7 @@ dtcolumn.add_column({
 dtcolumn.add_column({
   data: "description",
   render: (v,t,row) => {
-    const url = `promotion/{el-chaln-peruvian-cousine-44}/${row.slug}?mode=test`
+    const url = `promotion/${row.e_business_slug}/${row.slug}?mode=test`
     return get_link_local(url, v)
   }
 })
