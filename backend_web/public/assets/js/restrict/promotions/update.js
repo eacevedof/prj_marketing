@@ -227,7 +227,7 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-date_to">
-              <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control" ?disabled=${this._is_launched!==0 || this._disabled_date}}>
+              <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control" ?disabled=${this._is_launched!==0 || this._disabled_date}>
             </div>
           </div>
           <div class="form-group">
@@ -239,7 +239,7 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-date_execution">
-              <input type="datetime-local" step="1" id="date_execution" .value=${this._date_execution} class="form-control" ?disabled=${this._is_launched!==0 || this._disabled_date}}>
+              <input type="datetime-local" step="1" id="date_execution" .value=${this._date_execution} class="form-control" ?disabled=${this._is_launched!==0 || this._disabled_date}>
             </div>
           </div>          
         </div>
