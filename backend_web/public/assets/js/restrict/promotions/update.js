@@ -58,7 +58,6 @@ export class FormPromotionUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
-    disabled: { type: String },
 
     texts: {
       converter: (strjson) => {
@@ -109,6 +108,9 @@ export class FormPromotionUpdate extends LitElement {
     _num_subscribed: {type: String, state:true},
     _num_confirmed: {type: String, state:true},
     _num_executed: {type: String, state:true},
+    _disabled_date: {type: String, state:true},
+    _disabled_user: {type: String, state:true},
+    _disabled_reason: {type: String, state:true},
 
     _businessowners: {type: Array, state:true},
     _notoryes: {type: Array, state:true},
@@ -240,6 +242,7 @@ export class FormPromotionUpdate extends LitElement {
           </div>          
         </div>
 
+<!-- layout -->
         <div class="flex-row">
           <div class="form-group">
             <label for="bgcolor">${this.texts.f10}</label>
@@ -259,7 +262,6 @@ export class FormPromotionUpdate extends LitElement {
             ])}
           </div>
         </div>
-
         <div class="flex-row">
           <div class="form-group col-5">
             <label for="bgimage_sm">${this.texts.f12}</label>
@@ -308,7 +310,7 @@ export class FormPromotionUpdate extends LitElement {
             ])}            
           </div>
         </div>
-
+<!-- /layout -->
         <div class="flex-row">
           <div class="form-group col-4">
             <label for="bgimage_xxl">${this.texts.f16}</label>
@@ -369,7 +371,6 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
-        
         <div class="flex-row">
           <div class="form-group">
             <label for="invested">${this.texts.f17}</label>
@@ -438,8 +439,7 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
-        </div><!--/flex-row-->
-
+        
         <div class="form-group">
           <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
             ${this._btnsend}
@@ -457,6 +457,7 @@ export class FormPromotionUpdate extends LitElement {
                   : null
             }
           </button>
+        </div>
       </form>
     `
   }
@@ -519,7 +520,7 @@ export class FormPromotionUpdate extends LitElement {
 
   }//on_submit
 
-}//FormEdit
+}
 
 if (!customElements.get("form-promotion-update"))
   customElements.define("form-promotion-update", FormPromotionUpdate)
