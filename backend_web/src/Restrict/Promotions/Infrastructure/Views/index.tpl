@@ -148,6 +148,8 @@ dtcolumn.add_column({
   render: (v,t,row) => {
     const url = `promotion/${row.e_business_slug}/${row.slug}?mode=test`
     if (row.disabled_date) return `<span class="tx-warning">${v}</span>`
+    if (row.is_published==="1") v = `<span class="tx-success">${v}</span>`
+    if (row.is_published!=="1") v = `<span class="tx-gray-500">${v}</span>`
     return get_link_local(url, v)
   }
 })
