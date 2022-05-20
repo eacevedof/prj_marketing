@@ -207,6 +207,16 @@ final class AppView
         $any = ($any ?? "");
         echo $raw ? $any : htmlentities($any);
     }
+
+    private function _echo_nohtml(?string $any): void
+    {
+        echo htmlentities($any);
+    }
+
+    private function _nohtml(?string $any): string
+    {
+        return htmlentities($any);
+    }
     
     private function _send_headers(): void
     {
