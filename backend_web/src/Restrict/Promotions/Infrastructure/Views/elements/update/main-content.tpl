@@ -77,6 +77,9 @@ $promotion = [
     "is_launched" => $promotion["is_launched"],
     "tags" => $promotion["tags"],
     "notes" => $promotion["notes"],
+    "disabled_date" => $promotion["disabled_date"],
+    "disabled_user" => $promotion["disabled_user"],
+    "disabled_reason" => $promotion["disabled_reason"],
 
     "businessslug" => $businessslug,
     "timezones" => $timezones ?? [],

@@ -58,6 +58,8 @@ export class FormPromotionUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+    disabled: { type: String },
+
     texts: {
       converter: (strjson) => {
         if (strjson) return JSON.parse(strjson)
