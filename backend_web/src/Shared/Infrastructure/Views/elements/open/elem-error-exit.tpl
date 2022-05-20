@@ -5,6 +5,7 @@
  * @var array | string $messages
  */
 if (is_string($messages)) $messages = [$messages];
+if (!isset($title)) $title = "";
 ?>
 <!--elem-error-die-->
 <style>
