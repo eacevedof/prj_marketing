@@ -4,6 +4,7 @@
  * @var string $title
  * @var array | string $messages
  */
+if (is_string($messages)) $messages = [$messages];
 ?>
 <!--elem-error-die-->
 <style>
@@ -19,7 +20,7 @@ section.error ul {
 }
 </style>
 <section class="error">
-  <h3><?$this->_echo_nohtml($title);?></h3>
+  <h3><? $this->_echo_nohtml($title); ?></h3>
   <?php
   $ul = [];
   foreach ($messages as $message)
