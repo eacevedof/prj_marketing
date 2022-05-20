@@ -249,7 +249,7 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group">
             <label for="bgcolor">${this.texts.f10}</label>
             <div id="field-bgcolor">
-              <input type="color" id="bgcolor" .value=${this._bgcolor} class="form-control" maxlength="10">
+              <input type="color" id="bgcolor" .value=${this._bgcolor} ?disabled=${this._disabled_date} class="form-control" maxlength="10">
             </div>
           </div>
           <div class="form-group col-10">
@@ -257,6 +257,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_xs">
               <input type="text" id="bgimage_xs" .value=${this._bgimage_xs}
                      @change=${e => this._handle_keyup(e, "_bgimage_xs")}
+                     ?disabled=${this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -270,6 +271,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_sm">
               <input type="text" id="bgimage_sm" .value=${this._bgimage_sm}
                      @change=${e => this._handle_keyup(e, "_bgimage_sm")}
+                     ?disabled=${this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -281,6 +283,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_md">
               <input type="text" id="bgimage_md" .value=${this._bgimage_md}
                      @change=${e => this._handle_keyup(e, "_bgimage_md")}
+                     ?disabled=${this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -412,7 +415,8 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group col-12">
             <label for="content">${this.texts.f09}</label>
             <div id="field-content">
-              <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000" ?disabled=${this._is_launched!==0}></textarea>
+              <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000" 
+                        ?disabled=${this._is_launched!==0 || this._disabled_date}></textarea>
             </div>
           </div>
         </div>
@@ -426,7 +430,8 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-tags">
-              <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
+              <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500" 
+                        ?disabled=${this._disabled_date}></textarea>
             </div>
           </div>
         </div>
@@ -440,7 +445,8 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-notes">
-              <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300"></textarea>
+              <textarea type="text" id="notes" .value=${this._notes} class="form-control" maxlength="300" 
+                        ?disabled=${this._disabled_date}></textarea>
             </div>
           </div>
         </div>
