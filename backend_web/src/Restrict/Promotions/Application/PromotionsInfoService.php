@@ -106,9 +106,6 @@ final class PromotionsInfoService extends AppService
             UserPolicyType::MODULE_PROMOTIONS_UI, UserPolicyType::WRITE
         )[0];
 
-        if (!$this->auth->is_root())
-            unset($promotion["disabled_date"], $promotion["disabled_user"], $promotion["disabled_reason"]);
-
         return [
             "promotion" => $promotion,
             "promotionui" => $ispromotionui

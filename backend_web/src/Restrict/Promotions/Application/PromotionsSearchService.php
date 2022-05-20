@@ -64,6 +64,8 @@ final class PromotionsSearchService extends AppService
             ->add_column("date_to")->add_label(__("Date to"))->add_tooltip(__("Date to"))
 
             ->add_column("e_is_published")->add_label(__("Published"))->add_tooltip(__("Published"))
+            ->add_column("num_confirmed")->add_label(__("Conf"))->add_tooltip(__("Conf"))
+            ->add_column("num_executed")->add_label(__("Exec"))->add_tooltip(__("Exec"))
             ->add_column("invested")->add_label(__("Invested"))->add_tooltip(__("Invested"))
             ->add_column("returned")->add_label(__("Inv returned"))->add_tooltip(__("Inv returned"))
             //->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
