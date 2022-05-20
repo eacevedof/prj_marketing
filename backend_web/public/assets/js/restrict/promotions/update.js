@@ -439,25 +439,31 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
-        
-        <div class="form-group">
-          <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
-            ${this._btnsend}
-            ${
-                this._issending
-                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                  : null
-            }
-          </button>
-          <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
-            ${this._btncancel}
-            ${
-                this._issending
-                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                  : null
-            }
-          </button>
-        </div>
+
+        ${this._disabled_date 
+          ? null
+          :html`
+          <div class="form-group">
+            <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
+              ${this._btnsend}
+              ${
+                  this._issending
+                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                    : null
+              }
+            </button>
+            <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
+              ${this._btncancel}
+              ${
+                  this._issending
+                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                    : null
+              }
+            </button>
+          </div>
+        `
+      }
+    
       </form>
     `
   }
