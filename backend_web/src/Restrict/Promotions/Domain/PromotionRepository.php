@@ -106,6 +106,8 @@ final class PromotionRepository extends AppRepository
                 "m.notes",
                 "m.delete_date",
                 "m.disabled_date",
+                "m.num_confirmed",
+                "m.num_executed",
             ])
             ->set_limit(25)
             ->set_orderby(["m.id"=>"DESC"])
