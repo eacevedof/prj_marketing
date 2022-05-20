@@ -6,56 +6,23 @@
 */
 if (!$statspermission) return;
 ?>
-<div class="row">
-  <div class="col-2">
-    <div class="card bg-danger">
-      <div class="card-body">
-        <div class="counter-status md-mb-0">
-          <div class="ms-auto">
-            <h5 class="tx-lg-15 tx-white-8 mb-2"><?=__("Viewed")?></h5>
-            <h2 class="counter mb-0 text-white"><?=$result["promotion"]["num_viewed"]?></h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-3">
-    <div class="card bg-warning">
-      <div class="card-body">
-        <div class="counter-status md-mb-0">
-          <div class="ms-auto">
-            <h5 class="tx-lg-15 tx-white-8 mb-2"><?=__("Subscribed")?></h5>
-            <h2 class="counter mb-0 text-white"><?=$result["promotion"]["num_subscribed"]?></h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-3">
-    <div class="card bg-success">
-      <div class="card-body">
-        <div class="counter-status md-mb-0">
-          <div class="ms-auto">
-            <h5 class="tx-lg-15 tx-white-8 mb-2"><?=__("Confirmed")?></h5>
-            <h2 class="counter mb-0 text-white"><?=$result["promotion"]["num_confirmed"]?></h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-2">
-    <div class="card bg-info">
-      <div class="card-body">
-        <div class="counter-status md-mb-0">
-          <div class="ms-auto">
-            <h5 class="tx-lg-15 tx-white-8 mb-2"><?=__("Executed")?></h5>
-            <h2 class="counter mb-0 text-white"><?=$result["promotion"]["num_executed"]?></h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered mb-0 text-sm-nowrap text-lg-nowrap text-xl-nowrap">
+    <thead>
+    <tr>
+      <th class="wd-lg-25p tx-center bg-danger"><?=__("Viewed")?></th>
+      <th class="wd-lg-25p tx-center bg-warning"><?=__("Subscribed")?></th>
+      <th class="wd-lg-25p tx-center bg-info"><?=__("Confirmed")?></th>
+      <th class="wd-lg-25p tx-center bg-success"><?=__("Executed")?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="tx-center tx-medium tx-inverse"><?=$result["promotion"]["num_viewed"]?></td>
+      <td class="tx-center tx-medium tx-inverse"><?=$result["promotion"]["num_subscribed"]?></td>
+      <td class="tx-center tx-medium tx-info"><?=$result["promotion"]["num_confirmed"]?></td>
+      <td class="tx-center tx-medium tx-success"><?=$result["promotion"]["num_executed"]?></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
