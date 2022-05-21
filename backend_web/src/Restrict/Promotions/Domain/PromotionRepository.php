@@ -211,17 +211,17 @@ final class PromotionRepository extends AppRepository
         return (bool) $r[0]["is_launched"];
     }
 
-    public function is_published_by_uuid(string $uuid): bool
+    public function has_subscribers_by_uuid(string $uuid): bool
     {
         $uuid = $this->_get_sanitized($uuid);
         $qb = $this->_get_qbuilder()
-            ->set_comment("promotion.is_published_by_uuid")
+            ->set_comment("promotion.has_subscribers")
             ->set_table("$this->table as m")
-            ->set_getfields(["m.is_published",])
+            ->set_getfields(["m.num_subscribed",])
             ->add_and("m.uuid='$uuid'");
         $sql = $qb->select()->sql();
         $r = $this->query($sql);
-        return (bool) $r[0]["is_published"];
+        return (bool) $r[0]["num_subscribed"];
     }
 
     public function update_slug_with_id(int $id): void
