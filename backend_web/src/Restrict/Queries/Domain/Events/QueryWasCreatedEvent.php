@@ -6,25 +6,28 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 final class QueryWasCreatedEvent extends AbsEvent
 {
     private string $uuid;
-    private int $idowner;
-    private string $slug;
-
+    private string $description;
+    private string $query;
+    private string $module;
+    
     public function __construct(
-        int $iduser,
+        int $id,
         string $uuid,
-        int $idowner,
-        string $slug,
-
+        string $description,
+        string $query,
+        string $module,
+        
         ?string $eventid = null,
         ?int $occuredon = null,
         ?string $correlationid = null,
         ?string $causationid = null
     )
     {
-        parent::__construct($iduser, $eventid, $occuredon, $correlationid, $causationid);
+        parent::__construct($id, $eventid, $occuredon, $correlationid, $causationid);
         $this->uuid = $uuid;
-        $this->idowner = $idowner;
-        $this->slug = $slug;
+        $this->description = $description;
+        $this->query = $query;
+        $this->module = $module;
     }
 
     public static function event_name(): string
@@ -44,8 +47,9 @@ final class QueryWasCreatedEvent extends AbsEvent
         return new self(
             $aggregateId,
             $body["uuid"],
-            $body["id_owner"],
-            $body["slug"],
+            $body["description"],
+            $body["query"],
+            $body["module"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -57,8 +61,9 @@ final class QueryWasCreatedEvent extends AbsEvent
     {
         return [
             "uuid" => $this->uuid,
-            "id_owner" => $this->idowner,
-            "slug" => $this->slug,
+            "description" => $this->description,
+            "query" => $this->query,
+            "module" => $this->module,
         ];
     }
 
@@ -67,13 +72,18 @@ final class QueryWasCreatedEvent extends AbsEvent
         return $this->uuid;
     }
 
-    public function id_owner(): int
+    public function description(): string
     {
-        return $this->idowner;
+        return $this->description;
     }
 
-    public function slug(): string
+    public function query(): string
     {
-        return $this->slug;
+        return $this->query;
+    }
+
+    public function module(): string
+    {
+        return $this->module;
     }
 }
