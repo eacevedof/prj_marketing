@@ -131,13 +131,14 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
 
         $this->_dispatch([
             "query" => [
-                "uuid" => md5($sql),
+                "uuid" => $md5 = md5($sql),
                 "description" => "read:search",
                 "query" => $sql,
                 "module" => "promotions"
             ]
         ]);
 
+        $r["req_uuid"] = $md5;
         return $r;
     }
 

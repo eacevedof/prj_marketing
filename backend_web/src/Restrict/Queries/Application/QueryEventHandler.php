@@ -34,7 +34,7 @@ final class QueryEventHandler extends AppService implements IEventSubscriber
     public function on_event(IEvent $domevent): IEventSubscriber
     {
         $this->_on_created($domevent);
-        $this->_on_confirmation($domevent);
+        $this->_on_action($domevent);
         return $this;
     }
 }
