@@ -142,13 +142,17 @@ const get_topbuttons = () => {
       visible: true,
       action: _export_data,
       attr: {
-        approle: "export-data"
+        approle: "export-adata"
       }
     },
   ]
 
-  const is_addbtn = _$table.querySelector(`[approle='actions']`)?.getAttribute("add")==="1";
+  const is_addbtn = _$table.querySelector(`[approle="actions"]`)?.getAttribute("add")==="1";
   if (!is_addbtn) topbtns = topbtns.filter(btn => btn.approle !== "add-item")
+
+  const is_exportbtn = _$table.querySelector(`[approle="actions"]`)?.getAttribute("export")==="1";
+  if (!is_exportbtn) topbtns = topbtns.filter(btn => btn.approle !== "export-data")
+
   topbtns = topbtns.map(def => {
                     const btn = _topbtns.filter(top => top.approle === def.approle)[0] ?? null
                     if (!btn) return def
