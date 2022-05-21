@@ -15,7 +15,8 @@ let OPTIONS = {},
   is_rendered = false,
   idtable = "",
   $table = null,
-  dttable = null
+  dttable = null,
+  requestuuid = null  
 
 
 const get_page = perpage => {
@@ -73,7 +74,7 @@ const _hide_spinner = () => {
   if($div) $div.style.display = "none"
 }
 
-const on_ajax = async (data, fnrender) => {
+const on_ajax_request = async (data, fnrender) => {
   const urlsearch = $table.getAttribute("urlmodule").concat("/search")
   const URL_SEARCH = get_url_with_params(urlsearch, data)
 
@@ -82,7 +83,8 @@ const on_ajax = async (data, fnrender) => {
     _hide_spinner()
     return _show_error(response.errors[0])
   }
-
+  requestuuid = response?.req_uuid || null
+  console.log("REQUEST ID", requestuuid)
   fnrender({
     recordsTotal: response.total,
     recordsFiltered: response.total,
@@ -107,7 +109,7 @@ const dt_render = (options) => {
       displayStart: get_page(OPTIONS.ITEMS_PER_PAGE),
     },
 
-    ajax: on_ajax,
+    ajax: on_ajax_request,
 
     initComplete: function() {
       //esto es único por idtable
