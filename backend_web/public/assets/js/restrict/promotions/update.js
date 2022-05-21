@@ -126,6 +126,7 @@ export class FormPromotionUpdate extends LitElement {
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
     this._is_launched = parseInt(this._is_launched)
+    this._is_published = parseInt(this._is_published)
   }
 
   //4
