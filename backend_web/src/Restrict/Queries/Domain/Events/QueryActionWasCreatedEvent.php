@@ -5,15 +5,13 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 
 final class QueryActionWasCreatedEvent extends AbsEvent
 {
-    private string $uuid;
-    private int $idowner;
-    private string $slug;
+    private int $idquery;
+    private string $description;
 
     public function __construct(
-        int $iduser,
-        string $uuid,
-        int $idowner,
-        string $slug,
+        int $id,
+        int $idquery,
+        string $description,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -21,10 +19,9 @@ final class QueryActionWasCreatedEvent extends AbsEvent
         ?string $causationid = null
     )
     {
-        parent::__construct($iduser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->uuid = $uuid;
-        $this->idowner = $idowner;
-        $this->slug = $slug;
+        parent::__construct($id, $eventid, $occuredon, $correlationid, $causationid);
+        $this->idquery = $idquery;
+        $this->description = $description;
     }
 
     public static function event_name(): string
@@ -43,9 +40,8 @@ final class QueryActionWasCreatedEvent extends AbsEvent
     {
         return new self(
             $aggregateId,
-            $body["uuid"],
-            $body["id_owner"],
-            $body["slug"],
+            $body["id_query"],
+            $body["description"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -56,24 +52,18 @@ final class QueryActionWasCreatedEvent extends AbsEvent
     public function to_primitives(): array
     {
         return [
-            "uuid" => $this->uuid,
-            "id_owner" => $this->idowner,
-            "slug" => $this->slug,
+            "id_query" => $this->idquery,
+            "description" => $this->description,
         ];
     }
 
-    public function uuid(): string
+    public function id_query(): int
     {
-        return $this->uuid;
+        return $this->idquery;
     }
 
-    public function id_owner(): int
+    public function description(): string
     {
-        return $this->idowner;
-    }
-
-    public function slug(): string
-    {
-        return $this->slug;
+        return $this->description;
     }
 }
