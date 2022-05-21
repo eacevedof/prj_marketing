@@ -588,7 +588,7 @@ export class FormPromotionUpdate extends LitElement {
         .set_inner(this.texts.tr04)
         .show()
 
-  }//on_submit
+  }
 
 }
 
