@@ -81,6 +81,10 @@ $promotion = [
     "disabled_date" => $promotion["disabled_date"],
     "disabled_user" => $promotion["disabled_user"],
     "disabled_reason" => $promotion["disabled_reason"],
+    "num_viewed" => $promotion["num_viewed"],
+    "num_subscribed" => $promotion["num_subscribed"],
+    "num_confirmed" => $promotion["num_confirmed"],
+    "num_executed" => $promotion["num_executed"],
 
     "businessslug" => $businessslug,
     "timezones" => $timezones ?? [],
