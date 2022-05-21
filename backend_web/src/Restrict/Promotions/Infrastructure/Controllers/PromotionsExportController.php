@@ -19,10 +19,12 @@ final class PromotionsExportController extends RestrictController
                 ->show();
 
         try {
-            $export = SF::get_callable(PromotionsExportService::class, $this->request->get_get());
+            $export = SF::get_callable(PromotionsExportService::class,
+                ["req_uuid" =>$this->request->get_get("req_uuid")]
+            );
             $result = $export();
             header("Content-Description: File Transfer");
-            header("Content-Type: csv");
+            header("Content-Type: text/csv");
             header("Content-Disposition: attachment; filename=promotions.csv");
             header("Content-Transfer-Encoding: binary");
             header("Connection: Keep-Alive");

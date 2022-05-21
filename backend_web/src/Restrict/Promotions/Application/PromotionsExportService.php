@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Promotions\Application;
 
+use App\Restrict\Queries\Domain\QueryRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -14,29 +15,19 @@ use App\Shared\Domain\Enums\ExceptionType;
 
 final class PromotionsExportService extends AppService
 {
-    private AuthService $auth;
-    private PromotionRepository $repopromotion;
+    private string $requuid;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
-
-        $this->input = $input;
-        $this->repopromotion = RF::get(PromotionRepository::class);
-    }
-
-    public function __invoke(): array
-    {
-        $search = CF::get_datatable($this->input)->get_search();
-        return $this->repopromotion->set_auth($this->auth)->search($search);
+        $this->requuid = trim($input["req_uuid"] ?? "");
+        if (!$this->requuid) $this->_exception(__("No request id received"));
     }
 
     private function _check_permission(): void
     {
         if(!(
-            $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)
+            SF::get_auth()->is_user_allowed(UserPolicyType::PROMOTIONS_READ)
+            || SF::get_auth()->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)
         ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
@@ -44,53 +35,18 @@ final class PromotionsExportService extends AppService
             );
     }
 
-    public function get_datatable(): DatatableHelper
+    public function __invoke(): array
     {
-        $dthelp = HF::get(DatatableHelper::class)->add_column("id")->is_visible(false);
+        $this->_check_permission();
+        $iduser = SF::get_auth()->get_user()["id"] ?? -1;
 
-        if($this->auth->is_root())
-            $dthelp
-                ->add_column("delete_date")->add_label(__("Deleted at"))
-                ->add_column("e_deletedby")->add_label(__("Deleted by"));
+        if (!$query = RF::get(QueryRepository::class)->get_by_uuid_and_iduser($this->requuid, $iduser, ["query"]))
+            $this->_exception(
+                __("Request id {0} not found!", $this->requuid),
+                ExceptionType::CODE_NOT_FOUND
+            );
 
-        $dthelp->add_column("uuid")->add_label(__("Cod. Promo"))->add_tooltip(__("Cod. Promo"));
-        if($this->auth->is_system())
-            $dthelp->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"));
+        $result = RF::get(QueryRepository::class)->query($query);
 
-        $dthelp->add_column("description")->add_label(__("Description"))->add_tooltip(__("Description"))
-            //->add_column("slug")->add_label(__("Slug"))->add_tooltip(__("Slug"))
-            //->add_column("content")->add_label(__("Terms and conditions"))->add_tooltip(__("Terms and conditions"))
-            ->add_column("date_from")->add_label(__("Date from"))->add_tooltip(__("Date from"))
-            ->add_column("date_to")->add_label(__("Date to"))->add_tooltip(__("Date to"))
-
-            ->add_column("e_is_published")->add_label(__("Published"))->add_tooltip(__("Published"))
-            ->add_column("num_confirmed")->add_label(__("Conf"))->add_tooltip(__("Conf"))
-            ->add_column("num_executed")->add_label(__("Exec"))->add_tooltip(__("Exec"))
-            ->add_column("invested")->add_label(__("Invested"))->add_tooltip(__("Invested"))
-            ->add_column("returned")->add_label(__("Inv returned"))->add_tooltip(__("Inv returned"))
-            //->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
-        ;
-
-        if($this->auth->is_root())
-            $dthelp
-                ->add_column("disabled_date")->add_label(__("Disabled date"))->add_tooltip(__("Disabled date"))
-                ->add_action("show")
-                ->add_action("add")
-                ->add_action("edit")
-                ->add_action("del")
-                ->add_action("undel")
-            ;
-
-        if($this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE))
-            $dthelp->add_action("add")
-                ->add_action("edit")
-                ->add_action("del")
-                ->add_action("show")
-            ;
-
-        if($this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_READ))
-            $dthelp->add_action("show");
-
-        return $dthelp;
     }
 }
