@@ -150,7 +150,7 @@ export class FormPromotionUpdate extends LitElement {
             <label>${this.texts.f01}</label>
             <span>${this._uuid}</span>
             <br/>
-            <label>${this.texts.tr05} ${this._timezone}</label>
+            <label>${this.texts.tr05} ${this._timezone}</label>:
             <span>${new Date().toLocaleString("es-ES", { timeZone: this._timezone })}</span>
           </div>
         </div>
