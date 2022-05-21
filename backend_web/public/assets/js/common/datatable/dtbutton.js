@@ -15,6 +15,10 @@ const _toggle_filters = () => {
   if ($row) $row.classList.toggle("hidden")
 }
 
+const _export_data = () => {
+
+}
+
 const _on_show = async function(btn){
   spinner.render()
   const uuid = btn.getAttribute("uuid")
@@ -122,6 +126,16 @@ const get_topbuttons = () => {
       action: () => search(_$table, _dttable).reset_all(),
       attr: {
         approle: "reset-filters"
+      }
+    },
+    {
+      approle: "export-data",
+      text: `<i class="mdi mdi-arrow-collapse-down"></i>`,
+      className: "btn btn-dark btn-icon me-2",
+      visible: true,
+      action: _export_data,
+      attr: {
+        approle: "export-data"
       }
     },
   ]

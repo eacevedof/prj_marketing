@@ -15,9 +15,7 @@ let OPTIONS = {},
   is_rendered = false,
   idtable = "",
   $table = null,
-  dttable = null,
-  requestuuid = null  
-
+  dttable = null
 
 const get_page = perpage => {
   let page = get_page_from_url(3)
@@ -83,8 +81,9 @@ const on_ajax_request = async (data, fnrender) => {
     _hide_spinner()
     return _show_error(response.errors[0])
   }
-  requestuuid = response?.req_uuid || null
-  console.log("REQUEST ID", requestuuid)
+  const requuid = response?.req_uuid || ""
+  $table.setAttribute("req_uuid", requuid)
+  //console.log("REQUEST ID", requestuuid)
   fnrender({
     recordsTotal: response.total,
     recordsFiltered: response.total,
