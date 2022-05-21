@@ -2,11 +2,11 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Restrict\Query_actionss\Domain\Query_actionsEntity
+ * @name App\Restrict\Queries\Domain\Query_actionsEntity
  * @file Query_actionsEntity.php v1.0.0
  * @date %DATE% SPAIN
  */
-namespace App\Restrict\Query_actionss\Domain;
+namespace App\Restrict\Queries\Domain;
 
 use App\Shared\Domain\Entities\AppEntity;
 use App\Shared\Domain\Enums\EntityType;

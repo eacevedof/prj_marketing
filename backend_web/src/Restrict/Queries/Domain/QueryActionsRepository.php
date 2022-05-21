@@ -2,11 +2,11 @@
 /**
  * @author Module Builder
  * @link eduardoaf.com
- * @name App\Restrict\Query_actionss\Domain\Query_actionsRepository
+ * @name App\Restrict\Queries\Domain\Query_actionsRepository
  * @file Query_actionsRepository.php v1.0.0
  * @date %DATE% SPAIN
  */
-namespace App\Restrict\Query_actionss\Domain;
+namespace App\Restrict\Queries\Domain;
 
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
