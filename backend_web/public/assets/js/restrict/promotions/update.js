@@ -407,13 +407,21 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group">
             <label for="invested">${this.texts.f17}</label>
             <div id="field-invested">
-              <input type="number" min="0" step="any" id="invested" .value=${this._invested} ?disabled=${this._is_launched!==0 || this._disabled_date} class="form-control" maxlength="10">
+              <input type="number" min="0" step="any" id="invested" 
+                 class="form-control" maxlength="10"
+                 .value=${this._invested} 
+                 ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
             </div>
           </div>
           <div class="form-group">
             <label for="returned">${this.texts.f18}</label>
             <div id="field-returned">
-              <input type="number" min="0" step="any" id="returned" .value=${this._returned} ?disabled=${this._is_launched!==0 || this._disabled_date} class="form-control" maxlength="10">
+              <input type="number" min="0" step="any" id="returned"
+                 class="form-control" maxlength="10"
+                 .value=${this._returned} 
+                 ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
             </div>
           </div>
           <div class="form-group">
