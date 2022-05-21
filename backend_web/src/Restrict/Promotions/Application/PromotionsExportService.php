@@ -2,6 +2,7 @@
 namespace App\Restrict\Promotions\Application;
 
 use App\Restrict\Queries\Domain\QueryRepository;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Infrastructure\Components\Export\CsvComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -10,7 +11,7 @@ use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 
-final class PromotionsExportService extends AppService
+final class PromotionsExportService extends AppService implements IEventDispatcher
 {
     private string $requuid;
 
@@ -33,6 +34,11 @@ final class PromotionsExportService extends AppService
     }
 
     private function _transform_by_profile(array &$data): void
+    {
+
+    }
+
+    private function _dispatch(array $payload): void
     {
 
     }
