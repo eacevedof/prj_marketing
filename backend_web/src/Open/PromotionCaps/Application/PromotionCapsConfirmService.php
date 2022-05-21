@@ -81,6 +81,27 @@ final class PromotionCapsConfirmService extends AppService implements IEventDisp
         throw new PromotionCapException($message, $code);
     }
 
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            PromotionCapConfirmedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
+                "subsuuid" => $this->subscriptiondata["subscode"],
+                "email" => $this->subscriptiondata["email"],
+                "date_confirm" => $payload["date_confirm"],
+            ]),
+
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
+                "id_promotion" => $this->promotion["id"],
+                "id_promouser" => $idcapuser,
+                "id_type" => PromotionCapActionType::CONFIRMED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $this->istest,
+            ])
+        ]);
+    }
+
     public function __invoke(): array
     {
         $this->_load_request();
@@ -98,23 +119,7 @@ final class PromotionCapsConfirmService extends AppService implements IEventDisp
         $entitysubs->add_sysupdate($confirm, $iduser);
         $this->repopromocapsubscription->update($confirm);
 
-        EventBus::instance()->publish(...[
-            PromotionCapConfirmedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
-                "subsuuid" => $this->subscriptiondata["subscode"],
-                "email" => $this->subscriptiondata["email"],
-                "date_confirm" => $date,
-            ]),
-
-            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
-                "id_promotion" => $this->promotion["id"],
-                "id_promouser" => $idcapuser,
-                "id_type" => PromotionCapActionType::CONFIRMED,
-                "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip(),
-                "is_test" => $this->istest,
-            ])
-        ]);
+        $this->_dispatch(["date_confirm"=>$date]);
 
         return $this->subscriptiondata;
     }

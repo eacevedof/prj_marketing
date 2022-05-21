@@ -151,6 +151,26 @@ final class SubscriptionsUpdateService extends AppService implements IEventDispa
         return $validator;
     }
 
+    private function _dispatch(array $payload): array
+    {
+        $this->_load_request();
+
+        $subscription = $payload["subscription"];
+
+        EventBus::instance()->publish(...[
+            SubscriptionExecutedEvent::from_primitives($subscription["id"], $subscription),
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
+                "id_promotion" => $subscription["id_promotion"],
+                "id_promouser" => $subscription["id_promouser"],
+                "id_type" => PromotionCapActionType::EXECUTED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $subscription["is_test"],
+            ])
+        ]);
+    }
+
     public function __invoke(): array
     {
         $this->_load_dbsubscription();
@@ -179,20 +199,7 @@ final class SubscriptionsUpdateService extends AppService implements IEventDispa
             ["id", "uuid", "date_confirm", "date_execution", "subs_status", "id_promouser", "id_promotion", "is_test"]
         );
 
-        $this->_load_request();
-
-        EventBus::instance()->publish(...[
-            SubscriptionExecutedEvent::from_primitives($subscription["id"], $subscription),
-            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
-                "id_promotion" => $subscription["id_promotion"],
-                "id_promouser" => $subscription["id_promouser"],
-                "id_type" => PromotionCapActionType::EXECUTED,
-                "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip(),
-                "is_test" => $subscription["is_test"],
-            ])
-        ]);
+        $this->_dispatch(["subscription"=>$subscription]);
 
         return [
             "affected" => $affected,

@@ -63,12 +63,10 @@ final class PromotionCapInfoService extends AppService  implements IEventDispatc
             $this->_promocap_exception(__("Business account {$businessslug} not found!"), ExceptionType::CODE_NOT_FOUND);
     }
 
-    private function _load_promotion(): void
+    private function _dispatch(): void
     {
-        $promotionslug = $this->input["promotionslug"];
-        $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
-
         $this->_load_request();
+
         EventBus::instance()->publish(...[
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"] ?? -1,
@@ -80,6 +78,13 @@ final class PromotionCapInfoService extends AppService  implements IEventDispatc
                 "is_test" => $this->istest,
             ])
         ]);
+    }
+
+    private function _load_promotion(): void
+    {
+        $promotionslug = $this->input["promotionslug"];
+        $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
+        $this->_dispatch();
 
         SF::get(PromotionCapCheckService::class, [
             "promotion" => $this->promotion,
