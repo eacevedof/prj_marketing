@@ -308,7 +308,7 @@ msgid "Owner"
 msgstr "Propietario"
 
 msgid "Terms and conditions"
-msgstr "Contenido"
+msgstr "Términos y condiciones"
 
 msgid "Description"
 msgstr "Descripción"
