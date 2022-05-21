@@ -127,6 +127,7 @@ export class FormPromotionUpdate extends LitElement {
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
     this._is_launched = parseInt(this._is_launched)
     this._is_published = parseInt(this._is_published)
+    this._disabled_date = this._disabled_date !== "" ? this._disabled_date : null
   }
 
   //4
@@ -148,7 +149,8 @@ export class FormPromotionUpdate extends LitElement {
                 <label for="id_owner">${this.texts.f02}</label>
                 <div id="field-id_owner">
                   <select id="id_owner" class="form-control" 
-                          ?disabled=${this._is_launched!==0 || this._disabled_date}>
+                          ?disabled=${this._is_launched!==0 || this._disabled_date}
+                  >
                   ${this._businessowners.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._id_owner}>${item.value}</option>`
                   )}
@@ -166,8 +168,10 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-description">
-              <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required 
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}>
+              <input type="text" id="description" class="form-control" maxlength="250" required
+                     .value=${this._description}
+                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
             </div>
             <label>${this.texts.f06}: </label>
             <span>
@@ -185,7 +189,10 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-code_erp">
-              <input type="text" id="code_erp" .value=${this._code_erp} ?disabled=${this._is_launched!==0 || this._disabled_date} class="form-control" maxlength="25">
+              <input type="text" id="code_erp" class="form-control" maxlength="25" 
+                     .value=${this._code_erp} 
+                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
             </div>
           </div>
         </div>
@@ -200,7 +207,10 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>            
             <div id="field-id_tz">
-              <select id="id_tz" class="form-control" required ?disabled=${this._is_launched!==0 || this._disabled_date}>>
+              <select id="id_tz" class="form-control" 
+                required 
+                ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
                 ${this._timezones.map((item) =>
                     html`<option value=${item.key} ?selected=${parseInt(item.key)===parseInt(this._id_tz)}>${item.value}</option>`
                 )}
@@ -216,7 +226,10 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>            
             <div id="field-date_from">
-              <input type="datetime-local" step="1" id="date_from" .value=${this._date_from} class="form-control" ?disabled=${this._is_launched!==0 || this._disabled_date}>
+              <input type="datetime-local" step="1" id="date_from" class="form-control" 
+                     .value=${this._date_from}  
+                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
             </div>
           </div>
           <div class="form-group">
@@ -228,7 +241,9 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-date_to">
-              <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control" ?disabled=${this._is_launched!==0 || this._disabled_date}>
+              <input type="datetime-local" step="1" id="date_to" class="form-control" 
+                     .value=${this._date_to} ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
             </div>
           </div>
           <div class="form-group">
@@ -236,11 +251,14 @@ export class FormPromotionUpdate extends LitElement {
             <div class="tt-tooltip">
               <span class="tt-span">i</span>
               <p class="tt-tooltiptext">
-                Limit time to validate a confirmed subscription (voucher validation).
+                Limit time to validate a confirmed subscription (voucher validation). Read only after first publish
               </p>
             </div>
             <div id="field-date_execution">
-              <input type="datetime-local" step="1" id="date_execution" .value=${this._date_execution} class="form-control" ?disabled=${this._is_launched!==0 || this._disabled_date}>
+              <input type="datetime-local" step="1" id="date_execution" class="form-control" 
+                     .value=${this._date_execution} 
+                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+              >
             </div>
           </div>          
         </div>
@@ -250,7 +268,9 @@ export class FormPromotionUpdate extends LitElement {
           <div class="form-group">
             <label for="bgcolor">${this.texts.f10}</label>
             <div id="field-bgcolor">
-              <input type="color" id="bgcolor" .value=${this._bgcolor} ?disabled=${this._disabled_date} class="form-control" maxlength="10">
+              <input type="color" id="bgcolor" .value=${this._bgcolor} 
+                     ?disabled=${this._is_published || this._disabled_date} 
+                     class="form-control" maxlength="10">
             </div>
           </div>
           <div class="form-group col-10">
@@ -258,7 +278,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_xs">
               <input type="text" id="bgimage_xs" .value=${this._bgimage_xs}
                      @change=${e => this._handle_keyup(e, "_bgimage_xs")}
-                     ?disabled=${this._disabled_date}
+                     ?disabled=${this._is_published || this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -272,7 +292,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_sm">
               <input type="text" id="bgimage_sm" .value=${this._bgimage_sm}
                      @change=${e => this._handle_keyup(e, "_bgimage_sm")}
-                     ?disabled=${this._disabled_date}
+                     ?disabled=${this._is_published || this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -284,7 +304,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_md">
               <input type="text" id="bgimage_md" .value=${this._bgimage_md}
                      @change=${e => this._handle_keyup(e, "_bgimage_md")}
-                     ?disabled=${this._disabled_date}
+                     ?disabled=${this._is_published || this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -298,7 +318,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_lg">
               <input type="text" id="bgimage_lg" .value=${this._bgimage_lg}
                      @change=${e => this._handle_keyup(e, "_bgimage_lg")}
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     ?disabled=${this._is_published || this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -310,7 +330,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_xl">
               <input type="text" id="bgimage_xl" .value=${this._bgimage_xl} placeholder="cloudinary.com link"
                      @change=${e => this._handle_keyup(e, "_bgimage_xl")}
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     ?disabled=${this._is_published || this._disabled_date}
                      class="form-control" maxlength="500">
             </div>
             ${html([
@@ -325,7 +345,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-bgimage_xxl">
               <input type="text" id="bgimage_xxl" .value=${this._bgimage_xxl}
                      @change=${e => this._handle_keyup(e, "_bgimage_xxl")}
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     ?disabled=${this._is_published || this._disabled_date}
                      placeholder="cloudinary.com link" class="form-control" maxlength="500">
             </div>
             ${html([
@@ -342,7 +362,10 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>            
             <div id="field-max_confirmed">
-              <input type="number" min="-1" id="max_confirmed" .value=${this._max_confirmed} ?disabled=${this._is_launched!==0 || this._disabled_date} class="form-control" maxlength="10">
+              <input type="number" min="-1" id="max_confirmed" class="form-control" maxlength="10" 
+                     .value=${this._max_confirmed} 
+                     ?disabled=${this._is_published || this._disabled_date}
+              >
             </div>
           </div>
 
@@ -404,7 +427,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-is_published">
               <select id="is_published" class="form-control" required ?disabled=${this._disabled_date}>
                 ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._is_published}>${item.value}</option>`
+                    html`<option value=${item.key} ?selected=${parseInt(item.key)===this._is_published}>${item.value}</option>`
                 )}
               </select>
             </div>
