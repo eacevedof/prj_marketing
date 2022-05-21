@@ -21,6 +21,7 @@ final class QueryEventHandler extends AppService implements IEventSubscriber
             "uuid" => $domevent->uuid(),
             "description" => $domevent->description(),
             "query" => $domevent->query(),
+            "total" => $domevent->total(),
             "module" => $domevent->module(),
             "insert_user" => SF::get_auth()->get_user()["id"] ?? -1,
         ]);

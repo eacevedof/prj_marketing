@@ -51,6 +51,14 @@ final class QueryEntity extends AppEntity
                 ]
             ],
 
+            "total" => [
+                "label" => __("tr_total"),
+                EntityType::REQUEST_KEY => "total",
+                "config" => [
+                    "type" => EntityType::INT,
+                ]
+            ],
+
             "module" => [
                 "label" => __("tr_module"),
                 EntityType::REQUEST_KEY => "module",

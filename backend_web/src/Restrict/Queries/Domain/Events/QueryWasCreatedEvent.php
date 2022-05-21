@@ -8,6 +8,7 @@ final class QueryWasCreatedEvent extends AbsEvent
     private string $uuid;
     private string $description;
     private string $query;
+    private string $total;
     private string $module;
     
     public function __construct(
@@ -15,6 +16,7 @@ final class QueryWasCreatedEvent extends AbsEvent
         string $uuid,
         string $description,
         string $query,
+        int $total,
         string $module,
         
         ?string $eventid = null,
@@ -27,6 +29,7 @@ final class QueryWasCreatedEvent extends AbsEvent
         $this->uuid = $uuid;
         $this->description = $description;
         $this->query = $query;
+        $this->total = $total;
         $this->module = $module;
     }
 
@@ -49,6 +52,7 @@ final class QueryWasCreatedEvent extends AbsEvent
             $body["uuid"],
             $body["description"],
             $body["query"],
+            $body["total"],
             $body["module"],
             $eventId,
             $occurredon,
@@ -63,6 +67,7 @@ final class QueryWasCreatedEvent extends AbsEvent
             "uuid" => $this->uuid,
             "description" => $this->description,
             "query" => $this->query,
+            "total" => $this->total,
             "module" => $this->module,
         ];
     }
@@ -80,6 +85,11 @@ final class QueryWasCreatedEvent extends AbsEvent
     public function query(): string
     {
         return $this->query;
+    }
+
+    public function total(): int
+    {
+        return $this->total;
     }
 
     public function module(): string

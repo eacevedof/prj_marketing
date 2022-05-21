@@ -36,10 +36,14 @@ final class CreateAppQuery extends AbsMigration
             "comment" => "datetime de la creacion",
         ])
         ->addColumn("id", "integer", [
-            "limit" => 11,
+            "limit" => 10,
             "identity" => true,
         ])
         ->addColumn("uuid", "string", [
+            "limit" => 50,
+            "null" => true,
+        ])
+        ->addColumn("module", "string", [
             "limit" => 50,
             "null" => true,
         ])
@@ -51,9 +55,9 @@ final class CreateAppQuery extends AbsMigration
             "null" => true,
             "comment" => "null true pq para el borrado se puede marcar a null y menguar el tamaño de la tabla"
         ])
-        ->addColumn("module", "string", [
-            "limit" => 50,
-            "null" => true,
+        ->addColumn("total", "integer", [
+            "limit" => 10,
+            "identity" => true,
         ])
         ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
         ->addIndex(["uuid"], ["name"=>"uuid_idx"])
