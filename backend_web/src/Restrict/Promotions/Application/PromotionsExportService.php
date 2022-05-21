@@ -45,6 +45,6 @@ final class PromotionsExportService extends AppService
 
         $result = RF::get(QueryRepository::class)->query($query);
         //transformar dato por perfil de usuario
-        CF::get(CsvComponent::class)->download("promotion-{$this->requuid}.csv", $result);
+        CF::get(CsvComponent::class)->download("promotions-{$this->requuid}.csv", $result);
     }
 }
