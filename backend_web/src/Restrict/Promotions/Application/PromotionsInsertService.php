@@ -159,13 +159,13 @@ final class PromotionsInsertService extends AppService implements IEventDispatch
     private function _dispatch(array $payload): void
     {
         EventBus::instance()->publish(...[
-            PromotionWasCreatedEvent::from_primitives($payload["id"], $payload["promotion"])
+            PromotionWasCreatedEvent::from_primitives($payload["promotion"]["id"], $payload["promotion"])
         ]);
     }
 
     public function __invoke(): array
     {
-        if (!$insert = $this->_get_req_without_ops($this->input))
+        if (!$promotion = $this->_get_req_without_ops($this->input))
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
@@ -173,17 +173,17 @@ final class PromotionsInsertService extends AppService implements IEventDispatch
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $insert = $this->entitypromotion->map_request($insert);
-        $this->_map_entity($insert);
-        $id = $this->repopromotion->insert($insert);
+        $promotion = $this->entitypromotion->map_request($promotion);
+        $this->_map_entity($promotion);
+        $id = $this->repopromotion->insert($promotion);
         $this->repopromotion->update_slug_with_id($id);
         $promotion = $this->repopromotion->get_by_id($id);
 
-        $this->_dispatch(["id" => $id, "promotion" => $promotion,]);
+        $this->_dispatch(["promotion" => $promotion]);
 
         return [
             "id" => $id,
-            "uuid" => $insert["uuid"]
+            "uuid" => $promotion["uuid"]
         ];
     }
 }
