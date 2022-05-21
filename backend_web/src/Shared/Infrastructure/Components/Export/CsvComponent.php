@@ -17,7 +17,7 @@ final class CsvComponent
         exit;
     }
 
-    public function download_as_excel(string $filename, array $data, string $delimiter=self::DELIMITER_SEMICOLON): void
+    public function download_as_excel(string $filename, array $data): void
     {
         $fnFilter = function(&$str){
             $str = preg_replace("/\t/", "\\t", $str);
