@@ -128,6 +128,10 @@ export class FormPromotionUpdate extends LitElement {
     this._is_launched = parseInt(this._is_launched)
     this._is_published = parseInt(this._is_published)
     this._disabled_date = this._disabled_date !== "" ? this._disabled_date : null
+    this._num_viewed = parseInt(this._num_viewed)
+    this._num_subscribed = parseInt(this._num_subscribed)
+    this._num_confirmed = parseInt(this._num_confirmed)
+    this._num_executed = parseInt(this._num_executed)
   }
 
   //4
@@ -403,6 +407,7 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
+        
         <div class="flex-row">
           <div class="form-group">
             <label for="invested">${this.texts.f17}</label>
@@ -410,7 +415,7 @@ export class FormPromotionUpdate extends LitElement {
               <input type="number" min="0" step="any" id="invested" 
                  class="form-control" maxlength="10"
                  .value=${this._invested} 
-                 ?disabled=${this._is_launched || this._disabled_date}
+                 ?disabled=${this._is_published || this._disabled_date}
               >
             </div>
           </div>
@@ -439,8 +444,7 @@ export class FormPromotionUpdate extends LitElement {
                 )}
               </select>
             </div>
-          </div>          
-          
+          </div>
         </div>
         
         <div class="flex-row">
