@@ -16,14 +16,14 @@ const _toggle_filters = () => {
 }
 
 const _export_data = () => {
-  const requuid = _$table.getAttribute("req_uuid")
+  const requuid = _$table.getAttribute("req_uuid").trim()
   if (!requuid) {
     console.log("exporting data: no request id found")
     return
   }
 
-  const url = _$table.getAttribute("urlmodule").concat("/export")
-
+  const url = _$table.getAttribute("urlmodule").concat("/export").concat("?").concat("req_uuid=").concat(requuid)
+  window.location = url
 }
 
 const _on_show = async function(btn){
