@@ -513,3 +513,6 @@ msgstr "Address"
 
 msgid "Address position"
 msgstr "Address position"
+
+msgid "Timezone"
+msgstr "Zona horaria"
