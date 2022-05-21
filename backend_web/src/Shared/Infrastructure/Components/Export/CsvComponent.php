@@ -20,7 +20,6 @@ final class CsvComponent
     public function download_as_excel(string $filename, array $data): void
     {
         $eol = PHP_EOL;
-
         $fnFilter = function(&$str){
             $str = preg_replace("/\t/", "\\t", $str);
             $str = preg_replace("/\r?\n/", "\\n", $str);
