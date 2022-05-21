@@ -39,9 +39,17 @@ export class FormPromotionUpdate extends LitElement {
   }
 
   _load_response(result) {
-    this._is_published = parseInt(result.promotion.is_published)
-    this._is_launched = parseInt(result.promotion.is_launched)
-    this._slug = result.promotion.slug
+    const promotion = result?.promotion
+
+    this._is_published = parseInt(promotion.is_published)
+    this._is_launched = parseInt(promotion.is_launched)
+    this._disabled_date = promotion.disabled_date!== "" ? promotion.disabled_date : null
+
+    this._slug = promotion.slug
+    this._num_viewed = parseInt(promotion.num_viewed)
+    this._num_subscribed = parseInt(promotion.num_subscribed)
+    this._num_confirmed = parseInt(promotion.num_confirmed)
+    this._num_executed = parseInt(promotion.num_executed)
   }
 
   _handle_keyup(e, field) {
