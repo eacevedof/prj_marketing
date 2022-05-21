@@ -151,7 +151,7 @@ final class SubscriptionsUpdateService extends AppService implements IEventDispa
         return $validator;
     }
 
-    private function _dispatch(array $payload): array
+    private function _dispatch(array $payload): void
     {
         $this->_load_request();
 
