@@ -30,6 +30,11 @@ final class QueryEventHandler extends AppService implements IEventSubscriber
     public function _on_action($domevent): void
     {
         if (get_class($domevent)!==QueryActionWasCreatedEvent::class) return;
+        RF::get(QueryRepository::class)->insert([
+            "id_query" => $domevent->id_query(),
+            "description" => $domevent->description(),
+            "insert_user" => SF::get_auth()->get_user()["id"] ?? -1,
+        ]);
     }
 
     public function on_event(IEvent $domevent): IEventSubscriber
