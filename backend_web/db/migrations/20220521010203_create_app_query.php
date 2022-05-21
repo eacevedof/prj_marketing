@@ -48,7 +48,8 @@ final class CreateAppQuery extends AbsMigration
             "null" => true,
         ])
         ->addColumn("query", "text", [
-            "null" => false,
+            "null" => true,
+            "comment" => "null true pq para el borrado se puede marcar a null y menguar el tamaño de la tabla"
         ])
         ->addColumn("module", "string", [
             "limit" => 50,
