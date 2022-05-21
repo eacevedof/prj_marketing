@@ -50,7 +50,7 @@ final class PromotionsExportService extends AppService
 
         $sql = $query["query"];
         $sql = explode(" LIMIT ", $sql);
-        $result = RF::get(QueryRepository::class)->query($sql);
+        $result = RF::get(QueryRepository::class)->query($sql[0]);
         $this->_transform_by_profile($result);
         $now = date("Y-m-d_H-i-s");
         CF::get(CsvComponent::class)->download_as_excel("promotions-$now.xls", $result);
