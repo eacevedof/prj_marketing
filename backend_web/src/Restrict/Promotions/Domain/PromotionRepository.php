@@ -120,6 +120,15 @@ final class PromotionRepository extends AppRepository
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
         $r = $this->query_with_count($sqlcount, $sql);
+        EventBus::instance()->publish(...[
+            QueryWasCreatedEvent::from_primitives(-1, [
+                "uuid" => md5($sql),
+                "description" => "read:search",
+                "query" => $sql,
+                "module" => "promotions"
+            ])
+        ]);
+
         return $r;
     }
 
