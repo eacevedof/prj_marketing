@@ -15,6 +15,7 @@ $texts = [
     "tr02" => __("Cancel"),
     "tr03" => __("Error"),
     "tr04" => __("<b>Data updated</b>"),
+    "tr05" => __("Current time in"),
 
     "f00" => __("Nº"),
     "f01" => __("Code"),

@@ -115,6 +115,8 @@ export class FormPromotionUpdate extends LitElement {
     _businessowners: {type: Array, state:true},
     _notoryes: {type: Array, state:true},
     _timezones: {type: Array, state:true},
+
+    _timezone: {type: Array, state:true},
   }
 
   //3 (aqui siempre hay datos)
@@ -132,6 +134,9 @@ export class FormPromotionUpdate extends LitElement {
     this._num_subscribed = parseInt(this._num_subscribed)
     this._num_confirmed = parseInt(this._num_confirmed)
     this._num_executed = parseInt(this._num_executed)
+
+    this._timezone = this._timezones.filter(item => parseInt(item.key)===parseInt(this._id_tz)).map(item => item.value).join("")
+    console.log(this._timezone, "timezone found")
   }
 
   //4
@@ -144,6 +149,9 @@ export class FormPromotionUpdate extends LitElement {
             <span>${this._id}</span> | 
             <label>${this.texts.f01}</label>
             <span>${this._uuid}</span>
+            <br/>
+            <label>${this.texts.tr05} ${this._timezone}</label>
+            <span>${new Date().toLocaleString("es-ES", { timeZone: this._timezone })}</span>
           </div>
         </div>
         
@@ -232,7 +240,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-date_from">
               <input type="datetime-local" step="1" id="date_from" class="form-control" 
                      .value=${this._date_from}  
-                     ?disabled=${this._is_launched || this._disabled_date}
+                     ?disabled=${this._num_subscribed || this._disabled_date}
               >
             </div>
           </div>
@@ -246,7 +254,8 @@ export class FormPromotionUpdate extends LitElement {
             </div>
             <div id="field-date_to">
               <input type="datetime-local" step="1" id="date_to" class="form-control" 
-                     .value=${this._date_to} ?disabled=${this._is_launched || this._disabled_date}
+                     .value=${this._date_to} 
+                     ?disabled=${this._num_subscribed || this._disabled_date}
               >
             </div>
           </div>
@@ -261,7 +270,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-date_execution">
               <input type="datetime-local" step="1" id="date_execution" class="form-control" 
                      .value=${this._date_execution} 
-                     ?disabled=${this._is_launched || this._disabled_date}
+                     ?disabled=${this._num_subscribed || this._disabled_date}
               >
             </div>
           </div>          
