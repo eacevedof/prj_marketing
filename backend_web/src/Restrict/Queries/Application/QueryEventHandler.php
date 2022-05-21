@@ -5,9 +5,9 @@ use App\Open\QueryCaps\Domain\Enums\QueryCapActionType;
 use App\Restrict\Queries\Domain\Events\QueryActionWasCreatedEvent;
 use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
 use App\Restrict\Queries\Domain\QueryRepository;
-use App\Restrict\Subscriptions\Domain\QueryCapSubscriptionsRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\QueryCaps\Domain\Events\QueryCapActionHasOccurredEvent;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
@@ -17,9 +17,16 @@ final class QueryEventHandler extends AppService implements IEventSubscriber
     public function _on_created($domevent): void
     {
         if (get_class($domevent)!==QueryWasCreatedEvent::class) return;
+        RF::get(QueryRepository::class)->insert([
+            "uuid" => $domevent->uuid(),
+            "description" => $domevent->description(),
+            "query" => $domevent->query(),
+            "module" => $domevent->module(),
+            "insert_user" => SF::get_auth()->get_user()["id"] ?? -1,
+        ]);
     }
 
-    public function _on_confirmed($domevent): void
+    public function _on_action($domevent): void
     {
         if (get_class($domevent)!==QueryActionWasCreatedEvent::class) return;
     }
