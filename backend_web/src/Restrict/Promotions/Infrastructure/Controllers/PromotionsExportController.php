@@ -19,20 +19,9 @@ final class PromotionsExportController extends RestrictController
                 ->show();
 
         try {
-            $export = SF::get_callable(PromotionsExportService::class,
+            SF::get_callable(PromotionsExportService::class,
                 ["req_uuid" =>$this->request->get_get("req_uuid")]
-            );
-            $result = $export();
-            header("Content-Description: File Transfer");
-            header("Content-Type: text/csv");
-            header("Content-Disposition: attachment; filename=promotions.csv");
-            header("Content-Transfer-Encoding: binary");
-            header("Connection: Keep-Alive");
-            header("Expires: 0");
-            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-            header("Pragma: public");
-            header("Content-Length: ".strlen($result));
-            exit;
+            )();
         }
         catch (Exception $e) {
             $this->_get_json()->set_code($e->getCode())

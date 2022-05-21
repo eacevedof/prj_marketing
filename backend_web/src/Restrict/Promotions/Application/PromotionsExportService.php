@@ -2,6 +2,7 @@
 namespace App\Restrict\Promotions\Application;
 
 use App\Restrict\Queries\Domain\QueryRepository;
+use App\Shared\Infrastructure\Components\Export\CsvComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -35,7 +36,7 @@ final class PromotionsExportService extends AppService
             );
     }
 
-    public function __invoke(): array
+    public function __invoke(): void
     {
         $this->_check_permission();
         $iduser = SF::get_auth()->get_user()["id"] ?? -1;
@@ -47,6 +48,7 @@ final class PromotionsExportService extends AppService
             );
 
         $result = RF::get(QueryRepository::class)->query($query);
-
+        //transformar dato por perfil de usuario
+        CF::get(CsvComponent::class)->download("promotion-{$this->requuid}.csv", $result);
     }
 }

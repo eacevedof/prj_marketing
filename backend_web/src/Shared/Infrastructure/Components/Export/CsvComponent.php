@@ -13,5 +13,6 @@ final class CsvComponent
         $buffer = fopen("php://output", "w");
         foreach ($data as $line)
             fputcsv($buffer, $line, $delimiter);
+        exit;
     }
 }
