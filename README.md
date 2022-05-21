@@ -11,6 +11,11 @@ SN Marketing
 make ssh-be
 run help
 ```
+- migrations
+```
+make ssh-be
+run-migrate
+```
 
 ### tests (phpunit 9.3)
 - ejecuta todos los tests
