@@ -35,6 +35,7 @@ return [
     //@promotions
     ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInfoController", "method"=>"info"],
     ["url"=>"/restrict/promotions/create","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInsertController", "method"=>"create"],
+    ["url"=>"/restrict/promotions/export","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsExportController", "method"=>"export", "allowed"=>["get"]],
     ["url"=>"/restrict/promotions/insert","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInsertController", "method"=>"insert", "allowed"=>["post"]],
     ["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController", "method"=>"edit"],
     ["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController", "method"=>"update", "allowed"=>["put"]],

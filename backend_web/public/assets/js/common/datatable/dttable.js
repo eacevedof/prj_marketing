@@ -83,7 +83,6 @@ const on_ajax_request = async (data, fnrender) => {
   }
   const requuid = response?.req_uuid || ""
   $table.setAttribute("req_uuid", requuid)
-  //console.log("REQUEST ID", requestuuid)
   fnrender({
     recordsTotal: response.total,
     recordsFiltered: response.total,

@@ -16,6 +16,13 @@ const _toggle_filters = () => {
 }
 
 const _export_data = () => {
+  const requuid = _$table.getAttribute("req_uuid")
+  if (!requuid) {
+    console.log("exporting data: no request id found")
+    return
+  }
+
+  const url = _$table.getAttribute("urlmodule").concat("/export")
 
 }
 
