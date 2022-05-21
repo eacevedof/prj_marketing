@@ -2,9 +2,9 @@
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
-final class CreateAppQuery extends AbsMigration
+final class CreateAppQueryActions extends AbsMigration
 {
-    private string $tablename = "app_query";
+    private string $tablename = "app_query_actions";
 
     public function up(): void
     {
@@ -39,23 +39,17 @@ final class CreateAppQuery extends AbsMigration
             "limit" => 11,
             "identity" => true,
         ])
-        ->addColumn("uuid", "string", [
-            "limit" => 50,
-            "null" => true,
+        ->addColumn("id_query", "integer", [
+            "limit" => 11,
+            "null" => false
         ])
         ->addColumn("description", "string", [
             "limit" => 250,
             "null" => true,
+            "comment" => "csv, pdf, json, xml, ..."
         ])
-        ->addColumn("query", "text", [
-            "null" => false,
-        ])
-        ->addColumn("module", "string", [
-            "limit" => 50,
-            "null" => true,
-        ])
-        ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
-        ->addIndex(["uuid"], ["name"=>"uuid_idx"])
+        ->addIndex(["id","id_query"], ["name"=>"id__id_query_idx"])
+        ->addIndex(["id_query"], ["name"=>"id_query_idx"])
         ->create();
     }
 
