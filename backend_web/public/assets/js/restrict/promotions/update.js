@@ -149,7 +149,7 @@ export class FormPromotionUpdate extends LitElement {
                 <label for="id_owner">${this.texts.f02}</label>
                 <div id="field-id_owner">
                   <select id="id_owner" class="form-control" 
-                          ?disabled=${this._is_launched!==0 || this._disabled_date}
+                          ?disabled=${this._is_launched || this._disabled_date}
                   >
                   ${this._businessowners.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._id_owner}>${item.value}</option>`
@@ -170,7 +170,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-description">
               <input type="text" id="description" class="form-control" maxlength="250" required
                      .value=${this._description}
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     ?disabled=${this._is_launched || this._disabled_date}
               >
             </div>
             <label>${this.texts.f06}: </label>
@@ -191,7 +191,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-code_erp">
               <input type="text" id="code_erp" class="form-control" maxlength="25" 
                      .value=${this._code_erp} 
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     ?disabled=${this._is_launched || this._disabled_date}
               >
             </div>
           </div>
@@ -209,7 +209,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-id_tz">
               <select id="id_tz" class="form-control" 
                 required 
-                ?disabled=${this._is_launched!==0 || this._disabled_date}
+                ?disabled=${this._is_launched || this._disabled_date}
               >
                 ${this._timezones.map((item) =>
                     html`<option value=${item.key} ?selected=${parseInt(item.key)===parseInt(this._id_tz)}>${item.value}</option>`
@@ -228,7 +228,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-date_from">
               <input type="datetime-local" step="1" id="date_from" class="form-control" 
                      .value=${this._date_from}  
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     ?disabled=${this._is_launched || this._disabled_date}
               >
             </div>
           </div>
@@ -242,7 +242,7 @@ export class FormPromotionUpdate extends LitElement {
             </div>
             <div id="field-date_to">
               <input type="datetime-local" step="1" id="date_to" class="form-control" 
-                     .value=${this._date_to} ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     .value=${this._date_to} ?disabled=${this._is_launched || this._disabled_date}
               >
             </div>
           </div>
@@ -257,7 +257,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-date_execution">
               <input type="datetime-local" step="1" id="date_execution" class="form-control" 
                      .value=${this._date_execution} 
-                     ?disabled=${this._is_launched!==0 || this._disabled_date}
+                     ?disabled=${this._is_launched || this._disabled_date}
               >
             </div>
           </div>          
@@ -378,7 +378,7 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-is_raffleable">
-              <select id="is_raffleable" class="form-control" required ?disabled=${this._is_launched!==0 || this._disabled_date}>>
+              <select id="is_raffleable" class="form-control" required ?disabled=${this._is_launched || this._disabled_date}>>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
                 )}
@@ -395,7 +395,7 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-is_cumulative">
-              <select id="is_cumulative" class="form-control" required ?disabled=${this._is_launched!==0 || this._disabled_date}>>
+              <select id="is_cumulative" class="form-control" required ?disabled=${this._is_launched || this._disabled_date}>>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
                 )}
@@ -410,7 +410,7 @@ export class FormPromotionUpdate extends LitElement {
               <input type="number" min="0" step="any" id="invested" 
                  class="form-control" maxlength="10"
                  .value=${this._invested} 
-                 ?disabled=${this._is_launched!==0 || this._disabled_date}
+                 ?disabled=${this._is_launched || this._disabled_date}
               >
             </div>
           </div>
@@ -420,7 +420,7 @@ export class FormPromotionUpdate extends LitElement {
               <input type="number" min="0" step="any" id="returned"
                  class="form-control" maxlength="10"
                  .value=${this._returned} 
-                 ?disabled=${this._is_launched!==0 || this._disabled_date}
+                 ?disabled=${this._is_launched || this._disabled_date}
               >
             </div>
           </div>
@@ -448,7 +448,7 @@ export class FormPromotionUpdate extends LitElement {
             <label for="content">${this.texts.f09}</label>
             <div id="field-content">
               <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000" 
-                        ?disabled=${this._is_launched!==0 || this._disabled_date}></textarea>
+                        ?disabled=${this._is_launched || this._disabled_date}></textarea>
             </div>
           </div>
         </div>
