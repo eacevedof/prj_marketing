@@ -9,6 +9,7 @@
 namespace App\Restrict\Promotions\Domain;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -19,7 +20,7 @@ use App\Shared\Infrastructure\Bus\EventBus;
 use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
 use TheFramework\Components\Db\ComponentQB;
 
-final class PromotionRepository extends AppRepository
+final class PromotionRepository extends AppRepository implements IEventDispatcher
 {
     use SearchRepoTrait;
 

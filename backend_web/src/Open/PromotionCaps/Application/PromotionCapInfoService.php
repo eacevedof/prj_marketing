@@ -5,6 +5,7 @@ use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -14,7 +15,7 @@ use App\Shared\Domain\Enums\ExceptionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 
-final class PromotionCapInfoService extends AppService
+final class PromotionCapInfoService extends AppService  implements IEventDispatcher
 {
     use RequestTrait;
 

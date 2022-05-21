@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Users\Application;
 
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -18,7 +19,7 @@ use App\Shared\Domain\Enums\ExceptionType;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
-final class UsersInsertService extends AppService
+final class UsersInsertService extends AppService implements IEventDispatcher
 {
     use RequestTrait;
 
@@ -104,34 +105,40 @@ final class UsersInsertService extends AppService
         return $this->validator;
     }
 
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            UserWasCreatedEvent::from_primitives($payload["id"], $payload["user"])
+        ]);
+    }
+
     public function __invoke(): array
     {
-        $insert = $this->_get_req_without_ops($this->input);
-        if (!$insert)
+        $user = $this->_get_req_without_ops($this->input);
+        if (!$user)
             $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->validator = VF::get($insert, $this->entityuser);
+        $this->validator = VF::get($user, $this->entityuser);
         if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $insert = $this->entityuser->map_request($insert);
-        $insert["secret"] = $this->encdec->get_hashpassword($insert["secret"]);
-        $insert["description"] = $insert["fullname"];
-        $insert["uuid"] = uniqid();
-        $this->entityuser->add_sysinsert($insert, $this->authuser["id"]);
+        $user = $this->entityuser->map_request($user);
+        $user["secret"] = $this->encdec->get_hashpassword($user["secret"]);
+        $user["description"] = $user["fullname"];
+        $user["uuid"] = uniqid();
+        $this->entityuser->add_sysinsert($user, $this->authuser["id"]);
 
         //save user
-        $id = $this->repouser->insert($insert);
-        $insert = $this->repouser->get_by_id((string) $id);
-        EventBus::instance()->publish(...[
-            UserWasCreatedEvent::from_primitives($id, $insert)
-        ]);
+        $id = $this->repouser->insert($user);
+        $user = $this->repouser->get_by_id((string) $id);
+
+        $this->_dispatch(["id"=>$id,"user"=>$user]);
 
         return [
             "id" => $id,
-            "uuid" => $insert["uuid"]
+            "uuid" => $user["uuid"]
         ];
     }
 }

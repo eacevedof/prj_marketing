@@ -9,6 +9,7 @@ use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -20,7 +21,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 
-final class PromotionCapsConfirmService extends AppService
+final class PromotionCapsConfirmService extends AppService implements IEventDispatcher
 {
     use RequestTrait;
 

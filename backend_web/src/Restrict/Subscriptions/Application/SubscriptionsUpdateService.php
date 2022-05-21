@@ -8,6 +8,7 @@ use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Subscriptions\Domain\Events\PromotionHasFinishedEvent;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
@@ -26,7 +27,7 @@ use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
-final class SubscriptionsUpdateService extends AppService
+final class SubscriptionsUpdateService extends AppService implements IEventDispatcher
 {
     use RequestTrait;
     private array $authuser;
