@@ -401,7 +401,7 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-is_published">
-              <select id="is_published" class="form-control" required ?disabled=${this._is_launched!==0 || this._disabled_date}>
+              <select id="is_published" class="form-control" required ?disabled=${this._disabled_date}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._is_published}>${item.value}</option>`
                 )}

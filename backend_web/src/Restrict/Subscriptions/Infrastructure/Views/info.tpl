@@ -90,7 +90,7 @@
 
       <div class="tab-pane" id="tab-conditions">
         <ol>
-          <li><b><?=__("Content")?>:</b>&ensp;<span><?=$promotion["content"] ?? ""?></span></li>
+          <li><b><?=__("Terms and conditions")?>:</b>&ensp;<span><?=$promotion["content"] ?? ""?></span></li>
         </ol>
       </div><!--tab-conditions-->
 

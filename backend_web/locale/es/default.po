@@ -307,7 +307,7 @@ msgstr "Cod. Promo"
 msgid "Owner"
 msgstr "Propietario"
 
-msgid "Content"
+msgid "Terms and conditions"
 msgstr "Contenido"
 
 msgid "Description"

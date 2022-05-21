@@ -106,7 +106,7 @@ final class PromotionEntity extends AppEntity
             ],
 
             "content" => [
-                "label" => __("Content"),
+                "label" => __("Terms and conditions"),
                 EntityType::REQUEST_KEY => "content",
                 "config" => [
                     "type" => EntityType::STRING,
