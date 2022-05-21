@@ -76,6 +76,13 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
         }
     }
 
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            QueryWasCreatedEvent::from_primitives(-1, $payload["query"])
+        ]);
+    }
+
     public function search(array $search): array
     {
         $qb = $this->_get_qbuilder()
@@ -121,13 +128,14 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
         $r = $this->query_with_count($sqlcount, $sql);
-        EventBus::instance()->publish(...[
-            QueryWasCreatedEvent::from_primitives(-1, [
+
+        $this->_dispatch([
+            "query" => [
                 "uuid" => md5($sql),
                 "description" => "read:search",
                 "query" => $sql,
                 "module" => "promotions"
-            ])
+            ]
         ]);
 
         return $r;
