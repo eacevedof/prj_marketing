@@ -231,6 +231,11 @@ final class PromotionsUpdateService extends AppService
                 "is_launched" => $promotion["is_launched"],
                 "slug" => $promotion["slug"],
                 "is_published" => $promotion["is_published"],
+                "num_viewed" => $promotion["num_viewed"],
+                "num_subscribed" => $promotion["num_subscribed"],
+                "num_confirmed" => $promotion["num_confirmed"],
+                "num_executed" => $promotion["num_executed"],
+                "disabled_date" => $promotion["disabled_date"],
             ]
         ];
     }
