@@ -18,6 +18,7 @@ use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
@@ -25,7 +26,7 @@ use App\Shared\Domain\Enums\ExceptionType;
 use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 
-final class PromotionCapsInsertService extends AppService
+final class PromotionCapsInsertService extends AppService implements IEventDispatcher
 {
     use RequestTrait;
 
@@ -202,6 +203,22 @@ final class PromotionCapsInsertService extends AppService
         $promocapuser["id_promotion"] = $this->promotion["id"];
     }
 
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            PromotionCapUserSubscribedEvent::from_primitives($idcapuser = $payload["idcapuser"], $payload["promocapuser"]),
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
+                "id_promotion" => $this->promotion["id"],
+                "id_promouser" => $idcapuser,
+                "id_type" => PromotionCapActionType::SUBSCRIBED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $this->istest,
+            ])
+        ]);
+    }
+
     public function __invoke(): array
     {
         $this->_load_request();
@@ -225,18 +242,7 @@ final class PromotionCapsInsertService extends AppService
         $promocapuser["date_subscription"] = date("Y-m-d H:i:s");
         $promocapuser["is_test"] = $this->istest;
 
-        EventBus::instance()->publish(...[
-            PromotionCapUserSubscribedEvent::from_primitives($idcapuser, $promocapuser),
-            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
-                "id_promotion" => $this->promotion["id"],
-                "id_promouser" => $idcapuser,
-                "id_type" => PromotionCapActionType::SUBSCRIBED,
-                "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip(),
-                "is_test" => $this->istest,
-            ])
-        ]);
+        $this->_dispatch(["idcapuser"=>$idcapuser, "promocapuser"=>$promocapuser]);
 
         return [
             "description" => __("You have successfully subscribed. Please check your email to confirm your subscription!")
