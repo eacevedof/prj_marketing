@@ -3,6 +3,7 @@ namespace App\Restrict\Promotions\Application;
 
 use App\Checker\Application\CheckerService;
 use App\Restrict\Promotions\Domain\Events\PromotionWasCreatedEvent;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Services\AppService;
@@ -24,7 +25,7 @@ use App\Picklist\Domain;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 
-final class PromotionsInsertService extends AppService
+final class PromotionsInsertService extends AppService implements IEventDispatcher
 {
     use RequestTrait;
 
@@ -155,6 +156,13 @@ final class PromotionsInsertService extends AppService
         $promotion["date_execution"] = $this->datecomp->add_time($dateto, 3600);
     }
 
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            PromotionWasCreatedEvent::from_primitives($payload["id"], $payload["promotion"])
+        ]);
+    }
+
     public function __invoke(): array
     {
         if (!$insert = $this->_get_req_without_ops($this->input))
@@ -170,9 +178,8 @@ final class PromotionsInsertService extends AppService
         $id = $this->repopromotion->insert($insert);
         $this->repopromotion->update_slug_with_id($id);
         $promotion = $this->repopromotion->get_by_id($id);
-        EventBus::instance()->publish(...[
-            PromotionWasCreatedEvent::from_primitives($id, $promotion)
-        ]);
+
+        $this->_dispatch(["id" => $id, "promotion" => $promotion,]);
 
         return [
             "id" => $id,
