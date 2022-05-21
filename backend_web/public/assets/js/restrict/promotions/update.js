@@ -162,7 +162,7 @@ export class FormPromotionUpdate extends LitElement {
             <span>${new Date().toLocaleString("es-ES", { timeZone: this._timezone })}</span>
           </div>
         </div>
-        
+<!--row-2-->
         <div class="flex-row">
           ${this._businessowners.length > 0
               ? html`<div class="form-group">
@@ -179,7 +179,7 @@ export class FormPromotionUpdate extends LitElement {
               </div>`
               : null
           }
-          <div class="form-group col-5">
+          <div class="form-group col-8">
             <label for="description">${this.texts.f05}</label>
             <div class="tt-tooltip">
               <span class="tt-span">i</span>
@@ -200,7 +200,8 @@ export class FormPromotionUpdate extends LitElement {
             ])}
             </span>
           </div>
-          <div class="form-group col-2">
+          
+          <div class="form-group col-3">
             <label for="code_erp">${this.texts.f04}</label>
             <div class="tt-tooltip">
               <span class="tt-span">i</span>
@@ -216,7 +217,8 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
-
+<!--/row-2-->
+        
         <div class="flex-row">
           <div class="form-group">
             <label for="id_tz">${this.texts.f03}</label>
