@@ -19,6 +19,8 @@ final class CsvComponent
 
     public function download_as_excel(string $filename, array $data): void
     {
+        $eol = PHP_EOL;
+
         $fnFilter = function(&$str){
             $str = preg_replace("/\t/", "\\t", $str);
             $str = preg_replace("/\r?\n/", "\\n", $str);
@@ -28,9 +30,9 @@ final class CsvComponent
         header("Content-Type: application/vnd.ms-excel");
         header("Content-Disposition: attachment; filename=\"{$filename}\";");
         foreach ($data as $i => $row) {
-            if ($i===0) echo implode("\t", array_keys($row));
+            if ($i===0) echo implode("\t", array_keys($row)).$eol;
             array_walk($row, $fnFilter);
-            echo implode("\t", array_values($row))."\n";
+            echo implode("\t", array_values($row)).$eol;
         }
         exit;
     }
