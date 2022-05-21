@@ -30,7 +30,7 @@ final class CsvComponent
         foreach ($data as $i => $row) {
             if ($i===0) echo implode("\t", array_keys($row));
             array_walk($row, $fnFilter);
-            echo implode("\t", array_values($row));
+            echo implode("\t", array_values($row))."\n";
         }
         exit;
     }
