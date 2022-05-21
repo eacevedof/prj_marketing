@@ -185,7 +185,11 @@ final class PromotionsUpdateService extends AppService
 
     private function _map_entity(array &$promotion): void
     {
-        unset($promotion["slug"], $promotion["is_launched"]);
+        unset(
+            $promotion["slug"], $promotion["is_launched"], $promotion["num_viewed"],
+            $promotion["num_subscribed"], $promotion["num_confirmed"], $promotion["num_executed"]
+        );
+
         if (!$this->auth->is_system()) unset($promotion["id_owner"]);
 
         $promotion["slug"] = $this->textformat->slug($promotion["description"])."-".$promotion["id"];
