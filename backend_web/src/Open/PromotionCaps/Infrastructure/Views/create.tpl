@@ -160,7 +160,9 @@ body {
   </main>
   <footer class="social-footer">
     <div class="social-footer-left">
-      <a href="#"><img class="logo" src="https://placehold.it/150x30"></a>
+      <a href="https://test.eduardoaf.com">
+        <img class="logo" src="https://resources.theframework.es/eduardoaf.com/20200917/161342-favicon.ico">
+      </a>
     </div>
     <div class="social-footer-icons">
     <?=$bdhelp->get_footer_links()?>
