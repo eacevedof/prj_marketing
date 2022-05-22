@@ -1,5 +1,5 @@
 <?php
-namespace App\Restrict\Promotions\Application;
+namespace App\Restrict\Queries\Application;
 
 use App\Restrict\Queries\Domain\Events\QueryActionWasCreatedEvent;
 use App\Restrict\Queries\Domain\QueryRepository;
@@ -13,7 +13,7 @@ use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
 
-final class PromotionsExportService extends AppService implements IEventDispatcher
+final class QueryExportService extends AppService implements IEventDispatcher
 {
     private const LIMIT_PARAMS = 19999;
     private const LIMIT_DOWNLOAD = 1000;

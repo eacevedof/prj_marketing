@@ -3,7 +3,7 @@ namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Promotions\Application\PromotionsExportService;
+use App\Restrict\Queries\Application\QueryExportService;
 use App\Shared\Domain\Enums\ResponseType;
 use \Exception;
 
@@ -20,7 +20,7 @@ final class PromotionsExportController extends RestrictController
 
         try {
             SF::get_callable(
-                PromotionsExportService::class,
+                QueryExportService::class,
                 ["req_uuid" =>$uuid, "columns"=>$this->request->get_post("columns", [])]
             )();
         }
