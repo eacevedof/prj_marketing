@@ -44,6 +44,7 @@ body {
 }
 
 .wrapper main{
+  border: 1px solid green;
   margin:0;
   padding:0;
   height: 75vh;
@@ -61,10 +62,18 @@ body {
   height: 50px;
 }
 .wrapper main section {
-  width: 100px;
-  height: 100px;
+  border: 1px solid red;
+  margin: 0;
+  padding: 2em;
+
+  width: 50vw;
 
 }
+
+section.img-xs {
+
+}
+
 .wrapper footer {
 
 }
