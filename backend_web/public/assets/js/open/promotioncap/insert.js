@@ -145,7 +145,7 @@ export class FormPromotionCapInsert extends LitElement {
         `)}
 <!-- botones -->
         <div class="form-group">
-          <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
+          <button id="btn-submit" ?disabled=${this._issending} class="btn-submit">
             ${this._btnsend}
             ${
               this._issending
