@@ -21,10 +21,11 @@ const _get_columns_and_labels = () => {
         column: $th.getAttribute("column"),
         label: $th.querySelector(`span[title]`).innerText}
       ))
-      .reduce((old, cur) => ({
-        ...old,
-        ...({})[cur.column] = cur.label
-      }), {})
+      .reduce((old, curr)=>{
+        const tmp = {}
+        tmp[curr.column] = curr.label
+        return {...old, ...tmp}
+      },{})
 }
 
 const _export_data = () => {
