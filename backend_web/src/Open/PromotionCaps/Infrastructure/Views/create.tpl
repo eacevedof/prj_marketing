@@ -59,6 +59,7 @@ body {
  /*   opacity: 0.25; esto opaca todo el fondo y lo que hay sobre el*/
 <?=$bdhelp->get_style_body()?>
 }
+
 .wrapper main h1 {
   height: 50px;
 }
