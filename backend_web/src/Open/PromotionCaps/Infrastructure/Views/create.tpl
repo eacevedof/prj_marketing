@@ -66,9 +66,8 @@ body {
 .wrapper main section {
   border: 1px solid red;
   margin: 0;
-  padding: 2em;
+  padding: 0;
 
-  width: 50vw;
   background-repeat: no-repeat;
   background-position: center;
   background-size: auto;
@@ -92,6 +91,7 @@ body {
   <main>
     <h1><? $this->_echo($promotion["description"], false) ?></h1>
     <section>
+      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0;" />
     <?php
     $this->_element_view("promotion-cap-ui-form", [
       "uihelp" => $uihelp,
