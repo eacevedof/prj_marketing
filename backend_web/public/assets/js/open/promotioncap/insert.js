@@ -1,5 +1,4 @@
-import {html, LitElement, css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
-import get_cssrules from "/assets/js/common/cssrules.js"
+import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
@@ -14,12 +13,7 @@ const ACTION = "promotioncap.insert"
 
 export class FormPromotionCapInsert extends LitElement {
   static get styles() {
-    const globalStyle = css([get_cssrules([
-      "/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css",
-      "/themes/valex/assets/css/style.css",
-    ])])
     return [
-      globalStyle,
       cssformflex,
       cssfielderror
     ];
@@ -159,14 +153,6 @@ export class FormPromotionCapInsert extends LitElement {
                 : html``
             }
           </button>
-          <button type="button" ?disabled=${this._issending} @click=${this._on_cancel} class="btn btn-secondary mt-3 mb-0">
-            ${this._btncancel}
-            ${
-                this._issending
-                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                  : html``
-            }
-          </button>
         </div>
       </form>
     `
@@ -174,7 +160,7 @@ export class FormPromotionCapInsert extends LitElement {
   //render
 
   //5
-  firstUpdated(changedProperties) {
+  firstUpdated() {
     try {
       this._$get("input-email").focus()
     }
@@ -225,7 +211,6 @@ export class FormPromotionCapInsert extends LitElement {
       .show()
 
   }
-
 }
 
 if (!customElements.get("form-promotion-cap-insert"))
