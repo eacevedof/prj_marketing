@@ -37,19 +37,17 @@
 <!-- promotioncaps.tpl -->
 <style>
 body {
-  min-height: 100%;
-  font-size: 15px;
+  font-size: 16px;
   font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
+  margin: 0;
+  padding: 0;
 }
 .wrapper {
   min-height: 100%;
-  border: 1px solid black;
 }
 .wrapper header{
-  border: 1px solid green;
 }
 .wrapper main{
-  border: 1px solid orange;
 }
 .wrapper main h1 {
 

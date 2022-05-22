@@ -21,20 +21,26 @@ $uihelp = HF::get(PH::class, $promotionui)
 <!--promotincaps.create.tpl-->
 <style>
 body {
-  font-size: 15px;
+  font-size: 16px;
   font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
+  margin: 0;
+  padding: 0;
 }
+/*div wrapper*/
 .wrapper {
-  min-height: 100%;
-  border: 1px solid black;
+  height: 100vh;
 }
 .wrapper header{
-  border: 1px solid green;
+  background-repeat: no-repeat;
+  background-position: center;
   <?=$bdhelp->get_style_header()?>
 }
 .wrapper main{
-  border: 1px solid orange;
-  <?=$bdhelp->get_style_body()?>
+  height: 90vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+<?=$bdhelp->get_style_body()?>
 }
 .wrapper main h1 {
 
