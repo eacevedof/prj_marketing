@@ -69,6 +69,10 @@ body {
   padding: 2em;
 
   width: 50vw;
+  <?php
+  BH::echo_style("background-color", $promotion["bgcolor"]);
+  BH::echo_style("background-color", $promotion["bgcolor"]);
+  ?>
 }
 
 section.img-xs {
