@@ -11,6 +11,7 @@ const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
 const URL_POST = "/open/promotionscap/:promouuid/insert"
 const ACTION = "promotioncap.insert"
 
+console.log(cssformsubscription, "css import")
 export class FormPromotionCapInsert extends LitElement {
   static get styles() {
     return [
