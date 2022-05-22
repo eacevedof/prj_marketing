@@ -11,13 +11,13 @@ use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\PromotionUiHelper as PH;
 
-dd($result);
+//dd($result);
 $businessdata = $result["businessdata"] ?? [];
 $promotion = $result["promotion"];
 $promotionui = $result["promotionui"] ?? [];
 
 $bdhelp = HF::get(BH::class, $businessdata);
-$uihelp = HF::get(PH::class, $promotion)
+$uihelp = HF::get(PH::class, $promotionui)
 ?>
 <!--promotincaps.create.tpl-->
 <style>
