@@ -1,5 +1,5 @@
 <?php
-namespace App\Restrict\Users\Application;
+namespace App\Restrict\Users\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
