@@ -121,18 +121,18 @@ const reqjs = {
 }
 
 export const reqraw = {
-  post(path, params, blank=true) {
+  post(path, objpayload, blank=true) {
     const form = document.createElement("form")
     form.method = "post"
     form.action = path
     if (blank) form.target = "_blank"
 
-    for (const key in params) {
-      if (params.hasOwnProperty(key)) {
+    for (const key in objpayload) {
+      if (objpayload.hasOwnProperty(key)) {
         const hidfield = document.createElement("input")
         hidfield.type = "hidden"
         hidfield.name = `columns[${key}]`
-        hidfield.value = params[key]
+        hidfield.value = objpayload[key]
 
         form.appendChild(hidfield)
       }
