@@ -54,7 +54,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         foreach ($part as $field => $css) {
             if (!$value = trim($this->businessdata[$field])) continue;
             if (strstr($field,"bgimage")) $value = "url(\"$value\")";
-            $style[] = "{$css}: $value";
+            $style[] = "{$css}: $value !important";
         }
         return $style ? implode("; ",$style): "";
     }

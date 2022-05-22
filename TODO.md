@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- quizas faltaria estilo color en promoción
 - en grid: url con parametros get y filtros
 - disable modal para account 
 - url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
