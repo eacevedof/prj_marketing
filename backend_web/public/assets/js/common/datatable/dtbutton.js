@@ -15,6 +15,10 @@ const _toggle_filters = () => {
   if ($row) $row.classList.toggle("hidden")
 }
 
+const _get_columns_and_labels = () => {
+  return {}
+}
+
 const _export_data = () => {
   const requuid = _$table.getAttribute("req_uuid").trim()
   if (!requuid) {
@@ -23,9 +27,7 @@ const _export_data = () => {
   }
 
   const url = _$table.getAttribute("urlmodule").concat("/export/").concat(requuid)
-  reqraw.post(url,{
-    description: "Description",
-  })
+  reqraw.post(url, _get_columns_and_labels())
   //window.open(url,"_blank")
 }
 
