@@ -1,10 +1,8 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
-- url con parametros get y filtros
-- exportacion a csv en grid
-- hay un bug al validar el vaucher. por algún motivo no incrementa el contador en la promo
-- disable modal para account y promoción
+- en grid: url con parametros get y filtros
+- disable modal para account 
 - url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
 - configuracion de bow delegado (para empresas de marketing)
 - no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
@@ -33,11 +31,6 @@
 - fix tranferencia de traducciones a lit
 - modal info responsive
 - router al hacer redirect a pagina 1 debe arrastrar los parametros GET estos se pierden en la redirección
-- refactor a este patrón de carpetas de DDD by **codely**:
-  - https://www.youtube.com/watch?v=X2CPc8DLwEQ (explicación de la distribución de carpetas JAVA)
-  - https://www.youtube.com/watch?v=UFnABp2s8Y0 (explicación de distribución de carpetas php)
-  - https://www.youtube.com/watch?v=y3MWfPDmVqo (la distribución en si)
-  - repo php https://github.com/CodelyTV/php-ddd-example
 - validadores en cliente
 - cache por usuario o por elemento
   - comprobar cache en vista para evitar hacer toda la lógica de servicios
@@ -52,6 +45,13 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- refactor a este patrón de carpetas de DDD by **codely**:
+  - https://www.youtube.com/watch?v=X2CPc8DLwEQ (explicación de la distribución de carpetas JAVA)
+  - https://www.youtube.com/watch?v=UFnABp2s8Y0 (explicación de distribución de carpetas php)
+  - https://www.youtube.com/watch?v=y3MWfPDmVqo (la distribución en si)
+  - repo php https://github.com/CodelyTV/php-ddd-example
+- ~~exportacion a csv en grid~~
+- ~~disable modal para promoción~~
 - ~~crear parametro extra a mode=test fuerza publicacion~~
 - ~~tratar cuenta desabilitada~~
 - ~~business-data disabled, disabled_by, disabled_date, disabled-why~~
