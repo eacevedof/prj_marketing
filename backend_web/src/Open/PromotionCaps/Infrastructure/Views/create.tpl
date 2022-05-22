@@ -47,7 +47,7 @@ body {
   border: 1px solid green;
   margin:0;
   padding:0;
-  height: 75vh;
+  height: 80vh;
   background-repeat: repeat-x;
   background-position: center;
   background-size: auto 100%;
