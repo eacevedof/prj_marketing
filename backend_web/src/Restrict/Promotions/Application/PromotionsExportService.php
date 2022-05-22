@@ -24,6 +24,8 @@ final class PromotionsExportService extends AppService implements IEventDispatch
         if (!$this->requuid) $this->_exception(__("No request id received"));
         $this->columns = $input["columns"] ?? [];
         if (!$this->columns) $this->_exception(__("No request columns received"));
+        if (strlen(json_encode($this->columns))> 19999)
+            $this->_exception(__("Request payload is too big"));
     }
 
     private function _check_permission(): void
@@ -62,7 +64,11 @@ final class PromotionsExportService extends AppService implements IEventDispatch
         EventBus::instance()->publish(...[
             QueryActionWasCreatedEvent::from_primitives(
                 -1,
-                ["id_query"=>$payload["id"], "description"=>"excel-export"]
+                [
+                    "id_query"=>$payload["id"],
+                    "description"=>"excel-export",
+                    "params"=> json_encode($this->columns),
+                ]
             )
         ]);
     }
