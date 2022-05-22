@@ -21,7 +21,11 @@ final class UsersSearchExportController extends RestrictController
         try {
             SF::get_callable(
                 QueryExportService::class,
-                ["req_uuid" =>$uuid, "columns"=>$this->request->get_post("columns", [])]
+                [
+                    "req_uuid" => $uuid,
+                    "columns" => $this->request->get_post("columns", []),
+                    "filename" => "users",
+                ]
             )();
         }
         catch (Exception $e) {

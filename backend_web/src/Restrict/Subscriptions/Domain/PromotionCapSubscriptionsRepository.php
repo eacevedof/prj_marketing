@@ -130,7 +130,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository implements
             "description" => "read:search",
             "query" => $sql,
             "total" => $r["total"],
-            "module" => "promotions",
+            "module" => "subscriptions",
         ]);
 
         $r["req_uuid"] = $md5;

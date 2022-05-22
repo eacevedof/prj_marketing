@@ -127,7 +127,7 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             "description" => "read:search",
             "query" => $sql,
             "total" => $r["total"],
-            "module" => "promotions",
+            "module" => "users",
         ]);
 
         $r["req_uuid"] = $md5;

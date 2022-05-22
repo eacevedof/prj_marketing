@@ -19,6 +19,7 @@ final class QueryExportService extends AppService implements IEventDispatcher
     private const LIMIT_DOWNLOAD = 1000;
     private string $requuid;
     private array $columns;
+    private string $filename;
 
     public function __construct(array $input)
     {
@@ -34,6 +35,7 @@ final class QueryExportService extends AppService implements IEventDispatcher
         if (!$this->columns) $this->_exception(__("No request columns received"), ExceptionType::CODE_BAD_REQUEST);
         if (strlen(json_encode($this->columns))> self::LIMIT_PARAMS)
             $this->_exception(__("Request payload is too big"), ExceptionType::CODE_BAD_REQUEST);
+        $this->filename = $input["filename"] ?? "export";
     }
 
     private function _check_permission(): void
@@ -102,7 +104,6 @@ final class QueryExportService extends AppService implements IEventDispatcher
         $this->_transform_by_columns($result);
         $now = date("Y-m-d_H-i-s");
         $this->_dispatch($query);
-        $name = $this->input["filename"] ?? "export";
-        CF::get(CsvComponent::class)->download_as_excel("$name-$now.xls", $result);
+        CF::get(CsvComponent::class)->download_as_excel("{$this->filename}-$now.xls", $result);
     }
 }

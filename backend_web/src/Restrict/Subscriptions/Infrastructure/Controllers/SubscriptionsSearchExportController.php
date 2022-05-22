@@ -1,5 +1,5 @@
 <?php
-namespace App\Restrict\Promotions\Infrastructure\Controllers;
+namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -7,7 +7,7 @@ use App\Restrict\Queries\Application\QueryExportService;
 use App\Shared\Domain\Enums\ResponseType;
 use \Exception;
 
-final class PromotionsSearchExportController extends RestrictController
+final class SubscriptionsSearchExportController extends RestrictController
 {
     //@post
     public function export(string $uuid): void
@@ -24,7 +24,7 @@ final class PromotionsSearchExportController extends RestrictController
                 [
                     "req_uuid" => $uuid,
                     "columns" => $this->request->get_post("columns", []),
-                    "filename" => "promotions",
+                    "filename" => "subscriptions",
                 ]
             )();
         }

@@ -69,6 +69,7 @@ final class SubscriptionsSearchService extends AppService
             ->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
         ;
 
+        $dthelp->add_action("export");
         if($this->auth->is_root())
             $dthelp->add_action("show");
 
