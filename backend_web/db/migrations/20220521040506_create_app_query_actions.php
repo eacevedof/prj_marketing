@@ -49,10 +49,10 @@ final class CreateAppQueryActions extends AbsMigration
             "null" => true,
             "comment" => "csv, pdf, json, xml, ..."
         ])
-        ->addColumn("post", "string", [
-            "limit" => 250,
+        ->addColumn("params", "string", [
+            "limit" => 21570,
             "null" => true,
-            "comment" => "csv, pdf, json, xml, ..."
+            "comment" => "payload de columnas"
         ])
         ->addIndex(["id","id_query"], ["name"=>"id__id_query_idx"])
         ->addIndex(["id_query"], ["name"=>"id_query_idx"])

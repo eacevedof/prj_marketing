@@ -58,7 +58,7 @@ final class CreateAppQuery extends AbsMigration
         ])
         ->addColumn("total", "integer", [
             "limit" => 10,
-            "identity" => true,
+            "default" => 0
         ])
         ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
         ->addIndex(["uuid"], ["name"=>"uuid_idx"])
