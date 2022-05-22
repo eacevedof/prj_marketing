@@ -102,6 +102,7 @@ final class QueryExportService extends AppService implements IEventDispatcher
         $this->_transform_by_columns($result);
         $now = date("Y-m-d_H-i-s");
         $this->_dispatch($query);
-        CF::get(CsvComponent::class)->download_as_excel("promotions-$now.xls", $result);
+        $name = $this->input["filename"] ?? "export";
+        CF::get(CsvComponent::class)->download_as_excel("$name-$now.xls", $result);
     }
 }
