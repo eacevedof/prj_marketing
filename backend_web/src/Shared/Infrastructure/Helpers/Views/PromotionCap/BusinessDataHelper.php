@@ -71,4 +71,10 @@ final class BusinessDataHelper extends AppHelper implements IHelper
             ? "<ul>".implode(" ",$links)."</ul>"
             : "";
     }
+
+    public static function echo_style(string $property, ?string $value): void
+    {
+        if (!$value) return;
+        echo "$property: $value";
+    }
 }
