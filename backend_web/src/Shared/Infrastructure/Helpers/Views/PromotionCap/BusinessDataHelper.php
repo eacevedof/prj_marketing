@@ -69,7 +69,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
             $links[] = "<li><a href=\"{$value}\" target=\"_blank\" rel=\"nofollow\">{$value}</a></li>";
         }
         return $links
-            ? "<ul>".implode(" ",$links)."</ul>"
+            ? "<ul class=\"menu simple\">".implode(" ",$links)."</ul>"
             : "";
     }
 
