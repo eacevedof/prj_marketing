@@ -50,7 +50,8 @@ final class CreateAppQueryActions extends AbsMigration
             "comment" => "csv, pdf, json, xml, ..."
         ])
         ->addColumn("params", "string", [
-            "limit" => 21570,
+            //"limit" => 21570, esto lo admite pero por precaución lo dejo en 20
+            "limit" => 20000,
             "null" => true,
             "comment" => "payload de columnas"
         ])
