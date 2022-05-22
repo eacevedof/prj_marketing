@@ -38,6 +38,8 @@ body {
 .wrapper header h2 {
   padding: 0;
   margin: 0;
+  padding-top: 1em;
+  padding-left: 1em;
 }
 
 .wrapper main{
