@@ -16,7 +16,15 @@ const _toggle_filters = () => {
 }
 
 const _get_columns_and_labels = () => {
-  return {}
+  const ths = Array.from(_$table.querySelectorAll(`th[column][visible="1"]`))
+  return ths.map($th => ({
+        column: $th.getAttribute("column"),
+        label: $th.querySelector(`span[title]`).innerText}
+      ))
+      .reduce((old, cur) => ({
+        ...old,
+        ...({})[cur.column] = cur.label
+      }), {})
 }
 
 const _export_data = () => {
@@ -27,8 +35,8 @@ const _export_data = () => {
   }
 
   const url = _$table.getAttribute("urlmodule").concat("/export/").concat(requuid)
+  console.log("columns and labels", _get_columns_and_labels())
   reqraw.post(url, _get_columns_and_labels())
-  //window.open(url,"_blank")
 }
 
 const _on_show = async function(btn){
