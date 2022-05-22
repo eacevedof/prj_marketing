@@ -1,13 +1,16 @@
 <?php
 namespace App\Restrict\Billings\Domain;
 
+use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Repositories\AppRepository;
+use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 use App\Restrict\Auth\Application\AuthService;
 use TheFramework\Components\Db\ComponentQB;
 
-final class BillingsRepository extends AppRepository
+final class BillingsRepository extends AppRepository implements IEventDispatcher
 {
     use SearchRepoTrait;
 
@@ -87,6 +90,13 @@ final class BillingsRepository extends AppRepository
         }
     }
 
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            QueryWasCreatedEvent::from_primitives(-1, $payload)
+        ]);
+    }
+
     public function search(array $search): array
     {
         $qb = $this->_get_qbuilder()
@@ -111,6 +121,15 @@ final class BillingsRepository extends AppRepository
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
         $r = $this->query_with_count($sqlcount, $sql);
+
+        $this->_dispatch([
+            "uuid" => $md5 = md5($sql)."-".uniqid(),
+            "description" => "read:search",
+            "query" => $sql,
+            "total" => $r["total"],
+            "module" => "billings",
+        ]);
+        $r["req_uuid"] = $md5;
         return $r;
     }
 
