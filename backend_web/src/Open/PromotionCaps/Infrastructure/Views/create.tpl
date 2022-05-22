@@ -43,6 +43,8 @@ body {
 }
 
 .wrapper main{
+  margin:0;
+  padding:0;
   height: 75vh;
   background-repeat: repeat-x;
   background-position: center;
@@ -55,7 +57,7 @@ body {
 <?=$bdhelp->get_style_body()?>
 }
 .wrapper main h1 {
-
+  height: 50px;
 }
 .wrapper main section {
   width: 100px;
