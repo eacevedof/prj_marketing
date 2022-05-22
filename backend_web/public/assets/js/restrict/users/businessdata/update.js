@@ -152,7 +152,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div id="field-user_logo_1">
           <input type="text" id="user_logo_1" .value=${this._user_logo_1} 
               @change=${e => this._handle_keyup(e, "_user_logo_1")}
-              placeholder="link cloudinary" class="form-control" maxlength="100">
+              placeholder="link cloudinary" class="form-control" maxlength="300">
         </div>
         ${html([
           get_img_link(this._user_logo_1, this.texts.f05)
@@ -163,7 +163,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div id="field-user_logo_2">
           <input type="text" id="user_logo_2" .value=${this._user_logo_2}
                @change=${e => this._handle_keyup(e, "_user_logo_2")}
-               placeholder="link cloudinary" class="form-control" maxlength="100">
+               placeholder="link cloudinary" class="form-control" maxlength="300">
         </div>
         ${html([
           get_img_link(this._user_logo_2, this.texts.f06)
@@ -174,7 +174,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div id="field-user_logo_3">
           <input type="text" id="user_logo_3" .value=${this._user_logo_3}
                  @change=${e => this._handle_keyup(e, "_user_logo_3")}    
-                 placeholder="link cloudinary" class="form-control" maxlength="100">
+                 placeholder="link cloudinary" class="form-control" maxlength="300">
         </div>
         ${html([
           get_img_link(this._user_logo_3, this.texts.f07)
@@ -185,7 +185,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
         <div id="field-url_favicon">
           <input type="text" id="url_favicon" .value=${this._url_favicon}
                  @change=${e => this._handle_keyup(e, "_url_favicon")}
-                 placeholder="link cloudinary" class="form-control" maxlength="100">
+                 placeholder="link cloudinary" class="form-control" maxlength="300">
         </div>
         ${html([
           get_img_link(this._url_favicon, this.texts.f08)
@@ -210,7 +210,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-head_bgimage">
             <input type="text" id="head_bgimage" .value=${this._head_bgimage}
                   @change=${e => this._handle_keyup(e, "_head_bgimage")}
-                  class="form-control" maxlength="100">
+                  class="form-control" maxlength="300">
           </div>
           ${html([
             get_img_link(this._head_bgimage, this.texts.f11)
@@ -237,7 +237,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-body_bgimage">
             <input type="text" id="body_bgimage" .value=${this._body_bgimage}
                    @change=${e => this._handle_keyup(e, "_body_bgimage")}
-                   class="form-control" maxlength="100">
+                   class="form-control" maxlength="300">
           </div>
           ${html([
             get_img_link(this._body_bgimage, this.texts.f14)
@@ -252,7 +252,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-url_business">
             <input type="text" id="url_business" .value=${this._url_business}
                    @change=${e => this._handle_keyup(e, "_url_business")}
-                   class="form-control" maxlength="100">
+                   class="form-control" maxlength="300">
           </div>
           ${html([
             get_link(this._url_business, this.texts.f15)
@@ -263,7 +263,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-url_social_fb">
             <input type="text" id="url_social_fb" .value=${this._url_social_fb}
                    @change=${e => this._handle_keyup(e, "_url_social_fb")}
-                   class="form-control" maxlength="100">
+                   class="form-control" maxlength="300">
           </div>
           ${html([
             get_link(this._url_social_fb, this.texts.f15)
@@ -274,7 +274,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-url_social_ig">
             <input type="text" id="url_social_ig" .value=${this._url_social_ig}
                    @change=${e => this._handle_keyup(e, "_url_social_ig")}
-                   class="form-control" maxlength="100">
+                   class="form-control" maxlength="300">
           </div>
           ${html([
             get_link(this._url_social_ig, this.texts.f15)
@@ -285,7 +285,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-url_social_twitter">
             <input type="text" id="url_social_twitter" .value=${this._url_social_twitter}
                    @change=${e => this._handle_keyup(e, "_url_social_twitter")}
-                   class="form-control" maxlength="100">
+                   class="form-control" maxlength="300">
           </div>
           ${html([
             get_link(this._url_social_twitter, this.texts.f15)
@@ -296,7 +296,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div id="field-url_social_tiktok">
             <input type="text" id="url_social_tiktok" .value=${this._url_social_tiktok}
                    @change=${e => this._handle_keyup(e, "_url_social_tiktok")}
-                   class="form-control" maxlength="100">
+                   class="form-control" maxlength="300">
           </div>
           ${html([
             get_link(this._url_social_tiktok, this.texts.f15)
