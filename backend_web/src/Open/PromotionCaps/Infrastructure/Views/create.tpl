@@ -72,7 +72,7 @@ body {
 }
 
 section.img-xs {
-
+  BH::echo_style("background", "");
 }
 
 .wrapper footer {
