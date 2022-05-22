@@ -69,7 +69,6 @@ body {
   padding: 2em;
 
   width: 50vw;
-
 }
 
 section.img-xs {
