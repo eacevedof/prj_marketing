@@ -5,12 +5,6 @@
 - disable modal para account 
 - url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
 - configuracion de bow delegado (para empresas de marketing)
-- no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
-  el % del fee de la plataforma. No debería ser menos de 7
-  - de 7 a 15 = 6% (0,42 - 0,9)
-  - 16 a 30 = 4% (0,64 - 1,2)
-  - 31 a 49 = 3.5% (1,09 - 1,72)
-  - 50 a n = 3% (1.5 - 3)
 - configurador de planes por puntos y su reseteo a nivel de cliente. por ejemplo 10 puntos en 15 dias regalo botella de vino.
 - en la navegacion entre modals refrecar la url del nav
 - al configurar una promocion no coge el valor de max confirmed
@@ -45,6 +39,12 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
+  el % del fee de la plataforma. No debería ser menos de 7
+  - de 7 a 15 = 6% (0,42 - 0,9)
+  - 16 a 30 = 4% (0,64 - 1,2)
+  - 31 a 49 = 3.5% (1,09 - 1,72)
+  - 50 a n = 3% (1.5 - 3)
 - refactor a este patrón de carpetas de DDD by **codely**:
   - https://www.youtube.com/watch?v=X2CPc8DLwEQ (explicación de la distribución de carpetas JAVA)
   - https://www.youtube.com/watch?v=UFnABp2s8Y0 (explicación de distribución de carpetas php)
