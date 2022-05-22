@@ -43,7 +43,10 @@ final class PromotionsExportService extends AppService implements IEventDispatch
     private function _dispatch(array $payload): void
     {
         EventBus::instance()->publish(...[
-            QueryActionWasCreatedEvent::from_primitives(-1, ["id_query"=>$payload["id"],"description"=>"excel-export"])
+            QueryActionWasCreatedEvent::from_primitives(
+                -1,
+                ["id_query"=>$payload["id"], "description"=>"excel-export"]
+            )
         ]);
     }
 
