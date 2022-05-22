@@ -71,15 +71,20 @@ final class UsersSearchService extends AppService
                 ->add_action("edit")
                 ->add_action("del")
                 ->add_action("undel")
+                ->add_action("export")
             ;
 
         if($this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
             $dthelp->add_action("add")
                 ->add_action("edit")
-                ->add_action("del");
+                ->add_action("del")
+                ->add_action("export")
+            ;
 
         if($this->auth->is_user_allowed(UserPolicyType::USERS_READ))
-            $dthelp->add_action("show");
+            $dthelp->add_action("show")
+                ->add_action("export")
+            ;
 
         return $dthelp;
     }
