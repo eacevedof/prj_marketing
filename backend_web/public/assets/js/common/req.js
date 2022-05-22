@@ -116,7 +116,29 @@ const reqjs = {
       console.log("ERROR:",error)
       return _get_error(error.message)
     }
-  }
+  },
+
+  post_raw(path, params, blank=true) {
+    const form = document.createElement("form")
+    form.method = "post"
+    form.action = path
+    if (blank) form.target = "_blank"
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        const hidfield = document.createElement("input")
+        hidfield.type = "hidden"
+        hidfield.name = `columns[${key}]`
+        hidfield.value = params[key]
+
+        form.appendChild(hidfield)
+      }
+    }
+
+    document.body.appendChild(form)
+    form.submit()
+  },
+
 }
 
 const _get_json = str => {

@@ -22,7 +22,7 @@ const _export_data = () => {
     return
   }
 
-  const url = _$table.getAttribute("urlmodule").concat("/export").concat("?").concat("req_uuid=").concat(requuid)
+  const url = _$table.getAttribute("urlmodule").concat("/export/").concat(requuid)
   window.open(url,"_blank")
 }
 
