@@ -38,9 +38,23 @@ final class PromotionsExportService extends AppService implements IEventDispatch
             );
     }
 
-    private function _transform_by_profile(array &$data): void
+    private function _transform_by_columns(array &$data): void
     {
-
+        foreach($this->columns as $column => $label)
+            $this->columns[$column] = html_entity_decode($label);
+        
+        $colums = array_keys($this->columns);
+        $transformed = [0=>$this->columns];
+        foreach ($data as $row) {
+            $tmprow = [];
+            foreach ($row as $column => $value) {
+                if (!in_array($column, $colums)) continue;
+                $tmprow[$column] = $value;
+            }
+            if (!$tmprow) continue;
+            $transformed[] = $tmprow;
+        }
+        $data = $transformed;
     }
 
     private function _dispatch(array $payload): void
@@ -67,7 +81,7 @@ final class PromotionsExportService extends AppService implements IEventDispatch
         $sql = $query["query"];
         $sql = explode(" LIMIT ", $sql)[0];
         $result = RF::get(QueryRepository::class)->query($sql);
-        $this->_transform_by_profile($result);
+        $this->_transform_by_columns($result);
         $now = date("Y-m-d_H-i-s");
         $this->_dispatch($query);
         CF::get(CsvComponent::class)->download_as_excel("promotions-$now.xls", $result);
