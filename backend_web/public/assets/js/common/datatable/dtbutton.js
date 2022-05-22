@@ -36,7 +36,6 @@ const _export_data = () => {
   }
 
   const url = _$table.getAttribute("urlmodule").concat("/export/").concat(requuid)
-  console.log("columns and labels", _get_columns_and_labels())
   reqraw.post(url, _get_columns_and_labels())
 }
 
