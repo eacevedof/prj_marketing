@@ -21,11 +21,11 @@ final class PromotionsExportService extends AppService implements IEventDispatch
     public function __construct(array $input)
     {
         $this->requuid = trim($input["req_uuid"] ?? "");
-        if (!$this->requuid) $this->_exception(__("No request id received"));
+        if (!$this->requuid) $this->_exception(__("No request id received"), ExceptionType::CODE_BAD_REQUEST);
         $this->columns = $input["columns"] ?? [];
-        if (!$this->columns) $this->_exception(__("No request columns received"));
+        if (!$this->columns) $this->_exception(__("No request columns received"), ExceptionType::CODE_BAD_REQUEST);
         if (strlen(json_encode($this->columns))> 19999)
-            $this->_exception(__("Request payload is too big"));
+            $this->_exception(__("Request payload is too big"), ExceptionType::CODE_BAD_REQUEST);
     }
 
     private function _check_permission(): void
