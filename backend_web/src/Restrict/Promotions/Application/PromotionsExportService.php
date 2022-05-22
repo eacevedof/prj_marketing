@@ -15,6 +15,8 @@ use App\Shared\Domain\Enums\ExceptionType;
 
 final class PromotionsExportService extends AppService implements IEventDispatcher
 {
+    private const LIMIT_PARAMS = 19999;
+    private const LIMIT_DOWNLOAD = 1000;
     private string $requuid;
     private array $columns;
 
@@ -30,7 +32,7 @@ final class PromotionsExportService extends AppService implements IEventDispatch
         if (!$this->requuid) $this->_exception(__("No request id received"), ExceptionType::CODE_BAD_REQUEST);
         $this->columns = $input["columns"] ?? [];
         if (!$this->columns) $this->_exception(__("No request columns received"), ExceptionType::CODE_BAD_REQUEST);
-        if (strlen(json_encode($this->columns))> 19999)
+        if (strlen(json_encode($this->columns))> self::LIMIT_PARAMS)
             $this->_exception(__("Request payload is too big"), ExceptionType::CODE_BAD_REQUEST);
     }
 
@@ -87,6 +89,11 @@ final class PromotionsExportService extends AppService implements IEventDispatch
             $this->_exception(
                 __("Request id {0} not found!", $this->requuid),
                 ExceptionType::CODE_NOT_FOUND
+            );
+        if (($total = (int)$query["total"])>self::LIMIT_DOWNLOAD)
+            $this->_exception(
+                __("The amount of rows {0} exceed the limit {1}", $total, self::LIMIT_DOWNLOAD),
+                ExceptionType::CODE_EXPECTATION_FAILED
             );
 
         $sql = $query["query"];
