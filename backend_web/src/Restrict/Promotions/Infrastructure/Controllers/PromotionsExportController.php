@@ -9,7 +9,7 @@ use \Exception;
 
 final class PromotionsExportController extends RestrictController
 {
-    //@get
+    //@post
     public function export(string $requuid): void
     {
         if (!$this->auth->get_user())
