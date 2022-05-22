@@ -18,6 +18,7 @@ $promotionui = $result["promotionui"] ?? [];
 $bdhelp = HF::get(BH::class, $businessdata);
 $uihelp = HF::get(PH::class, $promotionui)
 ?>
+<!--promotincaps.create.tpl-->
 <style>
 body {
   font-size: 15px;
@@ -80,3 +81,4 @@ Snackbar.show({
   text: "hola mundo",
 })
 </script>
+<!--/promotincaps.create.tpl-->
