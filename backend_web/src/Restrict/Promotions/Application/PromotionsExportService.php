@@ -44,12 +44,12 @@ final class PromotionsExportService extends AppService implements IEventDispatch
             $this->columns[$column] = html_entity_decode($label);
         
         $colums = array_keys($this->columns);
-        $transformed = [0=>$this->columns];
+        $transformed = [];
         foreach ($data as $row) {
             $tmprow = [];
             foreach ($row as $column => $value) {
                 if (!in_array($column, $colums)) continue;
-                $tmprow[$column] = $value;
+                $tmprow[$this->columns[$column]] = $value;
             }
             if (!$tmprow) continue;
             $transformed[] = $tmprow;
