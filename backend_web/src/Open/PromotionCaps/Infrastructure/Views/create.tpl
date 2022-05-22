@@ -47,13 +47,18 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size:cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 <?=$bdhelp->get_style_body()?>
 }
 .wrapper main h1 {
 
 }
 .wrapper main section {
-
+  width: 100px;
+  height: 100px;
 }
 .wrapper footer {
 
