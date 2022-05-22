@@ -4,7 +4,6 @@ namespace App\Restrict\Promotions\Infrastructure\Controllers;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Promotions\Application\PromotionsSearchService;
-use App\Picklist\Application\PicklistService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
@@ -14,14 +13,6 @@ use \Exception;
 
 final class PromotionsSearchExportController extends RestrictController
 {
-    private PicklistService $picklist;
-    
-    public function __construct()
-    {
-        parent::__construct();
-        $this->picklist = SF::get(PicklistService::class);
-    }
-
     public function index(?string $page=null): void
     {
         $this->_if_noauth_tologin();

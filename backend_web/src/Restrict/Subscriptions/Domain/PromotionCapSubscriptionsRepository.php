@@ -2,7 +2,10 @@
 namespace App\Restrict\Subscriptions\Domain;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Repositories\AppRepository;
+use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
@@ -10,7 +13,7 @@ use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\Common\SysfieldRepository;
 use TheFramework\Components\Db\ComponentQB;
 
-final class PromotionCapSubscriptionsRepository extends AppRepository
+final class PromotionCapSubscriptionsRepository extends AppRepository implements IEventDispatcher
 {
     use SearchRepoTrait;
 
@@ -75,6 +78,13 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         }
     }
 
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            QueryWasCreatedEvent::from_primitives(-1, $payload)
+        ]);
+    }
+
     public function search(array $search): array
     {
         $qb = $this->_get_qbuilder()
@@ -115,6 +125,15 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $sql = $qb->select()->sql();
         $sqlcount = $qb->sqlcount();
         $r = $this->query_with_count($sqlcount, $sql);
+        $this->_dispatch([
+            "uuid" => $md5 = md5($sql)."-".uniqid(),
+            "description" => "read:search",
+            "query" => $sql,
+            "total" => $r["total"],
+            "module" => "promotions",
+        ]);
+
+        $r["req_uuid"] = $md5;
         return $r;
     }
 
