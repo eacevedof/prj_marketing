@@ -14,6 +14,7 @@ final class CreateAppQuery extends AbsMigration
     private function _create_table(): void
     {
         $this->table("{$this->tablename}", [
+            //"engine" => "MyISAM",
             "collation" => "utf8_general_ci",
             "id"=> false,
             "primary_key" => ["id"]

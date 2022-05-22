@@ -15,6 +15,7 @@ final class CreateBaseUserPermissions extends AbsMigration
     private function _create_table(): void
     {
         $table = $this->table("{$this->tablename}", [
+            "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
             "id"=> false,
             "primary_key" => ["id"]

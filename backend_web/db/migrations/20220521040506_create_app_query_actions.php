@@ -14,6 +14,7 @@ final class CreateAppQueryActions extends AbsMigration
     private function _create_table(): void
     {
         $this->table("{$this->tablename}", [
+            "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
             "id"=> false,
             "primary_key" => ["id"]
@@ -44,6 +45,11 @@ final class CreateAppQueryActions extends AbsMigration
             "null" => false
         ])
         ->addColumn("description", "string", [
+            "limit" => 250,
+            "null" => true,
+            "comment" => "csv, pdf, json, xml, ..."
+        ])
+        ->addColumn("post", "string", [
             "limit" => 250,
             "null" => true,
             "comment" => "csv, pdf, json, xml, ..."

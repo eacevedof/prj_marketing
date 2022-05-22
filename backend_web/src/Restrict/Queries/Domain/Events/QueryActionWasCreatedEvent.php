@@ -7,6 +7,7 @@ final class QueryActionWasCreatedEvent extends AbsEvent
 {
     private int $idquery;
     private string $description;
+    private string $columns;
 
     public function __construct(
         int $id,
