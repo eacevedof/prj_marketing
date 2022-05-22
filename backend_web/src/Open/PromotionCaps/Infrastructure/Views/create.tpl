@@ -94,6 +94,10 @@ body {
   justify-content: center;
 }
 
+.div-promotion h1 {
+  margin-bottom: 2em;
+}
+
 </style>
 <div class="wrapper">
   <header>
