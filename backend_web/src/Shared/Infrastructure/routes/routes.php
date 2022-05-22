@@ -23,6 +23,7 @@ return [
     ["url"=>"/restrict/users/update/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersUpdateController", "method"=>"update", "allowed"=>["put"]],
     ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersDeleteController", "method"=>"remove", "allowed"=>["delete"]],
     ["url"=>"/restrict/users/undelete/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
+    ["url"=>"/restrict/users/export/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchExportController", "method"=>"export", "allowed"=>["post"]],
     ["url"=>"/restrict/users/?int:page","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"index"],
     ["url"=>"/restrict/users/search","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"search"],
     //@users-tabs
@@ -35,15 +36,14 @@ return [
     //@promotions
     ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInfoController", "method"=>"info"],
     ["url"=>"/restrict/promotions/create","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInsertController", "method"=>"create"],
-    ["url"=>"/restrict/promotions/export/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsExportController", "method"=>"export", "allowed"=>["post"]],
     ["url"=>"/restrict/promotions/insert","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInsertController", "method"=>"insert", "allowed"=>["post"]],
     ["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController", "method"=>"edit"],
     ["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController", "method"=>"update", "allowed"=>["put"]],
     ["url"=>"/restrict/promotions/delete/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsDeleteController", "method"=>"remove", "allowed"=>["delete"]],
     ["url"=>"/restrict/promotions/undelete/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsDeleteController", "method"=>"undelete", "allowed"=>["patch"]],
+    ["url"=>"/restrict/promotions/export/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchExportController", "method"=>"export", "allowed"=>["post"]],
     ["url"=>"/restrict/promotions/?int:page","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"index"],
     ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"search"],
-
     //@promotions-tabs
     ["url"=>"/restrict/promotions/:uuid/ui/update","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionUisUpdateController", "method"=>"update", "allowed"=>["put"]],
 
@@ -61,6 +61,7 @@ return [
     //@subscriptions
     ["url"=>"/restrict/subscriptions/edit/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController", "method"=>"edit"],
     ["url"=>"/restrict/subscriptions/update-status/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController", "method"=>"update_status", "allowed"=>["put"]],
+    ["url"=>"/restrict/subscriptions/export/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchExportController", "method"=>"export", "allowed"=>["post"]],
     ["url"=>"/restrict/subscriptions/?int:page","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"index"],
     ["url"=>"/restrict/subscriptions/search","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"search"],
 

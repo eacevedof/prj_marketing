@@ -1,12 +1,4 @@
 <?php
-/**
- * @author Eduardo Acevedo Farje.
- * @link eduardoaf.com
- * @name App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController
- * @file PromotionsSearchController.php v1.0.0
- * @date 23-01-2022 10:22 SPAIN
- * @observations
- */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
@@ -20,7 +12,7 @@ use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use \Exception;
 
-final class PromotionsSearchController extends RestrictController
+final class PromotionsSearchExportController extends RestrictController
 {
     private PicklistService $picklist;
     
