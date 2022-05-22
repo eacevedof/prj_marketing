@@ -34,6 +34,7 @@
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+<!-- promotioncaps.tpl -->
 <style>
 body {
   min-height: 100%;
@@ -63,6 +64,7 @@ body {
 
 }
 </style>
+<!--/promotioncaps.tpl -->
 <?php
 $this->_template();
 ?>
