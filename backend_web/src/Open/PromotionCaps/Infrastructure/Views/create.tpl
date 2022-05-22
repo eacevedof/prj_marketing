@@ -28,15 +28,20 @@ body {
 }
 /*div wrapper*/
 .wrapper {
-  height: 100vh;
 }
 .wrapper header{
   background-repeat: no-repeat;
   background-position: center;
+  height: 6em;
   <?=$bdhelp->get_style_header()?>
 }
+.wrapper header h2 {
+  padding: 0;
+  margin: 0;
+}
+
 .wrapper main{
-  height: 90vh;
+  height: 70vh;
   background-repeat: no-repeat;
   background-position: center;
   background-size:cover;
