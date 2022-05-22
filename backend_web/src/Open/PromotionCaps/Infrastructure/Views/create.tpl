@@ -26,13 +26,19 @@ body {
   font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 /*div wrapper*/
 .wrapper {
+  width: 90vw;
+  display: inline-block;
+  border: 1px solid #C2CCD1;
+  border-radius: 25px;
 }
 .wrapper header{
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: right;
+  background-size: auto 100%;
   height: 6em;
   <?=$bdhelp->get_style_header()?>
 }
@@ -41,10 +47,10 @@ body {
   margin: 0;
   padding-top: 1em;
   padding-left: 1em;
+  float: left;
 }
 
 .wrapper main{
-  border: 1px solid green;
   margin:0;
   padding:0;
   height: 80vh;
@@ -76,13 +82,6 @@ body {
   ?>
 }
 
-.wrapper footer {
-
-}
-.wrapper footer ul {
-
-}
-
 .div-promotion {
   position: absolute;
   top: 50%;
@@ -95,7 +94,7 @@ body {
 }
 
 .div-promotion h1 {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 .social-footer {
@@ -142,7 +141,7 @@ body {
   </header>
   <main>
     <section>
-      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 74vh" />
+      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 79.5vh" />
       <div class="div-promotion">
         <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
         <?php
