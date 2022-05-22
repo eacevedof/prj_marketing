@@ -98,7 +98,6 @@ body {
   margin-bottom: 2em;
 }
 
-
 .social-footer {
   padding: 1em;
   background: #8a8a8a;
