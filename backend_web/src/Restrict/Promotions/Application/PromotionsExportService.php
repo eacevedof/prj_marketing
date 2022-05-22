@@ -16,11 +16,14 @@ use App\Shared\Domain\Enums\ExceptionType;
 final class PromotionsExportService extends AppService implements IEventDispatcher
 {
     private string $requuid;
+    private array $columns;
 
     public function __construct(array $input)
     {
         $this->requuid = trim($input["req_uuid"] ?? "");
         if (!$this->requuid) $this->_exception(__("No request id received"));
+        $this->columns = $input["columns"] ?? [];
+        if (!$this->columns) $this->_exception(__("No request columns received"));
     }
 
     private function _check_permission(): void
