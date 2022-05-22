@@ -118,7 +118,10 @@ const reqjs = {
     }
   },
 
-  post_raw(path, params, blank=true) {
+}
+
+export const reqraw = {
+  post(path, params, blank=true) {
     const form = document.createElement("form")
     form.method = "post"
     form.action = path
@@ -138,7 +141,6 @@ const reqjs = {
     document.body.appendChild(form)
     form.submit()
   },
-
 }
 
 const _get_json = str => {
