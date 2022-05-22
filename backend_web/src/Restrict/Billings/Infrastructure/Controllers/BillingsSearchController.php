@@ -61,6 +61,7 @@ final class BillingsSearchController extends RestrictController
                 "result"   => $result["result"],
                 "filtered" => $result["total"],
                 "total"    => $result["total"],
+                "req_uuid" => $result["req_uuid"],
             ])->show();
         }
         catch (Exception $e) {

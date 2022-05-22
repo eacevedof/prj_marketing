@@ -53,6 +53,7 @@ final class BillingsSearchService extends AppService
             ->add_column("e_returned")->add_label(__("Ret"))->add_tooltip(__("Ret"))
             ->add_column("e_earned")->add_label(__("Earn"))->add_tooltip(__("Earn"));
 
+        $dthelp->add_action("export");
         if ($this->auth->is_system())
             $dthelp->add_column("e_percent")->add_label(__("%"))->add_tooltip(__("%"));
 
