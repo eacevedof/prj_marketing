@@ -26,7 +26,7 @@ export class FormPromotionUiUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid", "id", "id_promotion", "id_owner","notoryes"])
+    return get_formdata(this.shadowRoot)(this.fields)(["uuid", "id", "id_promotion", "id_owner","notoryes","disabled_date"])
   }
 
   _on_cancel() {
