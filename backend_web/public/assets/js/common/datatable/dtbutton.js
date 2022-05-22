@@ -23,7 +23,7 @@ const _export_data = () => {
   }
 
   const url = _$table.getAttribute("urlmodule").concat("/export").concat("?").concat("req_uuid=").concat(requuid)
-  window.location = url
+  window.open(url,"_blank")
 }
 
 const _on_show = async function(btn){
