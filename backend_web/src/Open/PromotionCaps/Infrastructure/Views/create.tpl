@@ -44,9 +44,10 @@ body {
 
 .wrapper main{
   height: 75vh;
-  background-repeat: no-repeat;
+  background-repeat: repeat-x;
   background-position: center;
-  background-size:cover;
+  background-size: auto 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
