@@ -1,4 +1,4 @@
-import {reqtxt} from "/assets/js/common/req.js"
+import {reqtxt, reqraw} from "/assets/js/common/req.js"
 import spinner from "/assets/js/common/spinner.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
 
@@ -23,7 +23,10 @@ const _export_data = () => {
   }
 
   const url = _$table.getAttribute("urlmodule").concat("/export/").concat(requuid)
-  window.open(url,"_blank")
+  reqraw.post(url,{
+    description: "Description",
+  })
+  //window.open(url,"_blank")
 }
 
 const _on_show = async function(btn){

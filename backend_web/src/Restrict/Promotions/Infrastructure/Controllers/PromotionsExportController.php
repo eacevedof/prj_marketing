@@ -10,7 +10,7 @@ use \Exception;
 final class PromotionsExportController extends RestrictController
 {
     //@get
-    public function export(): void
+    public function export(string $requuid): void
     {
         if (!$this->auth->get_user())
             $this->_get_json()
@@ -19,8 +19,9 @@ final class PromotionsExportController extends RestrictController
                 ->show();
 
         try {
-            SF::get_callable(PromotionsExportService::class,
-                ["req_uuid" =>$this->request->get_get("req_uuid")]
+            SF::get_callable(
+                PromotionsExportService::class,
+                ["req_uuid" =>$requuid, "columns"=>$this->request->get_post("columns", [])]
             )();
         }
         catch (Exception $e) {
