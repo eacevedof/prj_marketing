@@ -51,7 +51,6 @@ body {
   background-repeat: repeat-x;
   background-position: center;
   background-size: auto 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,6 +80,15 @@ body {
 .wrapper footer ul {
 
 }
+
+.div-promotion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
 </style>
 <div class="wrapper">
   <header>
@@ -89,17 +97,17 @@ body {
   <main>
     <section>
       <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 56vh" />
-      <div>
-      <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
-    <?php
-    $this->_element_view("promotion-cap-ui-form", [
-      "uihelp" => $uihelp,
-      "promotionuuid" => $promotion["uuid"],
-      "languages" => $languages,
-      "countries" => $countries,
-      "genders" => $genders,
-    ]);
-    ?>
+      <div class="div-promotion">
+        <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
+        <?php
+        $this->_element_view("promotion-cap-ui-form", [
+          "uihelp" => $uihelp,
+          "promotionuuid" => $promotion["uuid"],
+          "languages" => $languages,
+          "countries" => $countries,
+          "genders" => $genders,
+        ]);
+        ?>
       </div>
     </section>
   </main>
