@@ -88,7 +88,7 @@ body {
   </header>
   <main>
     <section>
-      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 50vh" />
+      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 56vh" />
       <div>
       <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
     <?php
