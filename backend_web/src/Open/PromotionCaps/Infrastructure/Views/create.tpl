@@ -100,7 +100,7 @@ body {
 
 
 .social-footer {
-  padding: 1rem;
+  padding: 1em;
   background: #8a8a8a;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -160,8 +160,8 @@ body {
   </main>
   <footer class="social-footer">
     <div class="social-footer-left">
-      <a href="https://test.eduardoaf.com">
-        <img class="logo" src="https://resources.theframework.es/eduardoaf.com/20200917/161342-favicon.ico">
+      <a href="https://test.eduardoaf.com" target="_blank">
+        <img class="logo" src="https://resources.theframework.es/eduardoaf.com/20200917/161342-favicon.ico" style="height: 1.3em">
       </a>
     </div>
     <div class="social-footer-icons">
