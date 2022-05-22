@@ -43,7 +43,7 @@ body {
 }
 
 .wrapper main{
-  height: 70vh;
+  height: 75vh;
   background-repeat: no-repeat;
   background-position: center;
   background-size:cover;
