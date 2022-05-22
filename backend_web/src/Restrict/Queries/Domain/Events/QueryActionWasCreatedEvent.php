@@ -7,12 +7,13 @@ final class QueryActionWasCreatedEvent extends AbsEvent
 {
     private int $idquery;
     private string $description;
-    private string $columns;
+    private string $params;
 
     public function __construct(
         int $id,
         int $idquery,
         string $description,
+        string $params,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -23,6 +24,7 @@ final class QueryActionWasCreatedEvent extends AbsEvent
         parent::__construct($id, $eventid, $occuredon, $correlationid, $causationid);
         $this->idquery = $idquery;
         $this->description = $description;
+        $this->params = $params;
     }
 
     public static function event_name(): string
@@ -43,6 +45,7 @@ final class QueryActionWasCreatedEvent extends AbsEvent
             $aggregateId,
             $body["id_query"],
             $body["description"],
+            $body["params"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -55,6 +58,7 @@ final class QueryActionWasCreatedEvent extends AbsEvent
         return [
             "id_query" => $this->idquery,
             "description" => $this->description,
+            "params" => $this->params,
         ];
     }
 
@@ -66,5 +70,10 @@ final class QueryActionWasCreatedEvent extends AbsEvent
     public function description(): string
     {
         return $this->description;
+    }
+
+    public function params(): string
+    {
+        return $this->params;
     }
 }
