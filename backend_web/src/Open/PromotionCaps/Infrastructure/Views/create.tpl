@@ -56,12 +56,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
- /*   opacity: 0.25; esto opaca todo el fondo y lo que hay sobre el*/
 <?=$bdhelp->get_style_body()?>
 }
 
-.wrapper main h1 {
-  height: 50px;
+.wrapper main{
 }
 .wrapper main section {
   border: 1px solid red;
@@ -70,7 +68,7 @@ body {
 
   background-repeat: no-repeat;
   background-position: center;
-  background-size: auto;
+  background-size: cover;
   <?php
   BH::echo_style("background-color", $promotion["bgcolor"]);
   BH::echo_style("background-image", $promotion["bgimage_lg"]);
@@ -86,12 +84,13 @@ body {
 </style>
 <div class="wrapper">
   <header>
-    <h2><? $this->_echo($businessdata["business_name"], false) ?></h2>
+    <h2><? $this->_echo_nohtml($businessdata["business_name"]) ?></h2>
   </header>
   <main>
-    <h1><? $this->_echo($promotion["description"], false) ?></h1>
     <section>
-      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0;" />
+      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 50vh" />
+      <div>
+      <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
     <?php
     $this->_element_view("promotion-cap-ui-form", [
       "uihelp" => $uihelp,
@@ -101,6 +100,7 @@ body {
       "genders" => $genders,
     ]);
     ?>
+      </div>
     </section>
   </main>
   <footer>
