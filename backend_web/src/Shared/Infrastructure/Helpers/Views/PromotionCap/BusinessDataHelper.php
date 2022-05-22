@@ -53,7 +53,8 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         $part = $this->mapping[self::BODY];
         foreach ($part as $field => $css) {
             if (!$value = trim($this->businessdata[$field])) continue;
-            if (strstr($field,"bgimage")) $value = "url(\"$value\")";
+            if (strstr($field,"bgimage"))
+                $value = "linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)), url(\"$value\")";
             $style[] = "{$css}: $value !important";
         }
         return $style ? implode("; ",$style): "";

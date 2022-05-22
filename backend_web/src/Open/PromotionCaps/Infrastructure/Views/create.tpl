@@ -71,15 +71,11 @@ body {
   width: 50vw;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: auto 100%;
+  background-size: auto;
   <?php
   BH::echo_style("background-color", $promotion["bgcolor"]);
   BH::echo_style("background-image", $promotion["bgimage_lg"]);
   ?>
-}
-
-section.img-xs {
-  <?BH::echo_style("background", "");?>
 }
 
 .wrapper footer {
