@@ -20,6 +20,12 @@ final class PromotionsExportService extends AppService implements IEventDispatch
 
     public function __construct(array $input)
     {
+        $this->_load_input($input);
+    }
+
+    private function _load_input(array $input): void
+    {
+        if (!$input) $this->_exception(__("Empty request"), ExceptionType::CODE_BAD_REQUEST);
         $this->requuid = trim($input["req_uuid"] ?? "");
         if (!$this->requuid) $this->_exception(__("No request id received"), ExceptionType::CODE_BAD_REQUEST);
         $this->columns = $input["columns"] ?? [];
@@ -77,7 +83,6 @@ final class PromotionsExportService extends AppService implements IEventDispatch
     {
         $this->_check_permission();
         $iduser = SF::get_auth()->get_user()["id"] ?? -1;
-
         if (!$query = RF::get(QueryRepository::class)->get_by_uuid_and_iduser($this->requuid, $iduser, ["id","query", "total"]))
             $this->_exception(
                 __("Request id {0} not found!", $this->requuid),
