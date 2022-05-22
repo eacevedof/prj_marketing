@@ -64,8 +64,6 @@ body {
 <?=$bdhelp->get_style_body()?>
 }
 
-.wrapper main{
-}
 .wrapper main section {
   /*
   border: 1px solid red;
