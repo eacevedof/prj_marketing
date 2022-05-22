@@ -2,10 +2,10 @@ import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
-import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 import {get_parameter} from "/assets/js/common/url.js"
+import {cssformsubscription} from "/assets/js/open/promotioncap/form-subscription-lit-css.js"
 
 const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
 const URL_POST = "/open/promotionscap/:promouuid/insert"
@@ -14,7 +14,7 @@ const ACTION = "promotioncap.insert"
 export class FormPromotionCapInsert extends LitElement {
   static get styles() {
     return [
-      cssformflex,
+      cssformsubscription,
       cssfielderror
     ];
   }
@@ -133,14 +133,13 @@ export class FormPromotionCapInsert extends LitElement {
   render() {
     const inputs = this._inputs.map(field => this.get_inputs()[field])
     return html`
-      <form @submit=${this.on_submit}>
+      <form @submit=${this.on_submit} class="form-subscription">
         ${inputs.map(obj => html`
           <div class="flex-row">
             <div class="form-group">
               ${obj.label}
               ${obj.input}
             </div>
-          </div>
           </div>
         `)}
 <!-- botones -->
