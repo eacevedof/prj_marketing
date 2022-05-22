@@ -49,22 +49,22 @@ final class CreateAppBusinessData extends AbsMigration
             "null" => false
         ])
         ->addColumn("user_logo_1", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("user_logo_2", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("user_logo_3", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("url_favicon", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
@@ -79,7 +79,7 @@ final class CreateAppBusinessData extends AbsMigration
             "default" => null,
         ])
         ->addColumn("head_bgimage", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
@@ -94,32 +94,32 @@ final class CreateAppBusinessData extends AbsMigration
             "default" => null,
         ])
         ->addColumn("body_bgimage", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("url_business", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("url_social_fb", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("url_social_ig", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("url_social_twitter", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("url_social_tiktok", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])

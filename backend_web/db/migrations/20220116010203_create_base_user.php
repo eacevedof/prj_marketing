@@ -109,7 +109,7 @@ final class CreateBaseUser extends AbsMigration
             "comment" => "base_array.type=profile perfil 1 root, 2 sys admin, 3 business owner, 4 busines manager"
         ])
         ->addColumn("url_picture", "string", [
-            "limit" => 100,
+            "limit" => 300,
             "null" => true,
             "default" => null,
         ])

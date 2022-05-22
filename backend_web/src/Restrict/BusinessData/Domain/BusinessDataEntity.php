@@ -75,7 +75,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "user_logo_1",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -84,7 +84,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "user_logo_2",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -93,7 +93,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "user_logo_3",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -102,7 +102,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "url_favicon",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -129,7 +129,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "head_bgimage",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -156,7 +156,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "body_bgimage",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -165,7 +165,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "url_business",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -174,7 +174,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "url_social_fb",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -183,7 +183,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "url_social_ig",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -192,7 +192,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "url_social_twitter",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
@@ -201,7 +201,7 @@ final class BusinessDataEntity extends AppEntity
                 EntityType::REQUEST_KEY => "url_social_tiktok",
                 "config" => [
                     "type" => EntityType::STRING,
-                    "length" => 100,
+                    "length" => 300,
                 ]
             ],
 
