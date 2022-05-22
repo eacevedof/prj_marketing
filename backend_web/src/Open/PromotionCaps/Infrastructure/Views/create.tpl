@@ -61,7 +61,9 @@ body {
 .wrapper main{
 }
 .wrapper main section {
+  /*
   border: 1px solid red;
+   */
   margin: 0;
   padding: 0;
 
@@ -82,11 +84,14 @@ body {
 }
 
 .div-promotion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
 }
 
 </style>
@@ -96,7 +101,7 @@ body {
   </header>
   <main>
     <section>
-      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 56vh" />
+      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 74vh" />
       <div class="div-promotion">
         <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
         <?php
