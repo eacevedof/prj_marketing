@@ -69,9 +69,12 @@ body {
   padding: 2em;
 
   width: 50vw;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 100%;
   <?php
   BH::echo_style("background-color", $promotion["bgcolor"]);
-  BH::echo_style("background-color", $promotion["bgcolor"]);
+  BH::echo_style("background-image", $promotion["bgimage_lg"]);
   ?>
 }
 

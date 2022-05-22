@@ -75,7 +75,7 @@ final class BusinessDataHelper extends AppHelper implements IHelper
     public static function echo_style(string $property, ?string $value): void
     {
         if (!$value) return;
-        if (strstr($value,"bgimage")) $value = "url(\"$value\")";
+        if (strstr($property,"background-image")) $value = "url(\"$value\")";
         echo "$property: $value;";
     }
 }
