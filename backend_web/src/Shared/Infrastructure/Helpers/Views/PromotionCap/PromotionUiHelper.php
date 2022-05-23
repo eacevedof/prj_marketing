@@ -27,7 +27,7 @@ final class PromotionUiHelper extends AppHelper implements IHelper
         asort($mapped);
         $mapped = array_keys($mapped);
         //dd($mapped);
-        $mapped = array_merge($mapped, ["terms", "mailing"]);
+        $mapped = array_merge($mapped, ["mailing", "terms"]);
         //dd($mapped);
         return $mapped;
     }
