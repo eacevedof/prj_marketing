@@ -4,7 +4,8 @@ export const cssformsubscription = css`
 .form-subscription {
   margin:0;
   padding:0;
-  border: 2px solid black; 
   font-size: 1.2em;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid white;
 }
 `;
