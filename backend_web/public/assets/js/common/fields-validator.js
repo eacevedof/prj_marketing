@@ -34,13 +34,17 @@ export default  {
 
   get_errors() {
     const input = _input.fields
-    console.log(input)
-    return true
+    console.log("INPUT",input)
+    //return true
 
     const errors = []
     _rules.forEach(rule => {
       const field = rule.field
-      const msg = rule.fn(input, field, input[field].value, input[field].label)
+      const value = _input.wrapper.querySelector(`#input-${field}}`)?.value
+      const label = _input.wrapper.querySelector(`label[for=input-${field}]`).innerText
+      console.log("FIELD", field, "VALUE", value, "LABEL", label)
+      return;
+      const msg = rule.fn(input, field, value, label)
       if (msg) errors.push({
         field,
         rule:rule.rule,
