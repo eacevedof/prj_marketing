@@ -40,15 +40,14 @@ export default  {
     const errors = []
     _rules.forEach(rule => {
       const field = rule.field
-      const value = _input.wrapper.querySelector(`#input-${field}}`)?.value
-      const label = _input.wrapper.querySelector(`label[for=input-${field}]`).innerText
-      console.log("FIELD", field, "VALUE", value, "LABEL", label)
-      return;
+      const value = _input.wrapper.querySelector(`#input-${field}`)?.value
+      const label = _input.wrapper.querySelector(`label[for=input-${field}]`)?.innerText
+
       const msg = rule.fn(input, field, value, label)
       if (msg) errors.push({
         field,
-        rule:rule.rule,
-        label:input[field].label,
+        rule: rule.rule,
+        label,
         message: msg,
       })
     })
