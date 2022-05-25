@@ -1,8 +1,10 @@
 const _rules = []
 const _skip = []
 
-let _form = null
-let _fields = []
+let _input = {
+  wrapper: null,
+  fields: null
+}
 
 export const PATTERNS = {
   EMAIL: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
@@ -14,9 +16,8 @@ export const PATTERNS = {
 
 export default  {
 
-  init: (form, fields) =>{
-    _form = form
-    _fields = fields
+  init: obj =>{
+    _input = obj
   },
 
   add_rules: (field, rule, fn) => {
