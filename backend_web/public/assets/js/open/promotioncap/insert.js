@@ -28,8 +28,6 @@ export class FormPromotionCapInsert extends LitElement {
             (this.fields.inputs.map(input => "input-".concat(input)))([])
   }
 
-  _on_cancel() {window.modalraw.hide()}
-
   //1
   constructor() {
     super()
@@ -188,10 +186,12 @@ export class FormPromotionCapInsert extends LitElement {
     this._issending = true
     this._btnsend = this.texts.tr01
 
-    error.config({
+    const input = {
       wrapper: this.shadowRoot.querySelector("form"),
       fields: this.fields.inputs
-    })
+    }
+
+    error.config(input)
     error.clear()
 
     const response = await injson.post(
