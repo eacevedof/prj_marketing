@@ -18,7 +18,7 @@ final class HomeController extends OpenController
     {
         $this->add_var(PageType::TITLE, __("Home"))
             ->add_var(PageType::H1, __("Home"))
-            ->cache()
+            //->cache()
             ->render();
     }
 
