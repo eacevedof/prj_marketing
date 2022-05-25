@@ -6,6 +6,7 @@ import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 import {get_parameter} from "/assets/js/common/url.js"
 import {cssformsubscription} from "/assets/js/open/promotioncap/form-subscription-lit-css.js"
+import validator, {PATTERNS} from "/assets/js/common/fields-validator.js"
 
 const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
 const URL_POST = "/open/promotionscap/:promouuid/insert"
@@ -145,7 +146,7 @@ export class FormPromotionCapInsert extends LitElement {
   //4
   render() {
     const inputs = this._inputs.map(field => this.get_inputs()[field])
-    console.log(inputs)
+
     return html`
       <form @submit=${this.on_submit} class="form-subscription">
         ${inputs.map(obj => html`
