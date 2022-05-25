@@ -32,8 +32,10 @@ export default  {
     _skip.push({field})
   },
 
-  get_errors(input) {
-    if(!input) return []
+  get_errors() {
+    const input = _input.fields
+    console.log(input)
+    return true
 
     const errors = []
     _rules.forEach(rule => {

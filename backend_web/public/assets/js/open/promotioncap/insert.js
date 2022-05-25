@@ -181,6 +181,13 @@ export class FormPromotionCapInsert extends LitElement {
     }
   }
 
+  get_client_errors(input) {
+    let errors = []
+    validator.init(input)
+    errors = validator.get_errors()
+    return errors
+  }
+
   async on_submit(e) {
     e.preventDefault()
     this._issending = true
@@ -190,9 +197,14 @@ export class FormPromotionCapInsert extends LitElement {
       wrapper: this.shadowRoot.querySelector("form"),
       fields: this.fields.inputs
     }
-
     error.config(input)
     error.clear()
+
+    let errors = this.get_client_errors(input)
+    if(errors) {
+      window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
+      return error.append(errors)
+    }
 
     const response = await injson.post(
       URL_POST.replace(":promouuid", this.promotionuuid), {
@@ -207,6 +219,7 @@ export class FormPromotionCapInsert extends LitElement {
 
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
+      console.log("errors",errors)
       if(errors) {
         window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
         return error.append(errors)
@@ -216,8 +229,6 @@ export class FormPromotionCapInsert extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
-    const $dt = document.getElementById("table-datatable")
-    if ($dt) $($dt).DataTable().ajax.reload()
     window.modalraw.hide()
     window.snack.set_time(4)
       .set_color(SNACK.SUCCESS)
