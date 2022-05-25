@@ -1,8 +1,8 @@
 const _rules = []
 const _skip = []
 
-const _form = null
-const _fields = []
+let _form = null
+let _fields = []
 
 export const PATTERNS = {
   EMAIL: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
@@ -20,7 +20,7 @@ export default  {
   },
 
   add_rules: (field, rule, fn) => {
-    rules.push({
+    _rules.push({
       field,
       rule,
       fn,
