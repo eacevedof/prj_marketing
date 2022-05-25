@@ -30,6 +30,12 @@ export default  {
     rules.forEach(rule => {
       const field = rule.field
       const msg = rule.fn(input, field, input[field].value, input[field].label)
+      if (msg) errors.push({
+        field,
+        rule:rule.rule,
+        label:input[field].label,
+        message: msg,
+      })
     })
   }
 }
