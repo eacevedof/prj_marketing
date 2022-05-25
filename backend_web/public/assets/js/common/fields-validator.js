@@ -1,5 +1,8 @@
-const rules = []
-const skip = []
+const _rules = []
+const _skip = []
+
+const _form = null
+const _fields = []
 
 export const PATTERNS = {
   EMAIL: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
@@ -11,6 +14,11 @@ export const PATTERNS = {
 
 export default  {
 
+  init: (form, fields) =>{
+    _form = form
+    _fields = fields
+  },
+
   add_rules: (field, rule, fn) => {
     rules.push({
       field,
@@ -20,14 +28,14 @@ export default  {
   },
 
   add_skip: field => {
-    skip.push({field})
+    _skip.push({field})
   },
 
   get_errors(input) {
     if(!input) return []
 
     const errors = []
-    rules.forEach(rule => {
+    _rules.forEach(rule => {
       const field = rule.field
       const msg = rule.fn(input, field, input[field].value, input[field].label)
       if (msg) errors.push({
@@ -37,5 +45,7 @@ export default  {
         message: msg,
       })
     })
+
+    return errors
   }
 }
