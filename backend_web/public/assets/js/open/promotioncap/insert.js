@@ -188,6 +188,18 @@ export class FormPromotionCapInsert extends LitElement {
     return errors
   }
 
+  snak(msg) {
+    window.Snackbar.show({
+      pos: "top-right",
+      backgroundColor: "#ee335e",
+      duration: 1500,
+      textColor: "white",
+      actionText: "Error",
+      actionTextColor: "white",
+      text: msg,
+    })
+  }
+
   async on_submit(e) {
     e.preventDefault()
     this._issending = true
@@ -202,8 +214,11 @@ export class FormPromotionCapInsert extends LitElement {
 
     let errors = this.get_client_errors(input)
     if(errors) {
-      window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
-      return error.append(errors)
+      this._issending = false
+      this._btnsend = this.texts.tr00
+      //error.append(errors)
+      this.snak("Big error")
+      return
     }
 
     const response = await injson.post(
@@ -221,19 +236,9 @@ export class FormPromotionCapInsert extends LitElement {
       let errors = response.errors[0]?.fields_validation
       console.log("errors",errors)
       if(errors) {
-        window.snack.set_time(4).set_inner(this.texts.tr03).set_color(SNACK.ERROR).show()
         return error.append(errors)
       }
-
-      errors = response?.errors
-      return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
-
-    window.modalraw.hide()
-    window.snack.set_time(4)
-      .set_color(SNACK.SUCCESS)
-      .set_inner(this.texts.tr04)
-      .show()
 
   }
 }
