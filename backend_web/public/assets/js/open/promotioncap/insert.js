@@ -185,13 +185,13 @@ export class FormPromotionCapInsert extends LitElement {
 
   async on_submit(e) {
     e.preventDefault()
+    this._issending = true
+    this._btnsend = this.texts.tr01
+
     error.config({
       wrapper: this.shadowRoot.querySelector("form"),
       fields: this.fields.inputs
     })
-
-    this._issending = true
-    this._btnsend = this.texts.tr01
     error.clear()
 
     const response = await injson.post(
