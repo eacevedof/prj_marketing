@@ -28,7 +28,8 @@ export default  {
 
     const errors = []
     rules.forEach(rule => {
-
+      const field = rule.field
+      const msg = rule.fn(input, field, input[field].value, input[field].label)
     })
   }
 }
