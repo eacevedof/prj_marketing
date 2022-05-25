@@ -2,15 +2,14 @@ const rules = []
 const skip = []
 
 const PATTERNS = {
-  EMAIL: "",
-  NAME: "",
-  PHONE: "/^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/im",
-  DATE: "",
-  ADDRESS: "",
+  EMAIL: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+  NAME: /^[a-zA-Z\s-]{3,}$/,
+  PHONE: /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/im,
+  DATE: /^\d{2}[./-]\d{2}[./-]\d{4}$/,
+  ADDRESS: /^[a-zA-Z0-9\s,. '-]{3,}$/,
 }
 
 export default  {
-
 
   add_rules: (field, rule, fn) => {
     rules.push({
@@ -24,7 +23,12 @@ export default  {
     skip.push({field})
   },
 
-  get_errors() {
+  get_errors(input) {
+    if(!input) return []
 
+    const errors = []
+    rules.forEach(rule => {
+
+    })
   }
 }
