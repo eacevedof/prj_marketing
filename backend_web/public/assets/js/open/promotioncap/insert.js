@@ -180,6 +180,7 @@ export class FormPromotionCapInsert extends LitElement {
       console.log("input-email no focusable",e)
     }
   }
+
   snak(msg) {
     window.Snackbar.show({
       pos: "top-right",
@@ -197,9 +198,7 @@ export class FormPromotionCapInsert extends LitElement {
     validator.add_rules("email","empty", data => {
       return "not gooooood!"
     })
-    let errors = validator.get_errors()
-    console.log("EEEERRR", errors)
-    return errors
+    return validator.get_errors()
   }
 
   async on_submit(e) {
@@ -215,7 +214,7 @@ export class FormPromotionCapInsert extends LitElement {
     error.clear()
 
     let errors = this.get_client_errors(input)
-
+    if(errors) return error.append(errors)
 
     const response = await injson.post(
       URL_POST.replace(":promouuid", this.promotionuuid), {
