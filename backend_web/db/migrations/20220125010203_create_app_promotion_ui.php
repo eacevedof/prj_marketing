@@ -121,6 +121,26 @@ final class CreateAppPromotionUi extends AbsMigration
             "null" => false,
             "default" => 100,
         ])
+        ->addColumn("input_is_mailing", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 0,
+        ])
+        ->addColumn("pos_is_mailing", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
+        ->addColumn("input_is_terms", "integer", [
+            "limit" => 2,
+            "null" => false,
+            "default" => 1,
+        ])
+        ->addColumn("pos_is_terms", "integer", [
+            "limit" => 3,
+            "null" => false,
+            "default" => 100,
+        ])
         ->create();
     }
 
