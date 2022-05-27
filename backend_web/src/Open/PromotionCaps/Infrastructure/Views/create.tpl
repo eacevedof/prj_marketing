@@ -165,14 +165,4 @@ body {
     </div>
   </footer>
 </div>
-<script type="module">
-Snackbar.show({
-  pos: "top-right",
-  backgroundColor: "yellow",
-  duration: 1500,
-  textColor: "green",
-
-  text: "hola mundo",
-})
-</script>
 <!--/promotincaps.create.tpl-->

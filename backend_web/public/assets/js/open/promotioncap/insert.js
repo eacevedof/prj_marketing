@@ -85,16 +85,16 @@ export class FormPromotionCapInsert extends LitElement {
         label: html`<label for="input-address">${this.texts.address}</label>`,
         input: html`<input type="text" id="input-address" maxlength="100" required>`
       },
-      mailing: {
-        label: html`<label for="input-mailing">
-          <input type="checkbox" id="input-mailing">
-          <span>${this.texts?.mailing}Me gustaría recibir promociones y sorteos especiales en mi correo</span>
+      is_mailing: {
+        label: html`<label for="input-is_mailing">
+          <input type="checkbox" id="input-is_mailing">
+          <span>${this.texts?.is_mailing}Me gustaría recibir promociones y sorteos especiales en mi correo</span>
         </label>`,
       },
-      terms: {
-        label: html`<label for="input-terms">
-          <input type="checkbox" id="input-terms" required>
-          <span>${this.texts?.terms}He leído y acepto los terminos y condiciones relacionados con esta promoción</span>
+      is_terms: {
+        label: html`<label for="input-is_terms">
+          <input type="checkbox" id="input-is_terms" required>
+          <span>${this.texts?.is_terms}He leído y acepto los terminos y condiciones relacionados con esta promoción</span>
         </label>`,
       },
     }

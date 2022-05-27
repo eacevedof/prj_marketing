@@ -19,6 +19,8 @@ $texts = [
     "language" => __("Language"),
     "country" => __("Country"),
     "gender" => __("Gender"),
+    "is_mailing" => __("I would like to receive promotions and raffles in my email"),
+    "is_terms" => __("I have red and accept legal terms and conditions"),
 ];
 
 $result = [
