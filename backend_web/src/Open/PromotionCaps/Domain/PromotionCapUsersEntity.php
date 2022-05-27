@@ -150,7 +150,25 @@ final class PromotionCapUsersEntity extends AppEntity
                 "length" => 100,
             ]
         ],
-       ];
+
+        "is_mailing" => [
+            "label" => __("I would like to receive promotions and raffles in my email"),
+            EntityType::REQUEST_KEY => "is_mailing",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 2,
+            ]
+        ],
+
+        "is_terms" => [
+            "label" => __("I have red and accept legal terms and conditions"),
+            EntityType::REQUEST_KEY => "is_terms",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 2,
+            ]
+        ],
+        ];
 
         $this->pks = [
             "id", "uuid"
