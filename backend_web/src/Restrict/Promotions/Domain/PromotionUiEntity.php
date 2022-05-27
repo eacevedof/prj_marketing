@@ -231,7 +231,42 @@ final class PromotionUiEntity extends AppEntity
                 "length" => 10,
             ]
         ],
-       ];
+        "input_is_mailing" => [
+            "label" => __("tr_input_is_mailing"),
+            EntityType::REQUEST_KEY => "input_is_mailing",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 10,
+            ]
+        ],
+
+        "pos_is_mailing" => [
+            "label" => __("tr_pos_is_mailing"),
+            EntityType::REQUEST_KEY => "pos_is_mailing",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 10,
+            ]
+        ],
+
+        "input_is_terms" => [
+            "label" => __("tr_input_is_terms"),
+            EntityType::REQUEST_KEY => "input_is_terms",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 10,
+            ]
+        ],
+
+        "pos_is_terms" => [
+            "label" => __("tr_pos_is_terms"),
+            EntityType::REQUEST_KEY => "pos_is_terms",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 10,
+            ]
+        ],
+        ];
 
         $this->pks = [
             "id", "uuid"
