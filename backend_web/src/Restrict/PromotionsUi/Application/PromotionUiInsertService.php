@@ -52,6 +52,10 @@ final class PromotionUiInsertService extends AppService implements IEventSubscri
             "pos_gender" => 80,
             "input_address" => 0,
             "pos_address" => 90,
+            "input_is_mailing" => 0,
+            "pos_is_mailing" => 100,
+            "input_is_terms" => 0,
+            "pos_is_terms" => 110,
         ];
 
         $this->promotionui->add_sysinsert($promotionui, $this->auth->get_user()["id"]);

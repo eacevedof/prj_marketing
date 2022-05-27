@@ -183,7 +183,22 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                 });
             }
 
-        }//foreach
+            if ($field === PromotionCapUserType::INPUT_IS_MAILING) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::is_boolean($data["value"])
+                        ? false
+                        : __("Wrong mailing format. Only 0 or 1 allowed");
+                });
+            }
+
+            if ($field === PromotionCapUserType::INPUT_IS_TERMS) {
+                $this->validator->add_rule($field, "format", function ($data) {
+                    return CheckerService::is_boolean($data["value"])
+                        ? false
+                        : __("Wrong mailing format. Only 0 or 1 allowed");
+                });
+            }
+        }
 
         //to-do pasr fks
         $toskip = array_diff($fields, PromotionCapUserType::get_all());

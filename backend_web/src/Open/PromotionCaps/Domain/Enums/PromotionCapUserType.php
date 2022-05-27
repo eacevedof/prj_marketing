@@ -4,15 +4,17 @@ namespace App\Open\PromotionCaps\Domain\Enums;
 
 abstract class PromotionCapUserType
 {
-    const INPUT_EMAIL = "email";
-    const INPUT_NAME1 = "name1";
-    const INPUT_NAME2 = "name2";
-    const INPUT_LANGUAGE = "language";
-    const INPUT_COUNTRY = "country";
-    const INPUT_PHONE1 = "phone1";
-    const INPUT_BIRTHDATE = "birthdate";
-    const INPUT_GENDER = "gender";
-    const INPUT_ADDRESS = "address";
+    public const INPUT_EMAIL = "email";
+    public const INPUT_NAME1 = "name1";
+    public const INPUT_NAME2 = "name2";
+    public const INPUT_LANGUAGE = "language";
+    public const INPUT_COUNTRY = "country";
+    public const INPUT_PHONE1 = "phone1";
+    public const INPUT_BIRTHDATE = "birthdate";
+    public const INPUT_GENDER = "gender";
+    public const INPUT_ADDRESS = "address";
+    public const INPUT_IS_MAILING = "is_mailing";
+    public const INPUT_IS_TERMS = "is_terms";
 
     public static function get_all(): array
     {
@@ -26,6 +28,8 @@ abstract class PromotionCapUserType
             self::INPUT_BIRTHDATE,
             self::INPUT_GENDER,
             self::INPUT_ADDRESS,
+            self::INPUT_IS_MAILING,
+            self::INPUT_IS_TERMS,
         ];
     }
 }

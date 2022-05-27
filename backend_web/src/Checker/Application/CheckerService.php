@@ -54,6 +54,11 @@ final class CheckerService
         return (bool) ($matches[0] ?? "");
     }
 
+    public static function is_boolean(string $value): bool
+    {
+        return in_array($value, ["", "1", "0", 0, 1]);
+    }
+
     public static function phone_format(string $phone): bool
     {
         $matches = [];

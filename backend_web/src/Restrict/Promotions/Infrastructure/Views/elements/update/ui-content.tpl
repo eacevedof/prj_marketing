@@ -41,6 +41,8 @@ $texts = [
     //"f21" => __("tr_pos_gender"),
     "f22" => __("Address"),
     //"f23" => __("tr_pos_address"),
+    "f24" => __("I would like to receive promotions and raffles in my email"),
+    "f26" => __("I have red and accept legal terms and conditions"),
 ];
 
 $promotionui = [
@@ -75,6 +77,12 @@ $promotionui = [
 
     "input_address" => $promotionui["input_address"] ?? "0",
     "pos_address" => $promotionui["pos_address"] ?? 90,
+
+    "input_is_mailing" => $promotionui["input_is_mailing"] ?? "0",
+    "pos_is_mailing" => $promotionui["pos_is_mailing"] ?? 100,
+
+    "input_is_terms" => $promotionui["input_is_terms"] ?? "0",
+    "pos_is_terms" => $promotionui["pos_is_terms"] ?? 110,
 
     "notoryes" => $notoryes,
 

@@ -158,6 +158,18 @@ final class PromotionUiUpdateService extends AppService
             ->add_rule("pos_country", "pos_country", function ($data) use ($fn_validint) {
                 return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
             })
+            ->add_rule("input_is_mailing", "input_is_mailing", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_is_mailing", "pos_is_mailing", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
+            ->add_rule("input_is_terms", "input_is_terms", function ($data) use ($fn_isvalidbool) {
+                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
+            })
+            ->add_rule("pos_is_terms", "pos_is_terms", function ($data) use ($fn_validint) {
+                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
+            })
         ;
         
         return $this->validator;
