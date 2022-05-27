@@ -195,8 +195,8 @@ export class FormPromotionCapInsert extends LitElement {
 
   get_client_errors(input) {
     validator.init(input)
-    validator.add_rules("email","empty", data => {
-      return "not gooooood!"
+    validator.add_rules("input-email","empty", data => {
+      //return "not gooooood!"
     })
     return validator.get_errors()
   }
@@ -208,8 +208,9 @@ export class FormPromotionCapInsert extends LitElement {
 
     const input = {
       wrapper: this.shadowRoot.querySelector("form"),
-      fields: this.fields.inputs
+      fields: this.fields.inputs.map(input => `input-${input}`)
     }
+    console.log(input)
     error.config(input)
     error.clear()
 
