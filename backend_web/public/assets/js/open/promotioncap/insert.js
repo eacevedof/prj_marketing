@@ -12,7 +12,6 @@ const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
 const URL_POST = "/open/promotionscap/:promouuid/insert"
 const ACTION = "promotioncap.insert"
 
-console.log(cssformsubscription, "css import")
 export class FormPromotionCapInsert extends LitElement {
   static get styles() {
     return [
@@ -141,7 +140,6 @@ export class FormPromotionCapInsert extends LitElement {
     this[field] = value
   }
 
-  //4
   render() {
     const inputs = this._inputs.map(field => this.get_inputs()[field])
 
@@ -169,9 +167,7 @@ export class FormPromotionCapInsert extends LitElement {
       </form>
     `
   }
-  //render
 
-  //5
   firstUpdated() {
     try {
       this._$get("input-email").focus()
@@ -181,13 +177,25 @@ export class FormPromotionCapInsert extends LitElement {
     }
   }
 
-  snak(msg) {
+  snack_error(msg) {
     window.Snackbar.show({
       pos: "top-right",
       backgroundColor: "#ee335e",
       duration: 1500,
       textColor: "white",
       actionText: "Error",
+      actionTextColor: "white",
+      text: msg,
+    })
+  }
+
+  snack_success(msg) {
+    window.Snackbar.show({
+      pos: "top-right",
+      backgroundColor: "#22C03D",
+      duration: 1500,
+      textColor: "white",
+      actionText: "Success",
       actionTextColor: "white",
       text: msg,
     })
@@ -218,6 +226,7 @@ export class FormPromotionCapInsert extends LitElement {
     if(errors) {
       this._issending = false
       this._btnsend = this.texts.tr00
+      this.snack_error("Check errors")
       return error.append(errors)
     }
 
@@ -234,12 +243,13 @@ export class FormPromotionCapInsert extends LitElement {
 
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
-      console.log("errors",errors)
       if(errors) {
+        this.snack_error("Check errors")
         return error.append(errors)
       }
     }
 
+    
   }
 }
 
