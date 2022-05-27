@@ -215,7 +215,11 @@ export class FormPromotionCapInsert extends LitElement {
     error.clear()
 
     let errors = this.get_client_errors(input)
-    if(errors) return error.append(errors)
+    if(errors) {
+      this._issending = false
+      this._btnsend = this.texts.tr00
+      return error.append(errors)
+    }
 
     const response = await injson.post(
       URL_POST.replace(":promouuid", this.promotionuuid), {
