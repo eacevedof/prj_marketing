@@ -223,10 +223,11 @@ export class FormPromotionCapInsert extends LitElement {
     error.clear()
 
     let errors = this.get_client_errors(input)
-    if(errors) {
+    console.log("client-errors", errors)
+    if(errors?.length) {
       this._issending = false
       this._btnsend = this.texts.tr00
-      this.snack_error("Check errors")
+      this.snack_error("Check errors 1")
       return error.append(errors)
     }
 
@@ -243,13 +244,14 @@ export class FormPromotionCapInsert extends LitElement {
 
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
-      if(errors) {
-        this.snack_error("Check errors")
+      console.log("server-errors", errors)
+      if(errors?.length) {
+        this.snack_error("Check errors 2")
         return error.append(errors)
       }
     }
 
-    
+    this.snack_success("Check your email")
   }
 }
 
