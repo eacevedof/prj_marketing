@@ -76,13 +76,13 @@ final class CreateAppPromotioncapUsers extends AbsMigration
             "null" => true,
             "default" => null,
         ])
-        ->addColumn("mailing", "integer", [
+        ->addColumn("is_mailing", "integer", [
             "limit" => 2,
             "null" => false,
             "default" => 0,
             "comment" => "0: no, 1: yes",
         ])
-        ->addColumn("terms", "integer", [
+        ->addColumn("is_terms", "integer", [
             "limit" => 2,
             "null" => false,
             "default" => 1,
