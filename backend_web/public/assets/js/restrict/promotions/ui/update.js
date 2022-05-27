@@ -270,25 +270,10 @@ export class FormPromotionUiUpdate extends LitElement {
               <input type="number" id="pos_is_mailing" .value=${this._pos_is_mailing} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
             </td>
           </tr>
-
-          <!--input_is_mailing-->
+          
+          <!--input_is_terms-->
           <tr>
-            <td>${this.texts.f24}</td>
-            <td>
-              <select id="input_is_mailing" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                  html`<option value=${item.key} ?selected=${item.key===this._input_is_mailing}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_is_mailing" .value=${this._pos_is_mailing} ?disabled=${this.promoislaunched==="1" || this._disabled_date} min="1" max="100" class="form-control" maxlength="10">
-            </td>
-          </tr>        
-        
-        <!--input_is_terms-->
-          <tr>
-            <td>${this.texts.f24}</td>
+            <td>${this.texts.f26}</td>
             <td>
               <select id="input_is_terms" class="form-control" required ?disabled=${this.promoislaunched==="1" || this._disabled_date}>
                 ${this._notoryes.map((item) =>
