@@ -202,7 +202,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
         //to-do pasr fks
         $toskip = array_diff($fields, PromotionCapUserType::get_all());
-        $toskip = $toskip + ["uuid", "id_owner", "id_promotion"];
+        $toskip = array_merge($toskip, ["uuid", "id_owner", "id_promotion", "id_gender"]);
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);
 
