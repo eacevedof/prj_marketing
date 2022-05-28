@@ -108,9 +108,10 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
         $fields = $this->repopromotionui->get_active_fields($this->promotion["id"]);
 
         foreach ($fields as $field) {
-            $this->validator->add_rule($field, "empty", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            });
+            if (!in_array($field, [PromotionCapUserType::INPUT_IS_MAILING, PromotionCapUserType::INPUT_IS_TERMS]))
+                $this->validator->add_rule($field, "empty", function ($data) {
+                    return $data["value"] ? false : __("Empty field is not allowed");
+                });
 
             if ($field === PromotionCapUserType::INPUT_EMAIL) {
                 $this->validator->add_rule($field, "format", function ($data) {
@@ -211,7 +212,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
         //to-do pasr fks
         $toskip = array_diff($fields, PromotionCapUserType::get_all());
-        $toskip = array_merge($toskip, ["uuid", "id_owner", "id_promotion", "id_gender"]);
+        $toskip = array_merge($toskip, ["uuid", "id_owner", "id_promotion", "id_gender", "is_mailing", "is_terms"]);
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);
 
