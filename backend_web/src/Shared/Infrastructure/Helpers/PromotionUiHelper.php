@@ -1,6 +1,8 @@
 <?php
 namespace App\Shared\Infrastructure\Helpers;
 
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapUserType;
+
 final class PromotionUiHelper extends AppHelper implements IHelper
 {
     private array $promotionui;
@@ -29,7 +31,13 @@ final class PromotionUiHelper extends AppHelper implements IHelper
         }
         asort($mapped);
         $mapped = array_keys($mapped);
-        $fks = ["language","country","gender"];
+
+        $fks = [
+            PromotionCapUserType::INPUT_GENDER,
+            PromotionCapUserType::INPUT_LANGUAGE,
+            PromotionCapUserType::INPUT_COUNTRY
+        ];
+
         $mapped = array_map(function (string $field) use ($fks) {
             return in_array($field, $fks) ? "id_$field" : $field;
         }, $mapped);
