@@ -70,7 +70,7 @@ final class CheckerService
 
     public static function is_valid_date(?string $date): bool
     {
-        if (!$value) return false;
+        if (!$date) return false;
         if (strlen($date)!=10) return false;
         $date = explode("-",$date);
         return checkdate(
