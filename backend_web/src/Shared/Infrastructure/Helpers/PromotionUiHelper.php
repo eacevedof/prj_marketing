@@ -1,8 +1,5 @@
 <?php
-namespace App\Shared\Infrastructure\Helpers\Views\PromotionCap;
-
-use App\Shared\Infrastructure\Helpers\IHelper;
-use App\Shared\Infrastructure\Helpers\AppHelper;
+namespace App\Shared\Infrastructure\Helpers;
 
 final class PromotionUiHelper extends AppHelper implements IHelper
 {
@@ -11,6 +8,11 @@ final class PromotionUiHelper extends AppHelper implements IHelper
     public function __construct(array $promotionui)
     {
         $this->promotionui = $promotionui;
+    }
+
+    public static function get_instance(array $promotionui): self
+    {
+        return new self($promotionui);
     }
 
     public function get_inputs(): array
@@ -22,13 +24,15 @@ final class PromotionUiHelper extends AppHelper implements IHelper
             if ($prefix!=="input") continue;
             if (!$value) continue;
             $input = $parts[1];
+            if(strstr($field,"_is_")) $input = "{$parts[1]}_{$parts[2]}";
             $mapped[$input] = $this->promotionui["pos_$input"];
         }
         asort($mapped);
         $mapped = array_keys($mapped);
-        //dd($mapped);
-        $mapped = array_merge($mapped, ["mailing", "terms"]);
-        //dd($mapped);
+        $fks = ["language","country","gender"];
+        $mapped = array_map(function (string $field) use ($fks) {
+            return in_array($field, $fks) ? "id_$field" : $field;
+        }, $mapped);
         return $mapped;
     }
 }

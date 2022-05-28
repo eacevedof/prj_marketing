@@ -15,6 +15,7 @@ use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\Common\SysfieldRepository;
 use TheFramework\Components\Db\ComponentQB;
+use App\Shared\Infrastructure\Helpers\PromotionUiHelper;
 
 final class PromotionUiRepository extends AppRepository
 {
@@ -190,23 +191,6 @@ final class PromotionUiRepository extends AppRepository
             "input_country","pos_country","input_phone1","pos_phone1","input_birthdate","pos_birthdate","input_gender",
             "pos_gender","input_address","pos_address"
         ]);
-
-        $mapped = [];
-        foreach ($promotionui as $field => $value) {
-            $parts = explode("_", $field);
-            $prefix = $parts[0];
-            if ($prefix!=="input") continue;
-            if (!$value) continue;
-            $input = $parts[1];
-            $mapped[$input] = $promotionui["pos_$input"];
-        }
-        asort($mapped);
-        $mapped = array_keys($mapped);
-
-        $fks = ["language","country","gender"];
-        $mapped = array_map(function (string $field) use ($fks) {
-            return in_array($field, $fks) ? "id_$field" : $field;
-        }, $mapped);
-        return $mapped;
+        return PromotionUiHelper::get_instance($promotionui)->get_inputs();;
     }
-}//PromotionUiRepository
+}
