@@ -7,7 +7,6 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\Common\SysfieldRepository;
-use TheFramework\Components\Db\ComponentQB;
 
 final class PromotionCapSubscriptionsRepository extends AppRepository
 {
