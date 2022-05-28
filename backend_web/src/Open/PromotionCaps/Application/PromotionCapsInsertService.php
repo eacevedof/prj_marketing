@@ -62,11 +62,19 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             PromotionCapUserType::INPUT_LANGUAGE,
             PromotionCapUserType::INPUT_COUNTRY
         ];
+        $bools = [
+            PromotionCapUserType::INPUT_IS_TERMS,
+            PromotionCapUserType::INPUT_IS_MAILING,
+        ];
         foreach ($input as $key=>$value) {
             $key = str_replace("input-", "", $key);
             if (in_array($key, $tofks)) $key = "id_$key";
+            if (in_array($key, $bools)) $value = $value==="1" ? 1 : 0;
             $this->input[$key] = trim($value);
         }
+
+        if (!key_exists("email", $this->input)) $this->input["email"] = "";
+        if (!key_exists("is_terms", $this->input)) $this->input["is_terms"] = "0";
     }
 
     private function _load_promotion(): void
@@ -112,7 +120,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                 })
                 ->add_rule($field, "exist", function ($data) {
                     $idpromotion = $this->promotion["id"];
-                    $email = $data["value"];
+                    $email = $data["value"] ?? "";
                     return !$this->repopromocapuser->is_subscribed_by_email($idpromotion, $email)
                         ? false
                         : __("You are already subscribed");
@@ -193,9 +201,10 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
             if ($field === PromotionCapUserType::INPUT_IS_TERMS) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::is_boolean($data["value"])
-                        ? false
-                        : __("Wrong mailing format. Only 0 or 1 allowed");
+                    if (!CheckerService::is_boolean($value = $data["value"]))
+                        return __("Wrong mailing format. Only 0 or 1 allowed");
+                    if (!$value)
+                        return __("You have to read and accept terms and conditions");
                 });
             }
         }

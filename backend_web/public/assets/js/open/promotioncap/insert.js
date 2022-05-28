@@ -1,7 +1,6 @@
 import {html, LitElement} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
-import {SNACK} from "/assets/js/common/snackbar.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 import {get_parameter} from "/assets/js/common/url.js"
@@ -39,11 +38,11 @@ export class FormPromotionCapInsert extends LitElement {
     return {
       email: {
         label: html`<label for="input-email">${this.texts.email}</label>`,
-        input: html`<input type="email" id="input-email" maxlength="100" required>`
+        input: html`<input type="email" id="input-email" maxlength="100" >`
       },
       name1: {
         label: html`<label for="input-name1">${this.texts.name1}</label>`,
-        input: html`<input type="text" id="input-name1" maxlength="15" required>`
+        input: html`<input type="text" id="input-name1" maxlength="15" >`
       },
       name2: {
         label: html`<label for="input-name2">${this.texts.name2}</label>`,
@@ -87,13 +86,13 @@ export class FormPromotionCapInsert extends LitElement {
       },
       is_mailing: {
         label: html`<label for="input-is_mailing">
-          <input type="checkbox" id="input-is_mailing">
+          <input type="checkbox" id="input-is_mailing" value="1">
           <span>${this.texts?.is_mailing}</span>
         </label>`,
       },
       is_terms: {
         label: html`<label for="input-is_terms">
-          <input type="checkbox" id="input-is_terms" required>
+          <input type="checkbox" id="input-is_terms" value="1">
           <span>${this.texts?.is_terms}</span>
         </label>`,
       },

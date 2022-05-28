@@ -189,7 +189,7 @@ final class PromotionUiRepository extends AppRepository
         $promotionui = $this->get_by_promotion($idpromotion, [
             "input_email","pos_email","input_name1","pos_name1","input_name2","pos_name2","input_language","pos_language",
             "input_country","pos_country","input_phone1","pos_phone1","input_birthdate","pos_birthdate","input_gender",
-            "pos_gender","input_address","pos_address"
+            "pos_gender","input_address","pos_address", "input_is_mailing", "pos_is_mailing", "input_is_terms", "pos_is_terms"
         ]);
         return PromotionUiHelper::get_instance($promotionui)->get_inputs();;
     }
