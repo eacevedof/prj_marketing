@@ -157,7 +157,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                     if (!$address = $data["value"])
                         return __("Empty value is not allowed");
 
-                    if (!CheckerService::address_format($address)
+                    if (!CheckerService::address_format($address))
                         return __("Wrong address format. Only letters allowed");
                 });
             }
