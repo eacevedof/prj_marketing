@@ -117,7 +117,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                 ->add_rule($field, "exist", function ($data) {
                     $idpromotion = $this->promotion["id"];
                     $email = $data["value"] ?? "";
-                    if (!$this->repopromocapuser->is_subscribed_by_email($idpromotion, $email))
+                    if ($this->repopromocapuser->is_subscribed_by_email($idpromotion, $email))
                         return __("You are already subscribed");
                 });
             }
@@ -144,48 +144,60 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
             if ($field === PromotionCapUserType::INPUT_PHONE1) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::phone_format($data["value"])
-                        ? false
-                        : __("Wrong mobile format. Use only numbers and white space please");
+                    if (!$phone1 = $data["value"])
+                        return __("Empty value is not allowed");
+
+                    if (!CheckerService::phone_format($phone1))
+                        return __("Wrong mobile format. Use only numbers and white space please");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_ADDRESS) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::address_format($data["value"])
-                        ? false
-                        : __("Wrong address format. Only letters allowed");
+                    if (!$address = $data["value"])
+                        return __("Empty value is not allowed");
+
+                    if (!CheckerService::address_format($address)
+                        return __("Wrong address format. Only letters allowed");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_BIRTHDATE) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::is_valid_date($data["value"])
-                        ? false
-                        : __("Wrong birthdate value");
+                    if (!$birthdate = $data["value"])
+                        return __("Empty value is not allowed");
+
+                    if (!CheckerService::is_valid_date($birthdate))
+                        return __("Wrong birthdate value");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_COUNTRY) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    $value = $data["data"]["id_country"] ?? "";
-                    if (!$this->repoarray->exists((int)$value, AppArrayType::COUNTRY))
+                    if (!$idcountry = ($data["data"]["id_country"] ?? ""))
+                        return __("Empty value is not allowed");
+
+                    if (!$this->repoarray->exists((int)$idcountry, AppArrayType::COUNTRY))
                         return __("Unrecognized country");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_LANGUAGE) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    $value = $data["data"]["id_language"] ?? "";
-                    if (!$this->repoarray->exists((int)$value, AppArrayType::LANGUAGE, "id_pk"))
+                    if (!$idlanguage = ($data["data"]["id_language"] ?? ""))
+                        return __("Empty value is not allowed");
+
+                    if (!$this->repoarray->exists((int)$idlanguage, AppArrayType::LANGUAGE, "id_pk"))
                         return __("Unrecognized language");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_GENDER) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    $value = $data["data"]["id_gender"] ?? "";
-                    if (!$this->repoarray->exists((int)$value, AppArrayType::GENDER, "id_pk"))
+                    if (!$idgender = ($data["data"]["id_gender"] ?? ""))
+                        return __("Empty value is not allowed");
+
+                    if (!$this->repoarray->exists((int)$idgender, AppArrayType::GENDER, "id_pk"))
                         return __("Unrecognized gender");
                 });
             }
@@ -199,9 +211,9 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
             if ($field === PromotionCapUserType::INPUT_IS_TERMS) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    if (!CheckerService::is_boolean($value = $data["value"]))
+                    if (!CheckerService::is_boolean($isterms = $data["value"]))
                         return __("Wrong mailing format. Only 0 or 1 allowed");
-                    if (!$value)
+                    if (!$isterms)
                         return __("You have to read and accept terms and conditions");
                 });
             }
