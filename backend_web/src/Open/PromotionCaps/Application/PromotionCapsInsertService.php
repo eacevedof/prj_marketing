@@ -105,9 +105,9 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
         $promocapuser = MF::get(PromotionCapUsersEntity::class);
         $this->validator = VF::get($input, $promocapuser);
 
-        $fields = $this->repopromotionui->get_active_fields($this->promotion["id"]);
+        $uifields = $this->repopromotionui->get_active_fields($this->promotion["id"]);
 
-        foreach ($fields as $field) {
+        foreach ($uifields as $field) {
             if (!in_array($field, [PromotionCapUserType::INPUT_IS_MAILING, PromotionCapUserType::INPUT_IS_TERMS]))
                 $this->validator->add_rule($field, "empty", function ($data) {
                     return $data["value"] ? false : __("Empty field is not allowed");
@@ -170,33 +170,32 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
             if ($field === PromotionCapUserType::INPUT_COUNTRY) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return $this->repoarray->exists((int)$data["value"], AppArrayType::COUNTRY, "id_pk")
-                        ? false
-                        : __("Unrecognized country");
+                    $value = $data["data"]["id_country"] ?? "";
+                    if (!$this->repoarray->exists((int)$value, AppArrayType::COUNTRY, "id_pk"))
+                        return __("Unrecognized country");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_LANGUAGE) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return $this->repoarray->exists((int)$data["value"], AppArrayType::LANGUAGE, "id_pk")
-                        ? false
-                        : __("Unrecognized language");
+                    $value = $data["data"]["id_language"] ?? "";
+                    if (!$this->repoarray->exists((int)$value, AppArrayType::LANGUAGE, "id_pk"))
+                        return __("Unrecognized language");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_GENDER) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return $this->repoarray->exists((int)$data["value"], AppArrayType::GENDER, "id_pk")
-                        ? false
-                        : __("Unrecognized gender");
+                    $value = $data["data"]["id_gender"] ?? "";
+                    if (!$this->repoarray->exists((int)$value, AppArrayType::GENDER, "id_pk"))
+                        return __("Unrecognized gender");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_IS_MAILING) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::is_boolean($data["value"])
-                        ? false
-                        : __("Wrong mailing format. Only 0 or 1 allowed");
+                    if (!CheckerService::is_boolean($data["value"]))
+                        return __("Wrong mailing format. Only 0 or 1 allowed");
                 });
             }
 
@@ -211,7 +210,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
         }
 
         //to-do pasr fks
-        $toskip = array_diff($fields, PromotionCapUserType::get_all());
+        $toskip = array_diff($uifields, PromotionCapUserType::get_all());
         $toskip = array_merge($toskip, ["uuid", "id_owner", "id_promotion", "id_gender", "is_mailing", "is_terms"]);
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);

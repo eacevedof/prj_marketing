@@ -38,9 +38,11 @@ final class PromotionUiHelper extends AppHelper implements IHelper
             PromotionCapUserType::INPUT_COUNTRY
         ];
 
+        /*
         $mapped = array_map(function (string $field) use ($fks) {
             return in_array($field, $fks) ? "id_$field" : $field;
         }, $mapped);
+        */
         return $mapped;
     }
 }
