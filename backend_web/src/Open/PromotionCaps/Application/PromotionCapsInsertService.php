@@ -108,39 +108,37 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
         $uifields = $this->repopromotionui->get_active_fields($this->promotion["id"]);
 
         foreach ($uifields as $field) {
-            if (!in_array($field, [PromotionCapUserType::INPUT_IS_MAILING, PromotionCapUserType::INPUT_IS_TERMS]))
-                $this->validator->add_rule($field, "empty", function ($data) {
-                    return $data["value"] ? false : __("Empty field is not allowed");
-                });
-
             if ($field === PromotionCapUserType::INPUT_EMAIL) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::is_valid_email($data["value"])
-                        ? false
-                        : __("Wrong email format");
+                    if (!$data["value"]) return __("Empty value is not allowed");
+                    if (!CheckerService::is_valid_email($data["value"]))
+                        return __("Wrong email format");
                 })
                 ->add_rule($field, "exist", function ($data) {
                     $idpromotion = $this->promotion["id"];
                     $email = $data["value"] ?? "";
-                    return !$this->repopromocapuser->is_subscribed_by_email($idpromotion, $email)
-                        ? false
-                        : __("You are already subscribed");
+                    if (!$this->repopromocapuser->is_subscribed_by_email($idpromotion, $email))
+                        return __("You are already subscribed");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_NAME1) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::name_format($data["value"])
-                        ? false
-                        : __("Wrong first name format. Only letters allowed.");
+                    if (!$name1 = $data["value"])
+                        return __("Empty value is not allowed");
+
+                    if (!CheckerService::name_format($name1))
+                        return __("Wrong first name format. Only letters allowed.");
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_NAME2) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    return CheckerService::name_format($data["value"])
-                        ? false
-                        : __("Wrong last name format. Only letters allowed.");
+                    if (!$name2 = $data["value"])
+                        return __("Empty value is not allowed");
+
+                    if (!CheckerService::name_format($name2))
+                        return __("Wrong last name format. Only letters allowed.");
                 });
             }
 
@@ -211,7 +209,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
         //to-do pasr fks
         $toskip = array_diff($uifields, PromotionCapUserType::get_all());
-        $toskip = array_merge($toskip, ["uuid","id_country", "id_owner", "id_promotion", "id_gender", "is_mailing", "is_terms"]);
+        $toskip = array_merge($toskip, ["uuid","id_country","id_language", "id_owner", "id_promotion", "id_gender", "is_mailing", "is_terms"]);
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);
 

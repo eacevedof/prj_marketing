@@ -172,5 +172,4 @@ final class FieldsValidator
     {
         return $this->skip;
     }
-
-}//FieldsValidator
+}
