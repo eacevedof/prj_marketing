@@ -171,7 +171,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_COUNTRY) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     $value = $data["data"]["id_country"] ?? "";
-                    if (!$this->repoarray->exists((int)$value, AppArrayType::COUNTRY, "id_pk"))
+                    if (!$this->repoarray->exists((int)$value, AppArrayType::COUNTRY))
                         return __("Unrecognized country");
                 });
             }
@@ -211,7 +211,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
 
         //to-do pasr fks
         $toskip = array_diff($uifields, PromotionCapUserType::get_all());
-        $toskip = array_merge($toskip, ["uuid", "id_owner", "id_promotion", "id_gender", "is_mailing", "is_terms"]);
+        $toskip = array_merge($toskip, ["uuid","id_country", "id_owner", "id_promotion", "id_gender", "is_mailing", "is_terms"]);
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);
 
