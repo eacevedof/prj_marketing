@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- fix carga de id_xxx en promocap-insert se usan los ids y no los id_pk
 - modelo configurador premios por puntos
 - cookiebot
 - checks de aceptacion de terminos y condicones
