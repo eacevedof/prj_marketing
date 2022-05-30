@@ -202,11 +202,12 @@ export class FormPromotionCapInsert extends LitElement {
 
   get_client_errors(input) {
     validator.init(input)
-    //fn(input, field, value, label)
-    validator.add_rules("input-email","empty", (data, field, value, label) => {
-      //return "not gooooood!"
-      console.log("field", field, "value", value, "label", label)
+    validator.add_rules("input-email","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if (!v.match(PATTERNS.EMAIL)) return "Invalid email"
     })
+
     return validator.get_errors()
   }
 
