@@ -177,7 +177,6 @@ final class PromotionsUpdateService extends AppService
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!RF::get(ArrayRepository::class)->get_timezone_description_by_id($value))
                     return __("Invalid timezone");
-                return false;
             })
         ;
         return $this->validator;

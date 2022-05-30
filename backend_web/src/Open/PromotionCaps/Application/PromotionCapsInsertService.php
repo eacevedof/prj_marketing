@@ -47,7 +47,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
     public function __construct(array $input)
     {
         $this->_load_input($input);
-        $this->istest = (int) ($input["_test_mode"] ?? 0);
+        $this->istest = (int)($input["_test_mode"] ?? 0);
         $this->repopromotion = RF::get(PromotionRepository::class);
         $this->repopromotionui = RF::get(PromotionUiRepository::class);
         $this->reposubscription = RF::get(PromotionCapSubscriptionsRepository::class);
