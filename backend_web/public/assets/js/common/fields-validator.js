@@ -34,9 +34,6 @@ export default  {
 
   get_errors() {
     const input = _input.fields
-    console.log("INPUT",input)
-    //return true
-
     const errors = []
     _rules.forEach(rule => {
       const field = rule.field
@@ -51,7 +48,6 @@ export default  {
         message: msg,
       })
     })
-
     return errors
   }
 }
