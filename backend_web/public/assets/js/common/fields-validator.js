@@ -33,7 +33,13 @@ export default  {
   },
 
   get_errors() {
-    const input = _input.fields
+    const input = _input.fields.map(field => {
+      const f = `${field}`
+      const obj = {}
+      obj[f] = _input.wrapper.querySelector(`#${field}`)?.value
+      return obj
+    })
+
     const errors = []
     _rules.forEach(rule => {
       const field = rule.field
@@ -41,12 +47,13 @@ export default  {
       const label = _input.wrapper.querySelector(`label[for=${field}]`)?.innerText
 
       const msg = rule.fn(input, field, value, label)
-      if (msg) errors.push({
-        field,
-        rule: rule.rule,
-        label,
-        message: msg,
-      })
+      if (msg)
+        errors.push({
+          field,
+          rule: rule.rule,
+          label,
+          message: msg,
+        })
     })
     return errors
   }
