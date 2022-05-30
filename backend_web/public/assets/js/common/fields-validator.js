@@ -37,8 +37,8 @@ export default  {
     const errors = []
     _rules.forEach(rule => {
       const field = rule.field
-      const value = _input.wrapper.querySelector(`#input-${field}`)?.value
-      const label = _input.wrapper.querySelector(`label[for=input-${field}]`)?.innerText
+      const value = _input.wrapper.querySelector(`#${field}`)?.value
+      const label = _input.wrapper.querySelector(`label[for=${field}]`)?.innerText
 
       const msg = rule.fn(input, field, value, label)
       if (msg) errors.push({
