@@ -89,7 +89,7 @@ final class ArrayRepository extends AppRepository
         $sql = $this->_get_qbuilder()
             ->set_comment("apparrayrepo.get_genders")
             ->set_table("app_array as m")
-            ->set_getfields(["m.id","m.description"])
+            ->set_getfields(["m.id_pk as id","m.description"])
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.type='$type'")

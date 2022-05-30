@@ -197,7 +197,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                     if (!$idgender = ($data["data"]["id_gender"] ?? ""))
                         return __("Empty value is not allowed");
 
-                    if (!$this->repoarray->exists((int)$idgender, AppArrayType::GENDER))
+                    if (!$this->repoarray->exists((int)$idgender, AppArrayType::GENDER, "id_pk"))
                         return __("Unrecognized gender");
                 });
             }
