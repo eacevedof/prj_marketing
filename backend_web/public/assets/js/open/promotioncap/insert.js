@@ -202,9 +202,10 @@ export class FormPromotionCapInsert extends LitElement {
 
   get_client_errors(input) {
     validator.init(input)
-    validator.add_rules("input-email","empty", data => {
+    //fn(input, field, value, label)
+    validator.add_rules("input-email","empty", (data, field, value, label) => {
       //return "not gooooood!"
-      console.log("data", data)
+      console.log("field", field, "value", value, "label", label)
     })
     return validator.get_errors()
   }
@@ -218,12 +219,11 @@ export class FormPromotionCapInsert extends LitElement {
       wrapper: this.shadowRoot.querySelector("form"),
       fields: this.fields.inputs.map(input => `input-${input}`)
     }
-    console.log(input)
     error.config(input)
     error.clear()
 
     let errors = this.get_client_errors(input)
-    console.log("client-errors", errors)
+    console.log("on-submit - client-errors", errors)
     if(errors?.length) {
       this._issending = false
       this._btnsend = this.texts.tr00
@@ -244,7 +244,7 @@ export class FormPromotionCapInsert extends LitElement {
 
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `input-${errfield.field}`}))
-      console.log("server-errors", errors)
+      console.log("on-submit - server-errors", errors)
       if(errors?.length) {
         this.snack_error("Check errors 2")
         return error.append(errors)
