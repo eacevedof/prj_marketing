@@ -248,6 +248,12 @@ export class FormPromotionCapInsert extends LitElement {
       if (!v.match(PATTERNS.ZERO_ONE))
         return "Invalid value"
     })
+    validator.add_rules("input-is_terms","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if (!v.match(PATTERNS.ZERO_ONE))
+        return "Invalid value"
+    })
 
     return validator.get_errors()
   }
