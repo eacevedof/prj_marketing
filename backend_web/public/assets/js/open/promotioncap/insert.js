@@ -212,6 +212,36 @@ export class FormPromotionCapInsert extends LitElement {
       if (!v) return "Empty field"
       if (!v.match(PATTERNS.NAME)) return "Invalid value"
     })
+    validator.add_rules("input-phone1","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if (!v.match(PATTERNS.PHONE)) return "Invalid value"
+    })
+    validator.add_rules("input-name2","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if (!v.match(PATTERNS.NAME)) return "Invalid value"
+    })
+    validator.add_rules("input-language","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!isNaN(v)) return "Invalid value"
+    })
+    validator.add_rules("input-country","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if (!isNaN(v)) return "Invalid value"
+    })
+    validator.add_rules("input-gender","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if (!isNaN(v)) return "Invalid value"
+    })
+    validator.add_rules("input-birthdate","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if ((new Date(v) !== "Invalid Date") && !isNaN(new Date(v)))
+        return "Invalid value"
+    })
 
     return validator.get_errors()
   }
