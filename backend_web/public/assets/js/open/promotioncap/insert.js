@@ -242,10 +242,11 @@ export class FormPromotionCapInsert extends LitElement {
       if ((new Date(v) !== "Invalid Date") && !isNaN(new Date(v)))
         return "Invalid value"
     })
-    validator.add_rules("input-address","valid", (data, field, value, label) => {
+    validator.add_rules("input-is_mailing","valid", (data, field, value, label) => {
       let v = value.trim()
       if (!v) return "Empty field"
-      if (!v.match(PATTERNS.ADDRESS)) return "Invalid value"
+      if (!v.match(PATTERNS.ZERO_ONE))
+        return "Invalid value"
     })
 
     return validator.get_errors()

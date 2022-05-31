@@ -12,6 +12,7 @@ export const PATTERNS = {
   PHONE: /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/im,
   DATE: /^\d{2}[./-]\d{2}[./-]\d{4}$/,
   ADDRESS: /^[a-zA-Z0-9\s,. '-]{3,}$/,
+  ZERO_ONE: /^[0-1]{1,}$/,
 }
 
 export default  {
