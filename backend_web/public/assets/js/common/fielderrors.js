@@ -15,7 +15,7 @@ const _clear = () => {
   if (!_$wrapper) return
   let errors = Array.from(_$wrapper?.querySelectorAll(`[approle="field-error"]`))
   //limpia los li
-  errors.forEach($div => $div.parentNode.removeChild($div))
+  errors.forEach($div => $div.remove())
   //limpia las x y los marcos rojos
   errors = Array.from(_$wrapper?.querySelectorAll(`.${CSS.INPUT_ERROR}`))
   errors.forEach($input => $input.classList.remove(CSS.INPUT_ERROR))

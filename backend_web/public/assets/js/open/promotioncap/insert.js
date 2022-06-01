@@ -201,6 +201,7 @@ export class FormPromotionCapInsert extends LitElement {
   }
 
   get_client_errors(input) {
+    validator.reset()
     validator.init(input)
     validator.add_rules("input-email","valid", (data, field, value, label) => {
       let v = value.trim()

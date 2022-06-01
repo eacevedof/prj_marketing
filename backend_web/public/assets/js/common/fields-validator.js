@@ -1,5 +1,5 @@
-const _rules = []
-const _skip = []
+let _rules = []
+let _skip = []
 
 let _input = {
   wrapper: null,
@@ -19,6 +19,11 @@ export default  {
 
   init: obj =>{
     _input = obj
+  },
+
+  reset: () => {
+    _rules = []
+    _skip = []
   },
 
   add_rules: (field, rule, fn) => {
