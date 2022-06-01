@@ -240,9 +240,9 @@ export class FormPromotionCapInsert extends LitElement {
     })
     validator.add_rules("input-birthdate","valid", (data, field, value, label) => {
       let v = value.trim()
-      if (!v) return "Empty field"
-      if ((new Date(v) !== "Invalid Date") && !isNaN(new Date(v)))
-        return "Invalid value"
+      if (!v) return "Empty value"
+      console.log("DATE", v)
+      if (!v.match(PATTERNS.DATE)) return "Invalid value"
     })
     validator.add_rules("input-is_mailing","valid", (data, field, value, label) => {
       let v = value.trim()
