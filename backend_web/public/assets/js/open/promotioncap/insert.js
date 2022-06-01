@@ -244,17 +244,20 @@ export class FormPromotionCapInsert extends LitElement {
       console.log("DATE", v)
       if (!v.match(PATTERNS.DATE)) return "Invalid value"
     })
+    validator.add_rules("input-address","valid", (data, field, value, label) => {
+      let v = value.trim()
+      if (!v) return "Empty field"
+      if (!v.match(PATTERNS.ADDRESS)) return "Invalid value. Eg: St. Paul Street, 47 - N.Y."
+    })
     validator.add_rules("input-is_mailing","valid", (data, field, value, label) => {
       let v = value.trim()
       if (!v) return "Empty field"
-      if (!v.match(PATTERNS.ZERO_ONE))
-        return "Invalid value"
+      if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
     })
     validator.add_rules("input-is_terms","valid", (data, field, value, label) => {
       let v = value.trim()
       if (!v) return "Empty field"
-      if (!v.match(PATTERNS.ZERO_ONE))
-        return "Invalid value"
+      if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
     })
 
     return validator.get_errors()
