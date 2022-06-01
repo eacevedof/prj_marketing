@@ -216,7 +216,7 @@ export class FormPromotionCapInsert extends LitElement {
     validator.add_rules("input-phone1","valid", (data, field, value, label) => {
       let v = value.trim()
       if (!v) return "Empty field"
-      if (!v.match(PATTERNS.PHONE)) return "Invalid value"
+      if (!v.match(PATTERNS.PHONE)) return "Invalid format. Eg: 777 888 999 333"
     })
     validator.add_rules("input-name2","valid", (data, field, value, label) => {
       let v = value.trim()
