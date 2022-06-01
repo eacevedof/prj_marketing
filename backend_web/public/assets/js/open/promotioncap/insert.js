@@ -272,7 +272,6 @@ export class FormPromotionCapInsert extends LitElement {
     error.clear()
 
     let errors = this.get_client_errors(input)
-    console.log("on-submit - client-errors", errors)
     if(errors?.length) {
       this._issending = false
       this._btnsend = this.texts.tr00
