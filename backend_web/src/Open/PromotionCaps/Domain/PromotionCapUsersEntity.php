@@ -120,7 +120,7 @@ final class PromotionCapUsersEntity extends AppEntity
             EntityType::REQUEST_KEY => "name1",
             "config" => [
                 "type" => EntityType::STRING,
-                "length" => 15,
+                "length" => 30,
             ]
         ],
        
@@ -129,7 +129,7 @@ final class PromotionCapUsersEntity extends AppEntity
             EntityType::REQUEST_KEY => "name2",
             "config" => [
                 "type" => EntityType::STRING,
-                "length" => 15,
+                "length" => 30,
             ]
         ],
        

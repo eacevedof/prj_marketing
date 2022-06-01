@@ -56,12 +56,12 @@ final class CreateAppPromotioncapUsers extends AbsMigration
             "default" => null,
         ])
         ->addColumn("name1", "string", [
-            "limit" => 15,
+            "limit" => 30,
             "null" => true,
             "default" => null,
         ])
         ->addColumn("name2", "string", [
-            "limit" => 15,
+            "limit" => 30,
             "null" => true,
             "default" => null,
         ])
