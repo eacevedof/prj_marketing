@@ -236,7 +236,7 @@ export class FormPromotionCapInsert extends LitElement {
     validator.add_rules("input-gender","valid", (data, field, value, label) => {
       let v = value.trim()
       if (!v) return "Select one"
-      if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
+      if (!v.match(PATTERNS.GENDER)) return "Invalid value"
     })
     validator.add_rules("input-birthdate","valid", (data, field, value, label) => {
       let v = value.trim()
