@@ -42,16 +42,16 @@ export class FormPromotionCapInsert extends LitElement {
       },
       name1: {
         label: html`<label for="input-name1">${this.texts.name1}</label>`,
-        input: html`<input type="text" id="input-name1" maxlength="15" >`
+        input: html`<input type="text" id="input-name1" maxlength="30" >`
       },
       name2: {
         label: html`<label for="input-name2">${this.texts.name2}</label>`,
-        input: html`<input type="text" id="input-name2" maxlength="15" required>`
+        input: html`<input type="text" id="input-name2" maxlength="30" >`
       },
       country: {
         label: html`<label for="input-country">${this.texts.country}</label>`,
         input: html`
-          <select id="input-country" class="form-control" required>
+          <select id="input-country" class="form-control" >
             ${this._countries.map(item => html`
               <option value=${item.key}>${item.value}</option>`)}
           </select>`
@@ -59,7 +59,7 @@ export class FormPromotionCapInsert extends LitElement {
       gender: {
         label: html`<label for="input-gender">${this.texts.gender}</label>`,
         input: html`
-          <select id="input-gender" class="form-control" required>
+          <select id="input-gender" class="form-control" >
             ${this._genders.map(item => html`
               <option value=${item.key}>${item.value}</option>`)}
           </select>`
@@ -67,22 +67,22 @@ export class FormPromotionCapInsert extends LitElement {
       language: {
         label: html`<label for="input-language">${this.texts.language}</label>`,
         input: html`
-          <select id="input-language" class="form-control" required>
+          <select id="input-language" class="form-control" >
             ${this._languages.map(item => html`
               <option value=${item.key}>${item.value}</option>`)}
           </select>`
       },
       phone1: {
         label: html`<label for="input-phone1">${this.texts.phone1}</label>`,
-        input: html`<input type="text" id="input-phone1" maxlength="20" required>`
+        input: html`<input type="text" id="input-phone1" maxlength="20" >`
       },
       birthdate: {
         label: html`<label for="input-birthdate">${this.texts.birthdate}</label>`,
-        input: html`<input type="date" id="input-birthdate" required>`
+        input: html`<input type="date" id="input-birthdate" >`
       },
       address: {
         label: html`<label for="input-address">${this.texts.address}</label>`,
-        input: html`<input type="text" id="input-address" maxlength="100" required>`
+        input: html`<input type="text" id="input-address" maxlength="100" >`
       },
       is_mailing: {
         label: html`<label for="input-is_mailing">
@@ -211,7 +211,7 @@ export class FormPromotionCapInsert extends LitElement {
     validator.add_rules("input-name1","valid", (data, field, value, label) => {
       let v = value.trim()
       if (!v) return "Empty field"
-      if (!v.match(PATTERNS.NAME)) return "Invalid value"
+      if (!v.match(PATTERNS.NAME)) return "Invalid value. Eg:John Santino"
     })
     validator.add_rules("input-phone1","valid", (data, field, value, label) => {
       let v = value.trim()
@@ -221,7 +221,7 @@ export class FormPromotionCapInsert extends LitElement {
     validator.add_rules("input-name2","valid", (data, field, value, label) => {
       let v = value.trim()
       if (!v) return "Empty field"
-      if (!v.match(PATTERNS.NAME)) return "Invalid value"
+      if (!v.match(PATTERNS.NAME)) return "Invalid value. Eg: Smith Rincón"
     })
     validator.add_rules("input-language","valid", (data, field, value, label) => {
       let v = value.trim()
