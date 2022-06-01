@@ -11,9 +11,9 @@ namespace App\Checker\Application;
 
 final class CheckerService
 {
-    private const NAME_PATTERN = "/^[A-Za-zñÑ]+([A-Za-zñÑ]|\s[A-Za-zñÑ]+|\-[A-Za-zñÑ]+)*[a-z]$/";
-    private const ADDRESS_PATTERN = "/^[A-Za-zñÑ]+[A-Za-zñÑ\-\.\s\dº]*[A-Za-z\d]+$/";
-    private const PHONE_PATTERN = "/^[\d\(\)\+\s]+$/";
+    private const NAME_PATTERN = "/^([A-Z,a-zÑñáéíóú]+ )+[A-Z,a-zÑñáéíóú]+$|^[A-Z,a-záéíóú]+$/";
+    private const ADDRESS_PATTERN = "/^[a-zA-ZÑñáéíóú]+[a-zA-ZÑñáéíóú0-9\s,\.'\-]{3,}[a-zA-Z0-9\.]$/";
+    private const PHONE_PATTERN = "/^(\d{3} )+\d+$|^\d{3,}$/";
 
     public static function is_valid_url(?string $value): bool
     {
