@@ -296,7 +296,6 @@ export class FormPromotionCapInsert extends LitElement {
 
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `input-${errfield.field}`}))
-      console.log("on-submit - server-errors", errors)
       if(errors?.length) {
         this.snack_error("Check errors 2")
         return error.append(errors)

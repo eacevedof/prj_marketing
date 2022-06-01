@@ -67,8 +67,11 @@ const _append = errors => {
   })
 
   //console.log("error.inform",inform)
-  if (inform[0])
-    _$wrapper.querySelector(`#${inform[0]}`).focus()
+  if (inform[0]) {
+    const firstinput = _$wrapper.querySelector(`#${inform[0]}`)
+    firstinput.focus()
+    firstinput.select()
+  }
 }
 
 const _set_config = options => {
