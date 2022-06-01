@@ -225,17 +225,18 @@ export class FormPromotionCapInsert extends LitElement {
     })
     validator.add_rules("input-language","valid", (data, field, value, label) => {
       let v = value.trim()
-      if (!isNaN(v)) return "Invalid value"
+      if (!v) return "Select one"
+      if (!v.match(PATTERNS.INTEGER)) return "Invalid value"
     })
     validator.add_rules("input-country","valid", (data, field, value, label) => {
       let v = value.trim()
-      if (!v) return "Empty field"
-      if (!isNaN(v)) return "Invalid value"
+      if (!v) return "Select one"
+      if (!v.match(PATTERNS.INTEGER)) return "Invalid value"
     })
     validator.add_rules("input-gender","valid", (data, field, value, label) => {
       let v = value.trim()
-      if (!v) return "Empty field"
-      if (!isNaN(v)) return "Invalid value"
+      if (!v) return "Select one"
+      if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
     })
     validator.add_rules("input-birthdate","valid", (data, field, value, label) => {
       let v = value.trim()
