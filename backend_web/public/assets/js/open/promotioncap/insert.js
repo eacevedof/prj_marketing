@@ -201,64 +201,65 @@ export class FormPromotionCapInsert extends LitElement {
 
   get_client_errors(input) {
     const texts = this.texts
+    //console.log("texts",texts)
     validator.reset()
     validator.init(input)
     validator.add_rules("input-email","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Empty value is not allowed"
-      if (!v.match(PATTERNS.EMAIL)) return "Invalid format. Eg: xxx@domain.com"
+      if (!v) return texts.tr10
+      if (!v.match(PATTERNS.EMAIL)) return texts.tr11
     })
     validator.add_rules("input-name1","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Empty value is not allowed"
-      if (!v.match(PATTERNS.NAME)) return "Invalid format. Eg: John Santino"
+      if (!v) return texts.tr10
+      if (!v.match(PATTERNS.NAME)) return texts.tr12
     })
     validator.add_rules("input-phone1","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Empty value is not allowed"
-      if (!v.match(PATTERNS.PHONE)) return "Invalid format. Eg: 777 888 999 333"
+      if (!v) return texts.tr10
+      if (!v.match(PATTERNS.PHONE)) return texts.tr13
     })
     validator.add_rules("input-name2","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Empty value is not allowed"
-      if (!v.match(PATTERNS.NAME)) return "Invalid format. Eg: Smith Rincón"
+      if (!v) return texts.tr10
+      if (!v.match(PATTERNS.NAME)) return texts.tr14
     })
     validator.add_rules("input-language","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Please select an option"
-      if (!v.match(PATTERNS.INTEGER)) return "Invalid selection"
+      if (!v) return texts.tr15
+      if (!v.match(PATTERNS.INTEGER)) return texts.tr16
     })
     validator.add_rules("input-country","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Please select an option"
-      if (!v.match(PATTERNS.INTEGER)) return "Invalid selection"
+      if (!v) return texts.tr15
+      if (!v.match(PATTERNS.INTEGER)) return texts.tr16
     })
     validator.add_rules("input-gender","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Please select an option"
-      if (!v.match(PATTERNS.GENDER)) return "Invalid selection"
+      if (!v) return texts.tr15
+      if (!v.match(PATTERNS.GENDER)) return texts.tr16
     })
     validator.add_rules("input-birthdate","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Empty value is not allowed"
-      if (!v.match(PATTERNS.DATE)) return "Invalid date"
+      if (!v) return texts.tr10
+      if (!v.match(PATTERNS.DATE)) return texts.tr17
     })
     validator.add_rules("input-address","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Empty value is not allowed"
-      if (!v.match(PATTERNS.ADDRESS)) return "Invalid format. Eg: St. Paul Street, 47 - N.Y."
+      if (!v) return texts.tr10
+      if (!v.match(PATTERNS.ADDRESS)) return texts.tr18
     })
     validator.add_rules("input-is_mailing","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Empty value is not allowed"
-      if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
+      if (!v) return texts.tr10
+      if (!v.match(PATTERNS.ZERO_ONE)) return texts.tr19
     })
     validator.add_rules("input-is_terms","valid", (value) => {
       const v = value.trim()
-      if (!v) return "Please select an option"
-      if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
+      if (!v) return texts.tr15
+      if (!v.match(PATTERNS.ZERO_ONE)) return texts.tr19
       if (!this._$get("input-is_terms")?.checked)
-        return "In order to finish your subscription you have to read and accept terms and conditions"
+        return texts.tr20
     })
 
     return validator.get_errors()
