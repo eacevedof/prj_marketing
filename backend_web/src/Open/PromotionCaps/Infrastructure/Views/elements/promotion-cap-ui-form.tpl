@@ -10,6 +10,8 @@ $texts = [
     "tr02" => __("Error"),
     "tr03" => __("Some unexpected error occurred"),
 
+    "tr04" => _(),
+
     "email" => __("Email"),
     "name1" => __("First name"),
     "name2" => __("Last name"),
