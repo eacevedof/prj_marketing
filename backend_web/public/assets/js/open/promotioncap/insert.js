@@ -26,7 +26,6 @@ export class FormPromotionCapInsert extends LitElement {
             (this.fields.inputs.map(input => "input-".concat(input)))([])
   }
 
-  //1
   constructor() {
     super()
     this._issending = false
