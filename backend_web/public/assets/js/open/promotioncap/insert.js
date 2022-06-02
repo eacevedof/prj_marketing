@@ -200,6 +200,7 @@ export class FormPromotionCapInsert extends LitElement {
   }
 
   get_client_errors(input) {
+    const texts = this.texts
     validator.reset()
     validator.init(input)
     validator.add_rules("input-email","valid", (value) => {
