@@ -1,13 +1,11 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
-- fix carga de id_xxx en promocap-insert se usan los ids y no los id_pk
 - modelo configurador premios por puntos
 - cookiebot
-- checks de aceptacion de terminos y condicones
-- quizas faltaria estilo color en promoción
+- quiza faltaria estilo color en promoción
 - en grid: url con parametros get y filtros
-- disable modal para account 
+- disable modal para account ??
 - url /restrict/business-data/id/promotions permite hacer click en las promociones y ver la ui
 - configuracion de bow delegado (para empresas de marketing)
 - configurador de planes por puntos y su reseteo a nivel de cliente. por ejemplo 10 puntos en 15 dias regalo botella de vino.
@@ -44,6 +42,8 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~fix carga de id_xxx en promocap-insert se usan los ids y no los id_pk~~
+- ~~checks de aceptacion de terminos y condicones~~
 - no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará
   el % del fee de la plataforma. No debería ser menos de 7
   - de 7 a 15 = 6% (0,42 - 0,9)
