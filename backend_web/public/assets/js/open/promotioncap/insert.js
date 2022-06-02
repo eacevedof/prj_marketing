@@ -256,8 +256,8 @@ export class FormPromotionCapInsert extends LitElement {
     })
     validator.add_rules("input-is_terms","valid", (data, field, value, label) => {
       let v = value.trim()
-      if (!v) return "Empty field"
       if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
+      if (!this._$get("input-is_terms")?.checked) return "Required selection"
     })
 
     return validator.get_errors()
