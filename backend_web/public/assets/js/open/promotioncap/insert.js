@@ -203,58 +203,58 @@ export class FormPromotionCapInsert extends LitElement {
   get_client_errors(input) {
     validator.reset()
     validator.init(input)
-    validator.add_rules("input-email","valid", (data, field, value) => {
+    validator.add_rules("input-email","valid", (value) => {
       let v = value.trim()
       if (!v) return "Empty field"
       if (!v.match(PATTERNS.EMAIL)) return "Invalid email"
     })
-    validator.add_rules("input-name1","valid", (data, field, value) => {
+    validator.add_rules("input-name1","valid", (value) => {
       let v = value.trim()
       if (!v) return "Empty field"
       if (!v.match(PATTERNS.NAME)) return "Invalid value. Eg:John Santino"
     })
-    validator.add_rules("input-phone1","valid", (data, field, value) => {
+    validator.add_rules("input-phone1","valid", (value) => {
       let v = value.trim()
       if (!v) return "Empty field"
       if (!v.match(PATTERNS.PHONE)) return "Invalid format. Eg: 777 888 999 333"
     })
-    validator.add_rules("input-name2","valid", (data, field, value) => {
+    validator.add_rules("input-name2","valid", (value) => {
       let v = value.trim()
       if (!v) return "Empty field"
       if (!v.match(PATTERNS.NAME)) return "Invalid value. Eg: Smith Rincón"
     })
-    validator.add_rules("input-language","valid", (data, field, value) => {
+    validator.add_rules("input-language","valid", (value) => {
       let v = value.trim()
       if (!v) return "Select one"
       if (!v.match(PATTERNS.INTEGER)) return "Invalid value"
     })
-    validator.add_rules("input-country","valid", (data, field, value) => {
+    validator.add_rules("input-country","valid", (value) => {
       let v = value.trim()
       if (!v) return "Select one"
       if (!v.match(PATTERNS.INTEGER)) return "Invalid value"
     })
-    validator.add_rules("input-gender","valid", (data, field, value) => {
+    validator.add_rules("input-gender","valid", (value) => {
       let v = value.trim()
       if (!v) return "Select one"
       if (!v.match(PATTERNS.GENDER)) return "Invalid value"
     })
-    validator.add_rules("input-birthdate","valid", (data, field, value) => {
+    validator.add_rules("input-birthdate","valid", (value) => {
       let v = value.trim()
       if (!v) return "Empty value"
       console.log("DATE", v)
       if (!v.match(PATTERNS.DATE)) return "Invalid value"
     })
-    validator.add_rules("input-address","valid", (data, field, value) => {
+    validator.add_rules("input-address","valid", (value) => {
       let v = value.trim()
       if (!v) return "Empty field"
       if (!v.match(PATTERNS.ADDRESS)) return "Invalid value. Eg: St. Paul Street, 47 - N.Y."
     })
-    validator.add_rules("input-is_mailing","valid", (data, field, value) => {
+    validator.add_rules("input-is_mailing","valid", (value) => {
       let v = value.trim()
       if (!v) return "Empty field"
       if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
     })
-    validator.add_rules("input-is_terms","valid", (data, field, value) => {
+    validator.add_rules("input-is_terms","valid", (value) => {
       let v = value.trim()
       if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
       if (!this._$get("input-is_terms")?.checked) return "Required selection"

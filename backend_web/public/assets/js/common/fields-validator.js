@@ -50,14 +50,14 @@ export default  {
 
     const errors = []
     _rules.forEach(rule => {
-      const field = rule.field
-      const value = _input.wrapper.querySelector(`#${field}`)?.value
-      const label = _input.wrapper.querySelector(`label[for=${field}]`)?.innerText
+      const fieldid = rule.field
+      const value = _input.wrapper.querySelector(`#${fieldid}`)?.value
+      const label = _input.wrapper.querySelector(`label[for=${fieldid}]`)?.innerText
 
-      const msg = rule.fn(input, field, value, label)
+      const msg = rule.fn(value, fieldid, input, label)
       if (msg)
         errors.push({
-          field,
+          fieldid,
           rule: rule.rule,
           label,
           message: msg,
