@@ -256,7 +256,8 @@ export class FormPromotionCapInsert extends LitElement {
       const v = value.trim()
       if (!v) return "Please select an option"
       if (!v.match(PATTERNS.ZERO_ONE)) return "Invalid value"
-      if (!this._$get("input-is_terms")?.checked) return "Required selection"
+      if (!this._$get("input-is_terms")?.checked)
+        return "In order to finish your subscription you have to read and accept terms and conditions"
     })
 
     return validator.get_errors()

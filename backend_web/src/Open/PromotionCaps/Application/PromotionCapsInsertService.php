@@ -214,7 +214,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                     if (!CheckerService::is_boolean($isterms = $data["value"]))
                         return __("Wrong mailing format. Only 0 or 1 allowed");
                     if (!$isterms)
-                        return __("You have to read and accept terms and conditions");
+                        return __("In order to finish your subscription you have to read and accept terms and conditions");
                 });
             }
         }
