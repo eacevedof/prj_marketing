@@ -57,7 +57,7 @@ export default  {
       const msg = rule.fn(value, fieldid, input, label)
       if (msg)
         errors.push({
-          fieldid,
+          field: fieldid,
           rule: rule.rule,
           label,
           message: msg,
