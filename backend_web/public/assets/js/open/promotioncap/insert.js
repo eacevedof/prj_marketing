@@ -201,59 +201,71 @@ export class FormPromotionCapInsert extends LitElement {
 
   get_client_errors(input) {
     const texts = this.texts
-    //console.log("texts",texts)
     validator.reset()
     validator.init(input)
+    const fields = input.fields
+
+    if (fields.includes("input-email"))
     validator.add_rules("input-email","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.EMAIL)) return texts.tr11
     })
+    if (fields.includes("input-name1"))
     validator.add_rules("input-name1","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.NAME)) return texts.tr12
     })
+    if (fields.includes("input-phone1"))
     validator.add_rules("input-phone1","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.PHONE)) return texts.tr13
     })
+    if (fields.includes("input-name2"))
     validator.add_rules("input-name2","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.NAME)) return texts.tr14
     })
+    if (fields.includes("input-language"))
     validator.add_rules("input-language","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr15
       if (!v.match(PATTERNS.INTEGER)) return texts.tr16
     })
+    if (fields.includes("input-country"))
     validator.add_rules("input-country","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr15
       if (!v.match(PATTERNS.INTEGER)) return texts.tr16
     })
+    if (fields.includes("input-gender"))
     validator.add_rules("input-gender","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr15
       if (!v.match(PATTERNS.GENDER)) return texts.tr16
     })
+    if (fields.includes("input-birthdate"))
     validator.add_rules("input-birthdate","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.DATE)) return texts.tr17
     })
+    if (fields.includes("input-address"))
     validator.add_rules("input-address","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.ADDRESS)) return texts.tr18
     })
+    if (fields.includes("input-is_mailing"))
     validator.add_rules("input-is_mailing","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.ZERO_ONE)) return texts.tr19
     })
+    if (fields.includes("input-is_terms"))
     validator.add_rules("input-is_terms","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr15
