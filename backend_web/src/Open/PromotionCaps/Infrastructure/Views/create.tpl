@@ -20,11 +20,14 @@ $bdhelp = HF::get(BH::class, $businessdata);
 $uihelp = HF::get(PH::class, $promotionui)
 ?>
 <!--view:promotincaps.create.tpl-->
+<?php
+$this->_element_view("promotion-cap-style-rewrite", ["promotion"=>$promotion,"bdhelp"=>$bdhelp]);
+?>
 <main class="main-flex">
   <!-- nav to fixed -->
   <nav class="nav-flex">
     <a href="#"><img src="./logo.png"></a>
-    <h1>Eaf Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</h1>
+    <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
   </nav>
   <section class="section">
     <form class="form-grid">
