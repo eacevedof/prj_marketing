@@ -31,7 +31,6 @@ export class FormPromotionCapInsert extends LitElement {
     this._issending = false
     this.texts = {}
     this.fields = {}
-
   }
 
   get_inputs() {
