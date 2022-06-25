@@ -192,8 +192,8 @@ export class FormPromotionCapInsert extends LitElement {
             ${this._btnsend}
             ${
                 this._issending
-                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                    : html``
+                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                  : html``
             }
           </button>
         </div>
