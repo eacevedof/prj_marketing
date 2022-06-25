@@ -19,7 +19,7 @@ $promotionui = $result["promotionui"] ?? [];
 $bdhelp = HF::get(BH::class, $businessdata);
 $uihelp = HF::get(PH::class, $promotionui)
 ?>
-<!--promotincaps.create.tpl-->
+<!--view:promotincaps.create.tpl-->
 <main class="main-flex">
   <!-- nav to fixed -->
   <nav class="nav-flex">
