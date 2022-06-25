@@ -211,6 +211,31 @@ export class FormPromotionCapInsert extends LitElement {
     }
   }
 
+  on_ready(){
+
+    function has_scrollbar() {
+      let elem = window.document.querySelector("body")
+      const r = window.innerHeight < elem.scrollHeight
+      return r
+    }
+
+    function center_vertically() {
+      const $section = window.document.querySelector(".section")
+      $section.style.position = null
+      $section.style.top = null
+
+      if (has_scrollbar()) return
+      const $nav = window.document.querySelector(".nav-flex")
+      const bgZone = window.innerHeight - $nav.offsetHeight
+      const fromTop = (bgZone - $section.offsetHeight)/2
+      $section.style.position = "relative"
+      $section.style.top = fromTop.toString().concat("px")
+    }
+
+    window.addEventListener("load", center_vertically)
+    window.addEventListener("resize", center_vertically)
+  }
+
   snack_error(msg) {
     window.Snackbar.show({
       pos: "top-right",
@@ -316,38 +341,13 @@ export class FormPromotionCapInsert extends LitElement {
   form_shake() {
     const $section = window.document.querySelector(".section")
     if (!$section) return;
-    const $btn = this.shadowRoot.querySelector(".cell-btn button[type=submit]")
+    //const $btn = this.shadowRoot.querySelector(".cell-btn button[type=submit]")
     //$btn.setAttribute("disabled","")
     $section.classList.add("animation-h-shaking")
     setTimeout(() => {
       $section.classList.remove("animation-h-shaking")
       //$btn.removeAttribute("disabled")
     }, 600)
-  }
-
-  on_ready(){
-
-    function has_scrollbar() {
-      let elem = window.document.querySelector("body")
-      const r = window.innerHeight < elem.scrollHeight
-      return r
-    }
-
-    function center_vertically() {
-      const $section = window.document.querySelector(".section")
-      $section.style.position = null
-      $section.style.top = null
-
-      if (has_scrollbar()) return
-      const $nav = window.document.querySelector(".nav-flex")
-      const bgZone = window.innerHeight - $nav.offsetHeight
-      const fromTop = (bgZone - $section.offsetHeight)/2
-      $section.style.position = "relative"
-      $section.style.top = fromTop.toString().concat("px")
-    }
-
-    window.addEventListener("load", center_vertically)
-    window.addEventListener("resize", center_vertically)
   }
 
   async on_submit(e) {
