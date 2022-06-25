@@ -20,149 +20,150 @@ $bdhelp = HF::get(BH::class, $businessdata);
 $uihelp = HF::get(PH::class, $promotionui)
 ?>
 <!--promotincaps.create.tpl-->
-<style>
-body {
-  font-size: 16px;
-  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-/*div wrapper*/
-.wrapper {
-  width: 90vw;
-  display: inline-block;
-  border: 1px solid #C2CCD1;
-  border-radius: 25px;
-}
-.wrapper header{
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: auto 100%;
-  height: 6em;
-  <?=$bdhelp->get_style_header()?>
-}
-.wrapper header h2 {
-  padding: 0;
-  margin: 0;
-  padding-top: 1em;
-  padding-left: 1em;
-  float: left;
-}
-
-.wrapper main{
-  margin:0;
-  padding:0;
-  height: 80vh;
-  background-repeat: repeat-x;
-  background-position: center;
-  background-size: auto 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-<?=$bdhelp->get_style_body()?>
-}
-
-.wrapper main section {
-  /*
-  border: 1px solid red;
-   */
-  margin: 0;
-  padding: 0;
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  <?php
-  BH::echo_style("background-color", $promotion["bgcolor"]);
-  BH::echo_style("background-image", $promotion["bgimage_lg"]);
-  ?>
-}
-
-.div-promotion {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.div-promotion h1 {
-  margin-bottom: 1em;
-}
-
-.social-footer {
-  padding: 1em;
-  background: #8a8a8a;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.social-footer .social-footer-icons ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-.social-footer .social-footer-icons ul li {
-  float: left;
-}
-
-.social-footer .social-footer-icons li:last-of-type {
-  margin-right: 0;
-}
-
-.social-footer .social-footer-icons .fa {
-  font-size: 1.3rem;
-  color: #fefefe;
-}
-
-.social-footer .social-footer-icons .fa:hover {
-  color: #4a4a4a;
-  transition: color 0.3s ease-in;
-}
-</style>
-<div class="wrapper">
-  <header>
-    <h2><? $this->_echo_nohtml($businessdata["business_name"]) ?></h2>
-  </header>
-  <main>
-    <section>
-      <img src="<?$this->_echo($promotion["bgimage_lg"]);?>" style="visibility: hidden; margin: 0; height: 79.5vh" />
-      <div class="div-promotion">
-        <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
-        <?php
-        $this->_element_view("promotion-cap-ui-form", [
-          "uihelp" => $uihelp,
-          "promotionuuid" => $promotion["uuid"],
-          "languages" => $languages,
-          "countries" => $countries,
-          "genders" => $genders,
-        ]);
-        ?>
+<main class="main-flex">
+  <!-- nav to fixed -->
+  <nav class="nav-flex">
+    <a href="#"><img src="./logo.png"></a>
+    <h1>Eaf Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</h1>
+  </nav>
+  <section class="section">
+    <form class="form-grid">
+      <div class="message">
+        ha ocurrido un error en la red es muy dificil su conexión. Es probable
+        que su punto de acceso no tenga ancho de banda suficiente
       </div>
-    </section>
-  </main>
-  <footer class="social-footer">
-    <div class="social-footer-left">
-      <a href="https://test.eduardoaf.com" target="_blank">
-        <img class="logo" src="https://resources.theframework.es/eduardoaf.com/20200917/161342-favicon.ico" style="height: 1.3em">
-      </a>
-    </div>
-    <div class="social-footer-icons">
-    <?=$bdhelp->get_footer_links()?>
-    </div>
-  </footer>
-</div>
+      <div class="cell-flex cell1">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" autofocus>
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li><li>Me gustaria recibir mensajes de promociones y sorteos especiales en mi correo</li></ul>
+        </div>
+      </div>
+      <div class="cell-flex cell2">
+        <label for="first-name">First name</label>
+        <input type="text" id="first-name" name="first-name">
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li></ul>
+        </div>
+      </div>
+<!-- opcional -->
+      <div class="cell-flex cell3">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone">
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li></ul>
+        </div>
+      </div>
+      <div class="cell-flex cell4">
+        <label for="last-name">Last name</label>
+        <input type="text" id="last-name" name="last-name">
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li></ul>
+        </div>
+      </div>
+      <div class="cell-flex cell5">
+        <label for="language">Language</label>
+        <select id="language" name="language">
+          <option>select one</option>
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+        </select>
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li></ul>
+        </div>
+      </div>
+      <div class="cell-flex cell6">
+        <label for="country">Country</label>
+        <select id="country" name="country">
+          <option>select one</option>
+          <option value="aua">Aruba</option>
+          <option value="es">Spain</option>
+        </select>
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li></ul>
+        </div>
+      </div>
+      <div class="cell-flex cell7">
+        <label for="birthdate">Birthdate</label>
+        <input type="date" id="birthdate" name="birthdate" />
+      </div>
+      <div class="cell-flex cell8">
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+          <option>select one</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li></ul>
+        </div>
+      </div>
+      <div class="cell-flex cell9">
+        <label for="address">Address</label>
+        <textarea id="address" name="address"></textarea>
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li><li>Me gustaria recibir mensajes de promociones y sorteos especiales en mi correo</li></ul>
+        </div>
+      </div>
+<!--/opcional -->
+      <div class="cell-flex cell-chk">
+        <label for="chk-mailing">
+          <input type="checkbox" id="chk-mailing" name="chk-mailing" value="1">
+          <span>Me gustaria recibir mensajes de promociones y sorteos especiales en mi correo</span>
+        </label>
+        <div approle="field-error" class="">
+          <ul><li>Empty value is not allowed</li></ul>
+        </div>
+      </div>
+
+      <div class="cell-flex cell-chk">
+        <label for="chk-terms">
+          <input type="checkbox" id="chk-terms" name="chk-terms" class="fix-chk-size" value="1">
+          <span>He leido y acepto los terminos y condiciones <a href="#" target="_blank">generales y relacionadas</a> con esta promoción</span>
+        </label>
+        <div approle="field-error" class="">
+          <ul><li>In order to finish your subscription you have to read and accept terms and conditions</li></ul>
+        </div>
+      </div>
+      <div class="cell-flex cell-btn">
+        <button type="button" class="button button-glow">Subscribirme</button>
+      </div>
+
+    </form>
+  </section>
+</main>
+<script type="module">
+const $btn = document.querySelector(".cell-btn button[type=button]")
+$btn.addEventListener("click", () => {
+  const $section = document.querySelector(".section")
+  $btn.setAttribute("disabled","")
+  $section.classList.add("animation-h-shaking")
+  setTimeout(() => {
+    $section.classList.remove("animation-h-shaking")
+    $btn.removeAttribute("disabled")
+  }, 600)
+})
+
+function has_scrollbar() {
+  let elem = document.querySelector("body")
+  const r = window.innerHeight < elem.scrollHeight
+  return r
+}
+
+function center_vertically() {
+  const $section = document.querySelector(".section")
+  $section.style.position = null
+  $section.style.top = null
+
+  if (has_scrollbar()) return
+  const $nav = document.querySelector(".nav-flex")
+  const bgZone = window.innerHeight - $nav.offsetHeight
+  const fromTop = (bgZone - $section.offsetHeight)/2
+  $section.style.position = "relative"
+  $section.style.top = fromTop.toString().concat("px")
+}
+
+window.addEventListener("load", center_vertically)
+window.addEventListener("resize", center_vertically)
+</script>
 <!--/promotincaps.create.tpl-->
