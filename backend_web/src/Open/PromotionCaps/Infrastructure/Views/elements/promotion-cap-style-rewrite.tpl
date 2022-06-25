@@ -5,14 +5,11 @@ use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as B
 /*
 promotion-cap-style-rewrite.tpl
 */
-body {
-  font-size: 16px;
-  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
-  margin: 0;
-  padding: 0;
-  text-align: center;
+
+.main-flex {
+<?=$bdhelp->get_style_body()?>
 }
-/*div wrapper*/
+
 .wrapper {
   width: 90vw;
   display: inline-block;
@@ -34,19 +31,7 @@ body {
   float: left;
 }
 
-.wrapper main{
-  margin:0;
-  padding:0;
-  height: 80vh;
-  background-repeat: repeat-x;
-  background-position: center;
-  background-size: auto 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-<?=$bdhelp->get_style_body()?>
-}
+
 
 .wrapper main section {
   /*
