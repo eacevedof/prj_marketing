@@ -1,3 +1,6 @@
+<?php
+use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
+?>
 <style>
 /*
 promotion-cap-style-rewrite.tpl
