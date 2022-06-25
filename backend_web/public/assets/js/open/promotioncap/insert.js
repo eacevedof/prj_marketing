@@ -386,6 +386,7 @@ export class FormPromotionCapInsert extends LitElement {
         return error.append(errors)
       }
     }
+    input.wrapper.style.visibility = "hidden"
 
     this.snack_success("Check your email")
   }
