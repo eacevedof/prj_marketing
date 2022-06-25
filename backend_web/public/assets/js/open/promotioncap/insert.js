@@ -31,6 +31,7 @@ export class FormPromotionCapInsert extends LitElement {
     this._issending = false
     this.texts = {}
     this.fields = {}
+
   }
 
   get_inputs() {
@@ -216,6 +217,7 @@ export class FormPromotionCapInsert extends LitElement {
   }
 
   firstUpdated() {
+    this.on_ready()
     try {
       this._$get("input-email").focus()
     }
@@ -324,6 +326,42 @@ export class FormPromotionCapInsert extends LitElement {
     })
 
     return validator.get_errors()
+  }
+
+  on_ready(){
+
+    const $btn = this.shadowRoot.querySelector(".cell-btn button[type=button]")
+      $btn.addEventListener("click", () => {
+      const $section = window.document.querySelector(".section")
+      $btn.setAttribute("disabled","")
+      $section.classList.add("animation-h-shaking")
+      setTimeout(() => {
+      $section.classList.remove("animation-h-shaking")
+      $btn.removeAttribute("disabled")
+    }, 600)
+    })
+
+    function has_scrollbar() {
+      let elem = window.document.querySelector("body")
+      const r = window.innerHeight < elem.scrollHeight
+      return r
+    }
+
+    function center_vertically() {
+      const $section = window.document.querySelector(".section")
+      $section.style.position = null
+      $section.style.top = null
+
+      if (has_scrollbar()) return
+      const $nav = window.document.querySelector(".nav-flex")
+      const bgZone = window.innerHeight - $nav.offsetHeight
+      const fromTop = (bgZone - $section.offsetHeight)/2
+      $section.style.position = "relative"
+      $section.style.top = fromTop.toString().concat("px")
+    }
+
+    window.addEventListener("load", center_vertically)
+    window.addEventListener("resize", center_vertically)
   }
 
   async on_submit(e) {
