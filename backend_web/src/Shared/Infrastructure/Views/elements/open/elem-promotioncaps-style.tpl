@@ -93,7 +93,7 @@ a:hover {
   box-shadow: 5px 3px 6px 0px rgba(0,0,0,0.38);
   margin: 1rem;
   max-width: 500px;
-  color: #55e755;
+  color: green;
   font-size: 2rem;
   text-align: center;
 }
