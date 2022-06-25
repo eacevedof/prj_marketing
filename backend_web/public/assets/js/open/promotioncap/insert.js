@@ -386,7 +386,13 @@ export class FormPromotionCapInsert extends LitElement {
         return error.append(errors)
       }
     }
-    input.wrapper.style.visibility = "hidden"
+    const $section = window.document.querySelector(".section")
+    $section.innerHTML = `
+    <div class="subscription-message">
+      <p>
+      Thank you ${this._$get("input-name1").value} for you subscription. Please check your email and press the confirm button
+      </p>
+    </div>`
 
     this.snack_success("Check your email")
   }

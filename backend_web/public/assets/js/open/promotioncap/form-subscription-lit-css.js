@@ -139,9 +139,7 @@ a:hover {
 .cell-chk label {
   font-weight: normal;
 }
-/*
-https://codepen.io/5t3ph/pen/RwrOygP?editors=0100
-*/
+
 .cell-chk input[type=checkbox] {
   font-size: 1rem;
   display: grid;
@@ -182,6 +180,19 @@ https://codepen.io/5t3ph/pen/RwrOygP?editors=0100
 
 .cell-chk div[approle=field-error] ul {
   padding-left: 50px;
+}
+
+.subscription-message {
+  background-color:rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid black;
+  -webkit-box-shadow: 5px 3px 6px 0px rgba(0,0,0,0.38);
+  box-shadow: 5px 3px 6px 0px rgba(0,0,0,0.38);
+  margin: 1rem;
+  max-width: 500px;
+  color: green;
+  text-align: center;
 }
 
 @media screen and (max-width: 481px) {
