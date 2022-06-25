@@ -182,19 +182,6 @@ a:hover {
   padding-left: 50px;
 }
 
-.subscription-message {
-  background-color:rgba(255, 255, 255, 0.95);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid black;
-  -webkit-box-shadow: 5px 3px 6px 0px rgba(0,0,0,0.38);
-  box-shadow: 5px 3px 6px 0px rgba(0,0,0,0.38);
-  margin: 1rem;
-  max-width: 500px;
-  color: green;
-  text-align: center;
-}
-
 @media screen and (max-width: 481px) {
   .form-grid {
     background-color:rgba(255, 255, 255, 0.970);
