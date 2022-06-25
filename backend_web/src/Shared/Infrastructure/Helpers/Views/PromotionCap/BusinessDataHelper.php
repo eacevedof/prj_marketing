@@ -29,7 +29,6 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         ]
     ];
 
-
     public function __construct(array $businessdata)
     {
         $this->businessdata = $businessdata;
