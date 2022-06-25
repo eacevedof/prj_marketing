@@ -3,6 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $promotionui
  */
+$url = "/terms-and-conditions/$promotionuuid";
 
 $texts = [
     "tr00" => __("Subscribe"),
@@ -31,8 +32,10 @@ $texts = [
     "language" => __("Language"),
     "country" => __("Country"),
     "gender" => __("Gender"),
-    "is_mailing" => __("I would like to receive promotions and raffles in my email"),
-    "is_terms" => __("I have red and accept legal terms and conditions"),
+    "is_mailing" => __("I would like to receive promotions and special raffles messages in my email"),
+    "is_terms" => __(
+            "I have red and accept <a href=\"{0}\" target=\"_blank\">general and related</a> legal terms and conditions",$url
+    ),
 ];
 
 $result = [
