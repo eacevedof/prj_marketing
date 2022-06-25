@@ -86,15 +86,16 @@ a:hover {
 }
 .section .subscription-message {
   background-color:rgba(255, 255, 255, 0.95);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 0.5rem;
-  border: 2px solid black;
+  border: 2px solid #3a4f71;
   -webkit-box-shadow: 5px 3px 6px 0px rgba(0,0,0,0.38);
   box-shadow: 5px 3px 6px 0px rgba(0,0,0,0.38);
   margin: 1rem;
   max-width: 500px;
-  color: green;
-  font-size: 2rem;
+  color: #1db5e8;
+  font-size: 1.25rem;
+  line-height: 35px;
   text-align: center;
 }
 </style>

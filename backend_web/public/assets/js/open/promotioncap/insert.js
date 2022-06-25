@@ -393,7 +393,7 @@ export class FormPromotionCapInsert extends LitElement {
     $section.innerHTML = `
     <div class="subscription-message">
       <p>
-      Thank you <b>${name}</b> for your subscription. Please check your email <b>${email}</b> and press the confirm button.
+      Thank you <b>${name}</b> for your subscription. Please check your email <b>${email}</b> and click on the confirmation link.
       </p>
     </div>`
 
