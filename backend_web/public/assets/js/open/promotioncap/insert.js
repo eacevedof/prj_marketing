@@ -340,13 +340,11 @@ export class FormPromotionCapInsert extends LitElement {
   form_shake() {
     const $section = window.document.querySelector(".section")
     if (!$section) return;
-    //const $btn = this.shadowRoot.querySelector(".cell-btn button[type=submit]")
-    //$btn.setAttribute("disabled","")
     $section.classList.add("animation-h-shaking")
-    setTimeout(() => {
-      $section.classList.remove("animation-h-shaking")
-      //$btn.removeAttribute("disabled")
-    }, 600)
+    setTimeout(
+        () => $section.classList.remove("animation-h-shaking"),
+        600
+    )
   }
 
   async on_submit(e) {
