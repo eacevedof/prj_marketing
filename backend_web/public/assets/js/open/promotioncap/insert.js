@@ -75,7 +75,7 @@ export class FormPromotionCapInsert extends LitElement {
         input: html`
           <div class="cell-flex">
             <label for="input-gender">${this.texts.gender}</label>
-            <select id="input-gender" class="form-control" >
+            <select id="input-gender">
               ${this._genders.map(item => html`
                 <option value=${item.key}>${item.value}</option>`)}
             </select>
@@ -83,12 +83,15 @@ export class FormPromotionCapInsert extends LitElement {
         `
       },
       language: {
-        label: html`<label for="input-language">${this.texts.language}</label>`,
         input: html`
-          <select id="input-language" class="form-control" >
-            ${this._languages.map(item => html`
+          <div class="cell-flex">
+            <label for="input-language">${this.texts.language}</label>
+            <select id="input-language">
+              ${this._languages.map(item => html`
               <option value=${item.key}>${item.value}</option>`)}
-          </select>`
+            </select>
+          </div>
+        `
       },
       phone1: {
         label: html`<label for="input-phone1">${this.texts.phone1}</label>`,
@@ -177,14 +180,6 @@ export class FormPromotionCapInsert extends LitElement {
         <div class="cell-flex">
           <label for="last-name">Last name</label>
           <input type="text" id="last-name" name="last-name">
-        </div>
-        <div class="cell-flex">
-          <label for="language">Language</label>
-          <select id="language" name="language">
-            <option>select one</option>
-            <option value="en">English</option>
-            <option value="es">Spanish</option>
-          </select>
         </div>
 
         <div class="cell-flex">
