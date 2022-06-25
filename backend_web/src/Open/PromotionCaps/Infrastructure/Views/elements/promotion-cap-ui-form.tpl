@@ -23,6 +23,8 @@ $texts = [
     "tr19" => __("Invalid value"),
     "tr20" => __("In order to finish your subscription you have to read and accept terms and conditions"),
 
+    "tr30" => __("Thank you <b>%name%</b> for your subscription. Please check your email <b>%email%</b> and click on the confirmation link."),
+
     "email" => __("Email"),
     "name1" => __("First name"),
     "name2" => __("Last name"),

@@ -1,6 +1,8 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- espacio terms-and-conditions/promouuid
+- mailing template
 - modelo configurador premios por puntos
 - cookiebot
 - quiza faltaria estilo color en promoción
