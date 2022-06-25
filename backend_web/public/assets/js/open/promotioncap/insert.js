@@ -118,7 +118,7 @@ export class FormPromotionCapInsert extends LitElement {
         `
       },
       is_mailing: {
-        label: html`
+        input: html`
         <div class="cell-flex cell-chk">
           <label for="input-is_mailing">
             <input type="checkbox" id="input-is_mailing" value="1">
