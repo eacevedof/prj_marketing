@@ -1,6 +1,24 @@
 import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssformsubscription = css`
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: underline;
+  color: #3a4f71;
+  font-weight: bold;
+}
+a:link, a:visited {
+  color: black;
+}
+a:hover {
+  color: deepskyblue;
+}
+
 .form-grid {
   display: grid;
   row-gap: .7rem;

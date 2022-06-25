@@ -22,9 +22,8 @@ a:link, a:visited {
 a:hover {
   color: deepskyblue;
 }
-
 .animation-h-shaking {
-  animation: frames-h-shaking;
+  animation:frames-h-shaking;
   animation-duration: 0.25s;
   animation-iteration-count: 2;
 }
