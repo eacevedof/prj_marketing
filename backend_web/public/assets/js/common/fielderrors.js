@@ -43,16 +43,16 @@ const _append = errors => {
   const inform = []
   onlymsgs.forEach(objfield => {
     const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
-    const divtpl = tpl.replace("%lis%",lis).replace("%css%","")
+    const errordivtpl = tpl.replace("%lis%",lis).replace("%css%","")
     const $input = _$wrapper.querySelector(`#${objfield.fieldid}`)
     if ($input) {
       inform.push(objfield.fieldid)
-      if ($input.type!=="checkbox") {
-        $input.insertAdjacentHTML("afterend", divtpl)
+      if ($input?.type==="checkbox") {
+        const $label = $input.parentElement
+        $label.insertAdjacentHTML("afterend", errordivtpl)
       }
       else {
-        const $label = $input.parentElement
-        $label.insertAdjacentHTML("afterend", divtpl)
+        $input.insertAdjacentHTML("afterend", errordivtpl)
       }
 
       $input.classList.add(CSS.INPUT_ERROR)
