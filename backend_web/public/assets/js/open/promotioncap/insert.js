@@ -143,38 +143,22 @@ export class FormPromotionCapInsert extends LitElement {
 
     return html`
       <form class="form-grid">
-        <div class="message">
-          ha ocurrido un error en la red es muy dificil su conexión. Es probable
-          que su punto de acceso no tenga ancho de banda suficiente
-        </div>
         <div class="cell-flex cell1">
           <label for="email">Email</label>
           <input type="text" id="email" name="email" autofocus>
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li><li>Me gustaria recibir mensajes de promociones y sorteos especiales en mi correo</li></ul>
-          </div>
         </div>
         <div class="cell-flex cell2">
           <label for="first-name">First name</label>
           <input type="text" id="first-name" name="first-name">
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li></ul>
-          </div>
         </div>
         <!-- opcional -->
         <div class="cell-flex cell3">
           <label for="phone">Phone</label>
           <input type="text" id="phone" name="phone">
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li></ul>
-          </div>
         </div>
         <div class="cell-flex cell4">
           <label for="last-name">Last name</label>
           <input type="text" id="last-name" name="last-name">
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li></ul>
-          </div>
         </div>
         <div class="cell-flex cell5">
           <label for="language">Language</label>
@@ -183,9 +167,6 @@ export class FormPromotionCapInsert extends LitElement {
             <option value="en">English</option>
             <option value="es">Spanish</option>
           </select>
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li></ul>
-          </div>
         </div>
         <div class="cell-flex cell6">
           <label for="country">Country</label>
@@ -194,9 +175,6 @@ export class FormPromotionCapInsert extends LitElement {
             <option value="aua">Aruba</option>
             <option value="es">Spain</option>
           </select>
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li></ul>
-          </div>
         </div>
         <div class="cell-flex cell7">
           <label for="birthdate">Birthdate</label>
@@ -209,16 +187,10 @@ export class FormPromotionCapInsert extends LitElement {
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li></ul>
-          </div>
         </div>
         <div class="cell-flex cell9">
           <label for="address">Address</label>
           <textarea id="address" name="address"></textarea>
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li><li>Me gustaria recibir mensajes de promociones y sorteos especiales en mi correo</li></ul>
-          </div>
         </div>
         <!--/opcional -->
         <div class="cell-flex cell-chk">
@@ -226,11 +198,7 @@ export class FormPromotionCapInsert extends LitElement {
             <input type="checkbox" id="chk-mailing" name="chk-mailing" value="1">
             <span>Me gustaria recibir mensajes de promociones y sorteos especiales en mi correo</span>
           </label>
-          <div approle="field-error" class="">
-            <ul><li>Empty value is not allowed</li></ul>
-          </div>
         </div>
-
         <div class="cell-flex cell-chk">
           <label for="chk-terms">
             <input type="checkbox" id="chk-terms" name="chk-terms" class="fix-chk-size" value="1">
