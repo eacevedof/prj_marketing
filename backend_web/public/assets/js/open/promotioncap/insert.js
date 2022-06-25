@@ -128,10 +128,15 @@ export class FormPromotionCapInsert extends LitElement {
         `,
       },
       is_terms: {
-        label: html`<label for="input-is_terms">
-          <input type="checkbox" id="input-is_terms" value="1">
-          <span>${this.texts?.is_terms}</span>
-        </label>`,
+        input: html`
+        </label>
+        <div class="cell-flex cell-chk">
+          <label for="input-is_terms">
+            <input type="checkbox" id="input-is_terms" value="1">
+            <span>${this.texts?.is_terms}</span>
+          </label>
+        </div>
+        `,
       },
     }
   }
@@ -181,30 +186,8 @@ export class FormPromotionCapInsert extends LitElement {
 
     return html`
       <form @submit=${this.on_submit} class="form-grid">
-        <div class="cell-flex">
-          <label for="email">Email</label>
-          <input type="text" id="email" name="email" autofocus>
-        </div>
-        <div class="cell-flex">
-          <label for="first-name">First name</label>
-          <input type="text" id="first-name" name="first-name">
-        </div>
-
-
-
-
-
-
-
-        <div class="cell-flex cell-chk">
-          <label for="chk-terms">
-            <input type="checkbox" id="chk-terms" name="chk-terms" class="fix-chk-size" value="1">
-            <span>He leido y acepto los terminos y condiciones <a href="#" target="_blank">generales y relacionadas</a> con esta promoción</span>
-          </label>
-          <div approle="field-error" class="">
-            <ul><li>In order to finish your subscription you have to read and accept terms and conditions</li></ul>
-          </div>
-        </div>
+        ${inputs.map(obj => obj?.input)}
+        <!-- botones -->
         <div class="cell-flex cell-btn">
           <button id="btn-submit" ?disabled=${this._issending} class="button button-glow">
             ${this._btnsend}
