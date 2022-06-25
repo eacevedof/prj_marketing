@@ -129,7 +129,6 @@ export class FormPromotionCapInsert extends LitElement {
       },
       is_terms: {
         input: html`
-        </label>
         <div class="cell-flex cell-chk">
           <label for="input-is_terms">
             <input type="checkbox" id="input-is_terms" value="1">
