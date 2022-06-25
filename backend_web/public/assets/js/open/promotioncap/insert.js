@@ -118,10 +118,14 @@ export class FormPromotionCapInsert extends LitElement {
         `
       },
       is_mailing: {
-        label: html`<label for="input-is_mailing">
-          <input type="checkbox" id="input-is_mailing" value="1">
-          <span>${this.texts?.is_mailing}</span>
-        </label>`,
+        label: html`
+        <div class="cell-flex cell-chk">
+          <label for="input-is_mailing">
+            <input type="checkbox" id="input-is_mailing" value="1">
+            <span>${this.texts?.is_mailing}</span>
+          </label>
+        </div>        
+        `,
       },
       is_terms: {
         label: html`<label for="input-is_terms">
@@ -191,12 +195,7 @@ export class FormPromotionCapInsert extends LitElement {
 
 
 
-        <div class="cell-flex cell-chk">
-          <label for="chk-mailing">
-            <input type="checkbox" id="chk-mailing" name="chk-mailing" value="1">
-            <span>Me gustaria recibir mensajes de promociones y sorteos especiales en mi correo</span>
-          </label>
-        </div>
+
         <div class="cell-flex cell-chk">
           <label for="chk-terms">
             <input type="checkbox" id="chk-terms" name="chk-terms" class="fix-chk-size" value="1">
