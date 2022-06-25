@@ -102,7 +102,6 @@ export class FormPromotionCapInsert extends LitElement {
         `
       },
       birthdate: {
-        label: html``,
         input: html`
         <div class="cell-flex">
           <label for="input-birthdate">${this.texts.birthdate}</label>
@@ -111,8 +110,12 @@ export class FormPromotionCapInsert extends LitElement {
         `
       },
       address: {
-        label: html`<label for="input-address">${this.texts.address}</label>`,
-        input: html`<input type="text" id="input-address" maxlength="100" >`
+        input: html`
+        <div class="cell-flex">
+          <label for="input-address">${this.texts.address}</label>
+          <input type="text" id="input-address" maxlength="100"/>
+        </div>
+        `
       },
       is_mailing: {
         label: html`<label for="input-is_mailing">
@@ -186,10 +189,7 @@ export class FormPromotionCapInsert extends LitElement {
 
 
 
-        <div class="cell-flex">
-          <label for="address">Address</label>
-          <textarea id="address" name="address"></textarea>
-        </div>
+
 
         <div class="cell-flex cell-chk">
           <label for="chk-mailing">
