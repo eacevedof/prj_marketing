@@ -53,24 +53,34 @@ export class FormPromotionCapInsert extends LitElement {
           `
       },
       name2: {
-        label: html`<label for="input-name2">${this.texts.name2}</label>`,
-        input: html`<input type="text" id="input-name2" maxlength="30" >`
+        input: html`
+          <div class="cell-flex">
+            <label for="input-name2">${this.texts.name2}</label>
+            <input type="text" id="input-name2" maxlength="30" >
+          </div>
+          `
       },
       country: {
-        label: html`<label for="input-country">${this.texts.country}</label>`,
         input: html`
-          <select id="input-country" class="form-control" >
-            ${this._countries.map(item => html`
+          <div class="cell-flex">
+            <label for="input-country">${this.texts.country}</label>
+            <select id="input-country">
+              ${this._countries.map(item => html`
               <option value=${item.key}>${item.value}</option>`)}
-          </select>`
+            </select>
+          </div>
+        `
       },
       gender: {
-        label: html`<label for="input-gender">${this.texts.gender}</label>`,
         input: html`
-          <select id="input-gender" class="form-control" >
-            ${this._genders.map(item => html`
-              <option value=${item.key}>${item.value}</option>`)}
-          </select>`
+          <div class="cell-flex">
+            <label for="input-gender">${this.texts.gender}</label>
+            <select id="input-gender" class="form-control" >
+              ${this._genders.map(item => html`
+                <option value=${item.key}>${item.value}</option>`)}
+            </select>
+          </div>
+        `
       },
       language: {
         label: html`<label for="input-language">${this.texts.language}</label>`,
@@ -176,26 +186,12 @@ export class FormPromotionCapInsert extends LitElement {
             <option value="es">Spanish</option>
           </select>
         </div>
-        <div class="cell-flex">
-          <label for="country">Country</label>
-          <select id="country" name="country">
-            <option>select one</option>
-            <option value="aua">Aruba</option>
-            <option value="es">Spain</option>
-          </select>
-        </div>
+
         <div class="cell-flex">
           <label for="birthdate">Birthdate</label>
           <input type="date" id="birthdate" name="birthdate" />
         </div>
-        <div class="cell-flex">
-          <label for="gender">Gender</label>
-          <select id="gender" name="gender">
-            <option>select one</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
+
         <div class="cell-flex">
           <label for="address">Address</label>
           <textarea id="address" name="address"></textarea>
