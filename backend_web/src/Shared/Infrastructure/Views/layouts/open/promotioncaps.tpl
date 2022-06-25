@@ -35,37 +35,10 @@
 </head>
 <body>
 <!-- promotioncaps.tpl -->
-<style>
-body {
-  font-size: 16px;
-  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial";
-  margin: 0;
-  padding: 0;
-}
-.wrapper {
-  min-height: 100%;
-}
-.wrapper header{
-}
-.wrapper main{
-}
-.wrapper main h1 {
-
-}
-.wrapper main section {
-
-}
-.wrapper footer {
-
-}
-.wrapper footer ul {
-
-}
-</style>
-<!--/promotioncaps.tpl -->
 <?php
+$this->_element("open/elem-promotioncaps-style");
 $this->_template();
 ?>
 </body>
 </html>
-<!-- promotioncaps.tpl -->
+<!-- /promotioncaps.tpl -->
