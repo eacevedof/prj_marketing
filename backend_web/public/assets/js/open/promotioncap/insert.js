@@ -143,7 +143,7 @@ export class FormPromotionCapInsert extends LitElement {
     const inputs = this._inputs.map(field => this.get_inputs()[field])
 
     return html`
-      <form class="form-grid">
+      <form @submit=${this.on_submit} class="form-grid">
         <div class="cell-flex cell1">
           <label for="email">Email</label>
           <input type="text" id="email" name="email" autofocus>
@@ -210,7 +210,14 @@ export class FormPromotionCapInsert extends LitElement {
           </div>
         </div>
         <div class="cell-flex cell-btn">
-          <button type="button" class="button button-glow">Subscribirme</button>
+          <button id="btn-submit" ?disabled=${this._issending} class="button button-glow">
+            ${this._btnsend}
+            ${
+                this._issending
+                    ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+                    : html``
+            }
+          </button>
         </div>
       </form>
     `
@@ -328,18 +335,19 @@ export class FormPromotionCapInsert extends LitElement {
     return validator.get_errors()
   }
 
-  on_ready(){
-
-    const $btn = this.shadowRoot.querySelector(".cell-btn button[type=button]")
-      $btn.addEventListener("click", () => {
-      const $section = window.document.querySelector(".section")
-      $btn.setAttribute("disabled","")
-      $section.classList.add("animation-h-shaking")
-      setTimeout(() => {
+  form_shake() {
+    const $section = window.document.querySelector(".section")
+    if (!$section) return;
+    const $btn = this.shadowRoot.querySelector(".cell-btn button[type=submit]")
+    $btn.setAttribute("disabled","")
+    $section.classList.add("animation-h-shaking")
+    setTimeout(() => {
       $section.classList.remove("animation-h-shaking")
       $btn.removeAttribute("disabled")
     }, 600)
-    })
+  }
+
+  on_ready(){
 
     function has_scrollbar() {
       let elem = window.document.querySelector("body")
@@ -381,6 +389,7 @@ export class FormPromotionCapInsert extends LitElement {
       this._issending = false
       this._btnsend = this.texts.tr00
       this.snack_error("Check errors 1")
+      this.form_shake()
       return error.append(errors)
     }
 
