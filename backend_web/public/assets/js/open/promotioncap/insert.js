@@ -37,12 +37,20 @@ export class FormPromotionCapInsert extends LitElement {
   get_inputs() {
     return {
       email: {
-        label: html`<label for="input-email">${this.texts.email}</label>`,
-        input: html`<input type="email" id="input-email" maxlength="100" >`
+        input: html`
+          <div class="cell-flex">
+            <label for="input-email">${this.texts.email}</label>
+            <input type="email" id="input-email" maxlength="100">
+          </div>
+          `
       },
       name1: {
-        label: html`<label for="input-name1">${this.texts.name1}</label>`,
-        input: html`<input type="text" id="input-name1" maxlength="30" >`
+        input: html`
+          <div class="cell-flex">
+            <label for="input-name1">${this.texts.name1}</label>
+            <input type="text" id="input-name1" maxlength="30">
+          </div>
+          `
       },
       name2: {
         label: html`<label for="input-name2">${this.texts.name2}</label>`,
@@ -144,24 +152,23 @@ export class FormPromotionCapInsert extends LitElement {
 
     return html`
       <form @submit=${this.on_submit} class="form-grid">
-        <div class="cell-flex cell1">
+        <div class="cell-flex">
           <label for="email">Email</label>
           <input type="text" id="email" name="email" autofocus>
         </div>
-        <div class="cell-flex cell2">
+        <div class="cell-flex">
           <label for="first-name">First name</label>
           <input type="text" id="first-name" name="first-name">
         </div>
-        <!-- opcional -->
-        <div class="cell-flex cell3">
+        <div class="cell-flex">
           <label for="phone">Phone</label>
           <input type="text" id="phone" name="phone">
         </div>
-        <div class="cell-flex cell4">
+        <div class="cell-flex">
           <label for="last-name">Last name</label>
           <input type="text" id="last-name" name="last-name">
         </div>
-        <div class="cell-flex cell5">
+        <div class="cell-flex">
           <label for="language">Language</label>
           <select id="language" name="language">
             <option>select one</option>
@@ -169,7 +176,7 @@ export class FormPromotionCapInsert extends LitElement {
             <option value="es">Spanish</option>
           </select>
         </div>
-        <div class="cell-flex cell6">
+        <div class="cell-flex">
           <label for="country">Country</label>
           <select id="country" name="country">
             <option>select one</option>
@@ -177,11 +184,11 @@ export class FormPromotionCapInsert extends LitElement {
             <option value="es">Spain</option>
           </select>
         </div>
-        <div class="cell-flex cell7">
+        <div class="cell-flex">
           <label for="birthdate">Birthdate</label>
           <input type="date" id="birthdate" name="birthdate" />
         </div>
-        <div class="cell-flex cell8">
+        <div class="cell-flex">
           <label for="gender">Gender</label>
           <select id="gender" name="gender">
             <option>select one</option>
@@ -189,11 +196,11 @@ export class FormPromotionCapInsert extends LitElement {
             <option value="female">Female</option>
           </select>
         </div>
-        <div class="cell-flex cell9">
+        <div class="cell-flex">
           <label for="address">Address</label>
           <textarea id="address" name="address"></textarea>
         </div>
-        <!--/opcional -->
+
         <div class="cell-flex cell-chk">
           <label for="chk-mailing">
             <input type="checkbox" id="chk-mailing" name="chk-mailing" value="1">
