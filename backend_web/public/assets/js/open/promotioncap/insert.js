@@ -318,11 +318,11 @@ export class FormPromotionCapInsert extends LitElement {
     const $section = window.document.querySelector(".section")
     if (!$section) return;
     const $btn = this.shadowRoot.querySelector(".cell-btn button[type=submit]")
-    $btn.setAttribute("disabled","")
+    //$btn.setAttribute("disabled","")
     $section.classList.add("animation-h-shaking")
     setTimeout(() => {
       $section.classList.remove("animation-h-shaking")
-      $btn.removeAttribute("disabled")
+      //$btn.removeAttribute("disabled")
     }, 600)
   }
 
