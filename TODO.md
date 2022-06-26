@@ -1,6 +1,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- enlace de desusbscripción
 - espacio terms-and-conditions/promouuid
 - mailing template
 - modelo configurador premios por puntos
