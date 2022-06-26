@@ -86,18 +86,32 @@ mysql -u root -p'1234' \
 ```
 ### msmtp
 ```sh
-vi /etc/msmtprc
+#vi /usr/local/etc/php/conf.d/php.ini
+SMTP = localhost
+smtp_port = 25
+sendmail_path = "/usr/bin/msmtp -C /etc/msmtprc -t"
+mail.add_x_header = On
+mail.log = ~/.phpini-mail.log
+
+#vi /etc/msmtprc
 defaults
+auth on
 tls on
 tls_starttls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile ~/.msmtp.log
 
-account default
+# GMAIL
+account gmail 
 host smtp.gmail.com
 port 587
-auth on
-user someaccount@gmail.com
-from someaccount@gmail.com
-password 1234
+from tfwnoreply@gmail.com 
+user tfwnoreply
+password Tfw@9876%
+
+account default:gmail
+
+php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 ```
 
 ### Errores
