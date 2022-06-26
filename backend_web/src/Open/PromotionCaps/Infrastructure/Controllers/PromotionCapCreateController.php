@@ -17,6 +17,7 @@ final class PromotionCapCreateController extends OpenController
 {
     public function create(string $businessslug, string $promotionslug): void
     {
+        //phpinfo();die;
         $picklist = SF::get(PicklistService::class);
         try {
             $promotioncap = SF::get_callable(PromotionCapInfoService::class, [
