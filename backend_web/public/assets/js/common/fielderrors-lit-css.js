@@ -9,6 +9,11 @@ form .form-error {
     background-position: center right calc(0.375em + 0.1875rem);
     background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
+form input[type=checkbox].form-error {
+    border-color: #ee335e !important;
+    padding-right: 0;
+    background-position: center;
+}
 
 form div[approle="field-error"] ul {
     display: flex;
