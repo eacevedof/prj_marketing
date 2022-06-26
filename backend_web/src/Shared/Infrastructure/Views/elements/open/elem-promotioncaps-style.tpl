@@ -78,7 +78,7 @@ a:hover {
   object-fit: cover;
 }
 .nav-flex h1 {
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: white;
   padding: 0.5rem;
   text-align: center;
