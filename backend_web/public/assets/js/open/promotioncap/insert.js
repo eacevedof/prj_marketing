@@ -390,11 +390,10 @@ export class FormPromotionCapInsert extends LitElement {
     let name = this._$get("input-name1").value
     name = name[0].toUpperCase().concat(name.slice(1))
     const email = this._$get("input-email").value
+    const message = this.texts.tr30.replace("%name%",name).replace("%email%",email)
     $section.innerHTML = `
     <div class="subscription-message">
-      <p>
-      Thank you <b>${name}</b> for your subscription. Please check your email <b>${email}</b> and click on the confirmation link.
-      </p>
+      <p>${message}</p>
     </div>`
 
     this.snack_success("Check your email")

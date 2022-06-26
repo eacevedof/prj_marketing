@@ -23,7 +23,7 @@ $texts = [
     "tr19" => __("Invalid value"),
     "tr20" => __("In order to finish your subscription you have to read and accept terms and conditions"),
 
-    "tr30" => __("Thank you <b>%name%</b> for your subscription. Please check your email <b>%email%</b> and click on the confirmation link. <small>May be you have to check your spam folder</small>"),
+    "tr30" => __("Thank you <b>%name%</b> for your subscription. Please check your email <b>%email%</b> and click on the confirmation link.<br/><small>May be you have to check your spam folder</small>"),
 
     "email" => __("Email"),
     "name1" => __("First name"),
@@ -39,7 +39,6 @@ $texts = [
             "I have red and accept <a href=\"{0}\" target=\"_blank\">general and related</a> legal terms and conditions",$url
     ),
 ];
-
 $result = [
     "inputs" => $uihelp->get_inputs(),
     "languages" => $languages,
