@@ -72,6 +72,6 @@ function center_vertically() {
   $section.style.top = fromTop.toString().concat("px")
 }
 
-window.addEventListener("load", center_vertically)
+window.addEventListener("DOMContentLoaded", center_vertically)
 window.addEventListener("resize", center_vertically)
 </script>
