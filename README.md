@@ -84,6 +84,21 @@ mysql -u root -p'1234' \
         -h host.docker.internal -P 3306 \
         -D db_marketing
 ```
+### msmtp
+```sh
+vi /etc/msmtprc
+defaults
+tls on
+tls_starttls on
+
+account default
+host smtp.gmail.com
+port 587
+auth on
+user someaccount@gmail.com
+from someaccount@gmail.com
+password 1234
+```
 
 ### Errores
 - cargaba dos veces el html una como document y la otra como html/text
