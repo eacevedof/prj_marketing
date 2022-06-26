@@ -111,6 +111,7 @@ password Tfw@9876%
 
 account default:gmail
 
+echo "hello world" | /usr/bin/msmtp xxx@yahoo.com
 php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 ```
 
