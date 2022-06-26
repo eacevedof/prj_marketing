@@ -3,7 +3,7 @@ use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as B
 ?>
 <style>
 /*
-promotion-cap-style-rewrite.tpl
+promotioncap-style-rewrite.tpl
 */
 .main-flex {
 <?php

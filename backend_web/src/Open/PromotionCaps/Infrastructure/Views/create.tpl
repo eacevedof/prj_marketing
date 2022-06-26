@@ -21,7 +21,7 @@ $uihelp = HF::get(PH::class, $promotionui)
 ?>
 <!--view:promotincaps.create.tpl-->
 <?php
-$this->_element_view("promotion-cap-style-rewrite", ["promotion"=>$promotion,"bdhelp"=>$bdhelp]);
+$this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdhelp"=>$bdhelp]);
 ?>
 <main class="main-flex">
   <!-- nav to fixed -->
@@ -33,7 +33,7 @@ $this->_element_view("promotion-cap-style-rewrite", ["promotion"=>$promotion,"bd
   </nav>
   <section class="section">
   <?php
-  $this->_element_view("promotion-cap-ui-form", [
+  $this->_element_view("promotioncap-ui-form", [
     "uihelp" => $uihelp,
     "promotionuuid" => $promotion["uuid"],
     "languages" => $languages,
