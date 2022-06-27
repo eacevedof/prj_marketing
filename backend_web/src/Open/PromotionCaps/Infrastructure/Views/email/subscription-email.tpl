@@ -151,7 +151,7 @@ p {
                           <div class="txtTinyMce-wrapper"
                                style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 38px; text-align: left;"><span
-                                      style="font-size:30px;"><strong>Hello Xxx!!</strong></span></p>
+                                      style="font-size:30px;"><strong><?=__("Hello {0}!!", $hello) ?></strong></span></p>
                           </div>
                         </div>
                       </td>
@@ -164,22 +164,18 @@ p {
                         <div style="font-family: Tahoma, Verdana, sans-serif">
                           <div class="txtTinyMce-wrapper"
                                style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0; font-size: 17px; text-align: left;"><span
-                                      style="font-size:17px;">You have subscribed to promotion to "<strong>Menú
-                                          futbolero especial para clientes del chalán que vienen todos los
-                                          dias</strong>" published by: <span style="color:#ffffff;"><strong><a
-                                            href="http://elchalanaruba.com" rel="noopener"
-                                            style="text-decoration:none;color:#ffffff;" target="_blank"
-                                            title="El Chalán Peruvian Cousine">El Chalán Peruvian
-                                              Cousine</a></strong></span>.</span></p>
-                            <p style="margin: 0; font-size: 17px; text-align: left;"><span
-                                      style="font-size:17px;"> </span></p>
-                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;">Thank you for
-                                        your active participation. </span></p>
-                            <p style="margin: 0; font-size: 17px; mso-line-height-alt: 14.399999999999999px;"> 
+                            <p style="margin: 0; font-size: 17px; text-align: left;">
+                              <span style="font-size:17px;">
+                                <?=__("You have subscribed to promotion: <strong>&ldquo;{0}&rdquo;</strong> published by", $data["promotion"])?>
+                                <span style="color:#ffffff;">
+                                  <strong><a href="<?=$data["business_url"]?>" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="<?=$data["business"]?>"><?=$data["business"]?></a></strong>
+                                </span>.
+                              </span>
                             </p>
-                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;">Please, click
-                                        on confirm button to finish your subscription.</span></p>
+                            <p style="margin: 0; font-size: 17px; text-align: left;"><span style="font-size:17px;"> </span></p>
+                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;"><?=__("Thank you for your active participating.") ?>. </span></p>
+                            <p style="margin: 0; font-size: 17px; mso-line-height-alt: 14.399999999999999px;"> </p>
+                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;"><?=__("Please, click on confirm button to finish your subscription")?>.</span></p>
                           </div>
                         </div>
                       </td>
@@ -190,12 +186,14 @@ p {
                     <tr>
                       <td>
                         <div align="center">
-                          <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:900/promotion/62b4b2e5d318d/confirm/sb62b76f32eff1d?mode=test" style="height:42px;width:179px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#00bfff"><w:anchorlock/><v:textbox inset="5px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px"><![endif]--><a
-                                  href="http://localhost:900/promotion/62b4b2e5d318d/confirm/sb62b76f32eff1d?mode=test"
-                                  style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#00bfff;border-radius:4px;width:auto;border-top:1px solid #00bfff;font-weight:400;border-right:1px solid #00bfff;border-bottom:1px solid #00bfff;border-left:1px solid #00bfff;padding-top:5px;padding-bottom:5px;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;"
-                                  target="_blank"><span
-                                    style="padding-left:55px;padding-right:50px;font-size:16px;display:inline-block;letter-spacing:normal;"><span
-                                      style="font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">CONFIRM</span></span></a>
+                          <!--[if mso]>
+                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="<?=$data["confirm_link"]?>" style="height:42px;width:179px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#00bfff"><w:anchorlock/><v:textbox inset="5px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px">
+                          <![endif]-->
+                          <a href="<?=$data["confirm_link"]?>" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#00bfff;border-radius:4px;width:auto;border-top:1px solid #00bfff;font-weight:400;border-right:1px solid #00bfff;border-bottom:1px solid #00bfff;border-left:1px solid #00bfff;padding-top:5px;padding-bottom:5px;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
+                            <span style="padding-left:55px;padding-right:50px;font-size:16px;display:inline-block;letter-spacing:normal;">
+                              <span style="font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><?=__("CONFIRM")?></span>
+                            </span>
+                          </a>
                           <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
                         </div>
                       </td>
