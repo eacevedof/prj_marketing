@@ -168,7 +168,7 @@ p {
                               <span style="font-size:17px;">
                                 <?=__("You have subscribed to promotion: <strong>&ldquo;{0}&rdquo;</strong> published by", $data["promotion"])?>
                                 <span style="color:#ffffff;">
-                                  <strong><a href="<?=$data["business_url"]?>" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="<?=$data["business"]?>"><?=$data["business"]?></a></strong>
+                                  <strong><a href="<?=$data["businessurl"]?>" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="<?=$data["business"]?>"><?=$data["business"]?></a></strong>
                                 </span>.
                               </span>
                             </p>
