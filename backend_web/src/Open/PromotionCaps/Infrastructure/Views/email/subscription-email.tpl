@@ -231,15 +231,14 @@ p {
                       </td>
                     </tr>
                   </table>
-                  <table border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
-                        <div align="center" style="line-height:10px"><a href="vr" style="outline:none"
-                                                                        tabindex="-1" target="_blank"><img alt="Alternate text" class="big"
-                                                                                                           src="	https://css.eduardoaf.com/forms/with-bgimage/sabado.png"
-                                                                                                           style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;"
-                                                                                                           title="Alternate text" width="800" /></a></div>
+                        <div align="center" style="line-height:10px">
+                          <a href="vr" style="outline:none" tabindex="-1" target="_blank">
+                            <img alt="Alternate text" class="big" src="	https://css.eduardoaf.com/forms/with-bgimage/sabado.png" style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;" title="Alternate text" width="800" />
+                          </a>
+                        </div>
                       </td>
                     </tr>
                   </table>
