@@ -262,7 +262,15 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                *<?=__("Promotion details: Ends {0} UTC. While stocks last. {1}", $data["promodateto"], $data["promoterms"])?><br/>
+                                *<?=__("Promotion details: Ends at {0} UTC. While stocks last.", $data["promodateto"])?><br/>
+                                <?php
+                                $terms = trim($data["promoterms"]);
+                                $terms = explode("-", $terms);
+                                foreach ($terms as $term){
+                                  $term = trim($term);
+                                  echo $term."<br/>";
+                                }
+                                ?>
                               </span>
                             </p>
                           </div>
