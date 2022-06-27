@@ -187,28 +187,28 @@ p {
                       <td>
                         <div align="center">
                           <!--[if mso]>
-                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="<?=$data["confirm_link"]?>" style="height:42px;width:179px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#00bfff"><w:anchorlock/><v:textbox inset="5px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px">
+                          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="<?=$data["confirm_link"]?>" style="height:42px;width:179px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#00bfff"><w:anchorlock/><v:textbox inset="5px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px">
                           <![endif]-->
                           <a href="<?=$data["confirm_link"]?>" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#00bfff;border-radius:4px;width:auto;border-top:1px solid #00bfff;font-weight:400;border-right:1px solid #00bfff;border-bottom:1px solid #00bfff;border-left:1px solid #00bfff;padding-top:5px;padding-bottom:5px;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
                             <span style="padding-left:55px;padding-right:50px;font-size:16px;display:inline-block;letter-spacing:normal;">
                               <span style="font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><?=__("CONFIRM")?></span>
                             </span>
                           </a>
-                          <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
+                          <!--[if mso]>
+                          </center></v:textbox></v:roundrect>
+                          <![endif]-->
                         </div>
                       </td>
                     </tr>
                   </table>
-                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
                         <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper"
-                               style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0; font-size: 17px;"><span style="font-size:14px;">Remember to use
-                                        this email in all of your future subscriptions in order to accumulate
-                                        points. </span></p>
+                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
+                            <p style="margin: 0; font-size: 17px;">
+                              <span style="font-size:14px;"><?=__("Remember to use this email in all of your future subscriptions in order to accumulate points") ?>. </span>
+                            </p>
                           </div>
                         </div>
                       </td>
