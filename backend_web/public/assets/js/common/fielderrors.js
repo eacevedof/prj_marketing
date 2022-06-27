@@ -83,6 +83,8 @@ const _append = errors => {
 }
 
 const _append_top = errors => {
+  if (typeof errors === "string" || errors instanceof String)
+    errors = [errors]
   const lis = errors.map(message => `<li>${message}</li>`).join("")
   const html = TPL_DIV_ERROR
       .replace("%lis%",`${lis}`)
