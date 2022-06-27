@@ -10,6 +10,7 @@ $texts = [
     "tr01" => __("Processing..."),
     "tr02" => __("Error"),
     "tr03" => __("Some unexpected error occurred"),
+    "tr04" => __("Please check form errors"),
 
     "tr10" => __("Empty value is not allowed"),
     "tr11" => __("Invalid format. Eg: xxx@domain.com"),

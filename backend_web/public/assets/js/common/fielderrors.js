@@ -1,4 +1,4 @@
-const tpl = `
+const TPL_DIV_ERROR = `
     <div approle="field-error" class="%css%">
       <ul>%lis%</ul>
     </div>
@@ -43,7 +43,7 @@ const _append = errors => {
   const inform = []
   onlymsgs.forEach(objfield => {
     const lis = objfield.messages.map(message => `<li>${message}</li>`).join("")
-    const errordivtpl = tpl.replace("%lis%",lis).replace("%css%","")
+    const errordivtpl = TPL_DIV_ERROR.replace("%lis%",lis).replace("%css%","")
     const $input = _$wrapper.querySelector(`#${objfield.fieldid}`)
     if ($input) {
       inform.push(objfield.fieldid)
@@ -67,19 +67,27 @@ const _append = errors => {
     const messages = errors.filter(objerr => objerr.field === fieldid).map(objerr => objerr.message)
     const lis = messages.map(message => `<li>${message}</li>`).join("")
 
-    const html = tpl
+    const html = TPL_DIV_ERROR
       .replace("%lis%",`<li class="li-label">${!label ? fieldid : label}</li>${lis}`)
       .replace("%css%",` ${CSS.ERROR_TOP}`)
     _$wrapper.insertAdjacentHTML("afterbegin", html)
   })
 
-  console.log("error.inform",inform)
+  //console.log("error.inform",inform)
   if (inform[0]) {
     const firstinput = _$wrapper.querySelector(`#${inform[0]}`)
     //console.log("first input",firstinput)
     firstinput?.focus()
     if(firstinput.tagName!=="SELECT") firstinput?.select()
   }
+}
+
+const _append_top = errors => {
+  const lis = errors.map(message => `<li>${message}</li>`).join("")
+  const html = TPL_DIV_ERROR
+      .replace("%lis%",`${lis}`)
+      .replace("%css%",` ${CSS.ERROR_TOP}`)
+  _$wrapper.insertAdjacentHTML("afterbegin", html)
 }
 
 const _set_config = options => {
@@ -90,7 +98,8 @@ const _set_config = options => {
 const error = {
   config: _set_config,
   append: _append,
-  clear: _clear
+  clear: _clear,
+  append_top: _append_top,
 }
 
 export default error
