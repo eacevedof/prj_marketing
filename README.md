@@ -104,10 +104,10 @@ logfile ~/.msmtp.log
 # GMAIL
 account gmail 
 host smtp.gmail.com
-port 587
-from tfwnoreply@gmail.com 
-user tfwnoreply
-password Tfw@9876%
+port 587 
+from username@gmail.com 
+user username
+password 1234
 
 account default:gmail
 
