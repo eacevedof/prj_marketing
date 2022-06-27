@@ -11,7 +11,7 @@ if (is_null($result["preferences"])) return;
     $preferences = $result["preferences"] ?? [];
     foreach ($preferences as $arvalue):
       ?>
-      <li><b><?$this->_echo($arvalue["pref_key"]);?>:</b>&nbsp;&nbsp;<span><?$this->_echo($arvalue["pref_value"]);?></span></li>
+      <li><b><?php $this->_echo($arvalue["pref_key"]);?>:</b>&nbsp;&nbsp;<span><?php $this->_echo($arvalue["pref_value"]);?></span></li>
     <?php
     endforeach;
     ?>

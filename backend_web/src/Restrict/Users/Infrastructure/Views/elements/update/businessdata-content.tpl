@@ -71,12 +71,12 @@ $businessdata = [
 ?>
 <div id="businessdata" class="tab-pane">
     <form-user-businessdata-update
-        csrf=<?$this->_echo_js($csrf);?>
+        csrf=<?php $this->_echo_js($csrf);?>
 
         useruuid="<?=$uuid?>"
-        texts="<?$this->_echo_jslit($texts);?>"
+        texts="<?php $this->_echo_jslit($texts);?>"
 
-        fields="<?$this->_echo_jslit($businessdata);?>"
+        fields="<?php $this->_echo_jslit($businessdata);?>"
     />
 </div>
 

@@ -70,7 +70,7 @@
           $tab1 = $result["tab-1"] ?? [];
           foreach ($tab1 as $field => $value):
           ?>
-          <li><span><?$this->_echo($value);?></span></li>
+          <li><span><?php $this->_echo($value);?></span></li>
           <?php
           endforeach;
           ?>
@@ -83,7 +83,7 @@
           $tab2 = $result["tab-2"] ?? [];
           foreach ($tab2 as $arvalue):
             ?>
-            <li><b><?$this->_echo($arvalue["pref_key"]);?>:</b>&nbsp;&nbsp;<span><?$this->_echo($arvalue["pref_value"]);?></span></li>
+            <li><b><?php $this->_echo($arvalue["pref_key"]);?>:</b>&nbsp;&nbsp;<span><?php $this->_echo($arvalue["pref_value"]);?></span></li>
           <?php
           endforeach;
           ?>

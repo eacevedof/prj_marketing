@@ -52,8 +52,8 @@ import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 import auth from "/assets/js/restrict/auth.js"
 
-auth.id_user = <?$this->_echo_js($authuser["id"]) ?>;
-auth.id_profile = <?$this->_echo_js($authuser["id_profile"]) ?>;
+auth.id_user = <?php $this->_echo_js($authuser["id"]) ?>;
+auth.id_profile = <?php $this->_echo_js($authuser["id_profile"]) ?>;
 auth.readable = <?= (int)$authread ?>;
 auth.writable = <?= (int)$authwrite ?>;
 
@@ -161,19 +161,19 @@ dtcolumn.add_column({
 
 rowswal.set_texts({
   delswal: {
-    error: <?$this->_echo_js(__("<b>Error on delete</b>"));?>,
-    success: <?$this->_echo_js(__("Data successfully deleted"));?>
+    error: <?php $this->_echo_js(__("<b>Error on delete</b>"));?>,
+    success: <?php $this->_echo_js(__("Data successfully deleted"));?>
   },
   undelswal: {
-    error: <?$this->_echo_js(__("<b>Error on restore</b>"));?>,
-    success: <?$this->_echo_js(__("Data successfully restored"));?>
+    error: <?php $this->_echo_js(__("<b>Error on restore</b>"));?>,
+    success: <?php $this->_echo_js(__("Data successfully restored"));?>
   },
 })
 
 dt_render({
   URL_MODULE: "/restrict/users",
   ID_TABLE: "table-datatable",
-  ITEMS_PER_PAGE: <?$dthelp->show_perpage();?>,
+  ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
 })
 </script>
 <?php

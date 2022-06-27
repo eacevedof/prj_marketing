@@ -54,9 +54,9 @@ import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 import auth from "/assets/js/restrict/auth.js"
 
-auth.id_user = <?$this->_echo_js($authuser["id"]) ?>;
-auth.id_profile = <?$this->_echo_js($authuser["id_profile"]) ?>;
-auth.id_owner = <?$this->_echo_js((string) $idowner) ?>;
+auth.id_user = <?php $this->_echo_js($authuser["id"]) ?>;
+auth.id_profile = <?php $this->_echo_js($authuser["id_profile"]) ?>;
+auth.id_owner = <?php $this->_echo_js((string) $idowner) ?>;
 auth.readable = <?= (int)$authread ?>;
 auth.writable = <?= (int)$authwrite ?>;
 
@@ -100,7 +100,7 @@ dtcolumn.add_column({
 dt_render({
   URL_MODULE: "/restrict/billings",
   ID_TABLE: "table-datatable",
-  ITEMS_PER_PAGE: <?$dthelp->show_perpage();?>,
+  ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
 })
 </script>
 <?php

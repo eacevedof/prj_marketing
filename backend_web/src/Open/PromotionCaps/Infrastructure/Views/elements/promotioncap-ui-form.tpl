@@ -48,8 +48,8 @@ $result = [
 ?>
 <form-promotion-cap-insert
     promotionuuid="<?=$promotionuuid?>"
-    texts="<?$this->_echo_jslit($texts);?>"
-    fields="<?$this->_echo_jslit($result);?>"
+    texts="<?php $this->_echo_jslit($texts);?>"
+    fields="<?php $this->_echo_jslit($result);?>"
 />
 <script type="module" src="/assets/js/open/promotioncap/insert.js"></script>
 <script type="module">

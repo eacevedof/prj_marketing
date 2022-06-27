@@ -33,10 +33,10 @@
     foreach ($result as $i => $row):
     ?>
       <tr>
-        <td><?$this->_echo($i+1)?></td>
-        <td><?$this->_echo($row["description"]);?></td>
-        <td><?$this->_echo($row["date_execution"]);?></td>
-        <td><?$this->_echo($row["p"]);?></td>
+        <td><?php $this->_echo($i+1)?></td>
+        <td><?php $this->_echo($row["description"]);?></td>
+        <td><?php $this->_echo($row["date_execution"]);?></td>
+        <td><?php $this->_echo($row["p"]);?></td>
       </tr>
     <?php
     endforeach;

@@ -28,11 +28,11 @@ $result = [
   </div>
   <div class="card-body pt-0">
     <form-xxx-insert
-      csrf=<?$this->_echo_js($csrf);?>
+      csrf=<?php $this->_echo_js($csrf);?>
 
-      texts="<?$this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($result);?>"
+      fields="<?php $this->_echo_jslit($result);?>"
     />
   </div>
 </div>

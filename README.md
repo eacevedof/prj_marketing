@@ -51,7 +51,7 @@ run-test
 ```js
 button.add_topbtn({
   approle: "add-item",
-  text: `<span style="color:blue"><?$this->_echo(__("Add"));?></span>`,
+  text: `<span style="color:blue"><?php $this->_echo(__("Add"));?></span>`,
 })
 column.add_column({
   data: "phone",

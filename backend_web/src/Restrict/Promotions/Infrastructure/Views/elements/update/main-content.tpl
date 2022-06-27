@@ -95,11 +95,11 @@ $promotion = [
 ?>
 <div id="main" class="tab-pane active">
   <form-promotion-update
-      csrf=<?$this->_echo_js($csrf);?>
+      csrf=<?php $this->_echo_js($csrf);?>
 
-      texts="<?$this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($promotion);?>"
+      fields="<?php $this->_echo_jslit($promotion);?>"
   />
 </div>
 

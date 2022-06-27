@@ -26,7 +26,7 @@ section.error ul {
 }
 </style>
 <section class="error">
-  <h3><? $this->_echo_nohtml($title); ?></h3>
+  <h3><?php $this->_echo_nohtml($title); ?></h3>
   <?php
   $ul = [];
   foreach ($messages as $message)

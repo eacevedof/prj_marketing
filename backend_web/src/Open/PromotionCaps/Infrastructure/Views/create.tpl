@@ -26,10 +26,10 @@ $this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdh
 <main class="main-flex">
   <!-- nav to fixed -->
   <nav class="nav-flex">
-    <a href="<? $this->_echo_nohtml($businessdata["url_business"]) ?>" rel="nofollow" target="_blank">
-      <img src="<? $this->_echo_nohtml($businessdata["user_logo_1"]) ?>">
+    <a href="<?php $this->_echo_nohtml($businessdata["url_business"]) ?>" rel="nofollow" target="_blank">
+      <img src="<?php $this->_echo_nohtml($businessdata["user_logo_1"]) ?>">
     </a>
-    <h1><? $this->_echo_nohtml($promotion["description"]) ?></h1>
+    <h1><?php $this->_echo_nohtml($promotion["description"]) ?></h1>
   </nav>
   <section class="section">
   <?php

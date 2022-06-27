@@ -31,11 +31,11 @@ $permissions = [
 ?>
 <div id="permissions" class="tab-pane">
   <form-user-permissions-update
-      csrf=<?$this->_echo_js($csrf);?>
+      csrf=<?php $this->_echo_js($csrf);?>
 
       useruuid="<?=$uuid?>"
-      texts="<?$this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($permissions);?>"
+      fields="<?php $this->_echo_jslit($permissions);?>"
   />
 </div>

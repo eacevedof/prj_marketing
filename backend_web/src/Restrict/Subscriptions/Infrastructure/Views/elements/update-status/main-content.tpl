@@ -33,9 +33,9 @@ $subscription = [
   <h4><?=__("Vaucher code validation")?></h4>
   <br>
   <ul>
-    <li><?=__("Business")?>: <?$this->_echo($result["subscription"]["e_business"])?></li>
-    <li><?=__("Promotion")?>: <b><?$this->_echo($result["subscription"]["e_promotion"])?></b></li>
-    <li><?=__("For")?>: <?$this->_echo("<b>".$result["subscription"]["e_username"] . "</b> / <small>" . $result["subscription"]["e_usercode"]. "</small>")?></li>
+    <li><?=__("Business")?>: <?php $this->_echo($result["subscription"]["e_business"])?></li>
+    <li><?=__("Promotion")?>: <b><?php $this->_echo($result["subscription"]["e_promotion"])?></b></li>
+    <li><?=__("For")?>: <?php $this->_echo("<b>".$result["subscription"]["e_username"] . "</b> / <small>" . $result["subscription"]["e_usercode"]. "</small>")?></li>
   </ul>
   <?php
   if ($validable):
@@ -43,11 +43,11 @@ $subscription = [
   else:
   ?>
   <form-subscription-update
-      csrf=<?$this->_echo_js($csrf);?>
+      csrf=<?php $this->_echo_js($csrf);?>
 
-      texts="<?$this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echo_jslit($texts);?>"
 
-      fields="<?$this->_echo_jslit($subscription);?>"
+      fields="<?php $this->_echo_jslit($subscription);?>"
   />
   <?php
   endif;

@@ -48,8 +48,8 @@ import dt_render from "/assets/js/common/datatable/dttable.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 
-const sessusrid = <?$this->_echo_js($authuser["id"]);?>;
-const sesprofile = <?$this->_echo_js($authuser["id_profile"]);?>;
+const sessusrid = <?php $this->_echo_js($authuser["id"]);?>;
+const sesprofile = <?php $this->_echo_js($authuser["id_profile"]);?>;
 
 const PROFILES = {
   ROOT:"1",
@@ -145,19 +145,19 @@ dtcolumn.add_column({
 
 rowswal.set_texts({
   delswal: {
-    error: <?$this->_echo_js(__("<b>Error on delete</b>"));?>,
-    success: <?$this->_echo_js(__("Data successfully deleted"));?>
+    error: <?php $this->_echo_js(__("<b>Error on delete</b>"));?>,
+    success: <?php $this->_echo_js(__("Data successfully deleted"));?>
   },
   undelswal: {
-    error: <?$this->_echo_js(__("<b>Error on restore</b>"));?>,
-    success: <?$this->_echo_js(__("Data successfully restored"));?>
+    error: <?php $this->_echo_js(__("<b>Error on restore</b>"));?>,
+    success: <?php $this->_echo_js(__("Data successfully restored"));?>
   },
 })
 
 dt_render({
   URL_MODULE: "/restrict/xxxs",
   ID_TABLE: "table-datatable",
-  ITEMS_PER_PAGE: <?$dthelp->show_perpage();?>,
+  ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
 })
 </script>
 <?php

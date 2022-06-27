@@ -37,8 +37,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
          */
         $email = CF::get(FuncEmailComponent::class);
         $email
-            ->set_from("eaf@yahoo.es")
-            ->add_to("eacevedof@yahoo.es")
+            ->set_from("tfwnoreply@gmail.com")
+            ->add_to("eacevedof@gmail.com")
             ->set_subject(__("Subscription to \"{0}\"", $data["promotion"]))
             ->set_content($html)
             ->send()
