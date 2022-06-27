@@ -32,14 +32,15 @@ a:hover {
   max-width: 500px;
 }
 
-.form-grid .message {
+.form-grid .error-top {
   border-radius: 4px;
   border: 1px solid tomato;
   background-color: #fdf0f0;
   color: red;
-  padding: 3px;
+  padding: .5rem;
   justify-self: center;
   text-align: center;
+  width:100%;
 }
 
 .form-grid .cell-flex {
