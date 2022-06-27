@@ -73,11 +73,12 @@ const _append = errors => {
     _$wrapper.insertAdjacentHTML("afterbegin", html)
   })
 
-  //console.log("error.inform",inform)
+  console.log("error.inform",inform)
   if (inform[0]) {
     const firstinput = _$wrapper.querySelector(`#${inform[0]}`)
-    firstinput.focus()
-    firstinput.select()
+    //console.log("first input",firstinput)
+    firstinput?.focus()
+    if(firstinput.tagName!=="SELECT") firstinput?.select()
   }
 }
 

@@ -321,6 +321,19 @@ export class FormPromotionCapInsert extends LitElement {
     )
   }
 
+  on_success() {
+    const $section = window.document.querySelector(".section")
+    let name = this._$get("input-name1").value
+    name = name[0].toUpperCase().concat(name.slice(1))
+    const email = this._$get("input-email").value
+    const message = this.texts.tr30.replace("%name%",name).replace("%email%",email)
+    $section.innerHTML = `
+    <div class="subscription-message">
+      <p>${message}</p>
+    </div>`
+    this.snack_success("Check your email")
+  }
+
   async on_submit(e) {
     e.preventDefault()
     this._issending = true
@@ -354,23 +367,21 @@ export class FormPromotionCapInsert extends LitElement {
     this._btnsend = this.texts.tr00
 
     if(response?.errors){
-      let errors = response.errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `input-${errfield.field}`}))
+      let errors = response.errors[0]?.fields_validation
+      if (!errors) {
+        let error = response.errors[0]
+        this.snack_error(error)
+        return error.append(error)
+      }
+
+      errors = errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `input-${errfield.field}`}))
       if(errors?.length) {
-        this.snack_error("Check errors 2")
+        this.snack_error("Check errors")
         return error.append(errors)
       }
-    }
-    const $section = window.document.querySelector(".section")
-    let name = this._$get("input-name1").value
-    name = name[0].toUpperCase().concat(name.slice(1))
-    const email = this._$get("input-email").value
-    const message = this.texts.tr30.replace("%name%",name).replace("%email%",email)
-    $section.innerHTML = `
-    <div class="subscription-message">
-      <p>${message}</p>
-    </div>`
 
-    this.snack_success("Check your email")
+    }
+    this.on_success()
   }
 }
 
