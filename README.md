@@ -86,12 +86,9 @@ mysql -u root -p'1234' \
 ```
 ### msmtp
 ```sh
-#vi /usr/local/etc/php/conf.d/php.ini
-SMTP = localhost
-smtp_port = 25
-sendmail_path = "/usr/bin/msmtp -C /etc/msmtprc -t"
-mail.add_x_header = On
-mail.log = ~/.phpini-mail.log
+#vi /usr/local/etc/php/conf.d/php.ini o
+#vi /usr/local/etc/php/conf.d/php-sendmail.ini
+sendmail_path = "/usr/bin/msmtp -t -i"
 
 #vi /etc/msmtprc
 defaults
