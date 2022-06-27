@@ -113,7 +113,7 @@ p {
                     <tr>
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
                         <div align="center" style="line-height:10px">
-                          <img alt="Alternate text" src="<?=$data["businessurl"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
+                          <img alt="Alternate text" src="<?=$data["businesslogo"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
                         </div>
                       </td>
                     </tr>
