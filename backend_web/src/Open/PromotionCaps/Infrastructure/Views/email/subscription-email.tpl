@@ -108,15 +108,12 @@ p {
                    width="800">
               <tbody>
               <tr>
-                <td class="column column-1"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="100%">
-                  <table border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
                         <div align="center" style="line-height:10px">
-                          <img alt="Alternate text" src="https://css.eduardoaf.com/forms/with-bgimage/logo.png" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="Alternate text" width="160" />
+                          <img alt="Alternate text" src="<?=$data["businessurl"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
                         </div>
                       </td>
                     </tr>
@@ -262,10 +259,9 @@ p {
                     <tr>
                       <td style="padding-bottom:15px;padding-left:15px;padding-right:15px;padding-top:25px;">
                         <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper"
-                               style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
+                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
-                              <span style="color:#C0C0C0;">*Offer Details: Ends 5pm BST on 10 May 2020. While stocks last. Selected styles marked down on site.<br /></span>
+                              <span style="color:#C0C0C0;">*Offer Details: Ends 5pm BST on 10 May 2020. While stocks last.<br/></span>
                             </p>
                           </div>
                         </div>
