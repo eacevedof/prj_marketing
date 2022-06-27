@@ -250,29 +250,23 @@ p {
         </tr>
         </tbody>
       </table>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation"
-             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
           <td>
-            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
-                   role="presentation"
-                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
               <tbody>
               <tr>
-                <td class="column column-1"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="100%">
-                  <table border="0" cellpadding="0" cellspacing="0" class="text_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td style="padding-bottom:15px;padding-left:15px;padding-right:15px;padding-top:25px;">
                         <div style="font-family: sans-serif">
                           <div class="txtTinyMce-wrapper"
                                style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 12px; text-align: center;"><span
-                                      style="color:#C0C0C0;">*Offer Details: Ends 5pm BST on 10 May 2020. While stocks
-                                        last. Selected styles marked down on site.<br /></span></p>
+                            <p style="margin: 0; font-size: 12px; text-align: center;">
+                              <span style="color:#C0C0C0;">*Offer Details: Ends 5pm BST on 10 May 2020. While stocks last. Selected styles marked down on site.<br /></span>
+                            </p>
                           </div>
                         </div>
                       </td>
