@@ -236,7 +236,7 @@ p {
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
                         <div align="center" style="line-height:10px">
                           <a href="vr" style="outline:none" tabindex="-1" target="_blank">
-                            <img alt="Alternate text" class="big" src="	https://css.eduardoaf.com/forms/with-bgimage/sabado.png" style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;" title="Alternate text" width="800" />
+                            <img alt="Alternate text" class="big" src="https://css.eduardoaf.com/forms/with-bgimage/sabado.png" style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;" title="Alternate text" width="800" />
                           </a>
                         </div>
                       </td>
@@ -280,58 +280,49 @@ p {
         </tr>
         </tbody>
       </table>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation"
-             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
           <td>
-            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
-                   role="presentation"
-                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
               <tbody>
               <tr>
-                <td class="column column-1"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="100%">
-                  <table border="0" cellpadding="0" cellspacing="0" class="social_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="social_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td style="text-align:center;padding-right:0px;padding-left:0px;">
                         <table align="center" border="0" cellpadding="0" cellspacing="0" class="social-table"
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
                                width="188px">
                           <tr>
-                            <td style="padding:0 15px 0 0px;"><a href="https://www.facebook.com/"
-                                                                 target="_blank"><img alt="Facebook" height="32" src="images/facebook2x.png"
-                                                                                      style="display: block; height: auto; border: 0;" title="Facebook"
-                                                                                      width="32" /></a></td>
-                            <td style="padding:0 15px 0 0px;"><a href="https://twitter.com/"
-                                                                 target="_blank"><img alt="Twitter" height="32" src="images/twitter2x.png"
-                                                                                      style="display: block; height: auto; border: 0;" title="Twitter"
-                                                                                      width="32" /></a></td>
-                            <td style="padding:0 15px 0 0px;"><a href="https://plus.google.com/"
-                                                                 target="_blank"><img alt="Google+" height="32" src="images/googleplus2x.png"
-                                                                                      style="display: block; height: auto; border: 0;" title="Google+"
-                                                                                      width="32" /></a></td>
-                            <td style="padding:0 15px 0 0px;"><a href="https://instagram.com/"
-                                                                 target="_blank"><img alt="Instagram" height="32" src="images/instagram2x.png"
-                                                                                      style="display: block; height: auto; border: 0;" title="Instagram"
-                                                                                      width="32" /></a></td>
+                            <td style="padding:0 15px 0 0px;">
+                              <a href="https://www.facebook.com/" target="_blank">
+                                <img alt="Facebook" height="32" src="images/facebook2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" /></a>
+                            </td>
+                            <td style="padding:0 15px 0 0px;">
+                              <a href="https://twitter.com/" target="_blank">
+                                <img alt="Twitter" height="32" src="images/twitter2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" /></a>
+                            </td>
+                            <td style="padding:0 15px 0 0px;">
+                              <a href="https://plus.google.com/" target="_blank">
+                                <img alt="Google+" height="32" src="images/googleplus2x.png" style="display: block; height: auto; border: 0;" title="Google+" width="32" /></a>
+                            </td>
+                            <td style="padding:0 15px 0 0px;">
+                              <a href="https://instagram.com/" target="_blank">
+                                <img alt="Instagram" height="32" src="images/instagram2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32" /></a>
+                            </td>
                           </tr>
                         </table>
                       </td>
                     </tr>
                   </table>
-                  <table border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td>
                         <div align="center">
-                          <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                 style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                             <tr>
-                              <td class="divider_inner"
-                                  style="font-size: 1px; line-height: 1px; border-top: 2px dotted #D4D3D3;">
+                              <td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 2px dotted #D4D3D3;">
                                 <span> </span></td>
                             </tr>
                           </table>
@@ -347,47 +338,39 @@ p {
         </tr>
         </tbody>
       </table>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation"
-             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
           <td>
-            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
-                   role="presentation"
-                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
               <tbody>
               <tr>
-                <td class="column column-1"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="100%">
-                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
                         <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper"
-                               style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 12px; text-align: center;"><span
-                                      style="color:#C0C0C0;">Your Company, Greater London House, Hampstead Road,
-                                        London NW1 7FB, United Kingdom. <br />Your company is a wholly owned subsidiary
-                                        of Your Company plc. Registered in England – 3584121.</span></p>
+                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
+                            <p style="margin: 0; font-size: 12px; text-align: center;">
+                              <span style="color:#C0C0C0;">
+                                Your Company, Greater London House, Hampstead Road,London NW1 7FB, United Kingdom. <br />Your company is a wholly owned subsidiary of Your Company plc. Registered in England – 3584121.
+                              </span>
+                            </p>
                           </div>
                         </div>
                       </td>
                     </tr>
                   </table>
-                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
                         <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper"
-                               style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 12px; text-align: center;"><span
-                                      style="color:#C0C0C0;">Changed your mind? You can <a
-                                        href="http://localhost:900/account/promotion/uuuid/unsubscribe" rel="noopener"
-                                        style="text-decoration: underline; color: #C0C0C0;"
-                                        target="_blank">unsubscribe</a> at any time.</span></p>
+                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
+                            <p style="margin: 0; font-size: 12px; text-align: center;">
+                              <span style="color:#C0C0C0;">
+                                Changed your mind? You can <a href="http://localhost:900/account/promotion/uuuid/unsubscribe" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">unsubscribe</a> at any time.
+                              </span>
+                            </p>
                           </div>
                         </div>
                       </td>
@@ -401,42 +384,34 @@ p {
         </tr>
         </tbody>
       </table>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6" role="presentation"
-             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
           <td>
-            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
-                   role="presentation"
-                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
               <tbody>
               <tr>
-                <td class="column column-1"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="100%">
-                  <table border="0" cellpadding="0" cellspacing="0" class="icons_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="icons_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td style="vertical-align: middle; color: #9d9d9d; font-family: inherit; font-size: 15px; padding-bottom: 0px; padding-top: 0px; text-align: center;">
-                        <table cellpadding="0" cellspacing="0" role="presentation"
-                               style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                        <table cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                           <tr>
                             <td style="vertical-align: middle; text-align: center;">
                               <!--[if vml]>
                               <table align="left" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
                               <![endif]-->
                               <!--[if !vml]><!-->
-                              <table cellpadding="0" cellspacing="0" class="icons-inner" role="presentation"
-                                     style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; margin-right: -4px; padding-left: 0px; padding-right: 0px;">
+                              <table cellpadding="0" cellspacing="0" class="icons-inner" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; margin-right: -4px; padding-left: 0px; padding-right: 0px;">
                                 <!--<![endif]-->
                                 <tr>
                                   <td style="vertical-align: middle; text-align: center; padding-top: 0px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;">
-                                    <span style="font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 10px; color: #9d9d9d; vertical-align: middle; letter-spacing: undefined; text-align: center;">
-                                      Designed by
+                                    <span style="font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 10px; color: #9d9d9d; vertical-align: middle; letter-spacing: normal; text-align: center;">
+                                      <?=__("Designed by")?>
                                     </span>
                                     <a href="https://eduardoaf.com" style="text-decoration: none;" target="_blank">
                                       <img align="center"
-                                           alt="Empowered by Eduardo A. F." class="icon" height="32" src="images/eduardoaf-logo.png"
+                                           alt="Empowered by Eduardo A. F." class="icon" height="32" src="https://resources.theframework.es/eduardoaf.com/20200906/095050-logo-eduardoafcom_500.png"
                                            style="display: block; height: auto; margin: 0 auto; border: 0;"
                                            width="80" />
                                     </a>
@@ -462,5 +437,4 @@ p {
   </tbody>
 </table><!-- End -->
 </body>
-
 </html>
