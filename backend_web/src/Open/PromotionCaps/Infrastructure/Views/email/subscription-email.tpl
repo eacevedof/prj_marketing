@@ -219,12 +219,13 @@ p {
                     <tr>
                       <td>
                         <div style="font-family: Arial, sans-serif">
-                          <div class="txtTinyMce-wrapper"
-                               style="font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0;"><span style="color:#00bfff;">Promotion code:
-                                        <strong>62b4b2e5d318d</strong></span></p>
-                            <p style="margin: 0;"><span style="color:#00bfff;">Subscription code:
-                                        <strong>sb62b76f32eff1d</strong></span></p>
+                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
+                            <p style="margin: 0;">
+                              <span style="color:#00bfff;"><?=__("Promotion code: <strong>{0}</strong>", $data["promocode"])?></span>
+                            </p>
+                            <p style="margin: 0;">
+                              <span style="color:#00bfff;"><?=__("Subscription code: <strong>{0}</strong>", $data["subscode"])?></span>
+                            </p>
                           </div>
                         </div>
                       </td>
