@@ -261,7 +261,9 @@ p {
                         <div style="font-family: sans-serif">
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
-                              <span style="color:#C0C0C0;">*Offer Details: Ends 5pm BST on 10 May 2020. While stocks last.<br/></span>
+                              <span style="color:#C0C0C0;">
+                                *<?=__("Promotion details: Ends {0} UTC. While stocks last. {1}", $data["promodateto"], $data["promoterms"])?><br/>
+                              </span>
                             </p>
                           </div>
                         </div>
