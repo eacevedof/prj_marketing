@@ -262,15 +262,7 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                *<?=__("Promotion details: Ends at {0} UTC", $data["promodateto"])?><br/>
-                                <?php
-                                $terms = trim($data["promoterms"]);
-                                $terms = explode("-", $terms);
-                                foreach ($terms as $term){
-                                  $term = trim($term);
-                                  echo $term."<br/>";
-                                }
-                                ?>
+                                *<?=__("Promotion ends at {0} UTC", $data["promodateto"])?><br/>
                               </span>
                             </p>
                           </div>
@@ -359,7 +351,16 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                Your Company, Greater London House, Hampstead Road,London NW1 7FB, United Kingdom. <br />Your company is a wholly owned subsidiary of Your Company plc. Registered in England – 3584121.
+                                <?php
+                                $terms = trim($data["promoterms"]);
+                                $terms = explode("-", $terms);
+                                $string = [];
+                                foreach ($terms as $term){
+                                  $term = trim($term);
+                                  if ($term) $string[] = $term;
+                                }
+                                echo implode("<br />", $string);
+                                ?>
                               </span>
                             </p>
                           </div>
