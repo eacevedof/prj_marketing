@@ -321,7 +321,8 @@ p {
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                             <tr>
                               <td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 2px dotted #D4D3D3;">
-                                <span> </span></td>
+                                <span> </span>
+                              </td>
                             </tr>
                           </table>
                         </div>
@@ -375,7 +376,11 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                Changed your mind? You can <a href="http://localhost:900/account/promotion/uuuid/unsubscribe" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">unsubscribe</a> at any time.
+                                <?php __("Changed your mind? You can")?>
+                                <a href="<?=$data["unsubscribe_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
+                                  <?php __("unsubscribe")?>
+                                </a>
+                                <?php __("at any time")?>.
                               </span>
                             </p>
                           </div>
