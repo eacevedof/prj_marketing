@@ -154,8 +154,7 @@ p {
                       </td>
                     </tr>
                   </table>
-                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
                         <div style="font-family: Tahoma, Verdana, sans-serif">
@@ -178,8 +177,7 @@ p {
                       </td>
                     </tr>
                   </table>
-                  <table border="0" cellpadding="10" cellspacing="0" class="button_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="button_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td>
                         <div align="center">
