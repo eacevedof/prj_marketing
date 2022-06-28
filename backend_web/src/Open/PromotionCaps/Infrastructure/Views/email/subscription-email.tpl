@@ -256,7 +256,7 @@ p {
                         <div style="font-family: sans-serif">
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
-                              <span style="color:#C0C0C0;">
+                              <span style="color:#444444;">
                                 *<?=__("Promotion ends at {0} UTC", $data["promodateto"])?><br/>
                               </span>
                             </p>
