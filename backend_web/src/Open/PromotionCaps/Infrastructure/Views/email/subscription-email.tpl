@@ -290,19 +290,23 @@ p {
                           <tr>
                             <td style="padding:0 15px 0 0px;">
                               <a href="https://www.facebook.com/" target="_blank">
-                                <img alt="Facebook" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/facebook2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" /></a>
+                                <img alt="Facebook" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/facebook2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
+                              </a>
                             </td>
                             <td style="padding:0 15px 0 0px;">
                               <a href="https://twitter.com/" target="_blank">
-                                <img alt="Twitter" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/twitter2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" /></a>
+                                <img alt="Twitter" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/twitter2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
+                              </a>
                             </td>
                             <td style="padding:0 15px 0 0px;">
                               <a href="https://plus.google.com/" target="_blank">
-                                <img alt="Google+" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/googleplus2x.png" style="display: block; height: auto; border: 0;" title="Google+" width="32" /></a>
+                                <img alt="Google+" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/googleplus2x.png" style="display: block; height: auto; border: 0;" title="Google+" width="32" />
+                              </a>
                             </td>
                             <td style="padding:0 15px 0 0px;">
                               <a href="https://instagram.com/" target="_blank">
-                                <img alt="Instagram" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/instagram2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32" /></a>
+                                <img alt="Instagram" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/instagram2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32" />
+                              </a>
                             </td>
                           </tr>
                         </table>
