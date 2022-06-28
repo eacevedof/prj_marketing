@@ -376,11 +376,11 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                <?php __("Changed your mind? You can")?>
+                                <?= __("Changed your mind? You can")?>
                                 <a href="<?=$data["unsubscribe_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  <?php __("unsubscribe")?>
+                                  <?= __("unsubscribe")?>
                                 </a>
-                                <?php __("at any time")?>.
+                                <?= __("at any time")?>.
                               </span>
                             </p>
                           </div>
