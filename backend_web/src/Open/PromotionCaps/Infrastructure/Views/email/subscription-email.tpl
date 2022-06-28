@@ -359,7 +359,7 @@ p {
                                 ?>
                                 <br/>
                                 <a href="<?=$data["terms_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  <?= __("Check rest of terms and conditions")?>
+                                  <?= __("Check the rest of terms and conditions")?>
                                 </a>
                               </span>
                             </p>
