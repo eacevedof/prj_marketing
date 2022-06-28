@@ -357,10 +357,9 @@ p {
                                 }
                                 echo implode("<br />", $string);
                                 ?>
-                              </span>
-                              <span style="color:#C0C0C0;">
+                                <br/>
                                 <a href="<?=$data["terms_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  <?= __("Check terms and conditions")?>
+                                  <?= __("Check rest of terms and conditions")?>
                                 </a>
                               </span>
                             </p>
@@ -377,10 +376,8 @@ p {
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#C0C0C0;">
                                 <?= __("Changed your mind? You can")?>
-                                <a href="<?=$data["unsubscribe_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  <?= __("unsubscribe")?>
-                                </a>
-                                <?= __("at any time")?>.
+                                <a href="<?=$data["unsubscribe_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank"><?= __("unsubscribe")?></a>
+                                 <?= __("at any time")?>.
                               </span>
                             </p>
                           </div>
