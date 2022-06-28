@@ -170,7 +170,7 @@ p {
                               </span>
                             </p>
                             <p style="margin: 0; font-size: 17px; text-align: left;"><span style="font-size:17px;"> </span></p>
-                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;"><?=__("Thank you for your active participating.") ?>. </span></p>
+                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;"><?=__("Thank you for your active participating") ?>. </span></p>
                             <p style="margin: 0; font-size: 17px; mso-line-height-alt: 14.399999999999999px;"> </p>
                             <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;"><?=__("Please, click on confirm button to finish your subscription")?>.</span></p>
                           </div>
@@ -211,8 +211,7 @@ p {
                       </td>
                     </tr>
                   </table>
-                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
                         <div style="font-family: Arial, sans-serif">
