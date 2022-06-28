@@ -288,26 +288,44 @@ p {
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
                                width="188px">
                           <tr>
+                            <?php
+                            if ($url = $data["urlfb"]):
+                            ?>
                             <td style="padding:0 15px 0 0px;">
-                              <a href="https://www.facebook.com/" target="_blank">
-                                <img alt="Facebook" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/facebook2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
+                              <a href="<?=$url?>" target="_blank">
+                                <img alt="Facebook" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
                               </a>
                             </td>
+                            <?php
+                            endif;
+                            if ($url = $data["urltwitter"]):
+                            ?>
                             <td style="padding:0 15px 0 0px;">
-                              <a href="https://twitter.com/" target="_blank">
-                                <img alt="Twitter" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/twitter2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
+                              <a href="<?=$url?>" target="_blank">
+                                <img alt="Twitter" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/twitter@2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
                               </a>
                             </td>
+                            <?php
+                            endif;
+                            if ($url = $data["urlig"]):
+                            ?>
                             <td style="padding:0 15px 0 0px;">
-                              <a href="https://plus.google.com/" target="_blank">
-                                <img alt="Google+" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/googleplus2x.png" style="display: block; height: auto; border: 0;" title="Google+" width="32" />
+                              <a href="<?=$url?>" target="_blank">
+                                <img alt="Instagram" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" style="display: block; height: auto; border: 0;" title="Google+" width="32" />
                               </a>
                             </td>
+                            <?php
+                            endif;
+                            if ($url = $data["urltiktok"]):
+                            ?>
                             <td style="padding:0 15px 0 0px;">
-                              <a href="https://instagram.com/" target="_blank">
-                                <img alt="Instagram" height="32" src="https://css.eduardoaf.com/mailing/subscription/images/instagram2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32" />
+                              <a href="<?=$url?>" target="_blank">
+                                <img alt="Tik Tok" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/tiktok@2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32" />
                               </a>
                             </td>
+                            <?php
+                            endif;
+                            ?>
                           </tr>
                         </table>
                       </td>
