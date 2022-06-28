@@ -358,6 +358,11 @@ p {
                                 echo implode("<br />", $string);
                                 ?>
                               </span>
+                              <span style="color:#C0C0C0;">
+                                <a href="<?=$data["terms_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
+                                  <?= __("Check terms and conditions")?>
+                                </a>
+                              </span>
                             </p>
                           </div>
                         </div>

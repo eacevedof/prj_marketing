@@ -32,6 +32,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $data["confirm_link"] = $link;
         $link = "http://localhost:900/promotion/{$data["promocode"]}/unsubscribe/{$data["subscode"]}";
         $data["unsubscribe_link"] = $link;
+        $link = "http://localhost:900/terms-and-conditions/{$data["promocode"]}";
+        $data["terms_link"] = $link;
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"_on_subscription");
         /**
