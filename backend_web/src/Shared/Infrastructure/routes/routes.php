@@ -11,6 +11,11 @@ return [
     ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
     ["url"=>"/account/:slug","controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController","method"=>"index"],
 
+    ["url"=>"/promotion/:businessslug/:promotionslug/unsubscribe/:subsuuid","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapUpdateController","method"=>"unsubscribe"],
+
+    ["url"=>"/terms-and-conditions/:promoslug","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"info"],
+    ["url"=>"/terms-and-conditions","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"info"],
+
 //RESTRICT:
     ["url"=>"/restrict/logout","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"logout"],
     ["url"=>"/restrict","controller"=>"App\Restrict\Dashboard\Infrastructure\Controllers\DashboardController", "method"=>"index"],
