@@ -311,7 +311,7 @@ p {
                   </table>
                   <table app="20" border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
-                      <td>
+                      <td style="padding: 0">
                         <div align="center">
                           <table app="21" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                             <tr>
