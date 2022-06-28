@@ -19,7 +19,7 @@
 </head>
 <body class="main-body">
 <div class="page">
-<?
+<?php
 $this->_template();
 ?>
 </div>

@@ -45,7 +45,7 @@ $this->_element("common/elem-nav-menu");
 ?>
   <div class="main-content horizontal-content">
     <div class="container">
-    <?
+    <?php
     $this->_element("restrict/elem-breadscrumb");
     $this->_template();
     ?>

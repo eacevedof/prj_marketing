@@ -18,7 +18,7 @@
 <body class="main-body bg-primary-transparent">
 <!-- error.tpl -->
 <div class="page">
-<?
+<?php
 $this->_template();
 ?>
 </div>

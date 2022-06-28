@@ -320,7 +320,7 @@ p {
                         <div align="center">
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                             <tr>
-                              <td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 2px dotted #D4D3D3;">
+                              <td class="divider_inner" style="padding:0; font-size: 1px; line-height: 1px; border-top: 2px dotted #D4D3D3;">
                                 <span> </span>
                               </td>
                             </tr>
@@ -345,7 +345,7 @@ p {
               <tbody>
               <tr>
                 <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                  <table border="0" cellpadding="3" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
                         <div style="font-family: sans-serif">
