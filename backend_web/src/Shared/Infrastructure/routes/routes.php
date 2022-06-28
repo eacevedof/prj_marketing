@@ -1,6 +1,8 @@
 <?php
 return [
     ["url"=>"/promotion/:promotionuuid/confirm/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController","method"=>"confirm", "allowed"=>["get"]],
+    ["url"=>"/promotion/:promotionuuid/unsubscribe/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapUnsubscribeController","method"=>"unsubscribe", "allowed"=>["get"]],
+
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"create"],
     ["url"=>"/points/:businessuuid/user/:capuseruuid","controller"=>"App\Open\UserCaps\Infrastructure\Controllers\UserCapPointsController","method"=>"index", "allowed"=>["get"]],
     ["url"=>"/open/promotionscap/:promouuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapInsertController", "method"=>"insert", "allowed"=>["post"]],
@@ -8,13 +10,12 @@ return [
     ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index"],
     ["url"=>"/login/access","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"access", "allowed"=>["post"]],
 
-    ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
     ["url"=>"/account/:slug","controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController","method"=>"index"],
-
-    ["url"=>"/promotion/:businessslug/:promotionslug/unsubscribe/:subsuuid","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapUpdateController","method"=>"unsubscribe"],
 
     ["url"=>"/terms-and-conditions/:promoslug","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"info"],
     ["url"=>"/terms-and-conditions","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"info"],
+
+    ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
 
 //RESTRICT:
     ["url"=>"/restrict/logout","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"logout"],
