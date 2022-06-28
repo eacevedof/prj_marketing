@@ -30,10 +30,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $link = "http://localhost:900/{$data["businessslug"]}/promotion/{$data["promocode"]}/confirm/{$data["subscode"]}";
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
+
         $link = "http://localhost:900/{$data["businessslug"]}/promotion/{$data["promocode"]}/unsubscribe/{$data["subscode"]}";
+        $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
+
         $link = "http://localhost:900/terms-and-conditions/{$data["promoslug"]}";
+        $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["terms_link"] = $link;
+
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"_on_subscription");
         /**
