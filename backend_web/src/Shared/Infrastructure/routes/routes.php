@@ -12,8 +12,8 @@ return [
 
     ["url"=>"/account/:slug","controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController","method"=>"index"],
 
-    ["url"=>"/terms-and-conditions/:promoslug","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"info"],
-    ["url"=>"/terms-and-conditions","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"info"],
+    ["url"=>"/terms-and-conditions/:promoslug","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"promotion"],
+    ["url"=>"/terms-and-conditions","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"nopromotion"],
 
     ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
 
