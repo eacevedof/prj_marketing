@@ -14,6 +14,7 @@ use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
+use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -112,8 +113,8 @@ final class PromotionCapsCancelService extends AppService implements IEventDispa
 
         $this->repopromocapsubscription->set_model($entitysubs = MF::get(PromotionCapSubscriptionEntity::class));
         $cancel = [
-            "id"=>$this->subscriptiondata["subsid"],
-            "uuid"=>$this->subscriptiondata["subscode"],
+            "id" => $this->subscriptiondata["subsid"],
+            "uuid" => $this->subscriptiondata["subscode"],
             "subs_status" => PromotionCapActionType::CANCELLED
         ];
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
@@ -123,8 +124,7 @@ final class PromotionCapsCancelService extends AppService implements IEventDispa
         $cancel = [
             "id" => $this->subscriptiondata["idcapuser"],
             "uuid" => $this->subscriptiondata["capusercode"],
-
-            "email" => "to-do"
+            "email" => CF::get(TextComponent::class)->get_cancelled_email($this->subscriptiondata["email"]),
         ];
         $this->repopromocapuser->set_model($entitysubs = MF::get(PromotionCapUsersEntity::class));
         $entitysubs->add_sysupdate($cancel, $iduser);

@@ -100,4 +100,10 @@ final class TextComponent
         $parts = array_unique($parts);
         return implode(", ", $parts);
     }
+
+    public function get_cancelled_email(string $email): string
+    {
+        $email = explode("@", $email);
+        return "$email@deleted.ddd";
+    }
 }
