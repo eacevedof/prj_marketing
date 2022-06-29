@@ -61,9 +61,16 @@ final class PromotionCapsConfirmService extends AppService implements IEventDisp
 
     private function _load_subscription(): void
     {
-        $promosubscription = $this->repopromocapsubscription->get_by_uuid($this->input["subscriptionuuid"], ["id_promouser"]);
-        if(!$promosubscription)
+        $promosubscription = $this->repopromocapsubscription->get_by_uuid(
+            $this->input["subscriptionuuid"],
+            ["id_promouser", "delete_date", "subs_status"]
+        );
+
+        if (!$promosubscription || $promosubscription["delete_date"])
             $this->_promocap_exception(__("No subscription found"), ExceptionType::CODE_NOT_FOUND);
+
+        if (in_array($promosubscription["subs_status"], [PromotionCapActionType::CANCELLED]))
+            $this->_promocap_exception(__("Subscription not found"), ExceptionType::CODE_NOT_FOUND);
 
         $this->subscriptiondata = $this->repopromocapuser->get_subscription_data($promosubscription["id_promouser"]);
         if (!$this->subscriptiondata)
