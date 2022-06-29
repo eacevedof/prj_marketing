@@ -103,7 +103,7 @@ final class TextComponent
 
     public function get_cancelled_email(string $email): string
     {
-        $email = explode("@", $email);
+        $email = explode("@", $email)[0];
         return "$email@deleted.ddd";
     }
 }
