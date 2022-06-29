@@ -12,6 +12,7 @@ use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Bus\EventBus;
+use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
@@ -44,17 +45,13 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
 
     private function _load_promotion(): void
     {
-        $this->promotion = $this->repopromotion->get_by_uuid($this->input["promotionuuid"], [
-            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz",
-            "date_from", "date_to", "date_execution", "id_owner", "num_confirmed", "disabled_date"
-        ]);
+        $this->promotion = $this->repopromotion->get_by_uuid($this->input["promotionuuid"], ["date_to",]);
+        if (!$this->promotion)
+            $this->_promocap_exception(__("This promotion does not exist anymore"), ExceptionType::CODE_NOT_FOUND);
 
-        SF::get(PromotionCapCheckService::class, [
-            "email" => ($this->input["email"] ?? ""),
-            "promotion" => $this->promotion,
-            "is_test" => $this->istest,
-            "user" => AuthService::getme()->get_user()
-        ])->is_suitable_or_fail();
+        $i = CF::get(DateComponent::class)->get_seconds_between(date("Y-m-d H:i:s"), $this->promotion["date_to"]);
+        if ($i<=0)
+            $this->_promocap_exception(__("This promotion has expired", ExceptionType::CODE_NOT_ACCEPTABLE));
     }
 
     private function _load_subscription(): void
@@ -103,7 +100,12 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
     public function __invoke(): array
     {
         $this->_load_request();
+        //comprobar si existe la promo
+        //comprobar si ya ha finalizado la promo
+
         $this->_load_promotion();
+
+        //comprobar si el estado de la subscripcion no es executed
         $this->_load_subscription();
         $this->repopromocapsubscription->set_model($entitysubs = MF::get(PromotionCapSubscriptionEntity::class));
         $confirm = [
