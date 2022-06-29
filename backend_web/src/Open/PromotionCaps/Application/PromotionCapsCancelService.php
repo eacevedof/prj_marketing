@@ -45,8 +45,8 @@ final class PromotionCapsCancelService extends AppService implements IEventDispa
 
     private function _load_promotion(): void
     {
-        $this->promotion = $this->repopromotion->get_by_uuid($this->input["promotionuuid"], ["date_to",]);
-        if (!$this->promotion)
+        $this->promotion = $this->repopromotion->get_by_uuid($this->input["promotionuuid"], ["id", "uuid", "date_to", "delete_date"]);
+        if (!$this->promotion || $this->promotion["delete_date"])
             $this->_promocap_exception(__("This promotion does not exist anymore"), ExceptionType::CODE_NOT_FOUND);
 
         $i = CF::get(DateComponent::class)->get_seconds_between(date("Y-m-d H:i:s"), $this->promotion["date_to"]);
