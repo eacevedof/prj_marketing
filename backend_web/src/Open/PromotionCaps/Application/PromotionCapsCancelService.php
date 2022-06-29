@@ -91,6 +91,7 @@ final class PromotionCapsCancelService extends AppService implements IEventDispa
             PromotionCapCancelledEvent::from_primitives($this->subscriptiondata["subsid"], [
                 "subsuuid" => $this->subscriptiondata["subscode"],
                 "id_type_prev" => $this->subscriptiondata["subs_status"],
+                "is_test" => $this->istest,
             ]),
 
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [

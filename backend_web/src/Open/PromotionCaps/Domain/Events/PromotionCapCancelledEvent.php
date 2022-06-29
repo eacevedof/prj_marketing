@@ -7,12 +7,14 @@ final class PromotionCapCancelledEvent extends AbsEvent
 {
     private string $subsuuid;
     private string $idtypeprev;
+    private int $istest;
 
     public function __construct(
         int $idcapuser,
 
         string $subsuuid,
         string $idtypeprev,
+        int $istest,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -23,6 +25,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
         parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
         $this->subsuuid = $subsuuid;
         $this->idtypeprev = $idtypeprev;
+        $this->istest = $istest;
     }
 
     public static function event_name(): string
@@ -43,6 +46,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
             $aggregateId,
             $body["subsuuid"],
             $body["id_type_prev"],
+            $body["is_test"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -55,6 +59,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
         return [
             "subsuuid" => $this->subsuuid,
             "id_type_prev" => $this->idtypeprev,
+            "is_test" => $this->istest,
         ];
     }
 
@@ -66,5 +71,10 @@ final class PromotionCapCancelledEvent extends AbsEvent
     public function id_type_prev(): string
     {
         return $this->idtypeprev;
+    }
+
+    public function is_test(): int
+    {
+        return $this->istest;
     }
 }
