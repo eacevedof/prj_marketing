@@ -70,7 +70,10 @@ final class PromotionCapsConfirmService extends AppService implements IEventDisp
             $this->_promocap_exception(__("No subscription found"), ExceptionType::CODE_NOT_FOUND);
 
         if (in_array($promosubscription["subs_status"], [PromotionCapActionType::CANCELLED]))
-            $this->_promocap_exception(__("Subscription not found"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("Subscription cancelled"), ExceptionType::CODE_NOT_FOUND);
+
+        if (!in_array($promosubscription["subs_status"], [PromotionCapActionType::CONFIRMED]))
+            $this->_promocap_exception(__("Subscription already confirmed"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->subscriptiondata = $this->repopromocapuser->get_subscription_data($promosubscription["id_promouser"]);
         if (!$this->subscriptiondata)
