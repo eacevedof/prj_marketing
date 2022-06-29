@@ -6,13 +6,13 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 final class PromotionCapCancelledEvent extends AbsEvent
 {
     private string $subsuuid;
-    private string $subsstatus;
+    private string $idtypeprev;
 
     public function __construct(
         int $idcapuser,
 
         string $subsuuid,
-        string $subsstatus,
+        string $idtypeprev,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -22,7 +22,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
     {
         parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
         $this->subsuuid = $subsuuid;
-        $this->subsstatus = $subsstatus;
+        $this->idtypeprev = $idtypeprev;
     }
 
     public static function event_name(): string
@@ -42,7 +42,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
         return new self(
             $aggregateId,
             $body["subsuuid"],
-            $body["subs_status"],
+            $body["id_type_prev"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -54,7 +54,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
     {
         return [
             "subsuuid" => $this->subsuuid,
-            "subs_status" => $this->subsstatus,
+            "id_type_prev" => $this->idtypeprev,
         ];
     }
 
@@ -63,8 +63,8 @@ final class PromotionCapCancelledEvent extends AbsEvent
         return $this->subsuuid;
     }
 
-    public function subs_status(): string
+    public function id_type_prev(): string
     {
-        return $this->subsstatus;
+        return $this->idtypeprev;
     }
 }

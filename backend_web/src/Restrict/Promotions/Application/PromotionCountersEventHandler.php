@@ -15,6 +15,8 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
 {
     private function _increase_counters(IEvent $domevent): void
     {
+        if (get_class($domevent)!==PromotionCapActionHasOccurredEvent::class) return;
+
         $repopromo = RF::get(PromotionRepository::class);
         switch ($domevent->id_type()) {
             case PromotionCapActionType::VIEWED:
@@ -32,17 +34,35 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
         }
     }
 
+    private function _decrease_counters(IEvent $domevent): void
+    {
+        if (get_class($domevent)!==PromotionCapCancelledEvent::class) return;
+
+        $repopromo = RF::get(PromotionRepository::class);
+        switch ($domevent->id_type_prev()) {
+            case PromotionCapActionType::SUBSCRIBED:
+                $repopromo->decrease_subscribed($domevent->aggregate_id());
+            break;
+            case PromotionCapActionType::CONFIRMED:
+                $repopromo->decrease_confirmed($domevent->aggregate_id());
+            break;
+        }
+    }
+
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if (get_class($domevent)!==PromotionCapActionHasOccurredEvent::class) return $this;
+        if (!in_array(get_class($domevent), [PromotionCapActionHasOccurredEvent::class,PromotionCapCancelledEvent::class]))
+            return $this;
 
         if ($domevent->is_test()) return $this;
 
-        //si se esta visualizando no llega idcapuser
+        //si se esta visualizando no llega idcapuser pq no existe en bd
+        //si la suscripción esta en modo prueba no se cuenta ni descuenta
         if ($domevent->id_capuser() && RF::get(PromotionCapSubscriptionsRepository::class)->is_test_mode_by_id_capuser($domevent->id_capuser()))
             return $this;
 
         $this->_increase_counters($domevent);
+        $this->_decrease_counters($domevent);
 
         return $this;
     }

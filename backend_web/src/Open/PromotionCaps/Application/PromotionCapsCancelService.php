@@ -88,14 +88,14 @@ final class PromotionCapsCancelService extends AppService implements IEventDispa
     private function _dispatch(): void
     {
         EventBus::instance()->publish(...[
-            PromotionCapCancelledEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
+            PromotionCapCancelledEvent::from_primitives($this->subscriptiondata["subsid"], [
                 "subsuuid" => $this->subscriptiondata["subscode"],
-                "subs_status" => $this->subscriptiondata["subs_status"],
+                "id_type_prev" => $this->subscriptiondata["subs_status"],
             ]),
 
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
-                "id_promouser" => $idcapuser,
+                "id_promouser" => $this->subscriptiondata["idcapuser"],
                 "id_type" => PromotionCapActionType::CANCELLED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
