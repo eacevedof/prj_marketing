@@ -273,6 +273,18 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
         $this->execute($sql);
     }
 
+    public function decrease_subscribed(int $id): void
+    {
+        $sql = "UPDATE {$this->table} SET num_subscribed=num_subscribed - 1 WHERE 1 AND id={$id}";
+        $this->execute($sql);
+    }
+
+    public function decrease_confirmed(int $id): void
+    {
+        $sql = "UPDATE {$this->table} SET num_confirmed=num_confirmed - 1 WHERE 1 AND id={$id}";
+        $this->execute($sql);
+    }
+
     public function increase_executed(int $id): void
     {
         $sql = "UPDATE {$this->table} SET num_executed=num_executed + 1 WHERE 1 AND id={$id}";

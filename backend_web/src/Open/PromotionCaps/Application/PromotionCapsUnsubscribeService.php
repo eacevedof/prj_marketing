@@ -4,7 +4,7 @@ namespace App\Open\PromotionCaps\Application;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUnsubscribedEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
@@ -51,14 +51,21 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
 
         $i = CF::get(DateComponent::class)->get_seconds_between(date("Y-m-d H:i:s"), $this->promotion["date_to"]);
         if ($i<=0)
-            $this->_promocap_exception(__("This promotion has expired", ExceptionType::CODE_NOT_ACCEPTABLE));
+            $this->_promocap_exception(__("This promotion has expired", ExceptionType::CODE_BAD_REQUEST));
     }
 
     private function _load_subscription(): void
     {
-        $promosubscription = $this->repopromocapsubscription->get_by_uuid($this->input["subscriptionuuid"], ["id_promouser"]);
-        if(!$promosubscription)
+        $promosubscription = $this->repopromocapsubscription->get_by_uuid(
+            $this->input["subscriptionuuid"],
+            ["id_promouser", "subs_status", "delete_date"]
+        );
+
+        if (!$promosubscription || $promosubscription["delete_date"])
             $this->_promocap_exception(__("No subscription found"), ExceptionType::CODE_NOT_FOUND);
+
+        if (in_array($promosubscription["subs_status"], [PromotionCapActionType::UNSUBSCRIBED]))
+            $this->_promocap_exception(__("Subscription not found"), ExceptionType::CODE_NOT_FOUND);
 
         $this->subscriptiondata = $this->repopromocapuser->get_subscription_data($promosubscription["id_promouser"]);
         if (!$this->subscriptiondata)
@@ -67,8 +74,10 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
         if ($this->subscriptiondata["promocode"]!==$this->promotion["uuid"])
             $this->_promocap_exception(__("Promotion code does not match for this subscription"), ExceptionType::CODE_BAD_REQUEST);
 
-        if ($this->subscriptiondata["date_confirm"] || $this->subscriptiondata["date_execution"])
-            $this->_promocap_exception(__("You have already confirmed your subscription"), ExceptionType::CODE_BAD_REQUEST);
+        if ($this->subscriptiondata["date_execution"])
+            $this->_promocap_exception(__("You have already consumed your subscription"), ExceptionType::CODE_BAD_REQUEST);
+
+        $this->subscriptiondata["subs_status"] = $promosubscription["subs_status"];
     }
 
     private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
@@ -79,16 +88,16 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
     private function _dispatch(array $payload): void
     {
         EventBus::instance()->publish(...[
-            PromotionCapConfirmedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
+            PromotionCapUnsubscribedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
                 "subsuuid" => $this->subscriptiondata["subscode"],
-                "email" => $this->subscriptiondata["email"],
+                "subs_status" => $this->subscriptiondata["subs_status"],
                 "date_confirm" => $payload["date_confirm"],
             ]),
 
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
                 "id_promouser" => $idcapuser,
-                "id_type" => PromotionCapActionType::CONFIRMED,
+                "id_type" => PromotionCapActionType::UNSUBSCRIBED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
                 "remote_ip" => $this->request->get_remote_ip(),
