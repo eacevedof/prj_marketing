@@ -40,7 +40,7 @@
 <body>
 <main>
 <div class="horizontalMenucontainer">
-<?
+<?php
 $this->_element("common/elem-nav-menu");
 ?>
   <div class="main-content horizontal-content">
