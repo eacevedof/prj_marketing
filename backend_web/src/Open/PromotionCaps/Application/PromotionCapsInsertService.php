@@ -220,8 +220,9 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
         }
 
         //to-do pasr fks
-        $toskip = array_diff($uifields, PromotionCapUserType::get_all());
-        $toskip = array_merge($toskip, ["uuid","id_country","id_language", "id_owner", "id_promotion", "id_gender", "is_mailing", "is_terms"]);
+        $toskip = array_diff(PromotionCapUserType::get_all(), $uifields);
+        //pq aqui meto todo para que no se valide contra la bd?
+        $toskip = array_merge($toskip, ["uuid", "id_country","id_language", "id_owner", "id_promotion", "id_gender"]);
         foreach ($toskip as $skip)
             $this->validator->add_skip($skip);
 
