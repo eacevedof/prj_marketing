@@ -30,7 +30,7 @@ final class PromotionCapConfirmedEvent extends AbsEvent
 
     public static function event_name(): string
     {
-        return "promotioncapuser.confirmed";
+        return "promotioncap.confirmed";
     }
 
     public static function from_primitives(
