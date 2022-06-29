@@ -45,8 +45,8 @@ $this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdh
 <script type="module">
 function has_scrollbar() {
   let elem = document.querySelector("body")
-  console.log("w-h",window.innerHeight, "bd-h",elem.scrollHeight,window.innerHeight < elem.scrollHeight)
-  const r = window.innerHeight < elem.scrollHeight
+  console.log("window-h",window.innerHeight, "body-h",elem.scrollHeight,window.innerHeight < elem.scrollHeight)
+  const r = ((window.innerHeight + 1) < elem.scrollHeight)
   return r
 }
 
