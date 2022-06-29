@@ -1,7 +1,7 @@
 <?php
 return [
     ["url"=>"/promotion/:promotionuuid/confirm/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController","method"=>"confirm", "allowed"=>["get"]],
-    ["url"=>"/promotion/:promotionuuid/unsubscribe/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapUnsubscribeController","method"=>"unsubscribe", "allowed"=>["get"]],
+    ["url"=>"/promotion/:promotionuuid/cancel/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCancelController","method"=>"cancel", "allowed"=>["get"]],
 
     ["url"=>"/promotion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController","method"=>"create"],
     ["url"=>"/points/:businessuuid/user/:capuseruuid","controller"=>"App\Open\UserCaps\Infrastructure\Controllers\UserCapPointsController","method"=>"index", "allowed"=>["get"]],

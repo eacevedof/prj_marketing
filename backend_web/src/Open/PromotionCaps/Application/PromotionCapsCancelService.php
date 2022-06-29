@@ -21,7 +21,7 @@ use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 
-final class PromotionCapsUnsubscribeService extends AppService implements IEventDispatcher
+final class PromotionCapsCancelService extends AppService implements IEventDispatcher
 {
     use RequestTrait;
 
@@ -124,7 +124,7 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
             "id" => $this->subscriptiondata["idcapuser"],
             "uuid" => $this->subscriptiondata["capusercode"],
 
-            "email" =>
+            "email" => "to-do"
         ];
         $this->repopromocapuser->set_model($entitysubs = MF::get(PromotionCapUsersEntity::class));
         $entitysubs->add_sysupdate($cancel, $iduser);

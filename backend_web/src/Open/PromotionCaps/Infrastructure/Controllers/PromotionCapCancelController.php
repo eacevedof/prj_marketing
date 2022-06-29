@@ -7,13 +7,13 @@ namespace App\Open\PromotionCaps\Infrastructure\Controllers;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Open\PromotionCaps\Application\PromotionCapsUnsubscribeService;
+use App\Open\PromotionCaps\Application\PromotionCapsCancelService;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
-final class PromotionCapUnsubscribeController extends OpenController
+final class PromotionCapCancelController extends OpenController
 {
-    public function unsubscribe(string $promotionuuid, string $subscriptionuuid): void
+    public function cancel(string $promotionuuid, string $subscriptionuuid): void
     {
         if (!($promotionuuid && $subscriptionuuid))
             $this->set_layout("open/empty")
@@ -24,7 +24,7 @@ final class PromotionCapUnsubscribeController extends OpenController
                 ->set_template("400")
                 ->render();
         try {
-            $insert = SF::get_callable(PromotionCapsUnsubscribeService::class, [
+            $insert = SF::get_callable(PromotionCapsCancelService::class, [
                 "promotionuuid" => $promotionuuid,
                 "subscriptionuuid" => $subscriptionuuid,
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
