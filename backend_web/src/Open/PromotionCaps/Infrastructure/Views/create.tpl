@@ -11,7 +11,6 @@ use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
 use App\Shared\Infrastructure\Helpers\PromotionUiHelper as PH;
 
-//dd($result);
 $businessdata = $result["businessdata"] ?? [];
 $promotion = $result["promotion"];
 $promotionui = $result["promotionui"] ?? [];
@@ -43,4 +42,28 @@ $this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdh
   ?>
   </section>
 </main>
+<script type="module">
+function has_scrollbar() {
+  let elem = document.querySelector("body")
+  console.log("w-h",window.innerHeight, "bd-h",elem.scrollHeight,window.innerHeight < elem.scrollHeight)
+  const r = window.innerHeight < elem.scrollHeight
+  return r
+}
+
+function center_vertically() {
+  const $section = document.querySelector(".section")
+  $section.style.position = null
+  $section.style.top = null
+
+  if (has_scrollbar()) return
+  const $nav = document.querySelector(".nav-flex")
+  const bgZone = window.innerHeight - $nav.offsetHeight
+  const fromTop = (bgZone - $section.offsetHeight)/2
+  $section.style.position = "relative"
+  $section.style.top = fromTop.toString().concat("px")
+}
+
+window.addEventListener("DOMContentLoaded", center_vertically)
+window.addEventListener("resize", center_vertically)
+</script>
 <!--/promotincaps.create.tpl-->
