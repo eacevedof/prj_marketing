@@ -3,18 +3,16 @@ namespace App\Open\PromotionCaps\Domain\Events;
 
 use App\Shared\Infrastructure\Bus\AbsEvent;
 
-final class PromotionCapUnsubscribedEvent extends AbsEvent
+final class PromotionCapCancelledEvent extends AbsEvent
 {
     private string $subsuuid;
     private string $subsstatus;
-    private string $dateconfirm;
 
     public function __construct(
         int $idcapuser,
 
         string $subsuuid,
         string $subsstatus,
-        string $dateconfirm,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -25,12 +23,11 @@ final class PromotionCapUnsubscribedEvent extends AbsEvent
         parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
         $this->subsuuid = $subsuuid;
         $this->subsstatus = $subsstatus;
-        $this->dateconfirm = $dateconfirm;
     }
 
     public static function event_name(): string
     {
-        return "promotioncap.unsubscribed";
+        return "promotioncap.cancelled";
     }
 
     public static function from_primitives(
@@ -46,7 +43,6 @@ final class PromotionCapUnsubscribedEvent extends AbsEvent
             $aggregateId,
             $body["subsuuid"],
             $body["subs_status"],
-            $body["date_confirm"],
             $eventId,
             $occurredon,
             $correlationid,
@@ -59,7 +55,6 @@ final class PromotionCapUnsubscribedEvent extends AbsEvent
         return [
             "subsuuid" => $this->subsuuid,
             "subs_status" => $this->subsstatus,
-            "date_confirm" => $this->dateconfirm,
         ];
     }
 
@@ -71,10 +66,5 @@ final class PromotionCapUnsubscribedEvent extends AbsEvent
     public function subs_status(): string
     {
         return $this->subsstatus;
-    }
-    
-    public function date_confirm(): string
-    {
-        return $this->dateconfirm;
     }
 }

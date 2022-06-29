@@ -4,23 +4,22 @@ namespace App\Open\PromotionCaps\Application;
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUnsubscribedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapCancelledEvent;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
+use App\Open\PromotionCaps\Domain\PromotionCapUsersEntity;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 
 final class PromotionCapsUnsubscribeService extends AppService implements IEventDispatcher
 {
@@ -64,7 +63,7 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
         if (!$promosubscription || $promosubscription["delete_date"])
             $this->_promocap_exception(__("No subscription found"), ExceptionType::CODE_NOT_FOUND);
 
-        if (in_array($promosubscription["subs_status"], [PromotionCapActionType::UNSUBSCRIBED]))
+        if (in_array($promosubscription["subs_status"], [PromotionCapActionType::CANCELLED]))
             $this->_promocap_exception(__("Subscription not found"), ExceptionType::CODE_NOT_FOUND);
 
         $this->subscriptiondata = $this->repopromocapuser->get_subscription_data($promosubscription["id_promouser"]);
@@ -85,19 +84,18 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
         throw new PromotionCapException($message, $code);
     }
 
-    private function _dispatch(array $payload): void
+    private function _dispatch(): void
     {
         EventBus::instance()->publish(...[
-            PromotionCapUnsubscribedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
+            PromotionCapCancelledEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
                 "subsuuid" => $this->subscriptiondata["subscode"],
                 "subs_status" => $this->subscriptiondata["subs_status"],
-                "date_confirm" => $payload["date_confirm"],
             ]),
 
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
                 "id_promotion" => $this->promotion["id"],
                 "id_promouser" => $idcapuser,
-                "id_type" => PromotionCapActionType::UNSUBSCRIBED,
+                "id_type" => PromotionCapActionType::CANCELLED,
                 "url_req" => $this->request->get_request_uri(),
                 "url_ref" => $this->request->get_referer(),
                 "remote_ip" => $this->request->get_remote_ip(),
@@ -109,26 +107,30 @@ final class PromotionCapsUnsubscribeService extends AppService implements IEvent
     public function __invoke(): array
     {
         $this->_load_request();
-        //comprobar si existe la promo
-        //comprobar si ya ha finalizado la promo
-
         $this->_load_promotion();
-
-        //comprobar si el estado de la subscripcion no es executed
         $this->_load_subscription();
+
         $this->repopromocapsubscription->set_model($entitysubs = MF::get(PromotionCapSubscriptionEntity::class));
-        $confirm = [
+        $cancel = [
             "id"=>$this->subscriptiondata["subsid"],
             "uuid"=>$this->subscriptiondata["subscode"],
-            "date_confirm"=> $date = date("Y-m-d H:i:s"),
-            "code_execution" => CF::get(TextComponent::class)->get_random_word(4, 2),
-            "subs_status" => PromotionCapActionType::CONFIRMED
+            "subs_status" => PromotionCapActionType::CANCELLED
         ];
         $iduser = AuthService::getme()->get_user()["id"] ?? -1;
-        $entitysubs->add_sysupdate($confirm, $iduser);
-        $this->repopromocapsubscription->update($confirm);
+        $entitysubs->add_sysupdate($cancel, $iduser);
+        $this->repopromocapsubscription->update($cancel);
 
-        $this->_dispatch(["date_confirm"=>$date]);
+        $cancel = [
+            "id" => $this->subscriptiondata["idcapuser"],
+            "uuid" => $this->subscriptiondata["capusercode"],
+
+            "email" =>
+        ];
+        $this->repopromocapuser->set_model($entitysubs = MF::get(PromotionCapUsersEntity::class));
+        $entitysubs->add_sysupdate($cancel, $iduser);
+        $this->repopromocapuser->update($cancel);
+
+        $this->_dispatch();
 
         return $this->subscriptiondata;
     }

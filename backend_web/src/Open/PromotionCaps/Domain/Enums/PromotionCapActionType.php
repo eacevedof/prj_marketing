@@ -10,7 +10,6 @@ abstract class PromotionCapActionType
     public const EXECUTED = 3;
     public const CANCELLED = 4;
     public const FINISHED = 5;
-    public const UNSUBSCRIBED = 6;
 
     public static function get_all(): array
     {
@@ -21,7 +20,6 @@ abstract class PromotionCapActionType
             self::EXECUTED,
             self::CANCELLED,
             self::FINISHED,
-            self::UNSUBSCRIBED,
         ];
     }
 }
