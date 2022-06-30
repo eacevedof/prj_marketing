@@ -167,7 +167,7 @@ p {
                             </p>
                             <p style="margin: 0; font-size: 17px; text-align: left;"><span style="font-size:17px;"> </span></p>
                             <p style="margin: 0; font-size: 17px;">
-                              <span style="font-size:17px;">In order to make effective this voucher,&nbsp;&nbsp;please,&nbsp;&nbsp;show the following code.</span>
+                              <span style="font-size:17px;"><?=__("In order to make effective this voucher,&nbsp;&nbsp;please,&nbsp;&nbsp;show the following code.")?></span>
                             </p>
                           </div>
                         </div>
@@ -185,11 +185,11 @@ p {
                           <center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px">
                           <![endif]-->
                           <span style="padding-left:55px;padding-right:50px;font-size:16px;display:inline-block;letter-spacing:normal;background:white;">
-                            <span style="font-family:courier new; font-weight: bolder; font-size: 20px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">CATA69</span>
+                            <span style="font-family:courier new; font-weight: bolder; font-size: 20px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><?=$data["execode"];?></span>
                           </span>
                           <p style="margin: 0; font-size: 14px; padding-top:15px; color:white; font-weight: normal">
                             <span style="font-size: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                              Keep in mind this code expires at 2022-12-23 22:59:59 UTC
+                              <?=__("Keep in mind this code expires at {0} UTC", $data["promodateto"])?>
                             </span>
                           </p>
                           <!--[if mso]>
