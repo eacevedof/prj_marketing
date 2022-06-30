@@ -43,7 +43,7 @@ final class PromotionCapActionHasOccurredEvent extends AbsEvent
 
     public static function event_name(): string
     {
-        return "promotioncapaction.created";
+        return "promotioncapa.created";
     }
 
     public static function from_primitives(
