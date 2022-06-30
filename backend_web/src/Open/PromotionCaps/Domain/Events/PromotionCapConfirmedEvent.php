@@ -8,6 +8,7 @@ final class PromotionCapConfirmedEvent extends AbsEvent
     private string $subsuuid;
     private string $email;
     private string $dateconfirm;
+    private int $istest;
 
     public function __construct(
         int $idcapuser,
@@ -15,6 +16,7 @@ final class PromotionCapConfirmedEvent extends AbsEvent
         string $subsuuid,
         string $email,
         string $dateconfirm,
+        int $istest,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -26,6 +28,7 @@ final class PromotionCapConfirmedEvent extends AbsEvent
         $this->subsuuid = $subsuuid;
         $this->email = $email;
         $this->dateconfirm = $dateconfirm;
+        $this->istest = $istest;
     }
 
     public static function event_name(): string
@@ -47,6 +50,8 @@ final class PromotionCapConfirmedEvent extends AbsEvent
             $body["subsuuid"],
             $body["email"],
             $body["date_confirm"],
+            $body["is_test"],
+
             $eventId,
             $occurredon,
             $correlationid,
@@ -60,6 +65,7 @@ final class PromotionCapConfirmedEvent extends AbsEvent
             "subsuuid" => $this->subsuuid,
             "email" => $this->email,
             "date_confirm" => $this->dateconfirm,
+            "is_test" => $this->istest,
         ];
     }
 
@@ -76,5 +82,10 @@ final class PromotionCapConfirmedEvent extends AbsEvent
     public function date_confirm(): string
     {
         return $this->dateconfirm;
+    }
+
+    public function is_test(): int
+    {
+        return $this->istest;
     }
 }

@@ -98,6 +98,7 @@ final class PromotionCapsConfirmService extends AppService implements IEventDisp
                 "subsuuid" => $this->subscriptiondata["subscode"],
                 "email" => $this->subscriptiondata["email"],
                 "date_confirm" => $payload["date_confirm"],
+                "is_test" => $this->istest,
             ]),
 
             PromotionCapActionHasOccurredEvent::from_primitives(-1, [
