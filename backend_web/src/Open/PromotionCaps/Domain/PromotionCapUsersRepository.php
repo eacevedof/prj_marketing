@@ -171,6 +171,7 @@ final class PromotionCapUsersRepository extends AppRepository
                 "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business, bd.url_business AS businessurl, bd.user_logo_1 AS businesslogo",
                 "bd.url_social_fb AS urlfb, bd.url_social_ig AS urlig, bd.url_social_twitter AS urltwitter, bd.url_social_tiktok AS urltiktok",
                 "p.uuid AS promocode, p.slug AS promoslug, p.description AS promotion, p.content AS promoterms, p.date_to AS promodateto",
+                "p.bgimage_xs AS promoimage"
             ])
             ->add_join("INNER JOIN app_promotioncap_subscriptions AS ps
             ON pu.id = ps.id_promouser

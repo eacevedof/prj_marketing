@@ -227,7 +227,8 @@ p {
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
                         <div align="center" style="line-height:10px">
                           <a href="vr" style="outline:none" tabindex="-1" target="_blank">
-                            <img alt="Alternate text" class="big" src="https://css.eduardoaf.com/forms/with-bgimage/sabado.png" style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;" title="Alternate text" width="800" />
+                            <img alt="<?=$data["promotion"]?>" class="big" src="<?=$data["promoimage"]?>"
+                                 style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;" title="<?=$data["promotion"]?>" width="800" />
                           </a>
                         </div>
                       </td>
