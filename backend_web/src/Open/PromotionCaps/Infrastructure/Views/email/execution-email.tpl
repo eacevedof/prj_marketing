@@ -159,11 +159,12 @@ p {
                         <div style="font-family: Tahoma, Verdana, sans-serif">
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 17px; text-align: left;">
-                              <span style="font-size:17px;">
-                                <?=__("Your accumulated points at <strong>{0}</strong> have been updated. Check it out", $data["business"])?>
+                              <span style="font-size:17px; text-align: center">
+                                <?=__("Your accumulated points at <strong>{0}</strong> have been updated", $data["business"])?>
                               </span>
                             </p>
-                            <p style="margin: 0; font-size: 17px; text-align: center;">
+                            <p style="margin: 0; font-size: 17px; padding-top: 10px; text-align: center;">
+                              <?=__(" Check it out")?>
                               <a href="<?= $data["points_link"] ?>" rel="noopener" style="text-decoration:none;color:#00bfff;" target="_blank" title="<?=__("Accumulated points") ?>">
                                 <strong><?=__("here") ?></strong>.
                               </a>
