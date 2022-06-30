@@ -167,7 +167,7 @@ p {
                             </p>
                             <p style="margin: 0; font-size: 17px; text-align: left;"><span style="font-size:17px;"> </span></p>
                             <p style="margin: 0; font-size: 17px;">
-                              <span style="font-size:17px;"><?=__("In order to make effective this voucher,&nbsp;&nbsp;please,&nbsp;&nbsp;show the following code.")?></span>
+                              <span style="font-size:17px;"><?=__("In order to make this voucher effective, please, show the following code.")?></span>
                             </p>
                           </div>
                         </div>
