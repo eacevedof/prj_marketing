@@ -156,8 +156,7 @@ p {
                     <tr>
                       <td>
                         <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper"
-                               style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
+                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 17px; text-align: left;">
                               <span style="font-size:17px;">
                                 <?=__("You have subscribed to promotion: <strong>&ldquo;{0}&rdquo;</strong> published by", $data["promotion"])?>
