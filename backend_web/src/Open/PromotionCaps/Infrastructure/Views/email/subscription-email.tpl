@@ -2,7 +2,7 @@
 /**
  * @var array $data
  */
-$hello = $data["username"] ?: $data["email"];
+$hello = ucwords(strtolower($data["username"] ?? "")) ?: $data["email"];
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
