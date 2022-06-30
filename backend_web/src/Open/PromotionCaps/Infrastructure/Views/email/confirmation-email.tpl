@@ -189,7 +189,7 @@ p {
                           <span style="padding-left:55px;padding-right:50px;font-size:16px;display:inline-block;letter-spacing:normal;background:white;">
                             <span style="font-family:courier new; font-weight: bolder; font-size: 20px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">CATA69</span>
                           </span>
-                          <p style="margin: 0; font-size: 14px; padding-top:15px; color:white; font-weight: bold">
+                          <p style="margin: 0; font-size: 14px; padding-top:15px; color:white; font-weight: normal">
                             <span style="font-size: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                               Keep in mind this code expires at 2022-12-23 22:59:59 UTC
                             </span>
