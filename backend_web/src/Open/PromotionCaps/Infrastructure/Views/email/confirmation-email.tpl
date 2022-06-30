@@ -384,9 +384,20 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 10px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 10px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                condicion uno<br />condicion dos<br />condicion tres<br />condicion cuatro                                <br/>
-                                <a href="http://localhost:900/terms-and-conditions/menu-futbolero-especial-para-clientes-del-chalan-que-vienen-todos-los-dias-13" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  Check the rest of terms and conditions                                </a>
+                                <?php
+                                $terms = trim($data["promoterms"]);
+                                $terms = explode("-", $terms);
+                                $string = [];
+                                foreach ($terms as $term){
+                                  $term = trim($term);
+                                  if ($term) $string[] = $term;
+                                }
+                                echo implode("<br />", $string);
+                                ?>
+                                <br/>
+                                <a href="<?=$data["terms_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
+                                  <?= __("Check the rest of terms and conditions")?>
+                                </a>
                               </span>
                             </p>
                           </div>
@@ -401,9 +412,9 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                Changed your mind? You can
-                                <a href="http://localhost:900/promotion/62b4b2e5d318d/cancel/sb62bdd89489a93" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">unsubscribe</a>
-                                at any time.
+                                <?= __("Changed your mind? You can")?>
+                                <a href="<?=$data["unsubscribe_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank"><?= __("unsubscribe")?></a>
+                                 <?= __("at any time")?>.
                               </span>
                             </p>
                           </div>
