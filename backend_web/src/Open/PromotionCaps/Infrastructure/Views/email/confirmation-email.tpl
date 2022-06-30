@@ -207,13 +207,13 @@ p {
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 17px; text-align: left;">
                               <span style="font-size:17px;">
-                                Please, click on this
-                                <a href="#" rel="noopener" style="text-decoration:none;color:#00bfff;" target="_blank" title="points link">
-                                  <strong>&nbsp;link&nbsp;</strong>
+                                <?=__("Please, click on this") ?>
+                                <a href="<?= $data["points_link"] ?>" rel="noopener" style="text-decoration:none;color:#00bfff;" target="_blank" title="<?=__("Accumulated points") ?>">
+                                  <strong><?=__("link") ?></strong>
                                 </a>
-                                to check out your accumulated points at
+                                <?=__("to check your accumulated points at") ?>
                                 <span style="color:#ffffff;">
-                                  <strong><a href="http://elchalanaruba.com" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="El Chalán Peruvian Cousine">El Chalán Peruvian Cousine</a></strong>
+                                  <strong><?=$data["business"]?></strong>
                                 </span>.
                               </span>
                             </p>
@@ -272,7 +272,7 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 12px; text-align: center;">
                               <span style="color:#444444;">
-                                *Promotion ends at 2022-12-23 22:59:59 UTC<br/>
+                                *<?=__("Promotion ends at {0} UTC", $data["promodateto"])?><br/>
                               </span>
                             </p>
                           </div>
@@ -303,16 +303,44 @@ p {
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
                                width="188px">
                           <tr>
-                            <td style="padding:0 15px 0 0px;">
-                              <a href="https://www.facebook.com/profile.php?id=100010751494964" target="_blank">
-                                <img alt="Facebook" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
-                              </a>
-                            </td>
-                            <td style="padding:0 15px 0 0px;">
-                              <a href="https://twitter.com/ELCHALANARUBA" target="_blank">
-                                <img alt="Twitter" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/twitter@2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
-                              </a>
-                            </td>
+                            <?php
+                            if ($url = $data["urlfb"]):
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Facebook" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
+                                </a>
+                              </td>
+                            <?php
+                            endif;
+                            if ($url = $data["urltwitter"]):
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Twitter" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/twitter@2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
+                                </a>
+                              </td>
+                            <?php
+                            endif;
+                            if ($url = $data["urlig"]):
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Instagram" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" style="display: block; height: auto; border: 0;" title="Google+" width="32" />
+                                </a>
+                              </td>
+                            <?php
+                            endif;
+                            if ($url = $data["urltiktok"]):
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Tik Tok" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/tiktok@2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32" />
+                                </a>
+                              </td>
+                            <?php
+                            endif;
+                            ?>
                           </tr>
                         </table>
                       </td>
