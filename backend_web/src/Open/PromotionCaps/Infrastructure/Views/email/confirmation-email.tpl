@@ -111,7 +111,7 @@ p {
                     <tr>
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
                         <div align="center" style="line-height:10px">
-                          <img alt="Alternate text" src="https://css.eduardoaf.com/forms/with-bgimage/logo.png" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="El Chalán Peruvian Cousine" width="160" />
+                          <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
                         </div>
                       </td>
                     </tr>
@@ -143,10 +143,9 @@ p {
                     <tr>
                       <td style="padding-bottom:5px;padding-left:10px;padding-right:10px;padding-top:5px;">
                         <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper"
-                               style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
+                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 38px; text-align: left;">
-                              <span style="font-size:30px;"><strong>Hello Pato Felix!!</strong></span>
+                              <span style="font-size:30px;"><strong><?=__("Hello {0}!!", $hello) ?></strong></span>
                             </p>
                           </div>
                         </div>
