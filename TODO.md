@@ -1,6 +1,8 @@
+
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- previsualizacin de mailing
 - pagina index
 - pagina de error controlado
 - pagina de terminos y condiciones
