@@ -152,28 +152,6 @@ p {
                       </td>
                     </tr>
                   </table>
-                  <table appx="t8" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0; font-size: 17px; text-align: left;">
-                              <span style="font-size:17px;">
-                                <?=__("You have <strong>confirmed</strong> to promotion: <strong>&ldquo;{0}&rdquo;</strong> published by", $data["promotion"])?>
-                                <span style="color:#ffffff;">
-                                  <strong><a href="<?=$data["businessurl"]?>" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="<?=$data["business"]?>"><?=$data["business"]?></a></strong>
-                                </span>.
-                              </span>
-                            </p>
-                            <p style="margin: 0; font-size: 17px; text-align: left;"><span style="font-size:17px;"> </span></p>
-                            <p style="margin: 0; font-size: 17px;">
-                              <span style="font-size:17px;"><?=__("In order to make this voucher effective, please, show the following code.")?></span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
                   <table appx="t10" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
@@ -181,73 +159,10 @@ p {
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 17px; text-align: left;">
                               <span style="font-size:17px;">
-                                <?=__("Please, click on this") ?>
+                                <?=__("Your accumulated points at <strong>{0}</strong> has been updated. Check it out", $data["business"])?>
                                 <a href="<?= $data["points_link"] ?>" rel="noopener" style="text-decoration:none;color:#00bfff;" target="_blank" title="<?=__("Accumulated points") ?>">
-                                  <strong><?=__("link") ?></strong>
+                                  <strong><?=__("here") ?></strong>.
                                 </a>
-                                <?=__("to check your accumulated points at") ?>
-                                <span style="color:#ffffff;">
-                                  <strong><?=$data["business"]?></strong>
-                                </span>.
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t11" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: Arial, sans-serif">
-                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0;">
-                              <span style="color:#00bfff;">Promotion code: <strong>62b4b2e5d318d</strong></span>
-                            </p>
-                            <p style="margin: 0;">
-                              <span style="color:#00bfff;">Subscription code: <strong>sb62bdd89489a93</strong></span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t12" border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                    <tr>
-                      <td style="width:100%;padding-right:0px;padding-left:0px;">
-                        <div align="center" style="line-height:10px">
-                          <a href="vr" style="outline:none" tabindex="-1" target="_blank">
-                            <img alt="<?=$data["promotion"]?>" class="big" src="<?=$data["promoimage"]?>"
-                                 style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;" title="<?=$data["promotion"]?>" width="800" />
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <table appx="t13" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tbody>
-        <tr>
-          <td>
-            <table appx="t14" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
-              <tbody>
-              <tr>
-                <td appx="t14b" class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                  <table appx="t15" border="0" cellpadding="0" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td style="padding-bottom:15px;padding-left:15px;padding-right:15px;padding-top:25px;">
-                        <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 12px; text-align: center;">
-                              <span style="color:#444444;">
-                                *<?=__("Promotion ends at {0} UTC", $data["promodateto"])?><br/>
                               </span>
                             </p>
                           </div>
