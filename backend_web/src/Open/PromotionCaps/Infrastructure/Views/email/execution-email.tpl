@@ -259,67 +259,6 @@ p {
         </tr>
         </tbody>
       </table>
-      <table appx="t22" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tbody>
-        <tr>
-          <td>
-            <table appx="t23" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
-              <tbody>
-              <tr>
-                <td appx="t24" class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                  <table appx="t25" border="0" cellpadding="3" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 10px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 10px; text-align: center;">
-                              <span style="color:#C0C0C0;">
-                                <?php
-                                $terms = trim($data["promoterms"]);
-                                $terms = explode("-", $terms);
-                                $string = [];
-                                foreach ($terms as $term){
-                                  $term = trim($term);
-                                  if ($term) $string[] = $term;
-                                }
-                                echo implode("<br />", $string);
-                                ?>
-                                <br/>
-                                <a href="<?=$data["terms_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  <?= __("Check the rest of terms and conditions")?>
-                                </a>
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t26" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 12px; text-align: center;">
-                              <span style="color:#C0C0C0;">
-                                <?= __("Changed your mind? You can")?>
-                                <a href="<?=$data["unsubscribe_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank"><?= __("unsubscribe")?></a>
-                                 <?= __("at any time")?>.
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        </tbody>
-      </table>
       <table appx="t27" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
