@@ -66,6 +66,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
         $link = "http://localhost:900/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
         $data["points_link"] = $link;
+
+        $link = "http://localhost:900/promotion/{$data["promocode"]}/cancel/{$data["subscode"]}";
+        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $data["unsubscribe_link"] = $link;
+
+        $link = "http://localhost:900/terms-and-conditions/{$data["promoslug"]}";
+        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $data["terms_link"] = $link;
+
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"on_confirmation");
         /**
