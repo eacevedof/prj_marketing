@@ -222,7 +222,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_getfields([
                 "pu.id AS idcapuser, pu.uuid AS capusercode, pu.email, pu.name1 AS username",
                 "ps.id AS subsid, ps.uuid AS subscode, ps.date_confirm, ps.date_execution, ps.code_execution AS execode",
-                "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business",
+                "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business, bd.user_logo_1 AS businesslogo",
                 "bd.url_social_fb AS urlfb, bd.url_social_ig AS urlig, bd.url_social_twitter AS urltwitter, bd.url_social_tiktok AS urltiktok",
                 "p.uuid AS promocode, p.slug AS promoslug, p.description AS promotion",
             ])
