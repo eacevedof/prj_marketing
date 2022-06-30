@@ -46,10 +46,10 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
         $repopromo = RF::get(PromotionRepository::class);
         switch ($domevent->id_type_prev()) {
             case PromotionCapActionType::SUBSCRIBED:
-                $repopromo->decrease_subscribed($domevent->aggregate_id());
+                $repopromo->decrease_subscribed($domevent->id_promotion());
             break;
             case PromotionCapActionType::CONFIRMED:
-                $repopromo->decrease_confirmed($domevent->aggregate_id());
+                $repopromo->decrease_confirmed($domevent->id_promotion());
             break;
         }
     }

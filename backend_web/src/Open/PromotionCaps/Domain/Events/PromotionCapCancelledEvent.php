@@ -5,14 +5,14 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 
 final class PromotionCapCancelledEvent extends AbsEvent
 {
-    private string $subsuuid;
+    private int $idpromotion;
     private string $idtypeprev;
     private int $istest;
 
     public function __construct(
         int $idcapuser,
 
-        string $subsuuid,
+        int $idpromotion,
         string $idtypeprev,
         int $istest,
 
@@ -23,7 +23,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
     )
     {
         parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->subsuuid = $subsuuid;
+        $this->idpromotion = $idpromotion;
         $this->idtypeprev = $idtypeprev;
         $this->istest = $istest;
     }
@@ -44,7 +44,7 @@ final class PromotionCapCancelledEvent extends AbsEvent
     {
         return new self(
             $aggregateId,
-            $body["subsuuid"],
+            $body["id_promotion"],
             $body["id_type_prev"],
             $body["is_test"],
             $eventId,
@@ -57,15 +57,15 @@ final class PromotionCapCancelledEvent extends AbsEvent
     public function to_primitives(): array
     {
         return [
-            "subsuuid" => $this->subsuuid,
+            "id_promotion" => $this->idpromotion,
             "id_type_prev" => $this->idtypeprev,
             "is_test" => $this->istest,
         ];
     }
 
-    public function subscription_uuid(): string
+    public function id_promotion(): string
     {
-        return $this->subsuuid;
+        return $this->idpromotion;
     }
 
     public function id_type_prev(): string
