@@ -49,6 +49,7 @@ final class PromotionCountersEventHandler extends AppService implements IEventSu
                 $repopromo->decrease_subscribed($domevent->id_promotion());
             break;
             case PromotionCapActionType::CONFIRMED:
+                $repopromo->decrease_subscribed($domevent->id_promotion());
                 $repopromo->decrease_confirmed($domevent->id_promotion());
             break;
         }
