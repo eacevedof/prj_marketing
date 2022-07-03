@@ -151,6 +151,8 @@ final class CreateAppPromotionUi extends AbsMigration
             ->addIndex(["id", "uuid"], ["name"=>"id__uuid_idx"])
             ->update()
         ;
+
+        $this->_initial_load();
     }
 
 
