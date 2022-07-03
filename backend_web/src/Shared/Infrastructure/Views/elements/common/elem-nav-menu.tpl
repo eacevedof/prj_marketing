@@ -32,13 +32,13 @@ if ($authuser):
               <?=__("Modules")?><i class="fe fe-chevron-down horizontal-icon"></i>
             </a>
             <ul class="sub-menu">
-              <?
+              <?php
               foreach ($topmenu as $config):
-                $title = $config["title"];
-                $url = $config["search"];
+                $title = $config["title"] ?? "";
+                $url = $config["search"] ?? "";
               ?>
               <li aria-haspopup="true"><a href="<?=$url?>" class="slide-item"><?=$title?></a></li>
-              <?
+              <?php
               endforeach;
               ?>
             </ul>
