@@ -140,6 +140,15 @@ final class CreateBaseUser extends AbsMigration
             "default" => null,
         ])*/
         ->create();
+
+        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
+            ->addIndex(["email"], ["name"=>"email_idx"])
+            ->addIndex(["secret"], ["name"=>"secret_idx"])
+            ->addIndex(["description"], ["name"=>"description_idx"])
+            ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
+            ->update()
+        ;
     }
 
     private function _initial_load(): void
