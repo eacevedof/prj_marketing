@@ -13,6 +13,8 @@ run help
 ```
 - migrations
 ```
+cd $PATHWEB/db; phinx migrate -e testing
+o
 make ssh-be
 run-migrate
 ```

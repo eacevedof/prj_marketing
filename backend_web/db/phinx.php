@@ -10,8 +10,7 @@
  * vendor/bin/phinx create MyFirstMigration
  * vendor/bin/phinx migrate -e development
  *
- * dentro de la carpeta ssh-be/../db
- * $PATHWEB/vendor/bin/phinx migrate -e testing
+ * cd $PATHWEB/db; phinx migrate -e testing
 */
 $dir = __DIR__;
 
@@ -46,7 +45,7 @@ return [
         "testing" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",
-            "name" => "db_marketing_test",
+            "name" => "db_anytest",
             "user" => "root",
             "pass" => "1234",
             "port" => 3306,
