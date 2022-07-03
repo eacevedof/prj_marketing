@@ -42,6 +42,12 @@ final class CreateAppBusinessAttribute extends AbsMigration
             "default" => null,
         ])
         ->create();
+
+        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["id_business"], ["name"=>"id_business_idx"])
+            ->addIndex(["attr_key"], ["name"=>"attr_key_idx"])
+            ->update()
+        ;
     }
 
     private function _initial_load(): void
