@@ -142,6 +142,7 @@ final class CreateBaseUser extends AbsMigration
         ->create();
 
         $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
             ->addIndex(["uuid"], ["name"=>"uuid_idx"])
             ->addIndex(["email"], ["name"=>"email_idx"])
             ->addIndex(["secret"], ["name"=>"secret_idx"])
