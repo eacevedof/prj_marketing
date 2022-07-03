@@ -54,8 +54,7 @@ final class CreateBaseArray extends AbsMigration
         ])
         ->create();
 
-        $table
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
+        $table->addIndex(["uuid"], ["name"=>"uuid_idx"])
             ->addIndex(["type"], ["name"=>"type_idx"])
             ->addIndex(["id_pk"], ["name"=>"id_pk_idx"])
             ->addIndex(["description"], ["name"=>"description_idx"])
