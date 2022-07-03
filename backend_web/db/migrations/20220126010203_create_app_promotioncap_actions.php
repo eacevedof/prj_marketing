@@ -65,6 +65,16 @@ final class CreateAppPromotioncapActions extends AbsMigration
             "default" => "CURRENT_TIMESTAMP"
         ])
         ->create();
+
+        $table
+            ->addIndex(["id_promotion"], ["name"=>"id_promotion_idx"])
+            ->addIndex(["id_promouser"], ["name"=>"id_promouser_idx"])
+            ->addIndex(["id_type"], ["name"=>"id_type_idx"])
+            ->addIndex(["is_test"], ["name"=>"is_test_idx"])
+            ->update()
+        ;
+
+        $this->_initial_load();
     }
 
     private function _initial_load(): void {}
