@@ -66,7 +66,7 @@ final class CreateAppPromotionUrls extends AbsMigration
             ->addIndex(["description"], ["name"=>"description_idx"])
             ->addIndex(["id_promotion"], ["name"=>"id_promotion_idx"])
             ->addIndex(["id_type"], ["name"=>"id_type_idx"])
-            ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
+            ->addIndex(["id", "uuid"], ["name"=>"id__uuid_idx"])
             ->update()
         ;
     }
