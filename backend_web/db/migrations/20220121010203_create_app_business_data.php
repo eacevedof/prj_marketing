@@ -140,7 +140,6 @@ final class CreateAppBusinessData extends AbsMigration
         ->create();
 
         $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
             ->addIndex(["uuid"], ["name"=>"uuid_idx"])
             ->addIndex(["id_user"], ["name"=>"id_user_idx"])
             ->addIndex(["slug"], ["name"=>"slug_idx"])
