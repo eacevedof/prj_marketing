@@ -68,7 +68,7 @@ final class AppView
         $parts = array_reverse($parts);
         unset($parts[0]); unset($parts[1]);
         $parts = array_reverse($parts);
-        $parts[] = "views";
+        $parts[] = "Views";
         $strcontroller = implode(DS, $parts);
         $this->pathtpl["viewfolder"] = PATH_SRC."/$strcontroller";
     }
