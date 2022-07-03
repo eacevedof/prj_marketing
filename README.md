@@ -79,12 +79,12 @@ tooltip.css
 </div>
 ```
 
-### connect db_marketing
+### connect db_mypromos
 ```sh
 # conecta con cont-mariadb-univ
 mysql -u root -p'1234' \
         -h host.docker.internal -P 3306 \
-        -D db_marketing
+        -D db_mypromos
 ```
 ### msmtp
 ```sh

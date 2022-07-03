@@ -27,7 +27,7 @@ return [
         "production" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",
-            "name" => "db_marketing",
+            "name" => "db_mypromos",
             "user" => "root",
             "pass" => "1234",
             "port" => 3306,
@@ -36,7 +36,7 @@ return [
         "development" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",
-            "name" => "db_marketing",
+            "name" => "db_mypromos",
             "user" => "root",
             "pass" => "1234",
             "port" => 3306,

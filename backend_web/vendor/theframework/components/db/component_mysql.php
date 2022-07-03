@@ -51,7 +51,7 @@ final class ComponentMysql
         foreach($config as $sK=>$sV)
             $strcon .= "$sK=$sV;";
 
-        //mysql:host=cont-mariadb-univ;dbname=db_marketing;port=3306;
+        //mysql:host=cont-mariadb-univ;dbname=db_mypromos;port=3306;
         return $strcon;
     }//_get_config_string
 

@@ -9,13 +9,13 @@
     "schemas":[
       {
         "alias": "db-marketing",
-        "database":"db_marketing",
+        "database":"db_mypromos",
         "user":"root",
         "password":"1234"
       },
       {
         "alias": "db-marketing-log",
-        "database":"db_marketing_log",
+        "database":"db_mypromos_log",
         "user":"root",
         "password":"1234"
       }

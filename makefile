@@ -14,10 +14,10 @@ ps:
 	docker ps | grep marketing
 
 save-db: ## copia el dump a la carpeta db
-	cp ${HOME}/dockercfg/db_dumps/db_marketing.sql ./backend_web/db
+	cp ${HOME}/dockercfg/db_dumps/db_mypromos.sql ./backend_web/db
 
 restore-db: ## copia el dump a la carpeta db
-	cp ./backend_web/db/db_marketing.sql ${HOME}/dockercfg/db_dumps
+	cp ./backend_web/db/db_mypromos.sql ${HOME}/dockercfg/db_dumps
 
 rebuild: ## rebuild containers
 	docker-compose --env-file ./docker/.env -f docker-compose.yml down
