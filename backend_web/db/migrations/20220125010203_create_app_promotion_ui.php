@@ -142,6 +142,15 @@ final class CreateAppPromotionUi extends AbsMigration
             "default" => 100,
         ])
         ->create();
+
+        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
+            ->addIndex(["id_owner"], ["name"=>"id_owner_idx"])
+            ->addIndex(["description"], ["name"=>"description_idx"])
+            ->addIndex(["id_promotion"], ["name"=>"id_promotion_idx"])
+            ->addIndex(["id", "uuid"], ["name"=>"id__uuid_idx"])
+            ->update()
+        ;
     }
 
 
