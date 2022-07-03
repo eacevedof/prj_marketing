@@ -123,6 +123,7 @@ final class FuncEmailComponent extends AbsEmail
 
                 $this->emails_to = implode(", ",$this->emails_to);
                 $r = mail($this->emails_to, $this->subject, $content, $header);
+                dd($r);
                 if(!$r) {
                     $this->_add_error("Error sending email!");
                     $this->_add_error(error_get_last());
