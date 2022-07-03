@@ -89,11 +89,24 @@ final class CreateAppPromotioncapUsers extends AbsMigration
             "comment" => "0: no, 1: yes",
         ])
         ->create();
+
+        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
+            ->addIndex(["id_owner"], ["name"=>"id_owner_idx"])
+            ->addIndex(["id_promotion"], ["name"=>"id_promotion_idx"])
+            ->addIndex(["id_language"], ["name"=>"id_language_idx"])
+            ->addIndex(["id_country"], ["name"=>"id_country_idx"])
+            ->addIndex(["email"], ["name"=>"email_idx"])
+            ->addIndex(["is_mailing"], ["name"=>"is_mailing_idx"])
+            ->addIndex(["name1"], ["name"=>"name1_idx"])
+            ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
+            ->update()
+        ;
+
+        $this->_initial_load();
     }
 
-    private function _initial_load(): void
-    {
-    }
+    private function _initial_load(): void { }
 
     public function down(): void
     {
