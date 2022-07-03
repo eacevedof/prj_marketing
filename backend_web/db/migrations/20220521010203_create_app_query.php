@@ -20,7 +20,7 @@ final class CreateAppQuery extends AbsMigration
             "primary_key" => ["id"]
         ]);
 
-        $this->addColumn("insert_platform", "string", [
+        $table->addColumn("insert_platform", "string", [
             "limit" => 3,
             "default" => 1,
             "null" => true,
