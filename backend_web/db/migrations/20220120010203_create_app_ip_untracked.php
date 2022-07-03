@@ -65,6 +65,13 @@ final class CreateAppIpUntracked extends AbsMigration
             "default"=> 1,
         ])
         ->create();
+
+        $table
+            ->addIndex(["id_user"], ["name"=>"id_user_idx"])
+            ->addIndex(["id_owner"], ["name"=>"id_owner_idx"])
+            ->addIndex(["remote_ip"], ["name"=>"remote_ip_idx"])
+            ->update()
+        ;
     }
 
     private function _initial_load(): void { }
