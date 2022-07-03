@@ -60,6 +60,7 @@ final class CreateBaseArray extends AbsMigration
             ->addIndex(["description"], ["name"=>"description_idx"])
             ->addIndex(["order_by"], ["name"=>"order_by_idx"])
             ->addIndex(["id","type"], ["name"=>"id__type_idx"])
+            ->update()
         ;
     }
     
