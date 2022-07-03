@@ -1,14 +1,14 @@
 [
   {
     "id":"c1",
-    "alias":"db-marketing",
-    "description":"Main db for MARKETING",
+    "alias":"db-mypromos",
+    "description":"Main db for My Promotions",
     "type":"mysql",
     "server":"cont-mariadb-univ",
     "port":"3306",
     "schemas":[
       {
-        "alias": "db-marketing",
+        "alias": "db-mypromos",
         "database":"db_mypromos",
         "user":"root",
         "password":"1234"

@@ -5,7 +5,7 @@
 $this->_element("restrict/elem-bowdisabled");
 ?>
 <div id="dashboard" class="row row-sm">
-  <?
+  <?php
   $i=0;
   foreach ($modules as $module => $config):
     $i++;
@@ -23,20 +23,28 @@ $this->_element("restrict/elem-bowdisabled");
           <i class="las <?=$icon?> tx-16 me-1"></i>
         </div>
         <div class="card-footer p-1">
-          <?if ($search):?>
+          <?php
+          if ($search):
+          ?>
           <a href="<?=$search?>" class="btn btn-primary btn-block"><?=__("Search")?></a>
-          <?endif;?>
-          <?if ($create):?>
+          <?php
+          endif;
+          if ($create):
+          ?>
           <button href="<?=$create?>" class="btn btn-success btn-block" approle="add-item"><?=__("Add")?></button>
-          <?endif;?>
-          <?if ($edit):?>
+          <?php
+          endif;
+          if ($edit):
+          ?>
             <button href="<?=$edit?>" class="btn btn-success btn-block" approle="add-item"><?=__("Edit")?></button>
-          <?endif;?>
+          <?php
+          endif;
+          ?>
         </div>
       </div>
     </div>
   </div>
-  <?
+  <?php
   endforeach;
   ?>
 </div>
