@@ -189,6 +189,20 @@ final class CreateAppPromotion extends AbsMigration
             "comment" => "why is disabled",
         ])
         ->create();
+
+        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
+            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
+            ->addIndex(["id_owner"], ["name"=>"id_owner_idx"])
+            ->addIndex(["description"], ["name"=>"description_idx"])
+            ->addIndex(["slug"], ["name"=>"slug_idx"])
+            ->addIndex(["date_from"], ["name"=>"date_from_idx"])
+            ->addIndex(["date_to"], ["name"=>"date_to_idx"])
+            ->addIndex(["disabled_date"], ["name"=>"disabled_date_idx"])
+            ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
+            ->addIndex(["date_from","date_to"], ["name"=>"date_from__date_to_idx"])
+            ->update()
+        ;
     }
 
     private function _initial_load(): void { }
