@@ -41,6 +41,12 @@ final class CreateBaseUserPreferences extends AbsMigration
             "default" => null,
         ])
         ->create();
+
+        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["id_user"], ["name"=>"id_user_idx"])
+            ->addIndex(["pref_key"], ["name"=>"pref_key_idx"])
+            ->update()
+        ;
     }
 
     private function _initial_load(): void
