@@ -13,13 +13,14 @@ final class CreateAppQueryActions extends AbsMigration
 
     private function _create_table(): void
     {
-        $this->table("{$this->tablename}", [
+        $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
             "id"=> false,
             "primary_key" => ["id"]
-        ])
-        ->addColumn("insert_platform", "string", [
+        ]);
+
+        $table->addColumn("insert_platform", "string", [
             "limit" => 3,
             "default" => 1,
             "null" => true,
@@ -55,9 +56,12 @@ final class CreateAppQueryActions extends AbsMigration
             "null" => true,
             "comment" => "payload de columnas"
         ])
-        ->addIndex(["id","id_query"], ["name"=>"id__id_query_idx"])
-        ->addIndex(["id_query"], ["name"=>"id_query_idx"])
         ->create();
+
+        $table
+            ->addIndex(["id", "id_query"], ["name"=>"id__id_query_idx"])
+            ->addIndex(["id_query"], ["name"=>"id_query_idx"])
+            ->update();
     }
 
     public function down(): void
