@@ -58,6 +58,18 @@ final class CreateAppArray extends AbsMigration
             "null" => true,
         ])
         ->create();
+
+        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
+            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
+            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
+            ->addIndex(["type"], ["name"=>"type_idx"])
+            ->addIndex(["id_pk"], ["name"=>"id_pk_idx"])
+            ->addIndex(["description"], ["name"=>"description_idx"])
+            ->addIndex(["id_owner"], ["name"=>"id_owner"])
+            ->addIndex(["order_by"], ["name"=>"order_by_idx"])
+            ->addIndex(["id","type"], ["name"=>"id__type_idx"])
+            ->update()
+        ;
     }
 
     private function _initial_load(): void
