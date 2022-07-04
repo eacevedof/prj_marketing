@@ -118,10 +118,8 @@ php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 config .env a partir de .env.prod
 # el error de dominio viene pq los ficheros .json no son los del env
 
-# fichero ~/php.ini
-sendmail_path=/usr/bin/msmtp -t -i -X $HOME/mail.log -d >> $HOME/msmtp.log
 
-# fichero ~/.msmtprc
+# fichero $HOME/.msmtprc
 defaults
 auth on
 tls on
@@ -136,6 +134,16 @@ port 587
 from xxx@gmail.com 
 user xxx
 password yyy
+
+
+# fichero $HOME/php.ini 
+# (no vale $HOME en la ruta tiene q ser path-to-htdocs)
+# X configura log
+sendmail_path="/usr/bin/msmtp -t -i --file=<path-to-htdocs>/.msmtprc -X mail.log -d >> msmtp.log"
+
+# crear el enlace simbolico
+ln -s <path-to-htdocs>/php.ini <path-to-htdocs>/xxx/public/php.ini
+ln -s <path-to-htdocs>/php.ini <path-to-htdocs>/xxx/console/php.ini
 
 # -c <path> indica que cargue el php.ini de esa ruta
 # -r "xxxx" ejecute ese codigo sin necesidad de tags <??>
