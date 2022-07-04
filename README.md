@@ -110,7 +110,7 @@ password 1234
 
 account default:gmail
 
-echo "hello world" | /usr/bin/msmtp xxx@yahoo.com
+echo "hello world" | /usr/bin/msmtp -d xxx@gmail.com
 php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 ```
 
