@@ -115,7 +115,7 @@ php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 ```
 ### Desplegado
 ```
-config .env
+config .env a partir de .env.prod
 config
 
 # fichero ~/php.ini
