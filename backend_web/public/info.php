@@ -3,4 +3,4 @@
 $r = mail("eacevedof@gmail.com","titulo","mensaje");
 
 print_r("result: $r .");
-//phpinfo();
+phpinfo();
