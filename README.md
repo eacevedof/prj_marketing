@@ -115,6 +115,9 @@ php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 ```
 ### Desplegado
 ```
+config .env
+config
+
 # fichero ~/php.ini
 sendmail_path=/usr/bin/msmtp -t -i -X $HOME/mail.log -d >> $HOME/msmtp.log
 
