@@ -18,6 +18,13 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 {
     use LogTrait;
 
+    private string $domain = "";
+    
+    public function __construct()
+    {
+        $this->domain = "https://".getenv("APP_DOMAIN");
+    }
+
     private function _on_subscription(IEvent $domevent): void
     {
         if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return;
@@ -28,15 +35,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
 
-        $link = "http://localhost:900/promotion/{$data["promocode"]}/confirm/{$data["subscode"]}";
+        $link = "{$this->domain}/promotion/{$data["promocode"]}/confirm/{$data["subscode"]}";
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
 
-        $link = "http://localhost:900/promotion/{$data["promocode"]}/cancel/{$data["subscode"]}";
+        $link = "{$this->domain}/promotion/{$data["promocode"]}/cancel/{$data["subscode"]}";
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
-        $link = "http://localhost:900/terms-and-conditions/{$data["promoslug"]}";
+        $link = "{$this->domain}/terms-and-conditions/{$data["promoslug"]}";
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["terms_link"] = $link;
 
@@ -64,14 +71,14 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new \Exception("bad path $path");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
-        $link = "http://localhost:900/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
+        $link = "{$this->domain}/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
         $data["points_link"] = $link;
 
-        $link = "http://localhost:900/promotion/{$data["promocode"]}/cancel/{$data["subscode"]}";
+        $link = "{$this->domain}/promotion/{$data["promocode"]}/cancel/{$data["subscode"]}";
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
-        $link = "http://localhost:900/terms-and-conditions/{$data["promoslug"]}";
+        $link = "{$this->domain}/terms-and-conditions/{$data["promoslug"]}";
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["terms_link"] = $link;
 
@@ -99,7 +106,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new \Exception("bad path $path");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
-        $link = "http://localhost:900/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
+        $link = "{$this->domain}/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
         $data["points_link"] = $link;
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"on_confirmation");
