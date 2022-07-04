@@ -112,6 +112,11 @@ account default:gmail
 
 echo "hello world" | /usr/bin/msmtp -d xxx@gmail.com
 php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
+
+#ionos
+# -c <path> indica que cargue el php.ini de esa ruta
+# -r "xxxx" ejecute ese codigo sin necesidad de tags <??>
+php8.1-cli -c ~  -r "mail('xxx@gmail.com', 'PHP done', 'Test from PHP as wwwrun gg');"
 ```
 
 ### Errores
