@@ -89,7 +89,7 @@ final class UsersUpdateService extends AppService
         $repouser = $this->repouser;
         $this->validator
             ->add_rule("email", "email", function ($data) use ($repouser){
-                $email = trim($data["value"]);
+                $email = trim($data["value"] ?? "");
                 $uuid = $data["data"]["uuid"] ?? "";
                 $id = $repouser->get_id_by_uuid($uuid);
                 if (!$id) return __("{0} with code {1} not found", __("User"), $uuid);
@@ -98,36 +98,46 @@ final class UsersUpdateService extends AppService
                 return __("This email already exists");
             })
             ->add_rule("email", "email", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                $value = $data["value"] ?? "";
+                return $value ? false : __("Empty field is not allowed");
             })
             ->add_rule("email", "email", function ($data) {
-                return filter_var($data["value"], FILTER_VALIDATE_EMAIL) ? false : __("Invalid email format");
+                $value = $data["value"] ?? "";
+                return filter_var($value, FILTER_VALIDATE_EMAIL) ? false : __("Invalid email format");
             })
             ->add_rule("phone", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                $value = $data["value"] ?? "";
+                return $value ? false : __("Empty field is not allowed");
             })
             ->add_rule("fullname", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                $value = $data["value"] ?? "";
+                return $value ? false : __("Empty field is not allowed");
             })
             ->add_rule("birthdate", "empty", function ($data) {
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                $value = $data["value"] ?? "";
+                return $value ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_profile", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                $value = $data["value"] ?? "";
+                return $value ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_parent", "by-profile", function ($data){
-                if (($data["data"]["id_profile"] ?? "") === "4" && !trim($data["value"]))
+                $value = $data["value"] ?? "";
+                if (($data["data"]["id_profile"] ?? "") === "4" && !$value)
                     return __("Empty field is not allowed");
                 return false;
             })
             ->add_rule("id_country", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                $value = $data["value"] ?? "";
+                return $value ? false : __("Empty field is not allowed");
             })
             ->add_rule("id_language", "empty", function ($data){
-                return trim($data["value"]) ? false : __("Empty field is not allowed");
+                $value = $data["value"] ?? "";
+                return $value ? false : __("Empty field is not allowed");
             })
             ->add_rule("password", "not-equal", function ($data){
-                if(!($password = trim($data["value"]))) return false;
+                $password = $data["value"] ?? "";
+                if(!($password)) return false;
                 $password2 = trim($data["data"]["password2"] ?? "");
                 return ($password === $password2) ? false : __("Bad password confirmation");
             })
