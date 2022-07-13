@@ -1,12 +1,4 @@
 <?php
-/**
- * @author Eduardo Acevedo Farje.
- * @link eduardoaf.com
- * @name App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsController
- * @file TermsConditionsController.php v1.0.0
- * @date 30-10-2021 14:33 SPAIN
- * @observations
- */
 namespace App\Open\TermsConditions\Infrastructure\Controllers;
 
 use App\Shared\Domain\Enums\ResponseType;
