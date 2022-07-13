@@ -32,17 +32,17 @@
   <section class="section-grid center-x">
     <div class="div-texts">
       <h1><?= __("My promotions");?></h1>
-      <h2>Let us grow your marketing campaigns!.</h2>
+      <h2><?= __("Let us grow your marketing campaigns!.");?></h2>
       <p>
-        "My promotions" allows you to configure promotional landing pages with different acquisition data input.
+        <?= __("&ldquo;My promotions&ldquo; allows you to configure promotional landing pages with different acquisition data input.");?>
       </p>
       <p>
-        Once your client got subscribed it will receive a promotion code to be showed at your business.
+        <?= __("Once your client got subscribed it will receive a promotion code to be showed at your business.");?>
       </p>
       <p>
-        All your confirmed subscribers will accumulate points and you can handle these in order to increase customer loyalty.  For example by remarketing strategy.
+        <?= __("All your confirmed subscribers will accumulate points and you can handle these in order to increase customer loyalty.  For example by remarketing strategy.");?>
       </p>
-      <button id="btn-cta" class="button-cta">Join us!</button>
+      <button id="btn-cta" class="button-cta"><?= __("Join us!");?></button>
     </div>
 
     <figure class="figure-home-hero">
