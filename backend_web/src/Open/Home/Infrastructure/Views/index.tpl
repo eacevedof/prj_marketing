@@ -57,116 +57,74 @@
       <path d="M0 13.3467C139 80.6559 116 11.0538 250 37.4846C433.5 63.5143 458 25.422 500 13.3467V76.8467H0V13.3467Z" fill="white"/>
     </svg>
   </div>
-
-  <footer class="footer-flex">
-    <div class="item item-logo">
-      <a href="/"><img src="./themes/mypromo/images/provider-xxx-logo-white.svg">providerxxx.es</a></li>
-    </div>
-    <div class="item"></div>
-    <div class="item item-links">
-      <ul class="ul-links-flex">
-        <li><a href="./terms.html">Terms & conditions</a></li>
-        <li><a href="./cookies.html">Cookie policy</a></li>
-        <li><a href="./success.html">Success</a></li>
-        <li><a href="./error.html">error</a></li>
-      </ul>
-    </div>
-    <div class="item"></div>
-    <div class="item item-social">
-      <ul class="ul-social-flex">
-        <li><a href="#"><img src="./themes/mypromo/images/icon-social-fb.svg"></a></li>
-        <li><a href="#"><img src="./themes/mypromo/images/icon-social-twitter.svg"></a></li>
-        <li><a href="#"><img src="./themes/mypromo/images/icon-social-ig.svg"></a></li>
-        <li><a href="#"><img src="./themes/mypromo/images/icon-social-tiktok.svg"></a></li>
-      </ul>
-    </div>
-  </footer>
+  <?php
+  $this->_element("open/elem-footer");
+  ?>
 </main>
-<dialog class="dialog">
-  <form id="form-contact" class="form-flex">
-    <div>
-      <label for="name">Nombre *</label>
-      <input type="text" id="name" placeholder="Nicolas Cage" required="required">
-    </div>
-    <div>
-      <label for="email">Email *</label>
-      <input id="email" type="email" placeholder="nicocage@domain.com" required="required">
-    </div>
-    <div>
-      <label for="subject">Asunto *</label>
-      <input type="text" id="subject" placeholder="I would like to join" class="form-control">
-    </div>
-    <div>
-      <label for="message">Mensaje *</label>
-      <textarea id="message" placeholder="My phone is: 777 888 999. My business exports apples" required="required" rows="5" class="form-control"></textarea>
-    </div>
-    <div class="form-buttons">
-      <button id="btn-contact" class="btn btn-dark">Enviar</button>
-    </div>
-    <button type="button" id="button-exit" class="button-exit"><img src="./themes/mypromo/images/icon-close-modal.svg"></button>
-  </form>
-</dialog>
+<?php
+$this->_element_view("home-contact-form");
+?>
 <script type="module">
-  const get_cookie = name => {
-    const parts = document.cookie.split("; ")
-    const obj = parts
-        .map(str => str.split("="))
-        .filter(ar => ar[0] === name)
-        .map(ar => ar[1])
-    return obj.length ? obj[0] : null
+const get_cookie = name => {
+  const parts = document.cookie.split("; ")
+  const obj = parts
+      .map(str => str.split("="))
+      .filter(ar => ar[0] === name)
+      .map(ar => ar[1])
+  return obj.length ? obj[0] : null
+}
+const set_cookie = (name, value, days=1) => {
+  const pieces = [
+    `${name}=${value?.toString() || ""}`
+  ]
+
+  if (days) {
+    const date = new Date()
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
+    pieces.push(`expires=${date.toUTCString()}`)
   }
-  const set_cookie = (name, value, days=1) => {
-    const pieces = [
-      `${name}=${value?.toString() || ""}`
-    ]
 
-    if (days) {
-      const date = new Date()
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
-      pieces.push(`expires=${date.toUTCString()}`)
-    }
+  pieces.push("path=/")
+  document.cookie = pieces.join("; ")
+}
+const body = document.querySelector("body")
+const dialog = document.querySelector("dialog")
+const cancel = document.querySelector("#button-exit")
+const show = document.querySelector("#btn-cta")
 
-    pieces.push("path=/")
-    document.cookie = pieces.join("; ")
-  }
-  const body = document.querySelector("body")
-  const dialog = document.querySelector("dialog")
-  const cancel = document.querySelector("#button-exit")
-  const show = document.querySelector("#btn-cta")
+show.addEventListener("click", () => {
+  body.style.overflow = "hidden"
+  dialog.showModal()
+})
+cancel.addEventListener("click", () => {
+  body.style.overflow = "auto"
+  dialog.close()
+})
 
-  show.addEventListener("click", () => {
-    body.style.overflow = "hidden"
-    dialog.showModal()
+const langs = Array.from(document.querySelectorAll("a[lang]"))
+langs.forEach(anchor => anchor.addEventListener("click", ()=>{
+  set_cookie("lang", anchor.lang)
+  location.reload()
+}))
+
+//show.click()
+window.addEventListener("DOMContentLoaded", ()=>{
+  let lang = get_cookie("lang")
+  if (!lang) lang = "es"
+  set_cookie("lang", lang)
+
+  const active = "nav-li-item-active"
+  langs.forEach(anchor => {
+    const li = anchor.parentNode
+    li.classList.remove("nav-li-item-active")
+    if (anchor?.lang?.toLowerCase() === lang.toString().toLowerCase())
+      li.classList.add(active)
   })
-  cancel.addEventListener("click", () => {
-    body.style.overflow = "auto"
-    dialog.close()
-  })
+})
 
-  const langs = Array.from(document.querySelectorAll("a[lang]"))
-  langs.forEach(anchor => anchor.addEventListener("click", ()=>{
-    set_cookie("lang", anchor.lang)
-    location.reload()
-  }))
-
-  //show.click()
-  window.addEventListener("DOMContentLoaded", ()=>{
-    let lang = get_cookie("lang")
-    if (!lang) lang = "es"
-    set_cookie("lang", lang)
-
-    const active = "nav-li-item-active"
-    langs.forEach(anchor => {
-      const li = anchor.parentNode
-      li.classList.remove("nav-li-item-active")
-      if (anchor?.lang?.toLowerCase() === lang.toString().toLowerCase())
-        li.classList.add(active)
-    })
-  })
-
-  const form = document.getElementById("form-contact")
-  form.addEventListener("submit", e => {
-    e.preventDefault()
-    alert("...sent data")
-  })
+const form = document.getElementById("form-contact")
+form.addEventListener("submit", e => {
+  e.preventDefault()
+  alert("...sent data")
+})
 </script>
