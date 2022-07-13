@@ -31,7 +31,7 @@
 
   <section class="section-grid center-x">
     <div class="div-texts">
-      <h1>My promotions</h1>
+      <h1><?= __("My promotions");?></h1>
       <h2>Let us grow your marketing campaigns!.</h2>
       <p>
         "My promotions" allows you to configure promotional landing pages with different acquisition data input.
