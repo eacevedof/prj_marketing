@@ -9,4 +9,9 @@ final class TermsConditionsInfoService extends AppService
     {
         return [];
     }
+
+    public function get_by_promotion(): array
+    {
+        return [];
+    }
 }
