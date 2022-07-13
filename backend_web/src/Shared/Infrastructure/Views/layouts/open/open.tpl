@@ -13,11 +13,14 @@
   <title><?=$pagetitle ?? ""?></title>
   <link rel="stylesheet" href="./themes/mypromo/css/global.css" type="text/css" media="all" />
   <link rel="stylesheet" href="./themes/mypromo/css/footer.css" type="text/css" media="all" />
+  <?php
+  echo $this->_element("open/gtag-js");
+  ?>
   <!-- js -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <?= $this->_asset_js_module([
-      "common/snackbar"
-  ]) ?>
+  <?php
+  echo $this->_asset_js_module(["common/snackbar"]);
+  ?>
 </head>
 <?php
 $this->_template();
