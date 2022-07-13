@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700&display=swap");
+
+:root {
+    --color-white: #FFFFFF;
+    --color-clear-blue: #00C6FB;
+    --color-dark-blue: #005EEA;
+    --color-clear-black: #303030;
+    --color-yellow: #FFFF00FF;
+    --color-black: #000000;
+    --color-orange: #E65C00;
+    --color-green-alpha: rgba(0,255,0,0.36);
+    --color-black-alpha: rgba(0,0,0,0.36);
+    --color-clear-green: #9ACD32FF;
+    --color-clear-green-alpha: rgba(159, 252, 6, 1);
+    --color-clear-orange: #FFA500FF;
+    --color-red-error: #FF0033;
+}
+
+::backdrop {
+    --color-black: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+    font-family: "Urbanist", sans-serif;
+}
+
+a {
+    text-decoration: underline;
+    color: var(--color-white);
+    text-underline-offset: 2px;
+}
+a:link, a:visited {
+    color: var(--color-white);
+}
+a:hover {
+    color: var(--color-clear-blue);
+}
+
+.center-x {
+    width: 95%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+
+.div-totop {
+    position: fixed !important;
+    bottom: 45px;
+    right: 15px;
+    display: none;
+    z-index: 2;
+}
+
+.div-totop a {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 6px 0px;
+    border-radius: 15px;
+    font-size: 18px;
+    text-align: center;
+}

@@ -1,0 +1,15 @@
+.main-grid {
+  background-image: url("../images/success-background.png");
+}
+
+.section-grid .div-texts {
+  background-color: var(--color-clear-green);
+  color: var(--color-clear-black);
+  width: 80%;
+}
+
+@media (max-width: 800px) {
+  .main-grid {
+    background-image: url("../images/success-background-vertical-streched.png");
+  }
+}

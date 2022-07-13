@@ -1,0 +1,13 @@
+.main-grid {
+  background-image: url("../images/terms-background.png");
+}
+
+.section-scrumbs ul li a {
+  color: var(--color-white);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.section-grid .div-texts {
+  border: 2px solid var(--color-clear-blue);
+}

@@ -1,0 +1,15 @@
+.main-grid {
+  background-image: url("../images/error-background.png");
+}
+
+.section-scrumbs ul li a {
+  color: var(--color-white);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.section-grid .div-texts {
+  background-color: var(--color-red-error);
+  color: var(--color-white);
+  width: 80%;
+}
