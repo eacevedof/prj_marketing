@@ -17,7 +17,6 @@ final class PromotionCapCreateController extends OpenController
 {
     public function create(string $businessslug, string $promotionslug): void
     {
-        //phpinfo();die;
         $picklist = SF::get(PicklistService::class);
         try {
             $promotioncap = SF::get_callable(PromotionCapInfoService::class, [
@@ -36,21 +35,25 @@ final class PromotionCapCreateController extends OpenController
                 ->add_var("countries", $picklist->get_countries());
 
             unset($promotioncap, $businessdata, $result, $title, $picklist, $businessslug, $promotionslug);
-            $this->view->render();
+            $this->render();
         }
         catch (PromotionCapException $e) {
-            $this->set_layout("open/promotioncaps")
-                ->add_header($e->getCode())
-                ->add_var(PageType::H1, __("Warning!"))
+            $this->add_header($e->getCode())
+                ->set_layout("open/error")
+                ->add_var(PageType::TITLE, $title = __("Subscription error!"))
+                ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
                 ->render();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+                ->set_layout("open/error")
+                ->add_var(PageType::TITLE, $title = __("Unexpected error"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
+                ->render();
         }
     }
 }

@@ -2,12 +2,10 @@
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var string $title
- * @var string $description
+ * @var string $error
 */
 ?>
-<div>
 <?php
 echo isset($title) ? "<h1>$title</h1>" : "";
-echo isset($description) ? "<p>$description</p>" : "";
+echo isset($error) ? "<p>$error</p>" : "";
 ?>
-</div>

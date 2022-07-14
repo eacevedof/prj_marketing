@@ -3,10 +3,6 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
-
-if (isset($error))
-  $this->_element("open/elem-error-exit", ["messages"=>$error]);
-
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
 use App\Shared\Infrastructure\Helpers\PromotionUiHelper as PH;

@@ -11,16 +11,11 @@
   <link rel="icon" href="/themes/mypromo/images/provider-xxx-logo-orange.svg"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/themes/mypromo/css/global.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/sp-main.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/sp-wave-top.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/sp-nav.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/sp-scrums.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/sp-section.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/footer.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/sp-animation.css" type="text/css" media="all" />
+  <?php
+  $this->_element("open/elem-css-common");
+  ?>
   <link rel="stylesheet" href="/themes/mypromo/css/error.css" type="text/css" media="all" />
-  <title>Error</title>
+  <title><?php $this->_echo($pagetitle);?></title>
 </head>
 <body>
 <main class="main-grid">
@@ -43,9 +38,24 @@ $this->_element("open/elem-scrums");
   <section class="section-grid center-x">
     <div class="div-texts">
       <img src="/themes/mypromo/images/icon-error.svg" class="icon">
+      <h1><?php $this->_echo($h1); ?></h1>
       <?php
-      $this->_template();
+      if (is_string($error)) $this->_echo("<p>$error</p>");
+      if (is_array($error)) {
+        foreach ($error as $part) {
+          if (is_string($part)) $this->_echo("<p>$part</p>");
+          elseif (is_array($part)) {
+            $h2 = $part["h2"] ?? "";
+            if ($h2) $this->_echo("<h2>$h2</h2>");
+            $h3 = $part["h3"] ?? "";
+            if ($h3) $this->_echo("<h3>$h3</h3>");
+            $p = $part["p"] ?? "";
+            if ($p) $this->_echo("<p>$p</p>");
+          }
+        }
+      }
       ?>
+      <span class="code">[ <?php $this->_echo($code); ?> ]</span>
     </div>
   </section>
   <?php
@@ -63,21 +73,9 @@ $this->_element("open/elem-animation");
     </svg>
   </a>
 </div>
-<script type="module">
-  const ishow = 50
-  const $divtop = document.getElementById("div-totop")
-  window.addEventListener("scroll", function() {
-    if (!$divtop) return
-    $divtop.style.display = "none"
-    if(document.documentElement.scrollTop > ishow){
-      $divtop.style.display = "inherit"
-    }
-  })
-</script>
-<script>
-  const animation = document.querySelector(".ul-circles")
-  animation.style.height = document.body.offsetHeight.toString().concat("px")
-</script>
+<?php
+$this->_element("open/elem-js-center-y");
+?>
 </body>
 </html>
 <!-- /error.tpl -->
