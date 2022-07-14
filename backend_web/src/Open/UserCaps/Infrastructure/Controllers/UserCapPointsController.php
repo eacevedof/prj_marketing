@@ -24,28 +24,36 @@ final class UserCapPointsController extends OpenController
             ]);
             $result = $business();
 
-            $this->set_layout("open/promotioncaps")
-                ->add_var(PageType::TITLE, $title = htmlentities($result["business_name"] ?? ""))
+            $title = htmlentities($result["business_name"] ?? "");
+            $title = __("Accumulated points at {0} of {1}", $title, $result["username"]);
+            $this->set_layout("open/success")
+                ->add_var(PageType::TITLE, $title)
                 ->add_var(PageType::H1, $title)
-                ->add_var("username", $result["username"])
-                ->add_var("result", $result["result"]);
+                ->add_var("success",  [
+                    //["h2" => __("Hello {0}!", $result["username"])],
+                    ["h3" => __("You have a total of {0} points", $result["total_points"])],
+                ]);
 
             unset($business, $result, $title, $businessuuid, $capuseruuid);
-            $this->view->render();
+            $this->render();
         }
         catch (PromotionCapException $e) {
-            $this->set_layout("open/promotioncaps")
-                ->add_header($e->getCode())
-                ->add_var(PageType::H1, __("Error!"))
+            $this->add_header($e->getCode())
+                ->set_layout("open/error")
+                ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
+                ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
                 ->render();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+                ->set_layout("open/error")
+                ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
+                ->render();
         }
     }
 }

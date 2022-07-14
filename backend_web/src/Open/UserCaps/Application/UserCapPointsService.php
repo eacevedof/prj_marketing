@@ -74,14 +74,17 @@ final class UserCapPointsService extends AppService
             return [
                 "description" => $row["description"],
                 "date_execution" => $utc->get_utcdt_into_iptz($row["date_execution"], $remoteip, UTC::FORMAT_ONLY_DATE),
-                "p" => $row["p"],
+                "points" => $row["p"],
             ];
         }, $result);
 
+        $points = array_column($result, "points");
+        $points = array_sum($points);
         return [
             "username" => $this->promocapuser["name1"],
             "business_name" => $this->businesssdata["business_name"],
-            "result" => $result
+            "result" => $result,
+            "total_points" => $points,
         ];
     }
 }
