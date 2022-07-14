@@ -83,7 +83,7 @@
 }
 
 .section-grid .div-texts .table tbody tr:last-of-type {
-    border-bottom: 2px solid var(--color-clear-black);
+    border-bottom: 1px solid var(--color-yellow);
 }
 
 @media (max-width: 800px) {
