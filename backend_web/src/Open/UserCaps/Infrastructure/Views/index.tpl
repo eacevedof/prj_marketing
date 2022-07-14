@@ -8,13 +8,13 @@
 ?>
 <?php
 if (!$result) {
-  echo "<p>".__("You have no accumulated points yet")."</p>";
-  return;
+  echo "<h3>".__("You have no accumulated points yet")."</h3>";
+  //return;
 }
 ?>
 <table>
   <tr>
-    <th><?=__("Nº")?></th>
+    <th><?=__("N.")?></th>
     <th><?=__("Promotion")?></th>
     <th><?=__("Date")?></th>
     <th><?=__("Points")?></th>

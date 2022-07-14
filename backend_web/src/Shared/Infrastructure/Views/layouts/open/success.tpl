@@ -42,7 +42,7 @@
       <?php
       use App\Shared\Infrastructure\Helpers\DivTextsHelper;
       use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-      HF::get(DivTextsHelper::class)->print($success);
+      if (isset($success)) HF::get(DivTextsHelper::class)->print($success);
       $this->_template();
       ?>
     </div>
