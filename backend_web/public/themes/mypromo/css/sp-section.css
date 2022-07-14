@@ -79,7 +79,7 @@
 }
 
 .section-grid .div-texts .table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: var(--color-white);
 }
 
 .section-grid .div-texts .table tbody tr:last-of-type {
