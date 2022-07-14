@@ -15,7 +15,7 @@
   $this->_element("open/elem-css-common");
   ?>
   <link rel="stylesheet" href="/themes/mypromo/css/success.css" type="text/css" media="all" />
-  <title>Success</title>
+  <title><?php $this->_echo($pagetitle);?></title>
 </head>
 <body>
 <main class="main-grid">
@@ -32,14 +32,17 @@
       <img id="top-mark" src="/themes/mypromo/images/logo-account-yyy.png" class="nav-icon">
     </figure>
   </nav>
-<?php
-$this->_element("open/elem-scrums");
-?>
+  <?php
+  $this->_element("open/elem-scrums");
+  ?>
   <section class="section-grid center-x">
     <div class="div-texts">
-      <img src="/themes/mypromo/images/icon-error.svg" class="icon">
+      <img src="/themes/mypromo/images/icon-success.svg" class="icon">
+      <h1><?php $this->_echo($h1); ?></h1>
       <?php
-      $this->_template();
+      use App\Shared\Infrastructure\Helpers\DivTextsHelper;
+      use App\Shared\Infrastructure\Factories\HelperFactory as HF;
+      HF::get(DivTextsHelper::class)->print($success);
       ?>
     </div>
   </section>
