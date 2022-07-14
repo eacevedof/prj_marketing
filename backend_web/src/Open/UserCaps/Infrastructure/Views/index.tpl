@@ -1,17 +1,17 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
+ * @var string $total
  * @var array $result
- * @var string $h1
- * @var string $error
  */
 ?>
 <?php
-if (!$result) {
+if (!$total) {
   echo "<h3>".__("You have no accumulated points yet")."</h3>";
-  //return;
+  return;
 }
 ?>
+<h3><?=__("Total accumulated points: {0}", $total)?></h3>
 <table class="table">
   <thead>
   <tr>

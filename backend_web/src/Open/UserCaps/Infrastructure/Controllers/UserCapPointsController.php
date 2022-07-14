@@ -29,6 +29,7 @@ final class UserCapPointsController extends OpenController
             $this->set_layout("open/success")
                 ->add_var(PageType::TITLE, $title)
                 ->add_var(PageType::H1, $title)
+                ->add_var("total", $result["total_points"])
                 ->add_var("result", $result["result"]);
 
             unset($business, $result, $title, $businessuuid, $capuseruuid);
