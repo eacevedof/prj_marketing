@@ -15,7 +15,7 @@ final class TermsConditionsInfoController extends OpenController
     {
         try {
             $terms = SF::get_callable(TermsConditionsInfoService::class)();
-            $this->set_layout("open/business")
+            $this->set_layout("open/open")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
