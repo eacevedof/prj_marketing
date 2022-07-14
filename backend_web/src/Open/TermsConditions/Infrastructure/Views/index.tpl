@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="./themes/mypromo/css/sp-section.css" type="text/css" media="all" />
 <link rel="stylesheet" href="./themes/mypromo/css/footer.css" type="text/css" media="all" />
 <link rel="stylesheet" href="./themes/mypromo/css/sp-animation.css" type="text/css" media="all" />
-<link rel="stylesheet" href="./themes/mypromo/css/terms.css" type="text/css" media="all" />
+<link rel="stylesheet" href="./themes/mypromo/css/sp.css" type="text/css" media="all" />
+
 <main class="main-grid">
   <div class="div-wave-top">
     <svg viewBox="25 0 550 150" preserveAspectRatio="none" style="height: 300%; width: 110%;">
@@ -141,43 +142,13 @@
     </div>
   </section>
 
-  <footer class="footer-flex">
-    <div class="item item-logo">
-      <a href="./"><img src="./images/provider-xxx-logo-white.svg">providerxxx.es</a></li>
-    </div>
-    <div class="item"></div>
-    <div class="item item-links">
-      <ul class="ul-links-flex">
-        <li><a href="./terms.html">Terms & conditions</a></li>
-        <li><a href="./success.html">Success</a></li>
-        <li><a href="./error.html">error</a></li>
-      </ul>
-    </div>
-    <div class="item"></div>
-    <div class="item item-social">
-      <ul class="ul-social-flex">
-        <li><a href="#"><img src="./images/icon-social-fb.svg"></a></li>
-        <li><a href="#"><img src="./images/icon-social-twitter.svg"></a></li>
-        <li><a href="#"><img src="./images/icon-social-ig.svg"></a></li>
-        <li><a href="#"><img src="./images/icon-social-tiktok.svg"></a></li>
-      </ul>
-    </div>
-  </footer>
+<?php
+$this->_element("open/elem-footer");
+?>
 </main>
-<section class="section-animated-bg">
-  <ul class="ul-circles">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
-</section>
+<?php
+$this->_element("open/elem-animation");
+?>
 <div id="div-totop" class="div-totop">
   <a href="#top-mark">
     <svg width="60" height="60" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">

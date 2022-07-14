@@ -12,8 +12,6 @@
     <ul class="ul-links-flex">
       <li><a href="/terms-and-conditions">Terms & conditions</a></li>
       <li><a href="/cookies-policy">Cookie policy</a></li>
-      <li><a href="/success.html">Success</a></li>
-      <li><a href="/error.html">error</a></li>
     </ul>
   </div>
   <div class="item"></div>

@@ -15,8 +15,8 @@ final class CookiesPolicyInfoController extends OpenController
     {
         try {
             $terms = SF::get_callable(CookiesPolicyInfoService::class)();
-            $this->set_layout("open/business")
-                ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
+            $this->set_layout("open/open")
+                ->add_var(PageType::TITLE, $title = __("Cookies Policy"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
                 ->render();
