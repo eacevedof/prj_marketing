@@ -40,20 +40,9 @@ $this->_element("open/elem-scrums");
       <img src="/themes/mypromo/images/icon-error.svg" class="icon">
       <h1><?php $this->_echo($h1); ?></h1>
       <?php
-      if (is_string($error)) $this->_echo("<p>$error</p>");
-      if (is_array($error)) {
-        foreach ($error as $part) {
-          if (is_string($part)) $this->_echo("<p>$part</p>");
-          elseif (is_array($part)) {
-            $h2 = $part["h2"] ?? "";
-            if ($h2) $this->_echo("<h2>$h2</h2>");
-            $h3 = $part["h3"] ?? "";
-            if ($h3) $this->_echo("<h3>$h3</h3>");
-            $p = $part["p"] ?? "";
-            if ($p) $this->_echo("<p>$p</p>");
-          }
-        }
-      }
+      use App\Shared\Infrastructure\Helpers\DivTextsHelper;
+      use App\Shared\Infrastructure\Factories\HelperFactory as HF;
+      HF::get(DivTextsHelper::class)->echo($error);
       ?>
       <span class="code">[ <?php $this->_echo($code); ?> ]</span>
     </div>
