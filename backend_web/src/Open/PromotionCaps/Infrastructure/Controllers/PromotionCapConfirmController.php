@@ -31,9 +31,12 @@ final class PromotionCapConfirmController extends OpenController
             ]);
             $result = $insert();
             $this->set_layout("open/success")
-                ->add_var(PageType::TITLE, __("Subscription success!"))
-                ->add_var(PageType::H1, htmlentities($result["promotion"]))
-                ->add_var("result", $result);
+                ->add_var(PageType::TITLE, $title = __("Subscription confirmation success!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("success",  [
+                    ["p" => __("<b>{0}</b>. You have successfully confirmed your subscription to <b>&ldquo;{1}&rdquo;</b>", $result["username"], $result["promotion"])],
+                    ["p" => __("Please check your email inbox. You will receive a voucher code in order to show it at <b>{0}</b>", $result["business"])],
+                ]);
 
             unset($insert, $result, $promotionuuid, $subscriptionuuid);
             $this->render();
