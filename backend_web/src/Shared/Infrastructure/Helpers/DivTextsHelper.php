@@ -3,7 +3,7 @@ namespace App\Shared\Infrastructure\Helpers;
 
 final class DivTextsHelper extends AppHelper implements IHelper
 {
-    public function echo(array|string $texts): void
+    public function print(array|string $texts): void
     {
         if (is_string($texts)) {
             echo "<p>$texts</p>";

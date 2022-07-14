@@ -42,7 +42,7 @@ $this->_element("open/elem-scrums");
       <?php
       use App\Shared\Infrastructure\Helpers\DivTextsHelper;
       use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-      HF::get(DivTextsHelper::class)->echo($error);
+      HF::get(DivTextsHelper::class)->print($error);
       ?>
       <span class="code">[ <?php $this->_echo($code); ?> ]</span>
     </div>
