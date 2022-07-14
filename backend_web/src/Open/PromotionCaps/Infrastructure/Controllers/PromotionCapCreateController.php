@@ -49,7 +49,7 @@ final class PromotionCapCreateController extends OpenController
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->set_layout("open/error")
-                ->add_var(PageType::TITLE, $title = __("Unexpected error"))
+                ->add_var(PageType::TITLE, $title = __("Unexpected error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
