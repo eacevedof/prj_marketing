@@ -12,13 +12,16 @@ if (!$result) {
   //return;
 }
 ?>
-<table>
+<table class="table">
+  <thead>
   <tr>
     <th><?=__("N.")?></th>
     <th><?=__("Promotion")?></th>
     <th><?=__("Date")?></th>
     <th><?=__("Points")?></th>
   </tr>
+  </thead>
+  <tbody>
   <?php
   foreach ($result as $i => $row):
   ?>
@@ -31,4 +34,5 @@ if (!$result) {
   <?php
   endforeach;
   ?>
+  </tbody>
 </table>
