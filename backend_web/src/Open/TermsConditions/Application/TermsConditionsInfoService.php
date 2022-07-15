@@ -19,6 +19,10 @@ final class TermsConditionsInfoService extends AppService
         return [
             ["h2" => __("1. Portal Owner")],
             ["p" => __("This Legal Notice regulates the conditions of use of the website <a href=\"{0}\" target=\"_blank\">{1}</a> (hereinafter, the \"Website\" or the \"Portal\") responsibility of:", $domain, $domain)],
+            ["ul" => [
+                __("mypromos.es"),
+                __("Contact: info@mypromos.es"),
+            ]],
             ["p" => __("The fact of accessing the Website implies that you have read and accept, without reservation, these conditions. The Service Provider reserves the right to deny, suspend, interrupt or cancel access or use, totally or partially, of this website to those users or visitors who fail to comply with any of the conditions set forth in this Legal Notice.")],
 
             ["h2" => __("2. Intellectual and industrial property")],
