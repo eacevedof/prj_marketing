@@ -2,7 +2,7 @@
 namespace App\Open\TermsConditions\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\RepositoryFactory;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 
 final class TermsConditionsInfoService extends AppService
@@ -91,9 +91,10 @@ final class TermsConditionsInfoService extends AppService
 
     public function get_by_promotion(): array
     {
+        $promo = RF::get(PromotionRepository::class)->get_by_uuid($this->input);
         return array_merge(
             [
-                ["h2" => "- ".__("Promotion Terms: {0}", "xxx")],
+                ["h2" => "- ".__("Promotion Terms: {0}", $promo["description"])],
                 ["h2" => "esto es un h2"],
                 ["p" => "esto es una p"],
                 ["h2" => "- ".__("Provider Terms")]
