@@ -13,7 +13,17 @@ final class DivTextsHelper extends AppHelper implements IHelper
         if (is_array($texts))
             $this->_print_array($texts);
     }
-    
+
+    private function _print_ul(array $lis): void
+    {
+        echo "<ul>";
+        foreach ($lis as $li)
+        {
+            echo "<li>$li</li>";
+        }
+        echo "</ul>";
+    }
+
     private function _print_array(array $texts): void
     {
         foreach ($texts as $part) {
@@ -29,6 +39,8 @@ final class DivTextsHelper extends AppHelper implements IHelper
                 if ($h3) echo "<h3>$h3</h3>";
                 $p = $part["p"] ?? "";
                 if ($p) echo "<p>$p</p>";
+                $ul = $part["ul"] ?? [];
+                if ($ul) $this->_print_ul($ul);
             }
         }
     }
