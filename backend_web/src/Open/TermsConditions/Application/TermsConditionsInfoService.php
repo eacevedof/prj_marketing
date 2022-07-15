@@ -92,10 +92,10 @@ final class TermsConditionsInfoService extends AppService
     public function get_by_promotion(): array
     {
         return array_merge([
-            ["h2" => "- ".__("Promotion Terms")],
+            ["h2" => "- ".__("Promotion Terms: {0}", "xxx")],
             ["h2" => "esto es un h2"],
             ["p" => "esto es una p"],
-            ["h2" => "- ".__("General Terms")]
+            ["h2" => "- ".__("Provider Terms")]
         ],
         $this->_general_terms(),
         );
