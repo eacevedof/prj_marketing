@@ -28,6 +28,10 @@
     margin-left: 10px;
 }
 
+.section-grid .div-texts a {
+    color: var(--color-orange);
+}
+
 .section-grid .div-texts h1 {
     font-size: 1.4rem;
     padding: 2px 0 2px 0;
@@ -49,12 +53,30 @@
     padding-top: 1rem;
 }
 
+.section-grid .div-texts ul {
+    margin-left: 20px;
+    font-size: 1.15rem;
+    padding-top: 1rem;
+}
+
+.section-grid .div-texts ul li {
+    font-size: 1.15rem;
+    margin-bottom: 0.8rem;
+}
+
+.section-grid .div-texts ul li:last-child {
+    margin-bottom: 0;
+}
+
 .section-grid .div-texts .code {
     float: right;
     margin-left: 10px;
     font-size: 0.5rem;
 }
 
+/*
+<table>
+*/
 .section-grid .div-texts .table {
     border-collapse: collapse;
     margin: 1rem auto;
