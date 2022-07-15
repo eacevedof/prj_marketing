@@ -9,7 +9,7 @@ $this->_element("open/elem-css-common");
 ?>
 <link rel="stylesheet" href="./themes/mypromo/css/sp.css" type="text/css" media="all" />
 
-<main class="main-grid">
+<main class="main-grid" id="top-mark">
   <div class="div-wave-top">
     <svg viewBox="25 0 550 150" preserveAspectRatio="none" style="height: 300%; width: 110%;">
       <path d="M495 0H6.10352e-05V59C6.10352e-05 59 11.6918 42.2885 54.5 41.5C100.525 40.6522 171.967 19.5 218 19.5C257.5 19.5 329.036 29.6378 372.5 19.5C435.899 4.71257 495 0 495 0Z" fill="#3F3D56"/>
