@@ -14,13 +14,17 @@ final class TermsConditionsInfoService extends AppService
 
     public function __invoke(): array
     {
-        return [];
+        return [
+            ["h2" => "esto es un h2 no promo"],
+            ["p" => "esto es una p no promo"],
+        ];
     }
 
     public function get_by_promotion(): array
     {
         return [
-            ["h2" => ""]
+            ["h2" => "esto es un h2"],
+            ["p" => "esto es una p"],
         ];
     }
 }
