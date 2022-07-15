@@ -7,10 +7,9 @@ use App\Restrict\Promotions\Domain\PromotionRepository;
 
 final class TermsConditionsInfoService extends AppService
 {
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $this->input = $input["promoslug"] ?? "";
-
     }
 
     private function _general_terms(): array
