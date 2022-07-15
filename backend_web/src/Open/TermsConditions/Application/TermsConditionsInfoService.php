@@ -82,17 +82,18 @@ final class TermsConditionsInfoService extends AppService
 
     public function __invoke(): array
     {
-        return [
-            ["h2" => "esto es un h2 no promo"],
-            ["p" => "esto es una p no promo"],
-        ];
+        return $this->_general_terms();
     }
 
     public function get_by_promotion(): array
     {
-        return [
+        return array_merge([
+            ["h2" => "Promotion Terms"],
             ["h2" => "esto es un h2"],
             ["p" => "esto es una p"],
-        ];
+            ["h2" => __("General terms")]
+        ],
+        $this->_general_terms(),
+        );
     }
 }
