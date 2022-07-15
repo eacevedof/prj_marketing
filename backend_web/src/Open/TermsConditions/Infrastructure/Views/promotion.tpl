@@ -7,7 +7,7 @@
 <?php
 $this->_element("open/elem-css-common");
 ?>
-<link rel="stylesheet" href="./themes/mypromo/css/sp.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/themes/mypromo/css/sp.css" type="text/css" media="all" />
 
 <main class="main-grid" id="top-mark">
   <div class="div-wave-top">
@@ -20,7 +20,7 @@ $this->_element("open/elem-css-common");
 
   <nav class="nav-flex center-x">
     <figure>
-      <img src="./images/logo-account-yyy.png" class="nav-icon">
+      <img src="/images/logo-account-yyy.png" class="nav-icon">
     </figure>
   </nav>
 <?php
