@@ -552,40 +552,40 @@ msgid "3.1  General"
 msgstr "3.1  General"
 
 msgid "The use of the Portal attributes the condition of user and implies the acceptance of all the conditions included in this Legal Notice."
-msgstr "La utilización del Portal atribuye la condición de Usuario e implica la aceptación de todas las condiciones incluidas en este Aviso Legal."
+msgstr "La utilización del Portal atribuye la condición de usuario e implica la aceptación de todas las condiciones incluidas en este Aviso Legal."
 
 msgid "Notwithstanding the foregoing, access to certain services and/or content is restricted to certain users, and regulations, instructions, general conditions or particular conditions may be established that, where appropriate, replace, complete and/or modify this Notice Legal."
-msgstr "Sin perjuicio de lo anterior, el acceso a determinados servicios y/o contenidos se encuentra restringido a determinados Usuarios, pudiendo establecerse reglamentos, instrucciones, condiciones generales o condiciones particulares que, en su caso, sustituyen, completan y/o modifican el presente Aviso Legal."
+msgstr "Sin perjuicio de lo anterior, el acceso a determinados servicios y/o contenidos se encuentra restringido a determinados usuarios, pudiendo establecerse reglamentos, instrucciones, condiciones generales o condiciones particulares que, en su caso, sustituyen, completan y/o modifican el presente Aviso Legal."
 
 msgid "The user undertakes to make correct use of the Portal in accordance with the Law and this Legal Notice. The user will be liable to the Service Provider or to third parties for any damages that may be caused as a result of breach of said obligation."
-msgstr "El Usuario se obliga a hacer un uso correcto del Portal de conformidad con la Ley y el presente Aviso Legal. El Usuario responderá frente a Prestador de Servicios o frente a terceros, de cualesquiera daños y perjuicios que pudieran causarse como consecuencia del incumplimiento de dicha obligación."
+msgstr "El usuario se obliga a hacer un uso correcto del Portal de conformidad con la Ley y el presente Aviso Legal. El usuario responderá frente a Prestador de Servicios o frente a terceros, de cualesquiera daños y perjuicios que pudieran causarse como consecuencia del incumplimiento de dicha obligación."
 
 msgid "The use of the content made available to users for marketing is strictly prohibited. In this way, the user will not be able to provide services to third parties benefiting from the contents included in the Portal."
-msgstr "Queda terminantemente prohibida la utilización de los contenidos que se pongan a disposición de los Usuarios para su comercialización. De este modo, el Usuario no podrá prestar servicios a terceros beneficiándose de los contenidos incluidos en el Portal."
+msgstr "Queda terminantemente prohibida la utilización de los contenidos que se pongan a disposición de los usuarios para su comercialización. De este modo, el usuario no podrá prestar servicios a terceros beneficiándose de los contenidos incluidos en el Portal."
 
 msgid "Likewise, the use of the Portal for harmful purposes of goods or interests of the Service Provider or third parties or that in any other way overload, damage or disable the networks, servers and other computer equipment (hardware) or products and computer applications (software) of the Service Provider or third parties."
 msgstr "Así mismo, queda expresamente prohibido el uso del Portal con fines lesivos de bienes o intereses de Prestador de Servicios o de terceros o que de cualquier otra forma sobrecarguen, dañen o inutilicen las redes, servidores y demás equipos informáticos (hardware) o productos y aplicaciones informáticas (software) de Prestador de Servicios o de terceros."
 
 msgid "In any case, users undertake to use the Portal in full compliance with the Terms and Conditions that regulate the corresponding public cloud services:"
-msgstr "En todo caso, los Usuarios se comprometen a utilizar el Portal respetando íntegramente los Términos y Condiciones que regulan los correspondientes servicios de nube pública:"
+msgstr "En todo caso, los usuarios se comprometen a utilizar el Portal respetando íntegramente los Términos y Condiciones que regulan los correspondientes servicios de nube pública:"
 
 msgid "3.2 Contents"
 msgstr "3.2 Contenidos"
 
 msgid "The user agrees to use the Content in accordance with the Law and this Legal Notice, as well as with the other conditions, regulations and instructions that may be applicable in accordance with the provisions of the Legal Notice."
-msgstr "El Usuario se compromete a utilizar los Contenidos de conformidad con la Ley y el presente Aviso Legal, así como con las demás condiciones, reglamentos e instrucciones que en su caso pudieran ser de aplicación de conformidad con lo previsto en el Aviso Legal."
+msgstr "El usuario se compromete a utilizar los Contenidos de conformidad con la Ley y el presente Aviso Legal, así como con las demás condiciones, reglamentos e instrucciones que en su caso pudieran ser de aplicación de conformidad con lo previsto en el Aviso Legal."
 
 msgid "With a merely enunciative character, the user, in accordance with current legislation, must refrain from:"
-msgstr "Con carácter meramente enunciativo, el Usuario, de acuerdo con la legislación vigente, deberá abstenerse de:"
+msgstr "Con carácter meramente enunciativo, el usuario, de acuerdo con la legislación vigente, deberá abstenerse de:"
 
 msgid "Reproducing, copying, distributing, making available, publicly communicating, transforming or modifying the Content except in cases authorized by law or expressly consented to by the Service Provider or by whoever owns the exploitation rights in your case."
 msgstr "Reproducir, copiar, distribuir, poner a disposición, comunicar públicamente, transformar o modificar los Contenidos salvo en los casos autorizados en la ley o expresamente consentidos por el Prestador de Servicios o por quien ostente la titularidad de los derechos de explotación en su caso."
 
 msgid "Reproducing or copying for private use the Contents that may be considered as Software or Database in accordance with current legislation on intellectual property, as well as its public communication or making it available to third parties when these acts necessarily imply the reproduction by part of the user or a third party."
-msgstr "Reproducir o copiar para uso privado los Contenidos que puedan ser considerados como Software o Base de Datos de conformidad con la legislación vigente en materia de propiedad intelectual, así como su comunicación pública o puesta a disposición de terceros cuando estos actos impliquen necesariamente la reproducción por parte del Usuario o de un tercero."
+msgstr "Reproducir o copiar para uso privado los Contenidos que puedan ser considerados como Software o Base de Datos de conformidad con la legislación vigente en materia de propiedad intelectual, así como su comunicación pública o puesta a disposición de terceros cuando estos actos impliquen necesariamente la reproducción por parte del usuario o de un tercero."
 
 msgid "Extract and/or reuse all or a substantial part of the Contents of the Portal as well as the databases that the Service Provider makes available to users."
-msgstr "Extraer y/o reutilizar la totalidad o una parte sustancial de los Contenidos integrantes del Portal así como de las bases de datos que Prestador de Servicios ponga a disposición de los Usuarios."
+msgstr "Extraer y/o reutilizar la totalidad o una parte sustancial de los Contenidos integrantes del Portal así como de las bases de datos que Prestador de Servicios ponga a disposición de los usuarios."
 
 msgid "3.3 Introduction of links to the Portal"
 msgstr "3.3 Introducción de enlaces al Portal"
@@ -609,7 +609,7 @@ msgid "The use of any denominative, graphic or mixed brand or any other distinct
 msgstr "Está prohibida la utilización de cualquier marca denominativa, gráfica o mixta o cualquier otro signo distintivo de Prestador de Servicios dentro de la página del remitente salvo en los casos permitidos por la ley o expresamente autorizados por Prestador de Servicios y siempre que se permita, en estos casos, un enlace directo con el Portal en la forma establecida en esta cláusula."
 
 msgid "The page that establishes the link must faithfully comply with the law and may not in any case have or link to its own content or that of third parties that: (I) are illegal, harmful or contrary to morality and good customs (pornographic, violent , racist, etc.); (II) induce or may induce in the user the false conception that the Service Provider subscribes, endorses, adheres or in any way supports the ideas, statements or expressions, legal or illegal, of the sender ; (III) are inappropriate or not pertinent to the activity of the Service Provider in attention to the place, content and theme of the sender's website."
-msgstr "La página que establezca el enlace deberá cumplir fielmente con la ley y no podrá en ningún caso disponer o enlazar con contenidos propios o de terceros que: (I) sean ilícitos, nocivos o contrarios a la moral y a las buenas costumbres (pornográficos, violentos, racistas, etc.); (II) induzcan o puedan inducir en el Usuario la falsa concepción de que Prestador de Servicios suscribe, respalda, se adhiere o de cualquier manera apoya, las ideas, manifestaciones o expresiones, lícitas o ilícitas, del remitente; (III) resulten inapropiados o no pertinentes con la actividad de Prestador de Servicios en atención al lugar, contenidos y temática de la página web del remitente."
+msgstr "La página que establezca el enlace deberá cumplir fielmente con la ley y no podrá en ningún caso disponer o enlazar con contenidos propios o de terceros que: (I) sean ilícitos, nocivos o contrarios a la moral y a las buenas costumbres (pornográficos, violentos, racistas, etc.); (II) induzcan o puedan inducir en el usuario la falsa concepción de que Prestador de Servicios suscribe, respalda, se adhiere o de cualquier manera apoya, las ideas, manifestaciones o expresiones, lícitas o ilícitas, del remitente; (III) resulten inapropiados o no pertinentes con la actividad de Prestador de Servicios en atención al lugar, contenidos y temática de la página web del remitente."
 
 msgid "4. Exclusion of liability"
 msgstr "4. Exclusión de responsabilidad"
@@ -618,10 +618,10 @@ msgid "4.1 Of the quality of the Service"
 msgstr "4.1  De la calidad del Servicio"
 
 msgid "Access to the Portal does not imply an obligation on the part of the Service Provider to control the absence of viruses, worms or any other harmful computer element. The user is responsible, in any case, for the availability of adequate tools for the detection and disinfection of harmful computer programs."
-msgstr "El acceso al Portal no implica la obligación por parte de Prestador de Servicios de controlar la ausencia de virus, gusanos o cualquier otro elemento informático dañino. Corresponde al Usuario, en todo caso, la disponibilidad de herramientas adecuadas para la detección y desinfección de programas informáticos dañinos."
+msgstr "El acceso al Portal no implica la obligación por parte de Prestador de Servicios de controlar la ausencia de virus, gusanos o cualquier otro elemento informático dañino. Corresponde al usuario, en todo caso, la disponibilidad de herramientas adecuadas para la detección y desinfección de programas informáticos dañinos."
 
 msgid "Service Provider is not responsible for any damage caused to the computer equipment of users or third parties during the provision of the Portal service."
-msgstr "Prestador de Servicios no se responsabiliza de los daños producidos en los equipos informáticos de los Usuarios o de terceros durante la prestación del servicio del Portal."
+msgstr "Prestador de Servicios no se responsabiliza de los daños producidos en los equipos informáticos de los usuarios o de terceros durante la prestación del servicio del Portal."
 
 msgid "4.2 Availability of the Service"
 msgstr "4.2  De la disponibilidad del Servicio"
@@ -630,13 +630,13 @@ msgid "Access to the Portal requires services and supplies from third parties, i
 msgstr "El acceso al Portal requiere de servicios y suministros de terceros, incluidos el transporte a través de redes de telecomunicaciones cuya fiabilidad, calidad, continuidad y funcionamiento no corresponde a Prestador de Servicios. Por consiguiente, los servicios proveídos a través del Portal pueden ser suspendidos, cancelados o resultar inaccesibles, con carácter previo o simultáneo a la prestación del servicio del Portal."
 
 msgid "Service Provider is not responsible for damages or losses of any kind produced in the user that cause failures or disconnections in the telecommunications networks that produce the suspension, cancellation or interruption of the Portal service during the provision of the same or with character previous."
-msgstr "Prestador de Servicios no se responsabiliza de los daños o perjuicios de cualquier tipo producidos en el Usuario que traigan causa de fallos o desconexiones en las redes de telecomunicaciones que produzcan la suspensión, cancelación o interrupción del servicio del Portal durante la prestación del mismo o con carácter previo."
+msgstr "Prestador de Servicios no se responsabiliza de los daños o perjuicios de cualquier tipo producidos en el usuario que traigan causa de fallos o desconexiones en las redes de telecomunicaciones que produzcan la suspensión, cancelación o interrupción del servicio del Portal durante la prestación del mismo o con carácter previo."
 
 msgid "4.3 Links"
 msgstr "4.3  Enlaces"
 
 msgid "The access service to the Portal may include technical link devices, directories and even search tools that allow the user to access other Internet pages and portals (hereinafter, 'Linked Sites'). In these cases, the Service Provider acts as a provider of intermediation services in accordance with article 17 of Law 34/2002, of July 12, on Services of the Information Society and Electronic Commerce (hereinafter, the \"LSSI\") and will only be responsible for the contents and services provided on the Linked Sites to the extent that they have effective knowledge of the illegality and have not deactivated the link with due diligence.In the event that the user considers that there is a Linked Site with illegal or inappropriate content, they may communicate it to the Service Provider in accordance with the procedure and the effects established in clause 5, without this communication in any case entailing the obligation to and remove the corresponding link."
-msgstr "El servicio de acceso al Portal puede incluir dispositivos técnicos de enlace, directorios e incluso instrumentos de búsqueda que permiten al Usuario acceder a otras páginas y portales de Internet (en adelante, 'Sitios Enlazados'). En estos casos, Prestador de Servicios actúa como prestador de servicios de intermediación de conformidad con el artículo 17 de la Ley 34/2002, de 12 de julio, de Servicios de la Sociedad de la Información y el Comercio Electrónico (en adelante, la \"LSSI\") y sólo será responsable de los contenidos y servicios suministrados en los Sitios Enlazados en la medida en que tenga conocimiento efectivo de la ilicitud y no haya desactivado el enlace con la diligencia debida. En el supuesto de que el Usuario considere que existe un Sitio Enlazado con contenidos ilícitos o inadecuados podrá comunicárselo a Prestador de Servicios de acuerdo con el procedimiento y los efectos establecidos en la cláusula 5, sin que en ningún caso esta comunicación conlleve la obligación de retirar el correspondiente enlace."
+msgstr "El servicio de acceso al Portal puede incluir dispositivos técnicos de enlace, directorios e incluso instrumentos de búsqueda que permiten al usuario acceder a otras páginas y portales de Internet (en adelante, 'Sitios Enlazados'). En estos casos, Prestador de Servicios actúa como prestador de servicios de intermediación de conformidad con el artículo 17 de la Ley 34/2002, de 12 de julio, de Servicios de la Sociedad de la Información y el Comercio Electrónico (en adelante, la \"LSSI\") y sólo será responsable de los contenidos y servicios suministrados en los Sitios Enlazados en la medida en que tenga conocimiento efectivo de la ilicitud y no haya desactivado el enlace con la diligencia debida. En el supuesto de que el usuario considere que existe un Sitio Enlazado con contenidos ilícitos o inadecuados podrá comunicárselo a Prestador de Servicios de acuerdo con el procedimiento y los efectos establecidos en la cláusula 5, sin que en ningún caso esta comunicación conlleve la obligación de retirar el correspondiente enlace."
 
 msgid "In no case, the existence of Linked Sites must presuppose the existence of agreements with those responsible or owners thereof, nor the recommendation, promotion or identification of the Service Provider with the statements, content or services provided."
 msgstr "En ningún caso, la existencia de Sitios Enlazados debe presuponer la existencia de acuerdos con los responsables o titulares de los mismos, ni la recomendación, promoción o identificación de Prestador de Servicios con las manifestaciones, contenidos o servicios proveídas."
@@ -648,7 +648,7 @@ msgid "5. Communication of illicit and inappropriate activities"
 msgstr "5. Comunicación de actividades de carácter ilícito e inadecuado"
 
 msgid "In the event that the user or any other Internet user becomes aware that the Linked Sites refer to pages whose content or services are illegal, harmful, degrading, violent or contrary to morality; or that any of the information included by the users themselves, through the services offered on the Portal, have a consideration equal to that described above, the user may communicate it through the means of contact informed in section 1."
-msgstr "En el caso de que el Usuario o cualquier otro usuario de Internet tuviera conocimiento de que los Sitios Enlazados remiten a páginas cuyos contenidos o servicios son ilícitos, nocivos, denigrantes, violentos o contrarios a la moral; o que alguna de la información incluida por los propios Usuarios, a través de los servicios ofrecidos en el Portal, tienen una consideración igual a la descrita anteriormente, el Usuario podrá comunicarlo mediante los medios de contacto informados en el epígrafe 1."
+msgstr "En el caso de que el usuario o cualquier otro usuario de Internet tuviera conocimiento de que los Sitios Enlazados remiten a páginas cuyos contenidos o servicios son ilícitos, nocivos, denigrantes, violentos o contrarios a la moral; o que alguna de la información incluida por los propios usuarios, a través de los servicios ofrecidos en el Portal, tienen una consideración igual a la descrita anteriormente, el usuario podrá comunicarlo mediante los medios de contacto informados en el epígrafe 1."
 
 msgid "The reception by the Service Provider of the communication provided for in this clause will not imply, according to the provisions of the LSSI, effective knowledge of the activities and/or contents indicated by the caller."
 msgstr "La recepción por parte de Prestador de Servicios de la comunicación prevista en esta cláusula no supondrá, según lo dispuesto en la LSSI, el conocimiento efectivo de las actividades y/o contenidos indicados por el comunicante."
