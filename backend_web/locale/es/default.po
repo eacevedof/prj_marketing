@@ -518,6 +518,15 @@ msgid "Timezone"
 msgstr "Zona horaria"
 
 # terms and conditions
+msgid "Terms & Conditions"
+msgstr "Términos y Condiciones"
+
+msgid "Promotion Terms: {0}"
+msgstr "Términos de la promoción: {0}"
+
+msgid "Provider Terms"
+msgstr "Términos del proveedor"
+
 msgid "1. Portal Owner"
 msgstr "1. Titular del Portal"
 
@@ -635,7 +644,6 @@ msgstr "Prestador de Servicios no se responsabiliza de los daños o perjuicios d
 msgid "4.3 Links"
 msgstr "4.3  Enlaces"
 
-# ERROR
 msgid "The access service to the Portal may include technical link devices, directories and even search tools that allow the user to access other Internet pages and portals (hereinafter, 'Linked Sites'). In these cases, the Service Provider acts as a provider of intermediation services in accordance with article 17 of Law 34/2002, of July 12, on Services of the Information Society and Electronic Commerce (hereinafter, the 'LSSI') and will only be responsible for the contents and services provided on the Linked Sites to the extent that they have effective knowledge of the illegality and have not deactivated the link with due diligence.In the event that the user considers that there is a Linked Site with illegal or inappropriate content, they may communicate it to the Service Provider in accordance with the procedure and the effects established in clause 5, without this communication in any case entailing the obligation to and remove the corresponding link."
 msgstr "El servicio de acceso al Portal puede incluir dispositivos técnicos de enlace, directorios e incluso instrumentos de búsqueda que permiten al usuario acceder a otras páginas y portales de Internet (en adelante, 'Sitios Enlazados'). En estos casos, Prestador de Servicios actúa como prestador de servicios de intermediación de conformidad con el artículo 17 de la Ley 34/2002, de 12 de julio, de Servicios de la Sociedad de la Información y el Comercio Electrónico (en adelante, la 'LSSI') y sólo será responsable de los contenidos y servicios suministrados en los Sitios Enlazados en la medida en que tenga conocimiento efectivo de la ilicitud y no haya desactivado el enlace con la diligencia debida. En el supuesto de que el usuario considere que existe un Sitio Enlazado con contenidos ilícitos o inadecuados podrá comunicárselo a Prestador de Servicios de acuerdo con el procedimiento y los efectos establecidos en la cláusula 5, sin que en ningún caso esta comunicación conlleve la obligación de retirar el correspondiente enlace."
 
