@@ -57,6 +57,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
+                ->set_template("index")
                 ->render();
         }
         catch (NotFoundException $e) {
