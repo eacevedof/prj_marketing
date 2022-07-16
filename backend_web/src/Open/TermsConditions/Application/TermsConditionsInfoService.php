@@ -20,7 +20,7 @@ final class TermsConditionsInfoService extends AppService
             ["p" => __("This Legal Notice regulates the conditions of use of the website <a href=\"{0}\" target=\"_blank\">{1}</a> (hereinafter, the “Website“ or the “Portal“) responsibility of:", $domain, $domain)],
             ["ul" => [
                 __("providerxxx.es"),
-                __("Contact: info@mproviderxxx.es"),
+                __("Contact: info@providerxxx.es"),
             ]],
             ["p" => __("The fact of accessing the Website implies that you have read and accept, without reservation, these conditions. The Service Provider reserves the right to deny, suspend, interrupt or cancel access or use, totally or partially, of this website to those users or visitors who fail to comply with any of the conditions set forth in this Legal Notice.")],
 
