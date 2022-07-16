@@ -58,7 +58,7 @@
     </svg>
   </div>
   <?php
-  $this->_element("open/elem-footer");
+  $this->_element("open/mypromos/elem-footer");
   ?>
 </main>
 <?php

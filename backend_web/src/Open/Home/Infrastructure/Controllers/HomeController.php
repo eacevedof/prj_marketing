@@ -17,8 +17,8 @@ final class HomeController extends OpenController
     public function index(): void
     {
         $this->set_layout("open/mypromos/home")
-            ->add_var(PageType::TITLE, __("Home"))
-            ->add_var(PageType::H1, __("Home"))
+            ->add_var(PageType::TITLE, $title = __("My Promotions"))
+            ->add_var(PageType::H1, $title)
             //->cache()
             ->render();
     }
