@@ -15,32 +15,38 @@ final class CookiesPolicyInfoController extends OpenController
     {
         try {
             $terms = SF::get_callable(CookiesPolicyInfoService::class)();
-            $this->set_layout("open/open")
+            $this->set_layout("open/mypromos/info")
                 ->add_var(PageType::TITLE, $title = __("Cookies Policy"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
-                ->render();
+                ->render_nv();
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("404")
-                ->render_nl();
+                ->set_layout("open/mypromos/error")
+                ->add_var(PageType::TITLE, $title = __("Cookies Policy error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
+                ->render();
         }
         catch (ForbiddenException $e) {
             $this->add_header(ResponseType::FORBIDDEN)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
+                ->set_layout("open/mypromos/error")
+                ->add_var(PageType::TITLE, $title = __("Cookies Policy error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
+                ->render();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+                ->set_layout("open/mypromos/error")
+                ->add_var(PageType::TITLE, $title = __("Cookies Policy error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
+                ->render();
         }
     }
 }
