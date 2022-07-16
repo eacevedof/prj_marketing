@@ -10,16 +10,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/themes/mypromos/images/provider-xxx-logo-orange.svg"/>
   <title><?=($pagetitle ?? "")?></title>
-  <?= $this->_asset_css([
+  <?php
+  echo $this->_asset_css([
       "vendor/normalize/normalize-8.0.1.min",
       "vendor/snackbar/snackbar.min"
-  ])?>
-  <!-- js -->
-  <?= $this->_asset_js([
+  ]);
+  echo $this->_asset_js([
       "vendor/jquery/jquery-3.6.0",
       "vendor/snackbar/snackbar.min"
-  ]) ?>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  ])
+  ?>
 </head>
 <body>
 <!-- promotioncaps.tpl -->
