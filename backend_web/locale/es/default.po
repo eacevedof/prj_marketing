@@ -856,14 +856,14 @@ msgstr "DPO"
 msgid "For what purpose do we treat your data?"
 msgstr "¿Con qué finalidad tratamos sus datos?"
 
-msgid "The data collected during the contracting flow of the tool through the Marketplace will be processed for the configuration and maintenance of the profile of the contracting Client (hereinafter “the Organization“) on the Meikai platform."
-msgstr "Los datos recabados durante el flujo de contratación de la herramienta a través de Marketplace serán tratados para la configuración y mantenimiento del perfil del Cliente (en adelante “la Organización”) contratante en la plataforma Meikai."
+msgid "The data collected during the contracting flow of the tool through the Marketplace will be processed for the configuration and maintenance of the profile of the contracting Client (hereinafter “the Organization“) on the AppProviderXXX platform."
+msgstr "Los datos recabados durante el flujo de contratación de la herramienta a través de Marketplace serán tratados para la configuración y mantenimiento del perfil del Cliente (en adelante “la Organización”) contratante en la plataforma AppProviderXXX."
 
 msgid "What personal data do we process?"
 msgstr "¿Qué datos personales tratamos?"
 
-msgid "We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”Meikai enrollment form”."
-msgstr "Trataremos las direcciones de correo electrónico corporativo de Office 365 de los miembros de la Organización que usted nos facilite a través del formulario “Meikai enrolment form”."
+msgid "We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”AppProviderXXX enrollment form”."
+msgstr "Trataremos las direcciones de correo electrónico corporativo de Office 365 de los miembros de la Organización que usted nos facilite a través del formulario “AppProviderXXX enrolment form”."
 
 msgid "What is the legal basis of the treatment?"
 msgstr "¿Cuál es la base legal del tratamiento?"
@@ -886,8 +886,8 @@ msgstr "Dichas comunicaciones podrían suponer la transferencia internacional de
 msgid "How long will we keep your data?"
 msgstr "¿Por cuánto tiempo conservaremos sus datos?"
 
-msgid "Your data will be kept as long as the contractual relationship between the Organization and ProviderXXX Spain for the use of the Meikai platform is maintained, or as long as the Organization does not request ProviderXXX Spain to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods."
-msgstr "Sus datos se conservarán mientras se mantenga la relación contractual entre la Organización y ProviderXXX Spain para la utilización de la plataforma Meikai, o en tanto en cuanto la Organización no solicite a ProviderXXX Spain la modificación o eliminación de los datos facilitados en el formulario. No obstante, los datos podrán conservarse bloqueados durante los plazos de prescripción legalmente aplicables."
+msgid "Your data will be kept as long as the contractual relationship between the Organization and ProviderXXX Spain for the use of the AppProviderXXX platform is maintained, or as long as the Organization does not request ProviderXXX Spain to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods."
+msgstr "Sus datos se conservarán mientras se mantenga la relación contractual entre la Organización y ProviderXXX Spain para la utilización de la plataforma AppProviderXXX, o en tanto en cuanto la Organización no solicite a ProviderXXX Spain la modificación o eliminación de los datos facilitados en el formulario. No obstante, los datos podrán conservarse bloqueados durante los plazos de prescripción legalmente aplicables."
 
 msgid "What are your rights?"
 msgstr "¿Cuáles son sus derechos?"
