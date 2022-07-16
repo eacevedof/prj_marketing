@@ -677,9 +677,12 @@ msgstr "7. Legislación"
 msgid "This Legal Notice is governed in each and every one of its extremes by Spanish law."
 msgstr "El presente Aviso Legal se rige en todos y cada uno de sus extremos por la ley española."
 
-# cookies policy
+#cookies-policy
 msgid "Cookies Policy"
 msgstr "Política de Cookies"
+
+msgid "ProviderXXX S.A. (hereinafter, “ProviderXXX“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment."
+msgstr "ProviderXXX S.A. (a partir de ahora, “ProviderXXX“) informa, por medio de esta Política de Cookies, acerca del uso de métodos de almacenamiento y obtención de datos en los terminales de los usuarios."
 
 msgid "1. What are cookies?"
 msgstr "1. ¿Qué son las cookies?"
@@ -837,7 +840,7 @@ msgstr "<a href=\"javascript: Cookiebot.renew()\">Cambiar tu consentimiento</a>"
 msgid "You can obtain more information about the processing of your data by contacting {0}"
 msgstr "Puedes obtener más información sobre el tratamiento de tus datos dirigiéndote a {0}"
 
-#privacy_policy
+#privacy-policy
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
