@@ -68,6 +68,7 @@ return [
     ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataSearchController", "method"=>"search"],
 
     //@subscriptions
+    ["url"=>"/restrict/subscriptions/info/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsInfoController", "method"=>"info"],
     ["url"=>"/restrict/subscriptions/edit/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController", "method"=>"edit"],
     ["url"=>"/restrict/subscriptions/update-status/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController", "method"=>"update_status", "allowed"=>["put"]],
     ["url"=>"/restrict/subscriptions/export/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchExportController", "method"=>"export", "allowed"=>["post"]],

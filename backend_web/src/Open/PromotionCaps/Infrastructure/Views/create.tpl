@@ -31,6 +31,7 @@ $this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdh
   $this->_element_view("promotioncap-ui-form", [
     "uihelp" => $uihelp,
     "promotionuuid" => $promotion["uuid"],
+    "promotionslug" => $promotion["slug"],
     "languages" => $languages,
     "countries" => $countries,
     "genders" => $genders,

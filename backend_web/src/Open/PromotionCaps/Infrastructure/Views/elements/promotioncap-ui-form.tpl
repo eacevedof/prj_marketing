@@ -2,8 +2,9 @@
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $promotionui
+ * @var string $promotionslug
  */
-$url = "/terms-and-conditions/$promotionuuid";
+$url = "/terms-and-conditions/$promotionslug";
 
 $texts = [
     "tr00" => __("Subscribe"),
