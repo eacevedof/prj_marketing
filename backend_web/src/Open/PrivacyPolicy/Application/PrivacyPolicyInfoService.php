@@ -9,21 +9,18 @@ final class PrivacyPolicyInfoService extends AppService
     {
         $r = [
             ["h3" => __("For what purpose do we treat your data?")],
-            ["p" => __("The data collected during the contracting flow of the tool through the Marketplace will be processed for the configuration and maintenance of the profile of the contracting Client (hereinafter “the Organization“) on the AppProviderXXX platform.")],
+            ["p" => __("The data collected during the contracting flow of the tool through the sing up and/or subscription process will be handled for the configuration and maintenance of the profile of the contracting Client (hereinafter “Organization“) on the AppProviderXXX platform.")],
 
             ["h3" => __("What personal data do we process?")],
-            ["p" => __("We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”AppProviderXXX enrollment form”.")],
+            ["p" => __("There is registration by subscription and Organization. In each case the required data varies but at least an email account is requested. For subscribers, it will be used, with your prior consent, for the purpose of notifications of offers, raffles and promotions that may be of interest.")],
+            ["p" => __("At Organization level, It will be used to configure the space on the platform, thus allowing the publication of promotional landings.")],
 
             ["h3" => __("What is the legal basis of the treatment?")],
             ["p" => __("The legal basis of the treatments with the purposes described is the legitimate interest in the treatment of said data, being necessary for the formalization and maintenance of the contractual relationship between ProviderXXX and the contracting Organization")],
 
             ["h3" => __("Who are the recipients of your data?")],
-            ["p" => __(
-                "Your data may be communicated to the companies of the ProviderXXX Group, some of which are located in countries located outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection. The name and registered office of the entities of the ProviderXXX Group appear on the website {0}.",
-                "<a href=\"https://es.providerxxx.es/group-companies\" target=\"_blank\">https://es.providerxxx.es/group-companies</a>"
-            )],
+            ["p" => __("Your data may be communicated to the ProviderXXX's Organizations, some of which are located in countries outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection.")],
             ["p" => __("Additionally, we inform you that your data may be communicated to Treatment Managers, such as the following technology providers, some of which have processing and/or support centers located outside the European Economic Area.")],
-            ["p" => __("Said communications could entail the international transfer of data to countries located outside the European Economic Area, some of which have not been declared as countries with an adequate level of protection by the European Commission. We guarantee that when your data could leave the European Economic Area, they will maintain the same level of protection based on compliance with the provisions set forth in the European data protection regulations. In this sense, international data transfers will be made (i) to countries with an adequate level of protection declared by the European Commission (ii) based on the provision of adequate guarantees such as standard contractual clauses or binding corporate regulations or (iii ) by virtue of the authorization of the competent control authority or other cases provided for in the regulations.")],
 
             ["h3" => __("How long will we keep your data?")],
             ["p" => __("Your data will be kept as long as the contractual relationship between the Organization and ProviderXXX for the use of the AppProviderXXX platform is maintained, or as long as the Organization does not request ProviderXXX to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods.")],

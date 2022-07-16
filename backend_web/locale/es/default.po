@@ -867,11 +867,17 @@ msgstr "DPO"
 msgid "For what purpose do we treat your data?"
 msgstr "¿Con qué finalidad tratamos sus datos?"
 
-msgid "The data collected during the contracting flow of the tool through the Marketplace will be processed for the configuration and maintenance of the profile of the contracting Client (hereinafter “the Organization“) on the AppProviderXXX platform."
-msgstr "Los datos recabados durante el flujo de contratación de la herramienta a través de Marketplace serán tratados para la configuración y mantenimiento del perfil del Cliente (en adelante “la Organización”) contratante en la plataforma AppProviderXXX."
+msgid "The data collected during the contracting flow of the tool through the sing up and/or subscription process will be handled for the configuration and maintenance of the profile of the contracting Client (hereinafter “Organization“) on the AppProviderXXX platform."
+msgstr "Los datos recabados durante el flujo de contratación de la herramienta a través de los procesos de registro y/o suscripción serán tratados para la configuración y mantenimiento del perfil del Cliente (en adelante “Organización”) en la plataforma AppProviderXXX."
 
 msgid "What personal data do we process?"
 msgstr "¿Qué datos personales tratamos?"
+
+msgid "There is registration by subscription and Organization. In each case the required data varies but at least an email account is requested. For subscribers, it will be used, with your prior consent, for the purpose of notifications of offers, raffles and promotions that may be of interest."
+msgstr "Existe el alta por suscripción y Organización. En cada caso varian los datos requeridos pero como mínimo se solicita una cuenta de email. Para los suscriptores se usará, previo consentimiento por su parte, con el fin de notificaciones de ofertas, sorteos y promociones que pueden ser de su interes."
+
+msgid "At Organization level, It will be used to configure the space on the platform, thus allowing the publication of promotional landings."
+msgstr "A nivel de Organización se utilizarán para la configuración del espacio en la plataforma permitiendo así la publicación de landings promocionales."
 
 msgid "We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”AppProviderXXX enrollment form”."
 msgstr "Trataremos las direcciones de correo electrónico corporativo de Office 365 de los miembros de la Organización que usted nos facilite a través del formulario “AppProviderXXX enrolment form”."
@@ -885,8 +891,8 @@ msgstr "La base legal de los tratamientos con las finalidades descritas es el in
 msgid "Who are the recipients of your data?"
 msgstr "¿Quiénes son los destinatarios de sus datos?"
 
-msgid "Your data may be communicated to the companies of the ProviderXXX Group, some of which are located in countries located outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection. The name and registered office of the entities of the ProviderXXX Group appear on the website {0}."
-msgstr "Sus datos podrán ser comunicados a las empresas del Grupo ProviderXXX, algunas de las cuales se encuentran en países ubicados fuera del Espacio Económico Europeo que no han sido declarados por la Comisión Europea con nivel adecuado de protección de datos. La denominación y sede social de las entidades del Grupo ProviderXXX figuran en la página web {0}."
+msgid "Your data may be communicated to the ProviderXXX's Organizations, some of which are located in countries outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection"
+msgstr "Sus datos podrán ser comunicados a las organizaciones de ProviderXXX, algunas de las cuales se encuentran en países ubicados fuera del Espacio Económico Europeo que no han sido declarados por la Comisión Europea con nivel adecuado de protección de datos."
 
 msgid "Additionally, we inform you that your data may be communicated to Treatment Managers, such as the following technology providers, some of which have processing and/or support centers located outside the European Economic Area."
 msgstr "Adicionalmente le informamos que sus datos podrían ser comunicados a Encargados del Tratamiento, tales como los siguientes proveedores tecnológicos, algunos de los cuales disponen de centros de proceso y/o soporte ubicados fuera Espacio Económico Europeo."
