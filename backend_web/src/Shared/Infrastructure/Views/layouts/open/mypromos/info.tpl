@@ -11,8 +11,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="#">
   <title><?=$pagetitle ?? ""?></title>
-  <link rel="stylesheet" href="/themes/mypromos/css/global.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromos/css/footer.css" type="text/css" media="all" />
+  <?php
+  $this->_element("open/mypromos/elem-css-common");
+  ?>
   <link rel="stylesheet" href="/themes/mypromos/css/sp.css" type="text/css" media="all" />
   <?php
   echo $this->_element("open/elem-gtag-js");
@@ -24,9 +25,6 @@
   ?>
 </head>
 <body>
-<?php
-$this->_element("open/mypromos/elem-css-common");
-?>
 <main class="main-grid" id="top-mark">
   <div class="div-wave-top">
     <svg viewBox="25 0 550 150" preserveAspectRatio="none" style="height: 300%; width: 110%;">

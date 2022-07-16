@@ -54,12 +54,11 @@ final class TermsConditionsInfoController extends OpenController
     {
         try {
             $terms = SF::get(TermsConditionsInfoService::class, ["promoslug"=>$promoslug])->get_by_promotion();
-            $this->set_layout("open/mypromos/home")
+            $this->set_layout("open/mypromos/info")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
-                ->set_template("index")
-                ->render();
+                ->render_nv();
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
