@@ -21,6 +21,16 @@ final class DivTextsHelper extends AppHelper implements IHelper
         {
             if (is_string($li))
                 echo "<li>$li</li>";
+            if (is_array($li)) {
+                echo "<li>";
+                foreach ($li as $part) {
+                    $part = $part["b"] ?? "";
+                    if ($part) echo "<b>$part</b>";
+                    $part = $part["span"] ?? "";
+                    if ($part) echo "<span>$part</span>";
+                }
+                echo "</li>";
+            }
         }
         echo "</ul>";
     }
