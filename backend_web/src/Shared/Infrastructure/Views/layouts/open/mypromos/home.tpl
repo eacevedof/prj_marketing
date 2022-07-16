@@ -11,8 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="#">
   <title><?=$pagetitle ?? ""?></title>
-  <link rel="stylesheet" href="/themes/mypromo/css/global.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="/themes/mypromo/css/footer.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="/themes/mypromos/css/global.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="/themes/mypromos/css/footer.css" type="text/css" media="all" />
   <?php
   echo $this->_element("open/elem-gtag-js");
   ?>

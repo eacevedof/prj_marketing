@@ -8,13 +8,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="/themes/mypromo/images/provider-xxx-logo-orange.svg"/>
+  <link rel="icon" href="/themes/mypromos/images/provider-xxx-logo-orange.svg"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php
   $this->_element("open/elem-css-common");
   ?>
-  <link rel="stylesheet" href="/themes/mypromo/css/success.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="/themes/mypromos/css/error.css" type="text/css" media="all" />
   <title><?php $this->_echo($pagetitle);?></title>
 </head>
 <body>
@@ -29,22 +29,22 @@
 
   <nav class="nav-flex center-x">
     <figure>
-      <img id="top-mark" src="/themes/mypromo/images/logo-account-yyy.png" class="nav-icon">
+      <img id="top-mark" src="/themes/mypromos/images/logo-account-yyy.png" class="nav-icon">
     </figure>
   </nav>
-  <?php
-  $this->_element("open/elem-scrums");
-  ?>
+<?php
+$this->_element("open/elem-scrums");
+?>
   <section class="section-grid center-x">
     <div class="div-texts">
-      <img src="/themes/mypromo/images/icon-success.svg" class="icon">
+      <img src="/themes/mypromos/images/icon-error.svg" class="icon">
       <h1><?php $this->_echo($h1); ?></h1>
       <?php
       use App\Shared\Infrastructure\Helpers\DivTextsHelper;
       use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-      if (isset($success)) HF::get(DivTextsHelper::class)->print($success);
-      $this->_template();
+      HF::get(DivTextsHelper::class)->print($error);
       ?>
+      <span class="code">[ <?php $this->_echo($code); ?> ]</span>
     </div>
   </section>
   <?php

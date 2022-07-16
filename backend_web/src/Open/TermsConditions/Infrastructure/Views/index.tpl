@@ -7,7 +7,7 @@
 <?php
 $this->_element("open/elem-css-common");
 ?>
-  <link rel="stylesheet" href="/themes/mypromo/css/sp.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="/themes/mypromos/css/sp.css" type="text/css" media="all" />
 
   <main class="main-grid" id="top-mark">
     <div class="div-wave-top">

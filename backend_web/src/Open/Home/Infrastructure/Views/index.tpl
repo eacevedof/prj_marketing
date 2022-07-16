@@ -3,7 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  */
 ?>
-<link rel="stylesheet" href="./themes/mypromo/css/index.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/themes/mypromos/css/index.css" type="text/css" media="all" />
 <main class="main-grid">
   <div class="div-wave-top">
     <svg viewBox="25 0 550 150" preserveAspectRatio="none" style="height: 300%; width: 110%;">
@@ -15,7 +15,7 @@
 
   <nav class="nav-grid center-x">
     <figure>
-      <img src="./themes/mypromo/images/provider-xxx-logo-orange.svg" class="nav-icon">
+      <img src="/themes/mypromos/images/provider-xxx-logo-orange.svg" class="nav-icon">
     </figure>
     <input type="checkbox" id="chk-hamburguer" autocomplete="off" />
     <ul class="nav-list-ul">
@@ -24,7 +24,7 @@
     </ul>
     <label for="chk-hamburguer" class="label-hamburger">
       <figure class="nav-menu-figure">
-        <img src="./themes/mypromo/images/icon-hamburger.svg" class="nav-icon">
+        <img src="/themes/mypromos/images/icon-hamburger.svg" class="nav-icon">
       </figure>
     </label>
   </nav>
@@ -46,7 +46,7 @@
     </div>
 
     <figure class="figure-home-hero">
-      <img src="./themes/mypromo/images/home-hero.svg" class="figure-home-hero">
+      <img src="/themes/mypromos/images/home-hero.svg" class="figure-home-hero">
     </figure>
   </section>
 

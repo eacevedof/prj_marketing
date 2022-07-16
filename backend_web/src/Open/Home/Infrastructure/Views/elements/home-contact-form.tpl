@@ -25,6 +25,6 @@
     <div class="form-buttons">
       <button id="btn-contact" class="btn btn-dark">Enviar</button>
     </div>
-    <button type="button" id="button-exit" class="button-exit"><img src="./themes/mypromo/images/icon-close-modal.svg"></button>
+    <button type="button" id="button-exit" class="button-exit"><img src="/themes/mypromos/images/icon-close-modal.svg"></button>
   </form>
 </dialog>
