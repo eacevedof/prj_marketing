@@ -677,3 +677,159 @@ msgstr "7. Legislación"
 msgid "This Legal Notice is governed in each and every one of its extremes by Spanish law."
 msgstr "El presente Aviso Legal se rige en todos y cada uno de sus extremos por la ley española."
 
+# cookies policy
+msgid "Cookies Policy"
+msgstr "Política de Cookies"
+
+msgid "1. What are cookies?"
+msgstr "1. ¿Qué son las cookies?"
+
+msgid "Cookies are files or files that are downloaded to the <i>computer / smartphone / tablet<i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed."
+msgstr "Las cookies son archivos o ficheros que se descargan en el <i>ordenador / smartphone / tablet</i> del Usuario (en adelante, el “Usuario”), al acceder a determinados sitios web y aplicaciones, que permiten el almacenamiento y recuperación de los datos del Usuario. Las cookies se utilizan para diferentes fines, como reconocerte como Usuario, obtener información sobre tus hábitos de navegación y adaptar la forma en que se muestra el contenido."
+
+msgid "2.- What cookies do we use?"
+msgstr "2.- ¿Qué cookies utilizamos?"
+
+msgid "The Website may use the following types of cookies. A cookie may fall into more than one category:"
+msgstr "El Sitio web puede utilizar los siguientes tipos de cookies. Una cookie puede incluirse en más de una categoría:"
+
+msgid "Own cookies"
+msgstr "Cookies propias"
+
+msgid "Own cookies are those that are sent to the User's device from a computer or domain managed by ProviderXXX Spain and from which the service requested by the User is provided."
+msgstr "Las cookies propias son aquellas que se envían al dispositivo del Usuario desde un equipo o dominio gestionado por ProviderXXX Spain y desde el que se presta el servicio solicitado por el Usuario."
+
+msgid "Third party cookies"
+msgstr "Cookies de terceros"
+
+msgid "Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by ProviderXXX Spain but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “ProviderXXX“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out."
+msgstr "Las cookies de terceros son aquellas enviadas al dispositivo del Usuario desde un equipo o dominio que puede o no ser gestionado por ProviderXXX Spain pero por otra entidad que procesa los datos recogidos por la cookie para sus propios fines. Las cookies propias se identifican en esta política indicando que el titular es “ProviderXXX Spain”. El resto son propiedad de los terceros indicados en cada caso. En el apartado 6, puedes acceder a sus respectivas políticas de cookies al hacer clic en el nombre del tercero, incluidas las transferencias a países terceros que, en su caso, realice."
+
+msgid "Session cookies and persistent cookies"
+msgstr "Cookies de sesión y cookies persistente"
+
+msgid "session cookies are designed to collect and store data while the User accesses the Website. The information is kept only during the session, and disappears when it ends. Persistent cookies, however, continue to be stored in the terminal for a certain time even after the session has ended."
+msgstr "las cookies de sesión están diseñadas para recabar y almacenar datos mientras el Usuario accede al Sitio web. La información se conserva únicamente durante la sesión, y desaparece al terminar ésta. Las cookies persistentes, sin embargo, siguen almacenadas en el terminal por un tiempo determinado aún finalizada la sesión."
+
+msgid "Technical cookies"
+msgstr "Cookies técnicas"
+
+msgid "These cookies allow the Website to function correctly, so they are essential for the User to be able to use all the options of the Website and to be able to navigate and use its functions normally."
+msgstr "estas cookies permiten que el Sitio web funcione correctamente por lo que son imprescindibles para que el Usuario pueda usar todas las opciones del Sitio web y pueda navegar y utilizar las funciones de la misma con normalidad."
+
+msgid "Preference or personalization cookies"
+msgstr "Cookies de preferencia o personalización"
+
+msgid "are those that allow remembering information that allows the User to access the Website with some characteristics that make their experience different from that of other users, for example, the language, the type of browser through which the service is performed, the regional configuration from where the service is accessed, etc."
+msgstr "son aquéllas que permiten recordar información que permite al Usuario acceder al Sitio web con algunas características que hacen que su experiencia sea diferente a la de otros usuarios, por ejemplo, el idioma, el tipo de navegador a través del cual se realiza el servicio, la configuración regional desde donde se accede al servicio, etc."
+
+msgid "Analysis or measurement cookies"
+msgstr "Cookies de análisis o medición"
+
+msgid "are those that allow the monitoring and analysis of the behavior of the Users of the websites to which they are linked, including the quantification of the impacts of the advertisements, where appropriate. The information collected through this type of cookie is used to measure the activity of the Website and to create browsing profiles of the Users, in order to introduce improvements based on the analysis of the usage data made by the Users. from service."
+msgstr "son aquéllas que permiten el seguimiento y análisis del comportamiento de los Usuarios de los sitios web a los que están vinculadas, incluida la cuantificación de los impactos de los anuncios, en su caso. La información recogida mediante este tipo de cookies se utiliza en la medición de la actividad del Sitio web y para la elaboración de perfiles de navegación de los Usuarios, con el fin de introducir mejoras en función del análisis de los datos de uso que hacen los Usuarios del servicio."
+
+msgid "Behavioral advertising cookies"
+msgstr "Cookies de publicidad comportamental"
+
+msgid "are those that store information on the behavior of Users obtained through the continuous observation of their browsing habits, which allows the development of a specific profile to display advertising based on it."
+msgstr "son aquéllas que almacenan información del comportamiento de los Usuarios obtenida a través de la observación continuada de sus hábitos de navegación, lo que permite desarrollar un perfil específico para mostrar publicidad en función del mismo."
+
+msgid "In <a href=\"#section-6\">section 6</a> of this policy, the cookies used on the Website are detailed."
+msgstr "En el <a href=\"#apartado-6\">apartado 6</a> de la presente política se detallan las cookies que se utilizan en el Sitio web."
+
+msgid "3.- Are international data transfers made with the use of cookies?"
+msgstr "3.- ¿Se realizan transferencias internacionales de datos con el uso de cookies?"
+
+msgid "The acceptance of some of these cookies may involve the international transfer of data to third countries necessary for the operation of the services of our providers. The legal basis for said transfer is your consent, expressed by consenting to the use of the cookies in each case. In any case, international data transfers will be made to countries with an adequate level of protection declared by the European Commission and/or based on the provision of adequate guarantees such as standard contractual clauses (articles 45 and 46 of the General Protection Regulation of data)."
+msgstr "La aceptación de algunas de estas cookies puede suponer la transferencia internacional de datos a terceros países necesaria para el funcionamiento de los servicios de nuestros proveedores. La base legal para dicha transferencia es tu consentimiento, manifestado al consentir el uso de las cookies de que en cada caso se trate. En todo caso, las transferencias internacionales de datos se realizarán a países con un adecuado nivel de protección declarado por la Comisión Europea y/o en base a la aportación de garantías adecuadas tales como cláusulas contractuales tipo (artículos 45 y 46 del Reglamento General de Protección de Datos)."
+
+msgid "You can find out about the transfers to third countries that, where appropriate, are made by the third parties identified in this cookie policy in their corresponding policies, accessible in section 6."
+msgstr "Puedes informarte de las transferencias a terceros países que, en su caso, realizan los terceros identificados en esta política de cookies en sus correspondientes políticas, accesibles en el apartado 6."
+
+msgid "4. How to disable cookies?"
+msgstr "4. ¿Cómo deshabilitar las cookies?"
+
+msgid "All browsers allow you to make changes to disable cookie settings. This is why most browsers offer the ability to manage cookies, for finer control over privacy."
+msgstr "Todos los navegadores permiten hacer cambios para desactivar la configuración de las cookies. Este es el motivo por el que la mayoría de los navegadores ofrecen la posibilidad de administrar las cookies, para obtener un control más preciso sobre la privacidad."
+
+msgid "These settings are located in the \"options\" or \"preferences\" menu of your browser."
+msgstr "Estos ajustes se encuentran ubicados en las \"opciones\" o \"preferencias\" del menú de su navegador."
+
+msgid "If you wish to revoke your informed consent regarding the use of cookies sent from the Website, or modify it, you can access the cookie configuration panel or make the changes through the configuration of your browser, without preventing access to the contents."
+msgstr "Si deseas revocar tu consentimiento informado respecto al uso de cookies enviadas desde el Sitio web, o modificarlo, puedes acceder al panel de configuración de cookies o hacer los cambios a través de la configuración de tu navegador, sin que ello impida el acceso a los contenidos."
+
+msgid "These settings are located in the \"options\" or \"preferences\" menu of your browser. Below, you can find the links for each browser to disable cookies by following the instructions:"
+msgstr "Estos ajustes se encuentran ubicados en las \"opciones\" o \"preferencias\" del menú de tu navegador. A continuación, podrás encontrar los links de cada navegador para deshabilitar las cookies siguiendo las instrucciones:"
+
+msgid "In the tools menu, select ”Internet Options.”"
+msgstr "En el menú de herramientas, selecciona “Opciones de Internet”."
+
+msgid "Click on the privacy tab."
+msgstr "Haz clic en la pestaña de privacidad."
+
+msgid "You can configure privacy with a slider with six positions that allows you to control the number of cookies that will be installed: Block all cookies, High, Medium High, Medium (default level), Low and Accept all cookies."
+msgstr "Podrás configurar la privacidad con un cursor con seis posiciones que te permite controlar la cantidad de cookies que se instalarán: Bloquear todas las cookies, Alta, Media Alta, Media (nivel por defecto), Baja y Aceptar todas las cookies."
+
+msgid "At the top of the Firefox window, click on the Tools menu."
+msgstr "En la parte superior de la venta de Firefox hacer clic en el menú Herramientas."
+
+msgid "Select the Privacy panel."
+msgstr "Selecciona el panel Privacidad."
+
+msgid "In the Firefox option you can choose Use custom settings for history to configure the options."
+msgstr "En la opción Firefox podrás elegir Usar una configuración personalizada para el historial para configurar las opciones."
+
+msgid "Click on the menu located on the toolbar."
+msgstr "Haz clic en el menú situado en la barra de herramientas."
+
+msgid "Select Settings."
+msgstr "Seleccionar Configuración."
+
+msgid "Click Show advanced options."
+msgstr "Haz clic en Mostrar opciones avanzadas."
+
+msgid "In the “Privacy” selection, click the Content Settings button."
+msgstr "En la selección “Privacidad” haz clic en el botón Configuración de contenido."
+
+msgid "In the Cookies selection, the options can be configured."
+msgstr "En la selección de Cookies, se pueden configurar las opciones."
+
+msgid "In the configuration menu select the “Preferences” option."
+msgstr "En el menú de configuración selecciona la opción de “Preferencias”."
+
+msgid "Open the privacy tab."
+msgstr "Abre la pestaña de privacidad."
+
+msgid "Select the option you want from the “block cookies” section."
+msgstr "Selecciona la opción que quiera de la sección de “bloquear cookies”."
+
+msgid "Remember that certain functions and the full functionality of the Website may not be available after disabling cookies."
+msgstr "Recuerda que ciertas funciones y la plena funcionalidad del Sitio web pueden no estar disponibles después de deshabilitar las cookies."
+
+msgid "In order for visitors to the Website to have the possibility to prevent Google Analytics from using their data, Google has developed a Google opt-out browser add-on, available here: {0}"
+msgstr "Para que los visitantes del Sitio web tengáis la posibilidad de evitar que Google Analytics utilice vuestros datos, Google ha desarrollado un complemento de inhabilitación para navegadores de Google, disponible aquí: {0}"
+
+msgid "5.- Cookies on mobile devices"
+msgstr "5.- Cookies en los dispositivos móviles"
+
+msgid "Cookies and other storage devices are also used when you access the Website from mobile devices."
+msgstr "Las cookies y otros dispositivos de almacenamiento también se utilizan cuando accedes al Sitio web desde dispositivos móviles."
+
+msgid "As with computer browsers, mobile device browsers allow you to make changes to privacy options or settings to disable or delete cookies."
+msgstr "Al igual que sucede en los navegadores de ordenadores, los navegadores de los dispositivos móviles permiten realizar cambios en las opciones o ajustes de privacidad para desactivar o eliminar las cookies."
+
+msgid "If you wish to modify the privacy options, follow the instructions specified by the developer of your mobile device browser. Below, you can find some examples of the links that will guide you to modify the privacy options on your mobile device:"
+msgstr "Si deseas modificar las opciones de privacidad sigue las instrucciones especificadas por el desarrollador de tu navegador para dispositivo móvil. A continuación, podrás encontrar algunos ejemplos de los links que te guiarán para modificar las opciones de privacidad en tu dispositivo móvil:"
+
+msgid "6.- Acceptance, configuration or rejection of cookies, and more information"
+msgstr "6.- Aceptación, configuración o rechazo de cookies, y más información"
+
+msgid "In the cookie banner, you can click the “ACCEPT ALL” button to accept all cookies. Likewise, you can click on “ACCEPT SELECTION“ to accept only the cookies marked in the configuration boxes available in the banner, or you can click on “REJECT“ to reject unnecessary cookies."
+msgstr "En el banner de cookies, puedes hacer clic en el botón “ACEPTAR TODAS” para aceptar todas las cookies. Asimismo, puedes hacer clic en “ACEPTAR SELECCIÓN” para aceptar únicamente las cookies marcadas en las casillas de configuración disponibles en el banner, o puedes hacer clic en “RECHAZAR” para rechazar las cookies no necesarias."
+
+msgid "We inform you that in the case of blocking or not accepting the installation of cookies, it is possible that certain services will not be available without the use of cookies or that you will not be able to access certain services or take full advantage of everything that this Website offers you."
+msgstr "Te informamos que en el caso de bloquear o no aceptar la instalación de cookies, es posible que ciertos servicios no estén disponibles sin la utilización de éstas o que no puedas acceder a determinados servicios ni tampoco aprovechar por completo todo lo que este Sitio web te ofrece."
+
+msgid "<a href=\"javascript: Cookiebot.renew()\">Change your consent</a><br/><br/>You can obtain more information about the processing of your data by contacting <a href=\"mailto:data.protection.office@nttdata.com\">data.protection.office@nttdata.com</a>"
+msgstr "<a href=\"javascript: Cookiebot.renew()\">Cambiar tu consentimiento</a><br/><br/>Puedes obtener más información sobre el tratamiento de tus datos dirigiéndote a <a href=\"mailto:data.protection.office@nttdata.com\">data.protection.office@nttdata.com</a>"
