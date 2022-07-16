@@ -1,3 +1,4 @@
+# comillas “
 msgid "Content not found"
 msgstr "Contenido no encontrado"
 
@@ -530,8 +531,8 @@ msgstr "Términos del proveedor"
 msgid "1. Portal Owner"
 msgstr "1. Titular del Portal"
 
-msgid "This Legal Notice regulates the conditions of use of the website <a href=\"{0}\" target=\"_blank\">{1}</a> (hereinafter, the \"Website\" or the \"Portal\") responsibility of:"
-msgstr "El presente Aviso Legal regula las condiciones de utilización del sitio web <a href=\"{0}\" target=\"_blank\">{1}</a> (en adelante, el \"Sitio Web\" o el \"Portal\") responsabilidad de:"
+msgid "This Legal Notice regulates the conditions of use of the website <a href=\"{0}\" target=\"_blank\">{1}</a> (hereinafter, the “Website“ or the “Portal“) responsibility of:"
+msgstr "El presente Aviso Legal regula las condiciones de utilización del sitio web <a href=\"{0}\" target=\"_blank\">{1}</a> (en adelante, el “Sitio Web“ o el “Portal“) responsabilidad de:"
 
 msgid "The fact of accessing the Website implies that you have read and accept, without reservation, these conditions. The Service Provider reserves the right to deny, suspend, interrupt or cancel access or use, totally or partially, of this website to those users or visitors who fail to comply with any of the conditions set forth in this Legal Notice."
 msgstr "El hecho de acceder al Sitio Web implica que usted ha leído y acepta, sin reserva alguna, estas condiciones. El Prestador de Servicios se reserva el derecho de denegar, suspender, interrumpir o cancelar el acceso o la utilización, total o parcialmente, de este sitio web a aquellos usuarios o visitantes del mismo que incumplan cualquiera de las condiciones previstas en este Aviso Legal."
@@ -642,7 +643,7 @@ msgid "Service Provider is not responsible for damages or losses of any kind pro
 msgstr "Prestador de Servicios no se responsabiliza de los daños o perjuicios de cualquier tipo producidos en el usuario que traigan causa de fallos o desconexiones en las redes de telecomunicaciones que produzcan la suspensión, cancelación o interrupción del servicio del Portal durante la prestación del mismo o con carácter previo."
 
 msgid "4.3 Links"
-msgstr "4.3  Enlaces"
+msgstr "4.3 Enlaces"
 
 msgid "The access service to the Portal may include technical link devices, directories and even search tools that allow the user to access other Internet pages and portals (hereinafter, 'Linked Sites'). In these cases, the Service Provider acts as a provider of intermediation services in accordance with article 17 of Law 34/2002, of July 12, on Services of the Information Society and Electronic Commerce (hereinafter, the 'LSSI') and will only be responsible for the contents and services provided on the Linked Sites to the extent that they have effective knowledge of the illegality and have not deactivated the link with due diligence.In the event that the user considers that there is a Linked Site with illegal or inappropriate content, they may communicate it to the Service Provider in accordance with the procedure and the effects established in clause 5, without this communication in any case entailing the obligation to and remove the corresponding link."
 msgstr "El servicio de acceso al Portal puede incluir dispositivos técnicos de enlace, directorios e incluso instrumentos de búsqueda que permiten al usuario acceder a otras páginas y portales de Internet (en adelante, 'Sitios Enlazados'). En estos casos, Prestador de Servicios actúa como prestador de servicios de intermediación de conformidad con el artículo 17 de la Ley 34/2002, de 12 de julio, de Servicios de la Sociedad de la Información y el Comercio Electrónico (en adelante, la 'LSSI') y sólo será responsable de los contenidos y servicios suministrados en los Sitios Enlazados en la medida en que tenga conocimiento efectivo de la ilicitud y no haya desactivado el enlace con la diligencia debida. En el supuesto de que el usuario considere que existe un Sitio Enlazado con contenidos ilícitos o inadecuados podrá comunicárselo a Prestador de Servicios de acuerdo con el procedimiento y los efectos establecidos en la cláusula 5, sin que en ningún caso esta comunicación conlleve la obligación de retirar el correspondiente enlace."
