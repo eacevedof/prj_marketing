@@ -26,7 +26,7 @@ final class PrivacyPolicyInfoController extends OpenController
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
     }
 }

@@ -28,7 +28,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
         catch (ForbiddenException $e) {
             $this->add_header(ResponseType::FORBIDDEN)
@@ -37,7 +37,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
@@ -46,7 +46,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
     }
 
@@ -67,7 +67,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
         catch (ForbiddenException $e) {
             $this->add_header(ResponseType::FORBIDDEN)
@@ -76,7 +76,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
@@ -85,7 +85,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
     }
 }
