@@ -8,103 +8,31 @@ final class PrivacyPolicyInfoService extends AppService
     public function __invoke(): array
     {
         $r = [
-            ["p" => __("ProviderXXX S.A. (hereinafter, “ProviderXXX“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment.")],
+            ["h3" => __("For what purpose do we treat your data?")],
+            ["p" => __("The data collected during the contracting flow of the tool through the Marketplace will be processed for the configuration and maintenance of the profile of the contracting Client (hereinafter “the Organization“) on the Meikai platform.")],
 
-            ["h2" => __("1. What are cookies?")],
-            ["p" => __("Cookies are files or files that are downloaded to the <i>computer / smartphone / tablet<i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed.")],
+            ["h3" => __("What personal data do we process?")],
+            ["p" => __("We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”Meikai enrollment form”.")],
 
-            ["h2" => __("2.- What cookies do we use?")],
-            ["p" => __("The Website may use the following types of cookies. A cookie may fall into more than one category:")],
+            ["h3" => __("What is the legal basis of the treatment?")],
+            ["p" => __("The legal basis of the treatments with the purposes described is the legitimate interest in the treatment of said data, being necessary for the formalization and maintenance of the contractual relationship between NTT DATA Spain and the contracting Organization")],
 
-            ["ul" => [
-                [
-                    ["b" => __("Own cookies")],
-                    ["span" => __("Own cookies are those that are sent to the User's device from a computer or domain managed by ProviderXXX Spain and from which the service requested by the User is provided.")],
-                ],
-                [
-                    ["b" => __("Third party cookies")],
-                    ["span" => __("Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by ProviderXXX Spain but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “ProviderXXX“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out.")],
-                ],
-                [
-                    ["b" => __("Session cookies and persistent cookies")],
-                    ["span" => __("session cookies are designed to collect and store data while the User accesses the Website. The information is kept only during the session, and disappears when it ends. Persistent cookies, however, continue to be stored in the terminal for a certain time even after the session has ended.")],
-                ],
-                [
-                    ["b" => __("Technical cookies")],
-                    ["span" => __("These cookies allow the Website to function correctly, so they are essential for the User to be able to use all the options of the Website and to be able to navigate and use its functions normally.")],
-                ],
-                [
-                    ["b" => __("Preference or personalization cookies")],
-                    ["span" => __("are those that allow remembering information that allows the User to access the Website with some characteristics that make their experience different from that of other users, for example, the language, the type of browser through which the service is performed, the regional configuration from where the service is accessed, etc.")],
-                ],
-                [
-                    ["b" => __("Analysis or measurement cookies")],
-                    ["span" => __("are those that allow the monitoring and analysis of the behavior of the Users of the websites to which they are linked, including the quantification of the impacts of the advertisements, where appropriate. The information collected through this type of cookie is used to measure the activity of the Website and to create browsing profiles of the Users, in order to introduce improvements based on the analysis of the usage data made by the Users. from service.")],
-                ],
-                [
-                    ["b" => __("Behavioral advertising cookies")],
-                    ["span" => __("are those that store information on the behavior of Users obtained through the continuous observation of their browsing habits, which allows the development of a specific profile to display advertising based on it.")],
-                ],
-            ]],
-            ["p" => __("In <a href=\"#section-6\">section 6</a> of this policy, the cookies used on the Website are detailed.")],
-            ["h2" => __("3.- Are international data transfers made with the use of cookies?")],
-            ["p" => __("The acceptance of some of these cookies may involve the international transfer of data to third countries necessary for the operation of the services of our providers. The legal basis for said transfer is your consent, expressed by consenting to the use of the cookies in each case. In any case, international data transfers will be made to countries with an adequate level of protection declared by the European Commission and/or based on the provision of adequate guarantees such as standard contractual clauses (articles 45 and 46 of the General Protection Regulation of data).")],
-            ["p" => __("You can find out about the transfers to third countries that, where appropriate, are made by the third parties identified in this cookie policy in their corresponding policies, accessible in section 6.")],
-
-            ["h2" => __("4. How to disable cookies?")],
-            ["p" => __("All browsers allow you to make changes to disable cookie settings. This is why most browsers offer the ability to manage cookies, for finer control over privacy.")],
-            ["p" => __("These settings are located in the “options“ or “preferences“ menu of your browser.")],
-            ["p" => __("If you wish to revoke your informed consent regarding the use of cookies sent from the Website, or modify it, you can access the cookie configuration panel or make the changes through the configuration of your browser, without preventing access to the contents.")],
-            ["p" => __("These settings are located in the “options“ or “preferences“ menu of your browser. Below, you can find the links for each browser to disable cookies by following the instructions:")],
-            ["h3" => "Internet Explorer (<a href=\"https://goo.gl/iU2wh2\" target=\"_blank\">https://goo.gl/iU2wh2</a>)",],
-            ["ul" => [
-                __("In the tools menu, select ”Internet Options.”"),
-                __("Click on the privacy tab."),
-                __("You can configure privacy with a slider with six positions that allows you to control the number of cookies that will be installed: Block all cookies, High, Medium High, Medium (default level), Low and Accept all cookies."),
-            ]],
-            ["h3" => "Mozilla Firefox (<a href=\"http://goo.gl/QXWYmv\" target=\"_blank\">http://goo.gl/QXWYmv</a>)"],
-            ["ul" => [
-                __("At the top of the Firefox window, click on the Tools menu."),
-                __("Select Options."),
-                __("Select the Privacy panel."),
-                __("In the Firefox option you can choose Use custom settings for history to configure the options."),
-            ]],
-            ["h3" => "Google Chrome (<a href=\"http://goo.gl/fQnkSB\" target=\"_blank\">http://goo.gl/fQnkSB</a>)"],
-            ["ul" => [
-                __("Click on the menu located on the toolbar."),
-                __("Select Settings."),
-                __("Click Show advanced options."),
-                __("In the “Privacy” selection, click the Content Settings button."),
-                __("In the Cookies selection, the options can be configured."),
-            ]],
-            ["h3" => "Safari (<a href=\"https://goo.gl/PcjEm3\" target=\"_blank\">https://goo.gl/PcjEm3</a>; <a href=\"https://goo.gl/dQywEo\" target=\"_blank\">https://goo.gl/dQywEo</a>)"],
-            ["ul" => [
-                __("In the configuration menu select the “Preferences” option."),
-                __("Open the privacy tab."),
-                __("Select the option you want from the “block cookies” section."),
-                __("Remember that certain functions and the full functionality of the Website may not be available after disabling cookies."),
-            ]],
+            ["h3" => __("Who are the recipients of your data?")],
             ["p" => __(
-            "In order for visitors to the Website to have the possibility to prevent Google Analytics from using their data, Google has developed a Google opt-out browser add-on, available here: {0}",
-            "<a href=\"https://tools.google.com/dlpage/gaoptout\" target=\"_blank\">https://tools.google.com/dlpage/gaoptout</a>."
-            ),],
-            ["h2" => __("5.- Cookies on mobile devices")],
-            ["p" => __("Cookies and other storage devices are also used when you access the Website from mobile devices.")],
-            ["p" => __("As with computer browsers, mobile device browsers allow you to make changes to privacy options or settings to disable or delete cookies.")],
-            ["p" => __("If you wish to modify the privacy options, follow the instructions specified by the developer of your mobile device browser. Below, you can find some examples of the links that will guide you to modify the privacy options on your mobile device:")],
-            ["ul" => [
-               "IOS (<a href=\"http://goo.gl/61xevS\" target=\"_blank\">http://goo.gl/61xevS)</a>",
-               "Windows Phone (<a href=\"https://goo.gl/tKyb0y\" target=\"_blank\">https://goo.gl/tKyb0y</a>)",
-               "Chrome Mobile (<a href=\"http://goo.gl/XJp7N\" target=\"_blank\">http://goo.gl/XJp7N</a>)",
-               "Opera Mobile (<a href=\"http://goo.gl/Nzr8s7\" target=\"_blank\">http://goo.gl/Nzr8s7</a>)",
-            ]],
-            ["h2" => __("<span id=\"section-6\">6.- Acceptance, configuration or rejection of cookies, and more information</span>")],
-            ["p" => __("In the cookie banner, you can click the “ACCEPT ALL” button to accept all cookies. Likewise, you can click on “ACCEPT SELECTION“ to accept only the cookies marked in the configuration boxes available in the banner, or you can click on “REJECT“ to reject unnecessary cookies.")],
-            ["p" => __("We inform you that in the case of blocking or not accepting the installation of cookies, it is possible that certain services will not be available without the use of cookies or that you will not be able to access certain services or take full advantage of everything that this Website offers you.")],
-            ["p" => __("<a href=\"javascript: Cookiebot.renew()\">Change your consent</a>")],
-            ["p" => __("You can obtain more information about the processing of your data by contacting {0}", "<a href=\"mailto:info@providerxxx.es\">info@providerxxx.es</a>")],
+                "Your data may be communicated to the companies of the NTT DATA Spain Group, some of which are located in countries located outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection. The name and registered office of the entities of the NTT DATA Spain Group appear on the website {0}.",
+                "<a href=\"https://es.nttdata.com/group-companies\" target=\"_blank\">https://es.nttdata.com/group-companies</a>"
+            )],
+            ["p" => __("Additionally, we inform you that your data may be communicated to Treatment Managers, such as the following technology providers, some of which have processing and/or support centers located outside the European Economic Area.")],
+            ["p" => __("Said communications could entail the international transfer of data to countries located outside the European Economic Area, some of which have not been declared as countries with an adequate level of protection by the European Commission. We guarantee that when your data could leave the European Economic Area, they will maintain the same level of protection based on compliance with the provisions set forth in the European data protection regulations. In this sense, international data transfers will be made (i) to countries with an adequate level of protection declared by the European Commission (ii) based on the provision of adequate guarantees such as standard contractual clauses or binding corporate regulations or (iii ) by virtue of the authorization of the competent control authority or other cases provided for in the regulations.")],
+
+            ["h3" => __("How long will we keep your data?")],
+            ["p" => __("Your data will be kept as long as the contractual relationship between the Organization and NTT DATA Spain for the use of the Meikai platform is maintained, or as long as the Organization does not request NTT DATA Spain to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods.")],
+
+            ["h3" => __("What are your rights?")],
+            ["p" => __("You can ask NTT DATA Spain for confirmation as to whether your personal data is being processed and, if so, access them. Likewise, you can request the rectification of inaccurate data or, where appropriate, request its deletion when, among other reasons, the data is no longer necessary for the purposes for which it was collected.")],
+            ["p" => __("Likewise, in certain circumstances, you may request the limitation of the processing of your data, in which case we will only keep them for the exercise or defense of claims. You may also oppose the processing of your data in certain circumstances. We will stop processing the data, except for compelling legitimate reasons or for the exercise or defense of possible claims. Finally, when appropriate, the right of portability may be exercised to obtain the data in electronic format or to transmit the same to another entity.")],
+            ["p" => __("To exercise the aforementioned rights, you must write to the company's Data Protection Office, accompanied by an equivalent means of identification, to any of the following addresses:")],
         ];
-        //print_r($_REQUEST["TRANSLATIONS"]);die;
         return $r;
     }
 }

@@ -839,7 +839,7 @@ msgstr "Puedes obtener más información sobre el tratamiento de tus datos dirig
 
 #privacy_policy
 msgid "Privacy Policy"
-msgstr "Poóitica de privacidad"
+msgstr "Política de Privacidad"
 
 msgid "Who is the Data Controller?"
 msgstr "¿Quién es el Responsable del tratamiento?"
