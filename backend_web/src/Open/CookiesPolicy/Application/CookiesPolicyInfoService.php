@@ -19,11 +19,11 @@ final class CookiesPolicyInfoService extends AppService
             ["ul" => [
                 [
                     ["b" => __("Own cookies")],
-                    ["span" => __("Own cookies are those that are sent to the User's device from a computer or domain managed by ProviderXXX Spain and from which the service requested by the User is provided.")],
+                    ["span" => __("Own cookies are those that are sent to the User's device from a computer or domain managed by ProviderXXX and from which the service requested by the User is provided.")],
                 ],
                 [
                     ["b" => __("Third party cookies")],
-                    ["span" => __("Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by ProviderXXX Spain but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “ProviderXXX“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out.")],
+                    ["span" => __("Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by ProviderXXX but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “ProviderXXX“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out.")],
                 ],
                 [
                     ["b" => __("Session cookies and persistent cookies")],
