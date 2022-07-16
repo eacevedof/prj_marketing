@@ -34,7 +34,7 @@ final class TermsConditionsInfoService extends AppService
             ["h2" => __("3. Terms of use of the Portal")],
             ["h3" => __("3.1  General")],
             ["p" => __(
-                "The use of the Portal attributes the condition of user and implies the acceptance of all the conditions included in this Legal Notice and the rest included in: {0} and {1}.",
+                "The use of the Portal attributes the condition of user and implies the acceptance of all the conditions included in this Legal Notice and the rest that are present in {0} and {1}.",
                 "<a href=\"/cookies-policy\" target=\"_blank\">".__("Cookies Policy")."</a>",
                 "<a href=\"/privacy-policy\" target=\"_blank\">".__("Privacy Policy")."</a>"
             )],

@@ -568,8 +568,8 @@ msgstr "3. Condiciones de uso del Portal"
 msgid "3.1  General"
 msgstr "3.1  General"
 
-msgid "The use of the Portal attributes the condition of user and implies the acceptance of all the conditions included in this Legal Notice."
-msgstr "La utilización del Portal atribuye la condición de usuario e implica la aceptación de todas las condiciones incluidas en este Aviso Legal."
+msgid "The use of the Portal attributes the condition of user and implies the acceptance of all the conditions included in this Legal Notice and the rest that are present in {0} and {1}."
+msgstr "La utilización del Portal atribuye la condición de usuario e implica la aceptación de todas las condiciones incluidas en este Aviso Legal y las restantes que constan en {0} y {1}"
 
 msgid "Notwithstanding the foregoing, access to certain services and/or content is restricted to certain users, and regulations, instructions, general conditions or particular conditions may be established that, where appropriate, replace, complete and/or modify this Notice Legal."
 msgstr "Sin perjuicio de lo anterior, el acceso a determinados servicios y/o contenidos se encuentra restringido a determinados usuarios, pudiendo establecerse reglamentos, instrucciones, condiciones generales o condiciones particulares que, en su caso, sustituyen, completan y/o modifican el presente Aviso Legal."
