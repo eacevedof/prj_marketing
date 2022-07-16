@@ -18,11 +18,6 @@
   <?php
   echo $this->_element("open/elem-gtag-js");
   ?>
-  <!-- js -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <?php
-  echo $this->_asset_js_module(["common/snackbar"]);
-  ?>
 </head>
 <body>
 <main class="main-grid" id="top-mark">
@@ -68,4 +63,4 @@ $this->_element("open/mypromos/elem-js-center-y");
 ?>
 </body>
 </html>
-<!-- open.tpl -->
+<!-- info.tpl -->
