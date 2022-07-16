@@ -695,7 +695,7 @@ msgstr "ProviderXXX S.A. (a partir de ahora, “ProviderXXX“) informa, por med
 msgid "1. What are cookies?"
 msgstr "1. ¿Qué son las cookies?"
 
-msgid "Cookies are files or files that are downloaded to the <i>computer / smartphone / tablet<i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed."
+msgid "Cookies are files or files that are downloaded to the <i>computer / smartphone / tablet</i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed."
 msgstr "Las cookies son archivos o ficheros que se descargan en el <i>ordenador / smartphone / tablet</i> del Usuario (en adelante, el “Usuario”), al acceder a determinados sitios web y aplicaciones, que permiten el almacenamiento y recuperación de los datos del Usuario. Las cookies se utilizan para diferentes fines, como reconocerte como Usuario, obtener información sobre tus hábitos de navegación y adaptar la forma en que se muestra el contenido."
 
 msgid "2.- What cookies do we use?"
