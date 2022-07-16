@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="#">
+  <link rel="icon" href="/themes/mypromos/images/provider-xxx-logo-orange.svg"/>
   <title><?=$pagetitle ?? ""?></title>
   <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
   <!-- js -->
