@@ -8,7 +8,7 @@ final class CookiesPolicyInfoService extends AppService
     public function __invoke(): array
     {
         return [
-            ["p" => __("My Promotions“, S.A. (hereinafter, “My Promotions“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment.")],
+            ["p" => __("My Promotions S.A. (hereinafter, “My Promotions“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment.")],
 
             ["h2" => __("1. What are cookies?")],
             ["p" => __("Cookies are files or files that are downloaded to the <i>computer/smartphone/tablet</i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed.")],
@@ -46,7 +46,7 @@ final class CookiesPolicyInfoService extends AppService
                     ["span" => __("are those that store information on the behavior of Users obtained through the continuous observation of their browsing habits, which allows the development of a specific profile to display advertising based on it.")],
                 ],
             ]],
-            ["p" => __("In <a href=“#section-6“>section 6</a> of this policy, the cookies used on the Website are detailed.")],
+            ["p" => __("In <a href=\"#section-6\">section 6</a> of this policy, the cookies used on the Website are detailed.")],
             ["h2" => __("3.- Are international data transfers made with the use of cookies?")],
             ["p" => __("The acceptance of some of these cookies may involve the international transfer of data to third countries necessary for the operation of the services of our providers. The legal basis for said transfer is your consent, expressed by consenting to the use of the cookies in each case. In any case, international data transfers will be made to countries with an adequate level of protection declared by the European Commission and/or based on the provision of adequate guarantees such as standard contractual clauses (articles 45 and 46 of the General Protection Regulation of data).")],
             ["p" => __("You can find out about the transfers to third countries that, where appropriate, are made by the third parties identified in this cookie policy in their corresponding policies, accessible in section 6.")],
@@ -98,7 +98,7 @@ final class CookiesPolicyInfoService extends AppService
                ["b" => "Chrome Mobile (<a href=\"http://goo.gl/XJp7N\" target=\"_blank\">http://goo.gl/XJp7N</a>)"],
                ["b" => "Opera Mobile (<a href=\"http://goo.gl/Nzr8s7\" target=\"_blank\">http://goo.gl/Nzr8s7</a>)"],
             ]],
-            ["h2" => __("6.- Acceptance, configuration or rejection of cookies, and more information")],
+            ["h2" => __("<span id=\"section-6\">6.- Acceptance, configuration or rejection of cookies, and more information</span>")],
             ["p" => __("In the cookie banner, you can click the “ACCEPT ALL” button to accept all cookies. Likewise, you can click on “ACCEPT SELECTION“ to accept only the cookies marked in the configuration boxes available in the banner, or you can click on “REJECT“ to reject unnecessary cookies.")],
             ["p" => __("We inform you that in the case of blocking or not accepting the installation of cookies, it is possible that certain services will not be available without the use of cookies or that you will not be able to access certain services or take full advantage of everything that this Website offers you.")],
             ["p" => __("<a href=\"javascript: Cookiebot.renew()\">Change your consent</a>")],
