@@ -30,7 +30,7 @@ final class PromotionCapConfirmController extends OpenController
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $result = $insert();
-            $this->set_layout("open/success")
+            $this->set_layout("open/mypromos/success")
                 ->add_var(PageType::TITLE, $title = __("Subscription confirmation success!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("success",  [
@@ -39,25 +39,25 @@ final class PromotionCapConfirmController extends OpenController
                 ]);
 
             unset($insert, $result, $promotionuuid, $subscriptionuuid);
-            $this->render();
+            $this->view->render_nv();
         }
         catch (PromotionCapException $e) {
             $this->add_header($e->getCode())
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Subscription confirmation error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Subscription confirmation error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
-                ->render();
+                ->render_nv();
         }
     }
 }

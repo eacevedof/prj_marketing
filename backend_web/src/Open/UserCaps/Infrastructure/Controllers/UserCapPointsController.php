@@ -26,7 +26,7 @@ final class UserCapPointsController extends OpenController
 
             $title = htmlentities($result["business_name"] ?? "");
             $title = __("Accumulated points of {0} at {1}", $result["username"], $title);
-            $this->set_layout("open/success")
+            $this->set_layout("open/mypromos/success")
                 ->add_var(PageType::TITLE, $title)
                 ->add_var(PageType::H1, $title)
                 ->add_var("total", $result["total_points"])
@@ -37,7 +37,7 @@ final class UserCapPointsController extends OpenController
         }
         catch (PromotionCapException $e) {
             $this->add_header($e->getCode())
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
@@ -46,7 +46,7 @@ final class UserCapPointsController extends OpenController
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())

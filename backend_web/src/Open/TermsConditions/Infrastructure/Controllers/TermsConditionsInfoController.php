@@ -23,7 +23,7 @@ final class TermsConditionsInfoController extends OpenController
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
@@ -40,7 +40,7 @@ final class TermsConditionsInfoController extends OpenController
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
@@ -62,7 +62,7 @@ final class TermsConditionsInfoController extends OpenController
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
@@ -79,7 +79,7 @@ final class TermsConditionsInfoController extends OpenController
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())

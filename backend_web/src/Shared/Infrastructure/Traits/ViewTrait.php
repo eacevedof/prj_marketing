@@ -54,13 +54,4 @@ trait ViewTrait
         $this->view->render();
     }
 
-    protected function render_error($vars=[], string $pathtemplate=""): void
-    {
-        $this->_load_view();
-        foreach ($vars as $k => $v)
-            $this->view->add_var($k,$v);
-        if($pathtemplate) $this->view->set_template($pathtemplate);
-        $this->view->render();
-    }
-
-}//ViewTrait
+}

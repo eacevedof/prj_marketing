@@ -39,7 +39,7 @@ final class PromotionCapCreateController extends OpenController
         }
         catch (PromotionCapException $e) {
             $this->add_header($e->getCode())
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Subscription error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
@@ -48,7 +48,7 @@ final class PromotionCapCreateController extends OpenController
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/error")
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Unexpected error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
