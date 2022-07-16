@@ -16,6 +16,7 @@ return [
     ["url"=>"/terms-and-conditions","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"index"],
 
     ["url"=>"/cookies-policy","controller"=>"App\Open\CookiesPolicy\Infrastructure\Controllers\CookiesPolicyInfoController", "method"=>"index"],
+    ["url"=>"/privacy-policy","controller"=>"App\Open\PrivacyPolicy\Infrastructure\Controllers\PrivacyPolicyInfoController", "method"=>"index"],
 
     ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
 

@@ -12,6 +12,7 @@
     <ul class="ul-links-flex">
       <li><a href="/terms-and-conditions"><?=__("Terms & Conditions") ?></a></li>
       <li><a href="/cookies-policy"><?=__("Cookies Policy") ?></a></li>
+      <li><a href="/privacy-policy"><?=__("Privacy Policy") ?></a></li>
     </ul>
   </div>
   <div class="item"></div>
