@@ -11,7 +11,7 @@ final class CookiesPolicyInfoService extends AppService
             ["p" => __("ProviderXXX S.A. (hereinafter, “ProviderXXX“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment.")],
 
             ["h2" => __("1. What are cookies?")],
-            ["p" => __("Cookies are files or files that are downloaded to the <i>computer / smartphone / tablet<i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed.")],
+            ["p" => __("Cookies are files or files that are downloaded to the <i>computer / smartphone / tablet</i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed.")],
 
             ["h2" => __("2.- What cookies do we use?")],
             ["p" => __("The Website may use the following types of cookies. A cookie may fall into more than one category:")],
