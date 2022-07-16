@@ -19,13 +19,13 @@ final class TermsConditionsInfoService extends AppService
             ["h2" => __("1. Portal Owner")],
             ["p" => __("This Legal Notice regulates the conditions of use of the website <a href=\"{0}\" target=\"_blank\">{1}</a> (hereinafter, the “Website“ or the “Portal“) responsibility of:", $domain, $domain)],
             ["ul" => [
-                __("providerxxx.es"),
-                __("Contact: info@providerxxx.es"),
+                "providerxxx.es - Madrid 28002 - ".__("Spain"),
+                __("Contact").": info@providerxxx.es",
             ]],
             ["p" => __("The fact of accessing the Website implies that you have read and accept, without reservation, these conditions. The Service Provider reserves the right to deny, suspend, interrupt or cancel access or use, totally or partially, of this website to those users or visitors who fail to comply with any of the conditions set forth in this Legal Notice.")],
 
             ["h2" => __("2. Intellectual and industrial property")],
-            ["p" => __("All the contents of the Portal, understanding by these, by way of example, the texts, videos, photographs, graphics, images, icons, technologies, software, links and other audiovisual or sound content, as well as its graphic design and source codes (hereinafter , the \"Contents\"), are the intellectual property of the Service Provider or third parties, and none of the exploitation rights recognized by current regulations regarding intellectual property over them can be understood to be transferred to the user, except for those that are strictly necessary for the use of the Portal.")],
+            ["p" => __("All the contents of the Portal, understanding by these, by way of example, the texts, videos, photographs, graphics, images, icons, technologies, software, links and other audiovisual or sound content, as well as its graphic design and source codes (hereinafter , the “Contents“), are the intellectual property of the Service Provider or third parties, and none of the exploitation rights recognized by current regulations regarding intellectual property over them can be understood to be transferred to the user, except for those that are strictly necessary for the use of the Portal.")],
             ["p" => __("In particular, the reproduction, transformation, distribution, public communication, making available to the public and in general any other form of exploitation, by any procedure, of all or part of the contents of this website, as well as its design and the selection and form of presentation of the materials included in it.")],
             ["p" => __("These acts of exploitation may only be carried out with the express authorization of the Service Provider and provided that reference is made to the Service Provider's ownership of the indicated intellectual and industrial property rights.")],
             ["p" => __("It is also prohibited to decompile, disassemble, reverse engineer, sub-license or transmit in any way, translate or make derivative works of the computer programs necessary for the operation, access and use of this website and the services on it contents, as well as carry out, with respect to all or part of such programs, any of the exploitation acts described in the previous paragraph.The user of the website must refrain in any case from deleting, altering, evading or manipulating any protection device or security systems that may be installed in it.")],
@@ -33,7 +33,11 @@ final class TermsConditionsInfoService extends AppService
 
             ["h2" => __("3. Terms of use of the Portal")],
             ["h3" => __("3.1  General")],
-            ["p" => __("The use of the Portal attributes the condition of user and implies the acceptance of all the conditions included in this Legal Notice.")],
+            ["p" => __(
+                "The use of the Portal attributes the condition of user and implies the acceptance of all the conditions included in this Legal Notice and the rest included in: {0} and {1}.",
+                "<a href=\"/cookies-policy\" target=\"_blank\">".__("Cookies Policy")."</a>",
+                "<a href=\"/privacy-policy\" target=\"_blank\">".__("Privacy Policy")."</a>"
+            )],
             ["p" => __("Notwithstanding the foregoing, access to certain services and/or content is restricted to certain users, and regulations, instructions, general conditions or particular conditions may be established that, where appropriate, replace, complete and/or modify this Notice Legal.")],
             ["p" => __("The user undertakes to make correct use of the Portal in accordance with the Law and this Legal Notice. The user will be liable to the Service Provider or to third parties for any damages that may be caused as a result of breach of said obligation.")],
             ["p" => __("The use of the content made available to users for marketing is strictly prohibited. In this way, the user will not be able to provide services to third parties benefiting from the contents included in the Portal.")],
