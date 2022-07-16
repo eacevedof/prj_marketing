@@ -18,8 +18,8 @@ final class CookiesPolicyInfoService extends AppService
 
             ["ul" => [
                 [
-                    "b" => __("Own cookies"),
-                    "span" => __("Own cookies are those that are sent to the User's device from a computer or domain managed by “My Promotions“ and from which the service requested by the User is provided.")
+                    ["b" => __("Own cookies")],
+                    ["span" => __("Own cookies are those that are sent to the User's device from a computer or domain managed by “My Promotions“ and from which the service requested by the User is provided.")],
                 ],
                 [
                     ["b" => __("Third party cookies")],
