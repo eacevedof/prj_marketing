@@ -15,11 +15,11 @@ final class TermsConditionsInfoController extends OpenController
     {
         try {
             $terms = SF::get_callable(TermsConditionsInfoService::class)();
-            $this->set_layout("open/mypromos/home")
+            $this->set_layout("open/mypromos/info")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
-                ->render();
+                ->render_nv();
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
@@ -32,6 +32,7 @@ final class TermsConditionsInfoController extends OpenController
         }
         catch (ForbiddenException $e) {
             $this->add_header(ResponseType::FORBIDDEN)
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
@@ -71,6 +72,7 @@ final class TermsConditionsInfoController extends OpenController
         }
         catch (ForbiddenException $e) {
             $this->add_header(ResponseType::FORBIDDEN)
+                ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
