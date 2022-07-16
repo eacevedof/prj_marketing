@@ -122,18 +122,22 @@ function __(string $msgid): string
         foreach ($lines as $i => $line) {
 
             if (!$line = trim($line)) continue;
+            if (str_starts_with($line, "#")) continue;
             if(strstr($line, "msgstr \"")) continue;
 
             $id = str_replace("msgid \"","", $line);
             $id = substr($id, 0, -1);
+            $id = str_replace("\\\"","\"", $id);
 
             $tr = trim($lines[$i+1] ?? "");
             $tr = str_replace("msgstr \"","", $tr);
             $tr = substr($tr, 0, -1);
+            $tr = str_replace("\\\"","\"", $tr);
 
             $trs[$id] = $tr;
         }
         $_REQUEST["TRANSLATIONS"] = $trs;
+        unset($lines, $trs);
     }
 
     $msgchanged = !($_REQUEST["TRANSLATIONS"][$msgid] ?? "") ? $msgid : $_REQUEST["TRANSLATIONS"][$msgid];
