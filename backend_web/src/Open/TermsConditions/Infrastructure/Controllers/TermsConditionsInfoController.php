@@ -15,7 +15,7 @@ final class TermsConditionsInfoController extends OpenController
     {
         try {
             $terms = SF::get_callable(TermsConditionsInfoService::class)();
-            $this->set_layout("open/open")
+            $this->set_layout("open/mypromos/home")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
@@ -53,7 +53,7 @@ final class TermsConditionsInfoController extends OpenController
     {
         try {
             $terms = SF::get(TermsConditionsInfoService::class, ["promoslug"=>$promoslug])->get_by_promotion();
-            $this->set_layout("open/open")
+            $this->set_layout("open/mypromos/home")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
