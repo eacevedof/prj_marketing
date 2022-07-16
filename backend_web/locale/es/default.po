@@ -753,14 +753,14 @@ msgstr "4. ¿Cómo deshabilitar las cookies?"
 msgid "All browsers allow you to make changes to disable cookie settings. This is why most browsers offer the ability to manage cookies, for finer control over privacy."
 msgstr "Todos los navegadores permiten hacer cambios para desactivar la configuración de las cookies. Este es el motivo por el que la mayoría de los navegadores ofrecen la posibilidad de administrar las cookies, para obtener un control más preciso sobre la privacidad."
 
-msgid "These settings are located in the \"options\" or \"preferences\" menu of your browser."
-msgstr "Estos ajustes se encuentran ubicados en las \"opciones\" o \"preferencias\" del menú de su navegador."
+msgid "These settings are located in the “options“ or “preferences“ menu of your browser."
+msgstr "Estos ajustes se encuentran ubicados en las “opciones“ o “preferencias“ del menú de su navegador."
 
 msgid "If you wish to revoke your informed consent regarding the use of cookies sent from the Website, or modify it, you can access the cookie configuration panel or make the changes through the configuration of your browser, without preventing access to the contents."
 msgstr "Si deseas revocar tu consentimiento informado respecto al uso de cookies enviadas desde el Sitio web, o modificarlo, puedes acceder al panel de configuración de cookies o hacer los cambios a través de la configuración de tu navegador, sin que ello impida el acceso a los contenidos."
 
-msgid "These settings are located in the \"options\" or \"preferences\" menu of your browser. Below, you can find the links for each browser to disable cookies by following the instructions:"
-msgstr "Estos ajustes se encuentran ubicados en las \"opciones\" o \"preferencias\" del menú de tu navegador. A continuación, podrás encontrar los links de cada navegador para deshabilitar las cookies siguiendo las instrucciones:"
+msgid "These settings are located in the “options“ or “preferences“ menu of your browser. Below, you can find the links for each browser to disable cookies by following the instructions:"
+msgstr "Estos ajustes se encuentran ubicados en las “opciones“ o “preferencias“ del menú de tu navegador. A continuación, podrás encontrar los links de cada navegador para deshabilitar las cookies siguiendo las instrucciones:"
 
 msgid "In the tools menu, select ”Internet Options.”"
 msgstr "En el menú de herramientas, selecciona “Opciones de Internet”."
@@ -831,5 +831,8 @@ msgstr "En el banner de cookies, puedes hacer clic en el botón “ACEPTAR TODAS
 msgid "We inform you that in the case of blocking or not accepting the installation of cookies, it is possible that certain services will not be available without the use of cookies or that you will not be able to access certain services or take full advantage of everything that this Website offers you."
 msgstr "Te informamos que en el caso de bloquear o no aceptar la instalación de cookies, es posible que ciertos servicios no estén disponibles sin la utilización de éstas o que no puedas acceder a determinados servicios ni tampoco aprovechar por completo todo lo que este Sitio web te ofrece."
 
-msgid "<a href=\"javascript: Cookiebot.renew()\">Change your consent</a><br/><br/>You can obtain more information about the processing of your data by contacting <a href=\"mailto:data.protection.office@nttdata.com\">data.protection.office@nttdata.com</a>"
-msgstr "<a href=\"javascript: Cookiebot.renew()\">Cambiar tu consentimiento</a><br/><br/>Puedes obtener más información sobre el tratamiento de tus datos dirigiéndote a <a href=\"mailto:data.protection.office@nttdata.com\">data.protection.office@nttdata.com</a>"
+msgid "<a href=\"javascript: Cookiebot.renew()\">Change your consent</a>"
+msgstr "<a href=\"javascript: Cookiebot.renew()\">Cambiar tu consentimiento</a>"
+
+msgid "You can obtain more information about the processing of your data by contacting <a href=\"mailto:info@providerxxx.es\">info@providerxxx.es</a>"
+msgstr "Puedes obtener más información sobre el tratamiento de tus datos dirigiéndote a <a href=\"mailto:info@providerxxx.es\">info@providerxxx.es</a>"
