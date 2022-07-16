@@ -87,7 +87,9 @@ final class AppView
 
     private function _template(): void
     {
-        if(!is_file($this->pathtemplate) && $this->useview)
+        if (!$this->useview) return;
+
+        if(!is_file($this->pathtemplate))
             $this->_exception("template {$this->pathtemplate} does not exist!");
 
         foreach ($this->globals as $name => $value)
