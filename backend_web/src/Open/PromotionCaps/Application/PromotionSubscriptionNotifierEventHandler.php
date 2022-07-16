@@ -13,25 +13,34 @@ use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Shared\Infrastructure\Traits\LogTrait;
+use \Exception;
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
     use LogTrait;
 
-    private string $domain = "";
-    
+    private string $domain;
+    private array $tpls;
+
     public function __construct()
     {
         $this->domain = "https://".getenv("APP_DOMAIN");
+        if (strstr($this->domain, "localhost"))
+            $this->domain = str_replace("https://","http://", $this->domain);
+        
+        $this->tpls = [
+            "subscription" => realpath(__DIR__."/../Infrastructure/Views/email/email-subscription.tpl"),
+            "confirmation" => realpath(__DIR__."/../Infrastructure/Views/email/email-confirmation.tpl"),
+            "execution" => realpath(__DIR__."/../Infrastructure/Views/email/email-execution.tpl"),
+        ];
     }
 
     private function _on_subscription(IEvent $domevent): void
     {
         if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return;
 
-        $path = __DIR__."/../Infrastructure/Views/email/subscription-email.tpl";
-        $pathtpl = realpath($path);
-        if (!is_file($pathtpl)) throw new \Exception("bad path $path");
+        $pathtpl = $this->tpls["subscription"];
+        if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
 
@@ -67,9 +76,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     {
         if(get_class($domevent)!==PromotionCapConfirmedEvent::class) return;
 
-        $path = __DIR__."/../Infrastructure/Views/email/confirmation-email.tpl";
-        $pathtpl = realpath($path);
-        if (!is_file($pathtpl)) throw new \Exception("bad path $path");
+        $pathtpl = $this->tpls["confirmation"];
+        if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
         $link = "{$this->domain}/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
@@ -103,9 +111,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     {
         if(get_class($domevent)!==SubscriptionExecutedEvent::class) return;
 
-        $path = __DIR__."/../Infrastructure/Views/email/execution-email.tpl";
-        $pathtpl = realpath($path);
-        if (!is_file($pathtpl)) throw new \Exception("bad path $path");
+        $pathtpl = $this->tpls["execution"];
+        if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
         $link = "{$this->domain}/points/{$data["businesscode"]}/user/{$data["capusercode"]}";

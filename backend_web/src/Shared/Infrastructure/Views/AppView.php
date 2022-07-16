@@ -303,6 +303,25 @@ final class AppView
         $this->_flush_and_exit();
     }
 
+    public function render_nv(array $vars = []): void
+    {
+        $this->_cache_exit();
+        $this->locals = $vars;
+
+        if(!is_file($this->pathtpl["layout"]))
+            $this->_exception("layout {$this->pathtpl["layout"]} not found");
+
+        foreach ($this->globals as $name => $value)
+            $$name = $value;
+
+        foreach ($this->locals as $name => $value)
+            $$name = $value;
+
+        include_once($this->pathtpl["layout"]);
+
+        $this->_flush_and_exit();
+    }
+
     public function render_nl(array $vars = []): void
     {
         $this->_cache_exit();

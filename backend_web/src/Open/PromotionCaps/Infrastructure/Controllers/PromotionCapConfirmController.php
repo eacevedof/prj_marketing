@@ -16,13 +16,13 @@ final class PromotionCapConfirmController extends OpenController
     public function confirm(string $promotionuuid, string $subscriptionuuid): void
     {
         if (!($promotionuuid && $subscriptionuuid))
-            $this->set_layout("open/error")
+            $this->set_layout("open/mypromos/error")
                 ->add_header($code = ResponseType::BAD_REQUEST)
                 ->add_var(PageType::TITLE, $title = __("Subscription confirmation error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", __("Missing promotion and/or subscription code"))
                 ->add_var("code", "$code - bad request")
-                ->render();
+                ->render_nv();
         try {
             $insert = SF::get_callable(PromotionCapsConfirmService::class, [
                 "promotionuuid" => $promotionuuid,
