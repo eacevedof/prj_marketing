@@ -100,6 +100,15 @@ final class TermsConditionsInfoService extends AppService
             ["h2" => "- ".__("Promotion Terms: {0}", $promotion)],
             ["p" => __("None")],
         ];
+        $lines = explode("\n", $lines);
+
+        $conds[0] = ["h2" => "- ".__("Promotion Terms: {0}", $promotion)];
+        $conds[1] = ["ul"=>[]];
+        foreach ($lines as $line) {
+            $conds[1]["ul"][] = $line;
+        }
+        $conds[2] = ["h2" => "- ".__("General Terms")];
+        return $conds;
     }
 
     public function get_by_promotion(): array
