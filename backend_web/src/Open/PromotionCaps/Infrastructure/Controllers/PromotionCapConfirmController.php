@@ -29,7 +29,10 @@ final class PromotionCapConfirmController extends OpenController
                 "subscriptionuuid" => $subscriptionuuid,
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
-            $result = $insert();
+            //$result = $insert();
+            $result["username"] = "xxx";
+            $result["promotion"] = "ppp";
+            $result["business"] = "bbbb";
             $this->set_layout("open/mypromos/success")
                 ->add_var(PageType::TITLE, $title = __("Subscription confirmation success!"))
                 ->add_var(PageType::H1, $title)

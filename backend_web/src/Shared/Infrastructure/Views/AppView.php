@@ -28,6 +28,7 @@ final class AppView
 
     private array $araction;
     private bool $docache = false;
+    private bool $useview = true;
     private string $requri;
 
     private array $globals = [];
@@ -86,7 +87,9 @@ final class AppView
 
     private function _template(): void
     {
-        if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} does not exist!");
+        if(!is_file($this->pathtemplate) && $this->useview)
+            $this->_exception("template {$this->pathtemplate} does not exist!");
+
         foreach ($this->globals as $name => $value)
             $$name = $value;
 
@@ -305,6 +308,7 @@ final class AppView
 
     public function render_nv(array $vars = []): void
     {
+        $this->useview = false;
         $this->_cache_exit();
         $this->locals = $vars;
 

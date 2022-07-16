@@ -12,7 +12,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php
-  $this->_element("open/elem-css-common");
+  $this->_element("open/mypromos/elem-css-common");
   ?>
   <link rel="stylesheet" href="/themes/mypromos/css/error.css" type="text/css" media="all" />
   <title><?php $this->_echo($pagetitle);?></title>
@@ -33,7 +33,7 @@
     </figure>
   </nav>
 <?php
-$this->_element("open/elem-scrums");
+$this->_element("open/mypromos/elem-scrums");
 ?>
   <section class="section-grid center-x">
     <div class="div-texts">
@@ -48,11 +48,11 @@ $this->_element("open/elem-scrums");
     </div>
   </section>
   <?php
-  $this->_element("open/elem-footer");
+  $this->_element("open/mypromos/elem-footer");
   ?>
 </main>
 <?php
-$this->_element("open/elem-animation");
+$this->_element("open/mypromos/elem-animation");
 ?>
 <div id="div-totop" class="div-totop">
   <a href="#top-mark">
@@ -63,7 +63,7 @@ $this->_element("open/elem-animation");
   </a>
 </div>
 <?php
-$this->_element("open/elem-js-center-y");
+$this->_element("open/mypromos/elem-js-center-y");
 ?>
 </body>
 </html>
