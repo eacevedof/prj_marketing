@@ -836,3 +836,80 @@ msgstr "<a href=\"javascript: Cookiebot.renew()\">Cambiar tu consentimiento</a>"
 
 msgid "You can obtain more information about the processing of your data by contacting {0}"
 msgstr "Puedes obtener más información sobre el tratamiento de tus datos dirigiéndote a {0}"
+
+#privacy_policy
+msgid "Privacy Policy"
+msgstr "Poóitica de privacidad"
+
+msgid "Who is the Data Controller?"
+msgstr "¿Quién es el Responsable del tratamiento?"
+
+msgid "Tax ID"
+msgstr "CIF"
+
+msgid "Mailing address"
+msgstr "Dirección postal"
+
+msgid "DPO"
+msgstr "DPO"
+
+msgid "For what purpose do we treat your data?"
+msgstr "¿Con qué finalidad tratamos sus datos?"
+
+msgid "The data collected during the contracting flow of the tool through the Marketplace will be processed for the configuration and maintenance of the profile of the contracting Client (hereinafter “the Organization“) on the Meikai platform."
+msgstr "Los datos recabados durante el flujo de contratación de la herramienta a través de Marketplace serán tratados para la configuración y mantenimiento del perfil del Cliente (en adelante “la Organización”) contratante en la plataforma Meikai."
+
+msgid "What personal data do we process?"
+msgstr "¿Qué datos personales tratamos?"
+
+msgid "We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”Meikai enrollment form”."
+msgstr "Trataremos las direcciones de correo electrónico corporativo de Office 365 de los miembros de la Organización que usted nos facilite a través del formulario “Meikai enrolment form”."
+
+msgid "What is the legal basis of the treatment?"
+msgstr "¿Cuál es la base legal del tratamiento?"
+
+msgid "The legal basis of the treatments with the purposes described is the legitimate interest in the treatment of said data, being necessary for the formalization and maintenance of the contractual relationship between NTT DATA Spain and the contracting Organization"
+msgstr "La base legal de los tratamientos con las finalidades descritas es el interés legítimo en el tratamiento de dichos datos, siendo necesarios para la formalización y mantenimiento de la relación contractual entre NTT DATA Spain y la Organización contratante"
+
+msgid "Who are the recipients of your data?"
+msgstr "¿Quiénes son los destinatarios de sus datos?"
+
+msgid "Your data may be communicated to the companies of the NTT DATA Spain Group, some of which are located in countries located outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection. The name and registered office of the entities of the NTT DATA Spain Group appear on the website {0}."
+msgstr "Sus datos podrán ser comunicados a las empresas del Grupo NTT DATA Spain, algunas de las cuales se encuentran en países ubicados fuera del Espacio Económico Europeo que no han sido declarados por la Comisión Europea con nivel adecuado de protección de datos. La denominación y sede social de las entidades del Grupo NTT DATA Spain figuran en la página web {0}."
+
+msgid "Additionally, we inform you that your data may be communicated to Treatment Managers, such as the following technology providers, some of which have processing and/or support centers located outside the European Economic Area."
+msgstr "Adicionalmente le informamos que sus datos podrían ser comunicados a Encargados del Tratamiento, tales como los siguientes proveedores tecnológicos, algunos de los cuales disponen de centros de proceso y/o soporte ubicados fuera Espacio Económico Europeo."
+
+msgid "Said communications could entail the international transfer of data to countries located outside the European Economic Area, some of which have not been declared as countries with an adequate level of protection by the European Commission. We guarantee that when your data could leave the European Economic Area, they will maintain the same level of protection based on compliance with the provisions set forth in the European data protection regulations. In this sense, international data transfers will be made (i) to countries with an adequate level of protection declared by the European Commission (ii) based on the provision of adequate guarantees such as standard contractual clauses or binding corporate regulations or (iii ) by virtue of the authorization of the competent control authority or other cases provided for in the regulations."
+msgstr "Dichas comunicaciones podrían suponer la transferencia internacional de los datos a países ubicados fuera del Espacio Económico Europeo, algunos de los cuales no han sido declarados como países con nivel adecuado de protección por parte de la Comisión Europea. Le garantizamos que cuando sus datos pudieran salir del Espacio Económico Europeo, mantendrán el mismo nivel de protección en base al cumplimiento de las disposiciones previstas en la normativa europea de protección de datos. En este sentido, las transferencias internacionales de datos se realizarán (i) a países con un adecuado nivel de protección declarado por la Comisión Europea (ii) en base a la aportación de garantías adecuadas tales como cláusulas contractuales tipo o normas corporativas vinculantes o (iii) en virtud de la autorización de la autoridad de control competente u otros supuestos previstos en la normativa."
+
+msgid "How long will we keep your data?"
+msgstr "¿Por cuánto tiempo conservaremos sus datos?"
+
+msgid "Your data will be kept as long as the contractual relationship between the Organization and NTT DATA Spain for the use of the Meikai platform is maintained, or as long as the Organization does not request NTT DATA Spain to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods."
+msgstr "Sus datos se conservarán mientras se mantenga la relación contractual entre la Organización y NTT DATA Spain para la utilización de la plataforma Meikai, o en tanto en cuanto la Organización no solicite a NTT DATA Spain la modificación o eliminación de los datos facilitados en el formulario. No obstante, los datos podrán conservarse bloqueados durante los plazos de prescripción legalmente aplicables."
+
+msgid "What are your rights?"
+msgstr "¿Cuáles son sus derechos?"
+
+msgid "You can ask NTT DATA Spain for confirmation as to whether your personal data is being processed and, if so, access them. Likewise, you can request the rectification of inaccurate data or, where appropriate, request its deletion when, among other reasons, the data is no longer necessary for the purposes for which it was collected."
+msgstr "Usted puede solicitar a NTT DATA Spain confirmación sobre si sus datos personales están siendo tratados y, en caso afirmativo, acceder a los mismos. Asimismo, puede solicitar la rectificación de los datos inexactos o, en su caso, solicitar su supresión cuando, entre otros motivos, los datos ya no sean necesarios para los fines para los que se recogieron."
+
+msgid "Likewise, in certain circumstances, you may request the limitation of the processing of your data, in which case we will only keep them for the exercise or defense of claims. You may also oppose the processing of your data in certain circumstances. We will stop processing the data, except for compelling legitimate reasons or for the exercise or defense of possible claims. Finally, when appropriate, the right of portability may be exercised to obtain the data in electronic format or to transmit the same to another entity."
+msgstr "Asimismo, en determinadas circunstancias, Usted podrá solicitar la limitación del tratamiento de sus datos, en cuyo caso únicamente los conservaremos para el ejercicio o la defensa de reclamaciones. También podrá oponerse al tratamiento de sus datos en determinadas circunstancias. Dejaremos de tratar los datos, salvo por motivos legítimos imperiosos o para el ejercicio o la defensa de posibles reclamaciones. Por último, cuando sea procedente, se podrá ejercitar el derecho de portabilidad para obtener los datos en formato electrónico o que se transmitan los mismos a otra entidad."
+
+msgid "To exercise the aforementioned rights, you must write to the company's Data Protection Office, accompanied by an equivalent means of identification, to any of the following addresses:"
+msgstr "Para ejercitar los citados derechos, deberá dirigir un escrito a la Oficina de Protección de Datos de la compañía, al que se acompañe medio de identificación equivalente, a cualquiera de las siguientes direcciones:"
+
+msgid "Post mail"
+msgstr "Correo Postal"
+
+msgid "Email"
+msgstr "Correo electrónico"
+
+msgid "To help us process your request, please indicate in the subject \"Data Protection\""
+msgstr "Para ayudarnos a tramitar su solicitud, le rogamos indique en el asunto \"Protección de Datos\""
+
+msgid "Finally, you are informed of your right to file a claim with the Spanish Data Protection Agency if you are aware of or consider that an event may lead to a breach of the applicable data protection regulations."
+msgstr "Por último, se le informa de su derecho a presentar una reclamación ante la Agencia Española de Protección de Datos en caso de que tenga conocimiento o considere que un hecho pueda suponer un incumplimiento de la normativa aplicable en materia de protección de datos."
+

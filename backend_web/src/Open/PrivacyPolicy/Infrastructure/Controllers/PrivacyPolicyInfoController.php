@@ -16,7 +16,7 @@ final class PrivacyPolicyInfoController extends OpenController
         try {
             $terms = SF::get_callable(PrivacyPolicyInfoService::class)();
             $this->set_layout("open/mypromos/info")
-                ->add_var(PageType::TITLE, $title = __("Cookies Policy"))
+                ->add_var(PageType::TITLE, $title = __("Privacy Policy"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("result", $terms)
                 ->render_nv();
@@ -24,7 +24,7 @@ final class PrivacyPolicyInfoController extends OpenController
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)
                 ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Cookies Policy error!"))
+                ->add_var(PageType::TITLE, $title = __("Privacy Policy error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
@@ -33,7 +33,7 @@ final class PrivacyPolicyInfoController extends OpenController
         catch (ForbiddenException $e) {
             $this->add_header(ResponseType::FORBIDDEN)
                 ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Cookies Policy error!"))
+                ->add_var(PageType::TITLE, $title = __("Privacy Policy error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
@@ -42,7 +42,7 @@ final class PrivacyPolicyInfoController extends OpenController
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Cookies Policy error!"))
+                ->add_var(PageType::TITLE, $title = __("Privacy Policy error!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
