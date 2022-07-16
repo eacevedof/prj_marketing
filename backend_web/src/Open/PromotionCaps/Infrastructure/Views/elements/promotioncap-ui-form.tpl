@@ -38,7 +38,7 @@ $texts = [
     "gender" => __("Gender"),
     "is_mailing" => __("I would like to receive promotions and special raffles messages in my email"),
     "is_terms" => __(
-            "I have red and accept <a href=\"{0}\" target=\"_blank\">general and related</a> legal terms and conditions",$url
+            "I have read and accept the <a href=\"{0}\" target=\"_blank\">promotion and general</a> terms and conditions",$url
     ),
 ];
 $result = [

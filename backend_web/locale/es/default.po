@@ -532,6 +532,9 @@ msgstr "Términos y Condiciones"
 msgid "Promotion Terms: {0}"
 msgstr "Términos de la promoción: {0}"
 
+msgid "General Terms"
+msgstr "Términos Generales"
+
 msgid "Provider Terms"
 msgstr "Términos del proveedor"
 
@@ -921,12 +924,15 @@ msgstr "Para ejercitar los citados derechos, deberá dirigir un escrito a la Ofi
 msgid "Post mail"
 msgstr "Correo Postal"
 
-msgid "Email"
-msgstr "Correo electrónico"
-
 msgid "To help us process your request, please indicate in the subject “Data Protection“"
 msgstr "Para ayudarnos a tramitar su solicitud, le rogamos indique en el asunto “Protección de Datos“"
 
 msgid "Finally, you are informed of your right to file a claim with the Spanish Data Protection Agency if you are aware of or consider that an event may lead to a breach of the applicable data protection regulations."
 msgstr "Por último, se le informa de su derecho a presentar una reclamación ante la Agencia Española de Protección de Datos en caso de que tenga conocimiento o considere que un hecho pueda suponer un incumplimiento de la normativa aplicable en materia de protección de datos."
 
+#fin policy
+msgid "I have read and accept the <a href=\"{0}\" target=\"_blank\">promotion and general</a> terms and conditions"
+msgstr "He leído y acepto los términos y condiciones <a href=\"{0}\" target=\"_blank\">generales y de la promoción</a>"
+
+msgid "I would like to receive information about similar promotions, raffles and special discounts in my email"
+msgstr "Me gustaría recibir información similar sobre promociones, sorteos y descuentos especiales en mi correo eléctrónico."
