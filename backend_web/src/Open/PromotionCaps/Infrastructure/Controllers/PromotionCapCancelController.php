@@ -16,13 +16,13 @@ final class PromotionCapCancelController extends OpenController
     public function cancel(string $promotionuuid, string $subscriptionuuid): void
     {
         if (!($promotionuuid && $subscriptionuuid))
-            $this->set_layout("open/empty")
-                ->add_header(ResponseType::BAD_REQUEST)
-                ->add_var(PageType::H1, __("Bad Request"))
-                ->add_var("description", __("Missing promotion and/or subscription code"))
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("400")
-                ->render();
+            $this->add_header(ResponseType::BAD_REQUEST)
+                ->set_layout("open/mypromos/error")
+                ->add_var(PageType::TITLE, $title = __("Subscription cancellation error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", __("Missing promotion and/or subscription code"))
+                ->add_var("code", ResponseType::BAD_REQUEST)
+                ->render_nv();
         try {
             $insert = SF::get_callable(PromotionCapsCancelService::class, [
                 "promotionuuid" => $promotionuuid,
@@ -30,24 +30,32 @@ final class PromotionCapCancelController extends OpenController
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $result = $insert();
-            $this->add_var(PageType::H1, htmlentities($result["promotion"]))
-                ->add_var("result", $result);
-
+            $this->set_layout("open/mypromos/success")
+                ->add_var(PageType::TITLE, $title = __("Subscription cancellation success!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("success",  [
+                    ["p" => __("<b>{0}</b>. You have successfully cancelled your subscription to <b>&ldquo;{1}&rdquo;</b>", $result["username"], $result["promotion"])],
+                ]);
             unset($insert, $result, $promotionuuid, $subscriptionuuid);
-            $this->view->render_nl();
+            $this->view->render_nv();
         }
         catch (PromotionCapException $e) {
             $this->add_header($e->getCode())
-                ->add_var(PageType::H1, __("Whoops!"))
+                ->set_layout("open/mypromos/error")
+                ->add_var(PageType::TITLE, $title = __("Subscription cancellation error!"))
+                ->add_var(PageType::H1, $title)
                 ->add_var("error", $e->getMessage())
-                ->render_nl();
+                ->add_var("code", $e->getCode())
+                ->render_nv();
         }
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+                ->set_layout("open/mypromos/error")
+                ->add_var(PageType::TITLE, $title = __("Subscription cancellation error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", $e->getMessage())
+                ->add_var("code", $e->getCode())
+                ->render_nv();
         }
     }
 }
