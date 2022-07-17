@@ -2,11 +2,12 @@
 namespace App\Open\Home\Infrastructure\Controllers;
 
 use App\Open\PromotionCaps\Domain\Enums\RequestActionType;
-use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Exceptions\FieldsException;
-use App\Open\Home\Application\ContactSendService;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Auth\Application\CsrfService;
+use App\Open\Home\Application\ContactSendService;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
+use App\Shared\Domain\Enums\ResponseType;
 
 final class ContactSendController extends OpenController
 {
@@ -16,6 +17,12 @@ final class ContactSendController extends OpenController
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)
                 ->set_error([__("Only type json for accept header is allowed")])
+                ->show();
+
+        if (!SF::get(CsrfService::class)->is_valid($this->_get_csrf()))
+            $this->_get_json()
+                ->set_code(ResponseType::FORBIDDEN)
+                ->set_error([__("Invalid CSRF token")])
                 ->show();
 
         $post = $this->request->get_post();
