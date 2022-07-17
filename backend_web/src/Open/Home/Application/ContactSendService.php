@@ -49,14 +49,14 @@ final class ContactSendService extends AppService
                 if (!$value)
                     return __("Empty value is not allowed");
                 if (strlen($value)<10 || strlen($value)>50)
-                    return __("{0} must be greater than {1} and lighter than {2}", __("Email"), 10, 50);
+                    return __("{0} must be greater than {1} and lighter than {2}", __("Subject"), 10, 50);
             })
             ->add_rule("message", "message", function ($data) {
                 $value = $data["value"];
                 if (!$value)
                     return __("Empty value is not allowed");
                 if (strlen($value)<10 || strlen($value)>2000)
-                    return __("{0} must be greater than {1} and lighter than {2}", __("Email"), 10, 2000);
+                    return __("{0} must be greater than {1} and lighter than {2}", __("Message"), 10, 2000);
             });
     }
 
