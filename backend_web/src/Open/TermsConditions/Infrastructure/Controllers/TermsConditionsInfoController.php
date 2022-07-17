@@ -1,6 +1,7 @@
 <?php
 namespace App\Open\TermsConditions\Infrastructure\Controllers;
 
+use App\Shared\Domain\Enums\SessionType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Traits\CookieTrait;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
@@ -56,13 +57,12 @@ final class TermsConditionsInfoController extends OpenController
 
     public function promotion(string $promoslug): void
     {
-        $this->_load_cookie();
         try {
             $terms = SF::get(
                 TermsConditionsInfoService::class,
                 [
-                    "promoslug"=>$promoslug,
-                    CookieType::LANG => $this->cookie->get_value(CookieType::LANG) ?? ""
+                    "promoslug" => $promoslug,
+                    //SessionType::AUTH_USER_LANG => $this->request->get_request()
                 ]
             )->get_by_promotion();
 
