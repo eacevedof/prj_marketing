@@ -43,7 +43,7 @@ final class AppView
     public function __construct()
     {
         $this->requri = $_SERVER["REQUEST_URI"];
-        $this->araction = $_REQUEST["ACTION"] ?? [];
+        $this->araction = $_REQUEST["APP_ACTION"] ?? [];
         $this->pathtpl = [
             "layout" => self::PATH_LAYOUTS."/open/open.tpl",
             "viewfolder" => "",

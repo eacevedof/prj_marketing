@@ -104,7 +104,7 @@ final class CookiesPolicyInfoService extends AppService
             ["p" => __("<a href=\"javascript: Cookiebot.renew()\">Change your consent</a>")],
             ["p" => __("You can obtain more information about the processing of your data by contacting {0}", "<a href=\"mailto:info@providerxxx.es\">info@providerxxx.es</a>")],
         ];
-        //print_r($_REQUEST["TRANSLATIONS"]);die;
+        //print_r($_REQUEST["APP_TRANSLATIONS"]);die;
         return $r;
     }
 }

@@ -16,6 +16,12 @@ final class RequestComponent
         return $_GET[$sKey] ?? $default;
     }
 
+    public function get_request($sKey=null, $default=null)
+    {
+        if(!$sKey) return $_REQUEST ?? [];
+        return $_REQUEST[$sKey] ?? $default;
+    }
+
     public function get_files($sKey=null)
     {
         if(!$sKey) return $_FILES ?? [];

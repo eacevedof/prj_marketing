@@ -1,21 +1,17 @@
 <?php
 namespace App\Open\TermsConditions\Infrastructure\Controllers;
 
-use App\Shared\Domain\Enums\SessionType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Traits\CookieTrait;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\TermsConditions\Application\TermsConditionsInfoService;
+use App\Shared\Domain\Enums\RequestType;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\CookieType;
 
 final class TermsConditionsInfoController extends OpenController
 {
-    use CookieTrait;
-
     public function index(): void
     {
         try {
@@ -62,7 +58,7 @@ final class TermsConditionsInfoController extends OpenController
                 TermsConditionsInfoService::class,
                 [
                     "promoslug" => $promoslug,
-                    //SessionType::AUTH_USER_LANG => $this->request->get_request()
+                    RequestType::LANG => $this->request->get_request(RequestType::LANG, "")
                 ]
             )->get_by_promotion();
 

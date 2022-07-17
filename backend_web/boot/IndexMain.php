@@ -71,8 +71,8 @@ final class IndexMain
         if(!$_POST && $json = file_get_contents("php://input")) 
             $_POST = json_decode($json, 1);
 
-        $_REQUEST["ACTION"] = $arrundata;
-        $_REQUEST["ACTION_LANG"] = $this->_get_language();
+        $_REQUEST["APP_ACTION"] = $arrundata;
+        $_REQUEST["lang"] = $this->_get_language();
 
         $oController = new $arrundata["controller"]();
         $oController->{$arrundata["method"]}(

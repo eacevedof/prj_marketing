@@ -105,13 +105,13 @@ function __(string $msgid): string
         $msgchanged = str_replace($rep, $str, $msgchanged);
     }
 
-    $lang = strtolower(trim($_REQUEST["ACTION_LANG"] ?? "en"));
+    $lang = strtolower(trim($_REQUEST["lang"] ?? "en"));
     if ($lang === "en") return $msgchanged;
 
     $pathpo = PATH_ROOT."/locale/$lang/default.po";
     if(!is_file($pathpo)) return $msgchanged;
 
-    if(!($_REQUEST["TRANSLATIONS"] ?? [])) {
+    if(!($_REQUEST["APP_TRANSLATIONS"] ?? [])) {
         $content = file_get_contents($pathpo);
         $content = trim($content);
         if (!$content) return $msgchanged;
@@ -136,11 +136,11 @@ function __(string $msgid): string
 
             $trs[$id] = $tr;
         }
-        $_REQUEST["TRANSLATIONS"] = $trs;
+        $_REQUEST["APP_TRANSLATIONS"] = $trs;
         unset($lines, $trs);
     }
 
-    $msgchanged = !($_REQUEST["TRANSLATIONS"][$msgid] ?? "") ? $msgid : $_REQUEST["TRANSLATIONS"][$msgid];
+    $msgchanged = !($_REQUEST["APP_TRANSLATIONS"][$msgid] ?? "") ? $msgid : $_REQUEST["APP_TRANSLATIONS"][$msgid];
     foreach ($args as $i => $str) {
         $rep = "{".$i."}";
         $msgchanged = str_replace($rep, $str, $msgchanged);
