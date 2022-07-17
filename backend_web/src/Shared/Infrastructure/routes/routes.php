@@ -18,7 +18,7 @@ return [
     ["url"=>"/cookies-policy","controller"=>"App\Open\CookiesPolicy\Infrastructure\Controllers\CookiesPolicyInfoController", "method"=>"index"],
     ["url"=>"/privacy-policy","controller"=>"App\Open\PrivacyPolicy\Infrastructure\Controllers\PrivacyPolicyInfoController", "method"=>"index"],
 
-    ["url"=>"/contact/send","controller"=>"App\Open\Home\Infrastructure\Controllers\ContactSendController","method"=>"index"],
+    ["url"=>"/contact/send","controller"=>"App\Open\Home\Infrastructure\Controllers\ContactSendController","method"=>"send"],
     ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index"],
 
 
