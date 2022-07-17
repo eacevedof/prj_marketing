@@ -934,5 +934,8 @@ msgstr "Por último, se le informa de su derecho a presentar una reclamación an
 msgid "I have read and accept the <a href=\"{0}\" target=\"_blank\">promotion and general</a> terms and conditions"
 msgstr "He leído y acepto los términos y condiciones <a href=\"{0}\" target=\"_blank\">generales y de la promoción</a>"
 
-msgid "I would like to receive information about similar promotions, raffles and special discounts in my email"
+msgid "I would like to receive information about similar promotions, raffles and special discounts in my email."
 msgstr "Me gustaría recibir información similar sobre promociones, sorteos y descuentos especiales en mi correo eléctrónico."
+
+msgid "In order to finish your subscription you have to read and accept terms and conditions."
+msgstr "Para poder finalizar tu suscripción debes leer y aceptar los términos y condiciones."

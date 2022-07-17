@@ -23,7 +23,7 @@ $texts = [
     "tr17" => __("Invalid date"),
     "tr18" => __("Invalid format. Eg: St. Paul Street, 47 - N.Y."),
     "tr19" => __("Invalid value"),
-    "tr20" => __("In order to finish your subscription you have to read and accept terms and conditions"),
+    "tr20" => __("In order to finish your subscription you have to read and accept terms and conditions."),
 
     "tr30" => __("Thank you <b>%name%</b> for your subscription. Please check your email <b>%email%</b> and click on the confirmation link.<br/><small>May be you have to check your spam folder</small>"),
 
@@ -36,7 +36,7 @@ $texts = [
     "language" => __("Language"),
     "country" => __("Country"),
     "gender" => __("Gender"),
-    "is_mailing" => __("I would like to receive promotions and special raffles messages in my email"),
+    "is_mailing" => __("I would like to receive information about similar promotions, raffles and special discounts in my email."),
     "is_terms" => __(
             "I have read and accept the <a href=\"{0}\" target=\"_blank\">promotion and general</a> terms and conditions",$url
     ),
