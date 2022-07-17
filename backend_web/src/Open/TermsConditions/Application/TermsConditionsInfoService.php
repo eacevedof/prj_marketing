@@ -95,6 +95,9 @@ final class TermsConditionsInfoService extends AppService
 
     private function _promotion_terms(string $promotion, string $conditions): array
     {
+        //todo hay que agregar las fechas limites
+        // hasta agotar existencias
+        // rifable o acumulativa (tratarlo en en el contador)
         $lines = trim($conditions);
         if (!$lines) return [
             ["h2" => "- ".__("Promotion Terms: {0}", $promotion)],
