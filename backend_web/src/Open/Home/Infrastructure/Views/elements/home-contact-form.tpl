@@ -15,11 +15,11 @@ $texts = [
     "tr13" => __("Invalid format. Eg: I want to apply remarketing on my clients"),
     "tr14" => __("Invalid format. Eg: Some description about my business"),
 
-
     "email" => __("Email"),
     "name" => __("Name"),
     "subject" => __("Subject"),
     "message" => __("Message"),
+
 ];
 ?>
 <dialog class="dialog">
