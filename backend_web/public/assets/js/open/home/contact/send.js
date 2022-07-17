@@ -3,18 +3,16 @@ import injson from "/assets/js/common/req.js"
 import error from "/assets/js/common/fielderrors.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
-import {get_parameter} from "/assets/js/common/url.js"
-import {cssformsubscription} from "/assets/js/open/promotioncap/form-subscription-lit-css.js"
+import {cssformcontact} from "/assets/js/open/home/contact/form-contact-lit-css.js"
 import validator, {PATTERNS} from "/assets/js/common/fields-validator.js"
 
-const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
-const URL_POST = "/contact/promotionscap/:promouuid/insert"
+const URL_POST = "/contact/send"
 const ACTION = "home.contact.send"
 
 export class FormHomeContactSend extends LitElement {
   static get styles() {
     return [
-      cssformsubscription,
+      cssformcontact,
       cssfielderror
     ];
   }
@@ -23,127 +21,62 @@ export class FormHomeContactSend extends LitElement {
 
   _get_data() {
     return get_formdata(this.shadowRoot)
-            (this.fields.inputs.map(input => "input-".concat(input)))([])
+            (this.fields.inputs.map(input => "".concat(input)))([])
   }
 
   constructor() {
     super()
     this._issending = false
     this.texts = {}
-    this.fields = {}
   }
 
   get_inputs() {
     return {
       email: {
         input: html`
-          <div class="cell-flex">
-            <label for="input-email">${this.texts.email}</label>
-            <input type="email" id="input-email" maxlength="100"/>
+          <div>
+            <label for="email">${this.texts.email}</label>
+            <input type="email" id="email" maxlength="35" placeholder="" required/>
           </div>
           `
       },
       name: {
         input: html`
-          <div class="cell-flex">
-            <label for="input-name">${this.texts.name}</label>
-            <input type="text" id="input-name" maxlength="30"/>
+          <div>
+            <label for="name">${this.texts.name}</label>
+            <input type="text" id="name" maxlength="25"placeholder="" required/>
           </div>
           `
       },
-      name2: {
-        input: html`
-          <div class="cell-flex">
-            <label for="input-name2">${this.texts.name2}</label>
-            <input type="text" id="input-name2" maxlength="30"/>
-          </div>
-          `
-      },
-      country: {
-        input: html`
-          <div class="cell-flex">
-            <label for="input-country">${this.texts.country}</label>
-            <select id="input-country">
-              ${this._countries.map(item => html`
-              <option value=${item.key}>${item.value}</option>`)}
-            </select>
-          </div>
-        `
-      },
-      gender: {
-        input: html`
-          <div class="cell-flex">
-            <label for="input-gender">${this.texts.gender}</label>
-            <select id="input-gender">
-              ${this._genders.map(item => html`
-                <option value=${item.key}>${item.value}</option>`)}
-            </select>
-          </div>
-        `
-      },
-      language: {
-        input: html`
-          <div class="cell-flex">
-            <label for="input-language">${this.texts.language}</label>
-            <select id="input-language">
-              ${this._languages.map(item => html`
-              <option value=${item.key}>${item.value}</option>`)}
-            </select>
-          </div>
-        `
-      },
+
       subject: {
         input: html`
-        <div class="cell-flex">
-          <label for="input-subject">${this.texts.subject}</label>
-          <input type="text" id="input-subject" maxlength="20"/>
+        <div>
+          <label for="subject">${this.texts.subject}</label>
+          <input type="text" id="subject" maxlength="50" placeholder="" required/>
         </div>
         `
       },
-      birthdate: {
+      
+      message: {
         input: html`
-        <div class="cell-flex">
-          <label for="input-birthdate">${this.texts.birthdate}</label>
-          <input type="date" id="input-birthdate"/>
+        <div xmlns="http://www.w3.org/1999/html">
+          <label for="message">${this.texts.message}</label>
+          <textarea type="text" id="message" maxlength="2000" required></textarea>
         </div>
         `
-      },
-      address: {
-        input: html`
-        <div class="cell-flex">
-          <label for="input-message">${this.texts.address}</label>
-          <input type="text" id="input-message" maxlength="100"/>
-        </div>
-        `
-      },
-      is_mailing: {
-        input: html`
-        <div class="cell-flex cell-chk">
-          <label for="input-is_mailing">
-            <input type="checkbox" id="input-is_mailing" value="1">
-            <span>${this.texts?.is_mailing}</span>
-          </label>
-        </div>        
-        `,
-      },
-      is_terms: {
-        input: html`
-        <div class="cell-flex cell-chk">
-          <label for="input-is_terms">
-            <input type="checkbox" id="input-is_terms" value="1">
-            <span>${html([this.texts?.is_terms])}</span>
-          </label>
-        </div>
-        `,
       },
     }
   }
 
   static properties = {
     csrf: {type: String},
-    _issending,
-    _btnsend,
-    _btncancel,
+    texts: {
+      converter: (strjson) => {
+        if (strjson) return JSON.parse(strjson)
+        return {}
+      },
+    },
   }
 
   connectedCallback() {
@@ -152,16 +85,16 @@ export class FormHomeContactSend extends LitElement {
     this._btncancel = this.texts.tr02
   }
 
-
   render() {
-    const inputs = this._inputs.map(field => this.get_inputs()[field])
+    const inputs = Object.keys(this.get_inputs()).map(field => this.get_inputs()[field])
 
     return html`
-      <form @submit=${this.on_submit} class="form-grid">
+      <form @submit=${this.on_submit} class="form-flex">
         ${inputs.map(obj => obj?.input)}
+        
         <!-- botones -->
-        <div class="cell-flex cell-btn">
-          <button id="btn-submit" ?disabled=${this._issending} class="button button-glow">
+        <div class="form-buttons">
+          <button id="btn-submit" ?disabled=${this._issending}>
             ${this._btnsend}
             ${
                 this._issending
@@ -170,16 +103,17 @@ export class FormHomeContactSend extends LitElement {
             }
           </button>
         </div>
+        <button type="button" id="button-exit" class="button-exit"><img src="/themes/mypromos/images/icon-close-modal.svg"></button>
       </form>
     `
   }
 
   firstUpdated() {
     try {
-      this._$get("input-email").focus()
+      this._$get("email").focus()
     }
     catch(e) {
-      console.log("input-email no focusable",e)
+      console.log("email no focusable",e)
     }
   }
 
@@ -213,32 +147,30 @@ export class FormHomeContactSend extends LitElement {
     validator.init(input)
     const fields = input.fields
 
-    if (fields.includes("input-email"))
-    validator.add_rules("input-email","valid", (value) => {
+    if (fields.includes("email"))
+    validator.add_rules("email","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.EMAIL)) return texts.tr11
     })
 
-    if (fields.includes("input-name"))
-    validator.add_rules("input-name","valid", (value) => {
+    if (fields.includes("name"))
+    validator.add_rules("name","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
       if (!v.match(PATTERNS.NAME)) return texts.tr12
     })
 
-    if (fields.includes("input-subject"))
-    validator.add_rules("input-subject","valid", (value) => {
+    if (fields.includes("subject"))
+    validator.add_rules("subject","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
-      if (!v.match(PATTERNS.PHONE)) return texts.tr13
     })
 
-    if (fields.includes("input-message"))
-    validator.add_rules("input-message","valid", (value) => {
+    if (fields.includes("message"))
+    validator.add_rules("message","valid", (value) => {
       const v = value.trim()
       if (!v) return texts.tr10
-      if (!v.match(PATTERNS.ADDRESS)) return texts.tr18
     })
     return validator.get_errors()
   }
@@ -255,9 +187,9 @@ export class FormHomeContactSend extends LitElement {
 
   on_success() {
     const $section = window.document.querySelector(".section")
-    let name = this._$get("input-name").value
+    let name = this._$get("name").value
     name = name[0].toUpperCase().concat(name.slice(1))
-    const email = this._$get("input-email").value
+    const email = this._$get("email").value
     const message = this.texts.tr30.replace("%name%",name).replace("%email%",email)
     $section.innerHTML = `
     <div class="subscription-message">
@@ -273,8 +205,9 @@ export class FormHomeContactSend extends LitElement {
 
     const input = {
       wrapper: this.shadowRoot.querySelector("form"),
-      fields: this.fields.inputs.map(input => `input-${input}`)
+      fields: this.fields.inputs.map(input => `${input}`)
     }
+
     error.config(input)
     error.clear()
 
@@ -305,7 +238,7 @@ export class FormHomeContactSend extends LitElement {
         return error.append_top(response.errors[0])
       }
 
-      errors = errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `input-${errfield.field}`}))
+      errors = errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `${errfield.field}`}))
       if(errors?.length) {
         this.snack_error(this.texts.tr04)
         return error.append(errors)

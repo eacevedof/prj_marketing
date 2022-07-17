@@ -96,10 +96,12 @@ show.addEventListener("click", () => {
   body.style.overflow = "hidden"
   dialog.showModal()
 })
-cancel.addEventListener("click", () => {
-  body.style.overflow = "auto"
-  dialog.close()
-})
+
+if (cancel)
+  cancel.addEventListener("click", () => {
+    body.style.overflow = "auto"
+    dialog.close()
+  })
 
 const langs = Array.from(document.querySelectorAll("a[lang]"))
 langs.forEach(anchor => anchor.addEventListener("click", ()=>{
