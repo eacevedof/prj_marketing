@@ -53,6 +53,7 @@ final class IndexMain
                 ?: trim($_COOKIE["lang"] ?? "")
                 ?: trim($_SESSION["lang"] ?? "")
                 ?: trim($_ENV["lang"] ?? "")
+                ?: trim($_ENV["APP_DEFAULT_LANG"] ?? "")
                 ?: "en";
     }
 
