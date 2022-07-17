@@ -111,18 +111,20 @@ final class TermsConditionsInfoService extends AppService
             return $hashlang === "#{$this->lang}";
         });
         $found = array_values($found);
-        $lines = explode("\n", $conditions);
-        if (!$found) return $lines;
+        if (!$found) return explode("\n", $conditions);
 
-        $hahslang = str_replace(["#","\n"],"",$found[0]);
-        $pattern = "/\#{$hahslang}(.*?)\#/ims";
+        //$hashlang = str_replace(["#","\n"],"",$found[0]);
+        $hashlang = $found[0];
+        $pattern = "/{$hashlang}(.*?)\#/ims";
         preg_match_all($pattern, $conditions,$found);
-        $conditions = trim($found[0][1] ?? "");
-        if (!$conditions) {
+        $subconds = trim($found[1][0] ?? "");
+        if ($subconds)
+            return explode("\n", $subconds);
 
-        }
-
-        return array_slice($lines, 0, 100);
+        $start = strpos($conditions, $hashlang);
+        $subconds = substr($conditions, $start);
+        $subconds = str_replace($hashlang, "", $subconds);
+        return explode("\n", $subconds);;
     }
 
     private function _promotion_terms(string $promotion, string $conditions): array
