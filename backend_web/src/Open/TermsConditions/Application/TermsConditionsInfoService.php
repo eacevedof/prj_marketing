@@ -106,34 +106,13 @@ final class TermsConditionsInfoService extends AppService
             return explode("\n", $conditions);
 
         $found = array_unique($found);
-        $langsfound = [];
-        foreach ($found as $lang) {
-            $langhash = trim($lang);
-            $langraw = str_replace("#","", strtolower($langhash));
-            
-            if (LanguageType::exists($langraw) && $langraw === $this->lang) {
-                $langsfound[] = ["hashed" => $langhash, "raw" => $langraw, "found" => 1];
-                continue;
-            }
-            
-            if (LanguageType::exists($langraw))
-                $langsfound[] = ["hashed" => $langhash, "raw" => $langraw, "found" => 0];
-        }
-
+        $found = array_filter($found, function (string $hashlang) {
+            $hashlang = strtolower(trim($hashlang));
+            return $hashlang === "#{$this->lang}";
+        });
         $lines = explode("\n", $conditions);
-        if (!$langsfound)
+        if (!$found)
             return $lines;
-
-        $langsfound = array_map(function (array $langtype) use ($lines){
-            foreach ($lines as $i => $line) {
-                if (strstr($line, $langtype["hashed"])) {
-                    $langtype["position"] = $i;
-                    return $langtype;
-                }
-            }
-            return $langtype;
-        }, $langsfound);
-        
 
         return array_slice($lines, 0, 100);
     }
