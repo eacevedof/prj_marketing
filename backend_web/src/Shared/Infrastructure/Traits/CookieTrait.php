@@ -20,7 +20,7 @@ trait CookieTrait
 {
     private ?ComponentCookie $cookie = null;
 
-    protected function _cookieinit(): ComponentCookie
+    protected function _load_cookie(): ComponentCookie
     {
         if(!$this->cookie) $this->cookie = new ComponentCookie();
         return $this->cookie;

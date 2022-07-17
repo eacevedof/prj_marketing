@@ -3,9 +3,10 @@ namespace App\Open\TermsConditions\Application;
 
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Domain\Enums\LanguageType;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Shared\Domain\Enums\LanguageType;
+use App\Shared\Domain\Enums\CookieType;
 
 final class TermsConditionsInfoService extends AppService
 {
@@ -14,7 +15,7 @@ final class TermsConditionsInfoService extends AppService
     public function __construct(array $input = [])
     {
         $this->input = $input["promoslug"] ?? "";
-        $this->lang = LanguageType::exists($lang = trim($input["lang"] ?? "")) ? $lang : LanguageType::ES;
+        $this->lang = LanguageType::exists($lang = trim($input[CookieType::LANG])) ? $lang : LanguageType::ES;
     }
 
     private function _general_terms(): array

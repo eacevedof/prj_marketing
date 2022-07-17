@@ -83,7 +83,12 @@ final class ComponentCookie
         return $this;
     }
     
-    private function load_value($name=null){if($name) $this->_name = $name; $this->_value=(isset($_COOKIE[$this->_name])?$_COOKIE[$this->_name]:NULL); return $this;}
+    private function load_value($name=null)
+    {
+        if($name) $this->_name = $name;
+        $this->_value = (isset($_COOKIE[$this->_name]) ? $_COOKIE[$this->_name]: null);
+        return $this;
+    }
         
     public function set_name($value){$this->_name=$value; return $this;}
     public function set_value($value)

@@ -77,4 +77,5 @@ final class RequestComponent
         $accept = strtolower($accept);
         return strstr($accept,"application/json");
     }
+
 }
