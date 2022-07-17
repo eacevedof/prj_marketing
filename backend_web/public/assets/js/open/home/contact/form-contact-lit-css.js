@@ -21,6 +21,7 @@ export const cssformcontact = css`
 
 .form-flex .div-input {
   display: flex;
+  gap:0;
   flex-direction: column;
 }
 
