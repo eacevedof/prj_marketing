@@ -91,7 +91,7 @@ final class PromotionUiUpdateService extends AppService
 
         $fn_validint = function (string $value){
             $value = (int) $value;
-            return ($value > -1 && $value < 101);
+            return ($value > -1 && $value < 1000);
         };
 
         $this->validator
