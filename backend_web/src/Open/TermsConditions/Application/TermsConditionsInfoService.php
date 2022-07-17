@@ -6,7 +6,7 @@ use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Domain\Enums\LanguageType;
-use App\Shared\Domain\Enums\CookieType;
+use App\Shared\Domain\Enums\RequestType;
 
 final class TermsConditionsInfoService extends AppService
 {
@@ -15,7 +15,9 @@ final class TermsConditionsInfoService extends AppService
     public function __construct(array $input = [])
     {
         $this->input = $input["promoslug"] ?? "";
-        $this->lang = LanguageType::exists($lang = trim($input[CookieType::LANG])) ? $lang : LanguageType::ES;
+        $lang = trim($input[RequestType::LANG] ?? "");
+        $lang = strtolower($lang);
+        $this->lang = LanguageType::exists($lang) ? $lang : LanguageType::ES;
     }
 
     private function _general_terms(): array
