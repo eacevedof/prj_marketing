@@ -29,7 +29,7 @@ abstract class OpenController extends AppController
         $this->_load_view();
         $this->_load_response();
         $this->_load_session();
-        $this->set_layout("open/open")
+        $this->set_layout("open/open/mypromos")
             ->add_var("authuser", $this->session->get(SessionType::AUTH_USER));
     }
 
