@@ -101,7 +101,7 @@ final class TermsConditionsInfoService extends AppService
     {
         //busca #EN, #en #es_ES
         $pattern = "/\#[a-z,\_,A-Z]{2,6}\s*[\r\n]/im";
-        preg_match_all($pattern, $conditions, $found);
+        preg_match_all($pattern, $conditions,$found);
         if (!$found = $found[0])
             return explode("\n", $conditions);
 
@@ -110,9 +110,17 @@ final class TermsConditionsInfoService extends AppService
             $hashlang = strtolower(trim($hashlang));
             return $hashlang === "#{$this->lang}";
         });
+        $found = array_values($found);
         $lines = explode("\n", $conditions);
-        if (!$found)
-            return $lines;
+        if (!$found) return $lines;
+
+        $hahslang = str_replace(["#","\n"],"",$found[0]);
+        $pattern = "/\#{$hahslang}(.*?)\#/ims";
+        preg_match_all($pattern, $conditions,$found);
+        $conditions = trim($found[0][1] ?? "");
+        if (!$conditions) {
+
+        }
 
         return array_slice($lines, 0, 100);
     }
