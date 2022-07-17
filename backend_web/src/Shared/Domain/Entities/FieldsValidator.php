@@ -14,11 +14,11 @@ final class FieldsValidator
 {
     private array $rules = [];
     private array $request;
-    private AppEntity $entity;
+    private ?AppEntity $entity;
     private array $errors = [];
     private array $skip = [];
 
-    public function __construct(array $request, AppEntity $entity)
+    public function __construct(array $request, ?AppEntity $entity=null)
     {
         $this->request = $request;
         $this->entity = $entity;
@@ -29,7 +29,7 @@ final class FieldsValidator
         $reqkey = $this->entity->get_requestkey($field);
         $ilen = $this->entity->get_length($field);
         $value = $this->request[$reqkey] ?? "";
-        return (strlen($value)<=$ilen);
+        return (strlen($value) <= $ilen);
     }
 
     private function _is_datetime_ok(string $datetime): bool
@@ -72,8 +72,15 @@ final class FieldsValidator
     private function _check_rules(): void
     {
         foreach($this->rules as $rule) {
-            $reqkey = $this->entity->get_requestkey($field = $rule["field"]);
-            $label = $this->entity->get_label($field);
+            $field = $rule["field"];
+            $reqkey = $field;
+            $label = $this->request["label-$field"] ?? "";
+
+            if ($this->entity) {
+                $reqkey = $this->entity->get_requestkey($field);
+                $label = $this->entity->get_label($field);
+            }
+
             $message = $rule["fn"]([
                 "data" => $this->request,
                 "field" => $field,
@@ -108,9 +115,9 @@ final class FieldsValidator
         return in_array($key,$this->skip);
     }
 
-    public function get_errors(): array
+    private function _check_entity_fields(array $reqkeys): void
     {
-        $reqkeys = $this->_get_reqkeys();
+        if (!$this->entity) return;
 
         foreach ($reqkeys as $reqkey) {
             if($this->_is_operation($reqkey) || $this->_in_skip($reqkey))
@@ -149,9 +156,13 @@ final class FieldsValidator
                     $label);
             }
         }
+    }
 
+    public function get_errors(): array
+    {
+        $reqkeys = $this->_get_reqkeys();
+        $this->_check_entity_fields($reqkeys);
         if($this->errors) return $this->errors;
-
         $this->_check_rules();
         return $this->errors;
     }

@@ -2,13 +2,8 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- en el js de la actualiacion de la proocion hay que escuchar el select owner para reenviarlo pq sino se queda con el valor anterior
 - previsualizacin de mailing
-- pagina index
-- pagina de error controlado
-- pagina de terminos y condiciones
-- pagina de confirmación
-- enlace de baja
-- espacio terms-and-conditions/promouuid
 - mailing template
 - modelo configurador premios por puntos
 - cookiebot
@@ -51,6 +46,12 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~pagina index~~
+- ~~pagina de error controlado~~
+- ~~pagina de terminos y condiciones~~
+- ~~pagina de confirmación~~
+- ~~enlace de baja~~
+- ~~espacio terms-and-conditions/promouuid~~
 - ~~fix carga de id_xxx en promocap-insert se usan los ids y no los id_pk~~
 - ~~checks de aceptacion de terminos y condicones~~
 - no se debe permitir publicar una promoción sin inversion de retorno ya que a partir de esta se calculará

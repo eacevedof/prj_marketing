@@ -41,7 +41,7 @@ final class PromotionsUpdateService extends AppService
 
         $this->datecomp = CF::get(DateComponent::class);
         $this->_map_dates($input);
-        $this->input = $input;
+        $this->input = $this->_get_req_without_ops($input);
         if (!$this->input["uuid"])
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
