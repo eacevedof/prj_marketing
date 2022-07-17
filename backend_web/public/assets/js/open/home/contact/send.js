@@ -35,7 +35,7 @@ export class FormHomeContactSend extends LitElement {
         input: html`
           <div>
             <label for="email">${this.texts.email}</label>
-            <input type="email" id="email" maxlength="35" placeholder="" required/>
+            <input type="email" id="email" maxlength="35" placeholder="" required value="eaf@eaf.com"/>
           </div>
           `
       },
@@ -43,7 +43,7 @@ export class FormHomeContactSend extends LitElement {
         input: html`
           <div>
             <label for="name">${this.texts.name}</label>
-            <input type="text" id="name" maxlength="25"placeholder="" required/>
+            <input type="text" id="name" maxlength="25" placeholder="" required value="Some Name"/>
           </div>
           `
       },
@@ -52,16 +52,18 @@ export class FormHomeContactSend extends LitElement {
         input: html`
         <div>
           <label for="subject">${this.texts.subject}</label>
-          <input type="text" id="subject" maxlength="50" placeholder="" required/>
+          <input type="text" id="subject" maxlength="50" placeholder="" required value="A little subject"/>
         </div>
         `
       },
       
       message: {
         input: html`
-        <div xmlns="http://www.w3.org/1999/html">
+        <div>
           <label for="message">${this.texts.message}</label>
-          <textarea type="text" id="message" maxlength="2000" required></textarea>
+          <textarea type="text" id="message" maxlength="2000" required>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </textarea>
         </div>
         `
       },
@@ -230,13 +232,16 @@ export class FormHomeContactSend extends LitElement {
     this._btnsend = this.texts.tr00
 
     if(response?.errors){
+      console.log(response.errors, "errors")
       let errors = response.errors[0]?.fields_validation
       if (!errors) {
         this.snack_error(this.texts.tr04)
         return error.append_top(response.errors[0])
       }
 
-      errors = errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `${errfield.field}`}))
+      console.log(errors[0]?.fields_validation, "fields_validation")
+      return;
+      errors = errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `${errfield?.field}`}))
       if(errors?.length) {
         this.snack_error(this.texts.tr04)
         return error.append(errors)
