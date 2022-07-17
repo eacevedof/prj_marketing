@@ -124,15 +124,16 @@ final class TermsConditionsInfoService extends AppService
         if (!$langsfound)
             return $lines;
 
-        $found = array_filter($lines, function (string $line) use ($langsfound){
-            foreach ($langsfound as $lang) {
-                if (strstr($line, $lang["hashed"]))
-                    return true;
+        $langsfound = array_map(function (array $langtype) use ($lines){
+            foreach ($lines as $i => $line) {
+                if (strstr($line, $langtype["hashed"])) {
+                    $langtype["position"] = $i;
+                    return $langtype;
+                }
             }
-            return false;
-        });
-
-        ksort($found);
+            return $langtype;
+        }, $langsfound);
+        
 
         return array_slice($lines, 0, 100);
     }
