@@ -20,8 +20,7 @@ export class FormHomeContactSend extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)
-            (this.fields.inputs.map(input => "".concat(input)))([])
+    return get_formdata(this.shadowRoot)(Object.keys(this.get_inputs()))([])
   }
 
   constructor() {
@@ -205,7 +204,7 @@ export class FormHomeContactSend extends LitElement {
 
     const input = {
       wrapper: this.shadowRoot.querySelector("form"),
-      fields: this.fields.inputs.map(input => `${input}`)
+      fields: Object.keys(this.get_inputs())
     }
 
     error.config(input)
@@ -224,7 +223,6 @@ export class FormHomeContactSend extends LitElement {
       URL_POST.replace(":promouuid", this.promotionuuid), {
         _action: ACTION,
         _csrf: this.csrf,
-        _test_mode: IS_TEST_MODE,
         ...this._get_data()
       })
 
