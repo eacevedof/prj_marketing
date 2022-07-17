@@ -27,6 +27,7 @@ $preferences = array_map(function(array $row) {
 
 ?>
 <div id="preferences" class="tab-pane">
+  <!-- assets/js/restrict/users/preferences/update.js -->
   <form-user-preferences-update
       csrf=<?php $this->_echo_js($csrf);?>
 

@@ -70,6 +70,7 @@ $businessdata = [
 ];
 ?>
 <div id="businessdata" class="tab-pane">
+    <!--assets/js/restrict/users/businessdata/update.js -->
     <form-user-businessdata-update
         csrf=<?php $this->_echo_js($csrf);?>
 
