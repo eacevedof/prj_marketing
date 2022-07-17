@@ -1,7 +1,7 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
- * @var array $promotionui
+ * @var array $csrf
  */
 $texts = [
     "tr00" => __("Send"),
@@ -25,7 +25,7 @@ $texts = [
 ?>
 <dialog class="dialog">
   <form-home-contact-send
-      csrf="<?=$promotionuuid?>"
+      csrf="<?=$csrf?>"
       texts="<?php $this->_echo_jslit($texts);?>"
   />
 </dialog>
