@@ -19,6 +19,11 @@ export const cssformcontact = css`
   font-weight: bold;
 }
 
+.form-flex .div-input {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-flex textarea, input {
   font-size: 1rem;
   width: 400px;
@@ -33,7 +38,7 @@ export const cssformcontact = css`
   padding-top: 10px;
 }
 
-.form-buttons button {
+.form-flex .form-buttons button {
   text-decoration: none;
   color: var(--color-white);
   padding: 10px 60px;

@@ -23,52 +23,6 @@ export class FormHomeContactSend extends LitElement {
     return get_formdata(this.shadowRoot)(Object.keys(this.get_inputs()))([])
   }
 
-  constructor() {
-    super()
-    this.texts = {}
-  }
-
-  get_inputs() {
-    return {
-      email: {
-        input: html`
-          <div>
-            <label for="email">${this.texts.email}</label>
-            <input type="email" id="email" maxlength="35" placeholder="" required value="eaf@eaf.com"/>
-          </div>
-          `
-      },
-      name: {
-        input: html`
-          <div>
-            <label for="name">${this.texts.name}</label>
-            <input type="text" id="name" maxlength="25" placeholder="" required value="Some Name"/>
-          </div>
-          `
-      },
-
-      subject: {
-        input: html`
-        <div>
-          <label for="subject">${this.texts.subject}</label>
-          <input type="text" id="subject" maxlength="50" placeholder="" required value="A little subject"/>
-        </div>
-        `
-      },
-      
-      message: {
-        input: html`
-        <div>
-          <label for="message">${this.texts.message}</label>
-          <textarea type="text" id="message" maxlength="2000" required>
-            Lore
-          </textarea>
-        </div>
-        `
-      },
-    }
-  }
-
   static properties = {
     csrf: {type: String},
     texts: {
@@ -79,10 +33,64 @@ export class FormHomeContactSend extends LitElement {
     },
   }
 
+  constructor() {
+    super()
+    this.texts = {}
+  }
+
   connectedCallback() {
     super.connectedCallback()
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
+  }
+
+  get_inputs() {
+    return {
+      email: {
+        input: html`
+          <div>
+            <label for="email">${this.texts.email}</label>
+            <div class="div-input">
+              <input type="email" id="email" maxlength="35" placeholder="" required value="eaf@eaf.com"/>
+            </div>
+          </div>
+          `
+      },
+      name: {
+        input: html`
+          <div>
+            <label for="name">${this.texts.name}</label>
+            <div class="div-input">
+              <input type="text" id="name" maxlength="25" placeholder="" required value="Some Name"/>
+            </div>
+          </div>
+          `
+      },
+
+      subject: {
+        input: html`
+        <div>
+          <label for="subject">${this.texts.subject}</label>
+          <div class="div-input">
+            <input type="text" id="subject" maxlength="50" placeholder="" required value="A little subject"/>
+          </div>
+        </div>
+        `
+      },
+
+      message: {
+        input: html`
+        <div>
+          <label for="message">${this.texts.message}</label>
+          <div class="div-input">
+            <textarea type="text" id="message" maxlength="2000" required>
+              Lore
+            </textarea>
+          </div>
+        </div>
+        `
+      },
+    }
   }
 
   render() {
@@ -205,7 +213,7 @@ export class FormHomeContactSend extends LitElement {
 
     const input = {
       wrapper: this.shadowRoot.querySelector("form"),
-      fields: Object.keys(this.get_inputs())
+      fields: Object.keys(this.get_inputs())//los ids de los campos
     }
 
     error.config(input)
@@ -220,8 +228,7 @@ export class FormHomeContactSend extends LitElement {
       return error.append(errors)
     }
 
-    const response = await injson.post(
-      URL_POST.replace(":promouuid", this.promotionuuid), {
+    const response = await injson.post(URL_POST, {
         _action: ACTION,
         _csrf: this.csrf,
         ...this._get_data()

@@ -33,12 +33,11 @@ const _get_errors_by_fieldid = errors => _fieldsid.map(fieldid => (
 ))
 
 /**
- *
  * @param errors objeto con nodos field: que es el id del campo, message: que es el error
  * @private
  */
 const _append = errors => {
-  console.log("_append.errors", errors)
+  //console.log("_append.errors", errors)
   if (!_$wrapper) return
   //si los ids agregados en la config son menos a los que requiere el servidor
   let notinform = _get_not_declared_fields(errors)
