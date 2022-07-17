@@ -25,8 +25,8 @@ final class ContactSendController extends OpenController
                 ->set_error([__("Wrong action")])
                 ->show();
 
+        $send = SF::get_callable(ContactSendService::class, $post);
         try {
-            $send = SF::get_callable(ContactSendService::class, $post);
             $result = $send();
             $this->_get_json()->set_payload([
                 "message" => $result["description"],

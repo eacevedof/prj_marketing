@@ -121,10 +121,4 @@ window.addEventListener("DOMContentLoaded", ()=>{
       li.classList.add(active)
   })
 })
-
-const form = document.getElementById("form-contact")
-form.addEventListener("submit", e => {
-  e.preventDefault()
-  alert("...sent data")
-})
 </script>

@@ -7,7 +7,6 @@ use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Domain\Entities\FieldsValidator;
 
-
 final class ContactSendService extends AppService
 {
     private FieldsValidator $validator;
@@ -33,6 +32,8 @@ final class ContactSendService extends AppService
                     return __("Empty value is not allowed");
                 if (strlen($value)<5 || strlen($value)>25)
                     return __("{0} must be greater than {1} and lighter than {2}", __("Name"), 5, 25);
+                if (!CheckerService::name_format($value))
+                    return __("Invalid email format");
             })
             ->add_rule("email", "email", function ($data) {
                 $value = $data["value"];
