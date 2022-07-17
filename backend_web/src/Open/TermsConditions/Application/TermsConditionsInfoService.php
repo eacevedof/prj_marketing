@@ -97,6 +97,13 @@ final class TermsConditionsInfoService extends AppService
         return $this->_general_terms();
     }
 
+    private function _get_conditions_by_language(string $conditions): string
+    {
+        //busca #EN, #en #es_ES
+        $pattern = "/\#[a-z,\_,A-Z]{2,6}\s*[\r\n]$/im";
+        preg_match_all( $pattern, $conditions, $matches, PREG_OFFSET_CAPTURE);
+    }
+
     private function _promotion_terms(string $promotion, string $conditions): array
     {
         //todo hay que agregar las fechas limites
