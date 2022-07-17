@@ -14,7 +14,7 @@ use App\Shared\Domain\Entities\FieldsValidator;
 
 final class ValidatorFactory
 {
-    public static function get(array $request, AppEntity $entity): FieldsValidator
+    public static function get(array $request, ?AppEntity $entity=null): FieldsValidator
     {
         return new FieldsValidator($request, $entity);
     }
