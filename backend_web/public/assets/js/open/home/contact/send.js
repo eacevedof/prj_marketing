@@ -25,7 +25,6 @@ export class FormHomeContactSend extends LitElement {
 
   constructor() {
     super()
-    this._issending = false
     this.texts = {}
   }
 

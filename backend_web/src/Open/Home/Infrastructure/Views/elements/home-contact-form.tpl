@@ -4,6 +4,7 @@
  * @var array $promotionui
  */
 $texts = [
+    "tr00" => __("Send"),
     "tr01" => __("Processing..."),
     "tr02" => __("Error"),
     "tr03" => __("Some unexpected error occurred"),
