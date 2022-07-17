@@ -14,7 +14,7 @@ final class TermsConditionsInfoService extends AppService
     public function __construct(array $input = [])
     {
         $this->input = $input["promoslug"] ?? "";
-        $this->lang = $input["lang"] ?? LanguageType::ES;
+        $this->lang = LanguageType::exists($lang = trim($input["lang"] ?? "")) ? $lang : LanguageType::ES;
     }
 
     private function _general_terms(): array
@@ -97,11 +97,44 @@ final class TermsConditionsInfoService extends AppService
         return $this->_general_terms();
     }
 
-    private function _get_conditions_by_language(string $conditions): string
+    private function _get_conditions_by_language(string $conditions): array
     {
         //busca #EN, #en #es_ES
-        $pattern = "/\#[a-z,\_,A-Z]{2,6}\s*[\r\n]$/im";
-        preg_match_all( $pattern, $conditions, $matches, PREG_OFFSET_CAPTURE);
+        $pattern = "/\#[a-z,\_,A-Z]{2,6}\s*[\r\n]/im";
+        preg_match_all($pattern, $conditions, $found);
+        if (!$found = $found[0])
+            return explode("\n", $conditions);
+
+        $found = array_unique($found);
+        $langsfound = [];
+        foreach ($found as $lang) {
+            $langhash = trim($lang);
+            $langraw = str_replace("#","", strtolower($langhash));
+            
+            if (LanguageType::exists($langraw) && $langraw === $this->lang) {
+                $langsfound[] = ["hashed" => $langhash, "raw" => $langraw, "found" => 1];
+                continue;
+            }
+            
+            if (LanguageType::exists($langraw))
+                $langsfound[] = ["hashed" => $langhash, "raw" => $langraw, "found" => 0];
+        }
+
+        $lines = explode("\n", $conditions);
+        if (!$langsfound)
+            return $lines;
+
+        $found = array_filter($lines, function (string $line) use ($langsfound){
+            foreach ($langsfound as $lang) {
+                if (strstr($line, $lang["hashed"]))
+                    return true;
+            }
+            return false;
+        });
+
+        ksort($found);
+
+        return array_slice($lines, 0, 100);
     }
 
     private function _promotion_terms(string $promotion, string $conditions): array
@@ -114,7 +147,7 @@ final class TermsConditionsInfoService extends AppService
             ["h2" => "- ".__("Promotion Terms: {0}", $promotion)],
             ["p" => __("None")],
         ];
-        $lines = explode("\n", $lines);
+        $lines = $this->_get_conditions_by_language($conditions);
 
         $conds[0] = ["h2" => "- ".__("Promotion Terms: {0}", $promotion)];
         $conds[1] = ["ul"=>[]];

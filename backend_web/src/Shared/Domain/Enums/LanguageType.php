@@ -2,6 +2,8 @@
 
 namespace App\Shared\Domain\Enums;
 
+use JetBrains\PhpStorm\Pure;
+
 abstract class LanguageType
 {
     public const EN = "en";
@@ -17,5 +19,11 @@ abstract class LanguageType
             self::NL,
             self::PAP,
         ];
+    }
+
+    #[Pure] public static function exists(string $lang): bool
+    {
+        $lang = strtolower($lang);
+        return in_array($lang, self::get_all());
     }
 }
