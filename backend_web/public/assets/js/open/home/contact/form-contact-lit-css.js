@@ -30,6 +30,7 @@ export const cssformcontact = css`
 }
 
 .form-grid .error-top {
+  margin-top: 1rem;
   background: white;
   align-self: center;
   border: 1px solid red;
