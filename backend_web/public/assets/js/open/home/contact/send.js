@@ -166,6 +166,7 @@ export class FormHomeContactSend extends LitElement {
 
   on_success() {
     const tpl = ``
+
   }
 
   close_dialog() {
@@ -216,10 +217,9 @@ export class FormHomeContactSend extends LitElement {
         //este errors debe llevar nodos field (field-id) y message (el error)
         return error.append(errors)
       }
-
     }
 
-    this.on_success()
+    alert(response.message)
   }
 }
 
