@@ -63,9 +63,7 @@ export const cssformcontact = css`
   flex-direction: column;
   margin: 0;
   padding: 0;
-  padding-left: 20px;
-  margin-top: 2px;
-  margin-left: 5.5rem;
+
 }
 
 .form-grid .cell-flex div[approle=field-error] ul li {
@@ -77,10 +75,6 @@ export const cssformcontact = css`
   justify-content: center;
 }
 
-.form-grid button:hover {
-  background-color: var(--color-dark-blue);
-  color: var(--color-white);
-}
 
 .form-grid .cell-btn .button {
   text-decoration: none;
@@ -105,6 +99,11 @@ export const cssformcontact = css`
   padding-right: 1px;
   padding-left: 2px;
   border-radius: 30px;
+}
+
+.form-grid .button:hover, .button-exit:hover {
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
 }
 
 @media screen and (max-width: 645px) {

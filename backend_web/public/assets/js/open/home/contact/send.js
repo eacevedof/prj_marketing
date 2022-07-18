@@ -42,6 +42,10 @@ export class FormHomeContactSend extends LitElement {
     super.connectedCallback()
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
+    this._email = ""
+    this._name = ""
+    this._subject = ""
+    this._message = ""
   }
 
   get_inputs() {
@@ -50,7 +54,7 @@ export class FormHomeContactSend extends LitElement {
         input: html`
           <div class="cell-flex">
             <label for="email">${this.texts.email}</label>
-            <input type="email" id="email" maxlength="35" placeholder="" required value="eaf@eaf.com"/>
+            <input type="email" id="email" maxlength="35" placeholder="" required .value=${this._email}/>
           </div>
           `
       },
@@ -58,7 +62,7 @@ export class FormHomeContactSend extends LitElement {
         input: html`
           <div class="cell-flex">
             <label for="name">${this.texts.name}</label>
-            <input type="text" id="name" maxlength="25" placeholder="" required value="Some Name"/>
+            <input type="text" id="name" maxlength="25" placeholder="" required .value=${this._name}/>
           </div>
           `
       },
@@ -67,7 +71,7 @@ export class FormHomeContactSend extends LitElement {
         input: html`
         <div class="cell-flex">
           <label for="subject">${this.texts.subject}</label>
-          <input type="text" id="subject" maxlength="50" placeholder="" required value="A little subject"/>
+          <input type="text" id="subject" maxlength="50" placeholder="" required .value=${this._subject}/>
         </div>
         `
       },
@@ -76,9 +80,7 @@ export class FormHomeContactSend extends LitElement {
         input: html`
         <div class="cell-flex">
           <label for="message">${this.texts.message}</label>
-          <textarea type="text" id="message" maxlength="2000" required>
-            Lore
-          </textarea>
+          <textarea type="text" id="message" maxlength="2000" required .value=${this._message}/></textarea>
         </div>
         `
       },
