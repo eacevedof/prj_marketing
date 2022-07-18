@@ -4,7 +4,7 @@ import error from "/assets/js/common/fielderrors.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 import {get_parameter} from "/assets/js/common/url.js"
-import {cssformsubscription} from "/assets/js/open/promotioncap/form-subscription-lit-css.js"
+import {cssformsubscription} from "/assets/js/open/promotioncap/form-promotion-cap-insert-lit-css.js"
 import validator, {PATTERNS} from "/assets/js/common/fields-validator.js"
 
 const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
