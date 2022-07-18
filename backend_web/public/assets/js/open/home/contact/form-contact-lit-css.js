@@ -2,7 +2,6 @@ import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssformcontact = css`
 .form-grid {
-border: 1px solid blue;
   display: grid;
   row-gap: 1rem;
   padding: 1rem;
@@ -80,15 +79,10 @@ border: 1px solid blue;
 @media screen and (max-width: 645px) {
   .form-grid {
     width: 100%;
-    border: 1px solid red;
     margin:0;
     padding:0;
     margin-top: 1.5rem;
   } 
-
-  .form-grid .cell-flex {
-    //width: 95%;
-  }
 
   .form-grid .cell-flex label {
     width: 100%;
@@ -100,9 +94,8 @@ border: 1px solid blue;
     padding-left: 1.0rem;
   }
 
-  .form-grid .cell-flex input, textarea {
-    border: 1px solid purple;
-    width: 100%;
+  .form-grid .cell-flex textarea, input {
+    width: calc(100% - 20px);
   }
   
   .form-grid .cell-btn .button {
