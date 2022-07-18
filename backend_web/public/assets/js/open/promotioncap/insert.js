@@ -369,12 +369,14 @@ export class FormPromotionCapInsert extends LitElement {
     if(response?.errors){
       let errors = response.errors[0]?.fields_validation
       if (!errors) {
+        this.form_shake()
         this.snack_error(this.texts.tr04)
         return error.append_top(response.errors[0])
       }
 
       errors = errors[0]?.fields_validation.map( errfield => ({ ...errfield, field: `input-${errfield.field}`}))
       if(errors?.length) {
+        this.form_shake()
         this.snack_error(this.texts.tr04)
         return error.append(errors)
       }
