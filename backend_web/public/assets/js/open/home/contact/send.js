@@ -156,7 +156,6 @@ export class FormHomeContactSend extends LitElement {
 
   form_shake() {
     const $form = this.shadowRoot.querySelector(".form-grid")
-    console.log($form, "FORM-GRID")
     if (!$form) return;
     $form.classList.add("animation-h-shaking")
     setTimeout(
@@ -205,7 +204,6 @@ export class FormHomeContactSend extends LitElement {
     this._btnsend = this.texts.tr00
 
     if(response?.errors){
-      console.log(response.errors, "errors")
       let errors = response.errors[0]?.fields_validation
       //si no es error de campos es un error superior
       if (!errors) {
