@@ -34,6 +34,10 @@ export const cssformcontact = css`
   align-items: center;
 }
 
+.form-grid .cell-flex textarea {
+  height: 5rem;
+}
+
 .form-grid .cell-flex textarea, input {
   font-size: 1rem;
   width: 400px;
@@ -73,6 +77,11 @@ export const cssformcontact = css`
   justify-content: center;
 }
 
+.form-grid button:hover {
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
+}
+
 .form-grid .cell-btn .button {
   text-decoration: none;
   color: var(--color-white);
@@ -83,6 +92,7 @@ export const cssformcontact = css`
   font-size: 1.2rem;
   background-color: var(--color-orange);
   transition: background-color .3s;
+  margin-top: 1rem;
 }
 
 .form-grid .button-exit {
@@ -95,11 +105,6 @@ export const cssformcontact = css`
   padding-right: 1px;
   padding-left: 2px;
   border-radius: 30px;
-}
-
-.form-grid button:hover {
-  background-color: var(--color-dark-blue);
-  color: var(--color-white);
 }
 
 @media screen and (max-width: 645px) {
@@ -131,6 +136,7 @@ export const cssformcontact = css`
   }
   
   .form-grid .cell-btn .button {
+    margin-top: 0;
     margin-bottom: 10px;
   }  
 
