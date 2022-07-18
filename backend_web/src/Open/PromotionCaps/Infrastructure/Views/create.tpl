@@ -28,7 +28,7 @@ $this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdh
   </nav>
   <section class="section">
   <?php
-  $this->_element_view("promotioncap-ui-form", [
+  $this->_element_view("form-promotion-cap-insert", [
     "uihelp" => $uihelp,
     "promotionuuid" => $promotion["uuid"],
     "promotionslug" => $promotion["slug"],
