@@ -34,6 +34,8 @@ export const cssformcontact = css`
   list-style-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
   flex-direction: column;
   margin: 0;
+  padding: 0;
+  padding-left: 20px;
   margin-top: 2px;
   margin-left: 5.5rem;
 }
@@ -82,7 +84,7 @@ export const cssformcontact = css`
     margin:0;
     padding:0;
     margin-top: 1.5rem;
-  } 
+  }  
 
   .form-grid .cell-flex label {
     width: 100%;
@@ -91,16 +93,22 @@ export const cssformcontact = css`
 
   .form-grid .cell-flex div[approle=field-error] ul {
     width: 100%;
-    padding-left: 1.0rem;
+    margin: 0;
+    padding: 0;
+    padding-left: 25px; 
   }
 
   .form-grid .cell-flex textarea, input {
     width: calc(100% - 20px);
   }
   
+  .form-grid .cell-flex textarea {
+    height: 5rem;
+  }
+  
   .form-grid .cell-btn .button {
-    top: 20px;
-    right: 5px;
+    margin-bottom: 10px;
   }  
+
 }
 `;
