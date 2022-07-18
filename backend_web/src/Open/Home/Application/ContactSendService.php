@@ -67,7 +67,7 @@ final class ContactSendService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
         return [
-            "email" => $this->input["email"],
+            "description" => __("Thank you. This contact information has successfully been sent."),
         ];
     }
 }
