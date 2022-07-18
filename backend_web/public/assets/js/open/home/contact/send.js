@@ -103,7 +103,10 @@ export class FormHomeContactSend extends LitElement {
             }
           </button>
         </div>
-        <button type="button" id="button-exit" class="button-exit"><img src="/themes/mypromos/images/icon-close-modal.svg"></button>
+        
+        <button type="button" class="button-exit" @click="${this.close_dialog}">
+          <img src="/themes/mypromos/images/icon-close-modal.svg">
+        </button>
       </form>
     `
   }
@@ -115,30 +118,6 @@ export class FormHomeContactSend extends LitElement {
     catch(e) {
       console.log("email no focusable",e)
     }
-  }
-
-  snack_error(msg) {
-    window.Snackbar.show({
-      pos: "top-right",
-      backgroundColor: "#ee335e",
-      duration: 1500,
-      textColor: "white",
-      actionText: "Error",
-      actionTextColor: "white",
-      text: msg,
-    })
-  }
-
-  snack_success(msg) {
-    window.Snackbar.show({
-      pos: "top-right",
-      backgroundColor: "#22C03D",
-      duration: 1500,
-      textColor: "white",
-      actionText: "Success",
-      actionTextColor: "white",
-      text: msg,
-    })
   }
 
   get_client_errors(input) {
@@ -176,26 +155,23 @@ export class FormHomeContactSend extends LitElement {
   }
 
   form_shake() {
-    const $section = window.document.querySelector(".section")
-    if (!$section) return;
-    $section.classList.add("animation-h-shaking")
+    const $form = this.shadowRoot.querySelector(".form-grid")
+    console.log($form, "FORM-GRID")
+    if (!$form) return;
+    $form.classList.add("animation-h-shaking")
     setTimeout(
-        () => $section.classList.remove("animation-h-shaking"),
+        () => $form.classList.remove("animation-h-shaking"),
         600
     )
   }
 
   on_success() {
-    const $section = window.document.querySelector(".section")
-    let name = this._$get("name").value
-    name = name[0].toUpperCase().concat(name.slice(1))
-    const email = this._$get("email").value
-    const message = this.texts.tr30.replace("%name%",name).replace("%email%",email)
-    $section.innerHTML = `
-    <div class="subscription-message">
-      <p>${message}</p>
-    </div>`
-    this.snack_success("Check your email")
+    const tpl = ``
+  }
+
+  close_dialog() {
+    const dialog = window.document.querySelector("dialog")
+    dialog.close()
   }
 
   async on_submit(e) {
@@ -215,7 +191,6 @@ export class FormHomeContactSend extends LitElement {
     if(errors?.length) {
       this._issending = false
       this._btnsend = this.texts.tr00
-      this.snack_error("Check errors 1")
       this.form_shake()
       return error.append(errors)
     }
@@ -234,17 +209,18 @@ export class FormHomeContactSend extends LitElement {
       let errors = response.errors[0]?.fields_validation
       //si no es error de campos es un error superior
       if (!errors) {
-        this.snack_error(this.texts.tr04)
+        this.form_shake()
         return error.append_top(response.errors[0])
       }
 
       if(errors?.length) {
-        this.snack_error(this.texts.tr04)
+        this.form_shake()
         //este errors debe llevar nodos field (field-id) y message (el error)
         return error.append(errors)
       }
 
     }
+
     this.on_success()
   }
 }
