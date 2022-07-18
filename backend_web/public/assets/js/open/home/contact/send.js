@@ -48,45 +48,37 @@ export class FormHomeContactSend extends LitElement {
     return {
       email: {
         input: html`
-          <div>
+          <div class="cell-flex">
             <label for="email">${this.texts.email}</label>
-            <div class="div-input">
-              <input type="email" id="email" maxlength="35" placeholder="" required value="eaf@eaf.com"/>
-            </div>
+            <input type="email" id="email" maxlength="35" placeholder="" required value="eaf@eaf.com"/>
           </div>
           `
       },
       name: {
         input: html`
-          <div>
+          <div class="cell-flex">
             <label for="name">${this.texts.name}</label>
-            <div class="div-input">
-              <input type="text" id="name" maxlength="25" placeholder="" required value="Some Name"/>
-            </div>
+            <input type="text" id="name" maxlength="25" placeholder="" required value="Some Name"/>
           </div>
           `
       },
 
       subject: {
         input: html`
-        <div>
+        <div class="cell-flex">
           <label for="subject">${this.texts.subject}</label>
-          <div class="div-input">
-            <input type="text" id="subject" maxlength="50" placeholder="" required value="A little subject"/>
-          </div>
+          <input type="text" id="subject" maxlength="50" placeholder="" required value="A little subject"/>
         </div>
         `
       },
 
       message: {
         input: html`
-        <div>
+        <div class="cell-flex">
           <label for="message">${this.texts.message}</label>
-          <div class="div-input">
-            <textarea type="text" id="message" maxlength="2000" required>
-              Lore
-            </textarea>
-          </div>
+          <textarea type="text" id="message" maxlength="2000" required>
+            Lore
+          </textarea>
         </div>
         `
       },
@@ -97,12 +89,12 @@ export class FormHomeContactSend extends LitElement {
     const inputs = Object.keys(this.get_inputs()).map(field => this.get_inputs()[field])
 
     return html`
-      <form @submit=${this.on_submit} class="form-flex">
+      <form @submit=${this.on_submit} class="form-grid">
         ${inputs.map(obj => obj?.input)}
         
         <!-- botones -->
-        <div class="form-buttons">
-          <button id="btn-submit" ?disabled=${this._issending}>
+        <div class="cell-btn">
+          <button id="btn-submit" ?disabled=${this._issending} class="button">
             ${this._btnsend}
             ${
                 this._issending
