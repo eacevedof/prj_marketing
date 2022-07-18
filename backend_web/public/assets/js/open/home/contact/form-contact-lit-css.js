@@ -2,6 +2,7 @@ import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssformcontact = css`
 .form-grid {
+border: 1px solid blue;
   display: grid;
   row-gap: 1rem;
   padding: 1rem;
@@ -59,7 +60,7 @@ export const cssformcontact = css`
   transition: background-color .3s;
 }
 
-.button-exit {
+.form-grid .button-exit {
   position: absolute;
   top: 1px;
   right: 1px;
@@ -69,5 +70,44 @@ export const cssformcontact = css`
   padding-right: 1px;
   padding-left: 2px;
   border-radius: 30px;
+}
+
+.form-grid button:hover {
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
+}
+
+@media screen and (max-width: 645px) {
+  .form-grid {
+    width: 100%;
+    border: 1px solid red;
+    margin:0;
+    padding:0;
+    margin-top: 1.5rem;
+  } 
+
+  .form-grid .cell-flex {
+    //width: 95%;
+  }
+
+  .form-grid .cell-flex label {
+    width: 100%;
+    padding-bottom: 5px;
+  }
+
+  .form-grid .cell-flex div[approle=field-error] ul {
+    width: 100%;
+    padding-left: 1.0rem;
+  }
+
+  .form-grid .cell-flex input, textarea {
+    border: 1px solid purple;
+    width: 100%;
+  }
+  
+  .form-grid .cell-btn .button {
+    top: 20px;
+    right: 5px;
+  }  
 }
 `;
