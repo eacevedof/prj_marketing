@@ -62,7 +62,7 @@
   ?>
 </main>
 <?php
-$this->_element_view("home-contact-form");
+$this->_element_view("form-home-contact-send");
 ?>
 <script type="module">
 const get_cookie = name => {

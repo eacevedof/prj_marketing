@@ -5,7 +5,7 @@ export const cssformcontact = css`
   display: grid;
   row-gap: 1rem;
   padding: 1rem;
-  max-width: 600px;
+  max-width: 525px;
 }
 
 .form-grid .cell-flex {
