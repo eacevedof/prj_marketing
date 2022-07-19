@@ -20,7 +20,6 @@ $texts = [
     "name" => __("Name"),
     "subject" => __("Subject"),
     "message" => __("Message"),
-
 ];
 ?>
 <dialog class="dialog">
