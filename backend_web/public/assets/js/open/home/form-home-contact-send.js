@@ -31,21 +31,24 @@ export class FormHomeContactSend extends LitElement {
         return {}
       },
     },
+    _success: {type: String},
   }
 
   constructor() {
     super()
     this.texts = {}
+    this._success = ""
   }
 
   connectedCallback() {
     super.connectedCallback()
+    this._success = ""
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
     this._email = "email@email.com"
-    this._name = " "
-    this._subject = " "
-    this._message = " "
+    this._name = "Snoopy"
+    this._subject = "This is some snoopy's info"
+    this._message = "I'm Snoopy and Charlie Brown wants to go to the party"
   }
 
   _handle_keyup(e, field) {
@@ -110,8 +113,12 @@ export class FormHomeContactSend extends LitElement {
 
     return html`
       <form @submit=${this.on_submit} class="form-grid">
+        ${
+            this._success
+                ? html`<div class="success-top">Todo bien todo correcto y yo que me alegro</div>`
+                : null
+        }
         ${inputs.map(obj => obj?.input)}
-        
         <!-- botones -->
         <div class="cell-btn">
           <button id="btn-submit" ?disabled=${this._issending} class="button">
@@ -184,9 +191,17 @@ export class FormHomeContactSend extends LitElement {
     )
   }
 
-  on_success() {
-    const tpl = ``
-
+  on_success(message) {
+    this._success = message
+    this._email = ""
+    this._name = ""
+    this._subject = ""
+    this._message = ""
+    setTimeout(()=> {
+        this.close_dialog()
+        this._success = ""
+      },
+        13000)
   }
 
   close_dialog() {
@@ -238,8 +253,7 @@ export class FormHomeContactSend extends LitElement {
         return error.append(errors)
       }
     }
-
-    alert(response.message)
+    this.on_success(response.message)
   }
 }
 

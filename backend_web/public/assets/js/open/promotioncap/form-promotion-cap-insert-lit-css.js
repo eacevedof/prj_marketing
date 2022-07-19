@@ -34,9 +34,20 @@ a:hover {
 
 .form-grid .error-top {
   border-radius: 4px;
-  border: 1px solid tomato;
+  border: 1px solid var(--color-red-error);
   background-color: #fdf0f0;
-  color: red;
+  color: var(--color-red-error);
+  padding: .5rem;
+  justify-self: center;
+  text-align: center;
+  width: 100%;
+}
+
+.form-grid .success-top {
+  border-radius: 4px;
+  border: 1px solid var(--color-clear-green);
+  background-color: #fdf0f0;
+  color: var(--color-clear-green);
   padding: .5rem;
   justify-self: center;
   text-align: center;
