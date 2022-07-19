@@ -13,7 +13,7 @@
     --color-clear-green: #9ACD32FF;
     --color-clear-green-alpha: rgba(159, 252, 6, 1);
     --color-clear-orange: #FFA500FF;
-    --color-red-error: #FF0033;
+    --color-red-error: #EE335E;
 }
 
 ::backdrop {
@@ -65,4 +65,18 @@ a:hover {
     border-radius: 15px;
     font-size: 18px;
     text-align: center;
+}
+
+.animation-shaking-x {
+    animation:frames-shaking-x;
+    animation-duration: 0.25s;
+    animation-iteration-count: 2;
+}
+
+@keyframes frames-shaking-x {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
 }

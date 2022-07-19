@@ -159,9 +159,9 @@ export class FormHomeContactSend extends LitElement {
   form_shake() {
     const $form = this.shadowRoot.querySelector(".form-grid")
     if (!$form) return;
-    $form.classList.add("animation-h-shaking")
+    $form.classList.add("animation-shaking-x")
     setTimeout(
-        () => $form.classList.remove("animation-h-shaking"),
+        () => $form.classList.remove("animation-shaking-x"),
         600
     )
   }
