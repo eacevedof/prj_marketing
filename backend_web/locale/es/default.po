@@ -942,3 +942,15 @@ msgstr "Para poder finalizar tu suscripción debes leer y aceptar los términos 
 
 msgid "Thank you! Your information has been sent successfully."
 msgstr "Gracias! Su información se ha enviado correctamente."
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Subject"
+msgstr "Asunto"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Send"
+msgstr "Enviar"
