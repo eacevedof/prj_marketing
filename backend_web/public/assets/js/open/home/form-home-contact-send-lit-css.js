@@ -1,6 +1,19 @@
 import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssformcontact = css`
+.animation-shaking-x {
+    animation:frames-shaking-x;
+    animation-duration: 0.25s;
+    animation-iteration-count: 2;
+}
+
+@keyframes frames-shaking-x {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
+}
 
 .form-grid {
   border: 1px solid purple;
@@ -17,7 +30,7 @@ export const cssformcontact = css`
 
 .form-grid .cell-flex label {
   display: flex;
-  min-width: 5.5rem;
+  min-width: 5rem;
   font-weight: bold;
   align-items: center;
 }
@@ -51,8 +64,9 @@ export const cssformcontact = css`
   flex-direction: column;
   margin: 0;
   padding: 0;
-  width:100%;
-
+  width: auto;
+  margin-left: 6rem;
+  padding-top: .15rem;
 }
 
 .form-grid .cell-flex div[approle=field-error] ul li {
@@ -74,7 +88,7 @@ export const cssformcontact = css`
   font-size: 1.2rem;
   background-color: var(--color-orange);
   transition: background-color .3s;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .form-grid .button-exit {
