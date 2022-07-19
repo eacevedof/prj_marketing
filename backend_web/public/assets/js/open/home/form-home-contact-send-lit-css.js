@@ -121,10 +121,8 @@ export const cssformcontact = css`
   }
 
   .form-grid .cell-flex div[approle=field-error] ul {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    padding-left: 25px; 
+    width: auto;
+    margin-left: 1rem;
   }
 
   .form-grid .cell-flex textarea, input {
