@@ -160,7 +160,7 @@
 <dialog>
 */
 .dialog {
-  padding: 30px;
+  padding: 25px;
   position: absolute;
   border: 2px dashed var(--color-white);
   top: 50%;

@@ -16,7 +16,6 @@ export const cssformcontact = css`
 }
 
 .form-grid {
-  border: 1px solid purple;
   display: grid;
   row-gap: 1rem;
   padding: 1rem;
@@ -88,7 +87,7 @@ export const cssformcontact = css`
   font-size: 1.2rem;
   background-color: var(--color-orange);
   transition: background-color .3s;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .form-grid .button-exit {
