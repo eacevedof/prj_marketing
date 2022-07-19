@@ -12,8 +12,8 @@ const ACTION = "home.contact.send"
 export class FormHomeContactSend extends LitElement {
   static get styles() {
     return [
+      cssfielderror,
       cssformcontact,
-      cssfielderror
     ];
   }
 
@@ -114,7 +114,7 @@ export class FormHomeContactSend extends LitElement {
     return html`
       <form @submit=${this.on_submit} class="form-grid">
         ${
-            this._success
+            true
                 ? html`<div class="success-top">Todo bien todo correcto y yo que me alegro</div>`
                 : null
         }
@@ -201,7 +201,7 @@ export class FormHomeContactSend extends LitElement {
         this.close_dialog()
         this._success = ""
       },
-        13000)
+        33000)
   }
 
   close_dialog() {

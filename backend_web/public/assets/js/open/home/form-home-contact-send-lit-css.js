@@ -22,6 +22,17 @@ export const cssformcontact = css`
   max-width: 525px;
 }
 
+.form-grid .success-top {
+  border-radius: 4px;
+  border: 1px solid green;
+  background-color: var(--color-white);
+  color: green;
+  padding: .5rem;
+  justify-self: center;
+  text-align: center;
+  width: 100%;
+}
+
 .form-grid .cell-flex {
   display: flex;
   flex-wrap: wrap;
