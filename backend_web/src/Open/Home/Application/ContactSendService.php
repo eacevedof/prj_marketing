@@ -74,16 +74,6 @@ final class ContactSendService extends AppService implements IEventDispatcher
                 "date_confirm" => $payload["date_confirm"],
                 "is_test" => $this->istest,
             ]),
-
-            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
-                "id_promotion" => $this->promotion["id"],
-                "id_promouser" => $idcapuser,
-                "id_type" => PromotionCapActionType::CONFIRMED,
-                "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip(),
-                "is_test" => $this->istest,
-            ])
         ]);
     }
 
@@ -93,6 +83,7 @@ final class ContactSendService extends AppService implements IEventDispatcher
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
+        $this->_dispatch();
         return [
             "description" => __("Thank you! Your information has been sent successfully."),
         ];
