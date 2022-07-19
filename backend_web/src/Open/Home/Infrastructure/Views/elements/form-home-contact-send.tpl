@@ -13,8 +13,8 @@ $texts = [
     "tr10" => __("Empty value is not allowed"),
     "tr11" => __("Invalid format. Eg: xxx@domain.com"),
     "tr12" => __("Invalid format. Eg: John Santino"),
-    "tr13" => __("Invalid format. Eg: I want to apply remarketing on my clients"),
-    "tr14" => __("Invalid format. Eg: Some description about my business"),
+    "tr13" => __("Invalid format. Eg: I'm interested in using your solution"),
+    "tr14" => __("Invalid format. Eg: I have a restaurant in Mexico DF and this is my phone: 123456 please contact me ASAP"),
 
     "email" => __("Email"),
     "name" => __("Name"),
