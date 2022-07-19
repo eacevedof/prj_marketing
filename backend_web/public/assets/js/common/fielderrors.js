@@ -7,7 +7,7 @@ let _fieldsid = []
 let _$wrapper = null
 
 const CSS = {
-  INPUT_ERROR: "form-error",
+  INPUT_ERROR: "error-input",
   ERROR_TOP: "error-top",
 }
 

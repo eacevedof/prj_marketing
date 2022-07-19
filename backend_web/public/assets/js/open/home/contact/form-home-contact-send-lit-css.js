@@ -1,6 +1,7 @@
 import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssformcontact = css`
+
 .animation-h-shaking {
   animation:frames-h-shaking;
   animation-duration: 0.25s;
@@ -77,7 +78,6 @@ border: 1px solid purple;
   justify-content: center;
 }
 
-
 .form-grid .cell-btn .button {
   text-decoration: none;
   color: var(--color-white);
@@ -139,7 +139,6 @@ border: 1px solid purple;
   .form-grid .cell-btn .button {
     margin-top: 0;
     margin-bottom: 10px;
-  }  
-
+  }
 }
 `;
