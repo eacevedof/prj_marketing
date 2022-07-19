@@ -12,7 +12,7 @@ use App\Restrict\Promotions\Application\PromotionCountersEventHandler;
 use App\Open\PromotionCaps\Application\PromotionSubscriptionNotifierEventHandler;
 use App\Open\PromotionCaps\Application\PromotionCapFinishedEventHandler;
 use App\Restrict\Queries\Application\QueryEventHandler;
-use App\Open\PromotionCaps\Application\ContactEmailSentEventHandler;
+use App\Open\Home\Application\ContactEmailSentEventHandler;
 
 $bus = EventBus::instance();
 $bus->subscribe(new UserPreferencesInsertEventHandler());

@@ -1,5 +1,5 @@
 <?php
-namespace App\Open\PromotionCaps\Domain\Events;
+namespace App\Open\Home\Domain\Events;
 
 use App\Shared\Infrastructure\Bus\AbsEvent;
 
