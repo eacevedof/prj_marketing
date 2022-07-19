@@ -29,4 +29,4 @@ $texts = [
       texts="<?php $this->_echo_jslit($texts);?>"
   />
 </dialog>
-<script type="module" src="/assets/js/open/home/contact/form-home-contact-send.js"></script>
+<script type="module" src="/assets/js/open/home/form-home-contact-send.js"></script>
