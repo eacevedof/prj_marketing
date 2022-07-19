@@ -2,17 +2,17 @@ import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssformcontact = css`
 .animation-shaking-x {
-    animation:frames-shaking-x;
-    animation-duration: 0.25s;
-    animation-iteration-count: 2;
+  animation:frames-shaking-x;
+  animation-duration: 0.25s;
+  animation-iteration-count: 2;
 }
 
 @keyframes frames-shaking-x {
-    0% { transform: translateX(0) }
-    25% { transform: translateX(5px) }
-    50% { transform: translateX(-5px) }
-    75% { transform: translateX(5px) }
-    100% { transform: translateX(0) }
+  0% { transform: translateX(0) }
+  25% { transform: translateX(5px) }
+  50% { transform: translateX(-5px) }
+  75% { transform: translateX(5px) }
+  100% { transform: translateX(0) }
 }
 
 .form-grid {
