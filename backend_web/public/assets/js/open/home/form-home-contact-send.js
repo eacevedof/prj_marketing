@@ -114,8 +114,8 @@ export class FormHomeContactSend extends LitElement {
     return html`
       <form @submit=${this.on_submit} class="form-grid">
         ${
-            true
-                ? html`<div class="success-top">Todo bien todo correcto y yo que me alegro</div>`
+            this._success
+                ? html`<div class="success-top">${this._success}</div>`
                 : null
         }
         ${inputs.map(obj => obj?.input)}
@@ -201,7 +201,7 @@ export class FormHomeContactSend extends LitElement {
         this.close_dialog()
         this._success = ""
       },
-        33000)
+        5000)
   }
 
   close_dialog() {
