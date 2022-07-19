@@ -42,10 +42,10 @@ export class FormHomeContactSend extends LitElement {
     super.connectedCallback()
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
-    this._email = ""
-    this._name = ""
-    this._subject = ""
-    this._message = ""
+    this._email = "email@email.com"
+    this._name = " "
+    this._subject = " "
+    this._message = " "
   }
 
   get_inputs() {

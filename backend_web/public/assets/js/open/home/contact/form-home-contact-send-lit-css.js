@@ -16,6 +16,7 @@ export const cssformcontact = css`
 }
 
 .form-grid {
+border: 1px solid purple;
   display: grid;
   row-gap: 1rem;
   padding: 1rem;
@@ -63,6 +64,7 @@ export const cssformcontact = css`
   flex-direction: column;
   margin: 0;
   padding: 0;
+  width:100%;
 
 }
 
