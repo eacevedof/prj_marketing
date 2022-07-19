@@ -2,8 +2,8 @@ import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
 export const cssfielderror = css`
 form .error-input {
+    /*fielderrors-lit-css.js*/
     border-color: #ee335e;
-    padding-right: calc(1.5em + 0.75rem);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fa5c7c' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23fa5c7c' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
     background-repeat: no-repeat;
     background-position: center right calc(0.375em + 0.1875rem);
@@ -11,7 +11,6 @@ form .error-input {
 }
 form input[type=checkbox].error-input {
     border-color: #ee335e !important;
-    padding-right: 0;
     background-position: center;
 }
 
