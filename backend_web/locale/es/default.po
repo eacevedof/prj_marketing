@@ -11,8 +11,8 @@ msgstr "Inesperado"
 msgid "Yes"
 msgstr "Si"
 
-msgid "Invalid csrf {0}"
-msgstr "Csrf inválido {0}"
+msgid "Invalid or expired CSRF. Reload this page please. c{0}"
+msgstr "CSRF inválido o ha caducado. Por favor recarga la página. c{0}"
 
 msgid "Expired csrf {0}"
 msgstr "Csrf expirado {0}"

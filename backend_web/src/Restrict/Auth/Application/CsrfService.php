@@ -26,22 +26,22 @@ final class CsrfService extends AppService
 
     private function _validate_package(array $arpackage): void
     {
-        if(count($arpackage)!==12) $this->_exception(__("Invalid csrf {0}",1));
+        if(count($arpackage)!==12) $this->_exception(__("Invalid or expired CSRF. Reload this page please. c{0}",1));
 
         list($s0,$domain,$s1,$remoteip,$s2,$useragent,$s3,$username,$s4,$password,$s5,$date) = $arpackage;
 
-        if($domain!==$this->_get_domain()) $this->_exception(__("Invalid csrf {0}",2));
+        if($domain!==$this->_get_domain()) $this->_exception(__("Invalid or expired CSRF. Reload this page please. c{0}",2));
 
         //hago validacion en local por peticiones entre las ips de docker y mi maquina host
         //que usan distitntas ips
         if ($remoteip !== $this->_get_remote_ip())
-            $this->_exception(__("Invalid csrf {0}",3));
+            $this->_exception(__("Invalid or expired CSRF. Reload this page please. c{0}",3));
 
-        if($useragent !== md5($this->_get_user_agent())) $this->_exception(__("Invalid csrf {0}",4));
+        if($useragent !== md5($this->_get_user_agent())) $this->_exception(__("Invalid or expired CSRF. Reload this page please. c{0}",4));
 
         $md5pass = $this->autuser["secret"] ?? "";
         $md5pass = md5($md5pass);
-        if($md5pass!==$password) $this->_exception(__("Invalid csrf {0}",5));
+        if($md5pass!==$password) $this->_exception(__("Invalid or expired CSRF. Reload this page please. c{0}",5));
 
         $moment = new ComponentMoment($date);
         $now = date("Y-m-d H:i:s");
