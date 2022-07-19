@@ -939,3 +939,6 @@ msgstr "Me gustaría recibir información similar sobre promociones, sorteos y d
 
 msgid "In order to finish your subscription you have to read and accept terms and conditions."
 msgstr "Para poder finalizar tu suscripción debes leer y aceptar los términos y condiciones."
+
+msgid "Thank you! Your information has been sent successfully."
+msgstr "Gracias! Su información se ha enviado correctamente."

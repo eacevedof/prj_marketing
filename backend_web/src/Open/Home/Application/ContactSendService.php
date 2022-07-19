@@ -67,7 +67,7 @@ final class ContactSendService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
         return [
-            "description" => __("Thank you. This contact information has successfully been sent."),
+            "description" => __("Thank you! Your information has been sent successfully."),
         ];
     }
 }
