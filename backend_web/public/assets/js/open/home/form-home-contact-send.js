@@ -48,13 +48,21 @@ export class FormHomeContactSend extends LitElement {
     this._message = " "
   }
 
+  _handle_keyup(e, field) {
+    const value = e.target.value
+    this[field] = value
+  }
+
   get_inputs() {
     return {
       email: {
         input: html`
           <div class="cell-flex">
             <label for="email">${this.texts.email}</label>
-            <input type="email" id="email" maxlength="35" placeholder="" required .value=${this._email}/>
+            <input type="email" id="email" .value=${this._email} 
+                   @change=${e => this._handle_keyup(e, "_email")}
+                   maxlength="35" placeholder="" required
+            />
           </div>
           `
       },
@@ -62,7 +70,10 @@ export class FormHomeContactSend extends LitElement {
         input: html`
           <div class="cell-flex">
             <label for="name">${this.texts.name}</label>
-            <input type="text" id="name" maxlength="25" placeholder="" required .value=${this._name}/>
+            <input type="text" id="name"
+                   .value=${this._name}
+                   @change=${e => this._handle_keyup(e, "_name")}
+                   maxlength="25" placeholder="" required/>
           </div>
           `
       },
@@ -71,7 +82,10 @@ export class FormHomeContactSend extends LitElement {
         input: html`
         <div class="cell-flex">
           <label for="subject">${this.texts.subject}</label>
-          <input type="text" id="subject" maxlength="50" placeholder="" required .value=${this._subject}/>
+          <input type="text" id="subject" 
+                 .value=${this._subject}
+                 @change=${e => this._handle_keyup(e, "_subject")}
+                 maxlength="50" placeholder="" required />
         </div>
         `
       },
@@ -80,7 +94,11 @@ export class FormHomeContactSend extends LitElement {
         input: html`
         <div class="cell-flex">
           <label for="message">${this.texts.message}</label>
-          <textarea type="text" id="message" maxlength="2000" required .value=${this._message}/></textarea>
+          <textarea type="text" id="message"                  
+                    .value=${this._message}
+                    @change=${e => this._handle_keyup(e, "_message")}
+                    maxlength="2000" placeholder="" required
+          /></textarea>
         </div>
         `
       },
