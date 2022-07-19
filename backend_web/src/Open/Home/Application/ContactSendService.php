@@ -2,12 +2,17 @@
 namespace App\Open\Home\Application;
 
 use App\Checker\Application\CheckerService;
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
+use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Domain\Entities\FieldsValidator;
 
-final class ContactSendService extends AppService
+final class ContactSendService extends AppService implements IEventDispatcher
 {
     private FieldsValidator $validator;
 
@@ -58,6 +63,28 @@ final class ContactSendService extends AppService
                 if (strlen($value)<10 || strlen($value)>2000)
                     return __("{0} must be greater than {1} and lighter than {2}", __("Message"), 10, 2000);
             });
+    }
+
+    private function _dispatch(array $payload): void
+    {
+        EventBus::instance()->publish(...[
+            PromotionCapConfirmedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
+                "subsuuid" => $this->subscriptiondata["subscode"],
+                "email" => $this->subscriptiondata["email"],
+                "date_confirm" => $payload["date_confirm"],
+                "is_test" => $this->istest,
+            ]),
+
+            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
+                "id_promotion" => $this->promotion["id"],
+                "id_promouser" => $idcapuser,
+                "id_type" => PromotionCapActionType::CONFIRMED,
+                "url_req" => $this->request->get_request_uri(),
+                "url_ref" => $this->request->get_referer(),
+                "remote_ip" => $this->request->get_remote_ip(),
+                "is_test" => $this->istest,
+            ])
+        ]);
     }
 
     public function __invoke(): array
