@@ -42,15 +42,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
 
-        $link = $this->domain->get_full_with_extra("{$data["promocode"]}/confirm/{$data["subscode"]}");
+        $link = $this->domain->get_full_url(("{$data["promocode"]}/confirm/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
 
-        $link = $this->domain->get_full_with_extra("promotion/{$data["promocode"]}/cancel/{$data["subscode"]}");
+        $link = $this->domain->get_full_url(("promotion/{$data["promocode"]}/cancel/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
-        $link = $this->domain->get_full_with_extra("terms-and-conditions/{$data["promoslug"]}");
+        $link = $this->domain->get_full_url(("terms-and-conditions/{$data["promoslug"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["terms_link"] = $link;
 
@@ -78,14 +78,14 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
-        $link = $this->domain->get_full_with_extra("points/{$data["businesscode"]}/user/{$data["capusercode"]}");
+        $link = $this->domain->get_full_url(("points/{$data["businesscode"]}/user/{$data["capusercode"]}");
         $data["points_link"] = $link;
 
-        $link = $this->domain->get_full_with_extra("promotion/{$data["promocode"]}/cancel/{$data["subscode"]}");
+        $link = $this->domain->get_full_url(("promotion/{$data["promocode"]}/cancel/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
-        $link = $this->domain->get_full_with_extra("terms-and-conditions/{$data["promoslug"]}");
+        $link = $this->domain->get_full_url(("terms-and-conditions/{$data["promoslug"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["terms_link"] = $link;
 
@@ -113,7 +113,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
-        $link = $this->domain->get_full_with_extra("points/{$data["businesscode"]}/user/{$data["capusercode"]}");
+        $link = $this->domain->get_full_url(("points/{$data["businesscode"]}/user/{$data["capusercode"]}");
         $data["points_link"] = $link;
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"on_confirmation");

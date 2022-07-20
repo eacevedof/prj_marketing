@@ -8,6 +8,7 @@ use App\Shared\Domain\Bus\Event\IEvent;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
+use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Traits\LogTrait;
 use \Exception;
 
@@ -22,9 +23,10 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
         $pathtpl = realpath(__DIR__."/../Infrastructure/Views/email/email-contact.tpl");
         if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
+        $urldomain = UrlDomainHelper::get_instance();
         $data = [
             "business" => "My Promotions",
-            "businesslogo" => ""
+            "businesslogo" => $urldomain->get_full_url();
         ];
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"on_confirmation");

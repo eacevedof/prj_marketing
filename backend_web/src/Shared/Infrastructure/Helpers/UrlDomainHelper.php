@@ -17,7 +17,7 @@ final class UrlDomainHelper extends AppHelper implements IHelper
         return new self();
     }
 
-    public function get_full_url(): string
+    private function _get_full_url(): string
     {
         return match ($this->env) {
             "local" => "http://$this->domain",
@@ -25,9 +25,10 @@ final class UrlDomainHelper extends AppHelper implements IHelper
         };
     }
 
-    public function get_full_with_extra(string $append): string
+    public function get_full_url(?string $append=null): string
     {
-        $url = $this->get_full_url();
+        $url = $this->_get_full_url();
+        if (is_null($append)) return $url;
         return "$url/$append";
     }
 }
