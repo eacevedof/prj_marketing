@@ -5,11 +5,9 @@ use App\Open\Home\Domain\Events\ContactEmailSentEvent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
-use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Shared\Infrastructure\Traits\LogTrait;
 use \Exception;
 
@@ -24,9 +22,10 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
         $pathtpl = realpath(__DIR__."/../Infrastructure/Views/email/email-contact.tpl");
         if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
-        $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
-        $link = "{$this->domain}/points/{$data["businesscode"]}/user/{$data["capusercode"]}";
-        $data["points_link"] = $link;
+        $data = [
+            "business" => "My Promotions",
+            "businesslogo" => ""
+        ];
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"on_confirmation");
         /**
