@@ -159,14 +159,14 @@ p {
                             <p style="margin: 0; font-size: 15px; text-align: left;">
                               <span style="font-size:15px;"><strong><?=__("Subject") ?>:</strong></span>
                             </p>
-                            <p style="margin: 0; font-size: 17px; text-align: left;">
+                            <p style="margin: 0; margin-top: 5px; font-size: 17px; text-align: left;">
                               <?=$data["subject"]?>
                             </p>
                             <br/>
                             <p style="margin: 0; font-size: 15px; text-align: left;">
                               <span style="font-size:15px;"><strong><?=__("Your message") ?>:</strong></span>
                             </p>
-                            <p style="margin: 0; font-size: 17px; text-align: left;">
+                            <p style="margin: 0; margin-top: 5px; font-size: 17px; text-align: left;">
                               <?=$data["message"]?>
                             </p>
                             <br/>
@@ -212,6 +212,7 @@ p {
                   <table appx="t18" border="0" cellpadding="0" cellspacing="0" class="social_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td style="text-align:center;padding-right:0px;padding-left:0px;">
+                        <!-- social links -->
                         <table appx="t19" align="center" border="0" cellpadding="0" cellspacing="0" class="social-table"
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
                                width="188px">
