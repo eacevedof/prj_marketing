@@ -37,7 +37,7 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
             ->set_from("elchalanaua@gmail.com")
             //->add_to($data["email"])
             ->add_to("eacevedof@gmail.com")
-            ->set_subject(__("Subscription to \"{0}\"", $data["promotion"]))
+            ->set_subject(__("Subscription to “{0}“", $data["promotion"]))
             ->set_content($html)
             ->send()
         ;

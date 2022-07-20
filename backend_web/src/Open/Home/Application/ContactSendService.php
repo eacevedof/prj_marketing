@@ -17,8 +17,8 @@ final class ContactSendService extends AppService implements IEventDispatcher
     public function __construct(array $input)
     {
         $this->input = [
-            "name" => trim($input["name"] ?? ""),
             "email" => trim($input["email"] ?? ""),
+            "name" => trim($input["name"] ?? ""),
             "subject" => trim($input["subject"] ?? ""),
             "message" => trim($input["message"] ?? ""),
         ];
@@ -33,15 +33,22 @@ final class ContactSendService extends AppService implements IEventDispatcher
                 $value = $data["value"];
                 if (!$value)
                     return __("Empty value is not allowed");
+
+                if (!is_string($value))
+                    return __("Invalid {0} format", __("Name"));
+
                 if (strlen($value)<5 || strlen($value)>25)
                     return __("{0} must be greater than {1} and lighter than {2}", __("Name"), 5, 25);
+
                 if (!CheckerService::name_format($value))
-                    return __("Invalid email format");
+                    return __("Invalid name format");
             })
             ->add_rule("email", "email", function ($data) {
                 $value = $data["value"];
                 if (!$value)
                     return __("Empty value is not allowed");
+                if (!is_string($value))
+                    return __("Invalid {0} format", __("Email"));
                 if (strlen($value)<5 || strlen($value)>35)
                     return __("{0} must be greater than {1} and lighter than {2}", __("Email"), 5, 35);
                 if (!CheckerService::is_valid_email($value))
@@ -51,6 +58,8 @@ final class ContactSendService extends AppService implements IEventDispatcher
                 $value = $data["value"];
                 if (!$value)
                     return __("Empty value is not allowed");
+                if (!is_string($value))
+                    return __("Invalid {0} format", __("Subject"));
                 if (strlen($value)<10 || strlen($value)>50)
                     return __("{0} must be greater than {1} and lighter than {2}", __("Subject"), 10, 50);
             })
@@ -58,16 +67,19 @@ final class ContactSendService extends AppService implements IEventDispatcher
                 $value = $data["value"];
                 if (!$value)
                     return __("Empty value is not allowed");
+                if (!is_string($value))
+                    return __("Invalid {0} format", __("Message"));
                 if (strlen($value)<10 || strlen($value)>2000)
                     return __("{0} must be greater than {1} and lighter than {2}", __("Message"), 10, 2000);
             });
     }
 
-    private function _dispatch(array $payload): void
+    private function _dispatch(): void
     {
+        $payload = $this->input;
         EventBus::instance()->publish(...[
             ContactEmailSentEvent::from_primitives(1, [
-                "emeailuuid" => uniqid(),
+                "emailuuid" => uniqid(),
                 "email" => $payload["email"],
                 "name" => $payload["name"],
                 "subject" => $payload["subject"],
