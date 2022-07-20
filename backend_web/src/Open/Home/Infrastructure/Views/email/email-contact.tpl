@@ -201,6 +201,7 @@ p {
         </tr>
         </tbody>
       </table>
+      <!-- social and hr -->
       <table appx="t16" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
@@ -283,6 +284,8 @@ p {
         </tr>
         </tbody>
       </table>
+
+      <!-- footer designed by -->
       <table appx="t27" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
