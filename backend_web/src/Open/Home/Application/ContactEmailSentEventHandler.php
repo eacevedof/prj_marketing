@@ -27,8 +27,7 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
         $data = [
             "business" => "ProviderXXX",
             "businessurl" => $urldomain->get_full_url(),
-            "businesslogo" => $urldomain->get_full_url("themes/mypromos/images/provider-xxx-logo-orange.svg"),
-            "businesslogo" => "https://devmypromos.theframework.es/themes/mypromos/images/provider-xxx-logo-orange.svg",
+            "businesslogo" => $urldomain->get_full_url("themes/mypromos/images/provider-xxx-logo-orange.png"),
             "email" => $domevent->email(),
             "name" => $domevent->name(),
             "subject" => htmlentities($domevent->subject()),
