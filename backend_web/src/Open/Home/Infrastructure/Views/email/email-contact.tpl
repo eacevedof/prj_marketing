@@ -187,7 +187,7 @@ p {
                         <div style="font-family: Tahoma, Verdana, sans-serif">
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #303030; line-height: 1.2;">
                             <p style="margin: 0; font-size: 15px; text-align: left;">
-                              <?=__("We will get in touch with you soonP")?>.
+                              <?=__("We will get in touch with you soon")?>.
                             </p>
                             <br/><br/>
                             <p style="margin: 0; font-size: 15px; padding-right: 150px; text-align: right;">
