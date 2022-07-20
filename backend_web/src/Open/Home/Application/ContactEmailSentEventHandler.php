@@ -30,7 +30,7 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
             "businesslogo" => $urldomain->get_full_url("themes/mypromos/images/provider-xxx-logo-orange.svg"),
             "name" => $domevent->name(),
             "subject" => htmlentities($domevent->subject()),
-            "message" => htmlentities($domevent->message()),
+            "message" => str_replace("\n","<br/>",htmlentities($domevent->message())),
             "urlfb" => "",
             "urltwitter" => "",
             "urlig" => "",

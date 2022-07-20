@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700&display=swap");
 
 :root {
-    --color-white: #FFFFFF;
+    --color-white: rgba(255, 255, 255, 0.84);
     --color-clear-blue: #00C6FB;
     --color-dark-blue: #005EEA;
     --color-clear-black: #303030;

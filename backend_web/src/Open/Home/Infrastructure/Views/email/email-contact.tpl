@@ -100,6 +100,7 @@ p {
         <tbody>
         <tr>
           <td>
+            <!-- header con logo -->
             <table appx="t3" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
                    role="presentation"
                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: top center; color: #000000; background-color: #000000; width: 800px;"
@@ -132,9 +133,13 @@ p {
         <tbody>
         <tr>
           <td>
+            <!-- wrapper del texto -->
             <table appx="t6" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
                    role="presentation"
-                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: top center; color: #000000; background-color: #0c2f5d; width: 800px;"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;
+                   background-position: top center; color: #303030; background-color: #EFF6F6FF; width: 800px;
+                   border: 1px dashed #DBDEE0FF;
+                   "
                    width="800">
               <tbody>
               <tr>
@@ -146,11 +151,11 @@ p {
                     <tr>
                       <td style="padding-bottom:5px;padding-left:10px;padding-right:10px;padding-top:5px;">
                         <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0; font-size: 30px; text-align: left;">
+                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #303030; line-height: 1.2;">
+                            <p style="margin: 0; font-size: 30px; text-align: center;">
                               <span style="font-size:30px;"><strong><?=__("Hello {0}!!", $hello) ?></strong></span>
                             </p>
-                            <br/>
+                            <br/><br/>
                             <p style="margin: 0; font-size: 17px; text-align: left;">
                               <?= __("Thank you for contacting {0}", $data["business"]) ?>
                               <?= __("This is the content of your message.") ?>
@@ -180,12 +185,12 @@ p {
                     <tr>
                       <td>
                         <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
+                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #303030; line-height: 1.2;">
                             <p style="margin: 0; font-size: 15px; text-align: left;">
-                              <?=__("We will get in touch ASAP")?>.
+                              <?=__("We will get in touch with you soonP")?>.
                             </p>
-                            <br/>
-                            <p style="margin: 0; font-size: 15px; text-align: left;">
+                            <br/><br/>
+                            <p style="margin: 0; font-size: 15px; padding-right: 150px; text-align: right;">
                               <i><?=__("Best regards")?>.</i>
                             </p>
                           </div>
@@ -202,7 +207,8 @@ p {
         </tbody>
       </table>
       <!-- disclaimer -->
-      <table appx="t16new" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+      <table appx="t16new" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
           <td>
@@ -213,7 +219,7 @@ p {
                   <table appx="t18" border="0" cellpadding="0" cellspacing="0" class="social_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td style="text-align:center;padding-right:0px;padding-left:0px;">
-                        <!-- social links -->
+                        <!-- text disclaimer -->
                         <table appx="t19" align="center" border="0" cellpadding="0" cellspacing="0" class="social-table"
                                role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
                                width="500px">
