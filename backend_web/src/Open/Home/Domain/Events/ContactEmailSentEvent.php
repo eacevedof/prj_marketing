@@ -5,18 +5,20 @@ use App\Shared\Infrastructure\Bus\AbsEvent;
 
 final class ContactEmailSentEvent extends AbsEvent
 {
-    private string $subsuuid;
+    private string $emailuuid;
     private string $email;
-    private string $dateconfirm;
-    private int $istest;
+    private string $name;
+    private string $subject;
+    private string $message;
 
     public function __construct(
-        int $idcapuser,
+        int $idemail,
 
-        string $subsuuid,
+        string $emailuuid,
         string $email,
-        string $dateconfirm,
-        int $istest,
+        string $name,
+        string $subject,
+        string $message,
 
         ?string $eventid = null,
         ?int $occuredon = null,
@@ -24,16 +26,18 @@ final class ContactEmailSentEvent extends AbsEvent
         ?string $causationid = null
     )
     {
-        parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->subsuuid = $subsuuid;
+        parent::__construct($idemail, $eventid, $occuredon, $correlationid, $causationid);
+        
+        $this->emailuuid = $emailuuid;
         $this->email = $email;
-        $this->dateconfirm = $dateconfirm;
-        $this->istest = $istest;
+        $this->name = $name;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     public static function event_name(): string
     {
-        return "promotioncap.confirmed";
+        return "contactemail.sent";
     }
 
     public static function from_primitives(
@@ -47,10 +51,11 @@ final class ContactEmailSentEvent extends AbsEvent
     {
         return new self(
             $aggregateId,
-            $body["subsuuid"],
+            $body["emailuuid"],
             $body["email"],
-            $body["date_confirm"],
-            $body["is_test"],
+            $body["name"],
+            $body["subject"],
+            $body["message"],
 
             $eventId,
             $occurredon,
@@ -62,16 +67,17 @@ final class ContactEmailSentEvent extends AbsEvent
     public function to_primitives(): array
     {
         return [
-            "subsuuid" => $this->subsuuid,
+            "emailuuid" => $this->emailuuid,
             "email" => $this->email,
-            "date_confirm" => $this->dateconfirm,
-            "is_test" => $this->istest,
+            "name" => $this->name,
+            "subject" => $this->subject,
+            "message" => $this->message,
         ];
     }
 
     public function subscription_uuid(): string
     {
-        return $this->subsuuid;
+        return $this->emailuuid;
     }
 
     public function email(): string
@@ -79,13 +85,18 @@ final class ContactEmailSentEvent extends AbsEvent
         return $this->email;
     }
     
-    public function date_confirm(): string
+    public function name(): string
     {
-        return $this->dateconfirm;
+        return $this->name;
     }
 
-    public function is_test(): int
+    public function subject(): string
     {
-        return $this->istest;
+        return $this->subject;
+    }
+
+    public function message(): string
+    {
+        return $this->message;
     }
 }

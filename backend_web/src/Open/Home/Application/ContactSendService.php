@@ -1,16 +1,14 @@
 <?php
 namespace App\Open\Home\Application;
 
-use App\Checker\Application\CheckerService;
-use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
+use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
+use App\Checker\Application\CheckerService;
+use App\Shared\Domain\Entities\FieldsValidator;
+use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
+use App\Open\Home\Domain\Events\ContactEmailSentEvent;
 use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
-use App\Shared\Domain\Entities\FieldsValidator;
 
 final class ContactSendService extends AppService implements IEventDispatcher
 {
@@ -68,11 +66,12 @@ final class ContactSendService extends AppService implements IEventDispatcher
     private function _dispatch(array $payload): void
     {
         EventBus::instance()->publish(...[
-            PromotionCapConfirmedEvent::from_primitives($idcapuser = $this->subscriptiondata["idcapuser"], [
-                "subsuuid" => $this->subscriptiondata["subscode"],
-                "email" => $this->subscriptiondata["email"],
-                "date_confirm" => $payload["date_confirm"],
-                "is_test" => $this->istest,
+            ContactEmailSentEvent::from_primitives(1, [
+                "emeailuuid" => uniqid(),
+                "email" => $payload["email"],
+                "name" => $payload["name"],
+                "subject" => $payload["subject"],
+                "message" => $payload["message"],
             ]),
         ]);
     }
