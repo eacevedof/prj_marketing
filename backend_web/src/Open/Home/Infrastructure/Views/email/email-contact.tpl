@@ -112,13 +112,13 @@ p {
                 <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
                   <table appx="t4" border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
-                      <!-- logo -->
-                      <td style="width:80%;padding-right:0px;padding-left:0px;">
+                      <!-- logotipo -->
+                      <td style="width:80%;padding-right:0px;padding-left:30px;">
                         <div align="left" style="line-height:10px">
                           <a href="<?=$data["businessurl"]?>">
                             <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>"
-                                 style="display: block; height: auto; border: 0; width: 160px; max-width: 100%; max-height: 82px" title="<?=$data["business"]?>"
-                                 width="160" />
+                                 style="display: block; height: auto; border: 0; width: 80px; max-width: 100%; max-height: 80px" title="<?=$data["business"]?>"
+                                 width="80" />
                           </a>
                         </div>
                       </td>
@@ -147,7 +147,9 @@ p {
                    role="presentation"
                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;
                    background-position: top center; color: #303030; background-color: #62cbf8; width: 800px;
-                   border: 1px dashed #E65C00;
+                   border-left: 1px dashed #E65C00;
+                   border-right: 1px dashed #E65C00;
+                   border-bottom: 1px solid #303030;
                    "
                    width="800">
               <tbody>
