@@ -146,7 +146,7 @@ p {
             <table appx="t6" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
                    role="presentation"
                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;
-                   background-position: top center; color: #303030; background-color: #77d7f5; width: 800px;
+                   background-position: top center; color: #303030; background-color: #62cbf8; width: 800px;
                    border: 1px dashed #E65C00;
                    "
                    width="800">
@@ -252,7 +252,7 @@ p {
                                width="500px">
                           <tr>
                             <td>
-                              <p style="margin: 0; padding: 7px 0 7px 0; font-size: 14px; text-align: center; color: #FFF;">
+                              <p style="margin: 0; padding: 10px 0 10px 0; font-size: 14px; text-align: center; color: #FFF;">
                                 <b><?=__("If you have received this email by mistake, please delete it. Thanks in advance.")?></b>
                               </p>
                             </td>
