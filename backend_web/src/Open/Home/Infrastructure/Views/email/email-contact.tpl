@@ -196,7 +196,7 @@ p {
                           <tr>
                             <?php
                             if ($url = $data["urlfb"]):
-                              ?>
+                            ?>
                               <td style="padding:0 15px 0 0px;">
                                 <a href="<?=$url?>" target="_blank">
                                   <img alt="Facebook" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
@@ -205,7 +205,7 @@ p {
                             <?php
                             endif;
                             if ($url = $data["urltwitter"]):
-                              ?>
+                            ?>
                               <td style="padding:0 15px 0 0px;">
                                 <a href="<?=$url?>" target="_blank">
                                   <img alt="Twitter" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/twitter@2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
@@ -214,7 +214,7 @@ p {
                             <?php
                             endif;
                             if ($url = $data["urlig"]):
-                              ?>
+                            ?>
                               <td style="padding:0 15px 0 0px;">
                                 <a href="<?=$url?>" target="_blank">
                                   <img alt="Instagram" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" style="display: block; height: auto; border: 0;" title="Instagram+" width="32" />
@@ -223,7 +223,7 @@ p {
                             <?php
                             endif;
                             if ($url = $data["urltiktok"]):
-                              ?>
+                            ?>
                               <td style="padding:0 15px 0 0px;">
                                 <a href="<?=$url?>" target="_blank">
                                   <img alt="Tik Tok" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/tiktok@2x.png" style="display: block; height: auto; border: 0;" title="Tiktok" width="32" />
@@ -283,7 +283,8 @@ p {
                                 <tr>
                                   <td style="vertical-align: middle; text-align: center; padding-top: 0px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;">
                                     <span style="font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 10px; color: #9d9d9d; vertical-align: middle; letter-spacing: normal; text-align: center;">
-                                      Designed by                                    </span>
+                                      Designed by
+                                    </span>
                                     <a href="https://eduardoaf.com" style="text-decoration: none;" target="_blank">
                                       <img align="center"
                                            alt="Empowered by Eduardo A. F." class="icon" height="32" src="https://resources.theframework.es/eduardoaf.com/20200906/095050-logo-eduardoafcom_500.png"
