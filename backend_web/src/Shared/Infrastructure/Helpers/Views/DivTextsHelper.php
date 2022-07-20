@@ -1,5 +1,8 @@
 <?php
-namespace App\Shared\Infrastructure\Helpers;
+namespace App\Shared\Infrastructure\Helpers\Views;
+
+use App\Shared\Infrastructure\Helpers\AppHelper;
+use App\Shared\Infrastructure\Helpers\IHelper;
 
 final class DivTextsHelper extends AppHelper implements IHelper
 {

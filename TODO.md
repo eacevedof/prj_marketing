@@ -2,6 +2,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- en texto legal falta logo de la cuenta 
 - en el js de la actualiacion de la proocion hay que escuchar el select owner para reenviarlo pq sino se queda con el valor anterior
 - previsualizacin de mailing
 - mailing template

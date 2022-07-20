@@ -11,6 +11,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
+use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Shared\Infrastructure\Traits\LogTrait;
 use \Exception;
@@ -19,15 +20,12 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 {
     use LogTrait;
 
-    private string $domain;
+    private UrlDomainHelper $domain;
     private array $tpls;
 
     public function __construct()
     {
-        $this->domain = "https://".getenv("APP_DOMAIN");
-        if (strstr($this->domain, "localhost"))
-            $this->domain = str_replace("https://","http://", $this->domain);
-        
+        $this->domain = UrlDomainHelper::get_instance();
         $this->tpls = [
             "subscription" => realpath(__DIR__."/../Infrastructure/Views/email/email-subscription.tpl"),
             "confirmation" => realpath(__DIR__."/../Infrastructure/Views/email/email-confirmation.tpl"),
@@ -44,15 +42,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
 
-        $link = "{$this->domain}/promotion/{$data["promocode"]}/confirm/{$data["subscode"]}";
+        $link = $this->domain->get_full_with_extra("{$data["promocode"]}/confirm/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
 
-        $link = "{$this->domain}/promotion/{$data["promocode"]}/cancel/{$data["subscode"]}";
+        $link = $this->domain->get_full_with_extra("promotion/{$data["promocode"]}/cancel/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
-        $link = "{$this->domain}/terms-and-conditions/{$data["promoslug"]}";
+        $link = $this->domain->get_full_with_extra("terms-and-conditions/{$data["promoslug"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["terms_link"] = $link;
 
