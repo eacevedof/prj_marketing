@@ -2,7 +2,7 @@
 /**
  * @var array $data
  */
-$hello = ucwords(strtolower($data["username"] ?? "")) ?: $data["email"];
+$hello = ucwords(strtolower($data["name"] ?? ""));
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
@@ -160,14 +160,11 @@ p {
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 17px; text-align: left;">
                               <span style="font-size:17px;">
-                                <?=__("Your accumulated points at <strong>{0}</strong> have been updated", $data["business"])?>.
+                                <?=__("This is a copy of your message")?>
                               </span>
                             </p>
                             <p style="margin: 0; font-size: 17px; padding-top: 10px; text-align: left;">
-                              <?=__(" Check it out")?>
-                              <a href="<?= $data["points_link"] ?>" rel="noopener" style="text-decoration:none;color:#00bfff;" target="_blank" title="<?=__("Accumulated points") ?>">
-                                <strong><?=__("here") ?></strong>.
-                              </a>
+
                             </p>
                           </div>
                         </div>
