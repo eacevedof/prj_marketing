@@ -24,4 +24,10 @@ final class UrlDomainHelper extends AppHelper implements IHelper
             default => "https://$this->domain",
         };
     }
+
+    public function get_full_with_extra(string $append): string
+    {
+        $url = $this->get_full_url();
+        return "$url/$append";
+    }
 }
