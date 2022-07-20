@@ -19,10 +19,9 @@ final class UrlDomainHelper extends AppHelper implements IHelper
 
     public function get_full_url(): string
     {
-        switch ($this->env) {
-            case "local": return "http://$this->domain";
-            default:
-                return "https://$this->domain";
-        }
+        return match ($this->env) {
+            "local" => "http://$this->domain",
+            default => "https://$this->domain",
+        };
     }
 }
