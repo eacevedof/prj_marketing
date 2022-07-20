@@ -117,7 +117,22 @@ php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 ```shell
 config .env a partir de .env.prod
 # el error de dominio viene pq los ficheros .json no son los del env
+# actualizar con datos de pro
+modificado:     backend_web/.env
 
+# eliminar
+backend_web/config/contexts.local.json
+backend_web/config/encdecrypt.local.json
+backend_web/config/login.local.json
+
+# crear estos
+backend_web/config/contexts.json
+backend_web/config/encdecrypt.json
+backend_web/config/login.json
+
+#enlaces simbolicos
+backend_web/console/php.ini 
+backend_web/public/php.ini
 
 # fichero $HOME/.msmtprc
 defaults
