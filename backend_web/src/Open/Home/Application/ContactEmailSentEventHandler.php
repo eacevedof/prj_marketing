@@ -31,8 +31,8 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
             "name" => $domevent->name(),
             "subject" => htmlentities($domevent->subject()),
             "message" => htmlentities($domevent->message()),
-            "urlfb" => "xxx",
-            "urltwitter" => "yyy",
+            "urlfb" => "",
+            "urltwitter" => "",
             "urlig" => "",
             "urltiktok" => "",
         ];
