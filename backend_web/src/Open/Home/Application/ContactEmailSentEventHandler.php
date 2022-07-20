@@ -29,6 +29,7 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
             "businessurl" => $urldomain->get_full_url(),
             "businesslogo" => $urldomain->get_full_url("themes/mypromos/images/provider-xxx-logo-orange.svg"),
             "name" => $domevent->name(),
+            "subject" => $domevent->subject(),
             "message" => $domevent->message(),
             "urlfb" => "",
             "urltwitter" => "",
@@ -45,7 +46,7 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
             ->set_from(getenv("APP_EMAIL_FROM1"))
             //->add_to($domevent->email())
             ->add_to("eacevedof@gmail.com")
-            ->set_subject(__("{0} this is a copy of your message", $domevent->name()))
+            ->set_subject(__("{0} this is a copy of your message ", $domevent->name()))
             ->set_content($html)
             ->send()
         ;
