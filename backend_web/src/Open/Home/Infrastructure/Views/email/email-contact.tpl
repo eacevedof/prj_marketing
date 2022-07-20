@@ -111,9 +111,12 @@ p {
                     <tr>
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
                         <div align="center" style="line-height:10px">
-                          <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
+                          <a href="<?=$data["businessurl"]?>">
+                            <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
+                          </a>
                         </div>
                       </td>
+
                     </tr>
                   </table>
                 </td>
@@ -147,6 +150,9 @@ p {
                             <p style="margin: 0; font-size: 38px; text-align: left;">
                               <span style="font-size:30px;"><strong><?=__("Hello {0}!!", $hello) ?></strong></span>
                             </p>
+                            <p>
+                              <?=$data["message"]?>
+                            </p>
                           </div>
                         </div>
                       </td>
@@ -158,13 +164,10 @@ p {
                       <td>
                         <div style="font-family: Tahoma, Verdana, sans-serif">
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0; font-size: 17px; text-align: left;">
-                              <span style="font-size:17px;">
-                                <?=__("This is a copy of your message")?>
+                            <p style="margin: 0; font-size: 15px; text-align: left;">
+                              <span style="font-size:15px;">
+                                <?=__("We will get in touch ASAP")?>
                               </span>
-                            </p>
-                            <p style="margin: 0; font-size: 17px; padding-top: 10px; text-align: left;">
-
                             </p>
                           </div>
                         </div>
