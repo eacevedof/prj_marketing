@@ -201,6 +201,57 @@ p {
         </tr>
         </tbody>
       </table>
+      <!-- disclaimer -->
+      <table appx="t16new" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table appx="t17" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+              <tbody>
+              <tr>
+                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+                  <table appx="t18" border="0" cellpadding="0" cellspacing="0" class="social_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td style="text-align:center;padding-right:0px;padding-left:0px;">
+                        <!-- social links -->
+                        <table appx="t19" align="center" border="0" cellpadding="0" cellspacing="0" class="social-table"
+                               role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                               width="500px">
+                          <tr>
+                            <td>
+                              <p style="margin: 0; font-size: 13px; text-align: center; color: #EE335E">
+                                <?=__("If you have received this email by mistake, please delete it. Thanks in advance.")?>
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table appx="t20" border="0" cellpadding="10" cellspacing="0" class="divider_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td style="padding:0; padding-top:10px;">
+                        <div align="center">
+                          <table appx="t21" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                            <tr>
+                              <td class="divider_inner" style="padding:0; font-size: 1px; line-height: 1px; border-top: 2px dotted #D4D3D3;">
+                                <span> </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
       <!-- social and hr -->
       <table appx="t16" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
