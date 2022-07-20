@@ -385,19 +385,8 @@ p {
                           <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 10px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
                             <p style="margin: 0; font-size: 10px; text-align: center;">
                               <span style="color:#C0C0C0;">
-                                <?php
-                                $terms = trim($data["promoterms"]);
-                                $terms = explode("-", $terms);
-                                $string = [];
-                                foreach ($terms as $term){
-                                  $term = trim($term);
-                                  if ($term) $string[] = $term;
-                                }
-                                echo implode("<br />", $string);
-                                ?>
-                                <br/>
                                 <a href="<?=$data["terms_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  <?= __("Check the rest of terms and conditions")?>
+                                  <?= __("Check terms and conditions")?>
                                 </a>
                               </span>
                             </p>

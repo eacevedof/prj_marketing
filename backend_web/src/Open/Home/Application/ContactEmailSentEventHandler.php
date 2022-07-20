@@ -21,7 +21,7 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
     {
         if(get_class($domevent)!==ContactEmailSentEvent::class) return $this;
 
-        $pathtpl = "path-to-tpl-of-contact";
+        $pathtpl = realpath(__DIR__."/../Infrastructure/Views/email/email-contact.tpl");
         if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
@@ -34,8 +34,8 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
          */
         $email = CF::get(FuncEmailComponent::class);
         $email
-            ->set_from("elchalanaua@gmail.com")
-            //->add_to($data["email"])
+            ->set_from(getenv("APP_EMAIL_FROM1"))
+            //->add_to($domevent->email())
             ->add_to("eacevedof@gmail.com")
             ->set_subject(__("Subscription to “{0}“", $data["promotion"]))
             ->set_content($html)

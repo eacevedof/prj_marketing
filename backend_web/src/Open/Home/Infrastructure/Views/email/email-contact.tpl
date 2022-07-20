@@ -152,113 +152,22 @@ p {
                       </td>
                     </tr>
                   </table>
-                  <table appx="t8" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                  <table appx="t10" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word; padding-bottom:25px;" width="100%">
                     <tr>
                       <td>
                         <div style="font-family: Tahoma, Verdana, sans-serif">
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 17px; text-align: left;">
                               <span style="font-size:17px;">
-                                <?=__("You have subscribed to promotion: <strong>&ldquo;{0}&rdquo;</strong> published by", $data["promotion"])?>
-                                <span style="color:#ffffff;">
-                                  <strong><a href="<?=$data["businessurl"]?>" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="<?=$data["business"]?>"><?=$data["business"]?></a></strong>
-                                </span>.
+                                <?=__("Your accumulated points at <strong>{0}</strong> have been updated", $data["business"])?>.
                               </span>
                             </p>
-                            <p style="margin: 0; font-size: 17px; text-align: left;"><span style="font-size:17px;"> </span></p>
-                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;"><?=__("Thank you for your active participating") ?>. </span></p>
-                            <p style="margin: 0; font-size: 17px; mso-line-height-alt: 14.399999999999999px;"> </p>
-                            <p style="margin: 0; font-size: 17px;"><span style="font-size:17px;"><?=__("Please, click on confirm button to finish your subscription")?>.</span></p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t9" border="0" cellpadding="10" cellspacing="0" class="button_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                    <tr>
-                      <td>
-                        <div align="center">
-                          <!--[if mso]>
-                          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="<?=$data["confirm_link"]?>" style="height:42px;width:179px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#00bfff"><w:anchorlock/><v:textbox inset="5px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px">
-                          <![endif]-->
-                          <a href="<?=$data["confirm_link"]?>" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#00bfff;border-radius:4px;width:auto;border-top:1px solid #00bfff;font-weight:400;border-right:1px solid #00bfff;border-bottom:1px solid #00bfff;border-left:1px solid #00bfff;padding-top:5px;padding-bottom:5px;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
-                            <span style="padding-left:55px;padding-right:50px;font-size:16px;display:inline-block;letter-spacing:normal;">
-                              <span style="font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><?=__("CONFIRM")?></span>
-                            </span>
-                          </a>
-                          <!--[if mso]>
-                          </center></v:textbox></v:roundrect>
-                          <![endif]-->
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t10" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0; font-size: 17px;">
-                              <span style="font-size:14px;"><?=__("Remember to use this email in all of your future subscriptions in order to accumulate points") ?>. </span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t11" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: Arial, sans-serif">
-                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-                            <p style="margin: 0;">
-                              <span style="color:#00bfff;"><?=__("Promotion code: <strong>{0}</strong>", $data["promocode"])?></span>
-                            </p>
-                            <p style="margin: 0;">
-                              <span style="color:#00bfff;"><?=__("Subscription code: <strong>{0}</strong>", $data["subscode"])?></span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t12" border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                    <tr>
-                      <td style="width:100%;padding-right:0px;padding-left:0px;">
-                        <div align="center" style="line-height:10px">
-                          <a href="vr" style="outline:none" tabindex="-1" target="_blank">
-                            <img alt="<?=$data["promotion"]?>" class="big" src="<?=$data["promoimage"]?>"
-                                 style="display: block; height: auto; border: 0; width: 800px; max-width: 100%;" title="<?=$data["promotion"]?>" width="800" />
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <table appx="t13" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tbody>
-        <tr>
-          <td>
-            <table appx="t14" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
-              <tbody>
-              <tr>
-                <td appx="t14b" class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                  <table appx="t15" border="0" cellpadding="0" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td style="padding-bottom:15px;padding-left:15px;padding-right:15px;padding-top:25px;">
-                        <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 12px; text-align: center;">
-                              <span style="color:#444444;">
-                                *<?=__("Promotion ends at {0} UTC", $data["promodateto"])?><br/>
-                              </span>
+                            <p style="margin: 0; font-size: 17px; padding-top: 10px; text-align: left;">
+                              <?=__(" Check it out")?>
+                              <a href="<?= $data["points_link"] ?>" rel="noopener" style="text-decoration:none;color:#00bfff;" target="_blank" title="<?=__("Accumulated points") ?>">
+                                <strong><?=__("here") ?></strong>.
+                              </a>
                             </p>
                           </div>
                         </div>
@@ -290,39 +199,39 @@ p {
                           <tr>
                             <?php
                             if ($url = $data["urlfb"]):
-                            ?>
-                            <td style="padding:0 15px 0 0px;">
-                              <a href="<?=$url?>" target="_blank">
-                                <img alt="Facebook" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
-                              </a>
-                            </td>
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Facebook" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32" />
+                                </a>
+                              </td>
                             <?php
                             endif;
                             if ($url = $data["urltwitter"]):
-                            ?>
-                            <td style="padding:0 15px 0 0px;">
-                              <a href="<?=$url?>" target="_blank">
-                                <img alt="Twitter" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/twitter@2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
-                              </a>
-                            </td>
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Twitter" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/twitter@2x.png" style="display: block; height: auto; border: 0;" title="Twitter" width="32" />
+                                </a>
+                              </td>
                             <?php
                             endif;
                             if ($url = $data["urlig"]):
-                            ?>
-                            <td style="padding:0 15px 0 0px;">
-                              <a href="<?=$url?>" target="_blank">
-                                <img alt="Instagram" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" style="display: block; height: auto; border: 0;" title="Google+" width="32" />
-                              </a>
-                            </td>
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Instagram" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" style="display: block; height: auto; border: 0;" title="Instagram+" width="32" />
+                                </a>
+                              </td>
                             <?php
                             endif;
                             if ($url = $data["urltiktok"]):
-                            ?>
-                            <td style="padding:0 15px 0 0px;">
-                              <a href="<?=$url?>" target="_blank">
-                                <img alt="Tik Tok" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/tiktok@2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32" />
-                              </a>
-                            </td>
+                              ?>
+                              <td style="padding:0 15px 0 0px;">
+                                <a href="<?=$url?>" target="_blank">
+                                  <img alt="Tik Tok" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/tiktok@2x.png" style="display: block; height: auto; border: 0;" title="Tiktok" width="32" />
+                                </a>
+                              </td>
                             <?php
                             endif;
                             ?>
@@ -342,56 +251,6 @@ p {
                               </td>
                             </tr>
                           </table>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <table appx="t22" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tbody>
-        <tr>
-          <td>
-            <table appx="t23" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
-              <tbody>
-              <tr>
-                <td appx="t24" class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                  <table appx="t25" border="0" cellpadding="3" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 10px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 10px; text-align: center;">
-                              <span style="color:#C0C0C0;">
-                                <a href="<?=$data["terms_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank">
-                                  <?= __("Check terms and conditions")?>
-                                </a>
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  <table appx="t26" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                    <tr>
-                      <td>
-                        <div style="font-family: sans-serif">
-                          <div class="txtTinyMce-wrapper" style="color: #C0C0C0; font-size: 12px; mso-line-height-alt: 14.399999999999999px; line-height: 1.2; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
-                            <p style="margin: 0; font-size: 12px; text-align: center;">
-                              <span style="color:#C0C0C0;">
-                                <?= __("Changed your mind? You can")?>
-                                <a href="<?=$data["unsubscribe_link"]?>" rel="noopener" style="text-decoration: underline; color: #C0C0C0;" target="_blank"><?= __("unsubscribe")?></a>
-                                 <?= __("at any time")?>.
-                              </span>
-                            </p>
-                          </div>
                         </div>
                       </td>
                     </tr>
@@ -427,8 +286,7 @@ p {
                                 <tr>
                                   <td style="vertical-align: middle; text-align: center; padding-top: 0px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;">
                                     <span style="font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 10px; color: #9d9d9d; vertical-align: middle; letter-spacing: normal; text-align: center;">
-                                      <?=__("Designed by")?>
-                                    </span>
+                                      Designed by                                    </span>
                                     <a href="https://eduardoaf.com" style="text-decoration: none;" target="_blank">
                                       <img align="center"
                                            alt="Empowered by Eduardo A. F." class="icon" height="32" src="https://resources.theframework.es/eduardoaf.com/20200906/095050-logo-eduardoafcom_500.png"
