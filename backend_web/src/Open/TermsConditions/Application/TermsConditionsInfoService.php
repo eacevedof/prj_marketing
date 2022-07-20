@@ -130,35 +130,39 @@ final class TermsConditionsInfoService extends AppService
         return explode("\n", $subconds);;
     }
 
-    private function _promotion_terms(string $promotion, string $conditions): array
+    private function _promotion_terms(array $promotion): array
     {
         //todo hay que agregar las fechas limites
         // hasta agotar existencias
         // rifable o acumulativa (tratarlo en en el contador)
-        $lines = trim($conditions);
+        $lines = trim($promotion["content"]);
         if (!$lines) return [
-            ["h2" => "- ".__("Promotion Terms: {0}", $promotion)],
-            ["p" => __("None")],
+            ["h2" => "- ".__("Promotion Terms: {0}", $promotion["descripton"])],
+            ["p" => __("This promotion expires at: {0} UTC", $promotion["date_to"])],
         ];
-        $lines = $this->_get_conditions_by_language($conditions);
+        $lines = $this->_get_conditions_by_language($promotion["content"]);
 
-        $conds[0] = ["h2" => "- ".__("Promotion Terms: {0}", $promotion)];
+        $conds[0] = ["h2" => "- ".__("Promotion Terms: {0}", $promotion["description"])];
         $conds[1] = ["ul"=>[]];
         foreach ($lines as $line) {
             $conds[1]["ul"][] = $line;
         }
+        $conds[1]["ul"][] = __("This promotion expires on: {0} UTC", $promotion["date_to"]);
         $conds[2] = ["h2" => "- ".__("General Terms")];
         return $conds;
     }
 
     public function get_by_promotion(): array
     {
-        $promo = RF::get(PromotionRepository::class)->get_by_slug($this->input);
-        if (!$promo)
+        $promotion = RF::get(PromotionRepository::class)->get_by_slug(
+            $this->input,
+            ["description","content","date_to", "is_raffleable", "is_cumulative"]
+        );
+        if (!$promotion)
             throw new NotFoundException(__("Promotion not found"));
 
         return array_merge(
-            $this->_promotion_terms($promo["description"], $promo["content"]),
+            $this->_promotion_terms($promotion),
             $this->_general_terms(),
         );
     }

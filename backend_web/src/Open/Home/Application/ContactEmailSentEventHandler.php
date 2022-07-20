@@ -17,27 +17,11 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
 {
     use LogTrait;
 
-    private string $domain;
-    private array $tpls;
-
-    public function __construct()
-    {
-        $this->domain = "https://".getenv("APP_DOMAIN");
-        if (strstr($this->domain, "localhost"))
-            $this->domain = str_replace("https://","http://", $this->domain);
-        
-        $this->tpls = [
-            "subscription" => realpath(__DIR__."/../Infrastructure/Views/email/email-subscription.tpl"),
-            "confirmation" => realpath(__DIR__."/../Infrastructure/Views/email/email-confirmation.tpl"),
-            "execution" => realpath(__DIR__."/../Infrastructure/Views/email/email-execution.tpl"),
-        ];
-    }
-    
     public function on_event(IEvent $domevent): IEventSubscriber
     {
-        if(get_class($domevent)!==ContactEmailSentEvent::class) return;
+        if(get_class($domevent)!==ContactEmailSentEvent::class) return $this;
 
-        $pathtpl = $this->tpls["execution"];
+        $pathtpl = "path-to-tpl-of-contact";
         if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
