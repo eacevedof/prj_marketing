@@ -100,24 +100,33 @@ p {
         <tbody>
         <tr>
           <td>
-            <!-- header con logo -->
+            <!-- header logotipo -->
             <table appx="t3" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
                    role="presentation"
-                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: top center; color: #000000; background-color: #000000; width: 800px;"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;
+                   background-position: top center;
+                   color: #303030; background-color: #303030; width: 800px;"
                    width="800">
               <tbody>
               <tr>
                 <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
                   <table appx="t4" border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
-                      <td style="width:100%;padding-right:0px;padding-left:0px;">
-                        <div align="center" style="line-height:10px">
+                      <!-- logo -->
+                      <td style="width:80%;padding-right:0px;padding-left:0px;">
+                        <div align="left" style="line-height:10px">
                           <a href="<?=$data["businessurl"]?>">
-                            <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
+                            <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>"
+                                 style="display: block; height: auto; border: 0; width: 160px; max-width: 100%; max-height: 82px" title="<?=$data["business"]?>"
+                                 width="160" />
                           </a>
                         </div>
                       </td>
-
+                      <td style="width:20%;padding-right:0px;padding-left:0px;">
+                        <p style="margin: 0; font-size: 20px; text-align: left; color:#FFF">
+                          <b><?=$data["business"]?></b>
+                        </p>
+                      </td>
                     </tr>
                   </table>
                 </td>
@@ -133,12 +142,12 @@ p {
         <tbody>
         <tr>
           <td>
-            <!-- wrapper del texto -->
+            <!-- text container -->
             <table appx="t6" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
                    role="presentation"
                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;
-                   background-position: top center; color: #303030; background-color: #EFF6F6FF; width: 800px;
-                   border: 1px dashed #DBDEE0FF;
+                   background-position: top center; color: #303030; background-color: #77d7f5; width: 800px;
+                   border: 1px dashed #E65C00;
                    "
                    width="800">
               <tbody>
@@ -152,15 +161,21 @@ p {
                       <td style="padding-bottom:5px;padding-left:10px;padding-right:10px;padding-top:5px;">
                         <div style="font-family: Tahoma, Verdana, sans-serif">
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #303030; line-height: 1.2;">
-                            <p style="margin: 0; font-size: 30px; text-align: center;">
-                              <span style="font-size:30px;"><strong><?=__("Hello {0}!!", $hello) ?></strong></span>
+                            <p style="margin: 0; margin-top: 10px; font-size: 30px; text-align: center;">
+                              <span style="font-size:30px;"><strong><?=__("Hello {0}!", $hello) ?></strong></span>
                             </p>
                             <br/><br/>
                             <p style="margin: 0; font-size: 17px; text-align: left;">
-                              <?= __("Thank you for contacting {0}", $data["business"]) ?>
+                              <?= __("Thank you for contacting {0}", $data["business"]) ?>.
                               <?= __("This is the content of your message.") ?>
                             </p>
                             <br/><br/>
+                            <p style="margin: 0; font-size: 15px; text-align: left;">
+                              <span style="font-size:15px;"><strong><?=__("Email") ?>:</strong></span>
+                              &nbsp;
+                              <span style="font-size:17px;"><?=$data["email"]?></span>
+                            </p>
+                            <br/>
                             <p style="margin: 0; font-size: 15px; text-align: left;">
                               <span style="font-size:15px;"><strong><?=__("Subject") ?>:</strong></span>
                             </p>
@@ -173,6 +188,12 @@ p {
                             </p>
                             <p style="margin: 0; margin-top: 5px; font-size: 17px; text-align: left;">
                               <?=$data["message"]?>
+                            </p>
+                            <br/>
+                            <p style="margin: 0; font-size: 14px; text-align: left;">
+                              <span style="font-size:14px;">
+                                <strong><?=__("From IP") ?>:</strong>&nbsp;<?=$_SERVER["REMOTE_ADDR"]?>
+                              </span>
                             </p>
                             <br/>
                           </div>
@@ -191,7 +212,7 @@ p {
                             </p>
                             <br/><br/>
                             <p style="margin: 0; font-size: 15px; padding-right: 150px; text-align: right;">
-                              <i><?=__("Best regards")?>.</i>
+                              <strong><i><?=__("Best regards")?>.</i></strong>
                             </p>
                           </div>
                         </div>
@@ -212,11 +233,17 @@ p {
         <tbody>
         <tr>
           <td>
-            <table appx="t17" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+            <table appx="t17" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
               <tbody>
               <tr>
-                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                  <table appx="t18" border="0" cellpadding="0" cellspacing="0" class="social_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                <td class="column column-1"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400;
+                    text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top:
+                    0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="100%">
+                  <table appx="t18" border="0" cellpadding="0" cellspacing="0" class="social_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #E65C00;" width="100%">
                     <tr>
                       <td style="text-align:center;padding-right:0px;padding-left:0px;">
                         <!-- text disclaimer -->
@@ -225,8 +252,8 @@ p {
                                width="500px">
                           <tr>
                             <td>
-                              <p style="margin: 0; font-size: 13px; text-align: center; color: #EE335E">
-                                <?=__("If you have received this email by mistake, please delete it. Thanks in advance.")?>
+                              <p style="margin: 0; padding: 7px 0 7px 0; font-size: 14px; text-align: center; color: #FFF;">
+                                <b><?=__("If you have received this email by mistake, please delete it. Thanks in advance.")?></b>
                               </p>
                             </td>
                           </tr>
@@ -258,6 +285,9 @@ p {
         </tbody>
       </table>
 
+      <?php
+      if (trim($data["urlfb"].$data["urltwitter"].$data["urlig"].$data["urltiktok"])):
+      ?>
       <!-- social and hr -->
       <table appx="t16" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
@@ -342,6 +372,9 @@ p {
         </tbody>
       </table>
 
+      <?php
+      endif;
+      ?>
       <!-- footer designed by -->
       <table appx="t27" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
