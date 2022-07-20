@@ -40,7 +40,7 @@ $this->_element("open/mypromos/elem-scrums");
       <img src="/themes/mypromos/images/icon-error.svg" class="icon">
       <h1><?php $this->_echo($h1); ?></h1>
       <?php
-      use App\Shared\Infrastructure\Helpers\DivTextsHelper;
+      use App\Shared\Infrastructure\Helpers\Views\DivTextsHelper;
       use App\Shared\Infrastructure\Factories\HelperFactory as HF;
       HF::get(DivTextsHelper::class)->print($error);
       ?>
