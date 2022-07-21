@@ -31,7 +31,15 @@ export class FormHomeContactSend extends LitElement {
         return {}
       },
     },
+
+    _issending: { type: Boolean},
+    _btnsend: { type: String},
+
     _success: {type: String},
+    _email: {type: String},
+    _name: {type: String},
+    _subject: {type: String},
+    _message: {type: String},
   }
 
   constructor() {
@@ -42,13 +50,14 @@ export class FormHomeContactSend extends LitElement {
 
   connectedCallback() {
     super.connectedCallback()
-    this._success = ""
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
-    this._email = "email@email.com"
-    this._name = "Snoopy"
-    this._subject = "This is some snoopy's info"
-    this._message = "I'm Snoopy and Charlie Brown wants to go to the party"
+
+    this._success = ""
+    this._email = ""
+    this._name = ""
+    this._subject = ""
+    this._message = ""
   }
 
   _handle_keyup(e, field) {
@@ -122,11 +131,11 @@ export class FormHomeContactSend extends LitElement {
         <!-- botones -->
         <div class="cell-btn">
           <button id="btn-submit" ?disabled=${this._issending} class="button">
-            ${this._btnsend}
+            <span>${this._btnsend}</span>&nbsp;
             ${
-                this._issending
-                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                  : html``
+                this._issending //|| true
+                  ? html`<img src="/assets/images/common/loading.png" />`
+                  : null
             }
           </button>
         </div>
@@ -213,6 +222,7 @@ export class FormHomeContactSend extends LitElement {
     e.preventDefault()
     this._issending = true
     this._btnsend = this.texts.tr01
+console.log(this._btnsend, "btn-send")
 
     const input = {
       wrapper: this.shadowRoot.querySelector("form"),

@@ -53,7 +53,7 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
             //->add_bcc(getenv("APP_EMAIL_TO"))
             ->set_subject(__("{0} this is a copy of your message ", $domevent->name()))
             ->set_content($html)
-            ->send()
+            //->send()
         ;
         return $this;
     }

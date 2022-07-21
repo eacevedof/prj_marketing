@@ -91,7 +91,7 @@ export const cssformcontact = css`
 .form-grid .cell-btn .button {
   text-decoration: none;
   color: var(--color-white);
-  padding: 10px 60px;
+  padding: 10px 40px 14px;
   border: 1px solid var(--color-clear-black);
   border-radius: 6px;
   font-weight: bold;
@@ -99,6 +99,28 @@ export const cssformcontact = css`
   background-color: var(--color-orange);
   transition: background-color .3s;
   margin-top: 1rem;
+}
+
+.form-grid .cell-btn .button span {
+  padding-bottom:5px;
+}
+
+.form-grid .cell-btn .button img {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  top: 4px;
+  right: -33px;
+  animation: rotation 1s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 
 .form-grid .button-exit {
