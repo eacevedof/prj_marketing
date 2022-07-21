@@ -134,7 +134,7 @@ export class FormHomeContactSend extends LitElement {
             <span>${this._btnsend}</span>&nbsp;
             ${
                 this._issending //|| true
-                  ? html`<img src="/assets/images/common/loading.png" />`
+                  ? html`<img src="/assets/images/common/loading-2.png" />`
                   : null
             }
           </button>
@@ -222,7 +222,6 @@ export class FormHomeContactSend extends LitElement {
     e.preventDefault()
     this._issending = true
     this._btnsend = this.texts.tr01
-console.log(this._btnsend, "btn-send")
 
     const input = {
       wrapper: this.shadowRoot.querySelector("form"),
