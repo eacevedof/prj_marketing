@@ -92,11 +92,13 @@ p {
 </head>
 
 <body style="background-color: #fff; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
-<table appx="t1" border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fff;" width="100%">
+<table appx="t1" border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation"
+       style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fff;" width="100%">
   <tbody>
   <tr>
     <td>
-      <table appx="t2" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+      <table appx="t2" align="center" border="0" cellpadding="0" cellspacing="0" class="row row-1" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tbody>
         <tr>
           <td>
@@ -109,11 +111,17 @@ p {
                    width="800">
               <tbody>
               <tr>
-                <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                  <table appx="t4" border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                <td class="column column-1"
+                    style="
+                    mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top;
+                    padding-top: 5px; padding-bottom: 5px; border: 1px solid #E65C00;
+                    border-bottom: 0px; width:100%"
+                    width="100%">
+                  <table appx="t4" border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; width:100%" width="100%">
                     <tr>
                       <!-- logotipo -->
-                      <td style="width:80%;padding-right:0px;padding-left:30px;">
+                      <td style="width:25%; padding-right:0px;padding-left:30px;">
                         <div align="left" style="line-height:10px">
                           <a href="<?=$data["businessurl"]?>">
                             <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>"
@@ -122,11 +130,13 @@ p {
                           </a>
                         </div>
                       </td>
-                      <td style="width:20%;padding-right:0px;padding-left:0px;">
-                        <p style="margin: 0; font-size: 20px; text-align: left; color:#FFF">
+                      <td style="width:40%;"></td>
+                      <td style="width:30%; padding-right:0px;padding-left:0px;">
+                        <p style="margin: 0; font-size: 20px; text-align: right; color:#FFF">
                           <b><?=$data["business"]?></b>
                         </p>
                       </td>
+                      <td style="width:5%;"></td>
                     </tr>
                   </table>
                 </td>
@@ -151,7 +161,9 @@ p {
                    border-right: 1px dashed #E65C00;
                    border-bottom: 1px solid #303030;
                    "
-                   width="800">
+                   width="800"
+                   color="#303030"
+            >
               <tbody>
               <tr>
                 <td class="column column-1"
@@ -162,13 +174,14 @@ p {
                     <tr>
                       <td style="padding-bottom:5px;padding-left:10px;padding-right:10px;padding-top:5px;">
                         <div style="font-family: Tahoma, Verdana, sans-serif">
-                          <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #303030; line-height: 1.2;">
+                          <div class="txtTinyMce-wrapper"
+                               style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #303030; line-height: 1.2;">
                             <p style="margin: 0; margin-top: 10px; font-size: 30px; text-align: center;">
                               <span style="font-size:30px;"><strong><?=__("Hello {0}!", $hello) ?></strong></span>
                             </p>
                             <br/><br/>
                             <p style="margin: 0; font-size: 17px; text-align: left;">
-                              <?= __("Thank you for contacting {0}", $data["business"]) ?>.
+                              <?= __("Thank you for contacting <a href=\"{$data["businessurl"]}\" style=\"color:white;\"><b>{0}</b></a>", $data["business"]) ?>.
                               <?= __("This is the content of your message.") ?>
                             </p>
                             <br/><br/>
@@ -295,7 +308,8 @@ p {
         <tbody>
         <tr>
           <td>
-            <table appx="t17" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+            <table appx="t17" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
               <tbody>
               <tr>
                 <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
@@ -382,7 +396,8 @@ p {
         <tbody>
         <tr>
           <td>
-            <table appx="t28" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
+            <table appx="t28" align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 800px;" width="800">
               <tbody>
               <tr>
                 <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
