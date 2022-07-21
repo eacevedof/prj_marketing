@@ -126,7 +126,7 @@
   font-size: 1.3rem;
   letter-spacing: 1px;
   font-weight: bold;
-  background-color: var(--color-clear-orange);
+  background-color: var(--color-clear-green);
   transition: background-color .3s;
   display: block;
   margin: auto;
