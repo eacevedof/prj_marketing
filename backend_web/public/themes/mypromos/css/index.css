@@ -175,8 +175,8 @@
 dialog::backdrop {
   background: var(--color-black);
   opacity: 0.95;
-  -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity= 95); /* // for IE8 */
-  filter: alpha(opacity= 95); /* //for IE5-7 */
+  -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity= 95); /* for IE8 */
+  filter: alpha(opacity= 95); /* for IE5-7 */
 }
 
 @media (max-width: 645px) {
