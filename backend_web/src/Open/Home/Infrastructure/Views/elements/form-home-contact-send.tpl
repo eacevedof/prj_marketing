@@ -11,10 +11,10 @@ $texts = [
     "tr04" => __("Please check form errors"),
 
     "tr10" => __("Empty value is not allowed"),
-    "tr11" => __("Invalid format. Eg: xxx@domain.com"),
-    "tr12" => __("Invalid format. Eg: John Santino"),
-    "tr13" => __("Invalid format. Eg: I'm interested in using your solution"),
-    "tr14" => __("Invalid format. Eg: I have a restaurant in Mexico DF and this is my phone: 123456 please contact me ASAP"),
+    "tr11" => __("Invalid format. Eg: {0}", "xxx@domain.yyy"),
+    "tr12" => __("Invalid format. Eg: {0}", "John Santino"),
+    "tr13" => __("Invalid format. Eg: {0}", __("I'm interested in using your solution")),
+    "tr14" => __("Invalid format. Eg: {0}", __("I have a restaurant in Mexico DF and this is my phone: 123456 please contact me ASAP")),
 
     "email" => __("Email"),
     "name" => __("Name"),
