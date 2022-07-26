@@ -354,6 +354,9 @@ msgstr "Notas"
 msgid "External code"
 msgstr "Código externo"
 
+msgid "Promotion"
+msgstr "Promoción"
+
 msgid "Promotion info"
 msgstr "Info de promoción"
 

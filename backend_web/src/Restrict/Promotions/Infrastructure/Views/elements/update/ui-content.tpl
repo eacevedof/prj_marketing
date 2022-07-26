@@ -21,7 +21,7 @@ $texts = [
     "f02" => __("Owner"),
     "f03" => __("External code"),
     "f04" => __("Description"),
-    "f05" => __("tr_id_promotion"),
+    "f05" => __("Promotion"),
 
     "f06" => __("Email"),
     //"f07" => __("tr_pos_email"),

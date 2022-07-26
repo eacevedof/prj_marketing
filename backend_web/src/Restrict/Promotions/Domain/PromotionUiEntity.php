@@ -62,7 +62,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "id_promotion" => [
-            "label" => __("tr_id_promotion"),
+            "label" => __("Promotion"),
             EntityType::REQUEST_KEY => "id_promotion",
             "config" => [
                 "type" => EntityType::INT,
