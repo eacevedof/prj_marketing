@@ -64,7 +64,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->set_from(getenv("APP_EMAIL_FROM1"))
             //->add_to($data["email"])
             ->add_to("eacevedof@gmail.com")
-            ->set_subject(__("Subscription to \"{0}\"", $data["promotion"]))
+            ->set_subject(__("Subscription to “{0}“", $data["promotion"]))
             ->set_content($html)
             ->send()
         ;
@@ -99,7 +99,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->set_from(getenv("APP_EMAIL_FROM1"))
             //->add_to($data["email"])
             ->add_to("eacevedof@gmail.com")
-            ->set_subject(__("Subscription to \"{0}\"", $data["promotion"]))
+            ->set_subject(__("Subscription to “{0}“", $data["promotion"]))
             ->set_content($html)
             ->send()
         ;
@@ -125,7 +125,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->set_from(getenv("APP_EMAIL_FROM1"))
             //->add_to($data["email"])
             ->add_to("eacevedof@gmail.com")
-            ->set_subject(__("Subscription to \"{0}\"", $data["promotion"]))
+            ->set_subject(__("Subscription to “{0}“", $data["promotion"]))
             ->set_content($html)
             ->send()
         ;
