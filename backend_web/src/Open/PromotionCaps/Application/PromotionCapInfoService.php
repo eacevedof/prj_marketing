@@ -60,7 +60,7 @@ final class PromotionCapInfoService extends AppService  implements IEventDispatc
         $businessslug = $this->input["businessslug"];
         $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
         if (!$this->businesssdata)
-            $this->_promocap_exception(__("Business account {$businessslug} not found!"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("Business account {0} not found!", $businessslug), ExceptionType::CODE_NOT_FOUND);
     }
 
     private function _dispatch(): void

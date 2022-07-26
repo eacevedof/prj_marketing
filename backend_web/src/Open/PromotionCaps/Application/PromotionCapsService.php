@@ -38,7 +38,7 @@ final class PromotionCapsService extends AppService
         $businessslug = $this->input["businessslug"];
         $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
         if (!$this->businesssdata)
-            $this->_exception(__("Business account {$businessslug} not found!"), ExceptionType::CODE_NOT_FOUND);
+            $this->_exception(__("Business account {0} not found!", $businessslug), ExceptionType::CODE_NOT_FOUND);
     }
 
     private function _load_promotion(): void
