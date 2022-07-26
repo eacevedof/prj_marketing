@@ -64,7 +64,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "id_promouser" => [
-            "label" => __("tr_id_promouser"),
+            "label" => __("Subscriber"),
             EntityType::REQUEST_KEY => "id_promouser",
             "config" => [
                 "type" => EntityType::INT,
@@ -73,7 +73,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "date_subscription" => [
-            "label" => __("tr_date_subscription"),
+            "label" => __("Subscription date"),
             EntityType::REQUEST_KEY => "date_subscription",
             "config" => [
                 "type" => EntityType::DATETIME,
@@ -82,7 +82,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "date_confirm" => [
-            "label" => __("tr_date_confirm"),
+            "label" => __("Confirm date"),
             EntityType::REQUEST_KEY => "date_confirm",
             "config" => [
                 "type" => EntityType::DATETIME,
@@ -91,7 +91,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "date_execution" => [
-            "label" => __("tr_date_execution"),
+            "label" => __("Execution date"),
             EntityType::REQUEST_KEY => "date_execution",
             "config" => [
                 "type" => EntityType::DATETIME,
@@ -100,7 +100,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "code_execution" => [
-            "label" => __("tr_code_execution"),
+            "label" => __("Voucher code"),
             EntityType::REQUEST_KEY => "code_execution",
             "config" => [
                 "type" => EntityType::STRING,
@@ -109,7 +109,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "exec_user" => [
-            "label" => __("tr_exec_user"),
+            "label" => __("Validation user"),
             EntityType::REQUEST_KEY => "exec_user",
             "config" => [
                 "type" => EntityType::INT,
@@ -118,7 +118,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "subs_status" => [
-            "label" => __("tr_subs_status"),
+            "label" => __("Status"),
             EntityType::REQUEST_KEY => "subs_status",
             "config" => [
                 "type" => EntityType::INT,
@@ -127,7 +127,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "remote_ip" => [
-            "label" => __("tr_remote_ip"),
+            "label" => __("Remote IP"),
             EntityType::REQUEST_KEY => "remote_ip",
             "config" => [
                 "type" => EntityType::STRING,
@@ -136,7 +136,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "notes" => [
-            "label" => __("tr_notes"),
+            "label" => __("Notes"),
             EntityType::REQUEST_KEY => "notes",
             "config" => [
                 "type" => EntityType::STRING,

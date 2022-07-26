@@ -31,7 +31,7 @@ final class PromotionCapCancelController extends OpenController
             ]);
             $result = $insert();
             $this->set_layout("open/mypromos/success")
-                ->add_var(PageType::TITLE, $title = __("Subscription cancellation success!"))
+                ->add_var(PageType::TITLE, $title = __("Subscription cancellation successfully done!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("success",  [
                     ["p" => __("<b>{0}</b>. You have successfully cancelled your subscription to <b>“{1}&rdquo;</b>", $result["username"], $result["promotion"])],
