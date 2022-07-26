@@ -26,7 +26,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "uuid" => [
-            "label" => __("tr_uuid"),
+            "label" => __("Code"),
             EntityType::REQUEST_KEY => "uuid",
             "config" => [
                 "type" => EntityType::STRING,
@@ -35,7 +35,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "id_owner" => [
-            "label" => __("tr_id_owner"),
+            "label" => __("Owner"),
             EntityType::REQUEST_KEY => "id_owner",
             "config" => [
                 "type" => EntityType::INT,

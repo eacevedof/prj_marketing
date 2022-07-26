@@ -17,8 +17,8 @@ $texts = [
     "tr07" => __("Position"),
 
     "f00" => __("Nº"),
-    "f01" => __("tr_uuid"),
-    "f02" => __("tr_id_owner"),
+    "f01" => __("Code"),
+    "f02" => __("Owner"),
     "f03" => __("tr_code_erp"),
     "f04" => __("tr_description"),
     "f05" => __("tr_id_promotion"),

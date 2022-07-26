@@ -26,7 +26,7 @@ final class QueryEntity extends AppEntity
             ],
 
             "uuid" => [
-                "label" => __("tr_uuid"),
+                "label" => __("Code"),
                 EntityType::REQUEST_KEY => "uuid",
                 "config" => [
                     "type" => EntityType::STRING,
