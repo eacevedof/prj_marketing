@@ -159,7 +159,7 @@ p {
                           <div class="txtTinyMce-wrapper" style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
                             <p style="margin: 0; font-size: 17px; text-align: left;">
                               <span style="font-size:17px;">
-                                <?=__("You have <strong>confirmed</strong> to promotion: <strong>“{0}&rdquo;</strong> published by", $data["promotion"])?>
+                                <?=__("You have <strong>confirmed</strong> to promotion: <strong>“{0}“</strong> published by", $data["promotion"])?>
                                 <span style="color:#ffffff;">
                                   <strong><a href="<?=$data["businessurl"]?>" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="<?=$data["business"]?>"><?=$data["business"]?></a></strong>
                                 </span>.

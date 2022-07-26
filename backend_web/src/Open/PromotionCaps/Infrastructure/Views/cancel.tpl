@@ -13,6 +13,6 @@ if (isset($error))
 ?>
   <h1><?=$business = $result["business"];?></h1>
   <p>
-    <?=__("<b>{0}</b> you have cancelled your subscription to <b>“{1}&rdquo;</b>", $result["username"], $result["promotion"])?>
+    <?=__("<b>{0}</b> you have cancelled your subscription to <b>“{1}“</b>", $result["username"], $result["promotion"])?>
   </p>
 </main>
