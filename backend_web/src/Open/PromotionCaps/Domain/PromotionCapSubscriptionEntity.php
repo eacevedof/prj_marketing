@@ -37,7 +37,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "code_erp" => [
-            "label" => __("tr_code_erp"),
+            "label" => __("External code"),
             EntityType::REQUEST_KEY => "code_erp",
             "config" => [
                 "type" => EntityType::STRING,
@@ -46,7 +46,7 @@ final class PromotionCapSubscriptionEntity extends AppEntity
         ],
        
         "description" => [
-            "label" => __("tr_description"),
+            "label" => __("Description"),
             EntityType::REQUEST_KEY => "description",
             "config" => [
                 "type" => EntityType::STRING,

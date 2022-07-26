@@ -35,7 +35,7 @@ final class QueryEntity extends AppEntity
             ],
 
             "description" => [
-                "label" => __("tr_description"),
+                "label" => __("Description"),
                 EntityType::REQUEST_KEY => "description",
                 "config" => [
                     "type" => EntityType::STRING,
