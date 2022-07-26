@@ -41,7 +41,7 @@ final class ContactSendService extends AppService implements IEventDispatcher
                     return __("{0} must be greater than {1} and lighter than {2}", __("Name"), 5, 25);
 
                 if (!CheckerService::name_format($value))
-                    return __("Invalid name format");
+                    return __("Invalid {0} format", __("Name"));
             })
             ->add_rule("email", "email", function ($data) {
                 $value = $data["value"];
@@ -52,7 +52,7 @@ final class ContactSendService extends AppService implements IEventDispatcher
                 if (strlen($value)<5 || strlen($value)>35)
                     return __("{0} must be greater than {1} and lighter than {2}", __("Email"), 5, 35);
                 if (!CheckerService::is_valid_email($value))
-                    return __("Invalid email format");
+                    return __("Invalid {0} format", __("Email"));
             })
             ->add_rule("subject", "subject", function ($data) {
                 $value = $data["value"];
