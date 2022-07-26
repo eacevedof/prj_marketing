@@ -17,7 +17,7 @@ final class QueryActionsEntity extends AppEntity
     {
         $this->fields = [
             "id" => [
-                "label" => __("tr_id"),
+                "label" => __("Nº"),
                 EntityType::REQUEST_KEY => "id",
                 "config" => [
                     "type" => EntityType::INT,
