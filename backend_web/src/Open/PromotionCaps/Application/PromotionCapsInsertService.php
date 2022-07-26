@@ -112,7 +112,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$data["value"]) return __("Empty value is not allowed");
                     if (!CheckerService::is_valid_email($data["value"]))
-                        return __("Wrong email format");
+                        return __("Invalid {0} format", __("Email"));
                 })
                 ->add_rule($field, "exist", function ($data) {
                     $idpromotion = $this->promotion["id"];
@@ -128,7 +128,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                         return __("Empty value is not allowed");
 
                     if (!CheckerService::name_format($name1))
-                        return __("Wrong first name format. Only letters allowed.");
+                        return __("Invalid {0} format. Only letters allowed.", __("First name"));
                 });
             }
 
@@ -138,7 +138,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                         return __("Empty value is not allowed");
 
                     if (!CheckerService::name_format($name2))
-                        return __("Wrong last name format. Only letters allowed.");
+                        return __("Invalid {0} format. Only letters allowed.", __("Last name"));
                 });
             }
 
@@ -148,7 +148,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                         return __("Empty value is not allowed");
 
                     if (!CheckerService::phone_format($phone1))
-                        return __("Wrong mobile format. Use only numbers and white space please");
+                        return __("Invalid {0} format. Use only numbers and white space please", __("Mobile"));
                 });
             }
 
@@ -158,7 +158,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                         return __("Empty value is not allowed");
 
                     if (!CheckerService::address_format($address))
-                        return __("Wrong address format. Only letters allowed");
+                        return __("Invalid {0} format. Only letters allowed", __("Address"));
                 });
             }
 
@@ -168,7 +168,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                         return __("Empty value is not allowed");
 
                     if (!CheckerService::is_valid_date($birthdate))
-                        return __("Wrong birthdate value");
+                        return __("Invalid {0} value", __("Birthdate"));
                 });
             }
 
@@ -205,14 +205,14 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_IS_MAILING) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!CheckerService::is_boolean($data["value"]))
-                        return __("Wrong mailing format. Only 0 or 1 allowed");
+                        return __("Invalid {0} format. Only 0 or 1 allowed", __("Mailing"));
                 });
             }
 
             if ($field === PromotionCapUserType::INPUT_IS_TERMS) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!CheckerService::is_boolean($isterms = $data["value"]))
-                        return __("Wrong mailing format. Only 0 or 1 allowed");
+                        return __("Invalid {0} format. Only 0 or 1 allowed", __("Terms"));
                     if (!$isterms)
                         return __("In order to finish your subscription you have to read and accept terms and conditions");
                 });

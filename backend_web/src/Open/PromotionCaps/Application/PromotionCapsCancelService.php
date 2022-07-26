@@ -62,14 +62,14 @@ final class PromotionCapsCancelService extends AppService implements IEventDispa
         );
 
         if (!$promosubscription || $promosubscription["delete_date"])
-            $this->_promocap_exception(__("No subscription found"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("Subscription not found"), ExceptionType::CODE_NOT_FOUND);
 
         if (in_array($promosubscription["subs_status"], [PromotionCapActionType::CANCELLED]))
             $this->_promocap_exception(__("Subscription not found"), ExceptionType::CODE_NOT_FOUND);
 
         $this->subscriptiondata = $this->repopromocapuser->get_subscription_data($promosubscription["id_promouser"]);
         if (!$this->subscriptiondata)
-            $this->_promocap_exception(__("No subscription data found"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("Subscription data not found"), ExceptionType::CODE_NOT_FOUND);
 
         if ($this->subscriptiondata["promocode"]!==$this->promotion["uuid"])
             $this->_promocap_exception(__("Promotion code does not match for this subscription"), ExceptionType::CODE_BAD_REQUEST);
