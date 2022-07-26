@@ -181,7 +181,7 @@ p {
                             </p>
                             <br/><br/>
                             <p style="margin: 0; font-size: 17px; text-align: left;">
-                              <?= __("Thank you for contacting <a href=\"{$data["businessurl"]}\" style=\"color:white;\"><b>{0}</b></a>", $data["business"]) ?>.
+                              <?= __("Thank you for contacting <a href=\"{0}\" style=\"color:white;\"><b>{1}</b></a>", $data["businessurl"], $data["business"]) ?>.
                               <?= __("This is the content of your message.") ?>
                             </p>
                             <br/><br/>
