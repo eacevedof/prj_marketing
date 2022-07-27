@@ -147,7 +147,7 @@ final class TermsConditionsInfoService extends AppService
         foreach ($lines as $line) {
             $conds[1]["ul"][] = $line;
         }
-        $conds[1]["ul"][] = __("This promotion expires on: {0} UTC", $promotion["date_to"]);
+        $conds[1]["ul"][] = __("This promotion expires at: {0} UTC", $promotion["date_to"]);
         $conds[2] = ["h2" => "- ".__("General Terms")];
         return $conds;
     }

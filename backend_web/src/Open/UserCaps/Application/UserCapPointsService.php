@@ -45,7 +45,7 @@ final class UserCapPointsService extends AppService
         $businessuuid = $this->input["businessuuid"];
         $this->businesssdata = $this->repobusinessdata->get_by_uuid($businessuuid, ["id", "id_user", "business_name"]);
         if (!$this->businesssdata)
-            $this->_promocap_exception(__("Business account {$businessuuid} not found!"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("Business account {0} not found!", $businessuuid), ExceptionType::CODE_NOT_FOUND);
     }
 
     private function _load_promocapuser(): void
