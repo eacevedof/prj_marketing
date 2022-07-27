@@ -164,7 +164,7 @@ p {
                               </span>
                             </p>
                             <p style="margin: 0; font-size: 17px; padding-top: 10px; text-align: left;">
-                              <?=__(" Check it out")?>
+                              <?=__("Check it out")?>
                               <a href="<?= $data["points_link"] ?>" rel="noopener" style="text-decoration:none;color:#00bfff;" target="_blank" title="<?=__("Accumulated points") ?>">
                                 <strong><?=__("here") ?></strong>.
                               </a>
