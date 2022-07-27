@@ -53,10 +53,10 @@ final class UserCapPointsService extends AppService
         $capuseruuid = $this->input["capuseruuid"];
         $this->promocapuser = $this->repopromocapuser->get_by_uuid($capuseruuid, ["id", "id_owner", "email", "name1"]);
         if (!$this->promocapuser)
-            $this->_promocap_exception(__("User {$capuseruuid} not found!"), ExceptionType::CODE_NOT_FOUND);
+            $this->_promocap_exception(__("User {0} not found!", $capuseruuid), ExceptionType::CODE_NOT_FOUND);
 
         if (!$this->promocapuser["email"])
-            $this->_promocap_exception(__("User {$capuseruuid} without email!"), ExceptionType::CODE_BAD_REQUEST);
+            $this->_promocap_exception(__("User {0} without email!", $capuseruuid), ExceptionType::CODE_BAD_REQUEST);
 
         if ($this->businesssdata["id_user"] !== $this->promocapuser["id_owner"])
             $this->_promocap_exception(__("These codes are not congruent!"), ExceptionType::CODE_BAD_REQUEST);

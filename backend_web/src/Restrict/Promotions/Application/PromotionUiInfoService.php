@@ -62,7 +62,7 @@ final class PromotionUiInfoService extends AppService
     {
         if(!$promotion_ui = $this->repopromoui->get_info($this->input))
             $this->_exception(
-                __("{0} with code {1} not found", __("Promotion_ui"), $this->input),
+                __("{0} with code {1} not found", __("Promotion UI"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
 
@@ -76,7 +76,7 @@ final class PromotionUiInfoService extends AppService
     {
         if(!$promotion_ui = $this->repopromoui->get_info($this->input))
             $this->_exception(
-                __("{0} with code {1} not found", __("Promotion_ui"), $this->input),
+                __("{0} with code {1} not found", __("Promotion UI"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
         $this->_check_entity_permission($promotion_ui);

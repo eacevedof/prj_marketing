@@ -45,7 +45,7 @@ final class PromotionUisUpdateController extends RestrictController
             $update = SF::get_callable(PromotionUiUpdateService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
-                "message"=> __("{0} {1} successfully updated", __("Promotion_ui"), $uuid),
+                "message"=> __("{0} {1} successfully updated", __("Promotion UI"), $uuid),
                 "result" => $result,
             ])->show();
         }
