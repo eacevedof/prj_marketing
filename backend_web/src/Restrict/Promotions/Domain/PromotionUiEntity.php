@@ -71,7 +71,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_email" => [
-            "label" => __("tr_input_email"),
+            "label" => __("Email"),
             EntityType::REQUEST_KEY => "input_email",
             "config" => [
                 "type" => EntityType::INT,
