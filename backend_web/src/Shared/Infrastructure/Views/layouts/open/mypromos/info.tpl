@@ -29,7 +29,7 @@
     </svg>
   </div>
   <?php
-  $this->_element("open/mypromos/elem-top-right-logo");
+  $this->_element("open/mypromos/elem-logo-right");
   $this->_element("open/mypromos/elem-scrums");
   ?>
   <section class="section-grid center-x">

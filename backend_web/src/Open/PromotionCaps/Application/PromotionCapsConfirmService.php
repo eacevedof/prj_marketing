@@ -120,8 +120,8 @@ final class PromotionCapsConfirmService extends AppService implements IEventDisp
         $this->_load_subscription();
         $this->repopromocapsubscription->set_model($entitysubs = MF::get(PromotionCapSubscriptionEntity::class));
         $confirm = [
-            "id"=>$this->subscriptiondata["subsid"],
-            "uuid"=>$this->subscriptiondata["subscode"],
+            "id" => $this->subscriptiondata["subsid"],
+            "uuid" => $this->subscriptiondata["subscode"],
             "date_confirm"=> $date = date("Y-m-d H:i:s"),
             "code_execution" => CF::get(TextComponent::class)->get_random_word(4, 2),
             "subs_status" => PromotionCapActionType::CONFIRMED

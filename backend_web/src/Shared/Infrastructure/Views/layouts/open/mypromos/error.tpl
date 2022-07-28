@@ -27,12 +27,8 @@
     </svg>
   </div>
 
-  <nav class="nav-flex center-x">
-    <figure>
-      <img id="top-mark" src="/themes/mypromos/images/logo-account-yyy.png" class="nav-icon">
-    </figure>
-  </nav>
 <?php
+$this->_element("open/mypromos/elem-logo-right");
 $this->_element("open/mypromos/elem-scrums");
 ?>
   <section class="section-grid center-x">

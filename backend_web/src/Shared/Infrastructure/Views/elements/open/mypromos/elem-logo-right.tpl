@@ -6,7 +6,7 @@
 <!--elem-logo-right-->
 <nav class="nav-flex center-x">
   <figure>
-    <img id="top-mark" src="/themes/mypromos/images/logo-account-yyy.png" class="nav-icon">
+    <img id="top-mark" src="/themes/mypromos/images/provider-xxx-logo-orange.svg" class="nav-icon">
   </figure>
 </nav>
 <!--/elem-logo-right-->
