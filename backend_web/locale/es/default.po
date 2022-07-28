@@ -1242,68 +1242,68 @@ msgstr "Hola {0}!!"
 
 
 msgid "You have <strong>confirmed</strong> your subscription to promotion: <strong>“{0}“</strong> published by"
-
 msgstr "Has <strong>confirmado</strong> tu suscripción en la promoción <strong>“{0}“</strong> publicada por"
+
 msgid "In order to make this voucher effective, please, show the following code."
-
 msgstr "Para poder hacer efectivo el voucher, por favor, muestre el siguiente código."
+
 msgid "Keep in mind this code expires at {0} UTC"
-
 msgstr "Recuerda que este código expira en {0} UTC"
+
 msgid "Please, click on this"
-
 msgstr "Por favor, haz click en este"
+
 msgid "Accumulated points"
-
 msgstr "Puntos acumulados"
+
 msgid "to check your accumulated points at"
-
 msgstr "para revisar tus puntos acumulados en"
+
 msgid "Promotion code: <strong>{0}</strong>"
-
 msgstr "Código de promoción: <strong>{0}</strong>"
+
 msgid "Subscription code: <strong>{0}</strong>"
-
 msgstr "Código de la suscripción: <strong>{0}</strong>"
+
 msgid "Promotion ends at {0} UTC"
-
 msgstr "La promoción finaliza el{0} UTC"
+
 msgid "Check terms and conditions"
-
 msgstr "Revisa los términos y condiciones"
+
 msgid "Changed your mind? You can"
-
 msgstr "¿Has cambiado de parecer? Puedes"
+
 msgid "unsubscribe"
-
 msgstr "cancelar tu suscripción"
+
 msgid "Your accumulated points at <strong>{0}</strong> have been updated"
-
 msgstr "Tus puntos acumulados en <strong>{0}</strong> se han actualizado"
+
 msgid "Check it out"
-
 msgstr "Compruebalo"
+
 msgid "You have subscribed to promotion: <strong>“{0}“</strong> published by"
-
 msgstr "Te has suscrito a la promoción: <strong>“{0}“</strong> publicada por"
+
 msgid "Thank you for your active participating"
-
 msgstr "Gracias por tu participacion activa"
+
 msgid "Please, click on confirm button to finish your subscription"
-
 msgstr "Por favor, haz click en el botón de confirmación para finalizar tu suscripción"
+
 msgid "CONFIRM"
-
 msgstr "CONFIRMAR"
+
 msgid "Remember to use this email in all of your future subscriptions in order to accumulate points"
-
 msgstr "Recuerda usar este email en todas tus futuras suscripciones de modo que puedas acumular puntos"
+
 msgid "Designed by"
-
 msgstr "Diseñado por"
-msgid "Reproducing, copying, distributing, making available, publicly communicating, transforming or modifying the Content except in cases authorized by law or expressly consented to by the Service Provider or by whoever owns the exploitation rights in your case. "
 
+msgid "Reproducing, copying, distributing, making available, publicly communicating, transforming or modifying the Content except in cases authorized by law or expressly consented to by the Service Provider or by whoever owns the exploitation rights in your case. "
 msgstr "Reproducir, copiar, distribuir, hacer disponible, comunicar publicamente, transformar o modificar el contenido excepto en casos autorizados por ley o consentimiento expreso por el Proveedor del Servicio o por quien sea el propietario de los derechos de explotación. "
+
 msgid "This promotion expires at: {0} UTC"
 msgstr "Esta promoción expira el: {0} UTC"
 
