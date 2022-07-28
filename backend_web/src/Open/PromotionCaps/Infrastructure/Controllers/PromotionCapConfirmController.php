@@ -8,6 +8,7 @@ use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\PromotionCaps\Application\PromotionCapsConfirmService;
+use App\Open\Business\Application\BusinessSpaceService;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
@@ -27,7 +28,7 @@ final class PromotionCapConfirmController extends OpenController
             $insert = SF::get_callable(PromotionCapsConfirmService::class, [
                 "promotionuuid" => $promotionuuid,
                 "subscriptionuuid" => $subscriptionuuid,
-                "_test_mode" => $this->request->get_get("mode", "")==="test",
+                "_test_mode" => $istest = ($this->request->get_get("mode", "")==="test"),
             ]);
             $result = $insert();
             $this->set_layout("open/mypromos/success")
@@ -36,7 +37,9 @@ final class PromotionCapConfirmController extends OpenController
                 ->add_var("success",  [
                     ["p" => __("<b>{0}</b>. You have successfully confirmed your subscription to <b>“{1}“</b>", $result["username"], $result["promotion"])],
                     ["p" => __("Please check your email inbox. You will receive a voucher code which you should show it at <b>{0}</b>", $result["business"])],
-                ]);
+                ])
+                ->add_var("space", SF::get(BusinessSpaceService::class, ["_test_mode" => $istest]))
+            ;
 
             unset($insert, $result, $promotionuuid, $subscriptionuuid);
             $this->view->render_nv();
