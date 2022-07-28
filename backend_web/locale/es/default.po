@@ -1624,3 +1624,6 @@ msgstr "La cuenta negocio <b>{0}</b> esta bloqueada"
 
 msgid "for this reason: {0}"
 msgstr "por este motivo: {0}"
+
+msgid "Home"
+msgstr "Inicio"

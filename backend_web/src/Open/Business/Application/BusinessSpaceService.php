@@ -23,7 +23,7 @@ final class BusinessSpaceService extends AppService
 
         $url = "promotion/{$space["businessslug"]}/{$space["promoslug"]}";
         if ($this->istest) $url .= "?mode=test";
-        $space["promolink"] = UrlDomainHelper::get_instance()->get_full_url($url);
+        $space["promotionlink"] = UrlDomainHelper::get_instance()->get_full_url($url);
         return $space;
     }
 }
