@@ -481,7 +481,7 @@ msgid "Email position"
 msgstr "Email position"
 
 msgid "First name"
-msgstr "First name"
+msgstr "Nombre"
 
 msgid "First name position"
 msgstr "First name position"
@@ -1468,9 +1468,6 @@ msgstr "Confirmados"
 
 msgid "Executed"
 msgstr "Ejecutados"
-
-msgid "First name"
-msgstr "Nombre"
 
 msgid "Pos. First name"
 msgstr "Pos. Nombre"
