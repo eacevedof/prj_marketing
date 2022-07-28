@@ -204,7 +204,7 @@ msgid "Address"
 msgstr "Dirección"
 
 msgid "Birthdate"
-msgstr "Fec. nacimiento"
+msgstr "Feccha de nacimiento"
 
 msgid "Gender"
 msgstr "Género"
@@ -512,9 +512,6 @@ msgstr "Gender"
 
 msgid "Gender position"
 msgstr "Gender position"
-
-msgid "Address"
-msgstr "Address"
 
 msgid "Address position"
 msgstr "Address position"
@@ -1496,9 +1493,6 @@ msgstr "Pos. País"
 msgid "Pos. Phone"
 msgstr "Pos. Teléfono"
 
-msgid "Birthdate"
-msgstr "Fecha de nacimiento"
-
 msgid "Pos. Birthdate"
 msgstr "Pos. Fecha de nacimiento"
 
@@ -1507,9 +1501,6 @@ msgstr "Género"
 
 msgid "Pos. Gender"
 msgstr "Pos. Género"
-
-msgid "Address"
-msgstr "Dirección"
 
 msgid "Pos. Address"
 msgstr "Pos. Dirección"
