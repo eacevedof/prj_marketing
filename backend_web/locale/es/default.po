@@ -1334,9 +1334,6 @@ msgstr "Error en Términos y Condiciones!"
 msgid "No user provided"
 msgstr "No se ha proporcionado un usuario"
 
-msgid "Business account {0} not found!"
-msgstr "Cuenta negocio {0} not found!"
-
 msgid "User {0} not found!"
 msgstr "Usuario {0} no encontrado"
 
@@ -1507,9 +1504,6 @@ msgstr "País"
 
 msgid "Pos. Country"
 msgstr "Pos. País"
-
-msgid "Phone"
-msgstr "Teléfono"
 
 msgid "Pos. Phone"
 msgstr "Pos. Teléfono"
