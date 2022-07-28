@@ -1139,7 +1139,7 @@ msgid "Subscription to “{0}“"
 msgstr "Subscription to “{0}“"
 
 msgid "Subscriber"
-msgstr "Subscriber"
+msgstr "Suscriptor"
 
 msgid "Req url"
 msgstr "Req url"
@@ -1149,9 +1149,6 @@ msgstr "From url"
 
 msgid "Remote IP"
 msgstr "Remote IP"
-
-msgid "Subscriber"
-msgstr "Suscriptor"
 
 msgid "Subscription date"
 msgstr "Fecha de suscripción"
