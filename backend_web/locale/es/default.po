@@ -957,3 +957,721 @@ msgstr "Mensaje"
 
 msgid "Send"
 msgstr "Enviar"
+
+msgid "Select Options."
+msgstr "Seleccionar Opciones."
+
+msgid "<span id=\"section-6\">6.- Acceptance, configuration or rejection of cookies, and more information</span>"
+msgstr "<span id=\"section-6\">6.-Aceptación, configuración o rechazo de cookies y más información</span>"
+
+msgid "Cookies Policy error!"
+msgstr "Error en Política de Cookies!"
+
+msgid "Back to home"
+msgstr "Volver al inicio"
+
+msgid "{0} this is a copy of your message "
+msgstr "{0} esta es una copia de tu mensaje "
+
+msgid "Empty value is not allowed"
+msgstr "Vacío no es un valor permitido"
+
+msgid "Invalid {0} format"
+msgstr "Formato {0} inválido"
+
+msgid "{0} must be greater than {1} and lighter than {2}"
+msgstr "{0} debe ser mayor que {1} y menor que {2}"
+
+msgid "Wrong action"
+msgstr "Acción incorrecta"
+
+msgid "My Promotions"
+msgstr ""
+
+msgid "Please check form errors"
+msgstr "Por favor comprueba los errores del formulario"
+
+msgid "Invalid format. Eg: {0}"
+msgstr "Formato inválido. Ej: {0}"
+
+msgid "I'm interested in using your solution"
+msgstr "Estoy interesado en usar su solución"
+
+msgid "I have a restaurant in Mexico DF and this is my phone: 123456 please contact me ASAP"
+msgstr "Tengo un restaurante en México DF y este mi teléfono: 123456 por favor contacte conmigo lo antes posible"
+
+msgid "Hello {0}!"
+msgstr "Hola {0}!"
+
+msgid "Thank you for contacting <a href=\"{0}\" style=\"color:white;\"><b>{1}</b></a>"
+msgstr "Gracias por contactar con <a href=\"{0}\" style=\"color:white;\"><b>{1}</b></a>"
+
+msgid "This is the content of your message."
+msgstr "Este es el contenido de su mensaje."
+
+msgid "Your message"
+msgstr "Su mensaje"
+
+msgid "From IP"
+msgstr "Desde IP"
+
+msgid "We will get in touch with you soon"
+msgstr "Pronto contactaremos con usted"
+
+msgid "Best regards"
+msgstr "Saludos cordiales"
+
+msgid "If you have received this email by mistake, please delete it. Thanks in advance."
+msgstr "Si ha recibido este email por error por favor eliminelo. Gracias de antemano."
+
+msgid "Let us grow your marketing campaigns!."
+msgstr "Let us grow your marketing campaigns!."
+
+msgid "“My promotions“ allows you to configure promotional landing pages with different acquisition data input."
+msgstr "“My promotions“ le permite configurar paginas promocionales de tipo landing con diferentes datos de entrada."
+
+msgid "Once your client got subscribed it will receive a promotion code to be showed at your business."
+msgstr "Cuando un cliente se suscriba recibirá un código que deberá mostrar en su negocio."
+
+msgid "All your confirmed subscribers will accumulate points and you can handle these in order to increase customer loyalty.  For example by remarketing strategy."
+msgstr "Todos sus clientes que hayan confirmado su suscripción acumularán puntos de modo que se puedan gestionar con el fin de reforzar su confianza.  Por ejemplo mediante estratégia de remarketing."
+
+msgid "Join us!"
+msgstr "Únase a nosotros!"
+
+msgid "Your data may be communicated to the ProviderXXX's Organizations, some of which are located in countries outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection."
+msgstr "Sus datos serán comunicados a las organizaciones de ProviderXXX, algunas de estas localizadas fuera del Área Económica Europea las cuales no han sido declaradas por la Comisión Europea por tener un nivel adecuado de protección de datos."
+
+msgid "Privacy Policy error!"
+msgstr "Error de Política de Privacidad!"
+
+msgid "Sorry but this promotion does not exist"
+msgstr "Lo sentimos pero esta promoción no existe"
+
+msgid "Sorry but this promotion is paused (1)"
+msgstr "Lo sentimos pero esta promoción esta pausada (1)"
+
+msgid "Sorry but this promotion is disabled"
+msgstr "Disculpe las molestias pero esta promoción esta deshabilitada"
+
+msgid "This promotion is paused"
+msgstr "Esta promoción esta pausada"
+
+msgid "Sorry but this promotion has finished."
+msgstr "Lo sentimos pero esta promoción ha finalizado."
+
+msgid "Sorry but this promotion has not started yet or is paused. Please try again later."
+msgstr "Lo sentimos pero esta promoción o no ha empezado todavia o está pausada. Por favor pruebe más tarde."
+
+msgid "Sorry but this promotion has reached the max number of subscriptions"
+msgstr "Lo sentimos pero la promoción ha alcanzado el límite de suscripciones"
+
+msgid "You are already subscribed. Check your subscription email"
+msgstr "Ya esta suscrito. Compruebe su email de suscripción"
+
+msgid "No business account provided"
+msgstr "No se ha proporcionado una cuenta de negocio"
+
+msgid "No promotion name provided"
+msgstr "No se ha proporcionado un nombre de promoción"
+
+msgid "Business account {0} not found!"
+msgstr "Cuenta de negocio {0} no encontrada!"
+
+msgid "Missing promotion UI configuration!"
+msgstr "Falta la configuración UI de la promoción!"
+
+msgid "This promotion does not exist anymore"
+msgstr "Esta promoción ya no existe"
+
+msgid "This promotion has expired"
+msgstr "La promoción ha caducado"
+
+msgid "Subscription not found"
+msgstr "Suscripción no encontrada"
+
+msgid "Subscription data not found"
+msgstr "Datos de la suscripción no encontrados"
+
+msgid "Promotion code does not match for this subscription"
+msgstr "El código de la promoción no coincide con esta suscripción"
+
+msgid "You have already consumed your subscription"
+msgstr "Ya ha consumido su suscripción"
+
+msgid "Subscription cancelled"
+msgstr "Suscripción cancelada"
+
+msgid "Subscription already confirmed"
+msgstr "Ya se ha confirmado la suscripción"
+
+msgid "You have already confirmed your subscription"
+msgstr "Ya ha confirmado su suscripción"
+
+msgid "Wrong email format"
+msgstr "Wrong email format"
+
+msgid "You are already subscribed"
+msgstr "You are already subscribed"
+
+msgid "Wrong first name format. Only letters allowed."
+msgstr "Wrong first name format. Only letters allowed."
+
+msgid "Wrong last name format. Only letters allowed."
+msgstr "Wrong last name format. Only letters allowed."
+
+msgid "Wrong mobile format. Use only numbers and white space please"
+msgstr "Wrong mobile format. Use only numbers and white space please"
+
+msgid "Wrong address format. Only letters allowed"
+msgstr "Wrong address format. Only letters allowed"
+
+msgid "Wrong birthdate value"
+msgstr "Wrong birthdate value"
+
+msgid "Unrecognized country"
+msgstr "Unrecognized country"
+
+msgid "Unrecognized language"
+msgstr "Unrecognized language"
+
+msgid "Unrecognized gender"
+msgstr "Unrecognized gender"
+
+msgid "Wrong mailing format. Only 0 or 1 allowed"
+msgstr "Wrong mailing format. Only 0 or 1 allowed"
+
+msgid "You have successfully subscribed. Please check your email to confirm your subscription!"
+msgstr "You have successfully subscribed. Please check your email to confirm your subscription!"
+
+msgid "Promotion {$promotionslug} not found!"
+msgstr "Promotion {$promotionslug} not found!"
+
+msgid "Subscription to “{0}“"
+msgstr "Subscription to “{0}“"
+
+msgid "Subscriber"
+msgstr "Subscriber"
+
+msgid "Req url"
+msgstr "Req url"
+
+msgid "From url"
+msgstr "From url"
+
+msgid "Remote IP"
+msgstr "Remote IP"
+
+msgid "Subscriber"
+msgstr "Suscriptor"
+
+msgid "Subscription date"
+msgstr "Fecha de suscripción"
+
+msgid "Confirm date"
+msgstr "Fecha de confirmación"
+
+msgid "Date execution"
+msgstr "Execution date"
+
+msgid "Voucher code"
+msgstr "Código de voucher"
+
+msgid "Validation user"
+msgstr "Usuario validador"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Remote IP"
+msgstr "IP remota"
+
+msgid "I would like to receive promotions and raffles in my email"
+msgstr "Me gustaria recibir promociones y sorteos en mi emaill"
+
+msgid "I have red and accept legal terms and conditions"
+msgstr "He leido y acepto los términos y condiciones legales"
+
+msgid "Subscription cancellation error!"
+msgstr "Error al cancelar la suscripción!"
+
+msgid "Missing promotion and/or subscription code"
+msgstr "Falta el código de promoción o suscripción"
+
+msgid "Subscription cancellation successfully done!"
+msgstr "La cancelación de la suscripción realizada correctamente!"
+
+msgid "<b>{0}</b>. You have successfully cancelled your subscription to <b>“{1}“</b>"
+msgstr "<b>{0}</b>. Ha cancelado correctamente su suscripción a <b>“{1}“</b>"
+
+msgid "Subscription confirmation error!"
+msgstr "Error al confirmar la suscripción!"
+
+msgid "Subscription confirmation success!"
+msgstr "Confirmación de suscripción correcta!"
+
+msgid "<b>{0}</b>. You have successfully confirmed your subscription to <b>“{1}“</b>"
+msgstr "<b>{0}</b>. Ha confirmado correctamente su suscripción a <b>“{1}“</b>"
+
+msgid "Please check your email inbox. You will receive a voucher code which you should show it at <b>{0}</b>"
+msgstr "Por favor compruebe su bandeja de entrada. Recibirá un código de voucher que deberá mostarlo en <b>{0}</b>"
+
+msgid "Subscription error!"
+msgstr "Error en la suscripción!"
+
+msgid "Unexpected error!"
+msgstr "Error inesperado!"
+
+msgid "No promotion code provided"
+msgstr "No se ha proporcionado un código de promoción"
+
+msgid "<b>{0}</b> you have cancelled your subscription to <b>“{1}“</b>"
+msgstr "<b>{0}</b> ha cancelado su suscripción a <b>“{1}“</b>"
+
+msgid "Subscribe"
+msgstr "Suscribir"
+
+msgid "Invalid format. Eg: xxx@domain.com"
+msgstr "Formato inválido. Ej: xxx@domain.com"
+
+msgid "Invalid format. Eg: John Santino"
+msgstr "Formato inválido. Ej: John Santino"
+
+msgid "Invalid format. Eg: 777 888 999 333"
+msgstr "Formato inválido. Ej: 777 888 999 333"
+
+msgid "Invalid format. Eg: Smith Rincón"
+msgstr "Formato inválido. Ej: Smith Rincón"
+
+msgid "Please select an option"
+msgstr "Por favor seleccione una opción"
+
+msgid "Invalid selection"
+msgstr "Selección incorrecta"
+
+msgid "Invalid format. Eg: St. Paul Street, 47 - N.Y."
+msgstr "Formato inválido. Ej: St. Paul Street, 47 - N.Y."
+
+msgid "Thank you <b>%name%</b> for your subscription. Please check your email <b>%email%</b> and click on the confirmation link.<br/><small>May be you have to check your spam folder</small>"
+msgstr "Gracias <b>%name%</b> por su suscripción. Por favor compruebe su email <b>%email%</b> y haga click en el enlace de confirmación.<br/><small>May be you have to check your spam folder</small>"
+
+msgid "Hello {0}!!"
+msgstr "Hola {0}!!"
+
+
+msgid "You have <strong>confirmed</strong> your subscription to promotion: <strong>“{0}“</strong> published by"
+
+msgstr "Has <strong>confirmado</strong> tu suscripción en la promoción <strong>“{0}“</strong> publicada por"
+msgid "In order to make this voucher effective, please, show the following code."
+
+msgstr "Para poder hacer efectivo el voucher, por favor, muestre el siguiente código."
+msgid "Keep in mind this code expires at {0} UTC"
+
+msgstr "Recuerda que este código expira en {0} UTC"
+msgid "Please, click on this"
+
+msgstr "Por favor, haz click en este"
+msgid "Accumulated points"
+
+msgstr "Puntos acumulados"
+msgid "to check your accumulated points at"
+
+msgstr "para revisar tus puntos acumulados en"
+msgid "Promotion code: <strong>{0}</strong>"
+
+msgstr "Código de promoción: <strong>{0}</strong>"
+msgid "Subscription code: <strong>{0}</strong>"
+
+msgstr "Código de la suscripción: <strong>{0}</strong>"
+msgid "Promotion ends at {0} UTC"
+
+msgstr "La promoción finaliza el{0} UTC"
+msgid "Check terms and conditions"
+
+msgstr "Revisa los términos y condiciones"
+msgid "Changed your mind? You can"
+
+msgstr "¿Has cambiado de parecer? Puedes"
+msgid "unsubscribe"
+
+msgstr "cancelar tu suscripción"
+msgid "Your accumulated points at <strong>{0}</strong> have been updated"
+
+msgstr "Tus puntos acumulados en <strong>{0}</strong> se han actualizado"
+msgid "Check it out"
+
+msgstr "Compruebalo"
+msgid "You have subscribed to promotion: <strong>“{0}“</strong> published by"
+
+msgstr "Te has suscrito a la promoción: <strong>“{0}“</strong> publicada por"
+msgid "Thank you for your active participating"
+
+msgstr "Gracias por tu participacion activa"
+msgid "Please, click on confirm button to finish your subscription"
+
+msgstr "Por favor, haz click en el botón de confirmación para finalizar tu suscripción"
+msgid "CONFIRM"
+
+msgstr "CONFIRMAR"
+msgid "Remember to use this email in all of your future subscriptions in order to accumulate points"
+
+msgstr "Recuerda usar este email en todas tus futuras suscripciones de modo que puedas acumular puntos"
+msgid "Designed by"
+
+msgstr "Diseñado por"
+msgid "Reproducing, copying, distributing, making available, publicly communicating, transforming or modifying the Content except in cases authorized by law or expressly consented to by the Service Provider or by whoever owns the exploitation rights in your case. "
+
+msgstr "Reproducir, copiar, distribuir, hacer disponible, comunicar publicamente, transformar o modificar el contenido excepto en casos autorizados por ley o consentimiento expreso por el Proveedor del Servicio o por quien sea el propietario de los derechos de explotación. "
+msgid "This promotion expires at: {0} UTC"
+msgstr "Esta promoción expira el: {0} UTC"
+
+msgid "Promotion not found"
+msgstr "Promoción no encontrada"
+
+msgid "Terms & Conditions error!"
+msgstr "Error en Términos y Condiciones!"
+
+msgid "No user provided"
+msgstr "No se ha proporcionado un usuario"
+
+msgid "Business account {0} not found!"
+msgstr "Cuenta negocio {0} not found!"
+
+msgid "User {0} not found!"
+msgstr "Usuario {0} no encontrado"
+
+msgid "User {0} without email!"
+msgstr "Usuario {0} sin email!"
+
+msgid "These codes are not congruent!"
+msgstr "Estos códigos no coinciden!"
+
+msgid "Accumulated points of {0} at {1}"
+msgstr "Puntos acumulados de {0} en {1}"
+
+msgid "Accumulated points error!"
+msgstr "Error en puntos acumulados!"
+
+msgid "You have no accumulated points yet"
+msgstr "Todavía no tienes puntos acumulados"
+
+msgid "Total accumulated points: {0}"
+msgstr "Total de puntos acumulados: {0}"
+
+msgid "N."
+msgstr "N."
+
+msgid "Points"
+msgstr "Puntos"
+
+msgid "Exec"
+msgstr "Ejec"
+
+msgid "Ret"
+msgstr "Ret"
+
+msgid "Earn"
+msgstr "Beneficio"
+
+msgid "%"
+msgstr "%"
+
+msgid "Bill"
+msgstr "Factura"
+
+msgid "R. earn"
+msgstr "R. beneficio"
+
+msgid "Billings"
+msgstr "Facturación"
+
+msgid "Your session has finished please re-login"
+msgstr "Su sesion ha finalizado por favor reinicie su sesión"
+
+msgid "Url Tik Tok"
+msgstr "Url Tik Tok"
+
+msgid "Disabled date"
+msgstr "Fecha de bloqueo"
+
+msgid "Disabled by"
+msgstr "Bloqueado por"
+
+msgid "Disabled reason"
+msgstr "Motivo del bloqueo"
+
+msgid "Subscriptions"
+msgstr "Suscripciones"
+
+msgid "Promotion UI"
+msgstr "UI de promoción"
+
+msgid "{0} with code {1} is not editable"
+msgstr "{0} con código {1} no es editable"
+
+msgid "Unrecognized value for this field"
+msgstr "Valor no reconocido para este campo"
+
+msgid "Valid values are 1-100"
+msgstr "Los valores válidos son 1-100"
+
+msgid "This promotion UI does not belong to promotion {0}"
+msgstr "Esta UI de promoción no pertenece a la promoción {0}"
+
+msgid "{0} not found!"
+msgstr "{0} no encontrado/a!"
+
+msgid "Promotion UI"
+msgstr "UI de Promoción"
+
+msgid "Invalid url format"
+msgstr "Formato de url inválido"
+
+msgid "Date from is greater than Date to"
+msgstr "La Fecha desde es mayor que Fecha hasta"
+
+msgid "Date to is lower than Date from"
+msgstr "La Fecha hasta es menor que la Fecha desde"
+
+msgid "Published"
+msgstr "Publicado"
+
+msgid "{0} {1} does not exist"
+msgstr "{0} {1} no existe"
+
+msgid "Invalid owner"
+msgstr "Propietario inválido"
+
+msgid "0 confirmed is not valid for publishing"
+msgstr "0 confirmados no es válido para publicar"
+
+msgid "Must be greater than 1 for publishing"
+msgstr "Debe ser mayor que 1 para publicar"
+
+msgid "Value must be at least 1 hour after Date to"
+msgstr "El valor debe ser al menos 1 hora despues de Fecha hasta"
+
+msgid "Invalid timezone"
+msgstr "Zona horaria inválida"
+
+msgid "Date limit"
+msgstr "Fecha límite"
+
+msgid "Max. confirmed"
+msgstr "Max. confirmados"
+
+msgid "Raffleable"
+msgstr "Sorteable"
+
+msgid "Cumulative"
+msgstr "Acumulable"
+
+msgid "Launched"
+msgstr "Lanzada"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Viewed"
+msgstr "Vistos"
+
+msgid "Subscribed"
+msgstr "Suscritos"
+
+msgid "Confirmed"
+msgstr "Confirmados"
+
+msgid "Executed"
+msgstr "Ejecutados"
+
+msgid "First name"
+msgstr "Nombre"
+
+msgid "Pos. First name"
+msgstr "Pos. Nombre"
+
+msgid "Last name"
+msgstr "Apellidos"
+
+msgid "Pos. Last name"
+msgstr "Pos. Apellidos"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Pos. Language"
+msgstr "Pos. Idioma"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Pos. Country"
+msgstr "Pos. País"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Pos. Phone"
+msgstr "Pos. Teléfono"
+
+msgid "Birthdate"
+msgstr "Fecha de nacimiento"
+
+msgid "Pos. Birthdate"
+msgstr "Pos. Fecha de nacimiento"
+
+msgid "Gender"
+msgstr "Género"
+
+msgid "Pos. Gender"
+msgstr "Pos. Género"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Pos. Address"
+msgstr "Pos. Dirección"
+
+msgid "Allow mailing"
+msgstr "Permitir mailing"
+
+msgid "Pos. Allow mailing"
+msgstr "Pos. Permitir mailing"
+
+msgid "Read terms and conditions"
+msgstr "Leer términos y condiciones"
+
+msgid "Pos. Read terms and conditions"
+msgstr "Pos. Leer términos y condiciones"
+
+msgid "Promotion disabled"
+msgstr "Promotion disabled"
+
+msgid "Please, contact <a href=\"mailto:{0}\">{1}</a> to resolve this issue"
+msgstr "Por favor, contacta con <a href=\"mailto:{0}\">{1}</a> para solucionar este asunto"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Current time in"
+msgstr "Hora actual en"
+
+msgid "Position"
+msgstr "Posición"
+
+msgid "Fist name"
+msgstr "Nombre"
+
+msgid "Birthday"
+msgstr "Fecha de nacimiento"
+
+msgid "UI"
+msgstr ""
+
+msgid "Empty request"
+msgstr "Petición vacía"
+
+msgid "No request id received"
+msgstr "No se ha recibido el id de la petición"
+
+msgid "No request columns received"
+msgstr "No se han recibido las columnas"
+
+msgid "Request payload is too big"
+msgstr "El tamaño de la petición es muy grande"
+
+msgid "Request id {0} not found!"
+msgstr "Id {0} de la petición no encontrado!"
+
+msgid "The amount of rows {0} exceed the limit {1}"
+msgstr "La cantidad de filas {0} supera el límite {1}"
+
+msgid "tr_id_query"
+msgstr "tr_id_query"
+
+msgid "tr_query"
+msgstr "tr_query"
+
+msgid "tr_total"
+msgstr "tr_total"
+
+msgid "tr_module"
+msgstr "tr_module"
+
+msgid "Cod. Susbscription"
+msgstr "Cod. Susscripción"
+
+msgid "Test"
+msgstr "Prueba"
+
+msgid "Cod. User"
+msgstr "Cod. Usuario"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Empty voucher code"
+msgstr "Código de voucher vacío"
+
+msgid "Subscription"
+msgstr "Suscripción"
+
+msgid "Business account disabled"
+msgstr "Cuenta negocio bloqueada"
+
+msgid "Promotion disabled. {0}"
+msgstr "Promoción bloqueada. {0}"
+
+msgid "Subscription not confirmed"
+msgstr "Suscripción sin confirmar"
+
+msgid "Voucher already validated"
+msgstr "Voucher ya validado"
+
+msgid "Promotion has finished"
+msgstr "La promoción ha finalizado"
+
+msgid "Invalid code"
+msgstr "Código inválido"
+
+msgid "Edit subscription {0}"
+msgstr "Editar suscripción {0}"
+
+msgid "Already validated"
+msgstr "Ya validado"
+
+msgid "Cancelled"
+msgstr "Cancelado"
+
+msgid "Not confirmed"
+msgstr "No confirmada"
+
+msgid "Not allowed to validate because this promotion has finished"
+msgstr "No se permite validar porque esta promoción ha finalizado"
+
+msgid "Vaucher code validation"
+msgstr "Validación de código de voucher"
+
+msgid "Error reading data"
+msgstr "Error de lecutra de datos"
+
+msgid "Error persiting data"
+msgstr "Error de persistencia de datos"
+
+msgid "Error updating data"
+msgstr "Error de actualización de datos"
+
+msgid "Error deleting data"
+msgstr "Error de borrado de datos"
+
+msgid "Error reading sysdata"
+msgstr "Error al leer datos de sistema"
+
+msgid "Warning"
+msgstr "Advertencia"
+
+msgid "Business account <b>{0}</b> is disabled"
+msgstr "La cuenta negocio <b>{0}</b> esta bloqueada"
+
+msgid "for this reason: {0}"
+msgstr "por este motivo: {0}"
