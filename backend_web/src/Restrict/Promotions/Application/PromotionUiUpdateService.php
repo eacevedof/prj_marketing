@@ -73,11 +73,8 @@ final class PromotionUiUpdateService extends AppService
         //un sysadmin puede cambiar los de cualquiera
         if ($this->auth->is_sysadmin()) return;
 
-        $identowner = $this->repopromotion->get_by_id($this->idpromotion)["id_owner"];
+        $identowner = (int) $this->repopromotion->get_by_id($this->idpromotion)["id_owner"];
         //si es bow o bm y su idwoner es el de la ui
-        $this->logd($this->auth->get_idowner(), "gt_idowner");
-        $this->logd($identowner, "identowner");
-
         if ($this->auth->get_idowner() === $identowner)
             return;
 
