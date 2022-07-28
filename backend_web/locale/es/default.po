@@ -492,9 +492,6 @@ msgstr "Last name"
 msgid "Last name position"
 msgstr "Last name position"
 
-msgid "Language"
-msgstr "Language"
-
 msgid "Language position"
 msgstr "Language position"
 
@@ -1489,9 +1486,6 @@ msgstr "Apellidos"
 
 msgid "Pos. Last name"
 msgstr "Pos. Apellidos"
-
-msgid "Language"
-msgstr "Idioma"
 
 msgid "Pos. Language"
 msgstr "Pos. Idioma"
