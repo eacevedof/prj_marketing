@@ -80,7 +80,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_email" => [
-            "label" => __("Email position"),
+            "label" => __("Pos. Email"),
             EntityType::REQUEST_KEY => "pos_email",
             "config" => [
                 "type" => EntityType::INT,
@@ -89,7 +89,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_name1" => [
-            "label" => __("Name 1"),
+            "label" => __("First name"),
             EntityType::REQUEST_KEY => "input_name1",
             "config" => [
                 "type" => EntityType::INT,
@@ -98,7 +98,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_name1" => [
-            "label" => __("tr_pos_name1"),
+            "label" => __("Pos. First name"),
             EntityType::REQUEST_KEY => "pos_name1",
             "config" => [
                 "type" => EntityType::INT,
@@ -107,7 +107,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_name2" => [
-            "label" => __("tr_input_name2"),
+            "label" => __("Last name"),
             EntityType::REQUEST_KEY => "input_name2",
             "config" => [
                 "type" => EntityType::INT,
@@ -116,7 +116,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_name2" => [
-            "label" => __("tr_pos_name2"),
+            "label" => __("Pos. Last name"),
             EntityType::REQUEST_KEY => "pos_name2",
             "config" => [
                 "type" => EntityType::INT,
@@ -125,7 +125,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_language" => [
-            "label" => __("tr_input_language"),
+            "label" => __("Language"),
             EntityType::REQUEST_KEY => "input_language",
             "config" => [
                 "type" => EntityType::INT,
@@ -134,7 +134,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_language" => [
-            "label" => __("tr_pos_language"),
+            "label" => __("Pos. Language"),
             EntityType::REQUEST_KEY => "pos_language",
             "config" => [
                 "type" => EntityType::INT,
@@ -143,7 +143,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_country" => [
-            "label" => __("tr_input_country"),
+            "label" => __("Country"),
             EntityType::REQUEST_KEY => "input_country",
             "config" => [
                 "type" => EntityType::INT,
@@ -152,7 +152,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_country" => [
-            "label" => __("tr_pos_country"),
+            "label" => __("Pos. Country"),
             EntityType::REQUEST_KEY => "pos_country",
             "config" => [
                 "type" => EntityType::INT,
@@ -161,7 +161,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_phone1" => [
-            "label" => __("tr_input_phone1"),
+            "label" => __("Phone"),
             EntityType::REQUEST_KEY => "input_phone1",
             "config" => [
                 "type" => EntityType::INT,
@@ -170,7 +170,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_phone1" => [
-            "label" => __("tr_pos_phone1"),
+            "label" => __("Pos. Phone"),
             EntityType::REQUEST_KEY => "pos_phone1",
             "config" => [
                 "type" => EntityType::INT,
@@ -179,7 +179,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_birthdate" => [
-            "label" => __("tr_input_birthdate"),
+            "label" => __("Birthdate"),
             EntityType::REQUEST_KEY => "input_birthdate",
             "config" => [
                 "type" => EntityType::INT,
@@ -188,7 +188,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_birthdate" => [
-            "label" => __("tr_pos_birthdate"),
+            "label" => __("Pos. Birthdate"),
             EntityType::REQUEST_KEY => "pos_birthdate",
             "config" => [
                 "type" => EntityType::INT,
@@ -197,7 +197,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_gender" => [
-            "label" => __("tr_input_gender"),
+            "label" => __("Gender"),
             EntityType::REQUEST_KEY => "input_gender",
             "config" => [
                 "type" => EntityType::INT,
@@ -206,7 +206,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_gender" => [
-            "label" => __("tr_pos_gender"),
+            "label" => __("Pos. Gender"),
             EntityType::REQUEST_KEY => "pos_gender",
             "config" => [
                 "type" => EntityType::INT,
@@ -215,7 +215,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_address" => [
-            "label" => __("tr_input_address"),
+            "label" => __("Address"),
             EntityType::REQUEST_KEY => "input_address",
             "config" => [
                 "type" => EntityType::INT,
@@ -224,7 +224,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_address" => [
-            "label" => __("tr_pos_address"),
+            "label" => __("Pos. Address"),
             EntityType::REQUEST_KEY => "pos_address",
             "config" => [
                 "type" => EntityType::INT,
@@ -232,7 +232,7 @@ final class PromotionUiEntity extends AppEntity
             ]
         ],
         "input_is_mailing" => [
-            "label" => __("tr_input_is_mailing"),
+            "label" => __("Allow mailing"),
             EntityType::REQUEST_KEY => "input_is_mailing",
             "config" => [
                 "type" => EntityType::INT,
@@ -241,7 +241,7 @@ final class PromotionUiEntity extends AppEntity
         ],
 
         "pos_is_mailing" => [
-            "label" => __("tr_pos_is_mailing"),
+            "label" => __("Pos. Allow mailing"),
             EntityType::REQUEST_KEY => "pos_is_mailing",
             "config" => [
                 "type" => EntityType::INT,
@@ -250,7 +250,7 @@ final class PromotionUiEntity extends AppEntity
         ],
 
         "input_is_terms" => [
-            "label" => __("tr_input_is_terms"),
+            "label" => __("Read terms and conditions"),
             EntityType::REQUEST_KEY => "input_is_terms",
             "config" => [
                 "type" => EntityType::INT,
@@ -259,7 +259,7 @@ final class PromotionUiEntity extends AppEntity
         ],
 
         "pos_is_terms" => [
-            "label" => __("tr_pos_is_terms"),
+            "label" => __("Pos. Read terms and conditions"),
             EntityType::REQUEST_KEY => "pos_is_terms",
             "config" => [
                 "type" => EntityType::INT,
