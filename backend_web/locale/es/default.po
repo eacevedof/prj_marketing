@@ -1148,7 +1148,7 @@ msgid "From url"
 msgstr "From url"
 
 msgid "Remote IP"
-msgstr "Remote IP"
+msgstr "IP Remota"
 
 msgid "Subscription date"
 msgstr "Fecha de suscripción"
@@ -1167,9 +1167,6 @@ msgstr "Usuario validador"
 
 msgid "Status"
 msgstr "Estado"
-
-msgid "Remote IP"
-msgstr "IP remota"
 
 msgid "I would like to receive promotions and raffles in my email"
 msgstr "Me gustaria recibir promociones y sorteos en mi emaill"
@@ -1403,9 +1400,6 @@ msgstr "Esta UI de promoción no pertenece a la promoción {0}"
 msgid "{0} not found!"
 msgstr "{0} no encontrado/a!"
 
-msgid "Promotion UI"
-msgstr "UI de Promoción"
-
 msgid "Invalid url format"
 msgstr "Formato de url inválido"
 
@@ -1564,9 +1558,6 @@ msgstr "Prueba"
 
 msgid "Cod. User"
 msgstr "Cod. Usuario"
-
-msgid "Status"
-msgstr "Estado"
 
 msgid "Empty voucher code"
 msgstr "Código de voucher vacío"
