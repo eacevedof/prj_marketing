@@ -507,9 +507,6 @@ msgstr "Mobile number position"
 msgid "Birthdate position"
 msgstr "Birthdate position"
 
-msgid "Gender"
-msgstr "Gender"
-
 msgid "Gender position"
 msgstr "Gender position"
 
@@ -1495,9 +1492,6 @@ msgstr "Pos. Teléfono"
 
 msgid "Pos. Birthdate"
 msgstr "Pos. Fecha de nacimiento"
-
-msgid "Gender"
-msgstr "Género"
 
 msgid "Pos. Gender"
 msgstr "Pos. Género"
