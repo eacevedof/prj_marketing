@@ -80,7 +80,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "pos_email" => [
-            "label" => __("tr_pos_email"),
+            "label" => __("Email position"),
             EntityType::REQUEST_KEY => "pos_email",
             "config" => [
                 "type" => EntityType::INT,
@@ -89,7 +89,7 @@ final class PromotionUiEntity extends AppEntity
         ],
        
         "input_name1" => [
-            "label" => __("tr_input_name1"),
+            "label" => __("Name 1"),
             EntityType::REQUEST_KEY => "input_name1",
             "config" => [
                 "type" => EntityType::INT,

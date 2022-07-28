@@ -24,7 +24,7 @@ $texts = [
     "f05" => __("Promotion"),
 
     "f06" => __("Email"),
-    //"f07" => __("tr_pos_email"),
+    //"f07" => __("Email position"),
     "f08" => __("Fist name"),
     //"f09" => __("tr_pos_name1"),
     "f10" => __("Last name"),
