@@ -2,6 +2,7 @@
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
  */
+dd($space,"space");
 ?>
 <!--elem-logo-right-->
 <nav class="nav-flex center-x">
