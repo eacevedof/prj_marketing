@@ -1,6 +1,7 @@
 <?php
 namespace App\Open\TermsConditions\Infrastructure\Controllers;
 
+use App\Open\Business\Application\BusinessSpaceService;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
@@ -19,6 +20,7 @@ final class TermsConditionsInfoController extends OpenController
             $this->set_layout("open/mypromos/info")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("result", $terms)
                 ->render_nv();
         }
@@ -27,6 +29,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render_nv();
@@ -36,6 +39,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render_nv();
@@ -45,6 +49,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render_nv();
@@ -53,6 +58,8 @@ final class TermsConditionsInfoController extends OpenController
 
     public function promotion(string $promoslug): void
     {
+        $istest = ($this->request->get_get("mode", "")==="test");
+        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promoslug);
         try {
             $terms = SF::get(
                 TermsConditionsInfoService::class,
@@ -65,6 +72,7 @@ final class TermsConditionsInfoController extends OpenController
             $this->set_layout("open/mypromos/info")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("result", $terms)
                 ->render_nv();
         }
@@ -73,6 +81,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render_nv();
@@ -82,6 +91,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render_nv();
@@ -91,6 +101,7 @@ final class TermsConditionsInfoController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render_nv();

@@ -5,6 +5,7 @@ use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Restrict\Promotions\Domain\PromotionRepository;
 
 final class BusinessSpaceService extends AppService
 {
@@ -25,5 +26,12 @@ final class BusinessSpaceService extends AppService
         if ($this->istest) $url .= "?mode=test";
         $space["promotionlink"] = UrlDomainHelper::get_instance()->get_full_url($url);
         return $space;
+    }
+
+    public function get_data_by_promotion_slug(string $promoslug): array
+    {
+        $promouuid = RF::get(PromotionRepository::class)->get_by_slug($promoslug, ["uuid"]);
+        if (!$promouuid) return [];
+        return $this->get_data_by_promotion($promouuid["uuid"]);
     }
 }
