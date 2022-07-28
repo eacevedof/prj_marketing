@@ -6,10 +6,11 @@ final class TextComponent
 {
     public function slug(string $toslug): string
     {
+        $divider = "-";
         $toslug = trim($toslug);
         $toslug = preg_replace("/\s+/", " ",$toslug);
+        $toslug = str_replace(" ", $divider, $toslug);
         $toslug = $this->_remove_accents($toslug);
-        $divider = "-";
         $text = preg_replace("~[^\pL\d]+~u", $divider, $toslug);
         // transliterate
         $text = iconv("utf-8", "us-ascii//TRANSLIT", $text);
