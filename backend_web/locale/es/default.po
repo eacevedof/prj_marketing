@@ -498,9 +498,6 @@ msgstr "Language"
 msgid "Language position"
 msgstr "Language position"
 
-msgid "Country"
-msgstr "Country"
-
 msgid "Country position"
 msgstr "Country position"
 
@@ -1498,9 +1495,6 @@ msgstr "Idioma"
 
 msgid "Pos. Language"
 msgstr "Pos. Idioma"
-
-msgid "Country"
-msgstr "País"
 
 msgid "Pos. Country"
 msgstr "Pos. País"
