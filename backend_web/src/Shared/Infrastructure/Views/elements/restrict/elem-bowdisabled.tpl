@@ -16,7 +16,7 @@ if (!$bowdisabled) return;
               <?=__("for this reason: {0}", $bowdisabled["disabled_reason"]) ?>.
           </p>
           <p>
-              <?=__("Please contact <a href=\"mailto:support@yyy.xxx\">support@yyy.xxx</a> to resolve this issue") ?>
+              <?=__("Please, contact <a href=\"mailto:{0}\">{1}</a> to resolve this issue", "support@yyy.xxx")?>
           </p>
         </div>
       </div>
