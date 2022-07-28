@@ -55,7 +55,7 @@ final class PromotionUiUpdateService extends AppService
     {
         if($this->auth->is_root_super()) return;
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_UI_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
