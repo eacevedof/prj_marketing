@@ -194,6 +194,28 @@ final class BusinessDataRepository extends AppRepository
         return $this->query($sql)[0] ?? [];
     }
 
+    public function get_space_by_promotion(string $promouuid): array
+    {
+        $promouuid = $this->_get_sanitized($promouuid);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("businessdata.get_space_by_promotion")
+            ->set_table("$this->table as bd")
+            ->set_getfields([
+                "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business, bd.url_business AS businessurl, bd.user_logo_1 AS businesslogo",
+                "bd.url_social_fb AS urlfb, bd.url_social_ig AS urlig, bd.url_social_twitter AS urltwitter, bd.url_social_tiktok AS urltiktok",
+
+                "p.uuid AS promocode, p.slug AS promoslug, p.description AS promotion, p.content AS promoterms, p.date_to AS promodateto",
+                "p.bgimage_xs AS promoimage"
+            ])
+            ->add_join("INNER JOIN app_promotion AS p ON p.id_owner = bd.id_user")
+            ->add_and("p.uuid='$promouuid'")
+            ->add_and("p.delete_date IS NULL")
+            ->select()->sql()
+        ;
+        $r = $this->query($sql);
+        return $r[0] ?? [];
+    }
+
     public function is_disabled_by_iduser(int $iduser): bool
     {
         $sql = $this->_get_qbuilder()
