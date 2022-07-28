@@ -42,7 +42,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
 
-        $link = $this->domain->get_full_url("{$data["promocode"]}/confirm/{$data["subscode"]}");
+        $link = $this->domain->get_full_url("promotion/{$data["promocode"]}/confirm/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
 
