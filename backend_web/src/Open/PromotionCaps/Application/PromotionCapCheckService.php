@@ -58,10 +58,6 @@ final class PromotionCapCheckService extends AppService
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
 
-        $this->logd(date_default_timezone_get(), "php - tz");
-        $this->logd($utcnow, "utcnow");
-        $this->logd($promotion["date_from"], "date-from");
-        //esto hace utcnow - date_from (2022-07-29 17:53:33 - 2023-07-28 18:28:41)
         $seconds = $dt->get_seconds_between($promotion["date_from"], $utcnow);
         $this->logd($seconds, "seconds");
         if($seconds<0)
