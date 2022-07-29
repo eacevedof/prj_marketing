@@ -65,28 +65,8 @@
 $this->_element_view("form-home-contact-send");
 ?>
 <script type="module">
-const get_cookie = name => {
-  const parts = document.cookie.split("; ")
-  const obj = parts
-      .map(str => str.split("="))
-      .filter(ar => ar[0] === name)
-      .map(ar => ar[1])
-  return obj.length ? obj[0] : null
-}
-const set_cookie = (name, value, days=1) => {
-  const pieces = [
-    `${name}=${value?.toString() || ""}`
-  ]
+import set_cookie, {get_cookie} from "/assets/js/common/cookie.js"
 
-  if (days) {
-    const date = new Date()
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
-    pieces.push(`expires=${date.toUTCString()}`)
-  }
-
-  pieces.push("path=/")
-  document.cookie = pieces.join("; ")
-}
 const body = document.querySelector("body")
 const dialog = document.querySelector("dialog")
 const cancel = document.querySelector("#button-exit")
