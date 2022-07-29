@@ -42,7 +42,7 @@
       <p>
         <?= __("All your confirmed subscribers will accumulate points and you can handle these in order to increase customer loyalty.  For example by remarketing strategy.");?>
       </p>
-      <button id="btn-cta" class="button-cta"><?= __("Join us!");?></button>
+      <button id="button-cta" class="button-cta"><?= __("Join us!");?></button>
     </div>
 
     <figure class="figure-home-hero">
@@ -69,16 +69,17 @@ import set_cookie, {get_cookie} from "/assets/js/common/cookie.js"
 
 const body = document.querySelector("body")
 const dialog = document.querySelector("dialog")
-const cancel = document.querySelector("#button-exit")
-const show = document.querySelector("#btn-cta")
 
-show.addEventListener("click", () => {
+const $btncancel = document.querySelector("#button-exit")
+const $btncta = document.querySelector("#button-cta")
+
+$btncta.addEventListener("click", () => {
   body.style.overflow = "hidden"
   dialog.showModal()
 })
 
-if (cancel)
-  cancel.addEventListener("click", () => {
+if ($btncancel)
+  $btncancel.addEventListener("click", () => {
     body.style.overflow = "auto"
     dialog.close()
   })
@@ -89,10 +90,10 @@ langs.forEach(anchor => anchor.addEventListener("click", ()=>{
   location.reload()
 }))
 
-//show.click()
+//$btncta.click()
 window.addEventListener("DOMContentLoaded", ()=>{
   let lang = get_cookie("lang")
-  if (!lang) lang = "es"
+  if (!lang) lang = <?=getenv("APP_DEFAULT_LANG") ?? "es"?>
   set_cookie("lang", lang)
 
   const active = "nav-li-item-active"
