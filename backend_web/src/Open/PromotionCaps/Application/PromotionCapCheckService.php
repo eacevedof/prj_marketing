@@ -61,7 +61,9 @@ final class PromotionCapCheckService extends AppService
         $this->logd(date_default_timezone_get(), "php - tz");
         $this->logd($utcnow, "utcnow");
         $this->logd($promotion["date_from"], "date-from");
+        //esto hace utcnow - date_from (2022-07-29 17:53:33 - 2023-07-28 18:28:41)
         $seconds = $dt->get_seconds_between($promotion["date_from"], $utcnow);
+        $this->logd($seconds, "seconds");
         if($seconds<0)
             $this->_promocap_exception(
                 __("Sorry but this promotion has not started yet or is paused. Please try again later."),
