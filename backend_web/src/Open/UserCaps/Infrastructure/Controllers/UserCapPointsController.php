@@ -5,11 +5,11 @@
  */
 namespace App\Open\UserCaps\Infrastructure\Controllers;
 
-use App\Picklist\Application\PicklistService;
-use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Open\Business\Application\BusinessSpaceService;
 use App\Open\UserCaps\Application\UserCapPointsService;
+use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
@@ -17,6 +17,8 @@ final class UserCapPointsController extends OpenController
 {
     public function index(string $businessuuid, string $capuseruuid): void
     {
+        $istest = ($this->request->get_get("mode", "")==="test");
+        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promoslug);
         try {
             $business = SF::get_callable(UserCapPointsService::class, [
                 "businessuuid" => trim($businessuuid),
@@ -29,6 +31,7 @@ final class UserCapPointsController extends OpenController
             $this->set_layout("open/mypromos/success")
                 ->add_var(PageType::TITLE, $title)
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("total", $result["total_points"])
                 ->add_var("result", $result["result"]);
 
@@ -40,6 +43,7 @@ final class UserCapPointsController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render();
@@ -49,6 +53,7 @@ final class UserCapPointsController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render();

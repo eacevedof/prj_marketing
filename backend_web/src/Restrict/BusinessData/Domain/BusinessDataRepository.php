@@ -216,6 +216,24 @@ final class BusinessDataRepository extends AppRepository
         return $r[0] ?? [];
     }
 
+    public function get_space_by_uuid(string $businessuuid): array
+    {
+        $businessuuid = $this->_get_sanitized($businessuuid);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("businessdata.get_space_by_uuid")
+            ->set_table("$this->table as bd")
+            ->set_getfields([
+                "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business, bd.url_business AS businessurl, bd.user_logo_1 AS businesslogo",
+                "bd.url_social_fb AS urlfb, bd.url_social_ig AS urlig, bd.url_social_twitter AS urltwitter, bd.url_social_tiktok AS urltiktok",
+            ])
+            ->add_and("bd.uuid='$businessuuid'")
+            ->add_and("bd.delete_date IS NULL")
+            ->select()->sql()
+        ;
+        $r = $this->query($sql);
+        return $r[0] ?? [];
+    }
+
     public function is_disabled_by_iduser(int $iduser): bool
     {
         $sql = $this->_get_qbuilder()

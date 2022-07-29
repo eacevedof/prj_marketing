@@ -34,4 +34,9 @@ final class BusinessSpaceService extends AppService
         if (!$promouuid) return [];
         return $this->get_data_by_promotion($promouuid["uuid"]);
     }
+
+    public function get_data_by_uuid(string $businessuuid): array
+    {
+        return RF::get(BusinessDataRepository::class)->get_space_by_uuid($businessuuid);
+    }
 }
