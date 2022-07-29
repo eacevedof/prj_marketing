@@ -1,11 +1,6 @@
 <?php
 /**
- * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Open\Home\Infrastructure\Controllers\BusinessController
- * @file HomeController.php v1.0.0
- * @date 30-10-2021 14:33 SPAIN
- * @observations
  */
 namespace App\Open\Home\Infrastructure\Controllers;
 
@@ -13,7 +8,6 @@ use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\CsrfService;
 use App\Shared\Domain\Enums\PageType;
-
 
 final class HomeController extends OpenController
 {
@@ -23,6 +17,7 @@ final class HomeController extends OpenController
             ->add_var(PageType::TITLE, $title = __("My Promotions"))
             ->add_var(PageType::H1, $title)
             ->add_var(PageType::CSRF, SF::get(CsrfService::class)->get_token())
+            ->add_var("space", [])
             //->cache()
             ->render();
     }

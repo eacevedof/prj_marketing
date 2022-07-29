@@ -16,6 +16,7 @@ final class PrivacyPolicyInfoController extends OpenController
             $this->set_layout("open/mypromos/info")
                 ->add_var(PageType::TITLE, $title = __("Privacy Policy"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("result", $terms)
                 ->render_nv();
         }
@@ -24,6 +25,7 @@ final class PrivacyPolicyInfoController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Privacy Policy error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render_nv();

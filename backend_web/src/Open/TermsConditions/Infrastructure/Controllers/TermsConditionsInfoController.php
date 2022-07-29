@@ -61,13 +61,10 @@ final class TermsConditionsInfoController extends OpenController
         $istest = ($this->request->get_get("mode", "")==="test");
         $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promoslug);
         try {
-            $terms = SF::get(
-                TermsConditionsInfoService::class,
-                [
+            $terms = SF::get(TermsConditionsInfoService::class, [
                     "promoslug" => $promoslug,
                     RequestType::LANG => $this->request->get_request(RequestType::LANG, "")
-                ]
-            )->get_by_promotion();
+                ])->get_by_promotion();
 
             $this->set_layout("open/mypromos/info")
                 ->add_var(PageType::TITLE, $title = __("Terms & Conditions"))
