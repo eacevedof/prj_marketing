@@ -23,16 +23,14 @@
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <?php
-      $this->_element_view("update/main-content");
-      $this->_element_view("update/ui-content");
+      $this->_element_view("update/form-promotion-update");
+      $this->_element_view("update/form-promotion-ui-update");
       $this->_element_view("statistics");
       ?>
     </div><!--tab-content-->
 
   </div><!--card-body-->
 </div>
-<script type="module" src="/assets/js/restrict/promotions/update.js"></script>
-<script type="module" src="/assets/js/restrict/promotions/ui/update.js"></script>
 <?php
 $this->_element("restrict/elem-modal-launcher-showtab");
 ?>

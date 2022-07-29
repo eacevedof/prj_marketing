@@ -102,4 +102,4 @@ $promotion = [
       fields="<?php $this->_echo_jslit($promotion);?>"
   />
 </div>
-
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-update.js"></script>

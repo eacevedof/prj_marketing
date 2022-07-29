@@ -93,4 +93,4 @@ $result = [
     />
   </div>
 </div>
-<script type="module" src="/assets/js/restrict/promotions/insert.js"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-insert.js"></script>
