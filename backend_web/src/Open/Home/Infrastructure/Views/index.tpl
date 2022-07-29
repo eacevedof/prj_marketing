@@ -93,7 +93,7 @@ langs.forEach(anchor => anchor.addEventListener("click", ()=>{
 //$btncta.click()
 window.addEventListener("DOMContentLoaded", ()=>{
   let lang = get_cookie("lang")
-  if (!lang) lang = <?=getenv("APP_DEFAULT_LANG") ?? "es"?>
+  if (!lang) lang = <?php $this->_echo_js(getenv("APP_DEFAULT_LANG") ?? "es") ?>;
   set_cookie("lang", lang)
 
   const active = "nav-li-item-active"
