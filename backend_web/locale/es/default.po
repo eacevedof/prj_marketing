@@ -1193,7 +1193,7 @@ msgid "Subscription confirmation success!"
 msgstr "Confirmación de suscripción correcta!"
 
 msgid "<b>{0}</b>. You have successfully confirmed your subscription to <b>“{1}“</b>"
-msgstr "<b>{0}</b>. Ha confirmado correctamente su suscripción a <b>“{1}“</b>"
+msgstr "<b>{0}</b>. Ha confirmado correctamente su suscripción en <b>“{1}“</b>"
 
 msgid "Please check your email inbox. You will receive a voucher code which you should show it at <b>{0}</b>"
 msgstr "Por favor compruebe su bandeja de entrada. Recibirá un código de voucher que deberá mostarlo en <b>{0}</b>"
