@@ -17,11 +17,12 @@ final class UserCapPointsController extends OpenController
 {
     public function index(string $businessuuid, string $capuseruuid): void
     {
+        $businessuuid = trim($businessuuid);
         $istest = ($this->request->get_get("mode", "")==="test");
-        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promoslug);
+        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_uuid($businessuuid);
         try {
             $business = SF::get_callable(UserCapPointsService::class, [
-                "businessuuid" => trim($businessuuid),
+                "businessuuid" => $businessuuid,
                 "capuseruuid" => trim($capuseruuid),
             ]);
             $result = $business();
