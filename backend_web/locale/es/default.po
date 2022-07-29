@@ -1281,7 +1281,7 @@ msgid "Your accumulated points at <strong>{0}</strong> have been updated"
 msgstr "Tus puntos acumulados en <strong>{0}</strong> se han actualizado"
 
 msgid "Check it out"
-msgstr "Compruebalo"
+msgstr "Compruébalo"
 
 msgid "You have subscribed to promotion: <strong>“{0}“</strong> published by"
 msgstr "Te has suscrito a la promoción: <strong>“{0}“</strong> publicada por"
@@ -1627,3 +1627,6 @@ msgstr "por este motivo: {0}"
 
 msgid "Home"
 msgstr "Inicio"
+
+msgid "here"
+msgstr "aquí"
