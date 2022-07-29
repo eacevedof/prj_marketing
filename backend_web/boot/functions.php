@@ -105,7 +105,7 @@ function __(string $msgid): string
         $msgchanged = str_replace($rep, $str, $msgchanged);
     }
 
-    $lang = strtolower(trim($_REQUEST["lang"] ?? "es"));
+    $lang = strtolower(trim($_REQUEST["lang"] ?? "en"));
     if ($lang === "en") return $msgchanged;
 
     $pathpo = PATH_ROOT."/locale/$lang/default.po";

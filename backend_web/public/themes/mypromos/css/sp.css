@@ -10,4 +10,5 @@
 
 .section-grid .div-texts {
   border: 2px solid var(--color-clear-blue);
+  padding: 1rem;
 }

@@ -13,7 +13,7 @@
 }
 
 .section-grid .div-texts {
-    background-color: var(--color-white);
+    background-color: var(--color-white-alpha);
     border: 2px solid var(--color-clear-black);
     color: var(--color-clear-black);
     border-radius: 5px;
