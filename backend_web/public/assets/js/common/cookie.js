@@ -7,7 +7,7 @@ export const get_cookie = name => {
   return obj.length ? obj[0] : null
 }
 
-const set_cookie = (name, value, days) => {
+const set_cookie = (name, value, days=1) => {
   const pieces = [
     `${name}=${value?.toString() || ""}`
   ]
