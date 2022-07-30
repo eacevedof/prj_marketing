@@ -17,11 +17,15 @@ final class ComponentRouter
     private array $arrequest;
     private array $arArgs;
 
+    private static array $routes;
+
     public function __construct(array $arroutes=[], string $pathroutes="") 
     {
         $this->requesturi = $_SERVER["REQUEST_URI"];
         $this->pathroutes = $pathroutes;
         $this->arroutes = $arroutes;
+        self::$routes = $arroutes;
+
         $this->arrequest = [
             "url" => "",
             "url_pieces" => [],
@@ -36,6 +40,7 @@ final class ComponentRouter
         if($this->arroutes || !$this->pathroutes)
             return;
         $this->arroutes = include($this->pathroutes);
+        self::$routes = $this->arroutes;
     }
 
     private function _load_pieces(): void
@@ -231,9 +236,19 @@ final class ComponentRouter
         return $arrequest;
     }    
 
-    public static function from_primitives(array $body): self
+    public static function get_url(string $name, array $args=[]): string
     {
-        return new self($body["routes"], $body["path_routes"]);
+        $route = array_filter(function (array $route) use ($name) {
+            if (!$alias = ($route["name"] ?? "")) return false;
+            return trim($alias) === $name;
+        }, self::$routes);
+        if (!$route) return "";
+        $route = array_values($route);
+        $url = $route[0]["url"];
+        if (!$args) return $url;
+        $tags = array_keys($args);
+        $values = array_values($args);
+        return str_replace($tags, $values, $url);
     }
 
-}//ComponentRouter
+}
