@@ -10,5 +10,4 @@ final class RoutesComponent
     {
         return ComponentRouter::get_url($name, $args);
     }
-
 }
