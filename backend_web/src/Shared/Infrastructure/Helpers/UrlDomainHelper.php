@@ -29,6 +29,13 @@ final class UrlDomainHelper extends AppHelper implements IHelper
     {
         $url = $this->_get_full_url();
         if (is_null($append)) return $url;
+        return "$url$append";
+    }
+
+    public function get_full_urlds(?string $append=null): string
+    {
+        $url = $this->_get_full_url();
+        if (is_null($append)) return $url;
         return "$url/$append";
     }
 }

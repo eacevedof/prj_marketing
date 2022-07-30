@@ -9,6 +9,7 @@ use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Shared\Infrastructure\Components\Request\RoutesComponent as Routes;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
@@ -42,11 +43,13 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
 
-        $link = $this->domain->get_full_url("promotion/{$data["promocode"]}/confirm/{$data["subscode"]}");
+        Routes::url("subscription.confirm", [":promotionuuid"=>"", ":subscriptionuuid"=>""]);
+
+        $link = $this->domain->get_full_url("promocion/{$data["promocode"]}/confirm/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
 
-        $link = $this->domain->get_full_url("promotion/{$data["promocode"]}/cancel/{$data["subscode"]}");
+        $link = $this->domain->get_full_url("promocion/{$data["promocode"]}/cancel/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
@@ -81,7 +84,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $link = $this->domain->get_full_url("points/{$data["businesscode"]}/user/{$data["capusercode"]}");
         $data["points_link"] = $link;
 
-        $link = $this->domain->get_full_url("promotion/{$data["promocode"]}/cancel/{$data["subscode"]}");
+        $link = $this->domain->get_full_url("promocion/{$data["promocode"]}/cancel/{$data["subscode"]}");
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
