@@ -58,4 +58,5 @@ $user = [
       fields="<?php $this->_echo_jslit($user);?>"
   />
 </div>
+<script type="module" src="/assets/js/restrict/users/form-user-update.js"></script>
 

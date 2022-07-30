@@ -30,7 +30,6 @@ $permissions = [
 ];
 ?>
 <div id="permissions" class="tab-pane">
-  <!--assets/js/restrict/users/businessdata/update.js -->
   <form-user-permissions-update
       csrf=<?php $this->_echo_js($csrf);?>
 
@@ -40,3 +39,4 @@ $permissions = [
       fields="<?php $this->_echo_jslit($permissions);?>"
   />
 </div>
+<script type="module" src="/assets/js/restrict/users/permissions/form-user-permissions-update.js"></script>

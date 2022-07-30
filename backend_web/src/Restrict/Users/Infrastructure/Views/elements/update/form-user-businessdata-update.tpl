@@ -70,7 +70,6 @@ $businessdata = [
 ];
 ?>
 <div id="businessdata" class="tab-pane">
-    <!--assets/js/restrict/users/businessdata/update.js -->
     <form-user-businessdata-update
         csrf=<?php $this->_echo_js($csrf);?>
 
@@ -80,4 +79,4 @@ $businessdata = [
         fields="<?php $this->_echo_jslit($businessdata);?>"
     />
 </div>
-
+<script type="module" src="/assets/js/restrict/users/businessdata/form-user-businessdata-update.js"></script>
