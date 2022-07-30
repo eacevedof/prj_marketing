@@ -3,6 +3,14 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $space
  */
+
+use App\Shared\Infrastructure\Components\Request\RoutesComponent as Routes;
+
+$urls = [
+    "terms" => Routes::url("terms.general"),
+    "cookies" => Routes::url("cookies.policy"),
+    "privacy" => Routes::url("privacy.policy"),
+];
 ?>
 <footer class="footer-flex">
   <div class="item item-logo">
@@ -11,9 +19,9 @@
   <div class="item"></div>
   <div class="item item-links">
     <ul class="ul-links-flex">
-      <li><a href="/terms-and-conditions"><?=__("Terms & Conditions") ?></a></li>
-      <li><a href="/cookies-policy"><?=__("Cookies Policy") ?></a></li>
-      <li><a href="/privacy-policy"><?=__("Privacy Policy") ?></a></li>
+      <li><a href="<?=$urls["terms"]?>"><?=__("Terms & Conditions") ?></a></li>
+      <li><a href="<?=$urls["cookies"]?>"><?=__("Cookies Policy") ?></a></li>
+      <li><a href="<?=$urls["privacy"]?>"><?=__("Privacy Policy") ?></a></li>
     </ul>
   </div>
   <div class="item"></div>

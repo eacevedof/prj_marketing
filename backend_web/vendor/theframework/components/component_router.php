@@ -238,10 +238,10 @@ final class ComponentRouter
 
     public static function get_url(string $name, array $args=[]): string
     {
-        $route = array_filter(function (array $route) use ($name) {
+        $route = array_filter(self::$routes, function (array $route) use ($name) {
             if (!$alias = ($route["name"] ?? "")) return false;
             return trim($alias) === $name;
-        }, self::$routes);
+        });
         if (!$route) return "";
         $route = array_values($route);
         $url = $route[0]["url"];
