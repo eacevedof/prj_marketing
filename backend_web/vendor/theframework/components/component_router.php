@@ -247,10 +247,11 @@ final class ComponentRouter
         $url = $route[0]["url"];
         if (!$args) return $url;
         $tags = array_keys($args);
-        $values = array_values($args);
-        $values = array_map(function (string $tag){
+        $tags = array_map(function (string $tag){
             return str_starts_with($tag, ":") ? $tag : ":$tag";
-        }, $values);
+        }, $tags);
+
+        $values = array_values($args);
         return str_replace($tags, $values, $url);
     }
 
