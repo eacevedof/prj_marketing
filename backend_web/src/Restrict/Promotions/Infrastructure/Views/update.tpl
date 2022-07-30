@@ -15,8 +15,8 @@
     <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <?php
-        $this->_element_view("update/main-tab");
-        $this->_element_view("update/ui-tab");
+        $this->_element_view("update/form-promotion-update-tab");
+        $this->_element_view("update/form-promotion-ui-update-tab");
         ?>
       </ul>
     </div><!--nav-->
