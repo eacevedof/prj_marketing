@@ -145,7 +145,6 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
           `
       },
-
       phone1: {
         position: this._input_phone1,
         input: html`
@@ -164,7 +163,6 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
           `
       },
-
       name2: {
         position: this._pos_name2,
         input: html`
@@ -183,7 +181,6 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
           `
       },
-
       language: {
         position: this._pos_language,
         input: html`
@@ -202,7 +199,6 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
           `
       },
-
       country: {
         position: this._pos_country,
         input: html`
@@ -221,7 +217,6 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
           `
       },
-
       birthdate: {
         position: this._pos_birthdate,
         input: html`
@@ -259,7 +254,6 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
           `
       },
-
       address: {
         position: this._pos_address,
         input: html`
@@ -278,7 +272,6 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
           `
       },
-
       is_mailing: {
         position: this._pos_is_mailing,
         input: html`
@@ -316,14 +309,19 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
         `
       },
-
-
     }
 
+  }//get_inputs
+
+  _handle_keyup(e, field) {
+    const value = e.target.value
+    this[field] = value
   }
+
 
   //4
   render() {
+    const inputs = Array.from(Object.keys(this.get_inputs())).map(field => this.get_inputs()[field])
     return html`
     <form @submit=${this.on_submit}>
       <div>
@@ -336,7 +334,7 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
         </thead>
         <tbody>
-
+          ${inputs.map(obj => obj?.input)}
         </tbody>
       </table>
    
