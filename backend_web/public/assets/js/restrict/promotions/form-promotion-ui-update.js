@@ -203,6 +203,120 @@ export class FormPromotionUiUpdate extends LitElement {
           `
       },
 
+      country: {
+        position: this._pos_country,
+        input: html`
+          <tr>
+            <td>${this.texts.f14}</td>
+            <td>
+              <select id="input_country" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_country}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_country" .value=${this._pos_country} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+      birthdate: {
+        position: this._pos_birthdate,
+        input: html`
+          <tr>
+            <td>${this.texts.f18}</td>
+            <td>
+              <select id="input_birthdate" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_birthdate}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_birthdate" .value=${this._pos_birthdate} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+      gender: {
+        position: this._pos_gender,
+        input: html`
+          <tr>
+            <td>${this.texts.f20}</td>
+            <td>
+              <select id="input_gender" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_gender}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_gender" .value=${this._pos_gender} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+      address: {
+        position: this._pos_address,
+        input: html`
+          <tr>
+            <td>${this.texts.f22}</td>
+            <td>
+              <select id="input_address" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_address} >${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_address" .value=${this._pos_address} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+      is_mailing: {
+        position: this._pos_is_mailing,
+        input: html`
+          <tr>
+            <td>${this.texts.f24}</td>
+            <td>
+              <select id="input_is_mailing" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_is_mailing}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_is_mailing" .value=${this._pos_is_mailing} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+      is_terms: {
+        position: this._pos_is_terms,
+        input: html`
+          <tr>
+            <td>${this.texts.f26}</td>
+            <td>
+              <select id="input_is_terms" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_is_terms}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_is_terms" .value=${this._pos_is_terms} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+        `
+      },
+
 
     }
 
@@ -222,110 +336,7 @@ export class FormPromotionUiUpdate extends LitElement {
           </tr>
         </thead>
         <tbody>
-          <!--email-->
-          
-          
-          <!--input_name1-->
- 
 
-          <!--input_phone1-->
-  
-          
-          <!--input_name2-->
- 
-          
-          <!--input_language-->
- 
-
-          <!--input_country-->
-          <tr>
-            <td>${this.texts.f14}</td>
-            <td>
-              <select id="input_country" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_country}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_country" .value=${this._pos_country} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          
-          <!--input_birthdate-->
-          <tr>
-            <td>${this.texts.f18}</td>
-            <td>
-              <select id="input_birthdate" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_birthdate}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_birthdate" .value=${this._pos_birthdate} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-
-          <!--input_gender-->
-          <tr>
-            <td>${this.texts.f20}</td>
-            <td>
-              <select id="input_gender" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_gender}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_gender" .value=${this._pos_gender} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-
-          <!--input_address-->
-          <tr>
-            <td>${this.texts.f22}</td>
-            <td>
-              <select id="input_address" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_address} >${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_address" .value=${this._pos_address} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          
-          <!--input_is_mailing-->
-          <tr>
-            <td>${this.texts.f24}</td>
-            <td>
-              <select id="input_is_mailing" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                  html`<option value=${item.key} ?selected=${item.key===this._input_is_mailing}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_is_mailing" .value=${this._pos_is_mailing} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          
-          <!--input_is_terms-->
-          <tr>
-            <td>${this.texts.f26}</td>
-            <td>
-              <select id="input_is_terms" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                  html`<option value=${item.key} ?selected=${item.key===this._input_is_terms}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_is_terms" .value=${this._pos_is_terms} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>        
         </tbody>
       </table>
    
