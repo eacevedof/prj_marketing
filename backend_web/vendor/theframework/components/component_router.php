@@ -12,26 +12,30 @@ namespace TheFramework\Components;
 final class ComponentRouter
 {   
     private $sRequestUri;
-    private $sPathRoutes;
+    private $pathroutes;
     private $arRoutes;
     private $arRequest;
     private $arArgs;
 
-    public function __construct($arRoutes=[],$sPathRoutes="") 
+    public function __construct(array $arRoutes=[], string $pathroutes="") 
     {
         $this->sRequestUri = $_SERVER["REQUEST_URI"];
-        $this->sPathRoutes = $sPathRoutes;
+        $this->pathroutes = $pathroutes;
         $this->arRoutes = $arRoutes;
-        $this->arRequest = ["url"=>"","url_pieces"=>[],"get_params"=>[]];
+        $this->arRequest = [
+            "url" => "",
+            "url_pieces" => [],
+            "get_params" => []
+        ];
         $this->_load_routes();
         $this->_load_pieces();
     }
     
     private function _load_routes(): void
     {
-        if($this->arRoutes || !$this->sPathRoutes)
+        if($this->arRoutes || !$this->pathroutes)
             return;
-        $this->arRoutes = include($this->sPathRoutes);
+        $this->arRoutes = include($this->pathroutes);
     }
 
     private function _load_pieces(): void
