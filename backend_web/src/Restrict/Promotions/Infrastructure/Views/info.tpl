@@ -78,13 +78,28 @@
 
       <div class="tab-pane" id="tab-design">
         <ol>
-          <li><b><?=__("Bg color")?>:</b>&ensp;<span><?=$promotion["bgcolor"] ?? ""?></span></li>
-          <li><b><?=__("Bg image xs")?>:</b>&ensp;<span><?=$promotion["bgimage_xs"] ?? ""?></span></li>
+          <li>
+            <b><?=__("Bg color")?>:</b>
+            <span style="background-color: <?=$promotion["bgcolor"]?>; border: black">
+              <?=$promotion["bgcolor"] ?? ""?>
+            </span>
+          </li>
+          <li>
+            <b><?=__("Bg image xs")?>:</b>&ensp;
+            <span>
+              <?php
+              $urlimg = $promotion["bgimage_xs"] ?? "";
+              ?>
+              <a href="<?=$urlimg?>" target="_blank"><img src="<?=$urlimg?>" /></a>
+            </span>
+          </li>
+<!--
           <li><b><?=__("Bg image sm")?>:</b>&ensp;<span><?=$promotion["bgimage_sm"] ?? ""?></span></li>
           <li><b><?=__("Bg image md")?>:</b>&ensp;<span><?=$promotion["bgimage_md"] ?? ""?></span></li>
           <li><b><?=__("Bg image lg")?>:</b>&ensp;<span><?=$promotion["bgimage_lg"] ?? ""?></span></li>
           <li><b><?=__("Bg image xl")?>:</b>&ensp;<span><?=$promotion["bgimage_xl"] ?? ""?></span></li>
           <li><b><?=__("Bg image xxl")?>:</b>&ensp;<span><?=$promotion["bgimage_xxl"] ?? ""?></span></li>
+-->
         </ol>
       </div><!--tab-design-->
 
