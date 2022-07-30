@@ -360,12 +360,10 @@ export class FormPromotionUiUpdate extends LitElement {
         field,
         order: parseInt(inputs[field].position)
       }))
-      .sort((oba, obb) => oba.order - obb.order)
+      .sort((ogt, olt) => ogt.order - olt.order)
 
-    console.log("FIELDS",fields)
     const ordered = {}
     fields.forEach(obj => ordered[obj.field] = inputs[obj.field])
-    console.log("ORDERED",ordered)
     return ordered
   }//get_inputs
 
