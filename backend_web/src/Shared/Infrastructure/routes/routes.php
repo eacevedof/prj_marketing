@@ -18,7 +18,7 @@ return [
     ["url"=>"/politica-de-cookies","controller"=>"App\Open\CookiesPolicy\Infrastructure\Controllers\CookiesPolicyInfoController", "method"=>"index", "allowed"=>["get"], "name"=>"cookies.policy"],
     ["url"=>"/politica-de-privacidad","controller"=>"App\Open\PrivacyPolicy\Infrastructure\Controllers\PrivacyPolicyInfoController", "method"=>"index", "allowed"=>["get"], "name"=>"privacy.policy"],
 
-    ["url"=>"/contacto/mensaje","controller"=>"App\Open\Home\Infrastructure\Controllers\ContactSendController","method"=>"send", "allowed"=>["post"], "name"=>"contact.message"],
+    ["url"=>"/contact/send","controller"=>"App\Open\Home\Infrastructure\Controllers\ContactSendController","method"=>"send", "allowed"=>["post"], "name"=>"contact.send"],
 
     ["url"=>"/login/access","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"access", "allowed"=>["post"], "name"=>"login.access"],
     ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index", "allowed"=>["get"], "name"=>"login"],
