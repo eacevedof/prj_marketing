@@ -108,7 +108,7 @@ export class FormPromotionUiUpdate extends LitElement {
   }
 
   get_inputs() {
-    return {
+    const inputs = {
       email: {
         position: this._pos_email,
         input: html`
@@ -154,7 +154,7 @@ export class FormPromotionUiUpdate extends LitElement {
           `
       },
       phone1: {
-        position: this._input_phone1,
+        position: this._pos_phone1,
         input: html`
           <tr>
             <td>${this.texts.f16}</td>
@@ -355,13 +355,24 @@ export class FormPromotionUiUpdate extends LitElement {
       },
     }
 
+    const fields = Array.from(Object.keys(inputs))
+      .map(field => ({
+        field,
+        order: parseInt(inputs[field].position)
+      }))
+      .sort((oba, obb) => oba.order - obb.order)
+
+    console.log("FIELDS",fields)
+    const ordered = {}
+    fields.forEach(obj => ordered[obj.field] = inputs[obj.field])
+    console.log("ORDERED",ordered)
+    return ordered
   }//get_inputs
 
   _handle_keyup(e, field) {
     const value = e.target.value
     this[field] = value
   }
-
 
   //4
   render() {

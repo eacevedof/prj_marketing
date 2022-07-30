@@ -42,7 +42,7 @@ final class PromotionUiUpdateService extends AppService
         if (!$promotion = $this->repopromotion->get_by_uuid($promouuid))
             $this->_exception(__("{0} with code {1} not found", __("Promotion"), $promouuid));
 
-        if ($promotion["is_launched"])
+        if ($this->repopromotion->has_subscribers_by_uuid($promouuid))
             $this->_exception(__("{0} with code {1} is not editable", __("Promotion"), $promouuid));
 
         $this->idpromotion = $promotion["id"];
