@@ -230,5 +230,10 @@ final class ComponentRouter
         $this->_unset_empties($arrequest);
         return $arrequest;
     }    
-    
+
+    public static function from_primitives(array $body): self
+    {
+        return new self($body["routes"], $body["path_routes"]);
+    }
+
 }//ComponentRouter
