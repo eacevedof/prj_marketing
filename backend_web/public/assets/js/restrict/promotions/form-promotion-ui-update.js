@@ -126,8 +126,28 @@ export class FormPromotionUiUpdate extends LitElement {
             </td>
           </tr>
           `
-      }
-    },
+      },
+      name1: {
+        position: this._pos_name1,
+        input: html`
+          <tr>
+            <td>${this.texts.f08}</td>
+            <td>
+              <select id="input_name1" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_name1}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_name1" .value=${this._pos_name1} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+
+    }
 
   }
 
@@ -149,19 +169,7 @@ export class FormPromotionUiUpdate extends LitElement {
           
           
           <!--input_name1-->
-          <tr>
-            <td>${this.texts.f08}</td>
-            <td>
-              <select id="input_name1" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_name1}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_name1" .value=${this._pos_name1} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
+ 
 
           <!--input_phone1-->
           <tr>
