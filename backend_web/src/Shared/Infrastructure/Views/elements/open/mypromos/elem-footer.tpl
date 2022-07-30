@@ -7,6 +7,7 @@
 use App\Shared\Infrastructure\Components\Request\RoutesComponent as Routes;
 
 $urls = [
+    "home" => Routes::url("home"),
     "terms" => Routes::url("terms.general"),
     "cookies" => Routes::url("cookies.policy"),
     "privacy" => Routes::url("privacy.policy"),
@@ -14,7 +15,7 @@ $urls = [
 ?>
 <footer class="footer-flex">
   <div class="item item-logo">
-    <a href="/"><img src="/themes/mypromos/images/provider-xxx-logo-white.svg">providerxxx.es</a></li>
+    <a href="<?=$urls["terms"]?>"><img src="/themes/mypromos/images/provider-xxx-logo-white.svg">providerxxx.es</a></li>
   </div>
   <div class="item"></div>
   <div class="item item-links">
