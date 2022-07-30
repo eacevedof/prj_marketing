@@ -196,7 +196,7 @@ export class FormPromotionUpdate extends LitElement {
             <label>${this.texts.f06}: </label>
             <span>
             ${html([
-              get_link_local("promotion/"+this._businessslug.concat("/") + this._slug.concat("?mode=test"), this._slug)
+              get_link_local("promocion/"+this._businessslug.concat("/") + this._slug.concat("?mode=test"), this._slug)
             ])}
             </span>
           </div>
