@@ -146,6 +146,63 @@ export class FormPromotionUiUpdate extends LitElement {
           `
       },
 
+      phone1: {
+        position: this._input_phone1,
+        input: html`
+          <tr>
+            <td>${this.texts.f16}</td>
+            <td>
+              <select id="input_phone1" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_phone1}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_phone1" .value=${this._pos_phone1} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+      name2: {
+        position: this._pos_name2,
+        input: html`
+          <tr>
+            <td>${this.texts.f10}</td>
+            <td>
+              <select id="input_name2" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_name2}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_name2" .value=${this._pos_name2} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
+      language: {
+        position: this._pos_language,
+        input: html`
+          <tr>
+            <td>${this.texts.f12}</td>
+            <td>
+              <select id="input_language" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_language}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_language" .value=${this._pos_language} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      },
+
 
     }
 
@@ -172,49 +229,13 @@ export class FormPromotionUiUpdate extends LitElement {
  
 
           <!--input_phone1-->
-          <tr>
-            <td>${this.texts.f16}</td>
-            <td>
-              <select id="input_phone1" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_phone1}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_phone1" .value=${this._pos_phone1} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
+  
           
           <!--input_name2-->
-          <tr>
-            <td>${this.texts.f10}</td>
-            <td>
-              <select id="input_name2" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_name2}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_name2" .value=${this._pos_name2} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
+ 
           
           <!--input_language-->
-          <tr>
-            <td>${this.texts.f12}</td>
-            <td>
-              <select id="input_language" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_language}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_language" .value=${this._pos_language} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
+ 
 
           <!--input_country-->
           <tr>
