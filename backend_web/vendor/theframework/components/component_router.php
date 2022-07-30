@@ -11,18 +11,18 @@ namespace TheFramework\Components;
 
 final class ComponentRouter
 {   
-    private $sRequestUri;
-    private $pathroutes;
-    private $arRoutes;
-    private $arRequest;
-    private $arArgs;
+    private string $requesturi;
+    private string $pathroutes;
+    private array $arroutes;
+    private array $arrequest;
+    private array $arArgs;
 
-    public function __construct(array $arRoutes=[], string $pathroutes="") 
+    public function __construct(array $arroutes=[], string $pathroutes="") 
     {
-        $this->sRequestUri = $_SERVER["REQUEST_URI"];
+        $this->requesturi = $_SERVER["REQUEST_URI"];
         $this->pathroutes = $pathroutes;
-        $this->arRoutes = $arRoutes;
-        $this->arRequest = [
+        $this->arroutes = $arroutes;
+        $this->arrequest = [
             "url" => "",
             "url_pieces" => [],
             "get_params" => []
@@ -33,24 +33,24 @@ final class ComponentRouter
     
     private function _load_routes(): void
     {
-        if($this->arRoutes || !$this->pathroutes)
+        if($this->arroutes || !$this->pathroutes)
             return;
-        $this->arRoutes = include($this->pathroutes);
+        $this->arroutes = include($this->pathroutes);
     }
 
     private function _load_pieces(): void
     {
-        $arGet = $this->_get_get_params($this->sRequestUri);
-        $arUrlsep = $this->_get_url_pieces($this->sRequestUri);
-        $this->arRequest["url"] = "/".implode("/",$arUrlsep);
-        $this->arRequest["url_pieces"] = $arUrlsep;
-        $this->arRequest["get_params"] = $arGet;
+        $arGet = $this->_get_get_params($this->requesturi);
+        $arUrlsep = $this->_get_url_pieces($this->requesturi);
+        $this->arrequest["url"] = "/".implode("/",$arUrlsep);
+        $this->arrequest["url_pieces"] = $arUrlsep;
+        $this->arrequest["get_params"] = $arGet;
     }
 
     private function _search_exact(): array
     {
-        $requri = $this->arRequest["url"];
-        $routes = array_filter($this->arRoutes, function ($route) use ($requri) {
+        $requri = $this->arrequest["url"];
+        $routes = array_filter($this->arroutes, function ($route) use ($requri) {
             return $route["url"] === $requri;
         });
         return reset($routes) ?: [];
@@ -59,22 +59,22 @@ final class ComponentRouter
     private function _search_by_pieces(): array
     {
         $isFound = false;
-        foreach($this->arRoutes as $i=>$arRoute)
+        foreach($this->arroutes as $i=>$arRoute)
         {
             $sUrl = $arRoute["url"];
-            $arRouteSep = $this->_get_url_pieces($sUrl, true);
+            $arroutesep = $this->_get_url_pieces($sUrl, true);
             $this->arArgs = [];
             //compare pieces comprueba todo, tammaño y tags
-            $isFound = $this->_compare_pieces($this->arRequest["url_pieces"], $arRouteSep);
+            $isFound = $this->_compare_pieces($this->arrequest["url_pieces"], $arroutesep);
             if($isFound)
                 break;
         }
         
         if($isFound)
-            $this->_add_to_get($this->arRequest["url_pieces"], $arRouteSep);
+            $this->_add_to_get($this->arrequest["url_pieces"], $arroutesep);
 
         return array_merge(
-            $this->arRoutes[$i],
+            $this->arroutes[$i],
             $this->arArgs ? ["_args" => $this->arArgs] : []
         );
     }
@@ -107,37 +107,37 @@ final class ComponentRouter
         return false;
     }
 
-    private function _compare_pieces(array $arRequest,array $arRoute): bool
+    private function _compare_pieces(array $arrequest,array $arRoute): bool
     {
-        if(!$this->_is_probable($arRequest, $arRoute))
+        if(!$this->_is_probable($arrequest, $arRoute))
             return false;
         
         foreach($arRoute as $i=>$sPiece)
         {
             if ($this->_is_tag($sPiece)) {
                 $tag = $this->_get_taginfo($sPiece);
-                $value = $arRequest[$i] ?? null;
+                $value = $arrequest[$i] ?? null;
                 if(!$this->_match_type($value, $tag["types"]))
                     return false;
 
                 $this->arArgs[$tag["key"]] = $value;
                 continue;
             }
-            $sReqval = $arRequest[$i];
+            $sReqval = $arrequest[$i];
             if($sReqval != $sPiece)
                 return false;
         }
         return true;
     }
     
-    private function _add_to_get(array $arRequest,array $arRoute): void
+    private function _add_to_get(array $arrequest,array $arRoute): void
     {
         foreach($arRoute as $i=>$sPiece)
         {
             if(!$this->_is_tag($sPiece))
                 continue;
             $tag = $this->_get_taginfo($sPiece);
-            $_GET[$tag["key"]] = $arRequest[$i] ?? "";
+            $_GET[$tag["key"]] = $arrequest[$i] ?? "";
         }
     }
     
@@ -208,14 +208,14 @@ final class ComponentRouter
         return $arParams;
     }
     
-    private function _unset_empties(&$arRequest): void
+    private function _unset_empties(&$arrequest): void
     {
         $arNew = [];
-        foreach($arRequest as $i=>$sValue)
+        foreach($arrequest as $i=>$sValue)
             if($sValue)
                 $arNew[] = $sValue;
         
-        $arRequest = $arNew;
+        $arrequest = $arNew;
     }
     
     private function _get_url_pieces(string $sUrl, bool $haspattern=false): array
@@ -225,10 +225,10 @@ final class ComponentRouter
             if(isset($arTmp[1])) $sUrl = $arTmp[0];
         }
 
-        $arRequest = explode("/",$sUrl);
-        //pr($arRequest);
-        $this->_unset_empties($arRequest);
-        return $arRequest;
+        $arrequest = explode("/",$sUrl);
+        //pr($arrequest);
+        $this->_unset_empties($arrequest);
+        return $arrequest;
     }    
     
 }//ComponentRouter
