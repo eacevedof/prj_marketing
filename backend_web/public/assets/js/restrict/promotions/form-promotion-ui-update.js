@@ -502,7 +502,7 @@ export class FormPromotionUiUpdate extends LitElement {
       .set_inner(this.texts.tr04)
       .show()
 
-    this.requestUpdate()
+    //this.requestUpdate()
   }//on_submit
 
 }//FormEdit
