@@ -3,15 +3,20 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $space
  */
-$urlpromo = $space["promotionlink"] ?? "";
+use App\Shared\Infrastructure\Components\Request\RoutesComponent as Routes;
+
+$urls = [
+    "home" => Routes::url("home"),
+    "promocreate" => $space["promotionlink"] ?? "",
+];
 ?>
 <section class="section-scrumbs center-x">
 <ul>
   <li><a href="/">&#8962; <?=__("Home")?></a></li>
   <?php
-  if ($urlpromo):
+  if ($url = $urls["promocreate"]):
   ?>
-  <li><a href="<?=$urlpromo?>"><?php $this->_echo($space["promotion"]);?></a></li>
+  <li><a href="<?=$url?>"><?php $this->_echo($space["promotion"]);?></a></li>
   <?php
   endif;
   ?>

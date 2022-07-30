@@ -4,6 +4,7 @@ namespace App\Open\Business\Application;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Components\Request\RoutesComponent as Routes;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 
@@ -22,7 +23,11 @@ final class BusinessSpaceService extends AppService
         $space =  RF::get(BusinessDataRepository::class)->get_space_by_promotion($promouuid);
         if (!$space) return [];
 
-        $url = "promotion/{$space["businessslug"]}/{$space["promoslug"]}";
+        $url = Routes::url("subscription.create", [
+            "businessslug"=>$space["businessslug"],
+            "promotionslug"=>$space["promoslug"]
+        ]);
+
         if ($this->istest) $url .= "?mode=test";
         $space["promotionlink"] = UrlDomainHelper::get_instance()->get_full_url($url);
         return $space;
