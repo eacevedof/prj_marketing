@@ -139,7 +139,9 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f08}</td>
             <td>
-              <select id="input_name1" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_name1")}>
+              <select id="input_name1" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} 
+                      @change=${e => this._handle_keyup(e, "_input_name1")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name1}>${item.value}</option>`
                 )}
@@ -162,7 +164,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f16}</td>
             <td>
-              <select id="input_phone1" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_phone1")}>
+              <select id="input_phone1" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_phone1")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_phone1}>${item.value}</option>`
                 )}
@@ -185,7 +188,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f10}</td>
             <td>
-              <select id="input_name2" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_name2")}>
+              <select id="input_name2" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_name2")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name2}>${item.value}</option>`
                 )}
@@ -208,7 +212,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f12}</td>
             <td>
-              <select id="input_language" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_language")}>
+              <select id="input_language" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_language")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_language}>${item.value}</option>`
                 )}
@@ -231,7 +236,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f14}</td>
             <td>
-              <select id="input_country" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_country")}>
+              <select id="input_country" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_country")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_country}>${item.value}</option>`
                 )}
@@ -254,7 +260,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f18}</td>
             <td>
-              <select id="input_birthdate" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_birthdate")}>
+              <select id="input_birthdate" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_birthdate")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_birthdate}>${item.value}</option>`
                 )}
@@ -278,7 +285,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f20}</td>
             <td>
-              <select id="input_gender" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_gender")}>
+              <select id="input_gender" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_gender")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_gender}>${item.value}</option>`
                 )}
@@ -301,7 +309,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f22}</td>
             <td>
-              <select id="input_address" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_address")}>
+              <select id="input_address" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_address")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_address} >${item.value}</option>`
                 )}
@@ -324,7 +333,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f24}</td>
             <td>
-              <select id="input_is_mailing" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_mailing")}>
+              <select id="input_is_mailing" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_mailing")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_is_mailing}>${item.value}</option>`
                 )}
@@ -348,7 +358,8 @@ export class FormPromotionUiUpdate extends LitElement {
           <tr>
             <td>${this.texts.f26}</td>
             <td>
-              <select id="input_is_terms" class="form-control" required ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_terms")}>
+              <select id="input_is_terms" class="form-control" required 
+                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_terms")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_is_terms}>${item.value}</option>`
                 )}
@@ -369,16 +380,22 @@ export class FormPromotionUiUpdate extends LitElement {
     const fields = Array.from(Object.keys(inputs))
       .map(field => ({
         field,
-        enabled: inputs[field].enabled,
+        enabled: parseInt(inputs[field].enabled),
         order: parseInt(inputs[field].position),
       }))
       .sort((ogt, olt) => ogt.order - olt.order)
 
+    console.log("FIELDS", fields)
     const ordered = {}
     fields.filter(obj => obj.enabled).forEach(obj => ordered[obj.field] = inputs[obj.field])
     fields.filter(obj => !obj.enabled).forEach(obj => ordered[obj.field] = inputs[obj.field])
     return ordered
   }//get_inputs
+
+  _handle_keyup(e, field) {
+    const value = e.target.value
+    this[field] = value
+  }
 
   //4
   render() {
