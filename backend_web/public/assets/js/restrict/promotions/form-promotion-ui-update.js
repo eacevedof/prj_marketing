@@ -107,6 +107,30 @@ export class FormPromotionUiUpdate extends LitElement {
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
   }
 
+  get_inputs() {
+    return {
+      email: {
+        position: this._pos_email,
+        input: html`
+          <tr>
+            <td>${this.texts.f06}</td>
+            <td>
+              <select id="input_email" class="form-control" required disabled>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._input_email}>${item.value}</option>`
+                )}
+              </select>
+            </td>
+            <td>
+              <input type="number" id="pos_email" .value=${this._pos_email} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+            </td>
+          </tr>
+          `
+      }
+    },
+
+  }
+
   //4
   render() {
     return html`
@@ -122,19 +146,7 @@ export class FormPromotionUiUpdate extends LitElement {
         </thead>
         <tbody>
           <!--email-->
-          <tr>
-            <td>${this.texts.f06}</td>
-            <td>
-              <select id="input_email" class="form-control" required disabled>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_email}>${item.value}</option>`
-                )}
-              </select>    
-            </td>
-            <td>
-              <input type="number" id="pos_email" .value=${this._pos_email} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
+          
           
           <!--input_name1-->
           <tr>
