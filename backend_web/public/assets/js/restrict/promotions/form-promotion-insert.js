@@ -110,7 +110,7 @@ export class FormPromotionInsert extends LitElement {
       <form @submit=${this.on_submit}>
         <div class="flex-row">
           ${this._businessowners.length > 0
-              ? html`<div class="form-group">
+              ? html`<div class="form-group col-12">
                 <label for="id_owner">${this.texts.f02}</label>
                 <div id="field-id_owner">
                   <select id="id_owner" class="form-control">
@@ -181,6 +181,7 @@ export class FormPromotionInsert extends LitElement {
           </div>
         </div>
         
+<!--        
         <div class="flex-row">
           <div class="form-group col-5">
             <label for="bgimage_sm">${this.texts.f12}</label>
@@ -229,8 +230,9 @@ export class FormPromotionInsert extends LitElement {
             ])}
           </div>
         </div>
-        
+-->
         <div class="flex-row">
+<!--
           <div class="form-group col-4">
             <label for="bgimage_xxl">${this.texts.f16}</label>
             <div id="field-bgimage_xxl">
@@ -241,7 +243,8 @@ export class FormPromotionInsert extends LitElement {
             ${html([
               get_img_link(this._bgimage_xxl)
             ])}
-          </div>          
+          </div>
+-->          
           <div class="form-group">
             <label for="max_confirmed">${this.texts.f19}</label>
             <div id="field-max_confirmed">
