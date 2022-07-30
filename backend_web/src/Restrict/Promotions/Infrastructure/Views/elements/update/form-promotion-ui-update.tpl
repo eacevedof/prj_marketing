@@ -88,7 +88,6 @@ $promotionui = [
 
     "disabled_date" => $result["promotion"]["disabled_date"],
 ];
-//dd($notoryes);
 ?>
 <div id="ui" class="tab-pane mb-2">
   <form-promotion-ui-update
