@@ -122,7 +122,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_email" .value=${this._pos_email} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_email" 
+                     .value=${this._pos_email} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_email")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -140,7 +144,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_name1" .value=${this._pos_name1} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_name1" 
+                     .value=${this._pos_name1} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_name1")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -158,7 +166,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_phone1" .value=${this._pos_phone1} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_phone1" 
+                     .value=${this._pos_phone1} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_phone1")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -176,7 +188,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_name2" .value=${this._pos_name2} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_name2" 
+                     .value=${this._pos_name2} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_name2")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -194,7 +210,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_language" .value=${this._pos_language} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_language" 
+                     .value=${this._pos_language} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_language")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -212,7 +232,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_country" .value=${this._pos_country} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_country" 
+                     .value=${this._pos_country} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_country")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -230,7 +254,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_birthdate" .value=${this._pos_birthdate} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_birthdate" 
+                     .value=${this._pos_birthdate} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_birthdate")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -249,7 +277,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_gender" .value=${this._pos_gender} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_gender" 
+                     .value=${this._pos_gender} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_gender")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -267,7 +299,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_address" .value=${this._pos_address} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_address" 
+                     .value=${this._pos_address} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_address")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -285,7 +321,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_is_mailing" .value=${this._pos_is_mailing} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_is_mailing" 
+                     .value=${this._pos_is_mailing} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_is_mailing")}
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
           `
@@ -304,7 +344,11 @@ export class FormPromotionUiUpdate extends LitElement {
               </select>
             </td>
             <td>
-              <input type="number" id="pos_is_terms" .value=${this._pos_is_terms} ?disabled=${this._disabled_date} min="1" max="999" class="form-control" maxlength="3">
+              <input type="number" id="pos_is_terms" 
+                     .value=${this._pos_is_terms} 
+                     ?disabled=${this._disabled_date}
+                     @change=${e => this._handle_keyup(e, "_pos_is_terms")} 
+                     min="1" max="999" class="form-control" maxlength="3">
             </td>
           </tr>
         `
