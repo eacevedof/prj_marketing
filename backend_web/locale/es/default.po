@@ -1598,7 +1598,7 @@ msgstr "No confirmada"
 msgid "Not allowed to validate because this promotion has finished"
 msgstr "No se permite validar porque esta promoción ha finalizado"
 
-msgid "Vaucher code validation"
+msgid "Voucher code validation"
 msgstr "Validación de código de voucher"
 
 msgid "Error reading data"

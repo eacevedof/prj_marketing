@@ -21,12 +21,11 @@
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <?php
-      $this->_element_view("update-status/main-content");
+      $this->_element_view("update-status/form-subscription-update");
       ?>
     </div><!--tab-content-->
   </div><!--card-body-->
 </div>
-<script type="module" src="/assets/js/restrict/subscriptions/update.js"></script>
 <?php
 $this->_element("restrict/elem-modal-launcher-showtab");
 ?>

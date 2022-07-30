@@ -30,7 +30,7 @@ $subscription = [
 
 ?>
 <div id="main" class="tab-pane active">
-  <h4><?=__("Vaucher code validation")?></h4>
+  <h4><?=__("Voucher code validation")?></h4>
   <br>
   <ul>
     <li><?=__("Business")?>: <?php $this->_echo($result["subscription"]["e_business"])?></li>
@@ -49,6 +49,7 @@ $subscription = [
 
       fields="<?php $this->_echo_jslit($subscription);?>"
   />
+  <script type="module" src="/assets/js/restrict/subscriptions/form-subscription-update.js"></script>
   <?php
   endif;
   ?>
