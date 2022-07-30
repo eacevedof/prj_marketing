@@ -122,12 +122,13 @@ export class FormPromotionInsert extends LitElement {
               </div>`
               : null
           }
-          <div class="form-group col-5">
+          <div class="form-group col-12">
             <label for="description">${this.texts.f05}</label>
             <div id="field-description">
               <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
             </div>
           </div>
+          
           <div class="form-group col-2">
             <label for="code_erp">${this.texts.f04}</label>
             <div id="field-code_erp">

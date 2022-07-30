@@ -43,7 +43,7 @@ export class FormPromotionUiUpdate extends LitElement {
   static properties = {
     csrf: { type: String },
     promotionuuid: {type:String},
-    disableflags: {type:String},
+    iseditable: {type:String},
 
     texts: {
       converter: (strjson) => {
@@ -105,6 +105,8 @@ export class FormPromotionUiUpdate extends LitElement {
     this._btncancel = this.texts.tr02
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
+
+    console.log("UI IS EDITABLE", this.iseditable,typeof this.iseditable)
   }
 
   get_inputs() {
@@ -140,7 +142,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f08}</td>
             <td>
               <select id="input_name1" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} 
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} 
                       @change=${e => this._handle_keyup(e, "_input_name1")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name1}>${item.value}</option>`
@@ -165,7 +167,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f16}</td>
             <td>
               <select id="input_phone1" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_phone1")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_phone1")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_phone1}>${item.value}</option>`
                 )}
@@ -189,7 +191,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f10}</td>
             <td>
               <select id="input_name2" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_name2")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_name2")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_name2}>${item.value}</option>`
                 )}
@@ -213,7 +215,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f12}</td>
             <td>
               <select id="input_language" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_language")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_language")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_language}>${item.value}</option>`
                 )}
@@ -237,7 +239,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f14}</td>
             <td>
               <select id="input_country" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_country")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_country")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_country}>${item.value}</option>`
                 )}
@@ -261,7 +263,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f18}</td>
             <td>
               <select id="input_birthdate" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_birthdate")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_birthdate")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_birthdate}>${item.value}</option>`
                 )}
@@ -286,7 +288,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f20}</td>
             <td>
               <select id="input_gender" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_gender")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_gender")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_gender}>${item.value}</option>`
                 )}
@@ -310,7 +312,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f22}</td>
             <td>
               <select id="input_address" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_address")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_address")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_address} >${item.value}</option>`
                 )}
@@ -334,7 +336,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f24}</td>
             <td>
               <select id="input_is_mailing" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_mailing")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_mailing")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_is_mailing}>${item.value}</option>`
                 )}
@@ -359,7 +361,7 @@ export class FormPromotionUiUpdate extends LitElement {
             <td>${this.texts.f26}</td>
             <td>
               <select id="input_is_terms" class="form-control" required 
-                      ?disabled=${this.disableflags==="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_terms")}>
+                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_terms")}>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._input_is_terms}>${item.value}</option>`
                 )}
@@ -385,7 +387,6 @@ export class FormPromotionUiUpdate extends LitElement {
       }))
       .sort((ogt, olt) => ogt.order - olt.order)
 
-    console.log("FIELDS", fields)
     const ordered = {}
     fields.filter(obj => obj.enabled).forEach(obj => ordered[obj.field] = inputs[obj.field])
     fields.filter(obj => !obj.enabled).forEach(obj => ordered[obj.field] = inputs[obj.field])
@@ -446,7 +447,7 @@ export class FormPromotionUiUpdate extends LitElement {
   //5
   firstUpdated() {
     try {
-      this._$get("id").focus()
+      this._$get("pos_email").focus()
     }
     catch (e) {
       console.log(e)

@@ -93,7 +93,7 @@ $promotionui = [
   <form-promotion-ui-update
       csrf=<?php $this->_echo_js($csrf);?>
       promotionuuid=<?php $this->_echo_js($result["promotion"]["uuid"]);?>
-      disableflags=<?php $this->_echo_js(!$result["promotion"]["is_editable"]);?>
+      iseditable=<?php $this->_echo_js((int)$result["promotion"]["is_editable"]);?>
 
       texts="<?php $this->_echo_jslit($texts);?>"
 

@@ -83,7 +83,7 @@ final class PromotionsInfoService extends AppService
 
     private function _map_entity(array &$promotion): void
     {
-        $promotion["is_editable"] = $this->repopromotion->has_subscribers_by_uuid($promotion["uuid"]);
+        $promotion["is_editable"] = !$this->repopromotion->has_subscribers_by_uuid($promotion["uuid"]);
         $tzto = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
         if ($tzto === TimezoneType::UTC) return;
         $utc = CF::get(UtcComponent::class);

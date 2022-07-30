@@ -179,7 +179,7 @@ export class FormPromotionUpdate extends LitElement {
               </div>`
               : null
           }
-          <div class="form-group col-8">
+          <div class="form-group col-12">
             <label for="description">${this.texts.f05}</label>
             <div class="tt-tooltip">
               <span class="tt-span">i</span>
