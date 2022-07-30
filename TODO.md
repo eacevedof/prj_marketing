@@ -2,7 +2,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
-- promo ui modificable si no hay nada capturado
+- la promoción deberia aparecer como bloqueada en general. la ui y su config. Habria que validar en back.
 - tratar el idioma por get lang=xxx que se sobreescriba
 - en texto legal falta logo de la cuenta 
 - en el js de la actualiacion de la proocion hay que escuchar el select owner para reenviarlo pq sino se queda con el valor anterior
@@ -49,6 +49,7 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~promo ui modificable si no hay nada capturado~~
 - ~~pagina index~~
 - ~~pagina de error controlado~~
 - ~~pagina de terminos y condiciones~~
