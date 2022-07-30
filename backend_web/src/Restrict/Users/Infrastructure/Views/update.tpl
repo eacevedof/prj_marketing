@@ -31,7 +31,7 @@ $this->_element_view("update/form-user-preferences-update-tab");
 $this->_element_view("update/form-user-update");
 $this->_element_view("update/form-user-permissions-update");
 $this->_element_view("update/form-user-businessdata-update");
-$this->_element_view("update/form-user-preferences-update-content");
+$this->_element_view("update/form-user-preferences-update");
 ?>
     </div><!--tab-content-->
   </div><!--card-body-->
