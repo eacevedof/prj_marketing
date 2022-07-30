@@ -33,7 +33,8 @@ final class UserRepository extends AppRepository implements IEventDispatcher
         $this->table = "base_user";
         $this->joins = [
             "fields" => [
-                "u1.description"  => "e_parent",
+                //"u1.description"  => "e_parent",
+                "COALESCE(CONCAT(bd.business_name,' (',u1.description,')'),u1.description)" => "e_parent",
                 "u2.description"  => "e_deletedby",
                 "ar1.description" => "e_language",
                 "ar2.description" => "e_profile",
@@ -41,6 +42,7 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ],
             "on" => [
                 "LEFT JOIN base_user u1 ON m.id_parent = u1.id",
+                "LEFT JOIN app_business_data bd ON m.id_parent = bd.id_user AND m.id_parent = u1.id",
                 "LEFT JOIN base_user u2 ON m.delete_user = u2.id",
                 "LEFT JOIN app_array ar1 ON m.id_language = ar1.id_pk AND ar1.type='language'",
                 "LEFT JOIN base_array ar2 ON m.id_profile = ar2.id_pk AND ar2.type='profile'",
@@ -184,11 +186,12 @@ final class UserRepository extends AppRepository implements IEventDispatcher
                 "m.id_profile","m.id_parent", "m.id_country", "m.id_language",
 
                 "ar2.description as e_profile",
-                "u.description as e_parent",
+                "COALESCE(CONCAT(bd.business_name,' (',m.description,')'),m.description) as e_parent",
                 "ar3.description as e_country",
                 "ar1.description as e_language",
             ])
             ->add_join("LEFT JOIN base_user u ON m.id_parent = u.id")
+            ->add_join("LEFT JOIN app_business_data bd ON m.id = bd.id_user")
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id_pk AND ar1.type='language'")
             ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id_pk AND ar2.type='profile'")
             ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
