@@ -8,7 +8,7 @@ import {cssformsubscription} from "/assets/js/open/promotioncap/form-promotion-c
 import validator, {PATTERNS} from "/assets/js/common/fields-validator.js"
 
 const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
-const URL_POST = "/open/promotionscap/:promouuid/insert"
+const URL_POST = "/promotionscap/:promouuid/insert"
 const ACTION = "promotioncap.insert"
 
 export class FormPromotionCapInsert extends LitElement {
