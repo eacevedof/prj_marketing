@@ -61,12 +61,12 @@ final class PicklistRepository extends AppRepository
         $sql = $this->_get_qbuilder()
             ->set_comment("picklist.get_business_owners")
             ->set_table("base_user as m")
-            ->set_getfields(["m.id","m.description"])
+            ->set_getfields(["m.id","COALESCE(CONCAT(bd.business_name,' (',m.description,')'),m.description) description"])
             ->add_join("INNER JOIN app_business_data bd ON bd.id_user=m.id")
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("TRIM(COALESCE(bd.slug,''))!=''")
-            ->add_orderby("m.description")
+            ->add_orderby("COALESCE(CONCAT(bd.business_name,' (',m.description,')'),m.description)")
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
