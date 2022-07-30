@@ -80,7 +80,7 @@
         <ol>
           <li>
             <b><?=__("Bg color")?>:</b>
-            <span style="background-color: <?=$promotion["bgcolor"]?>; border: black">
+            <span style="padding: 0 3px 0 3px; background-color: <?=$promotion["bgcolor"]?>; border: 1px solid black">
               <?=$promotion["bgcolor"] ?? ""?>
             </span>
           </li>
