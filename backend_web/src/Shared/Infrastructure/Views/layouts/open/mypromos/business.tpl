@@ -30,7 +30,7 @@ if ($bgimage = $space["businessbgimage"]):
 }
 <?php
 endif;
- ?>
+?>
 </style>
 <main class="main-grid" id="top-mark">
   <div class="div-wave-top">
