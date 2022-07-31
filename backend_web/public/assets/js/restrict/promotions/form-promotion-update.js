@@ -196,7 +196,7 @@ export class FormPromotionUpdate extends LitElement {
             <label>${this.texts.f06}: </label>
             <span>
             ${html([
-              get_link_local("promocion/"+this._businessslug.concat("/") + this._slug.concat("?mode=test"), this._slug)
+              get_link_local(this._promotionlink.concat("/").concat(this._slug.concat("?mode=test")), this._slug)
             ])}
             </span>
           </div>
@@ -559,7 +559,6 @@ export class FormPromotionUpdate extends LitElement {
     this._btnsend = this.texts.tr01
     error.clear()
 
-    console.log("promotions.update to-do handle id_owner")
     const response = await injson.put(
         URL_UPDATE.concat(`/${this.fields.uuid}`), {
           _action: ACTION,

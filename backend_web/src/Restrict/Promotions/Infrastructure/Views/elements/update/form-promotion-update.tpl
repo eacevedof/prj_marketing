@@ -86,7 +86,7 @@ $promotion = [
     "num_confirmed" => $promotion["num_confirmed"],
     "num_executed" => $promotion["num_executed"],
 
-    "businessslug" => $businessslug,
+    "promotionlink" => $promotion["promotionlink"],
     "timezones" => $timezones ?? [],
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,

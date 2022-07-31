@@ -12,6 +12,7 @@ namespace App\Restrict\Promotions\Infrastructure\Controllers;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
+use App\Open\Business\Application\BusinessSpaceService;
 use App\Restrict\Promotions\Application\PromotionsUpdateService;
 use App\Restrict\Promotions\Application\PromotionsInfoService;
 use App\Restrict\BusinessData\Application\BusinessDataInfoService;
@@ -27,13 +28,10 @@ use \Exception;
 
 final class PromotionsUpdateController extends RestrictController
 {
-    private PicklistService $picklist;
-    
     public function __construct()
     {
         parent::__construct();
         $this->_if_noauth_tologin();
-        $this->picklist = SF::get(PicklistService::class);
     }
 
     //@modal
@@ -49,13 +47,14 @@ final class PromotionsUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
+            $picklist = SF::get(PicklistService::class);
             $businessowners =  ($this->auth->is_system())
-                ? $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
+                ? $picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER)
                 : [];
 
             $edit = SF::get(PromotionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
-            $slug = SF::get(BusinessDataInfoService::class)->get_slug_by_id_user($result["promotion"]["id_owner"]);
+            $result["promotion"]["promotionlink"] = SF::get(BusinessSpaceService::class)->get_promotion_url($uuid) ?? "";
 
             //dd($result);
             $this->set_template("update")
@@ -65,13 +64,14 @@ final class PromotionsUpdateController extends RestrictController
                 ->add_var("user", $this->auth->get_user())
                 ->add_var("uuid", $uuid)
                 ->add_var("result", $result)
-                ->add_var("businessslug", $slug)
-                ->add_var("timezones", $this->picklist->get_timezones())
+                ->add_var("timezones", $picklist->get_timezones())
                 ->add_var("businessowners", $businessowners)
-                ->add_var("notoryes", $this->picklist->get_not_or_yes())
+                ->add_var("notoryes", $picklist->get_not_or_yes())
                 //->add_var("statistics", SF::get(PromotionsStatsService::class, ["uuid"=>$uuid])())
-                ->add_var("statspermission", $this->auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ))
-                ->render_nl();
+                ->add_var("statspermission", $this->auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ));
+
+            unset($picklist, $businessowners, $edit, $result, $slug);
+            $this->view->render_nl();
         }
         catch (NotFoundException $e) {
             $this->add_header(ResponseType::NOT_FOUND)

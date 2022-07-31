@@ -13,7 +13,7 @@ final class BusinessSpaceService extends AppService
     private bool $istest;
 
     //"_test_mode" => $this->request->get_get("mode", "")==="test",
-    public function __construct(array $input)
+    public function __construct(array $input=[])
     {
         $this->istest = $input["_test_mode"] ?? false;
     }
@@ -43,5 +43,17 @@ final class BusinessSpaceService extends AppService
     public function get_data_by_uuid(string $businessuuid): array
     {
         return RF::get(BusinessDataRepository::class)->get_space_by_uuid($businessuuid);
+    }
+
+    public function get_promotion_url(string $promouuid): string
+    {
+        $space =  RF::get(BusinessDataRepository::class)->get_space_by_promotion($promouuid);
+        if (!$space) return [];
+
+        $url = Routes::url("subscription.create", [
+            "businessslug"=>$space["businessslug"],
+            "promotionslug"=>$space["promoslug"]
+        ]);
+        return $this->istest ? "$url?mode=test" : $url;
     }
 }

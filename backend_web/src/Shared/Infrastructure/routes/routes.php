@@ -8,7 +8,7 @@ return [
     ],
 
     [
-        "url"=>"/promotionscap/:promouuid/insert",
+        "url"=>"/partner/:businessslug/promotionscap/:promouuid/insert",
         "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapInsertController",
         "method"=>"insert", "allowed"=>["post"],
         "name"=>"subscription.post"
