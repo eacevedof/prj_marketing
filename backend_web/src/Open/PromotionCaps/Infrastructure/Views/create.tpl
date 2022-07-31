@@ -1,27 +1,29 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
+ * @var array $space
  * @var array $result
  */
 use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\Views\PromotionCap\BusinessDataHelper as BH;
 use App\Shared\Infrastructure\Helpers\PromotionUiHelper as PH;
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $businessdata = $result["businessdata"] ?? [];
 $promotion = $result["promotion"];
 $promotionui = $result["promotionui"] ?? [];
 
 $bdhelp = HF::get(BH::class, $businessdata);
-$uihelp = HF::get(PH::class, $promotionui)
-?>
-<!--view:promotincaps.create.tpl-->
-<?php
+$uihelp = HF::get(PH::class, $promotionui);
+
 $this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdhelp"=>$bdhelp]);
+
+$businessurl = Routes::url("business.space", ["businessslug"=>$businessdata["slug"]]);
 ?>
 <main class="main-flex">
   <!-- nav to fixed -->
   <nav class="nav-flex">
-    <a href="<?php $this->_echo_nohtml($businessdata["url_business"]) ?>" rel="nofollow" target="_blank">
+    <a href="<?php $this->_echo($businessurl) ?>" target="_blank">
       <img src="<?php $this->_echo_nohtml($businessdata["user_logo_1"]) ?>">
     </a>
     <h1><?php $this->_echo_nohtml($promotion["description"]) ?></h1>

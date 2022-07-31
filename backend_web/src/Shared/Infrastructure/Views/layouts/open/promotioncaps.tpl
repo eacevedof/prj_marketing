@@ -1,6 +1,7 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
+ * @var array $space
  */
 ?>
 <!doctype html>
@@ -8,11 +9,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="/themes/mypromos/images/provider-xxx-logo-orange.svg"/>
-  <title><?=($pagetitle ?? "")?></title>
+  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/provider-xxx-logo-orange.svg")?>"/>
+  <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
   <?php
   echo $this->_asset_css([
-      "vendor/normalize/normalize-8.0.1.min",
       "vendor/snackbar/snackbar.min"
   ]);
   echo $this->_asset_js([

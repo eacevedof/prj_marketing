@@ -5,6 +5,7 @@
  */
 namespace App\Open\PromotionCaps\Infrastructure\Controllers;
 
+use App\Open\Business\Application\BusinessSpaceService;
 use App\Picklist\Application\PicklistService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
@@ -26,6 +27,8 @@ final class PromotionCapCreateController extends OpenController
                 ->add_var("code", $code)
                 ->render_nv();
 
+        $istest = ($this->request->get_get("mode", "")==="test");
+        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promotionslug);
         $picklist = SF::get(PicklistService::class);
         try {
             $promotioncap = SF::get_callable(PromotionCapInfoService::class, [
@@ -38,6 +41,7 @@ final class PromotionCapCreateController extends OpenController
             $this->set_layout("open/promotioncaps")
                 ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
                 ->add_var("result", $promotioncap)
                 ->add_var("languages", $picklist->get_languages())
                 ->add_var("genders", $picklist->get_genders())
@@ -51,6 +55,7 @@ final class PromotionCapCreateController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Subscription error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render();
@@ -60,6 +65,7 @@ final class PromotionCapCreateController extends OpenController
                 ->set_layout("open/mypromos/error")
                 ->add_var(PageType::TITLE, $title = __("Unexpected error!"))
                 ->add_var(PageType::H1, $title)
+                ->add_var("space", [])
                 ->add_var("error", $e->getMessage())
                 ->add_var("code", $e->getCode())
                 ->render();
