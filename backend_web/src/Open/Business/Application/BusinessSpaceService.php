@@ -106,6 +106,11 @@ final class BusinessSpaceService extends AppService
     {
         $slug = "el-chaln-peruvian-cousine-44";
         $promotions = RF::get(BusinessDataRepository::class)->get_top5_last_running_promotions_by_slug($slug);
+        $promotions = array_map(function (array $row) use ($slug) {
+            $description = htmlentities($row["description"]);
+            $url = Routes::url("subscription.create", ["businessslug"=>$slug, "promotionslug"=>$row["slug"]]);
+            return "<a href=\"$url\">{$description}</a> <small>Desde: {$row["date_from"]} / Hasta: {$row["date_to"]} UTC</small>";
+        }, $promotions);
         return [
             ["h2" => "Sobre EL CHALÁN"],
             ["p" => "Los precursores de la gastronomía peruana en Aruba, Betty e Isaac iniciaron este proyecto en 1997 desde su hogar donde cada peruano residente se sentía como en casa recordando el Perú."],
@@ -127,7 +132,7 @@ rel=\"nofollow noopener noreferer\"
                 "Acumula 5 puntos en 5 días seguidos y llévate un Arroz Chaufa gratis"
             ]],
             ["h3" => "Promociones en curso"],
-            ["ul" => []],
+            ["ul" => $promotions],
             ["p" => "<br/><br/><br/>"],
         ];
     }

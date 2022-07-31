@@ -269,7 +269,7 @@ final class BusinessDataRepository extends AppRepository
             ->set_comment("businessdata.get_top5_last_running_promotions_by_slug")
             ->set_table("$this->table as m")
             ->set_getfields(["p.slug, p.description, p.bgimage_xs, p.date_from, p.date_to"])
-            ->add_join("INNER JOIN `app_promotion` p ON ON m.id_user = p.id_owner")
+            ->add_join("INNER JOIN app_promotion p ON m.id_user = p.id_owner")
             ->add_and("m.slug='$businessslug'")
             ->add_and("m.delete_date IS NULL")
             ->add_and("p.delete_date IS NULL")
