@@ -33,7 +33,7 @@ final class BusinessController extends OpenController
         try {
             $space = SF::get(BusinessSpaceService::class)->get_data_by_slug($businessslug);
             $this->set_layout("open/mypromos/business")
-                ->add_var(PageType::TITLE, $title = $space["business_name"])
+                ->add_var(PageType::TITLE, $title = $space["business"])
                 ->add_var(PageType::H1, $title)
                 ->add_var("space", $space)
                 ->add_var("result", ["p"=>"hola mundo"])

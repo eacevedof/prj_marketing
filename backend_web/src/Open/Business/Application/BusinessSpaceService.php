@@ -66,11 +66,27 @@ final class BusinessSpaceService extends AppService
 
     public function get_data_by_slug(string $businessslug): array
     {
-        $bd = RF::get(BusinessDataRepository::class)->get_by_slug($businessslug);
+        $bd = RF::get(BusinessDataRepository::class)->get_by_slug(
+            $businessslug,
+            ["business_name", "url_business","user_logo_1", "url_social_fb", "url_social_ig", "url_social_twitter", "url_social_tiktok","body_bgimage"]
+        );
         if (!$bd) {
             throw new NotFoundException(__("Partner “{0}“ not found!", $businessslug));
         }
-        return $bd;
+
+        $r = [
+            "business" => $bd["business_name"],
+            //"businessurl" => Routes::url("business.space", ["businessslug"=>$bd["slug"]]),
+            //quiza conviene usar la url de su sitio original en el logo y en los restantes usar el del espacio
+            "businessurl" => $bd["url_business"],
+            "businesslogo" => $bd["user_logo_1"],
+            "businessbgimage" => $bd["body_bgimage"],
+            "urlfb" => $bd["url_social_fb"],
+            "urlig" => $bd["url_social_ig"],
+            "urltwitter" => $bd["url_social_twitter"],
+            "urltiktok" => $bd["url_social_tiktok"],
+        ];
+        return $r;
     }
 
     public function get_promotion_url(string $promouuid): string
