@@ -6,6 +6,8 @@ use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
@@ -104,13 +106,16 @@ final class BusinessSpaceService extends AppService
 
     public static function chalan(): array
     {
+        $tz = CF::get(UtcComponent::class)->get_timezone_by_ip($_SERVER["REMOTE_ADDR"]);
         $slug = "el-chaln-peruvian-cousine-44";
-        $promotions = RF::get(BusinessDataRepository::class)->get_top5_last_running_promotions_by_slug($slug);
-        $promotions = array_map(function (array $row) use ($slug) {
+        $promotions = RF::get(BusinessDataRepository::class)->get_top5_last_running_promotions_by_slug($slug, $tz);
+        $promotions = array_map(function (array $row) use ($slug, $tz) {
             $description = htmlentities($row["description"]);
             $url = Routes::url("subscription.create", ["businessslug"=>$slug, "promotionslug"=>$row["slug"]]);
-            return "<a href=\"$url\">{$description}</a> <small>Desde: {$row["date_from"]} / Hasta: {$row["date_to"]} UTC</small>";
+            return "<a href=\"$url\">{$description}</a> <small>Desde: {$row["date_from"]} / Hasta: {$row["date_to"]} $tz</small>";
         }, $promotions);
+
+
         return [
             ["h2" => "Sobre EL CHALÁN"],
             ["p" => "Los precursores de la gastronomía peruana en Aruba, Betty e Isaac iniciaron este proyecto en 1997 desde su hogar donde cada peruano residente se sentía como en casa recordando el Perú."],
