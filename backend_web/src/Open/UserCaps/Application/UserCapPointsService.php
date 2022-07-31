@@ -73,6 +73,7 @@ final class UserCapPointsService extends AppService
         $result = array_map(function (array $row) use($utc, $remoteip) {
             return [
                 "description" => $row["description"],
+                "subscriptionuuid" => $row["uuid"],
                 "date_execution" => $utc->get_utcdt_into_iptz($row["date_execution"], $remoteip, UTC::FORMAT_ONLY_DATE),
                 "points" => $row["p"],
             ];

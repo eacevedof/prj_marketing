@@ -203,7 +203,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->set_comment("promocapusers.get_points_by_email_in_account")
             ->set_table("$this->table as m")
             ->distinct()
-            ->set_getfields(["p.description, ps.date_execution, 1 AS p"])
+            ->set_getfields(["p.description, ps.uuid, ps.date_execution, 1 AS p"])
             ->add_join("
             INNER JOIN app_promotioncap_subscriptions AS ps 
             ON m.id = ps.id_promouser AND m.id_promotion = ps.id_promotion

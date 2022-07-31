@@ -27,7 +27,10 @@ if (!$total) {
   ?>
     <tr>
       <td><?php $this->_echo($i+1)?></td>
-      <td><?php $this->_echo($row["description"]);?></td>
+      <td>
+        <?php $this->_echo($row["description"]);?>
+        <sub>(<?php $this->_echo($row["subscriptionuuid"]);?>)</sub>
+      </td>
       <td><?php $this->_echo($row["date_execution"]);?></td>
       <td><?php $this->_echo($row["points"]);?></td>
     </tr>
