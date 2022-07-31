@@ -46,7 +46,7 @@ final class CsrfService extends AppService
         $moment = new ComponentMoment($date);
         $now = date("Y-m-d H:i:s");
         $mins = (int) $moment->get_nmins($now);
-        if($mins > self::VALID_TIME_IN_MINS) $this->_exception(__("Expired csrf {0}",6));
+        if($mins > self::VALID_TIME_IN_MINS) $this->_exception(__("Expired CSRF {0}",6));
     }
 
     public function get_token(): string

@@ -158,7 +158,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
                         return __("Empty value is not allowed");
 
                     if (!CheckerService::address_format($address))
-                        return __("Invalid {0} format. Only letters allowed", __("Address"));
+                        return __("Invalid {0} format. Only letters allowed.", __("Address"));
                 });
             }
 

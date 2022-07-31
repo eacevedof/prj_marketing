@@ -1636,3 +1636,33 @@ msgstr "Falta socio y/o código de usuario"
 
 msgid "Partner “{0}“ not found!"
 msgstr "Socio “{0}“ no encontrado!"
+
+msgid "Partner space error!"
+msgstr "Error de espacio de socio!"
+
+msgid "Invalid {0} format. Only letters allowed."
+msgstr "Formato de {0} inválido. Solo se permiten letras."
+
+msgid "Invalid {0} format. Use only numbers and white space please"
+msgstr "Formato de {0} inválido. Por favor solo usa números y blancos"
+
+msgid "Invalid {0} value"
+msgstr "Valor de {0} inválido"
+
+msgid "Invalid {0} format. Only 0 or 1 allowed"
+msgstr "Formato de {0} inválido. Solo se admite 0 y 1"
+
+msgid "Promotion {0} not found!"
+msgstr "Promoción {0} no encontrada!"
+
+msgid "Missing partner and/or subscription code"
+msgstr "Falta socio y/o código de suscripción"
+
+msgid "Missing partner and/or promotion"
+msgstr "Falta socio y/o promoción"
+
+msgid "Pos. Email"
+msgstr ""
+
+msgid "Pos. Name"
+msgstr "Pos. Nombre"
