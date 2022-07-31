@@ -30,7 +30,7 @@ export class FormPromotionUpdate extends LitElement {
 
   _get_data() {
     return get_formdata(this.shadowRoot)(this.fields)([
-        "id","id_owner","uuid","businessowners","notoryes","timezones","businessslug"
+        "id","id_owner","uuid","businessowners","notoryes","timezones","promotionlink"
     ])
   }
 
