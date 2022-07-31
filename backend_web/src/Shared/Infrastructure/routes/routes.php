@@ -1,7 +1,7 @@
 <?php
 return [
     [
-        "url"=>"/socios/:businessslug/promocion/:promotionslug",
+        "url"=>"/organizacion/:businessslug/promocion/:promotionslug",
         "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController",
         "method"=>"create", "allowed"=>["get"],
         "name"=>"subscription.create"
@@ -15,28 +15,28 @@ return [
     ],
 
     [
-        "url"=>"/socios/:businessslug/suscripcion/:subscriptionuuid/confirmar",
+        "url"=>"/organizacion/:businessslug/suscripcion/:subscriptionuuid/confirmar",
         "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController",
         "method"=>"confirm", "allowed"=>["get"],
         "name"=>"subscription.confirm"
     ],
 
     [
-        "url"=>"/socios/:businessslug/suscripcion/:subscriptionuuid/cancelar/",
+        "url"=>"/organizacion/:businessslug/suscripcion/:subscriptionuuid/cancelar/",
         "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCancelController",
         "method"=>"cancel", "allowed"=>["get"],
         "name"=>"subscription.cancel"
     ],
 
     [
-        "url"=>"/socios/:businessslug/puntos-usuario/:capuseruuid",
+        "url"=>"/organizacion/:businessslug/puntos-usuario/:capuseruuid",
         "controller"=>"App\Open\UserCaps\Infrastructure\Controllers\UserCapPointsController",
         "method"=>"index", "allowed"=>["get"],
         "name"=>"user.points"
     ],
 
     [
-        "url"=>"/socios/:businessslug",
+        "url"=>"/organizacion/:businessslug",
         "controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController",
         "method"=>"index",
         "name"=>"business.space"
