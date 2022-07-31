@@ -3,7 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $space
  */
-use App\Shared\Infrastructure\Components\Request\RoutesComponent as Routes;
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $urls = [
     "home" => Routes::url("home"),

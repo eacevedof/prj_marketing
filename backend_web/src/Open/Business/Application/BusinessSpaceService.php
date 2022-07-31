@@ -4,7 +4,7 @@ namespace App\Open\Business\Application;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Components\Request\RoutesComponent as Routes;
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 
