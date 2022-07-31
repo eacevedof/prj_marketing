@@ -1250,8 +1250,11 @@ msgstr "Para poder hacer efectivo el voucher, por favor, muestre el siguiente c√
 msgid "Keep in mind this code expires at {0} UTC"
 msgstr "Recuerda que este c√≥digo expira en {0} UTC"
 
-msgid "Please, click on this"
-msgstr "Por favor, haz click en este"
+msgid "You can click on this"
+msgstr "Puedes hacer click en este"
+
+msgid "link"
+msgstr "enlace"
 
 msgid "Accumulated points"
 msgstr "Puntos acumulados"
