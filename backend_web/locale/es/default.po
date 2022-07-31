@@ -1328,8 +1328,8 @@ msgstr "Usuario {0} sin email!"
 msgid "These codes are not congruent!"
 msgstr "Estos códigos no coinciden!"
 
-msgid "Accumulated points of <u>{0}</u> at “{1}“"
-msgstr "Puntos acumulados de <u>{0}</u> en “{1}“"
+msgid "Accumulated points of “{0}“ at “{1}“"
+msgstr "Puntos acumulados de “{0}“ en “{1}“"
 
 msgid "Accumulated points error!"
 msgstr "Error en puntos acumulados!"
