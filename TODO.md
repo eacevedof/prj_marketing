@@ -6,7 +6,6 @@
 - un usuario se puede suscribir tantas veces que desee siempre y cuando su suscripcion este en executed o cancelled
 - la promoción deberia aparecer como bloqueada en general. la ui y su config. Habria que validar en back.
 - tratar el idioma por get lang=xxx que se sobreescriba
-- ~~en texto legal falta logo de la cuenta~~ 
 - en el js de la actualiacion de la promocion hay que escuchar el select owner para reenviarlo pq sino se queda con el valor anterior
 - previsualizacin de mailing
 - mailing template
@@ -51,6 +50,7 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~en texto legal falta logo de la cuenta~~
 - ~~promo ui modificable si no hay nada capturado~~
 - ~~pagina index~~
 - ~~pagina de error controlado~~
