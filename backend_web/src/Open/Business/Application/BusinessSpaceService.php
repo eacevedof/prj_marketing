@@ -114,10 +114,11 @@ final class BusinessSpaceService extends AppService
             ["p" => "<a 
 href=\"https://www.google.com/maps/place/Caya+G.+F.+Betico+Croes+152,+Oranjestad,+Aruba/@12.5189601,-70.0309033,17z/data=!3m1!4b1!4m5!3m4!1s0x8e853894e2ca1f09:0x9a74e6e217c0a32c!8m2!3d12.5189601!4d-70.0287146\"
 target=\ª_blank\"
+rel=\"nofollow noopener noreferer\"
 >Abrir en Google Maps</a>"],
             ["h2" => "Datos de contacto"],
-            ["p" => "Email: <a href=\"mailto:elchalanaruba@hotmail.com\">elchalanaruba@hotmail.com</a>"],
-            ["p" => "Teléfono: <a href=\"tel:+297 582 7591\">+297 582 7591</a>"],
+            ["p" => "Email: <a href=\"mailto:elchalanaruba@hotmail.com\" rel=\"nofollow noopener noreferer\">elchalanaruba@hotmail.com</a>"],
+            ["p" => "Teléfono: <a href=\"tel:+297 582 7591\" rel=\"nofollow noopener noreferer\">+297 582 7591</a>"],
             ["p" => "Horario: 11:30 – 21:00"],
             ["h3" => "Planes por puntos"],
             ["ul" => [
@@ -125,6 +126,7 @@ target=\ª_blank\"
             ]],
             ["h3" => "Promociones en curso"],
             ["ul" => []],
+            ["p" => "<br/><br/><br/>"],
         ];
     }
 }
