@@ -14,9 +14,9 @@ use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
 final class PromotionCapConfirmController extends OpenController
 {
-    public function confirm(string $promotionuuid, string $subscriptionuuid): void
+    public function confirm(string $businessslug, string $subscriptionuuid): void
     {
-        if (!($promotionuuid && $subscriptionuuid))
+        if (!($businessslug && $subscriptionuuid))
             $this->set_layout("open/mypromos/error")
                 ->add_header($code = ResponseType::BAD_REQUEST)
                 ->add_var(PageType::TITLE, $title = __("Subscription confirmation error!"))
@@ -26,10 +26,11 @@ final class PromotionCapConfirmController extends OpenController
                 ->render_nv();
 
         $istest = ($this->request->get_get("mode", "")==="test");
-        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion($promotionuuid);
+        //space = bd + p
+        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promocap($subscriptionuuid);
         try {
             $insert = SF::get_callable(PromotionCapsConfirmService::class, [
-                "promotionuuid" => $promotionuuid,
+                "promotionuuid" => $space["promocode"] ?? "",
                 "subscriptionuuid" => $subscriptionuuid,
                 "_test_mode" => $istest,
             ]);

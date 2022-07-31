@@ -15,9 +15,8 @@ use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
 
 final class UserCapPointsController extends OpenController
 {
-    public function index(string $businessuuid, string $capuseruuid): void
+    public function index(string $businessslug, string $capuseruuid): void
     {
-        $businessuuid = trim($businessuuid);
         $istest = ($this->request->get_get("mode", "")==="test");
         $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_uuid($businessuuid);
         try {

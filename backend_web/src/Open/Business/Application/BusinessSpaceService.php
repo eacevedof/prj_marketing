@@ -7,15 +7,16 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 
 final class BusinessSpaceService extends AppService
 {
-    private bool $istest;
+    private int $istest;
 
     //"_test_mode" => $this->request->get_get("mode", "")==="test",
     public function __construct(array $input=[])
     {
-        $this->istest = $input["_test_mode"] ?? false;
+        $this->istest = (int)($input["_test_mode"] ?? "");
     }
 
     public function get_data_by_promotion(string $promouuid): array
@@ -36,6 +37,14 @@ final class BusinessSpaceService extends AppService
     public function get_data_by_promotion_slug(string $promoslug): array
     {
         $promouuid = RF::get(PromotionRepository::class)->get_by_slug($promoslug, ["uuid"]);
+        if (!$promouuid) return [];
+        return $this->get_data_by_promotion($promouuid["uuid"]);
+    }
+
+    public function get_data_by_promocap(string $promocapuuid): array
+    {
+        $promoid = RF::get(PromotionCapSubscriptionsRepository::class)->get_by_uuid($promocapuuid, ["id_promotion"])["id_promotion"] ?? 0;
+        $promouuid = RF::get(PromotionRepository::class)->get_by_id($promoid, ["uuid"]);
         if (!$promouuid) return [];
         return $this->get_data_by_promotion($promouuid["uuid"]);
     }

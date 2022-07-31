@@ -31,12 +31,6 @@ final class PromotionCapInfoService extends AppService  implements IEventDispatc
     public function __construct(array $input)
     {
         $this->_load_input($input);
-        if (!($input["businessslug"] ?? ""))
-            $this->_promocap_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
-
-        if (!($input["promotionslug"] ?? ""))
-            $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
-
         $this->istest = (int)($input["_test_mode"] ?? "");
 
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
@@ -102,6 +96,12 @@ final class PromotionCapInfoService extends AppService  implements IEventDispatc
 
     public function __invoke(): array
     {
+        if (!($input["businessslug"] ?? ""))
+            $this->_promocap_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
+
+        if (!($input["promotionslug"] ?? ""))
+            $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
+
         $this->_load_businessdata();
         $this->_load_promotion();
         $this->_load_promotionui();
@@ -114,4 +114,5 @@ final class PromotionCapInfoService extends AppService  implements IEventDispatc
             "metadata" => [],
         ];
     }
+
 }

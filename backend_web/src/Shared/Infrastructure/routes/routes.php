@@ -29,7 +29,7 @@ return [
     ],
 
     [
-        "url"=>"/socios/:businesslug/puntos-usuario/:capuseruuid",
+        "url"=>"/socios/:businessslug/puntos-usuario/:capuseruuid",
         "controller"=>"App\Open\UserCaps\Infrastructure\Controllers\UserCapPointsController",
         "method"=>"index", "allowed"=>["get"],
         "name"=>"user.points"

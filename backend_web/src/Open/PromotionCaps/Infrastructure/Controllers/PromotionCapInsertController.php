@@ -13,7 +13,7 @@ use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class PromotionCapInsertController extends OpenController
 {
-    public function insert(string $promouuid): void
+    public function insert(string $businessslug, string $promouuid): void
     {
         if (!$promouuid)
             $this->_get_json()
@@ -34,7 +34,7 @@ final class PromotionCapInsertController extends OpenController
                 ->set_error([__("Wrong action")])
                 ->show();
 
-        $post = ["_promotionuuid"=>$promouuid] + $post;
+        $post = array_merge(["_businessslug" => $businessslug, "_promotionuuid"=>$promouuid], $post);
         $insert = SF::get_callable(PromotionCapsInsertService::class, $post);
         try {
             $result = $insert();
