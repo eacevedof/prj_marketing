@@ -2,6 +2,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- is_terms se ve siempre a 1 cuando no se captura. Creo que es el valor por defcto.
 - hay que cuardar el idioma en la suscripción ya que se necesita para el envío del email de puntos. De lo contrario se enviara con el idioma del validador.
 - documentación / ayuda
 - un usuario se puede suscribir tantas veces que desee siempre y cuando su suscripcion este en executed o cancelled
