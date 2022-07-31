@@ -29,11 +29,11 @@ final class UserCapPointsController extends OpenController
         $istest = ($this->request->get_get("mode", "")==="test");
         $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promocapuser($capuseruuid);
         try {
-            $business = SF::get_callable(UserCapPointsService::class, [
+            $userpoints = SF::get_callable(UserCapPointsService::class, [
                 "businessuuid" => $space["businesscode"] ?? "",
                 "capuseruuid" => $capuseruuid,
             ]);
-            $result = $business();
+            $result = $userpoints();
 
             $title = $result["business_name"] ?? "";
             $title = __("Accumulated points of <u>{0}</u> at “{1}“", $result["username"] ?? $result["email"], $title);
@@ -44,7 +44,7 @@ final class UserCapPointsController extends OpenController
                 ->add_var("total", $result["total_points"])
                 ->add_var("result", $result["result"]);
 
-            unset($business, $result, $title, $businessuuid, $capuseruuid);
+            unset($userpoints, $result, $title, $businessuuid, $capuseruuid);
             $this->render();
         }
         catch (PromotionCapException $e) {
