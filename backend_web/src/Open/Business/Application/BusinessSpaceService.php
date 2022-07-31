@@ -107,15 +107,24 @@ final class BusinessSpaceService extends AppService
         return [
             ["h2" => "Sobre EL CHALÁN"],
             ["p" => "Los precursores de la gastronomía peruana en Aruba, Betty e Isaac iniciaron este proyecto en 1997 desde su hogar donde cada peruano residente se sentía como en casa recordando el Perú."],
-            ["p" => "Hoy en dia estamos en el corazón de Aruba (Oranjestad) firmes en transmitir y deleitar con esa hospitalidad y sazón de hogar a toda la Isla y visitantes. Nuestra Filosofía se resume en ser “Una Familia que sirve a Familias ” es por ello que convertimos una de las mejores gastronomías del mundo a precios alcanzables para todos. Visitenos y permitanos tener el honor de servirles, el único riesgo que corre es el querer repetir todos los días."],
+            ["p" => "Hoy en dia estamos en el corazón de Aruba (Oranjestad) firmes en transmitir y deleitar con esa hospitalidad y sazón de hogar a toda la Isla y visitantes."],
+            ["p" => "Nuestra Filosofía se resume en ser “Una Familia que sirve a Familias ” es por ello que convertimos una de las mejores gastronomías del mundo a precios alcanzables para todos. Visitenos y permitanos tener el honor de servirles, el único riesgo que corre es el querer repetir todos los días."],
             ["h2" => "¿Dónde estamos?"],
-            ["p" => "Caya Betico Croes 152 (975,93 km)
-            297 Oranjestad - <b>Aruba</b>"],
+            ["p" => "En Caya Betico Croes 152 (975,93 km) <br/> 297 Oranjestad - <b>Aruba</b>"],
+            ["p" => "<a 
+href=\"https://www.google.com/maps/place/Caya+G.+F.+Betico+Croes+152,+Oranjestad,+Aruba/@12.5189601,-70.0309033,17z/data=!3m1!4b1!4m5!3m4!1s0x8e853894e2ca1f09:0x9a74e6e217c0a32c!8m2!3d12.5189601!4d-70.0287146\"
+target=\ª_blank\"
+>Abrir en Google Maps</a>"],
             ["h2" => "Datos de contacto"],
-            ["p" => "email: elchalanaruba@hotmail.com"],
-            ["p" => "Teléfono: +297 582 7591"],
+            ["p" => "Email: <a href=\"mailto:elchalanaruba@hotmail.com\">elchalanaruba@hotmail.com</a>"],
+            ["p" => "Teléfono: <a href=\"tel:+297 582 7591\">+297 582 7591</a>"],
             ["p" => "Horario: 11:30 – 21:00"],
-
+            ["h3" => "Planes por puntos"],
+            ["ul" => [
+                "Acumula 5 puntos en 5 días seguidos y llévate un Arroz Chaufa gratis"
+            ]],
+            ["h3" => "Promociones en curso"],
+            ["ul" => []],
         ];
     }
 }
