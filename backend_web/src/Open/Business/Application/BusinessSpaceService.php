@@ -104,6 +104,8 @@ final class BusinessSpaceService extends AppService
 
     public static function chalan(): array
     {
+        $slug = "el-chaln-peruvian-cousine-44";
+        $promotions = RF::get(BusinessDataRepository::class)->get_top5_last_running_promotions_by_slug($slug);
         return [
             ["h2" => "Sobre EL CHALÁN"],
             ["p" => "Los precursores de la gastronomía peruana en Aruba, Betty e Isaac iniciaron este proyecto en 1997 desde su hogar donde cada peruano residente se sentía como en casa recordando el Perú."],
