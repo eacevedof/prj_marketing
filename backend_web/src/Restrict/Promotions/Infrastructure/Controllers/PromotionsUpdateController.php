@@ -15,7 +15,6 @@ use App\Picklist\Application\PicklistService;
 use App\Open\Business\Application\BusinessSpaceService;
 use App\Restrict\Promotions\Application\PromotionsUpdateService;
 use App\Restrict\Promotions\Application\PromotionsInfoService;
-use App\Restrict\BusinessData\Application\BusinessDataInfoService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
