@@ -23,7 +23,7 @@ $businessurl = Routes::url("business.space", ["businessslug"=>$businessdata["slu
 <main class="main-flex">
   <!-- nav to fixed -->
   <nav class="nav-flex">
-    <a href="<?php $this->_echo($businessurl) ?>" target="_blank">
+    <a href="<?php $this->_echo($businessurl) ?>">
       <img src="<?php $this->_echo_nohtml($businessdata["user_logo_1"]) ?>">
     </a>
     <h1><?php $this->_echo_nohtml($promotion["description"]) ?></h1>
