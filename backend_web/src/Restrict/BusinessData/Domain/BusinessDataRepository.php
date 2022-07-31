@@ -265,22 +265,6 @@ final class BusinessDataRepository extends AppRepository
     public function get_top5_last_running_promotions_by_slug(string $businessslug): array
     {
         $businessslug = $this->_get_sanitized($businessslug);
-        /*
-SELECT p.slug, p.description, p.bgimage_xs, p.date_from, p.date_to
-FROM `app_business_data` m
-INNER JOIN `app_promotion` p
-ON m.id_user = p.id_owner
-WHERE 1
-AND m.`slug`='el-chaln-peruvian-cousine-44'
-AND p.delete_date IS NULL
-AND p.disabled_date IS NULL
-AND is_published=1
-AND p.num_confirmed < p.max_confirmed
-AND p.date_from <= UTC_DATE()
-AND p.date_to >= UTC_DATE()
-ORDER BY p.date_to, p.description
-LIMIT 5
-         * */
         $sql = $this->_get_qbuilder()
             ->set_comment("businessdata.get_top5_last_running_promotions_by_slug")
             ->set_table("$this->table as m")
@@ -291,13 +275,14 @@ LIMIT 5
             ->add_and("p.delete_date IS NULL")
             ->add_and("p.disabled_date IS NULL")
             ->add_and("p.is_published = 1")
-            ->add_and("p.is_published = 1")
-
-
-            ->add_and("m.disabled_date IS NOT NULL")
-            ->add_and("m.id_user=$iduser")
+            ->add_and("p.num_confirmed < p.max_confirmed")
+            ->add_and("p.date_from <= UTC_DATE()")
+            ->add_and("p.date_to >= UTC_DATE()")
+            ->add_orderby("p.date_to")
+            ->add_orderby("p.description")
+            ->set_limit(5)
         ;
         $sql = $sql->select()->sql();
-        return $this->query($sql)[0] ?? [];
+        return $this->query($sql);
     }
 }
