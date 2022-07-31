@@ -1054,8 +1054,8 @@ msgstr "Lo sentimos pero esta promoción o no ha empezado todavia o está pausad
 msgid "Sorry but this promotion has reached the max number of subscriptions"
 msgstr "Lo sentimos pero la promoción ha alcanzado el límite de suscripciones"
 
-msgid "You are already subscribed. Check your subscription email"
-msgstr "Ya esta suscrito. Compruebe su email de suscripción"
+msgid "You are already subscribed. Please, check your inbox or spam folder"
+msgstr "Ya esta suscrito. Por favor, compruebe su carpeta de entrada y spam"
 
 msgid "No business account provided"
 msgstr "No se ha proporcionado una cuenta de negocio"

@@ -82,7 +82,7 @@ final class PromotionCapCheckService extends AppService
         $email = trim($this->email ?? "");
         if ($email && RF::get(PromotionCapUsersRepository::class)->is_subscribed_by_email($promotion["id"], $email))
             $this->_promocap_exception(
-                __("You are already subscribed. Check your subscription email"),
+                __("You are already subscribed. Please, check your inbox or spam folder"),
                 ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
             );
     }
