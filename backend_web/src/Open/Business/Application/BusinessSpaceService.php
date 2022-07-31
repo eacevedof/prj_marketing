@@ -70,7 +70,8 @@ final class BusinessSpaceService extends AppService
     {
         $bd = RF::get(BusinessDataRepository::class)->get_by_slug(
             $businessslug,
-            ["business_name", "url_business", "url_favicon", "user_logo_1", "url_social_fb", "url_social_ig", "url_social_twitter", "url_social_tiktok","body_bgimage"]
+            ["business_name", "url_business", "url_favicon", "user_logo_1", "url_social_fb", "url_social_ig",
+                "url_social_twitter", "url_social_tiktok","body_bgimage"]
         );
         if (!$bd) {
             throw new NotFoundException(__("Partner “{0}“ not found!", $businessslug));
