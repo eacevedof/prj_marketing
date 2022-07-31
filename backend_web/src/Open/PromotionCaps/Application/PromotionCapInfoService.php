@@ -96,10 +96,10 @@ final class PromotionCapInfoService extends AppService  implements IEventDispatc
 
     public function __invoke(): array
     {
-        if (!($input["businessslug"] ?? ""))
+        if (!($this->input["businessslug"] ?? ""))
             $this->_promocap_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
 
-        if (!($input["promotionslug"] ?? ""))
+        if (!($this->input["promotionslug"] ?? ""))
             $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
 
         $this->_load_businessdata();
