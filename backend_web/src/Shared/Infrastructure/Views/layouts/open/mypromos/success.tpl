@@ -15,7 +15,7 @@
   $this->_element("open/mypromos/elem-css-common");
   ?>
   <link rel="stylesheet" href="/themes/mypromos/css/success.css" type="text/css" media="all" />
-  <title><?php $this->_echo($pagetitle);?></title>
+  <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
 </head>
 <body>
 <main class="main-grid" id="top-mark">
@@ -33,7 +33,7 @@
   <section class="section-grid center-x">
     <div class="div-texts">
       <img src="/themes/mypromos/images/icon-success.svg" class="icon">
-      <h1><?php $this->_echo($h1); ?></h1>
+      <h1><?php $this->_echo_nohtml($h1); ?></h1>
       <?php
       use App\Shared\Infrastructure\Helpers\Views\DivTextsHelper;
       use App\Shared\Infrastructure\Factories\HelperFactory as HF;
