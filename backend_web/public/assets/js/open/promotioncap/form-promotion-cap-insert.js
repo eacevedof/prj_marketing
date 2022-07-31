@@ -323,8 +323,10 @@ export class FormPromotionCapInsert extends LitElement {
 
   on_success() {
     const $section = window.document.querySelector(".section")
-    let name = this._$get("input-name1").value
-    name = name[0].toUpperCase().concat(name.slice(1))
+    let name = this._$get("input-name1")?.value ?? ""
+    if (name)
+      name = name[0].toUpperCase().concat(name.slice(1))
+
     const email = this._$get("input-email").value
     const message = this.texts.tr30.replace("%name%",name).replace("%email%",email)
     $section.innerHTML = `
