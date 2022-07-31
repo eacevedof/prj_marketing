@@ -36,7 +36,7 @@ final class UserCapPointsController extends OpenController
             $result = $business();
 
             $title = htmlentities($result["business_name"] ?? "");
-            $title = __("Accumulated points of {0} at {1}", $result["username"] ?? $result["email"], $title);
+            $title = __("Accumulated points of <u>{0}</u> at “{1}“", $result["username"] ?? $result["email"], $title);
             $this->set_layout("open/mypromos/success")
                 ->add_var(PageType::TITLE, $title)
                 ->add_var(PageType::H1, $title)
