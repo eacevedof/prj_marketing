@@ -226,6 +226,7 @@ final class BusinessDataRepository extends AppRepository
             ->set_table("$this->table as bd")
             ->set_getfields([
                 "bd.uuid AS businesscode, bd.slug AS businessslug, bd.business_name AS business, bd.url_business AS businessurl, bd.user_logo_1 AS businesslogo",
+                "bd.url_favicon AS businessfavicon, bd.body_bgimage AS businessbgimage",
                 "bd.url_social_fb AS urlfb, bd.url_social_ig AS urlig, bd.url_social_twitter AS urltwitter, bd.url_social_tiktok AS urltiktok",
             ])
             ->add_and("bd.uuid='$businessuuid'")
