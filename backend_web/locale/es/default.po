@@ -1181,7 +1181,7 @@ msgid "Missing promotion and/or subscription code"
 msgstr "Falta el código de promoción o suscripción"
 
 msgid "Subscription cancellation successfully done!"
-msgstr "La cancelación de la suscripción realizada correctamente!"
+msgstr "La cancelación de la suscripción se ha realizado correctamente!"
 
 msgid "<b>{0}</b>. You have successfully cancelled your subscription to <b>“{1}“</b>"
 msgstr "<b>{0}</b>. Ha cancelado correctamente su suscripción a <b>“{1}“</b>"

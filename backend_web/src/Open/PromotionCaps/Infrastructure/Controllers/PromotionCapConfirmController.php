@@ -21,7 +21,7 @@ final class PromotionCapConfirmController extends OpenController
                 ->add_header($code = ResponseType::BAD_REQUEST)
                 ->add_var(PageType::TITLE, $title = __("Subscription confirmation error!"))
                 ->add_var(PageType::H1, $title)
-                ->add_var("error", __("Missing promotion and/or subscription code"))
+                ->add_var("error", __("Missing partner and/or subscription code"))
                 ->add_var("code", $code)
                 ->render_nv();
 
