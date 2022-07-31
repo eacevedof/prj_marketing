@@ -2,6 +2,7 @@
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var string $pagetitle
+ * @var array $space
  */
 ?>
 <!doctype html>
@@ -9,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="/themes/mypromos/images/provider-xxx-logo-orange.svg"/>
+  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/provider-xxx-logo-orange.svg")?>"/>
   <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
   <?php
   $this->_element("open/mypromos/elem-css-common");
@@ -20,6 +21,17 @@
   ?>
 </head>
 <body>
+<style>
+<?php
+if ($bgimage = $space["businessbgimage"]):
+?>
+.main-grid {
+  background-image: url(<?php $this->_echo_nohtml($bgimage)?>);
+}
+<?php
+endif;
+ ?>
+</style>
 <main class="main-grid" id="top-mark">
   <div class="div-wave-top">
     <svg viewBox="25 0 550 150" preserveAspectRatio="none" style="height: 300%; width: 110%;">

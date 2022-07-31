@@ -68,7 +68,7 @@ final class BusinessSpaceService extends AppService
     {
         $bd = RF::get(BusinessDataRepository::class)->get_by_slug(
             $businessslug,
-            ["business_name", "url_business","user_logo_1", "url_social_fb", "url_social_ig", "url_social_twitter", "url_social_tiktok","body_bgimage"]
+            ["business_name", "url_business", "url_favicon", "user_logo_1", "url_social_fb", "url_social_ig", "url_social_twitter", "url_social_tiktok","body_bgimage"]
         );
         if (!$bd) {
             throw new NotFoundException(__("Partner “{0}“ not found!", $businessslug));
@@ -78,6 +78,7 @@ final class BusinessSpaceService extends AppService
             "business" => $bd["business_name"],
             //"businessurl" => Routes::url("business.space", ["businessslug"=>$bd["slug"]]),
             //quiza conviene usar la url de su sitio original en el logo y en los restantes usar el del espacio
+            "businessfavicon" => $bd["url_favicon"],
             "businessurl" => $bd["url_business"],
             "businesslogo" => $bd["user_logo_1"],
             "businessbgimage" => $bd["body_bgimage"],
