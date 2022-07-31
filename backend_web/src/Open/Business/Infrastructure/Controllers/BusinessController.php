@@ -20,18 +20,16 @@ use App\Shared\Domain\Enums\PageType;
 
 final class BusinessController extends OpenController
 {
-    public function index(string $slug): void
+    public function index(string $businessslug): void
     {
-        //dd($this->request->get_get());
         try {
-            dd("BusinessController.index (to-do)");
             $business = SF::get_callable(BusinessInfoService::class, [
-                "slug" => $slug,
+                "slug" => $businessslug,
                 "_test_mode" => $this->request->get_get("mode", "")==="test",
             ]);
             $business = $business();
             $this->set_layout("open/business")
-                ->add_var(PageType::TITLE, $title =($business["promotion"]["description"] ?? $slug))
+                ->add_var(PageType::TITLE, $title =($business["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
                 ->add_var("business", $business)
                 ->render();

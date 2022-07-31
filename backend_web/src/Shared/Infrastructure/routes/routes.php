@@ -36,7 +36,7 @@ return [
     ],
 
     [
-        "url"=>"/socios/:slug",
+        "url"=>"/socios/:businessslug",
         "controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController",
         "method"=>"index",
         "name"=>"business.space"
