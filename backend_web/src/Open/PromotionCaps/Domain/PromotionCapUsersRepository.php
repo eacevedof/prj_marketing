@@ -14,6 +14,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\Common\SysfieldRepository;
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType as Status;
 use TheFramework\Components\Db\ComponentQB;
 
 final class PromotionCapUsersRepository extends AppRepository
@@ -148,7 +149,7 @@ final class PromotionCapUsersRepository extends AppRepository
         $sql = $this->_get_qbuilder()
             ->set_comment("promocapusers.is_subscribed")
             ->set_table("$this->table as m")
-            ->set_getfields(["m.id"])
+            ->set_getfields(["m.id", "ps.subs_status"])
             ->add_join("INNER JOIN app_promotioncap_subscriptions ps ON m.id = ps.id_promouser")
             ->add_and("m.delete_date IS NULL")
             ->add_and("ps.is_test=0")
@@ -157,7 +158,14 @@ final class PromotionCapUsersRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        return (bool) ($r[0]["id"] ?? null);
+        if (!$r) return false;
+
+        $status = $r[0]["subs_status"];
+        if (in_array($status, [Status::EXECUTED])) {
+            return false;
+        }
+
+        return true;
     }
 
     public function get_subscription_data(int $idpromouser): array
