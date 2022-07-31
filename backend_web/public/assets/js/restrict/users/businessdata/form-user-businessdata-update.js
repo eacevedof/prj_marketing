@@ -6,7 +6,7 @@ import { SNACK } from "/assets/js/common/snackbar.js"
 import {cssformflex} from "/assets/js/common/formflex-lit-css.js"
 import {cssfielderror} from "/assets/js/common/fielderrors-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
-import {get_link, get_img_link} from "/assets/js/common/html/link.js"
+import {get_link, get_img_link, get_link_local} from "/assets/js/common/html/link.js"
 
 const URL_UPDATE = "/restrict/users/:uuid/business-data/update"
 const ACTION = "businessdata.update"
@@ -28,7 +28,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","id_user","timezones"])
+    return get_formdata(this.shadowRoot)(this.fields)(["id","uuid","id_user","timezones","spaceurl"])
   }
 
   _on_cancel() {
@@ -87,6 +87,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
     _url_social_twitter: {type: String, state:true},
     _url_social_tiktok: {type: String, state:true},
 
+    //_spaceurl: {type: String, state:true},
     _timezones: {type: String, state:true},
   }
 
@@ -112,7 +113,6 @@ export class FormUserBusinessDataUpdate extends LitElement {
 
   //4
   render() {
-    const urlslug = window.location.origin.concat("/account/").concat(this._slug)
     return html`
     <form @submit=${this.on_submit}>
       
@@ -132,10 +132,10 @@ export class FormUserBusinessDataUpdate extends LitElement {
           <div class="form-group">
             <label for="slug">${this.texts.f04}</label>
             <div id="field-slug">${this._slug}</div>
-            ${html([get_link(urlslug.concat("?mode=test"), this.texts.f50)])}
+            ${html([get_link_local(this._spaceurl.concat("?mode=test"), this.texts.f50)])}
           </div>  
           `
-          : html``
+          : null
       }
       <div class="form-group">
         <label for="id_tz">${this.texts.f51}</label>

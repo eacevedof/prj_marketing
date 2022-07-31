@@ -3,6 +3,7 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $result
  */
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 if (is_null($result["businessdata"])) return;
 
 $iduser = $result["user"]["id"];
@@ -66,6 +67,7 @@ $businessdata = [
     "url_social_twitter" => $businessdata["url_social_twitter"] ?? "",
     "url_social_tiktok" => $businessdata["url_social_tiktok"] ?? "",
 
+    "spaceurl" => Routes::url("business.space", ["businessslug"=>$businessdata["slug"]]),
     "timezones" => $timezones,
 ];
 ?>
