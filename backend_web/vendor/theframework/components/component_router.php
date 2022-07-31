@@ -70,7 +70,7 @@ final class ComponentRouter
             $arroutesep = $this->_get_url_pieces($sUrl, true);
             $this->arArgs = [];
             //compare pieces comprueba todo, tammaño y tags
-            $isFound = $this->_compare_pieces($this->arrequest["url_pieces"], $arroutesep);
+            $isFound = $this->_compare_pieces_and_load_args($this->arrequest["url_pieces"], $arroutesep);
             if($isFound)
                 break;
         }
@@ -78,10 +78,11 @@ final class ComponentRouter
         if($isFound)
             $this->_add_to_get($this->arrequest["url_pieces"], $arroutesep);
 
-        return array_merge(
+        $r = array_merge(
             $this->arroutes[$i],
             $this->arArgs ? ["_args" => $this->arArgs] : []
         );
+        return $r;
     }
     
     public function get_rundata(): array
@@ -112,20 +113,20 @@ final class ComponentRouter
         return false;
     }
 
-    private function _compare_pieces(array $arrequest,array $arRoute): bool
+    private function _compare_pieces_and_load_args(array $arrequest,array $arRoute): bool
     {
+        //true si casan todas las partes y de paso carga los args
         if(!$this->_is_probable($arrequest, $arRoute))
             return false;
         
-        foreach($arRoute as $i=>$sPiece)
-        {
+        foreach($arRoute as $i=>$sPiece) {
             if ($this->_is_tag($sPiece)) {
                 $tag = $this->_get_taginfo($sPiece);
                 $value = $arrequest[$i] ?? null;
                 if(!$this->_match_type($value, $tag["types"]))
                     return false;
 
-                $this->arArgs[$tag["key"]] = $value;
+                $this->arArgs[$tag["key"]] = trim(urldecode($value));
                 continue;
             }
             $sReqval = $arrequest[$i];
