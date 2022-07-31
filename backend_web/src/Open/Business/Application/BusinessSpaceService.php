@@ -106,9 +106,16 @@ final class BusinessSpaceService extends AppService
     {
         return [
             ["h2" => "Sobre EL CHALÁN"],
-            ["p" => "Los precursores de la gastronomía peruana en Aruba, Betty e Isaac iniciaron este proyecto en 1997 desde su hogar donde cada peruano residente se sentía como en casa recordando el Perú. Hoy en dia estamos en el corazón de Aruba (Oranjestad) firmes en transmitir y deleitar con esa hospitalidad y sazón de hogar a toda la Isla y visitantes. Nuestra Filosofía se resume en ser “Una Familia que sirve a Familias ” es por ello que convertimos una de las mejores gastronomías del mundo a precios alcanzables para todos. Visitenos y permitanos tener el honor de servirles, el único riesgo que corre es el querer repetir todos los días."],
-            ["h2" => "¿Donde estamos?"],
-            ["p" => ""],
+            ["p" => "Los precursores de la gastronomía peruana en Aruba, Betty e Isaac iniciaron este proyecto en 1997 desde su hogar donde cada peruano residente se sentía como en casa recordando el Perú."],
+            ["p" => "Hoy en dia estamos en el corazón de Aruba (Oranjestad) firmes en transmitir y deleitar con esa hospitalidad y sazón de hogar a toda la Isla y visitantes. Nuestra Filosofía se resume en ser “Una Familia que sirve a Familias ” es por ello que convertimos una de las mejores gastronomías del mundo a precios alcanzables para todos. Visitenos y permitanos tener el honor de servirles, el único riesgo que corre es el querer repetir todos los días."],
+            ["h2" => "¿Dónde estamos?"],
+            ["p" => "Caya Betico Croes 152 (975,93 km)
+            297 Oranjestad - <b>Aruba</b>"],
+            ["h2" => "Datos de contacto"],
+            ["p" => "email: elchalanaruba@hotmail.com"],
+            ["p" => "Teléfono: +297 582 7591"],
+            ["p" => "Horario: 11:30 – 21:00"],
+
         ];
     }
 }
