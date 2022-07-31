@@ -2,6 +2,8 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- documentación / ayuda
+- un usuario se puede suscribir tantas veces que desee siempre y cuando su suscripcion este en executed o cancelled
 - la promoción deberia aparecer como bloqueada en general. la ui y su config. Habria que validar en back.
 - tratar el idioma por get lang=xxx que se sobreescriba
 - ~~en texto legal falta logo de la cuenta~~ 
