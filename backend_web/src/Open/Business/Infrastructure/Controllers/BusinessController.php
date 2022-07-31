@@ -36,7 +36,7 @@ final class BusinessController extends OpenController
                 ->add_var(PageType::TITLE, $title = $space["business"])
                 ->add_var(PageType::H1, $title)
                 ->add_var("space", $space)
-                ->add_var("result", ["p"=>"hola mundo"])
+                ->add_var("result", BusinessSpaceService::chalan())
                 ->render_nv();
         }
         catch (NotFoundException $e) {
