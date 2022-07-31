@@ -48,7 +48,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
 
-        $url = Routes::url("subscription.cancel", ["promotionuuid"=>$data["promocode"], "subscriptionuuid"=>$data["subscode"]]);
+        $url = Routes::url("subscription.cancel", ["businessslug"=>$data["businessslug"], "subscriptionuuid"=>$data["subscode"]]);
         $link = $this->domain->get_full_url($url);
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
@@ -83,11 +83,11 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
 
-        $url = Routes::url("user.points", ["businessuuid"=>$data["businesscode"], "capuseruuid"=>$data["capusercode"]]);
+        $url = Routes::url("user.points", ["businessslug"=>$data["businessslug"], "capuseruuid"=>$data["capusercode"]]);
         $link = $this->domain->get_full_url($url);
         $data["points_link"] = $link;
 
-        $url = Routes::url("subscription.cancel", ["promotionuuid"=>$data["promocode"], "subscriptionuuid"=>$data["subscode"]]);
+        $url = Routes::url("subscription.cancel", ["businessslug"=>$data["businessslug"], "subscriptionuuid"=>$data["subscode"]]);
         $link = $this->domain->get_full_url($url);
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
@@ -122,7 +122,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
 
-        $url = Routes::url("user.points", ["businessuuid"=>$data["businesscode"], "capuseruuid"=>$data["capusercode"]]);
+        $url = Routes::url("user.points", ["businessslug"=>$data["businessslug"], "capuseruuid"=>$data["capusercode"]]);
         $link = $this->domain->get_full_url($url);
         $data["points_link"] = $link;
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
