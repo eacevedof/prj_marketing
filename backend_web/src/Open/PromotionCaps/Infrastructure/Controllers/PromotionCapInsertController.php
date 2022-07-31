@@ -4,6 +4,7 @@
  */
 namespace App\Open\PromotionCaps\Infrastructure\Controllers;
 
+use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
@@ -15,6 +16,15 @@ final class PromotionCapInsertController extends OpenController
 {
     public function insert(string $businessslug, string $promouuid): void
     {
+        if (!($businessslug && $promouuid))
+            $this->set_layout("open/mypromos/error")
+                ->add_header($code = ResponseType::BAD_REQUEST)
+                ->add_var(PageType::TITLE, $title = __("Subscription error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", __("Missing partner and/or promotion"))
+                ->add_var("code", $code)
+                ->render_nv();
+
         if (!$promouuid)
             $this->_get_json()
                 ->set_code(ResponseType::BAD_REQUEST)

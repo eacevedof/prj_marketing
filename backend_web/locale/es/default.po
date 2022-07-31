@@ -1630,3 +1630,6 @@ msgstr "Inicio"
 
 msgid "here"
 msgstr "aquí"
+
+msgid "Missing partner and/or user code"
+msgstr "Falta socio y/o código de usuario"

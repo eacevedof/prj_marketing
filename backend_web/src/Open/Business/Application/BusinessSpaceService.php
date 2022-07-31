@@ -1,6 +1,7 @@
 <?php
 namespace App\Open\Business\Application;
 
+use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -44,6 +45,14 @@ final class BusinessSpaceService extends AppService
     public function get_data_by_promocap(string $promocapuuid): array
     {
         $promoid = RF::get(PromotionCapSubscriptionsRepository::class)->get_by_uuid($promocapuuid, ["id_promotion"])["id_promotion"] ?? 0;
+        $promouuid = RF::get(PromotionRepository::class)->get_by_id($promoid, ["uuid"]);
+        if (!$promouuid) return [];
+        return $this->get_data_by_promotion($promouuid["uuid"]);
+    }
+
+    public function get_data_by_promocapuser(string $capuseruuid): array
+    {
+        $promoid = RF::get(PromotionCapUsersRepository::class)->get_by_uuid($capuseruuid, ["id_promotion"])["id_promotion"] ?? 0;
         $promouuid = RF::get(PromotionRepository::class)->get_by_id($promoid, ["uuid"]);
         if (!$promouuid) return [];
         return $this->get_data_by_promotion($promouuid["uuid"]);

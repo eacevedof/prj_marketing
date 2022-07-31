@@ -17,12 +17,21 @@ final class UserCapPointsController extends OpenController
 {
     public function index(string $businessslug, string $capuseruuid): void
     {
+        if (!($businessslug && $capuseruuid))
+            $this->set_layout("open/mypromos/error")
+                ->add_header($code = ResponseType::BAD_REQUEST)
+                ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", __("Missing partner and/or user code"))
+                ->add_var("code", $code)
+                ->render_nv();
+
         $istest = ($this->request->get_get("mode", "")==="test");
-        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_uuid($businessuuid);
+        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promocapuser($capuseruuid);
         try {
             $business = SF::get_callable(UserCapPointsService::class, [
-                "businessuuid" => $businessuuid,
-                "capuseruuid" => trim($capuseruuid),
+                "businessuuid" => $space["businesscode"] ?? "",
+                "capuseruuid" => $capuseruuid,
             ]);
             $result = $business();
 

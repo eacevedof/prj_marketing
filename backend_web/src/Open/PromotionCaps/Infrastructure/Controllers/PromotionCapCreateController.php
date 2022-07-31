@@ -17,6 +17,15 @@ final class PromotionCapCreateController extends OpenController
 {
     public function create(string $businessslug, string $promotionslug): void
     {
+        if (!($businessslug && $promotionslug))
+            $this->set_layout("open/mypromos/error")
+                ->add_header($code = ResponseType::BAD_REQUEST)
+                ->add_var(PageType::TITLE, $title = __("Subscription error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("error", __("Missing partner and/or promotion"))
+                ->add_var("code", $code)
+                ->render_nv();
+
         $picklist = SF::get(PicklistService::class);
         try {
             $promotioncap = SF::get_callable(PromotionCapInfoService::class, [
