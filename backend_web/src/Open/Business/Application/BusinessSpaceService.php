@@ -2,6 +2,7 @@
 namespace App\Open\Business\Application;
 
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
+use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -61,6 +62,15 @@ final class BusinessSpaceService extends AppService
     public function get_data_by_uuid(string $businessuuid): array
     {
         return RF::get(BusinessDataRepository::class)->get_space_by_uuid($businessuuid);
+    }
+
+    public function get_data_by_slug(string $businessslug): array
+    {
+        $bd = RF::get(BusinessDataRepository::class)->get_by_slug($businessslug);
+        if (!$bd) {
+            throw new NotFoundException(__("Partner “{0}“ not found!", $businessslug));
+        }
+        return $bd;
     }
 
     public function get_promotion_url(string $promouuid): string

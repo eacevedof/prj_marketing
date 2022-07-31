@@ -1132,8 +1132,8 @@ msgstr "Wrong mailing format. Only 0 or 1 allowed"
 msgid "You have successfully subscribed. Please check your email to confirm your subscription!"
 msgstr "You have successfully subscribed. Please check your email to confirm your subscription!"
 
-msgid "Promotion {$promotionslug} not found!"
-msgstr "Promotion {$promotionslug} not found!"
+msgid "Promotion “{0}“ not found!"
+msgstr "Promotion “{0}“ not found!"
 
 msgid "Subscription to “{0}“"
 msgstr "Subscription to “{0}“"
@@ -1633,3 +1633,6 @@ msgstr "aquí"
 
 msgid "Missing partner and/or user code"
 msgstr "Falta socio y/o código de usuario"
+
+msgid "Partner “{0}“ not found!"
+msgstr "Socio “{0}“ no encontrado!"
