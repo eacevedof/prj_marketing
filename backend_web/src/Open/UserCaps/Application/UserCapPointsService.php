@@ -82,6 +82,7 @@ final class UserCapPointsService extends AppService
         $points = array_sum($points);
         return [
             "username" => $this->promocapuser["name1"],
+            "email" => $this->promocapuser["email"],
             "business_name" => $this->businesssdata["business_name"],
             "result" => $result,
             "total_points" => $points,
