@@ -132,6 +132,7 @@ rel=\"nofollow noopener noreferer\"
             ["h2" => "Datos de contacto"],
             ["p" => "Email: <a href=\"mailto:elchalanaruba@hotmail.com\" rel=\"nofollow noopener noreferer\">elchalanaruba@hotmail.com</a>"],
             ["p" => "Teléfono: <a href=\"tel:+297 582 7591\" rel=\"nofollow noopener noreferer\">+297 582 7591</a>"],
+            ["p" => "Telegram: <a href=\"https://t.me/c/1394909256/17561\" rel=\"nofollow noopener noreferer\">+297 699 4346</a>"],
             ["p" => "Horario: 11:30 – 21:00"],
             ["h3" => "Planes por puntos"],
             ["ul" => [
