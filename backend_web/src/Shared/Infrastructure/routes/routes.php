@@ -1,29 +1,97 @@
 <?php
 return [
-    ["url"=>"/promocion/:businessslug/:promotionslug","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController", "method"=>"create", "allowed"=>["get"], "name"=>"subscription.create"],
+    [
+        "url"=>"/promocion/:businessslug/:promotionslug",
+        "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCreateController",
+        "method"=>"create", "allowed"=>["get"],
+        "name"=>"subscription.create"
+    ],
 
-    ["url"=>"/promotionscap/:promouuid/insert","controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapInsertController", "method"=>"insert", "allowed"=>["post"], "name"=>"subscription.post"],
+    [
+        "url"=>"/promotionscap/:promouuid/insert",
+        "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapInsertController",
+        "method"=>"insert", "allowed"=>["post"],
+        "name"=>"subscription.post"
+    ],
 
-    ["url"=>"/promocion/:promotionuuid/confirmar/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController", "method"=>"confirm", "allowed"=>["get"], "name"=>"subscription.confirm"],
+    [
+        "url"=>"/promocion/:promotionuuid/confirmar/:subscriptionuuid",
+        "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController",
+        "method"=>"confirm", "allowed"=>["get"],
+        "name"=>"subscription.confirm"
+    ],
 
-    ["url"=>"/promocion/:promotionuuid/cancelar/:subscriptionuuid", "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCancelController", "method"=>"cancel", "allowed"=>["get"], "name"=>"subscription.cancel"],
+    [
+        "url"=>"/promocion/:promotionuuid/cancelar/:subscriptionuuid",
+        "controller"=>"App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCancelController",
+        "method"=>"cancel", "allowed"=>["get"],
+        "name"=>"subscription.cancel"
+    ],
 
-    ["url"=>"/puntos/:businessuuid/usuario/:capuseruuid","controller"=>"App\Open\UserCaps\Infrastructure\Controllers\UserCapPointsController", "method"=>"index", "allowed"=>["get"], "name"=>"user.points"],
+    [
+        "url"=>"/puntos/:businessuuid/usuario/:capuseruuid",
+        "controller"=>"App\Open\UserCaps\Infrastructure\Controllers\UserCapPointsController",
+        "method"=>"index", "allowed"=>["get"],
+        "name"=>"user.points"
+    ],
 
-    ["url"=>"/empresa/:slug","controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController", "method"=>"index", "name"=>"business.space"],
+    [
+        "url"=>"/empresa/:slug",
+        "controller"=>"App\Open\Business\Infrastructure\Controllers\BusinessController",
+        "method"=>"index",
+        "name"=>"business.space"
+    ],
+    [
+        "url"=>"/terminos-y-condiciones/:promoslug",
+        "controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController",
+        "method"=>"promotion", "allowed"=>["get"],
+        "name"=>"terms.by-promotion"
+    ],
+    [
+        "url"=>"/terminos-y-condiciones",
+        "controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController",
+        "method"=>"index", "allowed"=>["get"],
+        "name"=>"terms.general"
+    ],
 
-    ["url"=>"/terminos-y-condiciones/:promoslug","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"promotion", "allowed"=>["get"], "name"=>"terms.by-promotion"],
-    ["url"=>"/terminos-y-condiciones","controller"=>"App\Open\TermsConditions\Infrastructure\Controllers\TermsConditionsInfoController", "method"=>"index", "allowed"=>["get"], "name"=>"terms.general"],
+    [
+        "url"=>"/politica-de-cookies",
+        "controller"=>"App\Open\CookiesPolicy\Infrastructure\Controllers\CookiesPolicyInfoController",
+        "method"=>"index", "allowed"=>["get"],
+        "name"=>"cookies.policy"
+    ],
+    [
+        "url"=>"/politica-de-privacidad",
+        "controller"=>"App\Open\PrivacyPolicy\Infrastructure\Controllers\PrivacyPolicyInfoController",
+        "method"=>"index", "allowed"=>["get"],
+        "name"=>"privacy.policy"
+    ],
 
-    ["url"=>"/politica-de-cookies","controller"=>"App\Open\CookiesPolicy\Infrastructure\Controllers\CookiesPolicyInfoController", "method"=>"index", "allowed"=>["get"], "name"=>"cookies.policy"],
-    ["url"=>"/politica-de-privacidad","controller"=>"App\Open\PrivacyPolicy\Infrastructure\Controllers\PrivacyPolicyInfoController", "method"=>"index", "allowed"=>["get"], "name"=>"privacy.policy"],
+    [
+        "url"=>"/contact/send",
+        "controller"=>"App\Open\Home\Infrastructure\Controllers\ContactSendController",
+        "method"=>"send", "allowed"=>["post"],
+        "name"=>"contact.send"
+    ],
 
-    ["url"=>"/contact/send","controller"=>"App\Open\Home\Infrastructure\Controllers\ContactSendController","method"=>"send", "allowed"=>["post"], "name"=>"contact.send"],
+    [
+        "url"=>"/login/access",
+        "controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController",
+        "method"=>"access", "allowed"=>["post"],
+        "name"=>"login.access"
+    ],
+    [
+        "url"=>"/login",
+        "controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController",
+        "method"=>"index", "allowed"=>["get"],
+        "name"=>"login"
+    ],
 
-    ["url"=>"/login/access","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"access", "allowed"=>["post"], "name"=>"login.access"],
-    ["url"=>"/login","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"index", "allowed"=>["get"], "name"=>"login"],
-
-    ["url"=>"/","controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController","method"=>"index", "allowed"=>["get"], "name"=>"home"],
+    [
+        "url"=>"/",
+        "controller"=>"App\Open\Home\Infrastructure\Controllers\HomeController",
+        "method"=>"index", "allowed"=>["get"], "name"=>"home"
+    ],
 
 //RESTRICT:
     ["url"=>"/restrict/logout","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"logout", "allowed"=>["get","post"], "name"=>"logout"],
