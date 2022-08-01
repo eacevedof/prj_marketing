@@ -169,7 +169,7 @@ rowswal.set_texts({
 })
 
 dt_render({
-  URL_MODULE: "/restrict/promotions",
+  URL_MODULE: <?php $this->_echo_js(Routes::url("module.promotions", ["page"=>""])); ?>,
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
 })
