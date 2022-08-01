@@ -123,7 +123,7 @@ function __(string $msgid): string
 
             if (!$line = trim($line)) continue;
             if (str_starts_with($line, "#")) continue;
-            if(strstr($line, "msgstr \"")) continue;
+            if (strstr($line, "msgstr \"")) continue;
 
             $id = str_replace("msgid \"","", $line);
             $id = substr($id, 0, -1);
