@@ -77,6 +77,7 @@ final class ConsoleMain
         if ($_REQUEST) lgerr($_REQUEST,"console-exception $uuid REQUEST", "error");
         if ($_ENV) lgerr($_ENV,"console-exception $uuid ENV", "error");
         lgerr($ex->getMessage(), "console-exception $uuid", "error");
+        lgerr($ex->getTraceAsString(),"index-exception $uuid TRACE", "error");
         lgerr($ex->getFile()." : (line: {$ex->getLine()})", "file-line $uuid", "error");
     }
 

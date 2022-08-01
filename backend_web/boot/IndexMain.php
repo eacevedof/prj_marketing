@@ -89,6 +89,7 @@ final class IndexMain
         if ($_REQUEST) lgerr($_REQUEST,"index-exception $uuid REQUEST", "error");
         if ($_ENV) lgerr($_ENV,"index-exception $uuid ENV", "error");
         lgerr($ex->getMessage(), "index-exception $uuid", "error");
+        lgerr($ex->getTraceAsString(),"index-exception $uuid TRACE", "error");
         lgerr($ex->getFile()." : (line: {$ex->getLine()})", "file-line $uuid", "error");
 
         $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
