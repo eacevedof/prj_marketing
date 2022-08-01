@@ -32,6 +32,10 @@
     color: var(--color-orange);
 }
 
+.section-grid .div-texts a.white {
+    color: var(--color-white);
+}
+
 .section-grid .div-texts h1 {
     font-size: 1.4rem;
     padding: 2px 0 2px 0;

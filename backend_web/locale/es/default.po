@@ -1672,3 +1672,18 @@ msgstr ""
 
 msgid "Pos. Name"
 msgstr "Pos. Nombre"
+
+msgid "Error {0}!"
+msgstr "Error {0}!"
+
+msgid "Forbidden {0}!"
+msgstr "Prohibido {0}!"
+
+msgid "You are not allowed to view this content"
+msgstr "No tienes permitido visualizar este contenido"
+
+msgid "Unexpected error occurred!"
+msgstr "Ha ocurrido un error inesperado!"
+
+msgid "Woops! Something went wrong"
+msgstr "Vaya! Algo ha ido mal"

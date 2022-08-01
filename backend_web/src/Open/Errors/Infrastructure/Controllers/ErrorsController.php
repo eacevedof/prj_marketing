@@ -16,16 +16,17 @@ use App\Shared\Domain\Enums\PageType;
 final class ErrorsController extends OpenController
 {
 
-    private function _get_referer(): string
+    private function _get_back_link(): string
     {
-        return $this->request->get_referer() ?? "vv";
+        $back = __("Back");
+        return ($urlback = $this->request->get_referer()) ? "<a href=\"$urlback\" class=\"white\"><b>$back</b></a>" : "";
     }
 
     public function notfound_404(): void
     {
-        //to-do, check accept json por llamada ajax ya que si el router
+        //todo, check accept json por llamada ajax ya que si el router
         //no encuentra la url termina llegando a este método
-        $back = __("Back");
+
         $this->add_header($code = ResponseType::NOT_FOUND)
             ->set_layout("open/mypromos/error")
             ->add_var(PageType::TITLE, $title = __("Error {0}!", $code))
@@ -33,7 +34,7 @@ final class ErrorsController extends OpenController
             ->add_var("space", [])
             ->add_var("error", [
                 __("Content not found"),
-                ($urlback = $this->_get_referer()) ? "<a href=\"$urlback\">$back</a>" : "",
+                $this->_get_back_link()
             ])
             ->add_var("code", $code)
             ->render_nv();
@@ -41,24 +42,34 @@ final class ErrorsController extends OpenController
 
     public function forbidden_403(): void
     {
-        $this->set_layout("error/error")
-            ->set_template("403")
-            ->add_header(ResponseType::FORBIDDEN)
-            ->add_var(PageType::TITLE, __("Forbidden"))
-            ->add_var(PageType::H1, __("Forbidden"))
-            ->add_var("urlback",$this->request->get_referer() ?? "")
-            ->render();
+        $back = __("Back");
+        $this->add_header($code = ResponseType::FORBIDDEN)
+            ->set_layout("open/mypromos/error")
+            ->add_var(PageType::TITLE, $title = __("Forbidden {0}!", $code))
+            ->add_var(PageType::H1, $title)
+            ->add_var("space", [])
+            ->add_var("error", [
+                __("You are not allowed to view this content"),
+                $this->_get_back_link()
+            ])
+            ->add_var("code", $code)
+            ->render_nv();
     }
 
     public function internal_500(): void
     {
-        $this->set_layout("error/error")
-            ->set_template("500")
-            ->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-            ->add_var(PageType::TITLE, __("Unexpected"))
-            ->add_var(PageType::H1, __("Unexpected"))
-            ->add_var("urlback",$this->request->get_referer() ?? "")
-            ->render();
+        $back = __("Back");
+        $this->add_header($code = ResponseType::FORBIDDEN)
+            ->set_layout("open/mypromos/error")
+            ->add_var(PageType::TITLE, $title = __("Unexpected error occurred!", $code))
+            ->add_var(PageType::H1, $title)
+            ->add_var("space", [])
+            ->add_var("error", [
+                __("Woops! Something went wrong"),
+                $this->_get_back_link()
+            ])
+            ->add_var("code", $code)
+            ->render_nv();
     }    
 
 }//ErrorsController
