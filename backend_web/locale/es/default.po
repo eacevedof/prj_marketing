@@ -1244,7 +1244,7 @@ msgid "Invalid format. Eg: St. Paul Street, 47 - N.Y."
 msgstr "Formato inválido. Ej: St. Paul Street, 47 - N.Y."
 
 msgid "Thank you <b>%name%</b> for your subscription. Please check your email <b>%email%</b> and click on the confirmation link.<br/><small>May be you have to check your spam folder</small>"
-msgstr "Gracias <b>%name%</b> por su suscripción. Por favor compruebe su email <b>%email%</b> y haga click en el enlace de confirmación.<br/><small>May be you have to check your spam folder</small>"
+msgstr "Gracias <b>%name%</b> por su suscripción. Por favor compruebe su email <b>%email%</b> y haga click en el enlace de confirmación.<br/><small>Puede que tengas que revisar tu carpeta de spam</small>"
 
 msgid "Hello {0}!!"
 msgstr "Hola {0}!!"
