@@ -8,6 +8,8 @@
  * @var bool $authread
  * @var bool $authwrite
  */
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
+
 if(!isset($authread)) $authread=false;
 if(!isset($authwrite)) $authwrite=false;
 
@@ -143,13 +145,14 @@ dtcolumn.add_column({
   }
 })
 
+const urlsubscripton = <?php $this->_echo_js(Routes::url("subscription.create")); ?>;
 dtcolumn.add_column({
   data: "description",
   render: (v,t,row) => {
-    const url = `promotion/${row.e_business_slug}/${row.slug}?mode=test`
+    const url = urlsubscripton.replace(":businessslug", row.e_business_slug).replace(":promotionslug",row.slug).concat("?mode=test")
     if (row.disabled_date) return `<span class="tx-warning">${v}</span>`
-    if (row.is_published==="1") v = `<span class="tx-success">${v}</span>`
-    if (row.is_published!=="1") v = `<span class="tx-gray-500">${v}</span>`
+    if (row.is_published==="1") v = `<span class="tx-success"><u>${v}</u></span>`
+    if (row.is_published!=="1") v = `<span class="tx-gray-500"><u>${v}</u></span>`
     return get_link_local(url, v)
   }
 })

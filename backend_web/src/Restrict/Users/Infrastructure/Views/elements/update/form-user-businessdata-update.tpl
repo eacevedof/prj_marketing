@@ -67,7 +67,7 @@ $businessdata = [
     "url_social_twitter" => $businessdata["url_social_twitter"] ?? "",
     "url_social_tiktok" => $businessdata["url_social_tiktok"] ?? "",
 
-    "spaceurl" => Routes::url("business.space", ["businessslug"=>$businessdata["slug"]]),
+    "spaceurl" => Routes::url("business.space", ["businessslug"=>$businessdata["slug"] ?? ""]),
     "timezones" => $timezones,
 ];
 ?>
