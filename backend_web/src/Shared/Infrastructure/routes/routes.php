@@ -106,7 +106,7 @@ return [
     ["url"=>"/restrict/users/delete/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersDeleteController", "method"=>"remove", "allowed"=>["delete"], "name"=>""],
     ["url"=>"/restrict/users/undelete/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersDeleteController", "method"=>"undelete", "allowed"=>["patch"], "name"=>""],
     ["url"=>"/restrict/users/export/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchExportController", "method"=>"export", "allowed"=>["post"], "name"=>""],
-    ["url"=>"/restrict/users/?int:page","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"index", "name"=>""],
+    ["url"=>"/restrict/users/?int:page","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"index", "name"=>"module.users"],
     ["url"=>"/restrict/users/search","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersSearchController", "method"=>"search", "name"=>""],
 //@users-tabs
     ["url"=>"/restrict/users/:uuid/permissions/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPermissionsUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
