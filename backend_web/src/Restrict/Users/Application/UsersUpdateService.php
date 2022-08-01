@@ -22,7 +22,6 @@ final class UsersUpdateService extends AppService
     use RequestTrait;
 
     private AuthService $auth;
-    private array $authuser;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
     private UserEntity $entityuser;
@@ -39,7 +38,6 @@ final class UsersUpdateService extends AppService
         $this->entityuser = MF::get(UserEntity::class);
         $this->repouser = RF::get(UserRepository::class);
         $this->repouser->set_model($this->entityuser);
-        $this->authuser = $this->auth->get_user();
         $this->encdec = $this->_get_encdec();
     }
 
@@ -55,7 +53,7 @@ final class UsersUpdateService extends AppService
     private function _check_entity_permission(array $entity): void
     {
         $iduser = $this->repouser->get_id_by_uuid($entity["uuid"]);
-        $idauthuser = (int)$this->authuser["id"];
+        $idauthuser = (int)$this->auth->get_user()["id"];
         if ($this->auth->is_root() || $idauthuser === $iduser) return;
 
         if ($this->auth->is_sysadmin()
@@ -158,7 +156,7 @@ final class UsersUpdateService extends AppService
         else
             $update["secret"] = $this->encdec->get_hashpassword($update["secret"]);
         $update["description"] = $update["fullname"];
-        $this->entityuser->add_sysupdate($update, $this->authuser["id"]);
+        $this->entityuser->add_sysupdate($update, $this->auth->get_user()["id"]);
 
         $affected = $this->repouser->update($update);
         return [
