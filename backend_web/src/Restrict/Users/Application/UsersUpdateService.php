@@ -25,7 +25,6 @@ final class UsersUpdateService extends AppService
     private array $authuser;
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
-    private FieldsValidator $validator;
     private UserEntity $entityuser;
 
     public function __construct(array $input)
@@ -38,7 +37,6 @@ final class UsersUpdateService extends AppService
             $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
         $this->entityuser = MF::get(UserEntity::class);
-        $this->validator = VF::get($this->input, $this->entityuser);
         $this->repouser = RF::get(UserRepository::class);
         $this->repouser->set_model($this->entityuser);
         $this->authuser = $this->auth->get_user();
@@ -78,16 +76,13 @@ final class UsersUpdateService extends AppService
         );
     }
 
-    private function _skip_validation(): self
+    private function _validate_request(array $request): array
     {
-        $this->validator->add_skip("password2");
-        return $this;
-    }
+        $validator = VF::get($request, $this->entityuser);
+        $validator->add_skip("password2");
 
-    private function _add_rules(): FieldsValidator
-    {
         $repouser = $this->repouser;
-        $this->validator
+        $validator
             ->add_rule("email", "email", function ($data) use ($repouser){
                 $email = trim($data["value"] ?? "");
                 $uuid = $data["data"]["uuid"] ?? "";
@@ -137,12 +132,12 @@ final class UsersUpdateService extends AppService
             })
             ->add_rule("password", "not-equal", function ($data){
                 $password = $data["value"] ?? "";
-                if(!($password)) return false;
-                $password2 = trim($data["data"]["password2"] ?? "");
-                return ($password === $password2) ? false : __("Bad password confirmation");
+                if(!($password)) return;
+                $password2 = $data["data"]["password2"] ?? "";
+                return ($password !== $password2) ? __("Bad password confirmation") : false;
             })
         ;
-        return $this->validator;
+        return $validator->get_errors();
     }
 
     public function __invoke(): array
@@ -151,7 +146,7 @@ final class UsersUpdateService extends AppService
         if (!$iduser = $this->repouser->get_id_by_uuid($uuid = $update["uuid"]))
             $this->_exception(__("{0} with code {1} not found", __("User"), $uuid), 404);
 
-        if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
+        if ($errors = $this->_validate_request($update)) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }

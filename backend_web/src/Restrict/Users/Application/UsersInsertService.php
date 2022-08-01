@@ -89,7 +89,7 @@ final class UsersInsertService extends AppService implements IEventDispatcher
             })
             ->add_rule("password", "not-equal", function ($data){
                 $value = $data["value"] ?? "";
-                return ($data["value"] === ($data["data"]["password2"] ?? "")) ? false : __("Bad password confirmation");
+                return ($value === ($data["data"]["password2"] ?? "")) ? false : __("Bad password confirmation");
             })
             ->add_rule("password", "empty", function ($data){
                 $value = $data["value"] ?? "";
