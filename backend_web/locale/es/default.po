@@ -1687,5 +1687,5 @@ msgstr "No tienes permitido visualizar este contenido"
 msgid "Woops! Something went wrong"
 msgstr "Vaya! Algo ha ido mal"
 
-msgstr "Promotion {0}"
-msgstr "Promoción {0}"
+msgid "Promotion: {0}"
+msgstr "Promoción: {0}"
