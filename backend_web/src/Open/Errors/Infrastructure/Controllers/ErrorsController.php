@@ -42,7 +42,6 @@ final class ErrorsController extends OpenController
 
     public function forbidden_403(): void
     {
-        $back = __("Back");
         $this->add_header($code = ResponseType::FORBIDDEN)
             ->set_layout("open/mypromos/error")
             ->add_var(PageType::TITLE, $title = __("Forbidden {0}!", $code))
@@ -58,7 +57,6 @@ final class ErrorsController extends OpenController
 
     public function internal_500(): void
     {
-        $back = __("Back");
         $this->add_header($code = ResponseType::FORBIDDEN)
             ->set_layout("open/mypromos/error")
             ->add_var(PageType::TITLE, $title = __("Unexpected error occurred!", $code))
