@@ -84,7 +84,7 @@ final class UsersUpdateService extends AppService
         $repouser = $this->repouser;
         $validator
             ->add_rule("email", "email", function ($data) use ($repouser){
-                $email = trim($data["value"] ?? "");
+                $email = $data["value"] ?? "";
                 $uuid = $data["data"]["uuid"] ?? "";
                 $id = $repouser->get_id_by_uuid($uuid);
                 if (!$id) return __("{0} with code {1} not found", __("User"), $uuid);
