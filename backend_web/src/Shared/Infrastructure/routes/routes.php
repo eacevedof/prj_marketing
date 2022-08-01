@@ -145,7 +145,7 @@ return [
     ["url"=>"/restrict/subscriptions/edit/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController", "method"=>"edit", "name"=>""],
     ["url"=>"/restrict/subscriptions/update-status/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsUpdateController", "method"=>"update_status", "allowed"=>["put"], "name"=>""],
     ["url"=>"/restrict/subscriptions/export/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchExportController", "method"=>"export", "allowed"=>["post"], "name"=>""],
-    ["url"=>"/restrict/subscriptions/?int:page","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"index", "name"=>""],
+    ["url"=>"/restrict/subscriptions/?int:page","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"index", "name"=>"module.subscriptions"],
     ["url"=>"/restrict/subscriptions/search","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"search", "name"=>""],
 
 //@billings

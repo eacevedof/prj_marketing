@@ -8,6 +8,7 @@
  * @var bool $authread
  * @var bool $authwrite
  */
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 if(!isset($authread)) $authread=false;
 if(!isset($authwrite)) $authwrite=false;
 $this->_element("restrict/elem-bowdisabled");
@@ -162,7 +163,7 @@ rowswal.set_texts({
 })
 
 dt_render({
-  URL_MODULE: "/restrict/subscriptions",
+  URL_MODULE: <?php $this->_echo_js(Routes::url("module.subscriptions", ["page"=>"","_nods"])); ?>,
   ID_TABLE: "table-datatable",
   ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
 })
