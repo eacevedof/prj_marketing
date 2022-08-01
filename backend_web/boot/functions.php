@@ -140,9 +140,7 @@ function __(string $msgid): string
         unset($lines, $trs);
     }
 
-    $msgchanged = !($_REQUEST["APP_TRANSLATIONS"][$lang][$msgid] ?? "")
-                    ? $msgid
-                    : $_REQUEST["APP_TRANSLATIONS"][$lang][$msgid];
+    $msgchanged = ($_REQUEST["APP_TRANSLATIONS"][$lang][$msgid] ?? "") ?: $msgid;
 
     foreach ($args as $i => $str) {
         $rep = "{".$i."}";
