@@ -994,6 +994,9 @@ msgstr "Tengo un restaurante en México DF y este mi teléfono: 123456 por favor
 msgid "Hello {0}!"
 msgstr "Hola {0}!"
 
+msgid "Back"
+msgstr "Volver"
+
 msgid "Thank you for contacting <a href=\"{0}\" style=\"color:white;\"><b>{1}</b></a>"
 msgstr "Gracias por contactar con <a href=\"{0}\" style=\"color:white;\"><b>{1}</b></a>"
 

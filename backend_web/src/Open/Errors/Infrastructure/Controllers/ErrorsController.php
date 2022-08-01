@@ -15,17 +15,28 @@ use App\Shared\Domain\Enums\PageType;
 
 final class ErrorsController extends OpenController
 {
+
+    private function _get_referer(): string
+    {
+        return $this->request->get_referer() ?? "vv";
+    }
+
     public function notfound_404(): void
     {
         //to-do, check accept json por llamada ajax ya que si el router
         //no encuentra la url termina llegando a este método
-        $this->set_layout("error/error")
-            ->set_template("404")
-            ->add_header(ResponseType::NOT_FOUND)
-            ->add_var(PageType::TITLE, __("Content not found"))
-            ->add_var(PageType::H1, __("Content not found"))
-            ->add_var("urlback",$this->request->get_referer() ?? "")
-            ->render();
+        $back = __("Back");
+        $this->add_header($code = ResponseType::NOT_FOUND)
+            ->set_layout("open/mypromos/error")
+            ->add_var(PageType::TITLE, $title = __("Error {0}!", $code))
+            ->add_var(PageType::H1, $title)
+            ->add_var("space", [])
+            ->add_var("error", [
+                __("Content not found"),
+                ($urlback = $this->_get_referer()) ? "<a href=\"$urlback\">$back</a>" : "",
+            ])
+            ->add_var("code", $code)
+            ->render_nv();
     }
 
     public function forbidden_403(): void
