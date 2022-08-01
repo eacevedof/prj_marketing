@@ -36,6 +36,16 @@ final class RequestComponent
         return "127.0.0.1";
     }
 
+    public function get_lang(): string
+    {
+        return $_REQUEST["lang"] ?? "en";
+    }
+
+    public function set_lang(string $lang="en"): void
+    {
+        $_REQUEST["lang"] = $lang;
+    }
+
     public function is_post($sKey=null): bool { return $sKey ? isset($_POST[$sKey]) : count($_POST)>0;}
 
     public function is_get($sKey=null): bool { return $sKey ? isset($_GET[$sKey]) : count($_GET)>0;}
