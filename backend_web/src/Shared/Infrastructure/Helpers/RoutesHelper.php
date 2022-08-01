@@ -45,6 +45,11 @@ final class RoutesHelper
         }, $tags);
 
         $values = array_values($args);
-        return str_replace($tags, $values, $url);
+        $url = str_replace($tags, $values, $url);
+        if ($args["_nods"] ?? "") {
+            if (substr($url,-1) === "/")
+                return substr_replace($url, "", -1);
+        }
+        return $url;
     }
 }
