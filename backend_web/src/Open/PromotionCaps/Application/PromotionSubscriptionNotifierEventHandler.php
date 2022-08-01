@@ -118,6 +118,9 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
     private function _on_execution(IEvent $domevent): void
     {
+        $req = $this->_load_request();
+        $lang = $req->get_lang();
+        $req->set_lang("es");
         if(get_class($domevent)!==SubscriptionExecutedEvent::class) return;
 
         $pathtpl = $this->tpls["execution"];
@@ -142,6 +145,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->set_content($html)
             ->send()
         ;
+        $req->set_lang($lang);
     }
 
     public function on_event(IEvent $domevent): IEventSubscriber
