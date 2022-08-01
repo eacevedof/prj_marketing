@@ -1,12 +1,14 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
-use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
-use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
+use App\Shared\Infrastructure\Traits\LogTrait;
+use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
+use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
@@ -14,12 +16,13 @@ use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
-use App\Shared\Infrastructure\Traits\LogTrait;
+
 use \Exception;
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
     use LogTrait;
+    use RequestTrait;
 
     private UrlDomainHelper $domain;
     private array $tpls;
