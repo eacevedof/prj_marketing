@@ -39,7 +39,7 @@ final class PromotionCapCreateController extends OpenController
             $promotioncap = $promotioncap();
 
             $this->set_layout("open/promotioncaps")
-                ->add_var(PageType::TITLE, $title = htmlentities($result["promotion"]["description"] ?? $businessslug))
+                ->add_var(PageType::TITLE, $title = htmlentities($promotioncap["promotion"]["description"] ?? $businessslug))
                 ->add_var(PageType::H1, $title)
                 ->add_var("space", $space)
                 ->add_var("result", $promotioncap)
