@@ -110,7 +110,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
         foreach ($uifields as $field) {
             if ($field === PromotionCapUserType::INPUT_EMAIL) {
                 $this->validator->add_rule($field, "format", function ($data) {
-                    if (!$data["value"]) return __("Empty value is not allowed");
+                    if (!$data["value"]) return __("This field cannot be left blank");
                     if (!CheckerService::is_valid_email($data["value"]))
                         return __("Invalid {0} format", __("Email"));
                 })
@@ -125,7 +125,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_NAME1) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$name1 = $data["value"])
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!CheckerService::name_format($name1))
                         return __("Invalid {0} format. Only letters allowed.", __("First name"));
@@ -135,7 +135,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_NAME2) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$name2 = $data["value"])
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!CheckerService::name_format($name2))
                         return __("Invalid {0} format. Only letters allowed.", __("Last name"));
@@ -145,7 +145,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_PHONE1) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$phone1 = $data["value"])
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!CheckerService::phone_format($phone1))
                         return __("Invalid {0} format. Use only numbers and white space please", __("Mobile"));
@@ -155,7 +155,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_ADDRESS) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$address = $data["value"])
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!CheckerService::address_format($address))
                         return __("Invalid {0} format. Only letters allowed.", __("Address"));
@@ -165,7 +165,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_BIRTHDATE) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$birthdate = $data["value"])
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!CheckerService::is_valid_date($birthdate))
                         return __("Invalid {0} value", __("Birthdate"));
@@ -175,7 +175,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_COUNTRY) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$idcountry = ($data["data"]["id_country"] ?? ""))
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!$this->repoarray->exists((int)$idcountry, AppArrayType::COUNTRY))
                         return __("Unrecognized country");
@@ -185,7 +185,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_LANGUAGE) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$idlanguage = ($data["data"]["id_language"] ?? ""))
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!$this->repoarray->exists((int)$idlanguage, AppArrayType::LANGUAGE, "id_pk"))
                         return __("Unrecognized language");
@@ -195,7 +195,7 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
             if ($field === PromotionCapUserType::INPUT_GENDER) {
                 $this->validator->add_rule($field, "format", function ($data) {
                     if (!$idgender = ($data["data"]["id_gender"] ?? ""))
-                        return __("Empty value is not allowed");
+                        return __("This field cannot be left blank");
 
                     if (!$this->repoarray->exists((int)$idgender, AppArrayType::GENDER, "id_pk"))
                         return __("Unrecognized gender");

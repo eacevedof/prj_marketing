@@ -13,7 +13,7 @@ $texts = [
     "tr03" => __("Some unexpected error occurred"),
     "tr04" => __("Please check form errors"),
 
-    "tr10" => __("Empty value is not allowed"),
+    "tr10" => __("This field cannot be left blank"),
     "tr11" => __("Invalid format. Eg: xxx@domain.com"),
     "tr12" => __("Invalid format. Eg: John Santino"),
     "tr13" => __("Invalid format. Eg: 777 888 999 333"),

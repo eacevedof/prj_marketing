@@ -964,6 +964,9 @@ msgstr "{0} esta es una copia de tu mensaje "
 msgid "Empty value is not allowed"
 msgstr "Vacío no es un valor permitido"
 
+msgid "This field cannot be left blank"
+msgstr "Este campo no puede estar vacío"
+
 msgid "Invalid {0} format"
 msgstr "Formato {0} inválido"
 

@@ -352,7 +352,7 @@ export class FormPromotionCapInsert extends LitElement {
     if(errors?.length) {
       this._issending = false
       this._btnsend = this.texts.tr00
-      this.snack_error("Check errors 1")
+      this.snack_error(this.texts.tr04)
       this.form_shake()
       return error.append(errors)
     }
