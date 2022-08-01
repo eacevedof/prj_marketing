@@ -1249,7 +1249,6 @@ msgstr "Gracias <b>%name%</b> por su suscripción. Por favor compruebe su email 
 msgid "Hello {0}!!"
 msgstr "Hola {0}!!"
 
-
 msgid "You have <strong>confirmed</strong> your subscription to promotion: <strong>“{0}“</strong> published by"
 msgstr "Has <strong>confirmado</strong> tu suscripción en la promoción <strong>“{0}“</strong> publicada por"
 
@@ -1687,3 +1686,6 @@ msgstr "No tienes permitido visualizar este contenido"
 
 msgid "Woops! Something went wrong"
 msgstr "Vaya! Algo ha ido mal"
+
+msgstr "Promotion {0}"
+msgstr "Promoción {0}"
