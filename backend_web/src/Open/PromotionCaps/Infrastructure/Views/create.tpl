@@ -18,12 +18,12 @@ $uihelp = HF::get(PH::class, $promotionui);
 
 $this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdhelp"=>$bdhelp]);
 
-$businessurl = Routes::url("business.space", ["businessslug"=>$businessdata["slug"]]);
+$spaceurl = Routes::url("business.space", ["businessslug"=>$businessdata["slug"]]);
 ?>
 <main class="main-flex">
   <!-- nav to fixed -->
   <nav class="nav-flex">
-    <a href="<?php $this->_echo($businessurl) ?>">
+    <a href="<?php $this->_echo($spaceurl) ?>">
       <img src="<?php $this->_echo_nohtml($businessdata["user_logo_1"]) ?>">
     </a>
     <h1><?php $this->_echo_nohtml($promotion["description"]) ?></h1>
