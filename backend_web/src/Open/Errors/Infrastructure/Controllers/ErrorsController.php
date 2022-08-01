@@ -59,11 +59,12 @@ final class ErrorsController extends OpenController
     {
         $this->add_header($code = ResponseType::FORBIDDEN)
             ->set_layout("open/mypromos/error")
-            ->add_var(PageType::TITLE, $title = __("Unexpected error occurred!", $code))
+            ->add_var(PageType::TITLE, $title = __("An unexpected error occurred!", $code))
             ->add_var(PageType::H1, $title)
             ->add_var("space", [])
             ->add_var("error", [
-                __("Woops! Something went wrong"),
+                __("Woops! Something went wrong."),
+                __("Please, try again later"),
                 $this->_get_back_link()
             ])
             ->add_var("code", $code)

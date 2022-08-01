@@ -1207,8 +1207,11 @@ msgstr "Por favor compruebe su bandeja de entrada. Recibirá un código de vouch
 msgid "Subscription error!"
 msgstr "Error en la suscripción!"
 
-msgid "Unexpected error!"
-msgstr "Error inesperado!"
+msgid "An unexpected error occurred!"
+msgstr "Ha occurrido un error inesperado!"
+
+msgid "Please, try again later"
+msgstr "Por favor, intentalo más tarde"
 
 msgid "No promotion code provided"
 msgstr "No se ha proporcionado un código de promoción"
@@ -1681,9 +1684,6 @@ msgstr "Prohibido {0}!"
 
 msgid "You are not allowed to view this content"
 msgstr "No tienes permitido visualizar este contenido"
-
-msgid "Unexpected error occurred!"
-msgstr "Ha ocurrido un error inesperado!"
 
 msgid "Woops! Something went wrong"
 msgstr "Vaya! Algo ha ido mal"

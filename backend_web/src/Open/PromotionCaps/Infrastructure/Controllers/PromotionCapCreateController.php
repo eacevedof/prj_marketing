@@ -27,10 +27,11 @@ final class PromotionCapCreateController extends OpenController
                 ->add_var("code", $code)
                 ->render_nv();
 
-        $istest = ($this->request->get_get("mode", "")==="test");
-        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promotionslug);
-        $picklist = SF::get(PicklistService::class);
         try {
+            $istest = ($this->request->get_get("mode", "")==="test");
+            $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promotionslug);
+            $picklist = SF::get(PicklistService::class);
+
             $promotioncap = SF::get_callable(PromotionCapInfoService::class, [
                 "businessslug" => $businessslug,
                 "promotionslug" => $promotionslug,
@@ -63,7 +64,7 @@ final class PromotionCapCreateController extends OpenController
         catch (Exception $e) {
             $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
                 ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Unexpected error!"))
+                ->add_var(PageType::TITLE, $title = __("An unexpected error occurred!"))
                 ->add_var(PageType::H1, $title)
                 ->add_var("space", [])
                 ->add_var("error", $e->getMessage())
