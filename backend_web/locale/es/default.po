@@ -1285,6 +1285,9 @@ msgstr "Revisa los términos y condiciones"
 msgid "Changed your mind? You can"
 msgstr "¿Has cambiado de parecer? Puedes"
 
+msgid "at any time"
+msgstr "en cualquier momento"
+
 msgid "unsubscribe"
 msgstr "cancelar tu suscripción"
 

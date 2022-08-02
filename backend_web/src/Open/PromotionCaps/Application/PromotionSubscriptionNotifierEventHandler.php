@@ -25,10 +25,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     use RequestTrait;
 
     private UrlDomainHelper $domain;
+    private string $lang;
     private array $tpls;
 
     public function __construct()
     {
+        //esto se hace en el listener no para cada llamada del evento
+        $this->_load_request();
+        $this->lang = $this->request->get_lang();
+
         $this->domain = UrlDomainHelper::get_instance();
         $this->tpls = [
             "subscription" => realpath(__DIR__."/../Infrastructure/Views/email/email-subscription.tpl"),
@@ -118,9 +123,6 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
     private function _on_execution(IEvent $domevent): void
     {
-        $req = $this->_load_request();
-        $lang = $req->get_lang();
-        $req->set_lang("es");
         if(get_class($domevent)!==SubscriptionExecutedEvent::class) return;
 
         $pathtpl = $this->tpls["execution"];
@@ -145,14 +147,15 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             ->set_content($html)
             ->send()
         ;
-        $req->set_lang($lang);
     }
 
     public function on_event(IEvent $domevent): IEventSubscriber
     {
+        $this->request->set_lang("es");
         $this->_on_subscription($domevent);
         $this->_on_confirmation($domevent);
         $this->_on_execution($domevent);
+        $this->request->set_lang($this->lang);
         return $this;
     }
 }

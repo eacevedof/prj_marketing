@@ -141,6 +141,7 @@ export class FormPromotionCapInsert extends LitElement {
 
   static properties = {
     csrf: {type: String},
+    businessslug: {type:String},
     promotionuuid: {type:String},
 
     texts: {
@@ -358,7 +359,7 @@ export class FormPromotionCapInsert extends LitElement {
     }
 
     const response = await injson.post(
-      URL_POST.replace(":promouuid", this.promotionuuid), {
+      URL_POST.replace(":businessslug",this.businessslug).replace(":promouuid", this.promotionuuid), {
         _action: ACTION,
         _csrf: this.csrf,
         _test_mode: IS_TEST_MODE,

@@ -5,7 +5,7 @@
  * @var string $promotionslug
  */
 $url = "/terms-and-conditions/$promotionslug";
-
+$businessslug = $result["businessdata"]["slug"];
 $texts = [
     "tr00" => __("Subscribe"),
     "tr01" => __("Processing..."),
@@ -49,6 +49,7 @@ $result = [
 ];
 ?>
 <form-promotion-cap-insert
+    businesslug="<?=$businessslug?>"
     promotionuuid="<?=$promotionuuid?>"
     texts="<?php $this->_echo_jslit($texts);?>"
     fields="<?php $this->_echo_jslit($result);?>"
