@@ -105,13 +105,16 @@ p {
                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: top center; color: #000000; background-color: #000000; width: 800px;"
                    width="800">
               <tbody>
+              <!-- logotipo -->
               <tr>
                 <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
                   <table appx="t4" border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                     <tr>
                       <td style="width:100%;padding-right:0px;padding-left:0px;">
                         <div align="center" style="line-height:10px">
-                          <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
+                          <a href="<?=$data["space_link"]?>" rel="noopener" style="text-decoration:none;color:#ffffff;" target="_blank" title="<?=$data["business"]?>">
+                            <img alt="<?=$data["business"]?>" src="<?=$data["businesslogo"]?>" style="display: block; height: auto; border: 0; width: 160px; max-width: 100%;" title="<?=$data["business"]?>" width="160" />
+                          </a>
                         </div>
                       </td>
                     </tr>
