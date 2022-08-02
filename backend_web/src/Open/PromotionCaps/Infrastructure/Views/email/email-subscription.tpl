@@ -394,6 +394,11 @@ p {
                                  <?= __("at any time")?>.
                               </span>
                             </p>
+                            <p style="margin: 0; font-size: 12px; text-align: center;">
+                              <span style="color:#C0C0C0;">
+                                <?= __("If you have not requested this information we apologize for the inconvenience and we ask you please to remove this email")?>
+                              </span>
+                            </p>
                           </div>
                         </div>
                       </td>
