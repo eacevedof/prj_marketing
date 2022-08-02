@@ -4,7 +4,8 @@
  * @var array $promotionui
  * @var string $promotionslug
  */
-$url = "/terms-and-conditions/$promotionslug";
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
+$url = Routes::url("terms.by-promotion", ["promoslug"=>$promotionslug]);
 $businessslug = $result["businessdata"]["slug"] ?? "";
 $texts = [
     "tr00" => __("Subscribe"),
