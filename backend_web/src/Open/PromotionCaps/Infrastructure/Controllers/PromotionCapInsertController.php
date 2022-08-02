@@ -11,6 +11,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\PromotionCaps\Application\PromotionCapsInsertService;
 use App\Open\PromotionCaps\Domain\Enums\RequestActionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
+use \Exception;
 
 final class PromotionCapInsertController extends OpenController
 {
@@ -44,9 +45,10 @@ final class PromotionCapInsertController extends OpenController
                 ->set_error([__("Wrong action")])
                 ->show();
 
-        $post = array_merge(["_businessslug" => $businessslug, "_promotionuuid"=>$promouuid], $post);
-        $insert = SF::get_callable(PromotionCapsInsertService::class, $post);
         try {
+            $post = array_merge(["_businessslug" => $businessslug, "_promotionuuid"=>$promouuid], $post);
+            $insert = SF::get_callable(PromotionCapsInsertService::class, $post);
+
             $result = $insert();
             $this->_get_json()->set_payload([
                 "message" => $result["description"],
