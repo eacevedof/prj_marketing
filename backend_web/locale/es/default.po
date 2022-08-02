@@ -1256,7 +1256,7 @@ msgid "In order to make this voucher effective, please, show the following code.
 msgstr "Para poder hacer efectivo el voucher, por favor, muestre el siguiente código."
 
 msgid "Keep in mind this code expires at {0} UTC"
-msgstr "Recuerda que este código expira en {0} UTC"
+msgstr "Recuerda que este código expira a las {0} UTC"
 
 msgid "You can click on this"
 msgstr "Puedes hacer click en este"
