@@ -10,6 +10,7 @@ use App\Open\TermsConditions\Application\TermsConditionsInfoService;
 use App\Shared\Domain\Enums\RequestType;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\PageType;
+use \Exception;
 
 final class TermsConditionsInfoController extends OpenController
 {

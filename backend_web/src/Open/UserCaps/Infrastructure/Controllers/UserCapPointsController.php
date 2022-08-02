@@ -12,6 +12,7 @@ use App\Open\UserCaps\Application\UserCapPointsService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
+use \Exception;
 
 final class UserCapPointsController extends OpenController
 {

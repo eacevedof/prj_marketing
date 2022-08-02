@@ -122,9 +122,16 @@ final class BusinessSpaceService extends AppService
 
         return [
             ["h2" => "Sobre EL CHALÁN"],
-            ["p" => "Los precursores de la gastronomía peruana en Aruba, Betty e Isaac iniciaron este proyecto en 1997 desde su hogar donde cada peruano residente se sentía como en casa recordando el Perú."],
-            ["p" => "Hoy en dia estamos en el corazón de Aruba (Oranjestad) firmes en transmitir y deleitar con esa hospitalidad y sazón de hogar a toda la Isla y visitantes."],
-            ["p" => "Nuestra Filosofía se resume en ser “Una Familia que sirve a Familias ” es por ello que convertimos una de las mejores gastronomías del mundo a precios alcanzables para todos. Visitenos y permitanos tener el honor de servirles, el único riesgo que corre es el querer repetir todos los días."],
+            ["p" => "Es un proyecto gastronómico emprendido por el matrimonio de Betty e Isaac allá por 1997; desde su hogar donde la comunidad peruana residente en la isla se sentía como en casa rememorando aquellos sabores tan únicos."],
+            ["p" => "Hoy continua más vivo que nunca gracias al trabajo de Dayana, Christian y el resto del staff que día a día se esfuerzan para que los visitantes se lleven la mejor de las experiencias."],
+            ["p" => "La filosofía que nos hace distintos es: “Una Familia que sirve a Familias”. Por ello que convertimos una de las mejores gastronomías del mundo a precios asequibles para todos. Visitenos y permitanos tener el honor de servirles. El único riesgo que corre es el querer repetir todos los días."],
+            ["h3" => "Planes por puntos"],
+            ["ul" => [
+                "Acumula 5 puntos en 5 días seguidos y llévate un Arroz Chaufa gratis",
+                "A fin de mes sortearemos algunas sorpresas "
+            ]],
+            ["h3" => "Promociones en curso"],
+            ["ul" => $promotions],
             ["h2" => "¿Dónde estamos?"],
             ["p" => "En Caya Betico Croes 152 (975,93 km) <br/> 297 Oranjestad - <b>Aruba</b>"],
             ["p" => "<a 
@@ -137,12 +144,7 @@ rel=\"nofollow noopener noreferer\"
             ["p" => "Teléfono: <a href=\"tel:+297 582 7591\" rel=\"nofollow noopener noreferer\">+297 582 7591</a>"],
             ["p" => "Telegram: <a href=\"https://t.me/c/1394909256/17561\" rel=\"nofollow noopener noreferer\">+297 699 4346</a>"],
             ["p" => "Horario: 11:30 – 21:00"],
-            ["h3" => "Planes por puntos"],
-            ["ul" => [
-                "Acumula 5 puntos en 5 días seguidos y llévate un Arroz Chaufa gratis"
-            ]],
-            ["h3" => "Promociones en curso"],
-            ["ul" => $promotions],
+
             ["p" => "<br/><br/><br/>"],
         ];
     }

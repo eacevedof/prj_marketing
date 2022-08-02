@@ -13,6 +13,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\PromotionCaps\Application\PromotionCapInfoService;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
+use \Exception;
 
 final class PromotionCapCreateController extends OpenController
 {

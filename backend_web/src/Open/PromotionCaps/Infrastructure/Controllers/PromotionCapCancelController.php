@@ -11,6 +11,7 @@ use App\Open\PromotionCaps\Application\PromotionCapsCancelService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
+use \Exception;
 
 final class PromotionCapCancelController extends OpenController
 {

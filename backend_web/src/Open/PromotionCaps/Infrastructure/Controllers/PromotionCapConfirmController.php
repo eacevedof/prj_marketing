@@ -11,6 +11,7 @@ use App\Open\PromotionCaps\Application\PromotionCapsConfirmService;
 use App\Open\Business\Application\BusinessSpaceService;
 use App\Shared\Domain\Enums\PageType;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
+use \Exception;
 
 final class PromotionCapConfirmController extends OpenController
 {
@@ -26,7 +27,6 @@ final class PromotionCapConfirmController extends OpenController
                 ->render_nv();
 
         $istest = ($this->request->get_get("mode", "")==="test");
-        //space = bd + p
         $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promocap($subscriptionuuid);
         try {
             $insert = SF::get_callable(PromotionCapsConfirmService::class, [
