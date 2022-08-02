@@ -6,13 +6,16 @@
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $urls = [
-    "home" => Routes::url("home"),
+    "home" => ($space["businessslug"] ?? "")
+        ? Routes::url("business.space", ["businessslug" => $space["businessslug"]])
+        : Routes::url("home"),
+
     "promocreate" => $space["promotionlink"] ?? "",
 ];
 ?>
 <section class="section-scrumbs center-x">
 <ul>
-  <li><a href="/">&#8962; <?=__("Home")?></a></li>
+  <li><a href="<?=$urls["home"]?>">&#8962; <?=__("Home")?></a></li>
   <?php
   if ($url = $urls["promocreate"]):
   ?>
