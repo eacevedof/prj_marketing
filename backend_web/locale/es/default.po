@@ -1277,7 +1277,7 @@ msgid "Subscription code: <strong>{0}</strong>"
 msgstr "Código de la suscripción: <strong>{0}</strong>"
 
 msgid "Promotion ends at {0} UTC"
-msgstr "La promoción finaliza el{0} UTC"
+msgstr "La promoción finaliza a las {0} UTC"
 
 msgid "Check terms and conditions"
 msgstr "Revisa los términos y condiciones"
