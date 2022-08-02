@@ -142,7 +142,6 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
         $url = Routes::url("business.space", ["businessslug" => $data["businessslug"]]);
         $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["space_link"] = $link;
 
         $url = Routes::url("user.points", ["businessslug"=>$data["businessslug"], "capuseruuid"=>$data["capusercode"]]);
