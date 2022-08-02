@@ -28,9 +28,19 @@ final class PromotionCapCreateController extends OpenController
                 ->add_var("code", $code)
                 ->render_nv();
 
+        $istest = ($this->request->get_get("mode", "")==="test");
+        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promotionslug);
+        if (!$space)
+            $this->add_header($code = ResponseType::NOT_FOUND)
+                ->set_layout("open/mypromos/error")
+                ->add_var(PageType::TITLE, $title = __("Subscription error!"))
+                ->add_var(PageType::H1, $title)
+                ->add_var("space", $space)
+                ->add_var("error", __("{0} not found!", __("Promotion")))
+                ->add_var("code", $code)
+                ->render_nv();
+
         try {
-            $istest = ($this->request->get_get("mode", "")==="test");
-            $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promotion_slug($promotionslug);
             $picklist = SF::get(PicklistService::class);
 
             $promotioncap = SF::get_callable(PromotionCapInfoService::class, [

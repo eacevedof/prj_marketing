@@ -46,7 +46,7 @@ final class PromotionCapsService extends AppService
         $promotionslug = $this->input["promotionslug"];
         $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
         if (!$this->promotion)
-            $this->_exception(__("Promotion {0} not found!", $promotionslug), ExceptionType::CODE_NOT_FOUND);
+            $this->_exception(__("{0} {1} not found!", __("Promotion"), $promotionslug), ExceptionType::CODE_NOT_FOUND);
     }
 
     private function _load_promotionui(): void

@@ -1411,9 +1411,6 @@ msgstr "Los valores válidos son 1-100"
 msgid "This promotion UI does not belong to promotion {0}"
 msgstr "Esta UI de promoción no pertenece a la promoción {0}"
 
-msgid "{0} not found!"
-msgstr "{0} no encontrado/a!"
-
 msgid "Invalid url format"
 msgstr "Formato de url inválido"
 
@@ -1663,8 +1660,14 @@ msgstr "Valor de {0} inválido"
 msgid "Invalid {0} format. Only 0 or 1 allowed"
 msgstr "Formato de {0} inválido. Solo se admite 0 y 1"
 
-msgid "Promotion {0} not found!"
-msgstr "Promoción {0} no encontrada!"
+msgid "{0} {1} not found!"
+msgstr "{0} {1} no encontrda!"
+
+msgid "{0} not found!"
+msgstr "{0} no encontrado/a!"
+
+msgid "Subscriber"
+msgstr "Suscriptor"
 
 msgid "Missing partner and/or subscription code"
 msgstr "Falta asociado y/o código de suscripción"
