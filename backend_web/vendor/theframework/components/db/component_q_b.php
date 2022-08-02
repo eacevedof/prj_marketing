@@ -94,7 +94,10 @@ final class ComponentQB
     {
         if(!$this->arlimit) return "";
         // LIMIT regfrom (secuenta desde 0), perpage
-        return " LIMIT ".implode(", ",$this->arlimit);
+
+        if ($this->arlimit["regfrom"]===0) return " LIMIT {$this->arlimit["perpage"]}";
+        $limit = implode(", ",$this->arlimit);
+        return " LIMIT $limit";
         /**
          * si por ejemplo deseo paginar de 10 en 10
          * para la pag:
@@ -355,7 +358,7 @@ final class ComponentQB
     public function set_having(array $arhaving=[]): self {$this->arhaving = []; if(is_array($arhaving)) $this->arhaving=$arhaving; return $this;}
 
     public function set_end(array $arend=[]): self {$this->arend = []; if(is_array($arend)) $this->arend=$arend; return $this;}
-    public function set_limit(int $ppage=1000, int $regfrom=0): self
+    public function set_limit(?int $ppage=1000, int $regfrom=0): self
     {
         $this->arlimit=["regfrom"=>$regfrom, "perpage"=>$ppage];
         if($ppage==null) $this->arlimit = [];

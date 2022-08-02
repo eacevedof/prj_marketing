@@ -1103,46 +1103,46 @@ msgid "You have already confirmed your subscription"
 msgstr "Ya ha confirmado su suscripción"
 
 msgid "Wrong email format"
-msgstr "Wrong email format"
+msgstr "Formato de email incorrecto"
 
 msgid "You are already subscribed"
-msgstr "You are already subscribed"
+msgstr "Ya estas suscrito"
 
 msgid "Wrong first name format. Only letters allowed."
-msgstr "Wrong first name format. Only letters allowed."
+msgstr "Formato de nombre incorrecto. Solo se permiten letras."
 
 msgid "Wrong last name format. Only letters allowed."
-msgstr "Wrong last name format. Only letters allowed."
+msgstr "Formato de apellido incorrecto. Solo se permiten letras."
 
 msgid "Wrong mobile format. Use only numbers and white space please"
-msgstr "Wrong mobile format. Use only numbers and white space please"
+msgstr "Formato de teléfono móvil incorrecto. Por favor solo usa números y espacios"
 
 msgid "Wrong address format. Only letters allowed"
-msgstr "Wrong address format. Only letters allowed"
+msgstr "Formato de dirección incorrecta. Solo se permiten letras"
 
 msgid "Wrong birthdate value"
-msgstr "Wrong birthdate value"
+msgstr "Valor de fecha de nacimiento incorrecto"
 
 msgid "Unrecognized country"
-msgstr "Unrecognized country"
+msgstr "País no reconocido"
 
 msgid "Unrecognized language"
-msgstr "Unrecognized language"
+msgstr "Idioma no reconocido"
 
 msgid "Unrecognized gender"
-msgstr "Unrecognized gender"
+msgstr "Género no reconocido"
 
 msgid "Wrong mailing format. Only 0 or 1 allowed"
-msgstr "Wrong mailing format. Only 0 or 1 allowed"
+msgstr "Formato de mailing incorrecto. Solo se permite 0 o 1"
 
 msgid "You have successfully subscribed. Please check your email to confirm your subscription!"
-msgstr "You have successfully subscribed. Please check your email to confirm your subscription!"
+msgstr "Te has suscrito correctamente. Por favor revisa tu email para confirmar tu suscripción!"
 
 msgid "Promotion “{0}“ not found!"
-msgstr "Promotion “{0}“ not found!"
+msgstr "Promoción “{0}“ no encontrada!"
 
 msgid "Subscription to “{0}“"
-msgstr "Subscription to “{0}“"
+msgstr "Suscrito a “{0}“"
 
 msgid "Subscriber"
 msgstr "Suscriptor"
@@ -1151,7 +1151,7 @@ msgid "Req url"
 msgstr "Req url"
 
 msgid "From url"
-msgstr "From url"
+msgstr "Url origen"
 
 msgid "Remote IP"
 msgstr "IP Remota"
@@ -1247,7 +1247,7 @@ msgid "Thank you <b>%name%</b> for your subscription. Please check your email <b
 msgstr "Gracias <b>%name%</b> por su suscripción. Por favor compruebe su email <b>%email%</b> y haga click en el enlace de confirmación.<br/><small>Puede que tengas que revisar tu carpeta de spam</small>"
 
 msgid "Hello {0}!"
-msgstr "Hola {0}!!"
+msgstr "Hola {0}!"
 
 msgid "You have <strong>confirmed</strong> your subscription to promotion: <strong>“{0}“</strong> published by"
 msgstr "Has <strong>confirmado</strong> tu suscripción en la promoción <strong>“{0}“</strong> publicada por"
