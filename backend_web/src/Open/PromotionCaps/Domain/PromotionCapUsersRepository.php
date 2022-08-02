@@ -155,6 +155,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_and("ps.is_test=0")
             ->add_and("m.id_promotion=$idpromotion")
             ->add_and("m.email='$email'")
+            ->add_orderby()
             ->select()->sql()
         ;
         $r = $this->query($sql);

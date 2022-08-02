@@ -98,7 +98,7 @@ final class IndexMain
             "code" => $code,
             "status" => false,
             "errors" => [
-                $ex->getMessage() ?: "Unexpected error occured",
+                "Sorry! but some unexpected error occurred. 😞 ($uuid)",
                 $uuid,
                 date("Y-m-d H:i:s")
             ],
