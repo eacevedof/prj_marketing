@@ -44,7 +44,9 @@ class ComponentContext
             {
                 $sJson = file_get_contents($sPathfile);
                 $this->arContexts = json_decode($sJson,1);
-                if (is_null($this->arContexts)) $this->arContexts = [];
+                if (is_null($this->arContexts))
+                    throw new Exception("Contexts not loaded");
+
             }
             else
                 $this->add_error("_load_array_fromjson: file $sPathfile not found");
