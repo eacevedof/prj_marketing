@@ -31,7 +31,7 @@ final class PrivacyPolicyInfoService extends AppService
             ["p" => __("To exercise the aforementioned rights, you must write to the company's Data Protection Office, accompanied by an equivalent means of identification, to any of the following addresses:")],
             ["ul" => [
                 __("Post mail") .": "."Madrid - 28002",
-                __("Email") .": "."<a href=\"mailto:dataprivacy@providerxxx.es\">dataprivacy@providerxxx.es</a>",
+                __("Email") .": "."<a href=\"mailto:dataprivacy@mypromos.es\">dataprivacy@mypromos.es</a>",
             ]],
             ["p" => __("To help us process your request, please indicate in the subject “Data Protection“")],
             ["p" => __("Finally, you are informed of your right to file a claim with the Spanish Data Protection Agency if you are aware of or consider that an event may lead to a breach of the applicable data protection regulations.")],

@@ -102,7 +102,7 @@ final class CookiesPolicyInfoService extends AppService
             ["p" => __("In the cookie banner, you can click the “ACCEPT ALL” button to accept all cookies. Likewise, you can click on “ACCEPT SELECTION“ to accept only the cookies marked in the configuration boxes available in the banner, or you can click on “REJECT“ to reject unnecessary cookies.")],
             ["p" => __("We inform you that in the case of blocking or not accepting the installation of cookies, it is possible that certain services will not be available without the use of cookies or that you will not be able to access certain services or take full advantage of everything that this Website offers you.")],
             ["p" => __("<a href=\"javascript: Cookiebot.renew()\">Change your consent</a>")],
-            ["p" => __("You can obtain more information about the processing of your data by contacting {0}", "<a href=\"mailto:info@providerxxx.es\">info@providerxxx.es</a>")],
+            ["p" => __("You can obtain more information about the processing of your data by contacting {0}", "<a href=\"mailto:info@mypromos.es\">info@mypromos.es</a>")],
         ];
         //print_r($_REQUEST["APP_TRANSLATIONS"]);die;
         return $r;
