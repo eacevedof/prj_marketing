@@ -9,6 +9,8 @@
  */
 namespace TheFramework\Components\Db\Context;
 
+use \Exception;
+
 class ComponentContext
 {
     private $isError;
@@ -35,14 +37,14 @@ class ComponentContext
         $this->_load_selected();
     }
 
-    private function _load_array_fromjson($sPathfile)
+    private function _load_array_fromjson(string $sPathfile): void
     {
         if($sPathfile)
             if(is_file($sPathfile))
             {
                 $sJson = file_get_contents($sPathfile);
                 $this->arContexts = json_decode($sJson,1);
-                //pr($this->arContexts);die;
+                if (is_null($this->arContexts)) $this->arContexts = [];
             }
             else
                 $this->add_error("_load_array_fromjson: file $sPathfile not found");
@@ -106,9 +108,9 @@ class ComponentContext
     }
 
     public function get_selected(){return $this->arSelected;}
-    public function get_selected_id(){return $this->arSelected["ctx"]["id"];}
+    public function get_selected_id(): string {return $this->arSelected["ctx"]["id"] ?? "";}
 
-    public function get_schemas(){return $this->arSelected["ctx"]["schemas"];}
+    public function get_schemas(): array {return $this->arSelected["ctx"]["schemas"] ?? [];}
 
     public function get_pubconfig_by($key,$val)
     {

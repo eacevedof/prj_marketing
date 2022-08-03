@@ -8,13 +8,13 @@
     "port":"3306",
     "schemas":[
       {
-        "alias": "db-mypromos",
-        "database":"db_mypromos",
+        "alias": "db-mypromos_test",
+        "database":"db_mypromos_test",
         "user":"root",
         "password":"1234"
       },
       {
-        "alias": "db-marketing-log",
+        "alias": "db-mypromos-log",
         "database":"db_mypromos_log",
         "user":"root",
         "password":"1234"
