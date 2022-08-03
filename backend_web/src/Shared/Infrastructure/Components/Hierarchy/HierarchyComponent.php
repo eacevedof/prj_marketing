@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Shared\Infrastructure\Components\Hierarchy;
+use App\Shared\Infrastructure\Traits\LogTrait;
 
 final class HierarchyComponent
 {
+    use LogTrait;
+
     private function _get_parent($id, $ar)
     {
         $newar = array_filter($ar, function($item) use ($id){
@@ -62,6 +65,8 @@ final class HierarchyComponent
 
     public function get_topparent(string $id, array $data): array
     {
+        $this->logd($id, "hier-id");
+        $this->logd($data, "hier-data");
         return $this->_get_parent($id, $data);
     }
 }
