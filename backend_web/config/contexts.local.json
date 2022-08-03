@@ -1,0 +1,24 @@
+[
+  {
+    "id":"c1",
+    "alias":"db-mypromos",
+    "description":"Main db for My Promotions",
+    "type":"mysql",
+    "server":"cont-mariadb-univ",
+    "port":"3306",
+    "schemas":[
+      {
+        "alias": "db-mypromos_test",
+        "database":"db_mypromos_test",
+        "user":"root",
+        "password":"1234"
+      },
+      {
+        "alias": "db-mypromos-log",
+        "database":"db_mypromos_log",
+        "user":"root",
+        "password":"1234"
+      }
+    ]
+  }
+]
