@@ -1,24 +1,23 @@
 <?php
 
 namespace App\Shared\Infrastructure\Components\Hierarchy;
-use App\Shared\Infrastructure\Traits\LogTrait;
 
 final class HierarchyComponent
 {
-    use LogTrait;
-
-    private function _get_parent($id, $ar)
+    private function _get_parent(string $id, array $withparents)
     {
-        $newar = array_filter($ar, function($item) use ($id){
-            return $item["id"] === $id;
+        $newar = array_filter($withparents, function(array $item) use ($id){
+            return (string)$item["id"] === $id;
         });
+        if (!$newar) return [];
+
         $newar = array_values($newar);
         //print_r($newar);
         $idparent = $newar[0]["id_parent"];
         if(!$idparent) return $newar[0];
 
         //obtener el item padre directo
-        $newar = array_filter($ar, function($item) use ($idparent){
+        $newar = array_filter($withparents, function($item) use ($idparent){
             return $item["id"] === $idparent;
         });
         $newar = array_values($newar);
@@ -26,13 +25,13 @@ final class HierarchyComponent
         $idparent = $newar[0]["id_parent"];
         if(!$idparent) return $newar[0];
 
-        return $this->_get_parent($idparent, $ar);
+        return $this->_get_parent($idparent, $withparents);
     }
 
-    private function _load_childs($id, $ar, &$ac=[])
+    private function _load_childs(string $id, array $ar, array &$ac=[]): void
     {
         $childs = array_filter($ar, function ($item) use ($id){
-            return $item["id_parent"] === $id;
+            return (string) $item["id_parent"] === $id;
         });
 
         if(!$childs) return;
@@ -51,9 +50,9 @@ final class HierarchyComponent
         $childids = [];
         $this->_load_childs($id, $data, $childids);
 
-        $childids = array_map(function ($childid) use ($data) {
+        $childids = array_map(function (string $childid) use ($data) {
             $found = array_filter($data, function ($d) use($childid) {
-                return $d["id"] === $childid;
+                return (string) $d["id"] === $childid;
             });
             $found = array_values($found);
             return $found[0];
@@ -65,8 +64,6 @@ final class HierarchyComponent
 
     public function get_topparent(string $id, array $data): array
     {
-        $this->logd($id, "hier-id");
-        $this->logd($data, "hier-data");
         return $this->_get_parent($id, $data);
     }
 }
