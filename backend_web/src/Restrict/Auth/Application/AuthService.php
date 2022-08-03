@@ -172,7 +172,7 @@ final class AuthService
 
     public function get_tz(): string
     {
-        return "Europe/Madrid";
+        //return "Europe/Madrid";
         return $this->get_user()[SessionType::AUTH_USER_TZ] ?? "";
     }
 
