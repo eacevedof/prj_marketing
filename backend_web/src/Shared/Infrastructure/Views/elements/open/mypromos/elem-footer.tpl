@@ -32,7 +32,7 @@ $space["urlig"] = $space["urlig"] ?? "https://www.instagram.com/mypromoses";
   </div>
   <div class="item"></div>
   <div class="item item-social">
-    <li class="ul-social-flex">
+    <ul class="ul-social-flex">
       <?php
       if ($url = $space["urlfb"] ?? ""):
       ?>
