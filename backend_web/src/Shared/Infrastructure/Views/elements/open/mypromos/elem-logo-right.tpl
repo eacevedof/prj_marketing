@@ -9,7 +9,7 @@ $spaceurl = ($space["businessslug"] ?? "")
               ? Routes::url("business.space", ["businessslug"=>$space["businessslug"]])
               : "/";
 
-$urllogo = $space["businesslogo"] ?? "/themes/mypromos/images/provider-xxx-logo-orange.svg";
+$urllogo = $space["businesslogo"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg";
 ?>
 <!--elem-logo-right-->
 <nav class="nav-flex center-x">

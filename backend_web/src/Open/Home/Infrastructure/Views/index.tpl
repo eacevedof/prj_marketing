@@ -15,7 +15,7 @@
 
   <nav class="nav-grid center-x">
     <figure>
-      <img src="/themes/mypromos/images/provider-xxx-logo-orange.svg" class="nav-icon">
+      <img src="/themes/mypromos/images/mypromos-logo-orange.svg" class="nav-icon">
     </figure>
     <input type="checkbox" id="chk-hamburguer" autocomplete="off" />
     <ul class="nav-list-ul">

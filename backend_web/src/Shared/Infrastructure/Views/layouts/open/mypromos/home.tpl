@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="/themes/mypromos/images/provider-xxx-logo-orange.svg"/>
+  <link rel="icon" href="/themes/mypromos/images/mypromos-logo-orange.svg"/>
   <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
   <link rel="stylesheet" href="/themes/mypromos/css/global.css" type="text/css" media="all" />
   <link rel="stylesheet" href="/themes/mypromos/css/footer.css" type="text/css" media="all" />
