@@ -45,7 +45,7 @@ return [
         "testing" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",
-            "name" => "db_anytest",
+            "name" => "db_mypromos_test",
             "user" => "root",
             "pass" => "1234",
             "port" => 3306,

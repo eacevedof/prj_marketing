@@ -161,6 +161,5 @@ ifeq ($(OS),Linux)
 	rm -f LICENSE
 	rm -f README.md
 	rm -f TODO.md
-  rm -f db/db_mypromos.sql
-  rm
+	rm -f db/db_mypromos.sql
 endif
