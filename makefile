@@ -150,6 +150,7 @@ log-sql: ## log queries
 OS := $(shell uname)
 
 prepare-pro:  ## prepare pro
+
 ifeq ($(OS),Linux)
 	echo "preparing"
 	# echo ${HOME}
