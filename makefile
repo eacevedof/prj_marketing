@@ -151,7 +151,6 @@ OS := $(shell uname)
 
 prepare-pro:  ## prepare pro
 ifeq ($(OS),Linux)
-
 	echo "preparing"
 	echo ${HOME}
 	git fetch --all; git reset --hard origin/main;
@@ -164,6 +163,7 @@ ifeq ($(OS),Linux)
 	rm -f README.md
 	rm -f TODO.md
 	rm -fr backend_web/config/*
+	rm -fr backend_web/.env.local
 	rm -f backend_web/db/db_mypromos.sql
 	cd ./backend_web/vendor/
 endif
