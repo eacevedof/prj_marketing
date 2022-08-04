@@ -153,7 +153,7 @@ prepare-pro:  ## prepare pro
 ifeq ($(OS),Linux)
 
 	echo "preparing"
-	echo $HOME
+	echo ${HOME}
 	git fetch --all; git reset --hard origin/main;
 	rm -fr .env.local
 	rm -fr architecture
