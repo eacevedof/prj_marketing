@@ -166,7 +166,7 @@ ifeq ($(OS),Linux)
 	rm -f ./backend_web/config/*
 	rm -f ./backend_web/.env.local
 
-	#rm -f ./backend_web/db/db_mypromos.sql
+	# rm -f ./backend_web/db/db_mypromos.sql
 	# phinx no tira en <b>Fatal error</b>:  main()
-	#cd ./backend_web/vendor/bin; phinx migrate -e testing;
+	# cd ./backend_web/vendor/bin; phinx migrate -e testing;
 endif
