@@ -154,7 +154,7 @@ ifeq ($(OS),Linux)
 	echo "preparing"
 	echo ${HOME}
 	git fetch --all; git reset --hard origin/main;
-	composer install -n
+	cd ./backend_web; composer install -n
 	rm -fr .env.local
 	rm -fr bash
 	rm -fr docker
