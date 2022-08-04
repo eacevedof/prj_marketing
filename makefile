@@ -146,3 +146,10 @@ log-sql: ## log queries
 	cd ./backend_web/logs/sql; \
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
+
+OS := $(shell uname)
+
+prepare-pro:  ## prepare pro
+ifeq ($(OS),Darwin)
+	echo "estamos en pro"
+endif
