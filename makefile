@@ -155,13 +155,13 @@ ifeq ($(OS),Linux)
 	echo ${HOME}
 	git fetch --all; git reset --hard origin/main;
 	rm -fr .env.local
-	rm -fr architecture
 	rm -fr bash
 	rm -fr docker
 	rm -f docker-compose.yml
 	rm -f LICENSE
 	rm -f README.md
 	rm -f TODO.md
+	rm -fr ./backend_web/architecture
 	rm -fr ./backend_web/config/*
 	rm -fr ./backend_web/.env.local
 	rm -f ./backend_web/db/db_mypromos.sql
