@@ -162,8 +162,8 @@ ifeq ($(OS),Linux)
 	rm -f LICENSE
 	rm -f README.md
 	rm -f TODO.md
-	rm -fr backend_web/config/*
-	rm -fr backend_web/.env.local
-	rm -f backend_web/db/db_mypromos.sql
+	rm -fr ./backend_web/config/*
+	rm -fr ./backend_web/.env.local
+	rm -f ./backend_web/db/db_mypromos.sql
 	cd ./backend_web/vendor/
 endif
