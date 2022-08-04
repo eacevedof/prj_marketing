@@ -154,7 +154,6 @@ ifeq ($(OS),Linux)
 	echo "preparing"
 	echo ${HOME}
 	git fetch --all; git reset --hard origin/main;
-	cd ./backend_web; composer update -n
 	rm -fr .env.local
 	rm -fr bash
 	rm -fr docker
@@ -166,5 +165,5 @@ ifeq ($(OS),Linux)
 	rm -fr ./backend_web/config/*
 	rm -fr ./backend_web/.env.local
 	rm -f ./backend_web/db/db_mypromos.sql
-	cd ./backend_web/vendor/
+	cd ./backend_web/vendor; phinx migrate -e testing;
 endif
