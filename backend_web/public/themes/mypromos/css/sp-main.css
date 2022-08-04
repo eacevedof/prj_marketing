@@ -3,7 +3,7 @@
     grid-template-rows: min-content min-content 1fr;
     grid-template-areas:
     "area-nav"
-    "area-scrumbs"
+    "area-scrums"
     "area-textbox";
     min-height: 100vh;
     background-image: url("../images/terms-background.png");

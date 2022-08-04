@@ -2,7 +2,7 @@
   background-image: url("../images/error-background.png");
 }
 
-.section-scrumbs ul li a {
+.section-scrums ul li a {
   color: var(--color-white);
   font-weight: bold;
   text-decoration: none;

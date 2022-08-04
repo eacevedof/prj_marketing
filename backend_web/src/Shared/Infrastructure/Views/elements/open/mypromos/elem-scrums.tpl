@@ -13,7 +13,7 @@ $urls = [
     "promocreate" => $space["promotionlink"] ?? "",
 ];
 ?>
-<section class="section-scrumbs center-x">
+<section class="section-scrums center-x">
 <ul>
   <li><a href="<?=$urls["home"]?>">&#8962; <?=__("Home")?></a></li>
   <?php

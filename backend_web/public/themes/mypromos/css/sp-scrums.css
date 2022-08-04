@@ -1,26 +1,26 @@
-.section-scrumbs {
-    grid-area: area-scrumbs;
+.section-scrums {
+    grid-area: area-scrums;
     z-index: 1;
 }
 
-.section-scrumbs ul {
+.section-scrums ul {
     display: flex;
     list-style: none;
 }
 
-.section-scrumbs ul li+li:before {
+.section-scrums ul li+li:before {
     padding: 8px;
     color: var(--color-clear-black);
     content: "/\00a0";
 }
 
-.section-scrumbs ul li a {
+.section-scrums ul li a {
     color: var(--color-clear-black);
     font-weight: bold;
     text-decoration: none;
 }
 
-.section-scrumbs ul li a:hover {
+.section-scrums ul li a:hover {
     color: var(--color-yellow);
     text-decoration: underline;
 }
