@@ -25,6 +25,9 @@ run-migrate
 make ssh-be
 be; phpunit
 
+en prod:
+/usr/bin/php8.0-cli vendor/bin/phpunit tests
+
 ó
 
 make ssh-be

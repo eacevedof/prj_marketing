@@ -8,5 +8,8 @@ remlogs: ## elimina los logs
 	rm -fr logs/*
 
 test: ## run test
+ifeq ($(OS),Linux)
+	/usr/bin/php8.0-cli vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests/Services/Apify/Security/LoginServiceTest.php --color=auto
+else
 	vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests/Services/Apify/Security/LoginServiceTest.php --color=auto
-
+endif

@@ -1,5 +1,6 @@
 #!/bin/bash
 TODAY := $(shell date +'%Y%m%d')
+OS := $(shell uname)
 
 help: ## Show this help message
 	@echo "usage: make [target]"
@@ -60,9 +61,6 @@ restart-be:
 restart-web:
 	docker restart php-marketing-web
 
-restart-cron:
-	docker restart php-marketing-cron
-
 restart-db:
 	docker restart php-marketing-db
 
@@ -71,9 +69,6 @@ stop: ## stop containers
 
 stop-db: ## stop db
 	docker stop php-marketing-db
-
-stop-cron: ## stop cron
-	docker stop php-marketing-cron
 
 stop-be: ## stop be
 	docker stop php-marketing-be
@@ -109,33 +104,11 @@ ssh-web: ## web
 ssh-db: ## ssh's into mysql
 	docker exec -it --user root php-marketing-db bash
 
-ssh-cron: ## ssh's into crontab
-	docker exec -it --user root php-marketing-cron sh
-
 deploy-test: ## deploy codeonly in test
-	py.sh deploy.codeonly eduardoaf
+	py.sh deploy.codeonly mypromos
 
 deploy-prod: ## deploy codeonly in prod
-	py.sh deploy.codeonly eduardoaf-prod
-
-start-front: ## npm run start
-	cd frontend/restrict; npm run start
-
-build-front: ## npm run build
-	cd frontend/restrict; npm run build
-
-gen-cert: ## certs
-	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ./io/in/localip-ca.key -out ./io/in/localip-ca.pem -subj "/CN=192.168.1.132"
-	openssl x509 -outform pem -in ./io/in/localip-ca.pem -out ./io/in/localip-ca.crt
-
-run-consumer: ## be-container
-	run --class=App.Services.Kafka.LogConsumerService
-
-ips: ## get ips of containers
-	echo "php-marketing-web"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-web
-	# echo "php-marketing-cron"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-cron
-	echo "php-marketing-be"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-be
-	echo "php-marketing-db"; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-marketing-db
+	py.sh deploy.codeonly mypromos-prod
 
 log-error: ## logs error
 	cd ./backend_web/logs/error; \
@@ -147,10 +120,8 @@ log-sql: ## log queries
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
 
-OS := $(shell uname)
 
 prepare-pro:  ## prepare pro
-
 ifeq ($(OS),Linux)
 	echo "preparing"
 	# echo ${HOME}
