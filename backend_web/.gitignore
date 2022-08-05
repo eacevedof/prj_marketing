@@ -10,3 +10,4 @@ src/xxx-module/*
 !src/xxx-module/files
 .env.prod
 /db/*.prod.*
+/db/*.test.*
