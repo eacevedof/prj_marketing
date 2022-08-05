@@ -1,6 +1,8 @@
 <?php
 namespace Boot;
 
+if (!is_file("../vendor/autoload.php"))
+    throw new \Exception("Missing vendor/autoload.php");
 include_once "../vendor/autoload.php";
 include_once "../vendor/theframework/bootstrap.php";
 include_once "../boot/appbootstrap.php";
