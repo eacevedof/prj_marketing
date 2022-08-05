@@ -24,8 +24,8 @@ export class FormLogin extends LitElement {
 
   constructor() {
     super()
-    this.email = "eaf@eaf.com"
-    this.password = "eaf"
+    this.email = ""
+    this.password = ""
     this.issending = false
     this.btnsend = "Enviar"
   }
