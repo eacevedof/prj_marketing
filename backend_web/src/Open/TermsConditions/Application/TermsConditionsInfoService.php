@@ -4,6 +4,7 @@ namespace App\Open\TermsConditions\Application;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Shared\Domain\Enums\LanguageType;
 use App\Shared\Domain\Enums\RequestType;
@@ -22,7 +23,7 @@ final class TermsConditionsInfoService extends AppService
 
     private function _general_terms(): array
     {
-        $domain = getenv("APP_DOMAIN");
+        $domain = UrlDomainHelper::get_instance()->get_full_url();
         return [
             ["h2" => __("1. Portal Owner")],
             ["p" => __("This Legal Notice regulates the conditions of use of the website <a href=\"{0}\" target=\"_blank\">{1}</a> (hereinafter, the “Website“ or the “Portal“) responsibility of:", $domain, $domain)],
