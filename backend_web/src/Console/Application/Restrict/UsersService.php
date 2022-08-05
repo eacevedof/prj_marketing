@@ -68,7 +68,7 @@ final class UsersService extends AppService implements IConsole
                 ->add_insert_fv("uuid",uniqid())
                 ->insert()
             ;
-            $sql = $qb->get_sql();
+            $sql = $qb->sql();
             $r = $db->exec($sql);
             if($db->is_error()) {
                 $this->_pr($this->get_error());
