@@ -141,7 +141,6 @@ ifeq ($(OS),Linux)
 	# rm -f ./backend_web/db/db_mypromos.sql
 	# phinx no tira en <b>Fatal error</b>:  main()
 	# cd ./backend_web/vendor/bin; phinx migrate -e testing;
-	ln -s $${HOME}/php.ini $${PATH_DOM_MYPROMOS}/mypromos.es/public/php.ini
-	ln -s $${HOME}/php.ini $${PATH_DOM_MYPROMOS}/mypromos.es/console/php.ini
+	ln -s $${HOME}/php.ini $${PATH_DOM_MYPROMOS}/mypromos.es/backend_web/public/php.ini
+	ln -s $${HOME}/php.ini $${PATH_DOM_MYPROMOS}/mypromos.es/backend_web/console/php.ini
 endif
-$HOME/www/dom_mypromos.es/mypromos.es/backend_web/vendor/bin/phinx
