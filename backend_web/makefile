@@ -11,7 +11,7 @@ remlogs: ## elimina los logs
 
 migrate: ## run migration
 ifeq ($(OS),Linux)
-	cd ./db; /usr/bin/php8.0-cli $${phinx} migrate -e production;
+	cd ./db; /usr/bin/php8.0-cli $${PATH_PHINX} migrate -e production;
 else
 	vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests/Services/Apify/Security/LoginServiceTest.php --color=auto
 endif
