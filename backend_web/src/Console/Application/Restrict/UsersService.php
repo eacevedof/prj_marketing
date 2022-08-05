@@ -62,7 +62,6 @@ final class UsersService extends AppService implements IConsole
                 ->add_insert_fv("insert_date", $faker->get_datetime("2017-01-01","2021-11-05"))
                 ->add_insert_fv("insert_platform", $faker->get_rndint(1,4))
                 ->add_insert_fv("insert_user", $faker->get_rndint(1,5))
-                ->add_insert_fv("is_notifiable", $faker->get_rndint(0,1))
                 ->add_insert_fv("secret", $faker->get_hash(8))
                 ->add_insert_fv("phone",$faker->get_int(9,9))
                 ->add_insert_fv("uuid",uniqid())
@@ -80,7 +79,7 @@ final class UsersService extends AppService implements IConsole
     //php run.php users 1234
     public function run(): void
     {
-        $this->_faker();
+        //$this->_faker();
         $this->_pr($this->word,"word");
         $password = $this->_get_password();
         $message = "password: {$password}";
