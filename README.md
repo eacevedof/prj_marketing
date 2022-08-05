@@ -113,7 +113,7 @@ account default:gmail
 echo "hello world" | /usr/bin/msmtp -d xxx@gmail.com
 php -r "mail('xxx@yahoo.com', 'PHP test', 'Test from PHP as wwwrun user');"
 ```
-### Desplegado
+### Desplegado (deploy)
 ```shell
 config .env a partir de .env.prod
 # el error de dominio viene pq los ficheros .json no son los del env
@@ -165,6 +165,9 @@ ln -s <path-to-htdocs>/php.ini <path-to-htdocs>/xxx/console/php.ini
 php8.1-cli -c ~ -r "mail('xxx@gmail.com', 'PHP done', 'Test from PHP as wwwrun gg');"
 # fichero de pruebas
 php8.1-cli -c ~ mail.php
+
+# para ejecutar comandos
+/usr/bin/php8.0-cli phinx
 ```
 
 ### Errores
