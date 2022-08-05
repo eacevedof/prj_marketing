@@ -9,6 +9,13 @@ help: ## Show this help message
 remlogs: ## elimina los logs
 	rm -fr logs/*
 
+migrate: ## run migration
+ifeq ($(OS),Linux)
+	cd ./db; phinx migrate -e production;
+else
+	vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests/Services/Apify/Security/LoginServiceTest.php --color=auto
+endif
+
 test: ## run test
 ifeq ($(OS),Linux)
 	/usr/bin/php8.0-cli ./vendor/bin/phpunit tests
