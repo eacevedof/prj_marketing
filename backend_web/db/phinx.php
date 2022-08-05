@@ -13,7 +13,7 @@
  * cd $PATHWEB/db; phinx migrate -e testing
 */
 $dir = __DIR__;
-
+include_once "$dir/../vendor/autoload.php";
 include_once "$dir/migrations/AbsMigration.php";
 
 return [

@@ -167,7 +167,7 @@ php8.1-cli -c ~ -r "mail('xxx@gmail.com', 'PHP done', 'Test from PHP as wwwrun g
 php8.1-cli -c ~ mail.php
 
 # para ejecutar comandos
-/usr/bin/php8.0-cli phinx
+cd $PATHWEB/db; /usr/bin/php8.0-cli phinx migrate -e testing
 ```
 
 ### Errores
