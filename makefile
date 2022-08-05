@@ -126,7 +126,7 @@ ifeq ($(OS),Linux)
 	echo "preparing"
 	# echo ${HOME}
 	# git fetch --all; git reset --hard origin/main;
-	rm -fr .env.local
+	rm -f .env.local
 	rm -fr bash
 	rm -fr docker
 	rm -f docker-compose.yml
@@ -135,10 +135,13 @@ ifeq ($(OS),Linux)
 	rm -f TODO.md
 	rm -f ./backend_web/.vendor.zip
 	rm -fr ./backend_web/architecture
-	rm -f ./backend_web/config/*
+	rm -f ./backend_web/config/*local*
 	rm -f ./backend_web/.env.local
 
 	# rm -f ./backend_web/db/db_mypromos.sql
 	# phinx no tira en <b>Fatal error</b>:  main()
 	# cd ./backend_web/vendor/bin; phinx migrate -e testing;
+	ln -s $${HOME}/php.ini $${HOME}/$${PATH_DOM_MYPROMOS}/mypromos.es/public/php.ini
+	ln -s $${HOME}/php.ini $${HOME}/$${PATH_DOM_MYPROMOS}/mypromos.es/console/php.ini
 endif
+$HOME/www/dom_mypromos.es/mypromos.es/backend_web/vendor/bin/phinx
