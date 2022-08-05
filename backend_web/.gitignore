@@ -4,10 +4,12 @@ architecture/*.crswap
 vendor/*
 !/vendor/theframework
 /config/*.prod.*
+/config/*.test.*
 cache/*
 !cache/.gitkeep
 src/xxx-module/*
 !src/xxx-module/files
 .env.prod
+.env.test
 /db/*.prod.*
 /db/*.test.*
