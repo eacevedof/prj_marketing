@@ -100,7 +100,7 @@ final class WriterService extends AppService
 
         $oCrud->insert();
         
-        return $oCrud->get_sql();
+        return $oCrud->sql();
     }
 
     private function _get_update_sql(array $qparams): string
@@ -131,7 +131,7 @@ final class WriterService extends AppService
 
 
         $oCrud->update();
-        $sql = $oCrud->get_sql();
+        $sql = $oCrud->sql();
         //pr($sql);die;
         return $sql;
     }//_get_update_sql
@@ -147,7 +147,7 @@ final class WriterService extends AppService
                 $oCrud->add_and($sWhere);
             }        
         $oCrud->delete();
-        $sql = $oCrud->get_sql();
+        $sql = $oCrud->sql();
         
         return $sql;      
     }//_get_delete_sql
@@ -177,7 +177,7 @@ final class WriterService extends AppService
             }
 
         $oCrud->update();
-        $sql = $oCrud->get_sql();
+        $sql = $oCrud->sql();
         //pr($sql);die;
         return $sql;
     }//_get_deletelogic_sql

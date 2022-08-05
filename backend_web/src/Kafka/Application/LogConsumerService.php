@@ -54,7 +54,7 @@ final class LogConsumerService
                 ->add_insert_fv("timest", $message["timestamp"])
                 ->add_insert_fv("code_cache", uniqid())
                 ->insert();
-            $sql = $sql->get_sql();
+            $sql = $sql->sql();
             $sqls[] = $sql;
         }
         $sql = implode(";",$sqls).";";
