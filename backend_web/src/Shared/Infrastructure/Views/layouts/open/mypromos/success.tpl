@@ -11,11 +11,12 @@
   <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg")?>"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
   <?php
+  $this->_element("common/elem-cookiebot");
   $this->_element("open/mypromos/elem-css-common");
   ?>
   <link rel="stylesheet" href="/themes/mypromos/css/success.css" type="text/css" media="all" />
-  <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
 </head>
 <body>
 <main class="main-grid" id="top-mark">

@@ -12,6 +12,7 @@
   <link rel="icon" href="/themes/mypromos/images/mypromos-logo-orange.svg"/>
   <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
   <?php
+  $this->_element("common/elem-cookiebot");
   $this->_element("open/mypromos/elem-css-common");
   ?>
   <link rel="stylesheet" href="/themes/mypromos/css/sp.css" type="text/css" media="all" />

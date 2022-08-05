@@ -12,6 +12,7 @@
   <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg")?>"/>
   <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
   <?php
+  $this->_element("common/elem-cookiebot");
   echo $this->_asset_css([
       "vendor/snackbar/snackbar.min"
   ]);

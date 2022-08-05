@@ -11,6 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="#">
   <title><?=$pagetitle ?? ""?></title>
+  <?php $this->_element("common/elem-cookiebot");?>
   <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
   <link href="/themes/valex/assets/plugins/bootstrap/css/bootstrap.min.css" theme="valex" rel="stylesheet">
   <link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
