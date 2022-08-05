@@ -1,4 +1,6 @@
 #!/bin/bash
+OS := $(shell uname)
+
 help: ## Show this help message
 	@echo "usage:\n\tmake [target]"
 	@echo "targets:"
