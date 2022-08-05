@@ -8,7 +8,7 @@ final class CookiesPolicyInfoService extends AppService
     public function __invoke(): array
     {
         $r = [
-            ["p" => __("ProviderXXX S.A. (hereinafter, “ProviderXXX“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment.")],
+            ["p" => __("My Promos S.A. (hereinafter, “My Promos“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment.")],
 
             ["h2" => __("1. What are cookies?")],
             ["p" => __("Cookies are files or files that are downloaded to the <i>computer / smartphone / tablet</i> of the User (hereinafter, the “User”), when accessing certain websites and applications, which allow storage and retrieval of the User's data. Cookies are used for different purposes, such as recognizing you as a User, obtaining information about your browsing habits and adapting the way content is displayed.")],
@@ -19,11 +19,11 @@ final class CookiesPolicyInfoService extends AppService
             ["ul" => [
                 [
                     ["b" => __("Own cookies")],
-                    ["span" => __("Own cookies are those that are sent to the User's device from a computer or domain managed by ProviderXXX and from which the service requested by the User is provided.")],
+                    ["span" => __("Own cookies are those that are sent to the User's device from a computer or domain managed by My Promos and from which the service requested by the User is provided.")],
                 ],
                 [
                     ["b" => __("Third party cookies")],
-                    ["span" => __("Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by ProviderXXX but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “ProviderXXX“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out.")],
+                    ["span" => __("Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by My Promos but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “My Promos“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out.")],
                 ],
                 [
                     ["b" => __("Session cookies and persistent cookies")],

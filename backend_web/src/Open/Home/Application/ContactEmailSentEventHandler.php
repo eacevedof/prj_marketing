@@ -25,10 +25,9 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
 
         $urldomain = UrlDomainHelper::get_instance();
         $data = [
-            "business" => "ProviderXXX",
+            "business" => "My Promos",
             "businessurl" => $urldomain->get_full_url(),
             "businesslogo" => $urldomain->get_full_url("themes/mypromos/images/mypromos-logo-orange.png"),
-            "businesslogo" => "https://devmypromos.theframework.es/themes/mypromos/images/mypromos-logo-orange.png",
             "email" => $domevent->email(),
             "name" => $domevent->name(),
             "subject" => htmlentities($domevent->subject()),
@@ -46,11 +45,8 @@ final class ContactEmailSentEventHandler extends AppService implements IEventSub
         $email = CF::get(FuncEmailComponent::class);
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
-            //->add_to($domevent->email())
-            ->add_to("eacevedof@yahoo.es")
-            ->add_to("eacevedof@hotmail.com")
-            ->add_to("eacevedof@gmail.com")
-            //->add_bcc(getenv("APP_EMAIL_TO"))
+            ->add_to($domevent->email())
+            ->add_bcc(getenv("APP_EMAIL_TO"))
             ->set_subject(__("{0} this is a copy of your message ", $domevent->name()))
             ->set_content($html)
             ->send()

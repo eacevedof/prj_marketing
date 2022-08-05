@@ -683,8 +683,8 @@ msgstr "El presente Aviso Legal se rige en todos y cada uno de sus extremos por 
 msgid "Cookies Policy"
 msgstr "Política de Cookies"
 
-msgid "ProviderXXX S.A. (hereinafter, “ProviderXXX“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment."
-msgstr "ProviderXXX S.A. (a partir de ahora, “ProviderXXX“) informa, por medio de esta Política de Cookies, acerca del uso de métodos de almacenamiento y obtención de datos en los terminales de los usuarios."
+msgid "My Promos S.A. (hereinafter, “My Promos“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment."
+msgstr "My Promos S.A. (a partir de ahora, “My Promos“) informa, por medio de esta Política de Cookies, acerca del uso de métodos de almacenamiento y obtención de datos en los terminales de los usuarios."
 
 msgid "1. What are cookies?"
 msgstr "1. ¿Qué son las cookies?"
@@ -701,14 +701,14 @@ msgstr "El Sitio web puede utilizar los siguientes tipos de cookies. Una cookie 
 msgid "Own cookies"
 msgstr "Cookies propias"
 
-msgid "Own cookies are those that are sent to the User's device from a computer or domain managed by ProviderXXX and from which the service requested by the User is provided."
-msgstr "Las cookies propias son aquellas que se envían al dispositivo del Usuario desde un equipo o dominio gestionado por ProviderXXX y desde el que se presta el servicio solicitado por el Usuario."
+msgid "Own cookies are those that are sent to the User's device from a computer or domain managed by My Promos and from which the service requested by the User is provided."
+msgstr "Las cookies propias son aquellas que se envían al dispositivo del Usuario desde un equipo o dominio gestionado por My Promos y desde el que se presta el servicio solicitado por el Usuario."
 
 msgid "Third party cookies"
 msgstr "Cookies de terceros"
 
-msgid "Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by ProviderXXX but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “ProviderXXX“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out."
-msgstr "Las cookies de terceros son aquellas enviadas al dispositivo del Usuario desde un equipo o dominio que puede o no ser gestionado por ProviderXXX pero por otra entidad que procesa los datos recogidos por la cookie para sus propios fines. Las cookies propias se identifican en esta política indicando que el titular es “ProviderXXX”. El resto son propiedad de los terceros indicados en cada caso. En el apartado 6, puedes acceder a sus respectivas políticas de cookies al hacer clic en el nombre del tercero, incluidas las transferencias a países terceros que, en su caso, realice."
+msgid "Third-party cookies are those sent to the User's device from a computer or domain that may or may not be managed by My Promos but by another entity that processes the data collected by the cookie for its own purposes. Own cookies are identified in this policy indicating that the owner is “My Promos“. The rest are owned by the third parties indicated in each case. In section 6, you can access their respective cookie policies by clicking on the name of the third party, including the transfers to third countries that, where appropriate, they carry out."
+msgstr "Las cookies de terceros son aquellas enviadas al dispositivo del Usuario desde un equipo o dominio que puede o no ser gestionado por My Promos pero por otra entidad que procesa los datos recogidos por la cookie para sus propios fines. Las cookies propias se identifican en esta política indicando que el titular es “My Promos”. El resto son propiedad de los terceros indicados en cada caso. En el apartado 6, puedes acceder a sus respectivas políticas de cookies al hacer clic en el nombre del tercero, incluidas las transferencias a países terceros que, en su caso, realice."
 
 msgid "Session cookies and persistent cookies"
 msgstr "Cookies de sesión y cookies persistente"
@@ -861,8 +861,8 @@ msgstr "DPO"
 msgid "For what purpose do we treat your data?"
 msgstr "¿Con qué finalidad tratamos sus datos?"
 
-msgid "The data collected during the contracting flow of the tool through the sing up and/or subscription process will be handled for the configuration and maintenance of the profile of the contracting Client (hereinafter “Organization“) on the AppProviderXXX platform."
-msgstr "Los datos recabados durante el flujo de contratación de la herramienta a través de los procesos de registro y/o suscripción serán tratados para la configuración y mantenimiento del perfil del Cliente (en adelante “Organización”) en la plataforma AppProviderXXX."
+msgid "The data collected during the contracting flow of the tool through the sing up and/or subscription process will be handled for the configuration and maintenance of the profile of the contracting Client (hereinafter “Organization“) on the AppMy Promos platform."
+msgstr "Los datos recabados durante el flujo de contratación de la herramienta a través de los procesos de registro y/o suscripción serán tratados para la configuración y mantenimiento del perfil del Cliente (en adelante “Organización”) en la plataforma AppMy Promos."
 
 msgid "What personal data do we process?"
 msgstr "¿Qué datos personales tratamos?"
@@ -873,20 +873,20 @@ msgstr "Existe el alta por suscripción y Organización. En cada caso varian los
 msgid "At Organization level, It will be used to configure the space on the platform, thus allowing the publication of promotional landings."
 msgstr "A nivel de Organización se utilizarán para la configuración del espacio en la plataforma permitiendo así la publicación de landings promocionales."
 
-msgid "We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”AppProviderXXX enrollment form”."
-msgstr "Trataremos las direcciones de correo electrónico corporativo de Office 365 de los miembros de la Organización que usted nos facilite a través del formulario “AppProviderXXX enrolment form”."
+msgid "We will treat the Office 365 corporate email addresses of the members of the Organization that you provide us through the ”AppMy Promos enrollment form”."
+msgstr "Trataremos las direcciones de correo electrónico corporativo de Office 365 de los miembros de la Organización que usted nos facilite a través del formulario “AppMy Promos enrolment form”."
 
 msgid "What is the legal basis of the treatment?"
 msgstr "¿Cuál es la base legal del tratamiento?"
 
-msgid "The legal basis of the treatments with the purposes described is the legitimate interest in the treatment of said data, being necessary for the formalization and maintenance of the contractual relationship between ProviderXXX and the contracting Organization"
-msgstr "La base legal de los tratamientos con las finalidades descritas es el interés legítimo en el tratamiento de dichos datos, siendo necesarios para la formalización y mantenimiento de la relación contractual entre ProviderXXX y la Organización contratante"
+msgid "The legal basis of the treatments with the purposes described is the legitimate interest in the treatment of said data, being necessary for the formalization and maintenance of the contractual relationship between My Promos and the contracting Organization"
+msgstr "La base legal de los tratamientos con las finalidades descritas es el interés legítimo en el tratamiento de dichos datos, siendo necesarios para la formalización y mantenimiento de la relación contractual entre My Promos y la Organización contratante"
 
 msgid "Who are the recipients of your data?"
 msgstr "¿Quiénes son los destinatarios de sus datos?"
 
-msgid "Your data may be communicated to the ProviderXXX's Organizations, some of which are located in countries outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection"
-msgstr "Sus datos podrán ser comunicados a las organizaciones de ProviderXXX, algunas de las cuales se encuentran en países ubicados fuera del Espacio Económico Europeo que no han sido declarados por la Comisión Europea con nivel adecuado de protección de datos."
+msgid "Your data may be communicated to the My Promos's Organizations, some of which are located in countries outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection"
+msgstr "Sus datos podrán ser comunicados a las organizaciones de My Promos, algunas de las cuales se encuentran en países ubicados fuera del Espacio Económico Europeo que no han sido declarados por la Comisión Europea con nivel adecuado de protección de datos."
 
 msgid "Additionally, we inform you that your data may be communicated to Treatment Managers, such as the following technology providers, some of which have processing and/or support centers located outside the European Economic Area."
 msgstr "Adicionalmente le informamos que sus datos podrían ser comunicados a Encargados del Tratamiento, tales como los siguientes proveedores tecnológicos, algunos de los cuales disponen de centros de proceso y/o soporte ubicados fuera Espacio Económico Europeo."
@@ -897,14 +897,14 @@ msgstr "Dichas comunicaciones podrían suponer la transferencia internacional de
 msgid "How long will we keep your data?"
 msgstr "¿Por cuánto tiempo conservaremos sus datos?"
 
-msgid "Your data will be kept as long as the contractual relationship between the Organization and ProviderXXX for the use of the AppProviderXXX platform is maintained, or as long as the Organization does not request ProviderXXX to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods."
-msgstr "Sus datos se conservarán mientras se mantenga la relación contractual entre la Organización y ProviderXXX para la utilización de la plataforma AppProviderXXX, o en tanto en cuanto la Organización no solicite a ProviderXXX la modificación o eliminación de los datos facilitados en el formulario. No obstante, los datos podrán conservarse bloqueados durante los plazos de prescripción legalmente aplicables."
+msgid "Your data will be kept as long as the contractual relationship between the Organization and My Promos for the use of the AppMy Promos platform is maintained, or as long as the Organization does not request My Promos to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods."
+msgstr "Sus datos se conservarán mientras se mantenga la relación contractual entre la Organización y My Promos para la utilización de la plataforma AppMy Promos, o en tanto en cuanto la Organización no solicite a My Promos la modificación o eliminación de los datos facilitados en el formulario. No obstante, los datos podrán conservarse bloqueados durante los plazos de prescripción legalmente aplicables."
 
 msgid "What are your rights?"
 msgstr "¿Cuáles son sus derechos?"
 
-msgid "You can ask ProviderXXX for confirmation as to whether your personal data is being processed and, if so, access them. Likewise, you can request the rectification of inaccurate data or, where appropriate, request its deletion when, among other reasons, the data is no longer necessary for the purposes for which it was collected."
-msgstr "Usted puede solicitar a ProviderXXX confirmación sobre si sus datos personales están siendo tratados y, en caso afirmativo, acceder a los mismos. Asimismo, puede solicitar la rectificación de los datos inexactos o, en su caso, solicitar su supresión cuando, entre otros motivos, los datos ya no sean necesarios para los fines para los que se recogieron."
+msgid "You can ask My Promos for confirmation as to whether your personal data is being processed and, if so, access them. Likewise, you can request the rectification of inaccurate data or, where appropriate, request its deletion when, among other reasons, the data is no longer necessary for the purposes for which it was collected."
+msgstr "Usted puede solicitar a My Promos confirmación sobre si sus datos personales están siendo tratados y, en caso afirmativo, acceder a los mismos. Asimismo, puede solicitar la rectificación de los datos inexactos o, en su caso, solicitar su supresión cuando, entre otros motivos, los datos ya no sean necesarios para los fines para los que se recogieron."
 
 msgid "Likewise, in certain circumstances, you may request the limitation of the processing of your data, in which case we will only keep them for the exercise or defense of claims. You may also oppose the processing of your data in certain circumstances. We will stop processing the data, except for compelling legitimate reasons or for the exercise or defense of possible claims. Finally, when appropriate, the right of portability may be exercised to obtain the data in electronic format or to transmit the same to another entity."
 msgstr "Asimismo, en determinadas circunstancias, Usted podrá solicitar la limitación del tratamiento de sus datos, en cuyo caso únicamente los conservaremos para el ejercicio o la defensa de reclamaciones. También podrá oponerse al tratamiento de sus datos en determinadas circunstancias. Dejaremos de tratar los datos, salvo por motivos legítimos imperiosos o para el ejercicio o la defensa de posibles reclamaciones. Por último, cuando sea procedente, se podrá ejercitar el derecho de portabilidad para obtener los datos en formato electrónico o que se transmitan los mismos a otra entidad."
@@ -1033,8 +1033,8 @@ msgstr "Todos sus clientes que hayan confirmado su suscripción acumularán punt
 msgid "Join us!"
 msgstr "Únase a nosotros!"
 
-msgid "Your data may be communicated to the ProviderXXX's Organizations, some of which are located in countries outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection."
-msgstr "Sus datos serán comunicados a las organizaciones de ProviderXXX, algunas de estas localizadas fuera del Área Económica Europea las cuales no han sido declaradas por la Comisión Europea por tener un nivel adecuado de protección de datos."
+msgid "Your data may be communicated to the My Promos's Organizations, some of which are located in countries outside the European Economic Area that have not been declared by the European Commission to have an adequate level of data protection."
+msgstr "Sus datos serán comunicados a las organizaciones de My Promos, algunas de estas localizadas fuera del Área Económica Europea las cuales no han sido declaradas por la Comisión Europea por tener un nivel adecuado de protección de datos."
 
 msgid "Privacy Policy error!"
 msgstr "Error de Política de Privacidad!"
