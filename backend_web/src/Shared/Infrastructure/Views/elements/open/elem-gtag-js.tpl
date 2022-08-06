@@ -1,7 +1,7 @@
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-xxx-8"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WJCL30FNFS"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
-gtag("js", new Date());
-gtag("config", "UA-xxx-8");
+gtag('js', new Date());
+gtag('config', 'G-WJCL30FNFS');
 </script>
