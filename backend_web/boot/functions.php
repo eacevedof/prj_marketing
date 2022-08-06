@@ -18,7 +18,7 @@ function lgerr($var, $title=null)
     if(!is_string($var)) $var = var_export($var,1);
     if($var) $var = PHP_EOL.$var.PHP_EOL;
     $var = $title.$var;
-    $sPathFile = defined("PATH_LOGS") ? PATH_LOGS."/error/" : "";
+    $sPathFile = BOOT::PATH_LOGS."/error/";
     if (!is_dir($sPathFile)) mkdir($sPathFile);
     $sPathFile .= "app_$dlog.log";
     $oCursor=fopen($sPathFile,"ab");
@@ -29,8 +29,8 @@ function lgerr($var, $title=null)
 function appboot_loadenv(): void
 {
     $arpaths = [
-        "%PATH_PUBLIC%" => PATH_PUBLIC, "%PATH_ROOT%" => PATH_ROOT,
-        "%PATH_SRC%" => PATH_SRC, "%PATH_SRC_CONFIG%" => PATH_SRC_CONFIG
+        "%PATH_PUBLIC%" => BOOT::PATH_PUBLIC, "%PATH_ROOT%" => BOOT::PATH_ROOT,
+        "%PATH_SRC%" => BOOT::PATH_SRC, "%PATH_SRC_CONFIG%" => BOOT::PATH_SRC_CONFIG
     ];
     
     $arEnvs = ["local" => ".env.local", "dev" => ".env.dev", "test" => ".env.test", "prod" => ".env", ];
