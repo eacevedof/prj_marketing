@@ -19,8 +19,8 @@ final class AppView
     use LogTrait;
     use DiskCacheTrait;
 
-    private const PATH_LAYOUTS = PATH_SRC."/Shared/Infrastructure/Views/layouts";
-    private const PATH_ELEMENTS = PATH_SRC."/Shared/Infrastructure/Views/elements";
+    private const PATH_LAYOUTS = BOOT::PATH_SRC."/Shared/Infrastructure/Views/layouts";
+    private const PATH_ELEMENTS = BOOT::PATH_SRC."/Shared/Infrastructure/Views/elements";
 
     private const PATH_ASSETS_JS = "/assets/js/";
     private const PATH_ASSETS_IMG = "/assets/images/";
@@ -71,7 +71,7 @@ final class AppView
         $parts = array_reverse($parts);
         $parts[] = "Views";
         $strcontroller = implode(DS, $parts);
-        $this->pathtpl["viewfolder"] = PATH_SRC."/$strcontroller";
+        $this->pathtpl["viewfolder"] = BOOT::PATH_SRC."/$strcontroller";
     }
 
     private function _load_viewname_by_method(): void
@@ -252,7 +252,7 @@ final class AppView
 
     public function set_foldertpl(string $folder): self
     {
-        $this->pathtpl["viewfolder"] = PATH_SRC.DS.$folder;
+        $this->pathtpl["viewfolder"] = BOOT::PATH_SRC."/$folder";
         return $this;
     }
 
