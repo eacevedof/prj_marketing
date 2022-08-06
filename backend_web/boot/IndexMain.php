@@ -55,7 +55,7 @@ final class IndexMain
             ini_set("display_errors",0);
             ini_set("log_errors",1);
             //Define where do you want the log to go, syslog or a file of your liking with
-            ini_set("error_log",PATH_LOGS.DS."error/sys_$today.log");
+            ini_set("error_log",PATH_LOGS."/error/sys_$today.log");
         }
     }
 

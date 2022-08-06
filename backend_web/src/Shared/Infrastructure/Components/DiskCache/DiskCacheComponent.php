@@ -4,7 +4,7 @@ namespace App\Shared\Infrastructure\Components\DiskCache;
 
 final class DiskCacheComponent
 {
-    private string $pathcache = PATH_DISK_CACHE ?? "./";
+    private string $pathcache = BOOT::PATH_DISK_CACHE ?? "./";
     private string $pathsub = "";
     protected int $time = 3600;
     private string $keyname = "";

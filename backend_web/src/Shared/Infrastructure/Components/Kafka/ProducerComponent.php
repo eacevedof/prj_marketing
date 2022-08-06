@@ -29,7 +29,7 @@ final class ProducerComponent
     {
         if(!self::$producer)
         {
-            $pathkafka = PATH_LOGS.DS."kafka";
+            $pathkafka = PATH_LOGS."/kafka";
             //https://github.com/eacevedof/prj_docker_imgs/blob/master/kafka/php/kafka/producer-2.php
             $CONFIG["callbacks"]["on_success"] = function ($kafka, $message) use ($pathkafka) {
                 @file_put_contents(

@@ -17,7 +17,7 @@ final class LogsController extends OpenController
     {
         $type = $this->request->get_get("type") ?? "debug";
 
-        $pathlogs = PATH_LOGS.DS.$type.DS;
+        $pathlogs = BOOT::PATH_LOGS."/$type/";
         if(!is_dir($pathlogs))
             return pr("No folder $pathlogs");
         
