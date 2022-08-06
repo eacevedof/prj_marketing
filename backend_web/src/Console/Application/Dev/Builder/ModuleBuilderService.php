@@ -21,8 +21,8 @@ final class ModuleBuilderService extends AppService implements IConsole
 
     private string $table;
     private SchemaService $schema;
-    private const PATH_XXXMODULE = PATH_SRC."/xxx-module";
-    private const PATH_FILESTPL = PATH_SRC."/xxx-module/files";
+    private const PATH_XXXMODULE = BOOT::PATH_SRC."/xxx-module";
+    private const PATH_FILESTPL = BOOT::PATH_SRC."/xxx-module/files";
     private string $pathbuild = "";
     private array $filestpl = [];
     private array $builders = [];
