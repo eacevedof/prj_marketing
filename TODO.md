@@ -2,6 +2,7 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- promocion con pais, moneda, en %, y zona IP
 - bd trackinglog
 - python deploy pre-deploy and post-deploy
 - replicador de base de datos por alias
