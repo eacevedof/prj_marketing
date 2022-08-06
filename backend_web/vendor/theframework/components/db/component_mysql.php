@@ -8,6 +8,7 @@
  * @observations
  */
 namespace TheFramework\Components\Db;
+
 use \PDO;
 use \PDOException;
 use \Exception;
