@@ -33,7 +33,7 @@ function appboot_loadenv(): void
         "%PATH_SRC%" => PATH_SRC, "%PATH_SRC_CONFIG%" => PATH_SRC_CONFIG
     ];
     
-    $arEnvs = ["local" => ".env.local", "dev" => ".env.dev","test" => ".env.test","prod" => ".env", ];
+    $arEnvs = ["local" => ".env.local", "dev" => ".env.dev", "test" => ".env.test", "prod" => ".env", ];
 
     foreach ($arEnvs as $envtype => $envfile) {
         $pathenv = PATH_ROOT . DS . $envfile;
