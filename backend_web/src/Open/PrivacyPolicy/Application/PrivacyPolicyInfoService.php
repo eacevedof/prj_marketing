@@ -9,7 +9,7 @@ final class PrivacyPolicyInfoService extends AppService
     {
         $r = [
             ["h3" => __("For what purpose do we treat your data?")],
-            ["p" => __("The data collected during the contracting flow of the tool through the sing up and/or subscription process will be handled for the configuration and maintenance of the profile of the contracting Client (hereinafter “Organization“) on the AppMy Promos platform.")],
+            ["p" => __("The data collected during the contracting flow of the tool through the sing up and/or subscription process will be handled for the configuration and maintenance of the profile of the contracting Client (hereinafter “Organization“) on the “My Promos“ platform.")],
 
             ["h3" => __("What personal data do we process?")],
             ["p" => __("There is registration by subscription and Organization. In each case the required data varies but at least an email account is requested. For subscribers, it will be used, with your prior consent, for the purpose of notifications of offers, raffles and promotions that may be of interest.")],
@@ -23,7 +23,7 @@ final class PrivacyPolicyInfoService extends AppService
             ["p" => __("Additionally, we inform you that your data may be communicated to Treatment Managers, such as the following technology providers, some of which have processing and/or support centers located outside the European Economic Area.")],
 
             ["h3" => __("How long will we keep your data?")],
-            ["p" => __("Your data will be kept as long as the contractual relationship between the Organization and My Promos for the use of the AppMy Promos platform is maintained, or as long as the Organization does not request My Promos to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods.")],
+            ["p" => __("Your data will be kept as long as the contractual relationship between the Organization and My Promos for the use of the “My Promos“ platform is maintained, or as long as the Organization does not request My Promos to modify or delete the data provided in the form. However, the data may be kept blocked during the legally applicable prescription periods.")],
 
             ["h3" => __("What are your rights?")],
             ["p" => __("You can ask My Promos for confirmation as to whether your personal data is being processed and, if so, access them. Likewise, you can request the rectification of inaccurate data or, where appropriate, request its deletion when, among other reasons, the data is no longer necessary for the purposes for which it was collected.")],
