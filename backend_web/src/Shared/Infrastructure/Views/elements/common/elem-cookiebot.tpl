@@ -15,9 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let times = 0;
   let thread = setInterval(()=>{
     times++
-    if (times===10) clearInterval(thread)
+    if (times===20) clearInterval(thread)
     const $cookiebot = document.getElementById(COOKIEBOTID)
     if ($cookiebot) {
+      if ($cookiebot?.style?.display === "none") {
+        clearInterval(thread)
+        return
+      }
       $cookiebot.style.display = "none";
     }
   }, 500)
