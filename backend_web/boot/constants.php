@@ -2,6 +2,21 @@
 //constants.php 20200721
 define("PATH_ROOT", dirname(__DIR__));
 
+abstract class ENV
+{
+    public const LOCAL = "local";
+    public const DEV = "dev";
+    public const TEST = "test";
+    public const PROD = "prod";
+
+    public static function is_local(): bool { return self::LOCAL === getenv("APP_ENV");}
+    public static function is_dev(): bool { return self::DEV === getenv("APP_ENV");}
+    public static function is_test(): bool { return self::TEST === getenv("APP_ENV");}
+    public static function is_prod(): bool { return self::PROD === getenv("APP_ENV");}
+
+    public static function env(): string { return getenv("APP_ENV");}
+}
+
 abstract class BOOT
 {
     public const PATH_ROOT = PATH_ROOT;
@@ -12,17 +27,4 @@ abstract class BOOT
     public const PATH_SRC_CONFIG = PATH_ROOT."/config";
     public const PATH_LOGS = PATH_ROOT."/logs";
     public const PATH_CONSOLE = PATH_ROOT."/console";
-}
-
-abstract class ENV
-{
-    public const LOCAL = "local";
-    public const DEV = "dev";
-    public const TEST = "test";
-    public const PROD = "prod";
-
-    public static function is_local(): bool { self::LOCAL === getenv("APP_ENV");}
-    public static function is_dev(): bool { self::DEV === getenv("APP_ENV");}
-    public static function is_test(): bool { self::TEST === getenv("APP_ENV");}
-    public static function is_prod(): bool { self::PROD === getenv("APP_ENV");}
 }

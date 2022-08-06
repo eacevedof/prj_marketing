@@ -1,6 +1,6 @@
 <!-- elem-gtag -->
 <?php
-if (getenv("APP_ENV")!=="prod") return;
+if (!ENV::is_prod()) return;
 ?>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJCL30FNFS"></script>
 <script>

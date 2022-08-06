@@ -8,7 +8,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <?php $this->_element("open/elem-gtag-js"); ?>
+  <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg")?>"/>
@@ -19,10 +19,13 @@
   ?>
   <link rel="stylesheet" href="/themes/mypromos/css/sp.css" type="text/css" media="all" />
   <?php
-  echo $this->_element("open/elem-gtag-js");
+  echo $this->_element("common/elem-gtag-js");
   ?>
 </head>
 <body>
+<?php
+$this->_element("common/elem-band-env");
+?>
 <style>
 <?php
 if ($bgimage = $space["businessbgimage"]):

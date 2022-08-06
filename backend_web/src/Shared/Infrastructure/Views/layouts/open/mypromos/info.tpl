@@ -7,7 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <?php $this->_element("open/elem-gtag-js"); ?>
+  <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/themes/mypromos/images/mypromos-logo-orange.svg"/>
@@ -19,6 +19,9 @@
   <link rel="stylesheet" href="/themes/mypromos/css/sp.css" type="text/css" media="all" />
 </head>
 <body>
+<?php
+$this->_element("common/elem-band-env");
+?>
 <main class="main-grid" id="top-mark">
   <div class="div-wave-top">
     <svg viewBox="25 0 550 150" preserveAspectRatio="none" style="height: 300%; width: 110%;">

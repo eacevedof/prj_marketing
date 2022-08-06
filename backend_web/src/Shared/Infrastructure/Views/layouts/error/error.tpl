@@ -7,7 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <?php $this->_element("open/elem-gtag-js"); ?>
+  <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="#">
@@ -18,6 +18,9 @@
   <link href="/themes/valex/assets/css/style.css" theme="valex" rel="stylesheet">
 </head>
 <body class="main-body bg-primary-transparent">
+<?php
+$this->_element("common/elem-band-env");
+?>
 <!-- error.tpl -->
 <div class="page">
 <?php

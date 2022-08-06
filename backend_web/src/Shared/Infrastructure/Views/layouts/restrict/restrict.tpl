@@ -7,7 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <?php $this->_element("open/elem-gtag-js"); ?>
+  <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?= $this->_element("common/elem-favicon") ?>
@@ -39,6 +39,9 @@
   ])?>
 </head>
 <body>
+<?php
+$this->_element("common/elem-band-env");
+?>
 <main>
 <div class="horizontalMenucontainer">
 <?php
