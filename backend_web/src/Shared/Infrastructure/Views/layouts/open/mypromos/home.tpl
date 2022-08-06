@@ -7,6 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <?php $this->_element("open/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/themes/mypromos/images/mypromos-logo-orange.svg"/>
@@ -19,7 +20,6 @@
   echo $this->_asset_css([
       "vendor/snackbar/snackbar.min"
   ]);
-  echo $this->_element("open/elem-gtag-js");
   echo $this->_asset_js([
       "vendor/jquery/jquery-3.6.0",
       "vendor/snackbar/snackbar.min"

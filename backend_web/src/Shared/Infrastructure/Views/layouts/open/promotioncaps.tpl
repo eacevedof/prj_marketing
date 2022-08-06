@@ -7,6 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <?php $this->_element("open/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg")?>"/>

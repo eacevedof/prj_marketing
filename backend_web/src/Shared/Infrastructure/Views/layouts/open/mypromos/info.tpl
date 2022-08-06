@@ -7,6 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <?php $this->_element("open/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/themes/mypromos/images/mypromos-logo-orange.svg"/>
@@ -16,9 +17,6 @@
   $this->_element("open/mypromos/elem-css-common");
   ?>
   <link rel="stylesheet" href="/themes/mypromos/css/sp.css" type="text/css" media="all" />
-  <?php
-  echo $this->_element("open/elem-gtag-js");
-  ?>
 </head>
 <body>
 <main class="main-grid" id="top-mark">
