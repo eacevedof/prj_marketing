@@ -2,6 +2,11 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
+- python deploy pre-deploy and post-deploy
+- bigjson config en my-common?
+- perfil agency  
+  - los bows deben permitir a agencias su gestion
+  - las agencias deberian tener jerarquia vertical?
 - is_terms se ve siempre a 1 cuando no se captura. Creo que es el valor por defcto.
 - hay que cuardar el idioma en la suscripción ya que se necesita para el envío del email de puntos. De lo contrario se enviara con el idioma del validador.
 - documentación / ayuda
