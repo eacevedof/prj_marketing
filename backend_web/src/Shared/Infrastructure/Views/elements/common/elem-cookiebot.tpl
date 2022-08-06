@@ -1,4 +1,7 @@
 <!-- elem-cookiebot -->
+<?php
+if (getenv("APP_ENV")!=="prod") return;
+?>
 <script
     id="Cookiebot"
     src="https://consent.cookiebot.com/uc.js"
