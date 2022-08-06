@@ -9,6 +9,7 @@
  */
 namespace App\Console\Application\Dev\Builder;
 
+use \BOOT;
 use App\Console\Application\IConsole;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\ConsoleTrait;

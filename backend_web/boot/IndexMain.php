@@ -15,6 +15,7 @@ include_once("listeners/eventbus.php");
 */
 include_once "../boot/appbootstrap.php";
 
+use \BOOT;
 use TheFramework\Components\ComponentRouter;
 use \Throwable;
 
@@ -24,7 +25,7 @@ final class IndexMain
 
     public function __construct()
     {
-        session_name(getenv("MYPROMOSID") ?: "MARKETINGID");
+        session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
         session_start();
         $this->routes = include_once "../src/Shared/Infrastructure/routes/routes.php";
         $this->_load_cors_headers();
@@ -55,7 +56,7 @@ final class IndexMain
             ini_set("display_errors",0);
             ini_set("log_errors",1);
             //Define where do you want the log to go, syslog or a file of your liking with
-            ini_set("error_log",PATH_LOGS."/error/sys_$today.log");
+            ini_set("error_log",BOOT::PATH_LOGS."/error/sys_$today.log");
         }
     }
 

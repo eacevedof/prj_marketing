@@ -10,6 +10,7 @@
  */
 namespace App\Shared\Infrastructure\Views;
 
+use \BOOT;
 use App\Shared\Infrastructure\Traits\DiskCacheTrait;
 use App\Shared\Infrastructure\Traits\LogTrait;
 use \Exception;

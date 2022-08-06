@@ -7,13 +7,13 @@ trait LogTrait
 {
     protected function log($mxVar, $title=null): void
     {
-        $oLog = new ComponentLog("test",PATH_LOGS);
+        $oLog = new ComponentLog("test",BOOT::PATH_LOGS);
         $oLog->save($mxVar, $title);
     }
 
     protected function logpr($mxVar, $title=null): void
     {
-        $oLog = new ComponentLog("test",PATH_LOGS);
+        $oLog = new ComponentLog("test",BOOT::PATH_LOGS);
         $mxVar = print_r($mxVar, 1);
         $oLog->save($mxVar, $title);
         echo date("Y-m-d H:i:s");

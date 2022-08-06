@@ -2,6 +2,8 @@
 
 namespace App\Shared\Infrastructure\Components\DiskCache;
 
+use \BOOT;
+
 final class DiskCacheComponent
 {
     private string $pathcache = BOOT::PATH_DISK_CACHE ?? "./";

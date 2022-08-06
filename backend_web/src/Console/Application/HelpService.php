@@ -8,6 +8,8 @@
  * @observations
  */
 namespace App\Console\Application;
+
+use \BOOT;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\ConsoleTrait;
 
@@ -20,7 +22,7 @@ final class HelpService extends AppService implements IConsole
     public function __construct(array $input)
     {
         $this->input = $input;
-        $pathservices = PATH_CONSOLE."/services.php";
+        $pathservices = BOOT::PATH_CONSOLE."/services.php";
         $this->commands = include($pathservices);
     }
 

@@ -129,8 +129,8 @@ final class ComponentMysql
 
     private function _log($mxVar, ?string $title=null): void
     {
-        if(defined("PATH_LOGS") && class_exists("\TheFramework\Components\ComponentLog")) {
-            $oLog = new \TheFramework\Components\ComponentLog("sql", PATH_LOGS);
+        if(class_exists("\BOOT") && class_exists("\TheFramework\Components\ComponentLog")) {
+            $oLog = new \TheFramework\Components\ComponentLog("sql", \BOOT::PATH_LOGS);
             $oLog->save($mxVar,"-- ". $title);
         }
 

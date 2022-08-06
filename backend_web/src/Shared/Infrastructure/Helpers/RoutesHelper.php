@@ -1,6 +1,8 @@
 <?php
 namespace App\Shared\Infrastructure\Helpers;
 
+use \BOOT;
+
 final class RoutesHelper
 {
     private const FIND_PARAMS_PATTERN = "/[\?|\?int|int]*:[a-z]+/";

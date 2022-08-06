@@ -8,7 +8,8 @@
  * @observations
  */
 namespace App\Restrict\Logs\Infrastructure\Controllers;
-use App\Shared\Infrastructure\Components\Kafka\ProducerComponent;
+
+use \BOOT;
 use App\Controllers\Open\OpenController;
 
 final class LogsController extends OpenController

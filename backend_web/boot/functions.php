@@ -1,4 +1,5 @@
 <?php
+
 //functions.php 20200721
 function dd($var,$title=""){
     $sContent= var_export($var,1);
