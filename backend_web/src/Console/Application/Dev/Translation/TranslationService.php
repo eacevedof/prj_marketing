@@ -21,7 +21,7 @@ final class TranslationService extends AppService implements IConsole
         "\_\_\(\"(.*?)\"",
     ];
 
-    private const PATH_SRC = PATH_SRC;
+    private const PATH_SRC = BOOT::PATH_SRC;
     private const PATH_TR_ES = PATH_ROOT."/locale/es/default.po";
 
     private array $arfiles;

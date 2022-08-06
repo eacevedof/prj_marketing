@@ -4,7 +4,7 @@ namespace App\Shared\Infrastructure\Helpers;
 final class RoutesHelper
 {
     private const FIND_PARAMS_PATTERN = "/[\?|\?int|int]*:[a-z]+/";
-    private const PATH_ROUTES = PATH_SRC."/Shared/Infrastructure/routes/routes.php";
+    private const PATH_ROUTES = BOOT::PATH_SRC."/Shared/Infrastructure/routes/routes.php";
     private static ?array $routes = null;
 
     private static function _load_routes(): void
