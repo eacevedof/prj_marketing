@@ -134,7 +134,7 @@ class ComponentDbSqlite
     
     private function set_pathfile()
     {
-        $this->sPathFile = realpath($this->sPathFolder.self::DS.$this->sDbName);
+        $this->sPathFile = realpath("$this->sPathFolder/$this->sDbName");
     }
     
     public function is_persistent($isOn=TRUE){$this->isPersistent=$isOn;}

@@ -11,7 +11,7 @@ namespace TheFramework\Components;
 
 class ComponentFile 
 {
-    const DS = DIRECTORY_SEPARATOR;
+    private const DS = DIRECTORY_SEPARATOR;
     
     //private $sPathFolderFrom;
     private $sPathFolderTo;
@@ -50,7 +50,7 @@ class ComponentFile
         else
             $oCursor = fopen($sPathFile,"x");
 
-        if($oCursor !== FALSE)
+        if($oCursor !== false)
         {
             $sToSave = $mxContent;
             fwrite($oCursor,""); //Grabo el caracter vacio
@@ -59,7 +59,7 @@ class ComponentFile
         }
         else
         {
-            return FALSE;
+            return false;
         }
         return TRUE;        
     }//save

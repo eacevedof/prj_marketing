@@ -71,7 +71,7 @@ final class AppView
         unset($parts[0]); unset($parts[1]);
         $parts = array_reverse($parts);
         $parts[] = "Views";
-        $strcontroller = implode(DS, $parts);
+        $strcontroller = implode("/", $parts);
         $this->pathtpl["viewfolder"] = BOOT::PATH_SRC."/$strcontroller";
     }
 

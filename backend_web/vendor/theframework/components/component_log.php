@@ -58,7 +58,7 @@ class ComponentLog
         else
             $oCursor = fopen($sPathFile,"x");
 
-        if($oCursor !== FALSE)
+        if($oCursor !== false)
         {
             $sToSave = $this->merge($mxVar,$sTitle);
             fwrite($oCursor,""); //Grabo el caracter vacio
@@ -67,9 +67,9 @@ class ComponentLog
         }
         else
         {
-            return FALSE;
+            return false;
         }
-        return TRUE;        
+        return true;        
     }//save
 
     public function set_filename($sValue){$this->sFileName="$sValue.log";}

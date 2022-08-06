@@ -86,7 +86,7 @@ if(!function_exists("lg"))
 
         $sPathFile = "";
         if(defined("TFW_PATH_FOLDER_LOG")) 
-            $sPathFile .= TFW_PATH_FOLDER_LOG.TFW_DS."custom".TFW_DS;
+            $sPathFile .= TFW_PATH_FOLDER_LOG."/custom/";
         $sPathFile .= "tfwlog.log";
 
         $oCursor=fopen($sPathFile,"ab");

@@ -34,10 +34,15 @@ function appboot_loadenv(): void
         "%PATH_SRC%" => BOOT::PATH_SRC, "%PATH_SRC_CONFIG%" => BOOT::PATH_SRC_CONFIG
     ];
     
-    $arEnvs = ["local" => ".env.local", "dev" => ".env.dev", "test" => ".env.test", "prod" => ".env", ];
+    $arEnvs = [
+        ENV::LOCAL => ".env.".ENV::LOCAL,
+        ENV::DEV => ".env.".ENV::DEV,
+        ENV::TEST => ".env.".ENV::TEST,
+        ENV::PROD => ".env",
+    ];
 
     foreach ($arEnvs as $envtype => $envfile) {
-        $pathenv = PATH_ROOT . DS . $envfile;
+        $pathenv = BOOT::PATH_ROOT."/$envfile";
         if (is_file($pathenv)) {
             $content = file_get_contents($pathenv);
             $lines = explode(PHP_EOL, $content);

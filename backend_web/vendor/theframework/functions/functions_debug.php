@@ -88,7 +88,7 @@ if(!function_exists("lg"))
         $sPathFile = "";
         if(defined("TFW_PATH_FOLDER_LOG"))
         {
-            $sPathFile .= TFW_PATH_FOLDER_LOG.TFW_DS.$sType.TFW_DS;
+            $sPathFile .= TFW_PATH_FOLDER_LOG."/$sType/";
             if(is_dir($sPathFile))
                 $sPathFile .= "lg_{$sLogdate}.log";
             else
