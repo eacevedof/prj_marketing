@@ -3,6 +3,7 @@
 - alta de usuario con bow permite dar de alta otro bow
 ### To-Do
 - python deploy pre-deploy and post-deploy
+- replicador de base de datos por alias
 - bigjson config en my-common?
 - perfil agency  
   - los bows deben permitir a agencias su gestion
