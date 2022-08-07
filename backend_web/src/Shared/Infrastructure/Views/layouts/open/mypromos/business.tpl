@@ -4,6 +4,7 @@
  * @var string $pagetitle
  * @var array $space
  */
+use App\Shared\Infrastructure\Helpers\Views\EnvIconHelper;
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,7 +12,7 @@
   <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg")?>"/>
+  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? EnvIconHelper::icon())?>"/>
   <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
   <?php
   $this->_element("common/elem-cookiebot");

@@ -10,7 +10,7 @@ abstract class ENV
     public const PROD = "prod";
 
     public const COLORS = [
-        self::LOCAL => "#0174ee", //rosa
+        self::LOCAL => "#fc0ac3", //rosa
         self::DEV => "#0174ee", //azul
         self::TEST => "#2f8a01", //verde
         self::PROD => "",
