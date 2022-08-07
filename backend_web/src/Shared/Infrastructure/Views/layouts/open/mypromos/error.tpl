@@ -3,13 +3,14 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var string $pagetitle
  */
+use App\Shared\Infrastructure\Helpers\Views\EnvIconHelper;
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="UTF-8">
-  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg")?>"/>
+  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? EnvIconHelper::icon())?>"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
