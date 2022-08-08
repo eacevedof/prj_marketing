@@ -16,3 +16,4 @@ cache/*
 !cache/.gitkeep
 src/xxx-module/*
 !src/xxx-module/files
+./vendor.zip
