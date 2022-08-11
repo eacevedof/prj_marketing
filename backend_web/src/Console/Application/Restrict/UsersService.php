@@ -109,5 +109,9 @@ final class UsersService extends AppService implements IConsole
         }
 
         $this->logpr("flat: $flag not valid");
+        $this->logpr([
+            "--get-password",
+            "--update-root-password",
+        ]);
     }
 }
