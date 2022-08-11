@@ -9,6 +9,7 @@
  */
 namespace App\Console\Application\Restrict;
 
+use App\Shared\Infrastructure\Factories\DbFactory;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Console\Application\IConsole;
 use App\Shared\Infrastructure\Traits\ConsoleTrait;
@@ -22,17 +23,32 @@ final class UsersService extends AppService implements IConsole
     use ConsoleTrait;
 
     private ComponentEncdecrypt $encdec;
-    private string $word;
 
     public function __construct(array $input)
     {
-        $this->word = $input[0] ?? ":)";
+        $this->input = $input;
         $this->encdec = $this->_get_encdec();
     }
 
     private function _get_password(): string
     {
-        return $this->encdec->get_hashpassword($this->word);
+        $hashed = $this->encdec->get_hashpassword($word = $this->input[1]);
+        $message = "password: {$hashed}";
+        $this->_pr($word,"word");
+        $this->logpr($message);
+        return $hashed;
+    }
+
+    private function _update_root_password(): void
+    {
+        $secret = $this->_get_password();
+        DbFactory::get_by_default()->exec("
+            UPDATE base_user 
+            SET secret='$secret'
+            WHERE 1
+            AND id=1
+        ");
+        $this->logpr("root user updated!");
     }
 
     private function _faker(): void
@@ -80,9 +96,18 @@ final class UsersService extends AppService implements IConsole
     public function run(): void
     {
         //$this->_faker();
-        $this->_pr($this->word,"word");
-        $password = $this->_get_password();
-        $message = "password: {$password}";
-        $this->logpr($message);
+        $flag = $this->input[0] ?? "";
+        switch ($flag) {
+            case "--get-password":
+                $this->_get_password();
+                return;
+            break;
+            case "--update-root-password":
+                $this->_update_root_password();
+                return;
+            break;
+        }
+
+        $this->logpr("flat: $flag not valid");
     }
 }
