@@ -14,7 +14,8 @@ return [
 
     "users"                  => [
         "service"   =>  "App\\Console\\Application\\Restrict\\UsersService",
-        "info"      =>  "",
+        "info"      =>  "--get-password word devuelve el hash de la palabra\n\t--update-root-password word actualiza la contraseña del root@sys.sys".
+                        "",
     ],
 
     "build-module"           => [
