@@ -23,6 +23,8 @@ abstract class ENV
 
     public static function env(): string { return getenv("APP_ENV");}
 
+    public static function is_debug(): bool { return (bool) getenv("APP_DEBUG"); }
+
     public static function color(): string
     {
         switch (getenv("APP_ENV")) {

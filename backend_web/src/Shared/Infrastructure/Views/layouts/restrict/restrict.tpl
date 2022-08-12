@@ -10,7 +10,7 @@
   <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <?= $this->_element("common/elem-favicon") ?>
+  <?php $this->_element("common/elem-favicon") ?>
   <title><?=$pagetitle?></title>
 <!-- css -->
   <?= $this->_asset_css("vendor/normalize/normalize-8.0.1.min") ?>
@@ -40,6 +40,7 @@
 </head>
 <body>
 <?php
+$this->_element("common/elem-snackbar");
 $this->_element("common/elem-band-env");
 ?>
 <main>
@@ -60,8 +61,9 @@ $this->_element("common/elem-nav-menu");
 </div>
 <div class="main-navbar-backdrop"></div>
 </main>
-<?=$this->_element("common/elem-modal-raw")?>
-<?=$this->_element("common/elem-snackbar")?>
-<?=$this->_element("common/elem-spinner")?>
+<?php
+$this->_element("common/elem-modal-raw");
+$this->_element("common/elem-spinner");
+?>
 </body>
 </html>

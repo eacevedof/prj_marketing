@@ -16,19 +16,31 @@ include_once("listeners/eventbus.php");
 include_once "../boot/appbootstrap.php";
 
 use \BOOT;
+use \ENV;
 use TheFramework\Components\ComponentRouter;
 use \Throwable;
 
 final class IndexMain
 {
+    private const SESSION_TIME = 3600;
     private array $routes;
 
     public function __construct()
     {
-        session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
-        session_start();
+        $this->_load_session();
         $this->routes = include_once "../src/Shared/Infrastructure/routes/routes.php";
         $this->_load_cors_headers();
+    }
+
+    private function _load_session(): void
+    {
+        //tiempo de vida de los datos en sesion
+        ini_set("session.gc_maxlifetime", self::SESSION_TIME);
+        //tiempo de vida de la cookie de sesion
+        //session_set_cookie_params(self::SESSION_TIME);
+        session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
+        session_start();
+        setcookie(session_name(),session_id(),time()+self::SESSION_TIME);
     }
 
     private function _load_cors_headers(): void
@@ -51,7 +63,7 @@ final class IndexMain
                 header("Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]}");
         }
 //si se está en producción se desactivan los mensajes en el navegador
-        if (($_ENV["APP_ENV"] ?? "")=="prod") {
+        if (($_ENV["APP_ENV"] ?? "")===ENV::PROD) {
             $today = date("Ymd");
             ini_set("display_errors",0);
             ini_set("log_errors",1);
@@ -123,8 +135,8 @@ final class IndexMain
 
     public static function debug(Throwable $ex): void
     {
-        if (getenv("APP_ENV")==="prod") return;
-        if (!((bool) getenv("APP_DEBUG"))) return;
+        if (ENV::is_prod()) return;
+        if (!ENV::is_debug()) return;
 
         $content = [];
         $content["Exception"] = $ex->getMessage();

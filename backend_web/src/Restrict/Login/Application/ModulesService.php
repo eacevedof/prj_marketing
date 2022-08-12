@@ -5,6 +5,7 @@ use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Enums\SessionType;
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 final class ModulesService
 {
@@ -56,7 +57,7 @@ final class ModulesService
                         "url" => "/restrict/subscriptions",
                     ],
                     "edit" => [
-                        //"url" => "/restrict/subscriptions/update",
+                        "url" => Routes::url("qr.validate"),
                     ],
                 ]
             ],

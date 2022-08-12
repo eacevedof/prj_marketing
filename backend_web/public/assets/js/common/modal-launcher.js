@@ -1,4 +1,4 @@
-import {reqtxt} from "/assets/js/common/req.js"
+import {reqtxt, is_get_200} from "/assets/js/common/req.js"
 import spinner from "/assets/js/common/spinner.js"
 import {SNACK} from "/assets/js/common/snackbar.js"
 
@@ -16,6 +16,7 @@ const _open_modal_by_get = async (url) => {
 
 const VIEWS = ["info", "edit"]
 
+//modal_launcher()
 export default () => {
   const url = window.location.search;
   if (!url) return
@@ -37,6 +38,38 @@ export default () => {
   _open_modal_by_get(final)
 }
 
+export const show_restrict_url = async () => {
+  const is_valid_url = async url => {
+    if (url.match(/\/restrict[\/]*$/)) return false
+    const is200 = await is_get_200(url)
+    if (url.startsWith("/restrict/") && is200)
+      return true
+    return false
+  }
+
+  const url = window.location.search;
+  if (!url) return
+  const urlparams = new URLSearchParams(url)
+  const inmodal = urlparams.get("in-modal").trim()
+  if (!inmodal) return
+
+  const isvalid = await is_valid_url(inmodal)
+  if (!isvalid) {
+    if (window?.snack)
+      window.snack
+      .set_color(SNACK.ERROR)
+      .set_time(5)
+      .set_inner("wrong in-modal param")
+      .show()
+    return
+  }
+  _open_modal_by_get(inmodal)
+}
+
+
+/*
+* en una vista con pestañas habilitar una pestaña concreta definia en la url
+*/
 export const show_tab = () => {
   const url = window.location.search;
   if (!url) return
@@ -45,7 +78,6 @@ export const show_tab = () => {
   if (!tab || tab==="main") return
 
   const $tab = document.querySelector(`a[href="#${tab}"]`)
-  console.log($tab, "TAB modal-launcher")
-  if (!$tab) return;
+  if (!$tab) return
   $tab.click()
 }

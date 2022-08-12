@@ -49,8 +49,10 @@ $this->_element("restrict/elem-bowdisabled");
   ?>
 </div>
 <script type="module">
+//dashboard.index.tpl
 import spinner from "/assets/js/common/spinner.js"
 import {reqtxt} from "/assets/js/common/req.js"
+import {show_restrict_url} from "/assets/js/common/modal-launcher.js"
 
 const dashboard = document.getElementById("dashboard")
 dashboard.addEventListener("click", (e) => {
@@ -73,4 +75,6 @@ const _in_modal = async url => {
       body: r,
   }).show()
 }// add. _in_modal
+
+await show_restrict_url()
 </script>
