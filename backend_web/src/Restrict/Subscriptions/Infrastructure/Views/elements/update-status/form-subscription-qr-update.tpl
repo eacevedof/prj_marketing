@@ -19,8 +19,6 @@ import { BarcodeDetectorPolyfill } from "https://cdn.jsdelivr.net/npm/@undecaf/b
   if ("BarcodeDetector" in window) return
   window["BarcodeDetector"] = BarcodeDetectorPolyfill
 })()
-//alert("module false")
-//alert(window["BarcodeDetector"])
 </script>
 
 <div id="main" class="tab-pane active">

@@ -127,8 +127,7 @@ final class BusinessSpaceService extends AppService
             ["p" => "La filosofía que nos hace distintos es: “Una Familia que sirve a Familias”. Por ello es que convertimos una de las mejores gastronomías del mundo a precios asequibles para todos. Visítenos y permítanos tener el honor de servirles. El único riesgo que corre es el querer repetir todos los días."],
             ["h2" => "Nuestros planes por puntos:"],
             ["ul" => [
-                "Acumula 5 puntos en 5 días seguidos y llévate un Arroz Chaufa gratis",
-                "A fin de mes sortearemos algunas sorpresas entre los suscriptores con más puntos."
+                "Acumula 5 puntos y reclama un Arroz Chaufa gratis",
             ]],
             ["h2" => "Promociones en curso:"],
             ["ul" => $promotions],

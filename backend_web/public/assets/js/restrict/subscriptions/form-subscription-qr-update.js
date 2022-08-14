@@ -67,6 +67,7 @@ export class FormSubscriptionQRUpdate extends LitElement {
     //this.texts = {}
 
     //aqui se puede definir estados iniciales sin contar con properties ya que en este punto no existen
+    //si no se inician los atributos que se instancian en el render se mostraran como undefined
     this._fullcode = ""
     this._uuid = ""
     this._exec_code = ""
