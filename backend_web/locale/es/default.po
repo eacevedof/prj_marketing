@@ -1701,3 +1701,6 @@ msgstr "Si no has solicitado esta información nos disculpamos por los inconveni
 
 msgid "Powered by"
 msgstr "Potenciado por"
+
+msgid "Date"
+msgstr "Fecha"
