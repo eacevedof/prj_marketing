@@ -5,7 +5,7 @@ use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Picklist\Application\PicklistService;
 use App\Restrict\Subscriptions\Application\SubscriptionsUpdateService;
-use App\Restrict\Subscriptions\Application\SubscriptionsInfoService;
+use App\Restrict\Subscriptions\Application\SubscriptionsQRValidateService;
 use App\Restrict\BusinessData\Application\BusinessDataInfoService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
@@ -38,7 +38,7 @@ final class SubscriptionsUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
+            $edit = SF::get(SubscriptionsQRValidateService::class, [$uuid]);
             $result = $edit->get_info_for_execute_date();
 
             $this->set_template("update-status")

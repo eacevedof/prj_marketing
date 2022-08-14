@@ -3,6 +3,7 @@
 architecture/*.crswap
 vendor/*
 !/vendor/theframework
+!/vendor/phpqrcode
 .env.prod
 .env.test
 .env.dev
@@ -17,3 +18,4 @@ cache/*
 src/xxx-module/*
 !src/xxx-module/files
 ./vendor.zip
+/public/images/qr

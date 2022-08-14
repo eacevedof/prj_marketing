@@ -21,7 +21,7 @@ final class DashboardController extends RestrictController
         $this->_if_noauth_tologin();
 
         $modules = SF::get_callable(ModulesService::class);
-        $this->add_var(PageType::TITLE, __("Dashboard x"))
+        $this->add_var(PageType::TITLE, __("Dashboard"))
             ->add_var(PageType::H1, __("Dashboard"))
             ->add_var("modules", $modules())
             ->render();

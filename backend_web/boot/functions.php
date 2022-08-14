@@ -21,7 +21,7 @@ function lgerr($var, $title=null)
     $var = $title.$var;
     $sPathFile = BOOT::PATH_LOGS."/error/";
     if (!is_dir($sPathFile)) mkdir($sPathFile);
-    $sPathFile .= "app_$dlog.log";
+    $sPathFile .= "lgerr_$dlog.log";
     $oCursor=fopen($sPathFile,"ab");
     fwrite($oCursor,$var);
     fclose($oCursor);

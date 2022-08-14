@@ -12,9 +12,22 @@ final class EnvIconHelper
         ENV::PROD => "/themes/mypromos/images/mypromos-logo-orange.svg",
     ];
 
+    private const ENV_LOGO_RESTRICT = [
+        ENV::LOCAL => "/favicon/favicon-logo-local.svg",
+        ENV::DEV => "/favicon/favicon-logo-dev.svg",
+        ENV::TEST => "/favicon/favicon-logo-test.svg",
+        ENV::PROD => "/favicon/favicon-logo-orange.svg",
+    ];
+
     public static function icon(): string
     {
         $env = (string) ENV::env();
         return self::ENV_LOGO[$env] ?? "";
+    }
+
+    public static function icon_restrict(): string
+    {
+        $env = (string) ENV::env();
+        return self::ENV_LOGO_RESTRICT[$env] ?? "";
     }
 }

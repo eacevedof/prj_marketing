@@ -11,7 +11,9 @@ use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
 use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Shared\Infrastructure\Factories\HelperFactory as HF;
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
+use App\Shared\Infrastructure\Helpers\QrHelper;
 use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
@@ -104,7 +106,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $link = $this->domain->get_full_url($url);
         $data["points_link"] = $link;
 
-        $url = Routes::url("subscription.cancel", ["businessslug"=>$data["businessslug"], "subscriptionuuid"=>$data["subscode"]]);
+        $url = Routes::url("subscription.cancel", ["businessslug"=>$data["businessslug"], "subscriptionuuid"=>$subsuuid = $data["subscode"]]);
         $link = $this->domain->get_full_url($url);
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
@@ -113,6 +115,13 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $link = $this->domain->get_full_url($url);
         $link .= $domevent->is_test() ? "?mode=test" : "";
         $data["terms_link"] = $link;
+
+        $value = "$subsuuid-{$data["execode"]}";
+        $dateexec = str_replace(["-",":"," "],["","",""],$data["promodateexec"]);
+        $filename = "$subsuuid-{$dateexec}";
+        $link = HF::get(QrHelper::class, ["value" => $value, "filename"=>$filename ])->save_image()->get_public_url();
+        //$link = "https://res.cloudinary.com/ioedu/image/upload/v1660317474/prj-marketing/partners/codigo-qr-ejemplo.png";
+        $data["qr_link"] = $link;
 
         $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
         $this->log($html,"on_confirmation");

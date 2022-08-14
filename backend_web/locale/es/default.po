@@ -17,8 +17,8 @@ msgstr "CSRF inválido o ha caducado. Por favor recarga la página. c{0}"
 msgid "Expired CSRF {0}"
 msgstr "CSRF expirado {0}"
 
-msgid "Dashboard x"
-msgstr "Panel x"
+msgid "Dashboard"
+msgstr "Panel"
 
 msgid "Dashboard"
 msgstr "Panel"
