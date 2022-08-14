@@ -55,7 +55,7 @@ export class FormLogin extends LitElement {
     }
 
     set_cookie("lang", response.lang)
-    Swal.fire({
+    window.Swal.fire({
       icon: "success",
       title: "Acceso concedido",
       showConfirmButton: false,

@@ -95,7 +95,6 @@ return [
 
 //RESTRICT:
     ["url"=>"/restrict/logout","controller"=>"App\Restrict\Login\Infrastructure\Controllers\LoginController", "method"=>"logout", "allowed"=>["get","post"], "name"=>"logout"],
-    ["url"=>"/restrict","controller"=>"App\Restrict\Dashboard\Infrastructure\Controllers\DashboardController", "method"=>"index", "allowed"=>["get"], "name"=>"dashboard"],
 
 //@users
     ["url"=>"/restrict/users/info/:uuid","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersInfoController", "method"=>"info", "name"=>""],
@@ -147,13 +146,15 @@ return [
     ["url"=>"/restrict/subscriptions/export/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchExportController", "method"=>"export", "allowed"=>["post"], "name"=>""],
     ["url"=>"/restrict/subscriptions/?int:page","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"index", "name"=>"module.subscriptions"],
     ["url"=>"/restrict/subscriptions/search","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsSearchController", "method"=>"search", "name"=>""],
+    ["url"=>"/restrict/subscriptions/validate-qr/update-status","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsValidateQRController", "method"=>"update_status", "allowed"=>["put"], "name"=>"qr.updatestatus"],
+    ["url"=>"/restrict/subscriptions/validate-qr","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsValidateQRController", "method"=>"edit", "allowed"=>["get"], "name"=>"qr.validate"],
 
 //@billings
     ["url"=>"/restrict/billings/export/:uuid","controller"=>"App\Restrict\Billings\Infrastructure\Controllers\BillingsSearchExportController", "method"=>"export", "allowed"=>["post"], "name"=>""],
     ["url"=>"/restrict/billings/?int:page","controller"=>"App\Restrict\Billings\Infrastructure\Controllers\BillingsSearchController", "method"=>"index", "name"=>""],
     ["url"=>"/restrict/billings/search","controller"=>"App\Restrict\Billings\Infrastructure\Controllers\BillingsSearchController", "method"=>"search", "name"=>""],
 
-
+    ["url"=>"/restrict","controller"=>"App\Restrict\Dashboard\Infrastructure\Controllers\DashboardController", "method"=>"index", "allowed"=>["get"], "name"=>"dashboard"],
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index", "name"=>""],
 
 // APIFY

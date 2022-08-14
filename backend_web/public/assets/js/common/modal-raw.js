@@ -43,7 +43,13 @@ export default function ModalRaw(opts={}) {
     $docbody.style.overflow = "hidden";
   }
 
+  this.on_hide = null
+
   const _hide = ev => {
+    if (this.on_hide) {
+      this.on_hide()
+      this.on_hide = null
+    }
     if(ev?.target?.id === modal.id_modal && !modal.bgclick) return
     modal.$modal.classList.add(CSS.HIDE)
     $docbody.style.overflow = "auto"

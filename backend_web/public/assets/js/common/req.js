@@ -191,10 +191,19 @@ export const reqtxt = {
       resp = await resp.text()
       return _get_response_txt(resp)
     } catch (error) {
-      console.log("TXT_ERROR",error,typeof error)
+      console.log("reqtxt.error",error,typeof error)
       return _get_error(error.message)
     }
   },
+}
+
+export const is_get_200 = async url => {
+  try {
+    const resp = await fetch(url)
+    return parseInt(resp.status) === 200
+  } catch (error) {
+    return false
+  }
 }
 
 /*

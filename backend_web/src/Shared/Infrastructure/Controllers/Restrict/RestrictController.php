@@ -19,6 +19,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Auth\Application\CsrfService;
 use App\Restrict\Login\Application\ModulesService;
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 use App\Shared\Domain\Enums\UrlType;
 
 abstract class RestrictController extends AppController
@@ -62,9 +63,9 @@ abstract class RestrictController extends AppController
     {
         if(!$this->auth->get_user()) {
             $redirect = $this->request->get_request_uri();
-            $url = UrlType::LOGIN_FORM;
-            if (strstr($redirect, "/restrict")) $url = "$url?redirect=".urlencode($redirect);
-            $this->response->location($url);
+            $loginurl = Routes::url("login");
+            if (strstr($redirect, "/restrict")) $loginurl = "$loginurl?redirect=".urlencode($redirect);
+            $this->response->location($loginurl);
         }
     }
 

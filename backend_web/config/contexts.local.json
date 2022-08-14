@@ -8,8 +8,8 @@
     "port":"3306",
     "schemas":[
       {
-        "alias": "db-mypromos_test",
-        "database":"db_mypromos_test",
+        "alias": "db-mypromos",
+        "database":"db_mypromos",
         "user":"root",
         "password":"1234"
       },

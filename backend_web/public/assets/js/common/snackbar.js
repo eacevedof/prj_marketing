@@ -9,6 +9,7 @@ function Snackbar(id) {
 
   const _$div = document.getElementById(_id)
   if(!_$div) return console.log("no snackbar found with id",_id)
+  //css: common/snackbar.css
   _$div.classList.add("snackbar")
 
   this.set_inner = html => {
@@ -27,7 +28,7 @@ function Snackbar(id) {
     const _hold = hold ? hold - (time * 2): 2.5
     //-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     //animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    console.log("time:",time,"_hold:",_hold)
+    //console.log("time:",time,"_hold:",_hold)
     const animation = `snackframe-fadein ${time}s, snackframe-fadeout ${time}s ${_hold}s`
     _$div.style.webkitAnimationName = animation
     _$div.style.animation = animation
@@ -36,7 +37,7 @@ function Snackbar(id) {
 
   this.set_time = time => {
     _time = time
-    console.log("_time set_time", _time)
+    //console.log("_time set_time", _time)
     return this
   }
 

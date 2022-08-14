@@ -187,8 +187,13 @@ p {
                           <w:anchorlock/><v:textbox inset="5px,0px,0px,0px">
                           <center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px">
                           <![endif]-->
-                          <span style="padding-left:55px;padding-right:50px;font-size:16px;display:inline-block;letter-spacing:normal;background:white;">
-                            <span style="font-family:courier new; font-weight: bolder; font-size: 20px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><?=$data["execode"];?></span>
+                          <p style="margin: 0; font-size: 14px; padding-top:0px; color:white; font-weight: normal">
+                            <img src="<?= $data["qr_link"] ?>" width="133" height="130">
+                          </p>
+                          <span style="padding-left:40px;padding-right:40px;font-size:15px;display:inline-block;letter-spacing:normal;background:white;">
+                            <span style="font-family:courier new; font-weight: bolder; font-size: 15px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 15px;">
+                              <?=$data["execode"];?>
+                            </span>
                           </span>
                           <p style="margin: 0; font-size: 14px; padding-top:15px; color:white; font-weight: normal">
                             <span style="font-size: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
