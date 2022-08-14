@@ -15,13 +15,13 @@ function lgerr($var, $title=null)
     $dlog = date("Ymd");
     $sNow = date("Y-m-d_H:i:s");
     if($title) $title = "<<  $title >>";
-    $title = PHP_EOL."$sNow: $title";
+    $title = PHP_EOL."$sNow: (lgerr) $title";
     if(!is_string($var)) $var = var_export($var,1);
     if($var) $var = PHP_EOL.$var.PHP_EOL;
     $var = $title.$var;
     $sPathFile = BOOT::PATH_LOGS."/error/";
     if (!is_dir($sPathFile)) mkdir($sPathFile);
-    $sPathFile .= "lgerr_$dlog.log";
+    $sPathFile .= "app_$dlog.log";
     $oCursor=fopen($sPathFile,"ab");
     fwrite($oCursor,$var);
     fclose($oCursor);
