@@ -1,3 +1,4 @@
+/*single-page section*/
 .section-grid {
     grid-area: area-textbox;
     display: grid;
@@ -112,7 +113,7 @@
 
 @media (max-width: 800px) {
     .main-grid {
-        background-position: top left;
+        background-position: top right;
     }
 
     .section-grid .div-texts {
@@ -126,7 +127,7 @@
     }
 
     .section-grid .div-texts h1 {
-        font-size: 2rem;
+        font-size: 1.25rem;
         letter-spacing: normal;
     }
 }

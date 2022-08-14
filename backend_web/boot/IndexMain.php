@@ -37,10 +37,13 @@ final class IndexMain
         //tiempo de vida de los datos en sesion
         ini_set("session.gc_maxlifetime", self::SESSION_TIME);
         //tiempo de vida de la cookie de sesion
-        //session_set_cookie_params(self::SESSION_TIME);
+        //session_set_cookie_params(self::SESSION_TIME); no func
+        ini_set("session.cookie_lifetime", self::SESSION_TIME);
+        ini_set("session.cache_expire", floor(self::SESSION_TIME/60));
         session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
         session_start();
-        setcookie(session_name(),session_id(),time()+self::SESSION_TIME);
+        //no func
+        //setcookie(session_name(),session_id(),time()+self::SESSION_TIME);
     }
 
     private function _load_cors_headers(): void

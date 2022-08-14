@@ -62,6 +62,7 @@ export class FormLogin extends LitElement {
       html: "...redirigiendo al panel de control",
     })
 
+    //console.log("redirect default module",response.url_default_module)
     setTimeout(() => window.location = response.url_default_module, 1000)
   }//submit
 

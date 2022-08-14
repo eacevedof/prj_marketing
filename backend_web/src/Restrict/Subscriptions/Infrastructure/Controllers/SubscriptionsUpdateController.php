@@ -3,14 +3,11 @@ namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Picklist\Application\PicklistService;
 use App\Restrict\Subscriptions\Application\SubscriptionsUpdateService;
-use App\Restrict\Subscriptions\Application\SubscriptionsQRValidateService;
-use App\Restrict\BusinessData\Application\BusinessDataInfoService;
+use App\Restrict\Subscriptions\Application\SubscriptionsInfoService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
 use App\Shared\Domain\Enums\ResponseType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
@@ -38,7 +35,7 @@ final class SubscriptionsUpdateController extends RestrictController
 
         $this->add_var("ismodal",1);
         try {
-            $edit = SF::get(SubscriptionsQRValidateService::class, [$uuid]);
+            $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
             $result = $edit->get_info_for_execute_date();
 
             $this->set_template("update-status")
