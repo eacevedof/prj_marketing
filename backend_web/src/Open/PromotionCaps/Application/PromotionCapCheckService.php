@@ -59,7 +59,6 @@ final class PromotionCapCheckService extends AppService
             );
 
         $seconds = $dt->get_seconds_between($promotion["date_from"], $utcnow);
-        $this->logd($seconds, "seconds");
         if($seconds<0)
             $this->_promocap_exception(
                 __("Sorry but this promotion has not started yet or is paused. Please try again later."),
