@@ -3,6 +3,8 @@
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var string $pagetitle
  */
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
+$requri = $_SERVER["REQUEST_URI"];
 ?>
 <!doctype html>
 <html lang="en">
@@ -56,8 +58,14 @@ $this->_element("common/elem-nav-menu");
     ?>
     </div>
   </div>
-  <?=$this->_element("restrict/elem-footer")?>
+  <?php
+  $this->_element("restrict/elem-footer");
+  if (!strstr(Routes::url("login"), $requri)):
+  ?>
   <a href="#top" id="back-to-top" style="display: block;"><i class="las la-angle-double-up"></i></a>
+  <?php
+  endif;
+  ?>
 </div>
 <div class="main-navbar-backdrop"></div>
 </main>
