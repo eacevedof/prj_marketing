@@ -46,10 +46,10 @@ $this->_element("common/elem-snackbar");
 $this->_element("common/elem-band-env");
 ?>
 <main>
-<div class="horizontalMenucontainer">
 <?php
 $this->_element("common/elem-nav-menu");
 ?>
+<div class="horizontalMenucontainer mmm">
   <div class="main-content horizontal-content">
     <div class="container">
     <?php
@@ -67,7 +67,6 @@ $this->_element("common/elem-nav-menu");
   endif;
   ?>
 </div>
-<div class="main-navbar-backdrop"></div>
 </main>
 <?php
 $this->_element("common/elem-modal-raw");
