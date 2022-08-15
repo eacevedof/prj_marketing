@@ -13,6 +13,7 @@ use App\Shared\Domain\Enums\ResponseType;
 use App\Services\Apify\Security\LoginService;
 use App\Services\Apify\Security\LoginMiddleService;
 use App\Controllers\Apify\ApifyController;
+use \Exception;
 
 final class LoginController extends ApifyController
 {
@@ -29,7 +30,7 @@ final class LoginController extends ApifyController
             $token = $oServ->get_token();
             $json->set_payload(["token"=>$token])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.index");
             $json->set_code(ResponseType::UNAUTHORIZED)
@@ -53,7 +54,7 @@ final class LoginController extends ApifyController
             $token = $oServ->get_token();
             $json->set_payload(["token"=>$token])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.middle");
             $json->set_code(ResponseType::UNAUTHORIZED)
@@ -83,7 +84,7 @@ final class LoginController extends ApifyController
             $oServ->is_valid($token);
             $json->set_payload(["isvalid"=>true])->show();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             $this->logerr($e->getMessage(),"LoginController.is_valid_token");
             $json->set_code(HelperJson::CODE_FORBIDDEN)

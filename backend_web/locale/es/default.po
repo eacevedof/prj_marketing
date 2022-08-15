@@ -48,7 +48,7 @@ msgid "Users"
 msgstr "Usuarios"
 
 msgid "Login"
-msgstr "Login"
+msgstr "Acceso"
 
 msgid "Invalid CSRF token"
 msgstr "Token CSRF inválido"
@@ -271,6 +271,9 @@ msgstr "Modificado el"
 
 msgid "send"
 msgstr "enviar"
+
+msgid "Send"
+msgstr "Enviar"
 
 msgid "Sending..."
 msgstr "Enviando..."
@@ -611,7 +614,7 @@ msgid "It will be prohibited in any case, in accordance with the applicable legi
 msgstr "Quedará en todo caso prohibido, de acuerdo con la legislación aplicable y vigente en cada momento, establecer frames o marcos de cualquier tipo que envuelvan al Portal o permitan la visualización de los Contenidos a través de direcciones de Internet distintas a las del Portal y, en cualquier caso, cuando se visualicen conjuntamente con contenidos ajenos al Portal de forma que: (I) produzca, o pueda producir, error, confusión o engaño en los usuarios sobre la verdadera procedencia del servicio o Contenidos; (II) suponga un acto de comparación o imitación desleal; (III) sirva para aprovechar la reputación de la marca y prestigio de Prestador de Servicios; o (IV) de cualquier otra forma resulte prohibido por la legislación vigente."
 
 msgid "No type of false, inaccurate or incorrect statement will be made from the page that introduces the link about the Service Provider, its partners, employees, clients or about the quality of the services it provides."
-msgstr "No se realizarán desde la página que introduce el enlace ningún tipo de manifestación falsa, inexacta o incorrecta sobre Prestador de Servicios, sus asociados, empleados, clientes o sobre la calidad de los servicios que presta."
+msgstr "No se realizarán desde la página que introduce el enlace ningún tipo de manifestación falsa, inexacta o incorrecta sobre Prestador de Servicios, sus afiliados, empleados, clientes o sobre la calidad de los servicios que presta."
 
 msgid "In no case, it will be expressed on the page where the link is located that the Service Provider has given its consent for the insertion of the link or that in another way it sponsors, collaborates, verifies or supervises the services of the sender."
 msgstr "En ningún caso, se expresará en la página donde se ubique el enlace que Prestador de Servicios ha prestado su consentimiento para la inserción del enlace o que de otra forma patrocina, colabora, verifica o supervisa los servicios del remitente."
@@ -1640,13 +1643,13 @@ msgid "here"
 msgstr "aquí"
 
 msgid "Missing partner and/or user code"
-msgstr "Falta asociado y/o código de usuario"
+msgstr "Falta afiliado y/o código de usuario"
 
 msgid "Partner “{0}“ not found!"
-msgstr "Asociado “{0}“ no encontrado!"
+msgstr "Afiliado “{0}“ no encontrado!"
 
 msgid "Partner space error!"
-msgstr "Error de espacio de asociado!"
+msgstr "Error de espacio de afiliado!"
 
 msgid "Invalid {0} format. Only letters allowed."
 msgstr "Formato de {0} inválido. Solo se permiten letras."
@@ -1670,10 +1673,10 @@ msgid "Subscriber"
 msgstr "Suscriptor"
 
 msgid "Missing partner and/or subscription code"
-msgstr "Falta asociado y/o código de suscripción"
+msgstr "Falta afiliado y/o código de suscripción"
 
 msgid "Missing partner and/or promotion"
-msgstr "Falta asociado y/o promoción"
+msgstr "Falta afiliado y/o promoción"
 
 msgid "Pos. Email"
 msgstr ""
@@ -1704,3 +1707,15 @@ msgstr "Potenciado por"
 
 msgid "Date"
 msgstr "Fecha"
+
+msgid "Access granted"
+msgstr "Acceso concedido"
+
+msgid "...redirecting to dashboard"
+msgstr "...redirigiendo al panel de control"
+
+msgid "Check empty fields"
+msgstr "Compruebe los campos en blanco"
+
+msgid "required"
+msgstr "obligatorio"
