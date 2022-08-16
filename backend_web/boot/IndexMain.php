@@ -22,7 +22,7 @@ use \Throwable;
 
 final class IndexMain
 {
-    private const SESSION_TIME_SECONDS = 60 * 30;
+    private const SESSION_TIME_SECONDS = 60 * 30;//30 min
     private array $routes;
 
     public function __construct()
