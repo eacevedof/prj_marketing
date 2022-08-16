@@ -140,7 +140,7 @@ export class FormUserBusinessDataUpdate extends LitElement {
       <div class="form-group">
         <label for="id_tz">${this.texts.f51}</label>
         <div id="field-id_tz">
-          <select id="id_tz" class="form-control">
+          <select id="id_tz" class="form-control" required>
             ${this._timezones.map((item) =>
                 html`<option value=${item.key} ?selected=${item.key===this._id_tz}>${item.value}</option>`
             )}

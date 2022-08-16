@@ -110,6 +110,7 @@ return [
 //@users-tabs
     ["url"=>"/restrict/users/:uuid/permissions/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPermissionsUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
     ["url"=>"/restrict/users/:uuid/business-data/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersBusinessDataUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
+    ["url"=>"/restrict/users/:uuid/business-attribute-space/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersBusinessAttributeSpaceUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>"businessattributespace.update"],
     ["url"=>"/restrict/users/:uuid/preferences/update","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
     ["url"=>"/restrict/users/:uuid/preferences/delete","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesDeleteController", "method"=>"delete", "allowed"=>["delete"], "name"=>""],
     ["url"=>"/restrict/users/:uuid/preferences","controller"=>"App\Restrict\Users\Infrastructure\Controllers\UsersPreferencesListController", "method"=>"index", "allowed"=>["get"], "name"=>""],
@@ -127,17 +128,6 @@ return [
     ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"search", "name"=>""],
 //@promotions-tabs
     ["url"=>"/restrict/promotions/:uuid/ui/update","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionUisUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
-
-//@business data
-    ["url"=>"/restrict/promotions/info/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInfoController", "method"=>"info", "name"=>""],
-    ["url"=>"/restrict/promotions/create","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInsertController", "method"=>"create", "name"=>""],
-    ["url"=>"/restrict/promotions/insert","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataInsertController", "method"=>"insert", "allowed"=>["post"], "name"=>""],
-    ["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataUpdateController", "method"=>"edit", "name"=>""],
-    ["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
-    ["url"=>"/restrict/promotions/delete/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataDeleteController", "method"=>"remove", "allowed"=>["delete"], "name"=>""],
-    ["url"=>"/restrict/promotions/undelete/:uuid","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataDeleteController", "method"=>"undelete", "allowed"=>["patch"], "name"=>""],
-    ["url"=>"/restrict/promotions/?int:page","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataSearchController", "method"=>"index", ],
-    ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\BusinessData\Infrastructure\Controllers\BusinessDataSearchController", "method"=>"search", "name"=>""],
 
 //@subscriptions
     ["url"=>"/restrict/subscriptions/info/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsInfoController", "method"=>"info", "name"=>""],

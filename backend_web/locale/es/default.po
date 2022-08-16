@@ -1719,3 +1719,22 @@ msgstr "Compruebe los campos en blanco"
 
 msgid "required"
 msgstr "obligatorio"
+
+msgid "This {0} does not belong to user {1}"
+msgstr "Este {0} no pertenece al usuario {1}"
+
+msgid "About {0}"
+msgstr "Acerca de {0}"
+
+msgid "Our points programs"
+msgstr "Nuestros planes por puntos"
+
+msgid "Current promotions"
+msgstr "Promociones en curso"
+
+msgid "Where are we located?"
+msgstr "¿Dónde estamos?"
+
+msgid "Contact us"
+msgstr "Contacta con nosotros"
+

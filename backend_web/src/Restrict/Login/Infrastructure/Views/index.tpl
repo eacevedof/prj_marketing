@@ -11,8 +11,8 @@ $texts = [
     "tr05" => __("...redirecting to dashboard"),
     "tr06" => __("Check empty fields"),
 
-    "f00" => __("Email")." (".__("required").")",
-    "f01" => __("Password")." (".__("required").")",
+    "f00" => __("Email")."*",
+    "f01" => __("Password")."*",
 ];
 
 $url = Routes::url("login.access")

@@ -3,6 +3,7 @@
  * eventbus listeners
  */
 use App\Shared\Infrastructure\Bus\EventBus;
+use App\Restrict\BusinessAttributes\Application\BusinessAttributesInsertEventHandler;
 use App\Restrict\UserPreferences\Application\UserPreferencesInsertEventHandler;
 use App\Restrict\UserPermissions\Application\UserPermissionsInsertEventHandler;
 use App\Restrict\PromotionsUi\Application\PromotionUiInsertService;
@@ -17,6 +18,7 @@ use App\Open\Home\Application\ContactEmailSentEventHandler;
 $bus = EventBus::instance();
 $bus->subscribe(new UserPreferencesInsertEventHandler());
 $bus->subscribe(new UserPermissionsInsertEventHandler());
+$bus->subscribe(new BusinessAttributesInsertEventHandler());
 $bus->subscribe(new PromotionUiInsertService());
 $bus->subscribe(new PromotionCapSubscriptionEventHandler());
 $bus->subscribe(new PromotionCapActionEventHandler());

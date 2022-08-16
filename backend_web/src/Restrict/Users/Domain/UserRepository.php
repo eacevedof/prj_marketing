@@ -260,4 +260,18 @@ final class UserRepository extends AppRepository implements IEventDispatcher
         return (bool) $this->query($sql,0,0);
     }
 
-}//UserRepository
+    public function is_business(int $iduser): bool
+    {
+        $idprofile = UserProfileType::BUSINESS_OWNER;
+        $sql = $this->_get_qbuilder()
+            ->set_comment("user.is_owner")
+            ->set_table("$this->table as m")
+            ->set_getfields(["m.id"])
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("m.id=$iduser")
+            ->add_and("m.id_profile=$idprofile")
+            ->select()->sql()
+        ;
+        return (bool) $this->query($sql,0,0);
+    }
+}

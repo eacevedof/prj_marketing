@@ -11,10 +11,10 @@ namespace App\Open\Business\Infrastructure\Controllers;
 
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Exceptions\ForbiddenException;
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\Business\Application\BusinessSpaceService;
+use App\Open\Business\Application\BusinessSpacePageService;
 use App\Shared\Domain\Enums\PageType;
 
 final class BusinessController extends OpenController
@@ -36,7 +36,10 @@ final class BusinessController extends OpenController
                 ->add_var(PageType::TITLE, $title = $space["business"])
                 ->add_var(PageType::H1, $title)
                 ->add_var("space", $space)
-                ->add_var("result", BusinessSpaceService::chalan())
+                ->add_var(
+                    "result",
+                    SF::get(BusinessSpacePageService::class)->get_page_by_businessslug($businessslug)
+                )
                 ->render_nv();
         }
         catch (NotFoundException $e) {
