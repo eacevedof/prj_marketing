@@ -22,7 +22,7 @@ use \Throwable;
 
 final class IndexMain
 {
-    private const SESSION_TIME = 3600;
+    private const SESSION_TIME_SECONDS = 60 * 30;
     private array $routes;
 
     public function __construct()
@@ -34,16 +34,18 @@ final class IndexMain
 
     private function _load_session(): void
     {
-        //tiempo de vida de los datos en sesion
-        ini_set("session.gc_maxlifetime", self::SESSION_TIME);
-        //tiempo de vida de la cookie de sesion
-        //session_set_cookie_params(self::SESSION_TIME); no func
-        ini_set("session.cookie_lifetime", self::SESSION_TIME);
-        ini_set("session.cache_expire", floor(self::SESSION_TIME/60));
         session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
         session_start();
-        //no func
-        //setcookie(session_name(),session_id(),time()+self::SESSION_TIME);
+        setcookie(session_name(), session_id(), null, "/");
+
+        if (!isset($_SESSION["last_activity"])) $_SESSION["last_activity"] = time();
+
+        if (($_SESSION["last_activity"] + self::SESSION_TIME_SECONDS) < time()) {
+            $_SESSION = ["last_activity" => time()];
+            return;
+        }
+
+        $_SESSION["last_activity"] = time();
     }
 
     private function _load_cors_headers(): void
