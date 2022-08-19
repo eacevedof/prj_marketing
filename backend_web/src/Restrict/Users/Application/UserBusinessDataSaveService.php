@@ -30,7 +30,7 @@ final class UserBusinessDataSaveService extends AppService
     private BusinessDataRepository $repobusinessdata;
     private FieldsValidator $validator;
     private BusinessDataEntity $entitybusinessdata;
-    private int $iduser;
+    private int $bdiduser;
 
     public function __construct(array $input)
     {
@@ -42,10 +42,8 @@ final class UserBusinessDataSaveService extends AppService
             $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
 
         $this->repouser = RF::get(UserRepository::class);
-        if (!$this->iduser = $this->repouser->get_id_by_uuid($useruuid))
+        if (!$this->bdiduser = $this->repouser->get_id_by_uuid($useruuid))
             $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
-        if ($this->iduser === 1)
-            $this->_exception(__("You can not add permissions to this user"));
 
         $this->entitybusinessdata = MF::get(BusinessDataEntity::class);
         $this->repobusinessdata = RF::get(BusinessDataRepository::class)->set_model($this->entitybusinessdata);
@@ -56,7 +54,7 @@ final class UserBusinessDataSaveService extends AppService
     {
         if($this->auth->is_root_super()) return;
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE))
+        if(!$this->auth->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -66,29 +64,16 @@ final class UserBusinessDataSaveService extends AppService
     private function _check_entity_permission(): void
     {
         //si es super puede interactuar con la entidad
-        if ($this->auth->is_root_super()) return;
+        if ($this->auth->is_system()) return;
 
-        //si el us en sesion se quiere agregar permisos
-        $permuser = $this->repouser->get_by_id($this->iduser);
+        //si el us en sesion quiere cambiar su bd
         $idauthuser = (int) $this->authuser["id"];
-        if ($idauthuser === $this->iduser)
-            $this->_exception(__("You are not allowed to change your own permissions"));
-
-        //un root puede cambiar el de cualquiera (menos el de el mismo, if anterior)
-        if ($this->auth->is_root()) return;
-
-        //un sysadmin puede cambiar solo a los que tiene debajo
-        if ($this->auth->is_sysadmin() && $this->auth->is_business($permuser["id_profile"])) return;
-
-        $identowner = $this->repouser->get_idowner($this->iduser);
-        //si logado es propietario y el bm a modificar le pertenece
-        if ($this->auth->is_business_owner()
-            && $this->auth->is_business_manager($permuser["id_profile"])
-            && ((int) $this->authuser["id"]) === $identowner
-        )
+        if ($idauthuser === $this->bdiduser)
             return;
 
-        //to-do, solo se pueden agregar los permisos que tiene el owner ninguno más
+        //si el propietario del us de sesion coincide con el de la entidad
+        if ($this->auth->get_idowner() === $this->bdiduser)
+            return;
 
         $this->_exception(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
@@ -121,6 +106,9 @@ final class UserBusinessDataSaveService extends AppService
                 if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
+            ->add_rule("id_tz", "id_tz", function ($data) {
+                return $data["value"] ? false : __("Empty field is not allowed");
+            })
             ->add_rule("business_name", "business_name", function ($data) {
                 if (!$data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
@@ -149,7 +137,7 @@ final class UserBusinessDataSaveService extends AppService
             })
             ->add_rule("head_color", "head_color", function ($data) {
                 if (!$value = $data["value"]) return false;
-                
+
                 return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
             })
             ->add_rule("head_bgimage", "head_bgimage", function ($data) {
@@ -189,16 +177,16 @@ final class UserBusinessDataSaveService extends AppService
                 return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
             })
         ;
-        
+
         return $this->validator;
     }
 
-    private function _update(array $update, array $permissions): array
+    private function _update(array $update, array $businessdata): array
     {
         unset($update["business_name"]);
-        if ($permissions["id"] !== $update["id"])
+        if ($businessdata["id"] !== $update["id"])
             $this->_exception(
-                __("This permission does not belong to user {0}", $this->input["_useruuid"]),
+                __("This {0} does not belong to user {1}", __("Business data") ,$this->input["_useruuid"]),
                 ExceptionType::CODE_BAD_REQUEST
             );
 
@@ -213,11 +201,11 @@ final class UserBusinessDataSaveService extends AppService
         $this->entitybusinessdata->add_sysupdate($update, $this->authuser["id"]);
         $this->repobusinessdata->update($update);
         return [
-            "id" => $permissions["id"],
+            "id" => $businessdata["id"],
             "uuid" => $update["uuid"]
         ];
     }
-    
+
     private function _insert(array $update): array
     {
         $update["_new"] = true;
@@ -226,9 +214,9 @@ final class UserBusinessDataSaveService extends AppService
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
-        $update["id_user"] = $this->iduser;
+        $update["id_user"] = $this->bdiduser;
         $update["uuid"] = uniqid();
-        $update["slug"] = CF::get(TextComponent::class)->slug($update["business_name"])."-$this->iduser";
+        $update["slug"] = CF::get(TextComponent::class)->slug($update["business_name"])."-$this->bdiduser";
         $update = $this->entitybusinessdata->map_request($update);
         $this->entitybusinessdata->add_sysinsert($update, $this->authuser["id"]);
         $id = $this->repobusinessdata->insert($update);
@@ -250,8 +238,8 @@ final class UserBusinessDataSaveService extends AppService
         $update["_new"] = false;
         $this->validator = VF::get($update, $this->entitybusinessdata);
 
-        return ($permissions = $this->repobusinessdata->get_by_user($this->iduser))
-            ? $this->_update($update, $permissions)
+        return ($businessdata = $this->repobusinessdata->get_by_user($this->bdiduser))
+            ? $this->_update($update, $businessdata)
             : $this->_insert($update);
     }
 }

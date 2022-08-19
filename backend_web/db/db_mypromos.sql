@@ -2,7 +2,8 @@
 SQLyog Community v12.1 (32 bit)
 MySQL - 10.5.8-MariaDB-1:10.5.8+maria~focal : Database - db_mypromos
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -70,12 +71,12 @@ CREATE TABLE `app_business_attribute` (
   `delete_user` varchar(15) DEFAULT NULL,
   `delete_date` datetime DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_business` int(11) NOT NULL COMMENT 'app_business_data.id',
+  `id_user` int(11) NOT NULL COMMENT 'app_business_data.id',
   `attr_key` varchar(250) NOT NULL,
   `attr_value` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `delete_date_idx` (`delete_date`),
-  KEY `id_business_idx` (`id_business`),
+  KEY `id_user_idx` (`id_user`),
   KEY `attr_key_idx` (`attr_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

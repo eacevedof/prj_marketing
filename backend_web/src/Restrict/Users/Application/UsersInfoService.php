@@ -9,6 +9,7 @@ use App\Restrict\Users\Domain\UserRepository;
 use App\Restrict\Users\Domain\UserPermissionsRepository;
 use App\Restrict\Users\Domain\UserPreferencesRepository;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Restrict\BusinessAttributes\Domain\BusinessAttributeRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
@@ -20,6 +21,8 @@ final class UsersInfoService extends AppService
     private UserRepository $repouser;
     private UserPermissionsRepository $repopermission;
     private UserPreferencesRepository $repoprefs;
+    private BusinessDataRepository $repobusinessdata;
+    private BusinessAttributeRepository $repobusinessattribute;
 
     public function __construct(array $input)
     {
@@ -34,6 +37,7 @@ final class UsersInfoService extends AppService
         $this->repopermission = RF::get(UserPermissionsRepository::class);
         $this->repoprefs = RF::get(UserPreferencesRepository::class);
         $this->repobusinessdata = RF::get(BusinessDataRepository::class);
+        $this->repobusinessattribute = RF::get(BusinessAttributeRepository::class);
     }
 
     private function _check_permission(): void
@@ -108,6 +112,9 @@ final class UsersInfoService extends AppService
             "businessdata" => $isbusinessdata
                 ? $this->_get_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
                 : null,
+            "businessattributespace" => $isbusinessdata
+                ? $this->_get_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
+                : null,
             "preferences" => $ispreferences ? $this->repoprefs->get_by_user($iduser) : null,
         ];
     }
@@ -142,6 +149,9 @@ final class UsersInfoService extends AppService
                 : null,
             "businessdata" => $isbusinessdata
                 ? $this->_get_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
+                : null,
+            "businessattributespace" => $isbusinessdata
+                ? $this->_get_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
                 : null,
             "preferences" => $ispreferences ? $this->repoprefs->get_by_user($iduser) : null,
         ];
