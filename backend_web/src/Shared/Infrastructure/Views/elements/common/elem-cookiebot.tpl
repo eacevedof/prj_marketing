@@ -1,5 +1,6 @@
 <!-- elem-cookiebot -->
 <?php
+return;
 if (getenv("APP_ENV")!=="prod") return;
 ?>
 <script
