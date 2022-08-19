@@ -42,6 +42,15 @@ export class FormLogin extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
+  firstUpdated() {
+    try {
+      this._$get("email").focus()
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
   async on_submit(e) {
     e.preventDefault()
 
@@ -68,6 +77,7 @@ export class FormLogin extends LitElement {
     this._btnsend = this.texts.tr00
 
     if(response?.errors){
+      //this._$get("email").focus()
       return Swal.fire({
         icon: "warning",
         title: this.texts.tr03,
@@ -95,7 +105,8 @@ export class FormLogin extends LitElement {
     return html`
     <form @submit=${this.on_submit} class="form-horizontal">
       <div class="form-group">
-        <input type="email" id="email" .value=${this._email} @change=${e => this._handle_keyup(e, "_email")} class="form-control" placeholder=${this.texts.f00} />
+        <input type="email" id="email" .value=${this._email} 
+               @change=${e => this._handle_keyup(e, "_email")} class="form-control" placeholder=${this.texts.f00} autofocus />
       </div>
       <div class="form-group">
         <input type="password" id="password" .value=${this._password} @change=${e => this._handle_keyup(e, "_password")} class="form-control" placeholder=${this.texts.f01} />

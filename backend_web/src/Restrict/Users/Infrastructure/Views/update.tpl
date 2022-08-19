@@ -21,6 +21,7 @@ echo $this->_asset_css([
 $this->_element_view("update/form-user-update-tab");
 $this->_element_view("update/form-user-permissions-update-tab");
 $this->_element_view("update/form-user-businessdata-update-tab");
+$this->_element_view("update/form-user-businessattribute-space-update-tab");
 $this->_element_view("update/form-user-preferences-update-tab");
 ?>
       </ul>
@@ -31,6 +32,7 @@ $this->_element_view("update/form-user-preferences-update-tab");
 $this->_element_view("update/form-user-update");
 $this->_element_view("update/form-user-permissions-update");
 $this->_element_view("update/form-user-businessdata-update");
+$this->_element_view("update/form-user-businessattribute-space-update");
 $this->_element_view("update/form-user-preferences-update");
 ?>
     </div><!--tab-content-->

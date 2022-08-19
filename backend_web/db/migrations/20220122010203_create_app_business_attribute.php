@@ -27,10 +27,10 @@ final class CreateAppBusinessAttribute extends AbsMigration
             "limit" => 11,
             "identity" => true,
         ])
-        ->addColumn("id_business", "integer", [
+        ->addColumn("id_user", "integer", [
             "limit" => 11,
             "null" => false,
-            "comment" => "app_business_data.id"
+            "comment" => "base_user.id"
         ])
         ->addColumn("attr_key", "string", [
             "limit" => 250,
@@ -44,7 +44,7 @@ final class CreateAppBusinessAttribute extends AbsMigration
         ->create();
 
         $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["id_business"], ["name"=>"id_business_idx"])
+            ->addIndex(["id_user"], ["name"=>"id_user_idx"])
             ->addIndex(["attr_key"], ["name"=>"attr_key_idx"])
             ->update()
         ;
