@@ -1,6 +1,7 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
+use \ENV;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
@@ -18,7 +19,6 @@ use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
 use App\Shared\Infrastructure\Components\Email\FromTemplate;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
-
 use \Exception;
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
@@ -79,6 +79,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
          * @var FuncEmailComponent $email
          */
         $email = CF::get(FuncEmailComponent::class);
+        if(ENV::is_local()) $data["email"] = ENV::get("APP_EMAIL_TO");
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
@@ -129,6 +130,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
          * @var FuncEmailComponent $email
          */
         $email = CF::get(FuncEmailComponent::class);
+        if(ENV::is_local()) $data["email"] = ENV::get("APP_EMAIL_TO");
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
@@ -160,6 +162,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
          * @var FuncEmailComponent $email
          */
         $email = CF::get(FuncEmailComponent::class);
+        if(ENV::is_local()) $data["email"] = ENV::get("APP_EMAIL_TO");
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])

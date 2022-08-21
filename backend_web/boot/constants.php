@@ -25,6 +25,8 @@ abstract class ENV
 
     public static function is_debug(): bool { return (bool) getenv("APP_DEBUG"); }
 
+    public static function get(string $env): string { return getenv($env) ?? "";}
+
     public static function color(): string
     {
         switch (getenv("APP_ENV")) {
