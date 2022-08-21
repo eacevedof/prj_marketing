@@ -68,7 +68,7 @@ final class PromotionCapActionEntity extends AppEntity
             EntityType::REQUEST_KEY => "remote_ip",
             "config" => [
                 "type" => EntityType::STRING,
-                "length" => 15,
+                "length" => 50,
             ]
         ],
        ];
