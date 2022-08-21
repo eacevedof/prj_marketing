@@ -46,7 +46,7 @@ final class CreateAppIpUntracked extends AbsMigration
             "comment" => "base_user.id, para que slug de subdominio se evitara el tracking"
         ])
         ->addColumn("remote_ip", "string", [
-            "limit" => 100,
+            "limit" => 50,
             "null" => false,
         ])
         ->addColumn("country", "string", [
