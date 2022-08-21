@@ -35,6 +35,7 @@ final class IndexMain
     private function _load_session(): void
     {
         session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
+        ini_set("session.save_path","/tmp");
         session_start();
         setcookie(session_name(), session_id(), null, "/");
 
