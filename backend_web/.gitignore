@@ -8,7 +8,6 @@ vendor/*
 .env.prod
 .env.test
 .env.dev
-#.env
 /config/*.prod.*
 /config/*.test.*
 /config/*.dev.*
