@@ -5,14 +5,6 @@ if (!is_file("../vendor/autoload.php"))
     throw new \Exception("Missing vendor/autoload.php");
 include_once "../vendor/autoload.php";
 include_once "../vendor/theframework/bootstrap.php";
-
-/*
-include_once("constants.php");
-include_once("functions.php");
-appboot_loadenv();
-include_once("listeners/commandbus.php");
-include_once("listeners/eventbus.php");
-*/
 include_once "../boot/appbootstrap.php";
 
 use \BOOT;
