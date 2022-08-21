@@ -4,6 +4,7 @@ architecture/*.crswap
 vendor/*
 !/vendor/theframework
 !/vendor/phpqrcode
+.env.local
 .env.prod
 .env.test
 .env.dev
