@@ -1,4 +1,4 @@
 ### transpilar
-```sys
+```js
 npx tsc --outDir ../js temp.ts --watch
 ```
