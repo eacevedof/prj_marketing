@@ -1,4 +1,4 @@
-export const get_cookie = name => {
+export const get_cookie = (name:string) => {
   const parts = document.cookie.split("; ")
   const obj = parts
       .map(str => str.split("="))
@@ -7,7 +7,7 @@ export const get_cookie = name => {
   return obj.length ? obj[0] : null
 }
 
-const set_cookie = (name, value, days=1) => {
+const set_cookie = (name:string, value:string, days:number =1) => {
   const pieces = [
     `${name}=${value?.toString() || ""}`
   ]
@@ -22,8 +22,8 @@ const set_cookie = (name, value, days=1) => {
   document.cookie = pieces.join("; ")
 }
 
-export const erase_cookie = name => {
-  const pieces = [
+export const erase_cookie = (name:string) => {
+  const pieces: Array<string> = [
     `${name}=`,
     "path=/",
     "expires=Thu, 01 Jan 1970 00:00:01 GMT"
