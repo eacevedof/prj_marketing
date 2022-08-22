@@ -120,28 +120,6 @@ log-sql: ## log queries
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
 
-
-prepare-pro:  ## prepare pro
-ifeq ($(OS),Linux)
-	echo "preparing"
-	# echo ${HOME}
-	# git fetch --all; git reset --hard origin/main;
-	rm -f .env.local
-	rm -fr bash
-	rm -fr docker
-	rm -f docker-compose.yml
-	rm -f LICENSE
-	rm -f README.md
-	rm -f TODO.md
-	rm -f ./backend_web/.vendor.zip
-	rm -fr ./backend_web/architecture
-	rm -f ./backend_web/config/*local*
-	rm -f ./backend_web/.env.local
-
-	# rm -f ./backend_web/db/db_mypromos.sql
-	# phinx no tira en <b>Fatal error</b>:  main()
-	# cd ./backend_web/vendor/bin; phinx migrate -e testing; (nok) en pro
-	# cd ./backend_web/db; phinx migrate -e testing;
-	ln -s $${HOME}/php.ini $${PATH_DOM_MYPROMOS}/mypromos.es/backend_web/public/php.ini
-	ln -s $${HOME}/php.ini $${PATH_DOM_MYPROMOS}/mypromos.es/backend_web/console/php.ini
-endif
+ts: ## ts compile
+	cd ./backend_web/public/assets/ts; \
+  npx tsc
