@@ -1,22 +1,31 @@
-export const onDocumentready = callbackFunction =>{
+interface IOnEvent {
+  (event: Event|undefined) : void
+}
+
+export const onDocumentready = (fnOnEvent: IOnEvent) =>{
   if(document.readyState != "loading")
-    callbackFunction(event)
+    fnOnEvent(event)
   else
-    document.addEventListener("DOMContentLoaded", callbackFunction)
+    document.addEventListener("DOMContentLoaded", fnOnEvent)
 }
 
-export const debounce = (func, timeout = 300) => {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
-  };
+interface IDebounce {
+  (args: any[]) : void | any
 }
 
-export const include_js = (pathjs, type="text/javascript") => {
+export const debounce = (func: IDebounce, timeout = 300) => {
+  let timer: number;
+  return (...args: any[]) => {
+    clearTimeout(timer)
+    // @ts-ignore
+    timer = setTimeout(() => func.apply(this, args), timeout)
+  }
+}
+
+export const include_js = (pathjs: string, type: string="text/javascript") => {
   //const $head = document.getElementsByTagName("head")[0]
-  const $body = document.body
-  const $script = document.createElement("script")
+  const $body: HTMLElement = document.body
+  const $script: HTMLScriptElement = document.createElement("script")
   $script.src = pathjs
   $script.type = type
   $script.setAttribute("approle","jsmodal")
@@ -24,12 +33,12 @@ export const include_js = (pathjs, type="text/javascript") => {
   $body.appendChild($script)
 }
 
-export const async_import = async (src) => {
+export const async_import = async (src: string) => {
   const { default: defaultFunc } = await import(src)
   defaultFunc()
 }
 
-export const get_as_element = html => {
+export const get_as_element = (html: string) => {
   const d=document
   let i
       ,a=d.createElement("div")
@@ -40,15 +49,15 @@ export const get_as_element = html => {
   return b;
 }
 
-export const run_js = $jswrapper => {
-  const scripts = $jswrapper.querySelectorAll("script")
+export const run_js = ($jswrapper: HTMLElement) => {
+  const scripts: HTMLScriptElement[] = $jswrapper.querySelectorAll("script")
   if (!scripts) return
 
-  const doc = document;
-  const atrribs = ["type","src","nonce","noModule"]
+  const doc: HTMLDocument = document;
+  const atrribs: string[] = ["type","src","nonce","noModule"]
 
   scripts.forEach($script => {
-    const $docscript = doc.createElement( "script" );
+    const $docscript: HTMLElement = doc.createElement( "script" );
     $docscript.text =  $script.textContent
     atrribs.forEach(attr => {
       const val = $script.getAttribute(attr)
