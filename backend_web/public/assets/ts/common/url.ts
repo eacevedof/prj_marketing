@@ -29,19 +29,17 @@ export const add_page_to_url = (page:string, position:number): void => {
   window.history.pushState({}, "", url)
 }
 
-function get_querystring(obj, prefix) {
-  return Object.keys(obj ?? {}).map(objKey => {
-    if (obj.hasOwnProperty(objKey)) {
-      const key = prefix ? `${prefix}[${objKey}]` : objKey;
-      const value = obj[objKey];
+function get_querystring(obj: object|null, prefix:string): string {
+  return Object.keys(obj ?? {}).map((objKey: string): string|null => {
+    if (obj?.hasOwnProperty(objKey)) {
+      const key: string = prefix ? `${prefix}[${objKey}]` : objKey;
+      const value = obj[objKey]
 
       return typeof value === "object" ?
         get_querystring(value, key) :
-        //`${encodeURIComponent(key)}=${encodeURIComponent(value)}`
           `${key}=${encodeURIComponent(value)}`
     }
-
-    return null;
+    return null
   }).filter(obj => obj).join("&");
 }
 
