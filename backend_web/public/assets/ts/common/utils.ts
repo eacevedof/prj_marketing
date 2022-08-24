@@ -49,15 +49,20 @@ export const get_as_element = (html: string) => {
   return b;
 }
 
+interface IScriptElement extends HTMLElement {
+  text: string | null
+}
+
+
 export const run_js = ($jswrapper: HTMLElement) => {
-  const scripts: HTMLScriptElement[] = Array.from($jswrapper.querySelectorAll("script"))
+  const scripts: HTMLElement[] = Array.from($jswrapper.querySelectorAll("script"))
   if (!scripts) return
 
   const doc: HTMLDocument = document;
   const atrribs: string[] = ["type","src","nonce","noModule"]
 
-  scripts.forEach($script => {
-    const $docscript: HTMLElement = doc.createElement( "script" );
+  scripts.forEach(($script: HTMLElement) => {
+    const $docscript: IScriptElement = doc.createElement( "script" );
     $docscript.text =  $script.textContent
     atrribs.forEach(attr => {
       const val = $script.getAttribute(attr)
