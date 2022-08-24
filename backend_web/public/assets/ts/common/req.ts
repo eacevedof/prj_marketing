@@ -1,13 +1,24 @@
-const _get_error = error => {
+const _get_error = (error:string): object => {
   console.error("from-server:",error)
   return {
     errors: ["Bad response from server"]
   }
 }
 
-const _get_response = response => {
-  let msg = response?.data?.message
-  let code = response?.data?.code
+interface IData {
+  message: string,
+  code: string,
+}
+
+interface IResponse {
+  data: IData,
+  message: string,
+  errors: string[]
+}
+
+const _get_response = (response: IResponse):object => {
+  let msg:string = response?.data?.message
+  let code:string = response?.data?.code
   if(msg && code)
     return {errors:[msg]}
 
@@ -18,9 +29,9 @@ const _get_response = response => {
   if(msg)
     return {errors:[msg]}
 
-  msg = response?.errors
-  if(msg)
+  if(response?.errors)
     return {errors: response?.errors}
+
   return response
 }
 
