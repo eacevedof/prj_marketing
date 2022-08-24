@@ -50,7 +50,7 @@ export const get_as_element = (html: string) => {
 }
 
 export const run_js = ($jswrapper: HTMLElement) => {
-  const scripts: HTMLScriptElement[] = $jswrapper.querySelectorAll("script")
+  const scripts: HTMLScriptElement[] = Array.from($jswrapper.querySelectorAll("script"))
   if (!scripts) return
 
   const doc: HTMLDocument = document;
