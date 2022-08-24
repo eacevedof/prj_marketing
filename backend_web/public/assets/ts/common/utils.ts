@@ -55,7 +55,7 @@ export const run_js = ($jswrapper: HTMLElement) => {
   const scripts: HTMLElement[] = Array.from($jswrapper.querySelectorAll("script"))
   if (!scripts) return
 
-  const $document: HTMLDocument = document;
+  const $document: HTMLDocument = window.document
   const atrribs: string[] = ["type","src","nonce","noModule"]
 
   scripts.forEach(($script: HTMLElement) => {
@@ -69,21 +69,21 @@ export const run_js = ($jswrapper: HTMLElement) => {
   })
 }
 
-const _append_css = href => {
-  const $link = document.createElement("link")
+const _append_css = (href: string) => {
+  const $link: HTMLLinkElement = document.createElement("link")
   $link.type = "text/css"
   $link.rel = "stylesheet"
   $link.href = href
   $link.media = "all"
-  document.head.appendChild($link).parentNode.removeChild($link)
+  document?.head?.appendChild($link)?.parentNode?.removeChild($link)
 }
 
-export const load_css = $wrapper => {
+export const load_css = ($wrapper:HTMLElement) => {
   const links = $wrapper.querySelectorAll("link")
   //console.log("load_css.links",links,"type",typeof links)
   if (!links) return
 
-  const doc = document;
+  const doc: HTMLDocument = window.document;
   const atrribs = ["type","rel","href","media"]
 
   links.forEach($link => {
