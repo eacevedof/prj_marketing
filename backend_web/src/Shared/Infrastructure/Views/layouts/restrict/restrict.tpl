@@ -36,7 +36,6 @@ $requri = $_SERVER["REQUEST_URI"];
   ]) ?>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <?= $this->_asset_js_module([
-    "index",
     "common/snackbar"
   ])?>
 </head>
