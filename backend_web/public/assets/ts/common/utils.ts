@@ -65,7 +65,7 @@ export const run_js = ($jswrapper: HTMLElement) => {
       const val = $script.getAttribute(attr)
       if(val) $docscript.setAttribute(attr, val)
     })
-    $document.head.appendChild($docscript).parentNode.removeChild($docscript)
+    $document?.head?.appendChild($docscript)?.parentNode?.removeChild($docscript)
   })
 }
 
