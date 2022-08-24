@@ -1,6 +1,7 @@
+// @ts-ignore
 import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
-export const csstooltip = css`
+export const csstooltip: string = css`
 .tt-tooltip {
     font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
     position: relative;
