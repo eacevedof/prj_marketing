@@ -1,20 +1,20 @@
 
-export const get_parameter = key => {
+export const get_parameter = (key: string): string => {
   key = key.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  const regex = new RegExp(`[\\?&]${key}=([^&#]*)`);
-  const results = regex.exec(window.location.search);
+  const regex: RegExp = new RegExp(`[\\?&]${key}=([^&#]*)`);
+  const results: string[] | null = regex.exec(window.location.search);
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-export const get_url_position = pos => {
-  let parts = window.location.pathname.split("?")
+export const get_url_position = (pos: number): string => {
+  let parts: string[] = window.location.pathname.split("?")
   parts = parts[0].split("/")
   return parts[pos] ?? ""
 }
 
-export const add_page_to_url = (page, position) => {
-  let url = window.location.pathname
-  const urlparts = url.split("/")
+export const add_page_to_url = (page:string, position:number): void => {
+  let url: string = window.location.pathname
+  const urlparts: string[] = url.split("/")
 
   if (urlparts[position]) {
     urlparts[position] = page
@@ -24,8 +24,8 @@ export const add_page_to_url = (page, position) => {
   }
 
   url = urlparts.join("/")
-  const search = window.location.search
-  if (search)  url = url.concat(search)
+  const search: string = window.location.search
+  if (search) url = url.concat(search)
   window.history.pushState({}, "", url)
 }
 
