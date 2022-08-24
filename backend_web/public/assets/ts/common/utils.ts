@@ -49,26 +49,23 @@ export const get_as_element = (html: string) => {
   return b;
 }
 
-interface IScriptElement extends HTMLElement {
-  text: string | null
-}
 
 
 export const run_js = ($jswrapper: HTMLElement) => {
   const scripts: HTMLElement[] = Array.from($jswrapper.querySelectorAll("script"))
   if (!scripts) return
 
-  const doc: HTMLDocument = document;
+  const $document: HTMLDocument = document;
   const atrribs: string[] = ["type","src","nonce","noModule"]
 
   scripts.forEach(($script: HTMLElement) => {
-    const $docscript: IScriptElement = doc.createElement( "script" );
-    $docscript.text =  $script.textContent
-    atrribs.forEach(attr => {
+    const $docscript: HTMLScriptElement = $document.createElement( "script" );
+    $docscript.setAttribute("text", $script.getAttribute("textContent") ?? "")
+    atrribs.forEach((attr: string) => {
       const val = $script.getAttribute(attr)
       if(val) $docscript.setAttribute(attr, val)
     })
-    doc.head.appendChild($docscript).parentNode.removeChild($docscript)
+    $document.head.appendChild($docscript).parentNode.removeChild($docscript)
   })
 }
 
