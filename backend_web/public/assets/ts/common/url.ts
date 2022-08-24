@@ -29,30 +29,31 @@ export const add_page_to_url = (page:string, position:number): void => {
   window.history.pushState({}, "", url)
 }
 
-function get_querystring(obj: object|null, prefix:string): string {
+function get_querystring(obj: object|null, prefix:string|null): string {
   return Object.keys(obj ?? {}).map((objKey: string): string|null => {
     if (obj?.hasOwnProperty(objKey)) {
       const key: string = prefix ? `${prefix}[${objKey}]` : objKey;
-      const value = obj[objKey]
+      // @ts-ignore
+      const value: string = obj[objKey]
 
       return typeof value === "object" ?
-        get_querystring(value, key) :
-          `${key}=${encodeURIComponent(value)}`
+            get_querystring(value, key) :
+            `${key}=${encodeURIComponent(value)}`
     }
     return null
   }).filter(obj => obj).join("&");
 }
 
-export const get_url_with_params = (url, params) => {
-  const qs = get_querystring(params)
+export const get_url_with_params = (url: string, params:object): string => {
+  const qs: string = get_querystring(params, null)
   //console.log("QS",qs)
-  const parts = [url, "?", qs]
+  const parts: string[] = [url, "?", qs]
   return parts.join("")
 }
 
-export const get_page_from_url = position => {
-  const page = get_url_position(position)
+export const get_page_from_url = (position: number):number|null => {
+  const page: string = get_url_position(position)
   if(!page) return null
-  if (isNaN(page)) return null
+  if (isNaN(Number(page))) return null
   return parseInt(page)
 }
