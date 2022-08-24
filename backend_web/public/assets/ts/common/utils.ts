@@ -75,36 +75,36 @@ const _append_css = (href: string) => {
   $link.rel = "stylesheet"
   $link.href = href
   $link.media = "all"
-  document?.head?.appendChild($link)?.parentNode?.removeChild($link)
+  window.document?.head?.appendChild($link)?.parentNode?.removeChild($link)
 }
 
 export const load_css = ($wrapper:HTMLElement) => {
-  const links = $wrapper.querySelectorAll("link")
+  const links: HTMLLinkElement[] = Array.from($wrapper.querySelectorAll("link"))
   //console.log("load_css.links",links,"type",typeof links)
   if (!links) return
 
-  const doc: HTMLDocument = window.document;
-  const atrribs = ["type","rel","href","media"]
+  const $document: HTMLDocument = window.document;
+  const atrribs: string[] = ["type","rel","href","media"]
 
-  links.forEach($link => {
+  links.forEach(($link: HTMLLinkElement ) => {
     //console.log("load_css.link", $link)
-    const $doclink = doc.createElement("link")
-    atrribs.forEach(attr => {
+    const $doclink: HTMLLinkElement = $document.createElement("link")
+    atrribs.forEach( (attr:string) => {
       const val = $link.getAttribute(attr)
       if(val) $doclink.setAttribute(attr, val)
     })
-    doc.head.appendChild($doclink).parentNode.removeChild($doclink)
+    $document?.head?.appendChild($doclink)?.parentNode?.removeChild($doclink)
   })
 }
 
-export const load_asset_css = paths => {
+export const load_asset_css = (paths: string | string[]) => {
   if (!paths) return
-  let links = document.head.querySelectorAll("link")
-  links = Array.from(links).map(link => link.href)
+  let links: HTMLLinkElement[] = Array.from(document.head.querySelectorAll("link"))
+  const hrefs: string[] = links.map(link => link.href)
   //console.log("links",links)
   if (typeof paths === "string" || paths instanceof String) {
     const url = `/assets/css/${paths}.css`
-    if (links.filter(href => href.includes(url)).length>0)
+    if (hrefs.filter(href => href.includes(url)).length>0)
       return
 
     const $link = document.createElement("link")
