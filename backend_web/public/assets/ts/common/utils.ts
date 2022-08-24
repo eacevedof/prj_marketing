@@ -112,19 +112,19 @@ export const load_asset_css = (paths: string | string[]) => {
     $link.rel = "stylesheet"
     //si lo quito deja de funcionar
     //con el remove el spinner no se ve
-    document.head.appendChild($link)//.parentNode.removeChild($link)
+    window.document.head.appendChild($link)//.parentNode.removeChild($link)
     return
   }
 
-  paths.forEach(path => {
+  paths.forEach((path: string )=> {
     const url = `/assets/css/${path}.css`
-    if (links.filter(href => href.includes(url)).length>0)
+    if (links.filter(link => link.href.includes(url)).length>0)
       return
 
-    const $link = document.createElement( "link" )
+    const $link:HTMLLinkElement = document.createElement( "link" )
     $link.href = url
     $link.rel = "stylesheet"
     //con el remove el spinner no se ve
-    document.head.appendChild($link)//.parentNode.removeChild($link)
+    window.document.head.appendChild($link)//.parentNode.removeChild($link)
   })
 }
