@@ -27,7 +27,7 @@ function Snackbar(id: string):any {
     return this
   }
 
-  const _set_animation = (hold:number, time:number): any => {
+  const _set_animation = (hold:number, time:number|null): any => {
     if (!time) time = 0.5
     const _hold:number = hold ? hold - (time * 2): 2.5
     //-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
@@ -47,15 +47,14 @@ function Snackbar(id: string):any {
     return this
   }
 
+  // @ts-ignore
   this.show = () => {
     _$div.classList.add("snackbar-show")
-    const tremove = _time * 900
-    _set_animation(_time)
+    const tremove:number = _time * 900
+    _set_animation(_time,null)
     setTimeout(() => {
       _$div.classList.remove("snackbar-show")
-      _$div.style.webkitAnimationName = ""
       _$div.style.animation = ""
-      //console.log("remove")
     }, tremove)
   }
 
