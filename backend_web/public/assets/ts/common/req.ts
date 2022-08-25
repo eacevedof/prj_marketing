@@ -164,7 +164,7 @@ const _get_json = (str: string): object |null => {
   return null
 }
 
-const _get_response_txt = (response: string): object|null => {
+const _get_response_txt = (response: string): object|null|string => {
   //si hay algún error llega en texto plano con lo cual
   //no se puede parsear a response.error
   /*
