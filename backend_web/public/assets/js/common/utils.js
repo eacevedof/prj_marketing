@@ -41,25 +41,23 @@ export const run_js = ($jswrapper) => {
     const $document = window.document;
     const atrribs = ["type", "src", "nonce", "noModule"];
     scripts.forEach(($script) => {
-        var _a, _b, _c, _d;
         const $docscript = $document.createElement("script");
-        $docscript.setAttribute("text", (_a = $script.getAttribute("textContent")) !== null && _a !== void 0 ? _a : "");
+        $docscript.setAttribute("text", $script.getAttribute("textContent") ?? "");
         atrribs.forEach((attr) => {
             const val = $script.getAttribute(attr);
             if (val)
                 $docscript.setAttribute(attr, val);
         });
-        (_d = (_c = (_b = $document === null || $document === void 0 ? void 0 : $document.head) === null || _b === void 0 ? void 0 : _b.appendChild($docscript)) === null || _c === void 0 ? void 0 : _c.parentNode) === null || _d === void 0 ? void 0 : _d.removeChild($docscript);
+        $document?.head?.appendChild($docscript)?.parentNode?.removeChild($docscript);
     });
 };
 const _append_css = (href) => {
-    var _a, _b, _c, _d;
     const $link = document.createElement("link");
     $link.type = "text/css";
     $link.rel = "stylesheet";
     $link.href = href;
     $link.media = "all";
-    (_d = (_c = (_b = (_a = window.document) === null || _a === void 0 ? void 0 : _a.head) === null || _b === void 0 ? void 0 : _b.appendChild($link)) === null || _c === void 0 ? void 0 : _c.parentNode) === null || _d === void 0 ? void 0 : _d.removeChild($link);
+    window.document?.head?.appendChild($link)?.parentNode?.removeChild($link);
 };
 export const load_css = ($wrapper) => {
     const links = Array.from($wrapper.querySelectorAll("link"));
@@ -69,7 +67,6 @@ export const load_css = ($wrapper) => {
     const $document = window.document;
     const atrribs = ["type", "rel", "href", "media"];
     links.forEach(($link) => {
-        var _a, _b, _c;
         //console.log("load_css.link", $link)
         const $doclink = $document.createElement("link");
         atrribs.forEach((attr) => {
@@ -77,7 +74,7 @@ export const load_css = ($wrapper) => {
             if (val)
                 $doclink.setAttribute(attr, val);
         });
-        (_c = (_b = (_a = $document === null || $document === void 0 ? void 0 : $document.head) === null || _a === void 0 ? void 0 : _a.appendChild($doclink)) === null || _b === void 0 ? void 0 : _b.parentNode) === null || _c === void 0 ? void 0 : _c.removeChild($doclink);
+        $document?.head?.appendChild($doclink)?.parentNode?.removeChild($doclink);
     });
 };
 export const load_asset_css = (paths) => {

@@ -5,10 +5,9 @@ export const get_parameter = (key) => {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 export const get_url_position = (pos) => {
-    var _a;
     let parts = window.location.pathname.split("?");
     parts = parts[0].split("/");
-    return (_a = parts[pos]) !== null && _a !== void 0 ? _a : "";
+    return parts[pos] ?? "";
 };
 export const add_page_to_url = (page, position) => {
     let url = window.location.pathname;
@@ -26,8 +25,8 @@ export const add_page_to_url = (page, position) => {
     window.history.pushState({}, "", url);
 };
 function get_querystring(obj, prefix) {
-    return Object.keys(obj !== null && obj !== void 0 ? obj : {}).map((objKey) => {
-        if (obj === null || obj === void 0 ? void 0 : obj.hasOwnProperty(objKey)) {
+    return Object.keys(obj ?? {}).map((objKey) => {
+        if (obj?.hasOwnProperty(objKey)) {
             const key = prefix ? `${prefix}[${objKey}]` : objKey;
             // @ts-ignore
             const value = obj[objKey];

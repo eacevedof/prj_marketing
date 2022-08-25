@@ -9,10 +9,9 @@ const spinnertpl = `
 </div>
 `;
 const _remove_spinner = () => {
-    var _a;
-    const $spinner = $wrapper === null || $wrapper === void 0 ? void 0 : $wrapper.querySelector(`[approle="spinner"]`);
+    const $spinner = $wrapper?.querySelector(`[approle="spinner"]`);
     if ($spinner)
-        (_a = $spinner === null || $spinner === void 0 ? void 0 : $spinner.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild($spinner);
+        $spinner?.parentNode?.removeChild($spinner);
 };
 const _add_spinner = () => {
     if (!$wrapper)

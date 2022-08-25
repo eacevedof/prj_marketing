@@ -13,7 +13,7 @@ interface IData {
 interface IResponse {
   data: IData,
   message: string,
-  errors: string[]
+  errors: string[],
 }
 
 const _get_response = (response: IResponse):object => {
@@ -36,8 +36,8 @@ const _get_response = (response: IResponse):object => {
 }
 
 const reqjs = {
-  async get(url) {
-    let resp = null
+  async get(url:string): Promise<object|IResponse> {
+    let resp: any = null
     try {
       resp = await fetch(url, {
         headers: {
@@ -53,8 +53,8 @@ const reqjs = {
     }
   },
   
-  async post(url, data) {
-    let resp = null
+  async post(url:string, data:object): Promise<object | IResponse> {
+    let resp:any = null
     try {
       resp = await fetch(url, {
         method: "POST",
@@ -72,8 +72,8 @@ const reqjs = {
     }
   },
 
-  async put(url, data) {
-    let resp = null
+  async put(url:string, data:object): Promise<object|IResponse> {
+    let resp: any = null
     try {
       resp = await fetch(url, {
         method: "PUT",
@@ -91,8 +91,8 @@ const reqjs = {
     }
   },
 
-  async del(url, data) {
-    let resp = null
+  async del(url:string, data:object): Promise<object|IResponse> {
+    let resp: any = null
     try {
       resp = await fetch(url, {
         method: "DELETE",
@@ -110,8 +110,8 @@ const reqjs = {
     }
   },
 
-  async patch(url, data) {
-    let resp = null
+  async patch(url:string, data:object): Promise<object|IResponse> {
+    let resp: any = null
     try {
       resp = await fetch(url, {
         method: "PATCH",
@@ -132,8 +132,8 @@ const reqjs = {
 }
 
 export const reqraw = {
-  post(path, objpayload, blank=true) {
-    const form = document.createElement("form")
+  post(path:string, objpayload:object, blank: boolean = true):void {
+    const form: HTMLFormElement = document.createElement("form")
     form.method = "post"
     form.action = path
     if (blank) form.target = "_blank"
@@ -143,6 +143,7 @@ export const reqraw = {
         const hidfield = document.createElement("input")
         hidfield.type = "hidden"
         hidfield.name = `columns[${key}]`
+        // @ts-ignore
         hidfield.value = objpayload[key]
 
         form.appendChild(hidfield)
@@ -154,7 +155,7 @@ export const reqraw = {
   },
 }
 
-const _get_json = str => {
+const _get_json = (str: string): object |null => {
   try {
     return JSON.parse(str);
   } catch (e) {
@@ -163,15 +164,15 @@ const _get_json = str => {
   return null
 }
 
-const _get_response_txt = response => {
+const _get_response_txt = (response: string): object|null => {
   //si hay algún error llega en texto plano con lo cual
   //no se puede parsear a response.error
   /*
   * Parse error: syntax error, unexpected token "." in /.../index.php on line 51
   * */
   //console.log("TXT_RESPONSE",response, typeof response)
-  if (!response) return ""
-  const resp = response.trim()
+  if (!response) return null
+  const resp:string = response.trim()
 
   //error de compilación
   if (resp.includes("Parse error"))
@@ -179,15 +180,17 @@ const _get_response_txt = response => {
 
   //en caso de excepción
   if (resp.includes("{\"")) {
-    const json = _get_json(resp)
+    const json:object|null = _get_json(resp)
+    // @ts-ignore
     if (json!==null && json?.errors) {
+      // @ts-ignore
       return {errors: json.errors}
     }
   }
 
   /*
-  * si se lanza una exceptcion llega lago como
-  * _txt_RESPONSE {"code":500,"status":false,"errors":["eeeeeeerrrror"],"data":[]}
+  * si se lanza una exceptcion llega algo como
+  * {"code":500,"status":false,"errors":["eeeeeeerrrror"],"data":[]}
   *
   * {"code":500,"status":false,"errors":["Server throwable error"],"data":[]} string
   * */

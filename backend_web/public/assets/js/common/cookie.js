@@ -8,7 +8,7 @@ export const get_cookie = (name) => {
 };
 const set_cookie = (name, value, days = 1) => {
     const pieces = [
-        `${name}=${(value === null || value === void 0 ? void 0 : value.toString()) || ""}`
+        `${name}=${value?.toString() || ""}`
     ];
     if (days) {
         const date = new Date();
