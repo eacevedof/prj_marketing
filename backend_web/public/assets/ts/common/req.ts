@@ -1,4 +1,7 @@
-const _get_error = (error:string): object => {
+interface IError {
+  errors: string[]
+}
+const _get_error = (error:string): IError => {
   console.error("from-server:",error)
   return {
     errors: ["Bad response from server"]
@@ -36,7 +39,7 @@ const _get_response = (response: IResponse):object => {
 }
 
 const reqjs = {
-  async get(url:string): Promise<object|IResponse> {
+  async get(url:string): Promise<object|IResponse|IError> {
     let resp: any = null
     try {
       resp = await fetch(url, {
@@ -53,7 +56,7 @@ const reqjs = {
     }
   },
   
-  async post(url:string, data:object): Promise<object | IResponse> {
+  async post(url:string, data:object): Promise<object|IError> {
     let resp:any = null
     try {
       resp = await fetch(url, {
@@ -72,7 +75,7 @@ const reqjs = {
     }
   },
 
-  async put(url:string, data:object): Promise<object|IResponse> {
+  async put(url:string, data:object): Promise<object|IError> {
     let resp: any = null
     try {
       resp = await fetch(url, {
@@ -91,7 +94,7 @@ const reqjs = {
     }
   },
 
-  async del(url:string, data:object): Promise<object|IResponse> {
+  async del(url:string, data:object): Promise<object|IError> {
     let resp: any = null
     try {
       resp = await fetch(url, {
@@ -110,7 +113,7 @@ const reqjs = {
     }
   },
 
-  async patch(url:string, data:object): Promise<object|IResponse> {
+  async patch(url:string, data:object): Promise<object|IError> {
     let resp: any = null
     try {
       resp = await fetch(url, {
@@ -198,7 +201,7 @@ const _get_response_txt = (response: string): object|null|string => {
 }
 
 export const reqtxt = {
-  async get(url) {
+  async get(url:string): {
     let resp = null
     try {
       resp = await fetch(url)
