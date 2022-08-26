@@ -33,7 +33,7 @@ const reqjs = {
         }
         catch (error) {
             //este error sería del tipo: error.message "Unexpected token < in JSON at position 0"
-            return _get_error(error.message);
+            return _get_error(error?.message);
         }
     },
     async post(url, data) {
@@ -52,7 +52,7 @@ const reqjs = {
         }
         catch (error) {
             console.log("ERROR:", error);
-            return _get_error(error.message);
+            return _get_error(error?.message);
         }
     },
     async put(url, data) {
@@ -125,6 +125,7 @@ export const reqraw = {
                 const hidfield = document.createElement("input");
                 hidfield.type = "hidden";
                 hidfield.name = `columns[${key}]`;
+                // @ts-ignore
                 hidfield.value = objpayload[key];
                 form.appendChild(hidfield);
             }
@@ -133,7 +134,7 @@ export const reqraw = {
         form.submit();
     },
 };
-const _get_json = str => {
+const _get_json = (str) => {
     try {
         return JSON.parse(str);
     }
@@ -142,7 +143,7 @@ const _get_json = str => {
     }
     return null;
 };
-const _get_response_txt = response => {
+const _get_response_txt = (response) => {
     //si hay algún error llega en texto plano con lo cual
     //no se puede parsear a response.error
     /*
@@ -158,13 +159,15 @@ const _get_response_txt = response => {
     //en caso de excepción
     if (resp.includes("{\"")) {
         const json = _get_json(resp);
+        // @ts-ignore
         if (json !== null && json?.errors) {
+            // @ts-ignore
             return { errors: json.errors };
         }
     }
     /*
-    * si se lanza una exceptcion llega lago como
-    * _txt_RESPONSE {"code":500,"status":false,"errors":["eeeeeeerrrror"],"data":[]}
+    * si se lanza una exceptcion llega algo como
+    * {"code":500,"status":false,"errors":["eeeeeeerrrror"],"data":[]}
     *
     * {"code":500,"status":false,"errors":["Server throwable error"],"data":[]} string
     * */
@@ -187,7 +190,7 @@ export const reqtxt = {
 export const is_get_200 = async (url) => {
     try {
         const resp = await fetch(url);
-        return parseInt(resp.status) === 200;
+        return parseInt(resp?.status) === 200;
     }
     catch (error) {
         return false;
