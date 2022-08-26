@@ -1,6 +1,7 @@
+// @ts-ignore
 import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
-export const cssformflex = css`
+export const cssformflex:string = css`
 form label {
   font-weight: 500;
 }
