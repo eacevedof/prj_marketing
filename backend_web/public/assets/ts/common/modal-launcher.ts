@@ -49,22 +49,22 @@ export default ():void => {
   _open_modal_by_get(final)
 }
 
-export const show_restrict_url = async () => {
+export const show_restrict_url = async (): Promise<void> => {
   const is_valid_url = async (url: string): Promise<boolean> => {
     if (url.match(/\/restrict[\/]*$/)) return false
-    const is200 = await is_get_200(url)
+    const is200:boolean = await is_get_200(url)
     if (url.startsWith("/restrict/") && is200)
       return true
     return false
   }
 
-  const url = window.location.search;
+  const url:string = window.location.search
   if (!url) return
-  const urlparams = new URLSearchParams(url)
-  const inmodal = urlparams.get("in-modal").trim()
+  const urlparams:URLSearchParams = new URLSearchParams(url)
+  const inmodal:string = urlparams.get("in-modal")?.trim() ?? ""
   if (!inmodal) return
 
-  const isvalid = await is_valid_url(inmodal)
+  const isvalid:boolean = await is_valid_url(inmodal)
   if (!isvalid) {
     if (window?.snack)
       window.snack
@@ -82,13 +82,13 @@ export const show_restrict_url = async () => {
 * en una vista con pestañas habilitar una pestaña concreta definia en la url
 */
 export const show_tab = () => {
-  const url = window.location.search;
+  const url:string = window.location.search
   if (!url) return
-  const urlparams = new URLSearchParams(url)
-  const tab = urlparams.get("tab")
+  const urlparams:URLSearchParams = new URLSearchParams(url)
+  const tab:string = urlparams.get("tab") ?? ""
   if (!tab || tab==="main") return
 
-  const $tab = document.querySelector(`a[href="#${tab}"]`)
+  const $tab: HTMLAnchorElement | null = document.querySelector(`a[href="#${tab}"]`)
   if (!$tab) return
   $tab.click()
 }
