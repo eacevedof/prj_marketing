@@ -1,6 +1,6 @@
-import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
-
-export const cssformflex = css`
+// @ts-ignore
+import { css } from "/assets/js/vendor/lit.dev/lit-bundle.js";
+export const cssformflex = css `
 form label {
   font-weight: 500;
 }

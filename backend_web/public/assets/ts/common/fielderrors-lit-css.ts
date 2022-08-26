@@ -1,6 +1,7 @@
+// @ts-ignore
 import {css} from "/assets/js/vendor/lit.dev/lit-bundle.js"
 
-export const cssfielderror = css`
+export const cssfielderror: string = css`
 form .error-input {
     /*fielderrors-lit-css.js*/
     border-color: #ee335e;
