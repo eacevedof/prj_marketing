@@ -52,7 +52,7 @@ const reqjs = {
       return _get_response(resp)
     } catch (error) {
       //este error sería del tipo: error.message "Unexpected token < in JSON at position 0"
-      return _get_error(error?.message)
+      return _get_error(error.message)
     }
   },
   
@@ -71,7 +71,7 @@ const reqjs = {
       return _get_response(resp)
     } catch (error) {
       console.log("ERROR:",error)
-      return _get_error(error?.message)
+      return _get_error(error.message)
     }
   },
 
