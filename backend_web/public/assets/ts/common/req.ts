@@ -167,14 +167,14 @@ const _get_json = (str: string): object |null => {
   return null
 }
 
-const _get_response_txt = (response: string): object|null|string => {
+const _get_response_txt = (response: string): IError|string => {
   //si hay algún error llega en texto plano con lo cual
   //no se puede parsear a response.error
   /*
   * Parse error: syntax error, unexpected token "." in /.../index.php on line 51
   * */
   //console.log("TXT_RESPONSE",response, typeof response)
-  if (!response) return null
+  if (!response) return ""
   const resp:string = response.trim()
 
   //error de compilación
@@ -201,8 +201,8 @@ const _get_response_txt = (response: string): object|null|string => {
 }
 
 export const reqtxt = {
-  async get(url:string): {
-    let resp = null
+  async get(url:string): Promise<string|IError>  {
+    let resp: any = null
     try {
       resp = await fetch(url)
       resp = await resp.text()
@@ -214,10 +214,10 @@ export const reqtxt = {
   },
 }
 
-export const is_get_200 = async url => {
+export const is_get_200 = async (url: string): Promise<boolean> => {
   try {
-    const resp = await fetch(url)
-    return parseInt(resp.status) === 200
+    const resp: any = await fetch(url)
+    return parseInt(resp?.status) === 200
   } catch (error) {
     return false
   }
