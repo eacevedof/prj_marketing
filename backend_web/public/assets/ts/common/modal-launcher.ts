@@ -1,14 +1,17 @@
+// @ts-ignore
 import {reqtxt, is_get_200} from "/assets/js/common/req.js"
+// @ts-ignore
 import spinner from "/assets/js/common/spinner.js"
+// @ts-ignore
 import {SNACK} from "/assets/js/common/snackbar.js"
 
-const _open_modal_by_get = async (url) => {
+const _open_modal_by_get = async (url: string): Promise<void> => {
   spinner.render()
   const r = await reqtxt.get(url)
   spinner.remove()
   if (r.errors)
-    return window.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
-  window.modalraw.opts({
+    return window?.snack.set_color(SNACK.ERROR).set_time(5).set_inner(r.errors[0]).show()
+  window?.modalraw.opts({
     bgclick: false,
     body: r,
   }).show()
