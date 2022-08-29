@@ -1,5 +1,10 @@
 .vscode
 .idea
+public/themes/valex/assets/_plugins
+public/themes/valex/assets/_js
+.scannerwork*
+#src/Shared/.scannerwork
+
 architecture/*.crswap
 vendor/*
 !/vendor/theframework

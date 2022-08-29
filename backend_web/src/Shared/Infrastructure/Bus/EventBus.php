@@ -4,7 +4,6 @@ namespace App\Shared\Infrastructure\Bus;
 use App\Shared\Domain\Bus\Event\IEventBus;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
-//use App\Shared\Infrastructure\Repositories\EventStoreRepository;
 
 final class EventBus implements IEventBus
 {
@@ -32,16 +31,15 @@ final class EventBus implements IEventBus
 
     public function subscribe(IEventSubscriber $subscriber): int
     {
-        $id = $this->id;
-        $this->subscribers[$id] = $subscriber;
+        $key = $this->id;
+        $this->subscribers[$key] = $subscriber;
         $this->id++;
-        return $id;
+        return $key;
     }
 
     public function publish(IEvent ...$domainEvents): void
     {
         foreach ($domainEvents as $event) {
-            //(new EventStoreRepository())->append($event);
             foreach($this->subscribers as $subscriber) {
                 $subscriber->on_event($event);
             }

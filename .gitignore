@@ -3,5 +3,3 @@
 .DS_Store
 *.log
 io
-backend_web/public/themes/valex/assets/_plugins
-backend_web/public/themes/valex/assets/_js
