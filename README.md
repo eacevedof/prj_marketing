@@ -8,6 +8,11 @@ SN Marketing
 ### console
 - php run.php --class=App.Services.Kafka.LogConsumerService
 ```
+sonar -Dsonar.projectKey=prj-marketing \
+    -Dsonar.sources=. \
+    -Dsonar.host.url=http://localhost:3500 \
+    -Dsonar.login=sqp_efee45136ec3f5d561ebec0249911d493932ce0b
+
 make ssh-be
 run help
 ```

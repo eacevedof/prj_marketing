@@ -28,9 +28,10 @@ final class DiskCacheComponent
 
     private function _get_cached_files(): array
     {
-        if(!is_dir($this->pathfinal)) {
-            mkdir($this->pathfinal, 0777, true);
-            chmod($this->pathcache, 0777);
+        if (!is_dir($this->pathfinal)) {
+            //705 es lo minimo para que funcione desde web
+            mkdir($this->pathfinal, 0705, true);
+            chmod($this->pathcache, 0705);
         }
 
         $files = scandir($this->pathfinal);
