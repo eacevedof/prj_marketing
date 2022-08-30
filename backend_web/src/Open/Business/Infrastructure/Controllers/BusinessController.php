@@ -22,7 +22,7 @@ final class BusinessController extends OpenController
 {
     public function index(string $businessslug): void
     {
-        if (!($businessslug))
+        if (!$businessslug)
             $this->set_layout("open/mypromos/error")
                 ->add_header($code = ResponseType::BAD_REQUEST)
                 ->add_var(PageType::TITLE, $title = __("Partner space error!"))

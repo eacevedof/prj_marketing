@@ -12,7 +12,7 @@ sonar \
   -Dsonar.projectKey=prj-marketing \
   -Dsonar.sources=. \
   -Dsonar.host.url=http://localhost:3500 \
-  -Dsonar.login=sqp_3ad14217991aca9e5be879a7ba7cf158313cfd5a
+  -Dsonar.login=sqp_635fb25b1a382cdc444204938bd0fce36c34f439
 
 make ssh-be
 run help
