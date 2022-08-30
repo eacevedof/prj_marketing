@@ -3,7 +3,7 @@ namespace App\Open\PromotionCaps\Application;
 
 use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Subscriptions\Domain\Events\PromotionHasFinishedEvent;;
+use App\Restrict\Subscriptions\Domain\Events\PromotionHasFinishedEvent;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
