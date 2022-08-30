@@ -7,7 +7,7 @@ final class CookiesPolicyInfoService extends AppService
 {
     public function __invoke(): array
     {
-        $r = [
+        return [
             ["p" => __("My Promos S.A. (hereinafter, “My Promos“) informs you, through this Cookies Policy, about the use of data storage and recovery devices in users' terminal equipment.")],
 
             ["h2" => __("1. What are cookies?")],
@@ -104,7 +104,5 @@ final class CookiesPolicyInfoService extends AppService
             ["p" => __("<a href=\"javascript: Cookiebot.renew()\">Change your consent</a>")],
             ["p" => __("You can obtain more information about the processing of your data by contacting {0}", "<a href=\"mailto:info@mypromos.es\">info@mypromos.es</a>")],
         ];
-        //print_r($_REQUEST["APP_TRANSLATIONS"]);die;
-        return $r;
     }
 }
