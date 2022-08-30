@@ -16,6 +16,7 @@ use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\Business\Application\BusinessSpaceService;
 use App\Open\Business\Application\BusinessSpacePageService;
 use App\Shared\Domain\Enums\PageType;
+use \Exception;
 
 final class BusinessController extends OpenController
 {
