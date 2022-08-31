@@ -137,6 +137,7 @@ export class FormPromotionUpdate extends LitElement {
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
     this._is_launched = parseInt(this._is_launched)
     this._is_published = parseInt(this._is_published)
+    this._is_raffleable = parseInt(this._is_raffleable)
     this._disabled_date = this._disabled_date !== "" ? this._disabled_date : null
     this._num_viewed = parseInt(this._num_viewed)
     this._num_subscribed = parseInt(this._num_subscribed)
@@ -144,7 +145,11 @@ export class FormPromotionUpdate extends LitElement {
     this._num_executed = parseInt(this._num_executed)
 
     this._timezone = this._timezones.filter(item => parseInt(item.key)===parseInt(this._id_tz)).map(item => item.value).join("")
-    console.log(this._timezone, "timezone found")
+  }
+
+  _on_change(e, field) {
+    const value = e.target.value
+    this[field] = value
   }
 
   //4
@@ -283,7 +288,7 @@ export class FormPromotionUpdate extends LitElement {
                      ?disabled=${this._num_subscribed || this._disabled_date}
               >
             </div>
-          </div>          
+          </div> 
         </div>
 
 <!-- layout -->
@@ -405,13 +410,31 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-is_raffleable">
-              <select id="is_raffleable" class="form-control" required ?disabled=${this._is_launched || this._disabled_date}>>
+              <select id="is_raffleable" class="form-control" required 
+                      ?disabled=${this._is_launched || this._disabled_date} 
+                      @change=${e => this._on_change(e, "_is_raffleable")}
+              >
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
                 )}
               </select>
             </div>
           </div>
+
+          ${this._is_raffleable ?
+            html`
+              <div class="form-group">
+                <label for="date_to">${this._is_raffleable}${typeof this._is_raffleable}</label>
+                <div id="field-date_raffle">
+                  <input type="datetime-local" step="1" id="date_raffle" class="form-control"
+                         .value=${this._date_raffle}
+                         ?disabled=${this._num_subscribed || this._disabled_date}
+                  >
+                </div>
+              </div>`
+            : null
+          }
+        </div>          
 
           <div class="form-group">
             <label for="is_cumulative">${this.texts.f21}</label>

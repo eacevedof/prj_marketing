@@ -73,6 +73,7 @@ $promotion = [
     "returned" => $promotion["returned"],
     "max_confirmed" => $promotion["max_confirmed"],
     "is_raffleable" => $promotion["is_raffleable"],
+    "date_raffle" => $dateto,
     "is_cumulative" => $promotion["is_cumulative"],
     "is_published" => $promotion["is_published"],
     "is_launched" => $promotion["is_launched"],
@@ -85,6 +86,7 @@ $promotion = [
     "num_subscribed" => $promotion["num_subscribed"],
     "num_confirmed" => $promotion["num_confirmed"],
     "num_executed" => $promotion["num_executed"],
+
 
     "promotionlink" => $promotion["promotionlink"],
     "timezones" => $timezones ?? [],
