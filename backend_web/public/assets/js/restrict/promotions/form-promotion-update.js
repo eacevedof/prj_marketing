@@ -148,7 +148,7 @@ export class FormPromotionUpdate extends LitElement {
   }
 
   _on_change(e, field) {
-    const value = e.target.value
+    const value = parseInt(e.target.value)
     this[field] = value
   }
 
