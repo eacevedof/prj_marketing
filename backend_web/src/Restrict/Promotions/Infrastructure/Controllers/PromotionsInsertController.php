@@ -1,12 +1,4 @@
 <?php
-/**
- * @author Eduardo Acevedo Farje.
- * @link eduardoaf.com
- * @name App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInsertController
- * @file PromotionsInsertController.php v1.0.0
- * @date 23-01-2022 10:22 SPAIN
- * @observations
- */
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
@@ -15,7 +7,6 @@ use App\Picklist\Application\PicklistService;
 use App\Restrict\Promotions\Application\PromotionsInsertService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\PageType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
