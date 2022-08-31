@@ -6,6 +6,7 @@ use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\PrivacyPolicy\Application\PrivacyPolicyInfoService;
 use App\Shared\Domain\Enums\PageType;
+use \Exception;
 
 final class PrivacyPolicyInfoController extends OpenController
 {
@@ -32,6 +33,8 @@ final class PrivacyPolicyInfoController extends OpenController
         }
     }
 }
+
+
 
 
 

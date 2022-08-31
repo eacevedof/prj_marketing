@@ -8,6 +8,7 @@ use App\Restrict\Auth\Application\CsrfService;
 use App\Open\Home\Application\ContactSendService;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use App\Shared\Domain\Enums\ResponseType;
+use \Exception;
 
 final class ContactSendController extends OpenController
 {

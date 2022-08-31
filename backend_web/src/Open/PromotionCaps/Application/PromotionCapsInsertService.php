@@ -21,7 +21,6 @@ use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Picklist\Domain\Enums\AppArrayType;
 use App\Shared\Infrastructure\Traits\RequestTrait;
@@ -29,9 +28,6 @@ use App\Shared\Infrastructure\Traits\RequestTrait;
 final class PromotionCapsInsertService extends AppService implements IEventDispatcher
 {
     use RequestTrait;
-
-    private AuthService $auth;
-    private array $authuser;
 
     private FieldsValidator $validator;
     private PromotionRepository $repopromotion;

@@ -72,7 +72,7 @@ final class BusinessSpaceService extends AppService
             throw new NotFoundException(__("Partner “{0}“ not found!", $businessslug));
         }
 
-        $r = [
+        return [
             "business" => $bd["business_name"],
             //"businessurl" => Routes::url("business.space", ["businessslug"=>$bd["slug"]]),
             //quiza conviene usar la url de su sitio original en el logo y en los restantes usar el del espacio
@@ -86,7 +86,6 @@ final class BusinessSpaceService extends AppService
             "urltwitter" => $bd["url_social_twitter"],
             "urltiktok" => $bd["url_social_tiktok"],
         ];
-        return $r;
     }
 
     public function get_promotion_url(string $promouuid): string
