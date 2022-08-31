@@ -7,7 +7,7 @@ final class PrivacyPolicyInfoService extends AppService
 {
     public function __invoke(): array
     {
-        $r = [
+        return [
             ["h3" => __("For what purpose do we treat your data?")],
             ["p" => __("The data collected during the contracting flow of the tool through the sing up and/or subscription process will be handled for the configuration and maintenance of the profile of the contracting Client (hereinafter “Organization“) on the “My Promos“ platform.")],
 
@@ -36,6 +36,5 @@ final class PrivacyPolicyInfoService extends AppService
             ["p" => __("To help us process your request, please indicate in the subject “Data Protection“")],
             ["p" => __("Finally, you are informed of your right to file a claim with the Spanish Data Protection Agency if you are aware of or consider that an event may lead to a breach of the applicable data protection regulations.")],
         ];
-        return $r;
     }
 }

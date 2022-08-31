@@ -3,11 +3,10 @@ namespace App\Open\CookiesPolicy\Infrastructure\Controllers;
 
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Open\CookiesPolicy\Application\CookiesPolicyInfoService;
 use App\Shared\Domain\Enums\PageType;
+use \Exception;
 
 final class CookiesPolicyInfoController extends OpenController
 {
