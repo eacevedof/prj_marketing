@@ -231,11 +231,11 @@ final class AppView
             http_response_code($code);
     }
 
-    private function _flush_and_exit(): void
+    private function _ob_get_clean_and_exit(): void
     {
         $this->_send_headers();
         if ($this->docache) {
-            $content = ob_get_contents();
+            $content = ob_get_clean();
             $now = date("Y-m-d H:i:s");
             $content .= "<!-- cached at $now -->";
             $this->diskcache->write($content);
@@ -306,7 +306,7 @@ final class AppView
 
         include_once($this->pathtpl["layout"]);
 
-        $this->_flush_and_exit();
+        $this->_ob_get_clean_and_exit();
     }
 
     public function render_nv(array $vars = []): void
@@ -326,7 +326,7 @@ final class AppView
 
         include_once($this->pathtpl["layout"]);
 
-        $this->_flush_and_exit();
+        $this->_ob_get_clean_and_exit();
     }
 
     public function render_nl(array $vars = []): void
@@ -344,7 +344,7 @@ final class AppView
             $$name = $value;
 
         include_once($this->pathtemplate);
-        $this->_flush_and_exit();
+        $this->_ob_get_clean_and_exit();
     }
         
 }//AppView
