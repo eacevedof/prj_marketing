@@ -22,11 +22,23 @@ final class ErrorsController extends OpenController
         return ($urlback = $this->request->get_referer()) ? "<a href=\"$urlback\" class=\"white\"><b>$back</b></a>" : "";
     }
 
+    public function badrequest_400(): void
+    {
+        //$error = $this->_load_session()->get_once("global_error", []);
+        $this->add_header($code = ResponseType::BAD_REQUEST)
+            ->set_layout("open/tema/error")
+            ->add_var(PageType::TITLE, $title = __("Bad request {0}!", $code))
+            ->add_var(PageType::H1, $title)
+            ->add_var("error", [
+                __("Bad request"),
+                $this->_get_back_link()
+            ])
+            ->add_var("code", $code)
+            ->render_nv();
+    }
+
     public function notfound_404(): void
     {
-        //todo, check accept json por llamada ajax ya que si el router
-        //no encuentra la url termina llegando a este método
-
         $this->add_header($code = ResponseType::NOT_FOUND)
             ->set_layout("open/mypromos/error")
             ->add_var(PageType::TITLE, $title = __("Error {0}!", $code))
