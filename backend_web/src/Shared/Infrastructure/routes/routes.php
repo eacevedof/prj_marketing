@@ -174,8 +174,8 @@ return [
     ["url"=>"/apify/security/login-middle","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"middle", "name"=>""],
     ["url"=>"/apify/security/is-valid-token","controller"=>"App\Controllers\Apify\Security\LoginController","method"=>"is_valid_token", "name"=>""],
 
-    ["url"=>"/error/forbidden-403","controller"=>"App\Open\Errors\Infrastructure\Controllers\ErrorsController","method"=>"forbidden_403", "name"=>""],
-    ["url"=>"/error/unexpected-500","controller"=>"App\Open\Errors\Infrastructure\Controllers\ErrorsController","method"=>"internal_500", "name"=>""],
-//la 404 debe ser la última ruta siempre
-    ["url"=>"/error/not-found-404","controller"=>"App\Open\Errors\Infrastructure\Controllers\ErrorsController","method"=>"notfound_404", "name"=>""],
+    ["url"=>"/error/bad-request-400","controller"=>"App\Open\Errors\Infrastructure\Controllers\ErrorsController","method"=>"badrequest_400", "name"=>"error.400"],
+    ["url"=>"/error/forbidden-403","controller"=>"App\Open\Errors\Infrastructure\Controllers\ErrorsController","method"=>"forbidden_403", "name"=>"error.403"],
+    ["url"=>"/error/unexpected-500","controller"=>"App\Open\Errors\Infrastructure\Controllers\ErrorsController","method"=>"internal_500", "name"=>"error.500"],
+    ["url"=>"/error/not-found-404","controller"=>"App\Open\Errors\Infrastructure\Controllers\ErrorsController","method"=>"notfound_404", "name"=>"error.404"],
 ];

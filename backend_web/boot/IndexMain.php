@@ -5,14 +5,6 @@ if (!is_file("../vendor/autoload.php"))
     throw new \Exception("Missing vendor/autoload.php");
 include_once "../vendor/autoload.php";
 include_once "../vendor/theframework/bootstrap.php";
-
-/*
-include_once("constants.php");
-include_once("functions.php");
-appboot_loadenv();
-include_once("listeners/commandbus.php");
-include_once("listeners/eventbus.php");
-*/
 include_once "../boot/appbootstrap.php";
 
 use \BOOT;
@@ -37,7 +29,8 @@ final class IndexMain
         session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
         ini_set("session.save_path","/tmp");
         session_start();
-        setcookie(session_name(), session_id(), null, "/");
+        //setcookie(name, value, expire, path, domain, secure, httponly);
+        setcookie(session_name(), session_id(), 2147483647, "/");
 
         if (!isset($_SESSION["last_activity"])) $_SESSION["last_activity"] = time();
 
@@ -63,7 +56,7 @@ final class IndexMain
 // Access-Control headers are received during OPTIONS requests
         if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
             if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]))
-                header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+                header("Access-Control-Allow-Methods: HEAD, GET, POST, PUT, DELETE, OPTIONS");
 
             if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]))
                 header("Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]}");
@@ -88,18 +81,46 @@ final class IndexMain
                 ?: "en";
     }
 
+    private function _error_response(array $response): void
+    {
+        $jsonheader = array_filter(getallheaders(), function ($v, $k) {
+            $k = strtolower(trim($k));
+            $v = strtolower(trim($v));
+            return ($k === "accept" && $v==="application/json");
+        }, ARRAY_FILTER_USE_BOTH);
+
+        http_response_code($response["code"]);
+        if ($jsonheader) {
+            echo json_encode($response);
+            return;
+        }
+
+        $_SESSION["global_error"] = $response;
+        header("Location:/error/bad-request-400");
+        die;
+    }
+
     public function exec(): void
     {
         $router = new ComponentRouter($this->routes);
         $arrundata = $router->get_rundata();
         $this->routes = []; unset($router);
-        
+
         if($methods = ($arrundata["allowed"] ?? [])) {
-            if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods))
-                throw new \Exception("request method {$method} not allowed");
+            if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods)) {
+                $response = [
+                    "code" => 400,
+                    "status" => false,
+                    "errors" => [
+                        "request method {$method} not allowed",
+                    ],
+                    "data" => []
+                ];
+                self::_error_response($response);
+            }
         }
 
-        if(!$_POST && $json = file_get_contents("php://input")) 
+        if(!$_POST && $json = file_get_contents("php://input"))
             $_POST = json_decode($json, 1);
 
         $_REQUEST["APP_ACTION"] = $arrundata;
@@ -114,17 +135,17 @@ final class IndexMain
     public static function on_error(Throwable $ex): void
     {
         $uuid = uniqid();
+        lgerr($_SERVER["REQUEST_URI"] ?? "", "index-exception REQUEST_URI", "error");
         if ($_POST) lgerr($_POST,"index-exception $uuid POST", "error");
         if ($_GET) lgerr($_GET,"index-exception $uuid GET", "error");
         if ($_SESSION) lgerr($_SESSION,"index-exception $uuid SESSION", "error");
         if ($_REQUEST) lgerr($_REQUEST,"index-exception $uuid REQUEST", "error");
         if ($_ENV) lgerr($_ENV,"index-exception $uuid ENV", "error");
-        lgerr($ex->getMessage(), "index-exception $uuid", "error");
+        lgerr($ex->getMessage(), "index-exception $uuid message", "error");
         lgerr($ex->getTraceAsString(),"index-exception $uuid TRACE", "error");
         lgerr($ex->getFile()." : (line: {$ex->getLine()})", "file-line $uuid", "error");
 
         $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
-        http_response_code($code);
         $response = [
             "code" => $code,
             "status" => false,
@@ -135,8 +156,7 @@ final class IndexMain
             ],
             "data" => []
         ];
-
-        echo json_encode($response);
+        self::_error_response($response);
     }
 
     public static function debug(Throwable $ex): void
