@@ -7,7 +7,7 @@ SN Marketing
 
 ### console
 - php run.php --class=App.Services.Kafka.LogConsumerService
-```
+```bash
 sonar \
   -Dsonar.projectKey=prj-marketing \
   -Dsonar.sources=. \
@@ -18,16 +18,19 @@ make ssh-be
 run help
 ```
 - migrations
-```
+```bash
 cd $PATHWEB/db; phinx migrate -e testing
 o
 make ssh-be
 run-migrate
+
+#rollback
+cd $PATHWEB/db; phinx rollback -t <version>
 ```
 
 ### tests (phpunit 9.3)
 - ejecuta todos los tests
-```
+```bash
 make ssh-be
 be; phpunit
 
