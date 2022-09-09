@@ -26,7 +26,7 @@ final class ErrorsController extends OpenController
     {
         //$error = $this->_load_session()->get_once("global_error", []);
         $this->add_header($code = ResponseType::BAD_REQUEST)
-            ->set_layout("open/tema/error")
+            ->set_layout("open/mypromos/error")
             ->add_var(PageType::TITLE, $title = __("Bad request {0}!", $code))
             ->add_var(PageType::H1, $title)
             ->add_var("error", [
