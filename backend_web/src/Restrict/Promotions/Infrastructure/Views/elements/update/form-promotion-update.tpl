@@ -74,7 +74,7 @@ $promotion = [
     "returned" => $promotion["returned"],
     "max_confirmed" => $promotion["max_confirmed"],
     "is_raffleable" => $promotion["is_raffleable"],
-    "date_raffle" => $dateto,
+    "date_raffle" => $promotion["is_raffleable"] ? $dateto : null,
     "is_cumulative" => $promotion["is_cumulative"],
     "is_published" => $promotion["is_published"],
     "is_launched" => $promotion["is_launched"],
@@ -94,7 +94,7 @@ $promotion = [
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
-//dd($promotion);
+dd($promotion, "prompo-update-tpl");
 ?>
 <div id="main" class="tab-pane active">
   <form-promotion-update
