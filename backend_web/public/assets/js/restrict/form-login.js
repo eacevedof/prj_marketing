@@ -31,8 +31,8 @@ export class FormLogin extends LitElement {
 
   constructor() {
     super()
-    this._email = ""
-    this._password = ""
+    this._email = "eaf@eaf.com"
+    this._password = "eaf"
   }
 
   connectedCallback() {
