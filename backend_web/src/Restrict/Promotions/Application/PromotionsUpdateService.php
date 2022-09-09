@@ -245,6 +245,7 @@ final class PromotionsUpdateService extends AppService
         $this->_check_entity_permission($update);
         $this->_map_entity($update);
         $this->entitypromotion->add_sysupdate($update, $this->authuser["id"]);
+        dd($update,"before update");
 
         $affected = $this->repopromotion->update($update);
         $promotion = $this->repopromotion->get_by_id($update["id"]);
