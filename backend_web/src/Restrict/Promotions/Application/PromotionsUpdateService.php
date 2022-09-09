@@ -77,7 +77,7 @@ final class PromotionsUpdateService extends AppService
         $input["date_execution"] = $date;
 
         $date = $input["date_raffle"] ?? "";
-        $date = $this->datecomp->get_dbdt($date);
+        $date = $date ? $this->datecomp->get_dbdt($date) : null;
         $input["date_raffle"] = $date;
 
         $input["tags"] = CF::get(TextComponent::class)->get_csv_cleaned($input["tags"]);
