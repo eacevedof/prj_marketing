@@ -164,11 +164,14 @@ final class PromotionsUpdateService extends AppService
                 if ($ispublished && (!in_array($israffleable,[0, 1])))
                     return __("Invalid value {0}", $israffleable);
             })
-            ->add_rule("date_from", "date_from", function ($data) {
+            ->add_rule("date_raffleable", "date_raffleable", function ($data) {
+                $israffleable = (int) $data["data"]["is_raffleable"];
+                if (!$israffleable) return;
+
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
-                if ($value>$data["data"]["date_to"]) return __("Date from is greater than Date to");
-                return false;
+                if ($value < $data["data"]["date_from"] || $value < $data["data"]["date_to"])
+                    return __("Date from is greater than Date to");
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
