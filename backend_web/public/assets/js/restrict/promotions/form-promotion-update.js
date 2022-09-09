@@ -489,7 +489,7 @@ export class FormPromotionUpdate extends LitElement {
             <label for="content">${this.texts.f09}</label>
             <div id="field-content">
               <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000" 
-                        ?disabled=${this._num_subscribed || this._disabled_date}></textarea>
+                        ?disabled=${this._is_published || this._num_subscribed || this._disabled_date}></textarea>
             </div>
           </div>
         </div>
@@ -520,7 +520,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-code_erp">
               <input type="text" id="code_erp" class="form-control" maxlength="25"
                      .value=${this._code_erp}
-                     ?disabled=${this._is_launched || this._disabled_date}
+                     ?disabled=${this._is_published || this._disabled_date}
               >
             </div>
           </div>  
