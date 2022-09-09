@@ -53,10 +53,9 @@ final class PromotionsUpdateController extends RestrictController
 
             $edit = SF::get(PromotionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
-            dd($result);
             $result["promotion"]["promotionlink"] = SF::get(BusinessSpaceService::class)->get_promotion_url($uuid) ?? "";
 
-            //dd($result);
+            dd($result, "promo-edit");
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit promotion {0}", $uuid))
@@ -67,7 +66,6 @@ final class PromotionsUpdateController extends RestrictController
                 ->add_var("timezones", $picklist->get_timezones())
                 ->add_var("businessowners", $businessowners)
                 ->add_var("notoryes", $picklist->get_not_or_yes())
-                //->add_var("statistics", SF::get(PromotionsStatsService::class, ["uuid"=>$uuid])())
                 ->add_var("statspermission", $this->auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ));
 
             unset($picklist, $businessowners, $edit, $result, $slug);
