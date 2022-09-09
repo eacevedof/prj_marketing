@@ -71,6 +71,15 @@ final class PromotionCapSubscriptionEntity extends AppEntity
                 "length" => 10,
             ]
         ],
+
+        "id_raffle" => [
+            "label" => __("Raffle state"),
+            EntityType::REQUEST_KEY => "id_raffle",
+            "config" => [
+                "type" => EntityType::INT,
+                "length" => 3,
+            ]
+        ],
        
         "date_subscription" => [
             "label" => __("Subscription date"),
