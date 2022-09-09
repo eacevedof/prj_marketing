@@ -139,6 +139,7 @@ export class FormPromotionUpdate extends LitElement {
     this._is_launched = parseInt(this._is_launched)
     this._is_published = parseInt(this._is_published)
     this._is_raffleable = parseInt(this._is_raffleable)
+    this._date_raffle = !this._is_raffleable ? null : this._date_raffle
     this._disabled_date = this._disabled_date !== "" ? this._disabled_date : null
     this._num_viewed = parseInt(this._num_viewed)
     this._num_subscribed = parseInt(this._num_subscribed)
@@ -414,6 +415,7 @@ export class FormPromotionUpdate extends LitElement {
                   <input type="datetime-local" step="1" id="date_raffle" class="form-control"
                          .value=${this._date_raffle}
                          ?disabled=${this._num_subscribed || this._disabled_date}
+                         @change=${e => this._on_change(e, "_date_raffle")}
                   >
                 </div>
               </div>`

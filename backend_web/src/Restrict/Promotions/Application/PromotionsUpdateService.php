@@ -164,7 +164,7 @@ final class PromotionsUpdateService extends AppService
                 if ($ispublished && (!in_array($israffleable,[0, 1])))
                     return __("Invalid value {0}", $israffleable);
             })
-            ->add_rule("date_raffleable", "date_raffleable", function ($data) {
+            ->add_rule("date_raffle", "date_raffle", function ($data) {
                 $israffleable = (int) $data["data"]["is_raffleable"];
                 if (!$israffleable) return;
 
