@@ -1303,8 +1303,8 @@ msgstr "Compruébalo"
 msgid "You have subscribed to promotion: <strong>“{0}“</strong> published by"
 msgstr "Te has suscrito a la promoción: <strong>“{0}“</strong> publicada por"
 
-msgid "Thank you for your active participating"
-msgstr "Gracias por tu participacion activa"
+msgid "Thank you for your participation"
+msgstr "Gracias por tu participación"
 
 msgid "Please, click on confirm button to finish your subscription"
 msgstr "Por favor, haz click en el botón de confirmación para finalizar tu suscripción"
