@@ -25,7 +25,7 @@ make ssh-be
 run-migrate
 
 #rollback
-cd $PATHWEB/db; phinx rollback -t <version>
+cd $PATHWEB/db; phinx rollback -t 20220521040506
 ```
 
 ### tests (phpunit 9.3)

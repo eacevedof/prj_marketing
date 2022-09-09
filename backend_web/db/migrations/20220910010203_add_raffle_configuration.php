@@ -15,7 +15,7 @@ final class AddRaffleConfiguration extends AbsMigration
     {
         $table = $this->table("app_promotion");
         $table->addColumn("date_raffle", "datetime", [
-            "null" => false,
+            "null" => true,
             "after" => "is_raffleable",
             "comment" => "depende de is_raffable",
         ])
