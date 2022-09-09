@@ -47,9 +47,28 @@ final class AddRaffleConfiguration extends AbsMigration
             $this->execute($sql);
     }
 
+    private function _down_columns_to_app_promotion(): void
+    {
+        $table = $this->table("app_promotion");
+        $table->removeColumn("date_raffle")->save();
+    }
+
+    private function _down_columns_to_app_promotion_cap(): void
+    {
+        $table = $this->table("app_promotioncap_subscriptions");
+        $table->removeColumn("id_raffle")->save();
+    }
+
+    private function _down_initial_load(): void
+    {
+        $sql = "DELETE FROM app_array WHERE type='raffle'";
+        $this->execute($sql);
+    }
+
     public function down(): void
     {
-
-
+        $this->_down_columns_to_app_promotion();
+        $this->_down_columns_to_app_promotion_cap();
+        $this->_down_initial_load();
     }
 }
