@@ -53,6 +53,7 @@ final class PromotionsUpdateController extends RestrictController
 
             $edit = SF::get(PromotionsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
+            dd($result);
             $result["promotion"]["promotionlink"] = SF::get(BusinessSpaceService::class)->get_promotion_url($uuid) ?? "";
 
             //dd($result);
