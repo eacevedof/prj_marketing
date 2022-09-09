@@ -1,6 +1,7 @@
 <?php
 namespace App\Open\PromotionCaps\Application;
 
+use \ENV;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Domain\Bus\Event\IEventSubscriber;
 use App\Shared\Domain\Bus\Event\IEvent;
@@ -29,6 +30,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     private UrlDomainHelper $domain;
     private string $lang;
     private array $tpls;
+    private const TEST_EMAIL = "eacevedof@yahoo.es";
 
     public function __construct()
     {
@@ -79,6 +81,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
          * @var FuncEmailComponent $email
          */
         $email = CF::get(FuncEmailComponent::class);
+        if (ENV::is_local())
+            $email["email"] = self::TEST_EMAIL;
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
@@ -129,6 +133,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
          * @var FuncEmailComponent $email
          */
         $email = CF::get(FuncEmailComponent::class);
+        if (ENV::is_local())
+            $email["email"] = self::TEST_EMAIL;
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
@@ -160,6 +166,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
          * @var FuncEmailComponent $email
          */
         $email = CF::get(FuncEmailComponent::class);
+        if (ENV::is_local())
+            $email["email"] = self::TEST_EMAIL;
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
