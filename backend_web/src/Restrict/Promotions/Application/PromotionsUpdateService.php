@@ -158,6 +158,18 @@ final class PromotionsUpdateService extends AppService
                 $returned = (float) $data["data"]["returned"];
                 if ($ispublished && ($returned<1)) return __("Must be greater than 1 for publishing");
             })
+            ->add_rule("is_raffleable", "is_raffleable", function ($data) {
+                $ispublished = (int) $data["data"]["is_published"];
+                $israffleable = (int) $data["value"];
+                if ($ispublished && (!in_array($israffleable,[0, 1])))
+                    return __("Invalid value {0}", $israffleable);
+            })
+            ->add_rule("date_from", "date_from", function ($data) {
+                if (!$value = $data["value"]) return __("Empty field is not allowed");
+                if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
+                if ($value>$data["data"]["date_to"]) return __("Date from is greater than Date to");
+                return false;
+            })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
@@ -196,7 +208,6 @@ final class PromotionsUpdateService extends AppService
         if (!$this->auth->is_system()) unset($promotion["id_owner"]);
 
         $promotion["slug"] = $this->textformat->slug($promotion["description"])."-".$promotion["id"];
-        //paso a UTC
         $utc = CF::get(UtcComponent::class);
         $tzfrom = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
