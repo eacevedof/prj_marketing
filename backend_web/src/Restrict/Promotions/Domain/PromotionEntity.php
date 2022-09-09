@@ -213,9 +213,9 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
-            "raffle_date" => [
-                "label" => __("Raffle date"),
-                EntityType::REQUEST_KEY => "raffle_date",
+            "date_raffle" => [
+                "label" => __("Date raffle"),
+                EntityType::REQUEST_KEY => "date_raffle",
                 "config" => [
                     "type" => EntityType::DATETIME,
                 ]

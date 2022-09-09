@@ -48,6 +48,7 @@ $texts = [
     "f28" => __("Published"),
     "f29" => __("Launched"),
     "f30" => __("Date limit"),
+    "f31" => __("Date raffle"),
 ];
 
 $promotion = [
