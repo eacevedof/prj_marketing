@@ -107,6 +107,7 @@ export class FormPromotionUpdate extends LitElement {
     _returned: {type: String, state:true},
     _max_confirmed: {type: String, state:true},
     _is_raffleable: {type: Boolean, state:true},
+    _date_raffle: {type: String, state:true},
     _is_cumulative: {type: Boolean, state:true},
     _is_published: {type: Boolean, state:true},
     _is_launched: {type: Boolean, state:true},
@@ -408,7 +409,7 @@ export class FormPromotionUpdate extends LitElement {
           ${this._is_raffleable ?
             html`
               <div class="form-group">
-                <label for="date_to">${this._is_raffleable}${typeof this._is_raffleable}</label>
+                <label for="date_raffle">${this.texts.f20}</label>
                 <div id="field-date_raffle">
                   <input type="datetime-local" step="1" id="date_raffle" class="form-control"
                          .value=${this._date_raffle}
