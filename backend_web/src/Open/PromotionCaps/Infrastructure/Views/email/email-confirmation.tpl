@@ -208,6 +208,9 @@ p {
                       </td>
                     </tr>
                   </table>
+<?php
+if ($data["promocumulative"]):
+?>
                   <table appx="t10" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
@@ -230,6 +233,9 @@ p {
                       </td>
                     </tr>
                   </table>
+<?php
+endif;
+?>
                   <table appx="t11" border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                     <tr>
                       <td>
