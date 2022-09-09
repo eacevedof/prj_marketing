@@ -213,6 +213,14 @@ final class PromotionEntity extends AppEntity
                 ]
             ],
 
+            "raffle_date" => [
+                "label" => __("Raffle date"),
+                EntityType::REQUEST_KEY => "raffle_date",
+                "config" => [
+                    "type" => EntityType::DATETIME,
+                ]
+            ],
+
             "is_cumulative" => [
                 "label" => __("Cumulative"),
                 EntityType::REQUEST_KEY => "is_cumulative",
