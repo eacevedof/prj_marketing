@@ -410,7 +410,7 @@ export class FormPromotionUpdate extends LitElement {
           ${this._is_raffleable ?
             html`
               <div class="form-group">
-                <label for="date_raffle">${this.texts.f20}</label>
+                <label for="date_raffle">${this.texts.f31}</label>
                 <div id="field-date_raffle">
                   <input type="datetime-local" step="1" id="date_raffle" class="form-control"
                          .value=${this._date_raffle}
