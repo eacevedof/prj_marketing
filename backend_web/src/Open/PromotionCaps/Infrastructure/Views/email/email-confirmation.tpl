@@ -200,6 +200,17 @@ p {
                               <?=__("Keep in mind this code expires at {0} UTC", $data["promodateto"])?>
                             </span>
                           </p>
+<?php
+if ($data["promoraffledate"]):
+?>
+                          <p style="margin: 0; font-size: 14px; padding-top:15px; color:white; font-weight: normal">
+                            <span style="font-size: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;">
+                              <?=__("Date of this raffle {0} UTC", $data["promoraffledate"])?>
+                            </span>
+                          </p>
+<?php
+endif;
+?>
                           <!--[if mso]>
                           </center>
                           </v:textbox></v:roundrect>
