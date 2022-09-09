@@ -135,7 +135,9 @@ export class FormPromotionUpdate extends LitElement {
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
 
+    //console.log("this.fields", this.fields)
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
+
     this._is_launched = parseInt(this._is_launched)
     this._is_published = parseInt(this._is_published)
     this._is_raffleable = parseInt(this._is_raffleable)
@@ -403,7 +405,7 @@ export class FormPromotionUpdate extends LitElement {
                       @change=${e => this._on_change(e, "_is_raffleable")}
               >
                 ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
+                    html`<option value=${item.key} ?selected=${parseInt(item.key)===this._is_raffleable}>${item.value}</option>`
                 )}
               </select>
             </div>
