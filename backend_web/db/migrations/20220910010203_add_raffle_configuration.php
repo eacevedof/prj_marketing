@@ -23,7 +23,7 @@ final class AddRaffleConfiguration extends AbsMigration
 
     private function _add_columns_to_app_promotion_cap(): void
     {
-        $table = $this->table("app_promotion_cap");
+        $table = $this->table("app_promotioncap_subscriptions");
         $table->addColumn("id_raffle", "integer", [
             "limit" => 3,
             "null" => true,
