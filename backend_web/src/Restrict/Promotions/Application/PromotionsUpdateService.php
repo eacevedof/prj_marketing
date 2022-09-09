@@ -216,6 +216,7 @@ final class PromotionsUpdateService extends AppService
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], $tzfrom);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], $tzfrom);
         $promotion["date_execution"] = $utc->get_dt_into_tz($promotion["date_execution"], $tzfrom);
+        $promotion["date_raffle"] = $promotion["is_raffleable"] ? $utc->get_dt_into_tz($promotion["date_raffle"], $tzfrom) : null;
 
         if (
             $this->repopromotion->is_launched_by_uuid($promotion["uuid"])
