@@ -137,10 +137,17 @@ final class TermsConditionsInfoService extends AppService
         // hasta agotar existencias
         // rifable o acumulativa (tratarlo en en el contador)
         $lines = trim($promotion["content"]);
-        if (!$lines) return [
-            ["h2" => "- ".__("Promotion Terms: {0}", $promotion["descripton"])],
-            ["p" => __("This promotion expires at: {0} UTC", $promotion["date_to"])],
-        ];
+        if (!$lines) {
+            $tmp = [
+                ["h2" => "- ".__("Promotion Terms: {0}", $promotion["description"])],
+                ["p" => __("This promotion expires at: {0} UTC", $promotion["date_to"])],
+            ];
+            if ($promotion["date_raffle"])
+                $tmp[] = ["p" => __("The date of this raffle: {0} UTC", $promotion["date_raffle"])];
+            if ($promotion["is_cumulative"])
+                $tmp[] = ["p" => __("Once this promotion is consumed It will increase your accumulated points")];
+            return $tmp;
+        }
         $lines = $this->_get_conditions_by_language($promotion["content"]);
 
         $conds[0] = ["h2" => "- ".__("Promotion Terms: {0}", $promotion["description"])];
@@ -149,6 +156,12 @@ final class TermsConditionsInfoService extends AppService
             $conds[1]["ul"][] = $line;
         }
         $conds[1]["ul"][] = __("This promotion expires at: {0} UTC", $promotion["date_to"]);
+
+        if ($promotion["date_raffle"])
+            $conds[1]["ul"][] = __("Date of this raffle: {0} UTC", $promotion["date_raffle"]);
+        if ($promotion["is_cumulative"])
+            $conds[1]["ul"][] = __("Once this promotion is consumed It will increase your accumulated points");
+
         $conds[2] = ["h2" => "- ".__("General Terms")];
         return $conds;
     }
@@ -157,8 +170,9 @@ final class TermsConditionsInfoService extends AppService
     {
         $promotion = RF::get(PromotionRepository::class)->get_by_slug(
             $this->input,
-            ["description","content","date_to", "is_raffleable", "is_cumulative"]
+            ["description", "content","date_to", "is_raffleable", "is_cumulative", "date_raffle"]
         );
+
         if (!$promotion)
             throw new NotFoundException(__("Promotion not found"));
 

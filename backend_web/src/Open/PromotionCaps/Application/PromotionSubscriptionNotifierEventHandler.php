@@ -152,6 +152,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
 
         $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
+        if (!$data["promocumulative"]) return;
 
         $url = Routes::url("business.space", ["businessslug" => $data["businessslug"]]);
         $link = $this->domain->get_full_url($url);
