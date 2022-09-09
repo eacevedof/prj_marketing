@@ -150,7 +150,9 @@ export class FormPromotionUpdate extends LitElement {
   }
 
   _on_change(e, field) {
-    const value = parseInt(e.target.value)
+    const fields = FormPromotionUpdate.properties
+    const ints = Object.keys(fields).filter( key=> fields[key]?.type === Boolean)
+    const value = ints.includes(field) ? parseInt(e.target.value) : e.target.value
     this[field] = value
   }
 
