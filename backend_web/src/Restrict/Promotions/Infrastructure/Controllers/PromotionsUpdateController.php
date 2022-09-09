@@ -55,7 +55,7 @@ final class PromotionsUpdateController extends RestrictController
             $result = $edit->get_for_edit();
             $result["promotion"]["promotionlink"] = SF::get(BusinessSpaceService::class)->get_promotion_url($uuid) ?? "";
 
-            dd($result, "promo-edit");
+            //dd($result, "promo-edit");
             $this->set_template("update")
                 ->add_var(PageType::TITLE, __("Edit promotion {0}", $uuid))
                 ->add_var(PageType::H1, __("Edit promotion {0}", $uuid))
