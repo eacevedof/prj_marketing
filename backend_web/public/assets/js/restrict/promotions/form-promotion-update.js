@@ -245,8 +245,7 @@ export class FormPromotionUpdate extends LitElement {
             <div id="field-date_from">
               <input type="datetime-local" step="1" id="date_from" class="form-control" 
                      .value=${this._date_from}  
-                     ?disabled=${this.
-                     || this._disabled_date}
+                     ?disabled=${this._num_subscribed || this._disabled_date}
               >
             </div>
           </div>
