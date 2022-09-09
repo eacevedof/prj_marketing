@@ -279,7 +279,7 @@ export class FormPromotionInsert extends LitElement {
         </div>
         
         <div class="flex-row">
-          <div class="form-group col-12">
+          <div class="form-group col-12 col-sm-12">
             <label for="tags">${this.texts.f22}</label>
             <div id="field-tags">
               <textarea id="tags" .value=${this._tags} class="form-control" maxlength="500"></textarea>
@@ -288,7 +288,7 @@ export class FormPromotionInsert extends LitElement {
         </div>
         
         <div class="flex-row">
-          <div class="form-group col-2">
+          <div class="form-group col-2 col-sm-12">
             <label for="code_erp">${this.texts.f04}</label>
             <div id="field-code_erp">
               <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
