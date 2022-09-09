@@ -128,13 +128,6 @@ export class FormPromotionInsert extends LitElement {
               <input type="text" id="description" .value=${this._description} class="form-control" maxlength="250" required>
             </div>
           </div>
-          
-          <div class="form-group col-2">
-            <label for="code_erp">${this.texts.f04}</label>
-            <div id="field-code_erp">
-              <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
-            </div>
-          </div>
         </div>
         
         <div class="flex-row">
@@ -284,6 +277,7 @@ export class FormPromotionInsert extends LitElement {
             </div>
           </div>
         </div>
+        
         <div class="flex-row">
           <div class="form-group col-12">
             <label for="tags">${this.texts.f22}</label>
@@ -292,7 +286,15 @@ export class FormPromotionInsert extends LitElement {
             </div>
           </div>
         </div>
+        
         <div class="flex-row">
+          <div class="form-group col-2">
+            <label for="code_erp">${this.texts.f04}</label>
+            <div id="field-code_erp">
+              <input type="text" id="code_erp" .value=${this._code_erp} class="form-control" maxlength="25">
+            </div>
+          </div>
+          
           <div class="form-group col-12">
             <label for="notes">${this.texts.f23}</label>
             <div id="field-notes">

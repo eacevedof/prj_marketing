@@ -205,22 +205,6 @@ export class FormPromotionUpdate extends LitElement {
             ])}
             </span>
           </div>
-          
-          <div class="form-group col-3">
-            <label for="code_erp">${this.texts.f04}</label>
-            <div class="tt-tooltip">
-              <span class="tt-span">i</span>
-              <p class="tt-tooltiptext">
-                Optional code for your promotion. 
-              </p>
-            </div>
-            <div id="field-code_erp">
-              <input type="text" id="code_erp" class="form-control" maxlength="25" 
-                     .value=${this._code_erp} 
-                     ?disabled=${this._is_launched || this._disabled_date}
-              >
-            </div>
-          </div>
         </div>
 <!--/row-2-->
         
@@ -518,6 +502,21 @@ export class FormPromotionUpdate extends LitElement {
           </div>
         </div>
         <div class="flex-row">
+          <div class="form-group col-3">
+            <label for="code_erp">${this.texts.f04}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Optional code for your promotion.
+              </p>
+            </div>
+            <div id="field-code_erp">
+              <input type="text" id="code_erp" class="form-control" maxlength="25"
+                     .value=${this._code_erp}
+                     ?disabled=${this._is_launched || this._disabled_date}
+              >
+            </div>
+          </div>          
           <div class="form-group col-12">
             <label for="notes">${this.texts.f23}</label>
             <div class="tt-tooltip">
