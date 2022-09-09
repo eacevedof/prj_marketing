@@ -35,6 +35,7 @@ final class PromotionCapCheckService extends AppService
     public function is_suitable_or_fail(): void
     {
         $promotion = $this->promotion;
+
         if (!$promotion || $promotion["delete_date"])
             $this->_promocap_exception(__("Sorry but this promotion does not exist"), ExceptionType::CODE_NOT_FOUND);
 
@@ -50,8 +51,18 @@ final class PromotionCapCheckService extends AppService
 
         $utc = CF::get(UtcComponent::class);
         $dt = CF::get(DateComponent::class);
+        $utcnow = $utc->get_nowdt_in_timezone();
 
-        $seconds = $dt->get_seconds_between($utcnow = $utc->get_nowdt_in_timezone(), $promotion["date_execution"]);
+        if ($promotion["is_raffleable"]) {
+            $seconds = $dt->get_seconds_between($utcnow, $promotion["date_raffle"]);
+            if($seconds<0)
+                $this->_promocap_exception(
+                    __("Sorry but this promotion has finished."),
+                    ExceptionType::CODE_UNAVAILABLE_FOR_LEGAL_REASONS
+                );
+        }
+
+        $seconds = $dt->get_seconds_between($utcnow, $promotion["date_execution"]);
         if($seconds<0)
             $this->_promocap_exception(
                 __("Sorry but this promotion has finished."),

@@ -77,8 +77,8 @@ final class PromotionCapsInsertService extends AppService implements IEventDispa
     {
         $promotionuuid = $this->input["_promotionuuid"];
         $this->promotion = $this->repopromotion->get_by_uuid($promotionuuid, [
-            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "id_tz",
-            "date_from", "date_to", "date_execution", "id_owner", "num_confirmed", "disabled_date"
+            "delete_date", "id", "uuid", "slug", "max_confirmed", "is_published", "is_launched", "is_raffleable", "id_tz",
+            "date_raffle", "date_from", "date_to", "date_execution", "id_owner", "num_confirmed", "disabled_date"
         ]);
 
         SF::get(PromotionCapCheckService::class, [
