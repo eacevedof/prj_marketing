@@ -176,6 +176,7 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
                 "m.returned",
                 "m.max_confirmed",
                 "m.is_raffleable",
+                "m.date_raffle",
                 "m.is_cumulative",
                 "m.is_published",
                 "m.is_launched",
