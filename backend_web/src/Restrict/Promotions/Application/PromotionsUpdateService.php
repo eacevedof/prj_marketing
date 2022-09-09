@@ -171,7 +171,7 @@ final class PromotionsUpdateService extends AppService
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
                 if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
                 if ($value < $data["data"]["date_from"] || $value < $data["data"]["date_to"])
-                    return __("Date raffle is greater than Date to");
+                    return __("Date raffle is lighter than Date to or Date from");
             })
             ->add_rule("date_from", "date_from", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
