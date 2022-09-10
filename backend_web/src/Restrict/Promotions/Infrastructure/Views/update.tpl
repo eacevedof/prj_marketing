@@ -17,6 +17,7 @@
         <?php
         $this->_element_view("update/form-promotion-update-tab");
         $this->_element_view("update/form-promotion-ui-update-tab");
+        $this->_element_view("update/form-promotion-raffle-tab");
         ?>
       </ul>
     </div><!--nav-->
@@ -25,6 +26,7 @@
       <?php
       $this->_element_view("update/form-promotion-update");
       $this->_element_view("update/form-promotion-ui-update");
+      $this->_element_view("update/form-promotion-raffle-update");
       $this->_element_view("statistics");
       ?>
     </div><!--tab-content-->

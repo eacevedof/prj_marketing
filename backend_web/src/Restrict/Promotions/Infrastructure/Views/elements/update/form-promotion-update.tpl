@@ -96,7 +96,6 @@ $promotion = [
     "notoryes" => $notoryes,
     "businessowners" => $businessowners,
 ];
-//dd($promotion, "prompo-update-tpl");
 ?>
 <div id="main" class="tab-pane active">
   <form-promotion-update
