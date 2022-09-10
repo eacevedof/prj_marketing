@@ -276,22 +276,6 @@ export class FormPromotionUpdate extends LitElement {
               >
             </div>
           </div>
-          <div class="form-group">
-            <label for="date_to">${this.texts.f30}</label>
-            <div class="tt-tooltip">
-              <span class="tt-span">i</span>
-              <p class="tt-tooltiptext">
-                Limit time to validate a confirmed subscription (voucher validation). Read only after first publish
-              </p>
-            </div>
-            
-            <div id="field-date_execution">
-              <input type="datetime-local" step="1" id="date_execution" class="form-control" 
-                     .value=${this._date_execution} 
-                     ?disabled=${this._num_subscribed || this._disabled_date}
-              >
-            </div>
-          </div> 
           
           <div class="form-group">
             <label for="is_raffleable">${this.texts.f20}</label>
@@ -314,19 +298,38 @@ export class FormPromotionUpdate extends LitElement {
           </div>
 
           ${this._is_raffleable ?
-              html`
-              <div class="form-group">
-                <label for="date_raffle">${this.texts.f31}</label>
-                <div id="field-date_raffle">
-                  <input type="datetime-local" step="1" id="date_raffle" class="form-control"
-                         .value=${this._date_raffle}
-                         ?disabled=${this._num_subscribed || this._disabled_date}
-                         @change=${e => this._on_change(e, "_date_raffle")}
-                  >
-                </div>
-              </div>`
-              : null
+            html`
+            <div class="form-group">
+              <label for="date_raffle">${this.texts.f31}</label>
+              <div id="field-date_raffle">
+                <input type="datetime-local" step="1" id="date_raffle" class="form-control"
+                   .value=${this._date_raffle}
+                   ?disabled=${this._num_subscribed || this._disabled_date}
+                   @change=${e => this._on_change(e, "_date_raffle")}
+                >
+              </div>
+            </div>`
+            : null
           }  
+          
+          <div class="form-group">
+            <label for="date_to">${this.texts.f30}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                Limit time to validate a confirmed subscription (voucher validation). Read only after first publish
+              </p>
+            </div>
+            
+            <div id="field-date_execution">
+              <input type="datetime-local" step="1" id="date_execution" class="form-control" 
+                     .value=${this._date_execution} 
+                     ?disabled=${this._num_subscribed || this._disabled_date}
+              >
+            </div>
+          </div> 
+          
+
         </div>
 
 <!-- layout -->
