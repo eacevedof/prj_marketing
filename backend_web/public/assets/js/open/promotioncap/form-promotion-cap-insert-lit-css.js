@@ -182,8 +182,6 @@ a:hover {
   padding-left: 50px;
 }
 
-
-
 @media screen and (max-width: 481px) {
   .form-grid {
     background-color:rgba(255, 255, 255, 0.970);
