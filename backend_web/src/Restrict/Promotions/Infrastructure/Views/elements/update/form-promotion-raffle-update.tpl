@@ -98,7 +98,7 @@ $promotion = [
 ];
 ?>
 <div id="main" class="tab-pane active">
-  <form-promotion-update
+  <form-promotion-raffle-update
       csrf=<?php $this->_echo_js($csrf);?>
       url="<?php $this->_echo($urlpost);?>"
       url_terms="<?php $this->_echo($urlterms);?>"
@@ -107,4 +107,4 @@ $promotion = [
       fields="<?php $this->_echo_jslit($promotion);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-update.js?yyy"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?xx"></script>
