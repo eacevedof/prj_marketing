@@ -329,8 +329,6 @@ export class FormPromotionUpdate extends LitElement {
               >
             </div>
           </div> 
-          
-
         </div>
 
 <!-- layout -->

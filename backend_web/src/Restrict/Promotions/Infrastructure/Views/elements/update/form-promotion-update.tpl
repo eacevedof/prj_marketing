@@ -101,11 +101,11 @@ $promotion = [
 <div id="main" class="tab-pane active">
   <form-promotion-update
       csrf=<?php $this->_echo_js($csrf);?>
-      url=<?php $this->_echo_js($urlpost);?>
-      url_terms=<?php $this->_echo_js($urlterms);?>
+      url="<?php $this->_echo($urlpost);?>"
+      url_terms="<?php $this->_echo($urlterms);?>"
       texts="<?php $this->_echo_jslit($texts);?>"
 
       fields="<?php $this->_echo_jslit($promotion);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-update.js?now"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-update.js?xxx"></script>
