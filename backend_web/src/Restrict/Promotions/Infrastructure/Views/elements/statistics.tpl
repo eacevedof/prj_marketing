@@ -18,10 +18,10 @@ if (!$statspermission) return;
     </thead>
     <tbody>
     <tr>
-      <td class="tx-center tx-medium tx-inverse"><?=$result["promotion"]["num_viewed"]?></td>
-      <td class="tx-center tx-medium tx-inverse"><?=$result["promotion"]["num_subscribed"]?></td>
-      <td class="tx-center tx-medium tx-info"><?=$result["promotion"]["num_confirmed"]?></td>
-      <td class="tx-center tx-medium tx-success"><?=$result["promotion"]["num_executed"]?></td>
+      <td id="num-viewed" class="tx-center tx-medium tx-inverse"><?=$result["promotion"]["num_viewed"]?></td>
+      <td id="num-subscribed" class="tx-center tx-medium tx-inverse"><?=$result["promotion"]["num_subscribed"]?></td>
+      <td id="num-confirmed" class="tx-center tx-medium tx-info"><?=$result["promotion"]["num_confirmed"]?></td>
+      <td id="num-executed" class="tx-center tx-medium tx-success"><?=$result["promotion"]["num_executed"]?></td>
     </tr>
     </tbody>
   </table>

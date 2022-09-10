@@ -50,6 +50,18 @@ export class FormPromotionUpdate extends LitElement {
     this._num_subscribed = parseInt(promotion.num_subscribed)
     this._num_confirmed = parseInt(promotion.num_confirmed)
     this._num_executed = parseInt(promotion.num_executed)
+
+    let td = window.document.getElementById("num-viewed")
+    if (td) td.innerText = this._num_viewed
+
+    td = window.document.getElementById("num-subscribed")
+    if (td) td.innerText = this._num_subscribed
+
+    td = window.document.getElementById("num-confirmed")
+    if (td) td.innerText = this._num_confirmed
+
+    td = window.document.getElementById("num-executed")
+    if (td) td.innerText = this._num_executed
   }
 
   _handle_keyup(e, field) {
