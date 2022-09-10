@@ -438,8 +438,6 @@ export class FormPromotionUpdate extends LitElement {
               >
             </div>
           </div>
-          
-        </div>          
 
           <div class="form-group">
             <label for="is_cumulative">${this.texts.f21}</label>
@@ -456,8 +454,8 @@ export class FormPromotionUpdate extends LitElement {
                 )}
               </select>
             </div>
-          </div>
-        </div>
+          </div>          
+        </div>          
         
         <div class="flex-row">
           <div class="form-group">
@@ -476,7 +474,7 @@ export class FormPromotionUpdate extends LitElement {
               <input type="number" min="0" step="any" id="returned"
                  class="form-control" maxlength="10"
                  .value=${this._returned} 
-                 ?disabled=${this._is_launched || this._disabled_date}
+                 ?disabled=${this._num_subscribed || this._disabled_date}
               >
             </div>
           </div>
@@ -507,6 +505,7 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
+        
         <div class="flex-row">
           <div class="form-group col-12">
             <label for="tags">${this.texts.f22}</label>
@@ -522,6 +521,7 @@ export class FormPromotionUpdate extends LitElement {
             </div>
           </div>
         </div>
+        
         <div class="flex-row">
           <div class="form-group col-sm-12">
             <label for="code_erp">${this.texts.f04}</label>
