@@ -144,8 +144,10 @@ final class TermsConditionsInfoService extends AppService
             ];
             if ($promotion["date_raffle"])
                 $tmp[] = ["p" => __("The date of this raffle: {0} UTC", $promotion["date_raffle"])];
-            if ($promotion["is_cumulative"])
-                $tmp[] = ["p" => __("Once this promotion is consumed It will increase your accumulated points.")];
+
+                $tmp[] = $promotion["is_cumulative"]
+                    ? ["p" => __("Once this promotion is consumed It will increment your accumulated points.")]
+                    : ["p" => __("This promotion does not increment points.")];
             return $tmp;
         }
         $lines = $this->_get_conditions_by_language($promotion["content"]);
@@ -159,8 +161,10 @@ final class TermsConditionsInfoService extends AppService
 
         if ($promotion["date_raffle"])
             $conds[1]["ul"][] = __("Date of this raffle: {0} UTC", $promotion["date_raffle"]);
-        if ($promotion["is_cumulative"])
-            $conds[1]["ul"][] = __("Once this promotion is consumed It will increase your accumulated points.");
+
+        $conds[1]["ul"][] = $promotion["is_cumulative"]
+            ? __("Once this promotion is consumed It will increment your accumulated points.")
+            : __("This promotion does not increment points.");
 
         $conds[2] = ["h2" => "- ".__("General Terms")];
         return $conds;
