@@ -401,7 +401,7 @@ export class FormPromotionUpdate extends LitElement {
             </div>
             <div id="field-is_raffleable">
               <select id="is_raffleable" class="form-control" required 
-                      ?disabled=${this._is_launched || this._disabled_date} 
+                      ?disabled=${this._num_subscribed || this._disabled_date} 
                       @change=${e => this._on_change(e, "_is_raffleable")}
               >
                 ${this._notoryes.map((item) =>
@@ -436,7 +436,7 @@ export class FormPromotionUpdate extends LitElement {
               </p>
             </div>
             <div id="field-is_cumulative">
-              <select id="is_cumulative" class="form-control" required ?disabled=${this._is_launched || this._disabled_date}>>
+              <select id="is_cumulative" class="form-control" required ?disabled=${this._num_subscribed || this._disabled_date}>>
                 ${this._notoryes.map((item) =>
                     html`<option value=${item.key} ?selected=${item.key===this._is_cumulative}>${item.value}</option>`
                 )}
