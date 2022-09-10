@@ -6,7 +6,6 @@ export const cssformsubscription = css`
   padding: 0;
   box-sizing: border-box;
 }
-
 a {
   text-decoration: underline;
   color: #3a4f71;
@@ -182,6 +181,8 @@ a:hover {
 .cell-chk div[approle=field-error] ul {
   padding-left: 50px;
 }
+
+
 
 @media screen and (max-width: 481px) {
   .form-grid {

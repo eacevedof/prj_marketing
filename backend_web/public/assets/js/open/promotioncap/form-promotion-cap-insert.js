@@ -8,7 +8,6 @@ import {cssformsubscription} from "/assets/js/open/promotioncap/form-promotion-c
 import validator, {PATTERNS} from "/assets/js/common/fields-validator.js"
 
 const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
-const URL_POST = "/partner/:businessslug/promotionscap/:promouuid/insert"
 const ACTION = "promotioncap.insert"
 
 export class FormPromotionCapInsert extends LitElement {
@@ -141,8 +140,8 @@ export class FormPromotionCapInsert extends LitElement {
 
   static properties = {
     csrf: {type: String},
-    businessslug: {type:String},
-    promotionuuid: {type:String},
+    url: {type: String},
+    url_terms: {type: String},
 
     texts: {
       converter: (strjson) => {
@@ -182,7 +181,6 @@ export class FormPromotionCapInsert extends LitElement {
 
   render() {
     const inputs = this._inputs.map(field => this.get_inputs()[field])
-
     return html`
       <form @submit=${this.on_submit} class="form-grid">
         ${inputs.map(obj => obj?.input)}
@@ -197,6 +195,14 @@ export class FormPromotionCapInsert extends LitElement {
             }
           </button>
         </div>
+        ${this._inputs.some(strinput => strinput === "is_terms") 
+            ? null 
+            : html`
+              <div class="cell-flex cell-btn">
+                <a href="${this.url_terms}" target="_blank" style="color: #ccc; font-size: small; font-family: Urbanist, sans-serif;">Terms & Conditions</a>
+              </div>
+            `
+        }
       </form>
     `
   }
@@ -359,7 +365,7 @@ export class FormPromotionCapInsert extends LitElement {
     }
 
     const response = await injson.post(
-      URL_POST.replace(":businessslug",this.businessslug).replace(":promouuid", this.promotionuuid), {
+      this.url, {
         _action: ACTION,
         _csrf: this.csrf,
         _test_mode: IS_TEST_MODE,

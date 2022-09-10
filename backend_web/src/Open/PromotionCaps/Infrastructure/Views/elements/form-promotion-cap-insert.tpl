@@ -5,8 +5,10 @@
  * @var string $promotionslug
  */
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
-$url = Routes::url("terms.by-promotion", ["promoslug"=>$promotionslug]);
 $businessslug = $result["businessdata"]["slug"] ?? "";
+$urlpost = Routes::url("subscription.post", ["businessslug"=>$businessslug, "promouuid"=>$promotionuuid]);
+$urlterms = Routes::url("terms.by-promotion", ["promoslug"=>$result["promotion"]["slug"]]);
+
 $texts = [
     "tr00" => __("Subscribe"),
     "tr01" => __("Processing..."),
@@ -39,7 +41,7 @@ $texts = [
     "gender" => __("Gender"),
     "is_mailing" => __("I would like to receive information about similar promotions, raffles and special discounts in my email."),
     "is_terms" => __(
-            "I have read and accept the <a href=\"{0}\" target=\"_blank\">promotion and general</a> terms and conditions",$url
+            "I have read and accept the <a href=\"{0}\" target=\"_blank\">promotion and general</a> terms and conditions",$urlterms
     ),
 ];
 $result = [
@@ -50,8 +52,8 @@ $result = [
 ];
 ?>
 <form-promotion-cap-insert
-    businessslug="<?=$businessslug?>"
-    promotionuuid="<?=$promotionuuid?>"
+    url="<?=$urlpost?>"
+    url_terms="<?=$urlterms?>"
     texts="<?php $this->_echo_jslit($texts);?>"
     fields="<?php $this->_echo_jslit($result);?>"
 />
