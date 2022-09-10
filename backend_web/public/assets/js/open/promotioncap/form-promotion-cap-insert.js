@@ -199,7 +199,7 @@ export class FormPromotionCapInsert extends LitElement {
             ? null 
             : html`
               <div class="cell-flex cell-btn">
-                <a href="${this.url_terms}" target="_blank" style="color: #ccc; font-size: small; font-family: Urbanist, sans-serif;">Terms & Conditions</a>
+                <a href="${this.url_terms}" target="_blank" style="color: var(--color-clear-black); font-size: small;">Terms & Conditions</a>
               </div>
             `
         }
