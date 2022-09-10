@@ -128,7 +128,7 @@ return [
     ["url"=>"/restrict/promotions/search","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchController", "method"=>"search", "name"=>""],
 //@promotions-tabs
     ["url"=>"/restrict/promotions/:uuid/ui/update","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionUisUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
-    ["url"=>"/restrict/promotions/:uuid/raffle/update","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionUisUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>"promotion.raffle.update"],
+    ["url"=>"/restrict/promotions/:uuid/raffle/update","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionRafflesUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>"promotion.raffle.update"],
 
 //@subscriptions
     ["url"=>"/restrict/subscriptions/info/:uuid","controller"=>"App\Restrict\Subscriptions\Infrastructure\Controllers\SubscriptionsInfoController", "method"=>"info", "name"=>""],
