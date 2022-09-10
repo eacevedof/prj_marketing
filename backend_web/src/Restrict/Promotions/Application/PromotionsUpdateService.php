@@ -190,10 +190,20 @@ final class PromotionsUpdateService extends AppService
             })
             ->add_rule("date_execution", "date_execution", function ($data) {
                 if (!$value = $this->datecomp->to_db($data["value"])) return __("Empty field is not allowed");
-                if (!$this->datecomp->is_valid($value)) return __("Invalid date {0}", $value);
+
+                if (!$this->datecomp->is_valid($value))
+                    return __("Invalid date {0}", $value);
+
                 $dateto = $this->datecomp->add_time($data["data"]["date_to"],3600);
                 if ($dateto > $value)
                     return __("Value must be at least 1 hour after Date to");
+
+                $israffleable = (int) $data["data"]["is_raffleable"];
+                if (!$israffleable) return;
+
+                $dateraffle = $this->datecomp->add_time($data["data"]["date_raffle"],3600);
+                if ($dateraffle > $value)
+                    return __("Value must be at least 1 hour after Date raffle");
             })
             ->add_rule("id_tz", "id_tz", function ($data) {
                 if (!$value = $data["value"]) return __("Empty field is not allowed");
