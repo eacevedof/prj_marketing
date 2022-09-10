@@ -174,7 +174,7 @@ final class TermsConditionsInfoService extends AppService
     {
         $promotion = RF::get(PromotionRepository::class)->get_by_slug(
             $this->input,
-            ["description", "content","date_to", "is_raffleable", "is_cumulative", "date_raffle"]
+            ["description", "content", "date_to", "is_raffleable", "is_cumulative", "date_raffle"]
         );
 
         if (!$promotion)
