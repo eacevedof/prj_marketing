@@ -14,9 +14,8 @@ use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
 use \Exception;
 
-final class PromotionUisUpdateController extends RestrictController
+final class PromotionRafflesUpdateController extends RestrictController
 {
-
     private PicklistService $picklist;
 
     public function __construct()
