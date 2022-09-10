@@ -153,8 +153,18 @@ export class FormPromotionInsert extends LitElement {
               <input type="datetime-local" step="1" id="date_to" .value=${this._date_to} class="form-control">
             </div>
           </div>
+          <div class="form-group">
+            <label for="is_raffleable">${this.texts.f20}</label>
+            <div id="field-is_raffleable">
+              <select id="is_raffleable" class="form-control" required>
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
+                )}
+              </select>
+            </div>
+          </div>          
         </div>
-
+        
         <div class="flex-row">
           <div class="form-group">
             <label for="bgcolor">${this.texts.f10}</label>
@@ -243,17 +253,6 @@ export class FormPromotionInsert extends LitElement {
             <label for="max_confirmed">${this.texts.f19}</label>
             <div id="field-max_confirmed">
                 <input type="number" id="max_confirmed" .value=${this._max_confirmed} class="form-control" maxlength="10">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="is_raffleable">${this.texts.f20}</label>
-            <div id="field-is_raffleable">
-              <select id="is_raffleable" class="form-control" required>
-                ${this._notoryes.map((item) =>
-                  html`<option value=${item.key} ?selected=${item.key===this._is_raffleable}>${item.value}</option>`
-                )}
-              </select>
             </div>
           </div>
           

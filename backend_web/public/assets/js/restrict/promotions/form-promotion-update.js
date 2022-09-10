@@ -272,6 +272,7 @@ export class FormPromotionUpdate extends LitElement {
                 Limit time to validate a confirmed subscription (voucher validation). Read only after first publish
               </p>
             </div>
+            
             <div id="field-date_execution">
               <input type="datetime-local" step="1" id="date_execution" class="form-control" 
                      .value=${this._date_execution} 
@@ -279,6 +280,41 @@ export class FormPromotionUpdate extends LitElement {
               >
             </div>
           </div> 
+          
+          <div class="form-group">
+            <label for="is_raffleable">${this.texts.f20}</label>
+            <div class="tt-tooltip">
+              <span class="tt-span">i</span>
+              <p class="tt-tooltiptext">
+                In case you want subscribers with acquisition to gather points for a future gift raffle
+              </p>
+            </div>
+            <div id="field-is_raffleable">
+              <select id="is_raffleable" class="form-control" required 
+                      ?disabled=${this._num_subscribed || this._disabled_date} 
+                      @change=${e => this._on_change(e, "_is_raffleable")}
+              >
+                ${this._notoryes.map((item) =>
+                    html`<option value=${item.key} ?selected=${parseInt(item.key)===this._is_raffleable}>${item.value}</option>`
+                )}
+              </select>
+            </div>
+          </div>
+
+          ${this._is_raffleable ?
+              html`
+              <div class="form-group">
+                <label for="date_raffle">${this.texts.f31}</label>
+                <div id="field-date_raffle">
+                  <input type="datetime-local" step="1" id="date_raffle" class="form-control"
+                         .value=${this._date_raffle}
+                         ?disabled=${this._num_subscribed || this._disabled_date}
+                         @change=${e => this._on_change(e, "_date_raffle")}
+                  >
+                </div>
+              </div>`
+              : null
+          }  
         </div>
 
 <!-- layout -->
@@ -390,41 +426,7 @@ export class FormPromotionUpdate extends LitElement {
               >
             </div>
           </div>
-
-          <div class="form-group">
-            <label for="is_raffleable">${this.texts.f20}</label>
-            <div class="tt-tooltip">
-              <span class="tt-span">i</span>
-              <p class="tt-tooltiptext">
-                In case you want subscribers with acquisition to gather points for a future gift raffle
-              </p>
-            </div>
-            <div id="field-is_raffleable">
-              <select id="is_raffleable" class="form-control" required 
-                      ?disabled=${this._num_subscribed || this._disabled_date} 
-                      @change=${e => this._on_change(e, "_is_raffleable")}
-              >
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${parseInt(item.key)===this._is_raffleable}>${item.value}</option>`
-                )}
-              </select>
-            </div>
-          </div>
-
-          ${this._is_raffleable ?
-            html`
-              <div class="form-group">
-                <label for="date_raffle">${this.texts.f31}</label>
-                <div id="field-date_raffle">
-                  <input type="datetime-local" step="1" id="date_raffle" class="form-control"
-                         .value=${this._date_raffle}
-                         ?disabled=${this._num_subscribed || this._disabled_date}
-                         @change=${e => this._on_change(e, "_date_raffle")}
-                  >
-                </div>
-              </div>`
-            : null
-          }
+          
         </div>          
 
           <div class="form-group">
