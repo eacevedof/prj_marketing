@@ -9,7 +9,6 @@ import {csstooltip} from "/assets/js/common/tooltip-lit-css.js"
 import {selector, get_formdata} from "/assets/js/common/shadowroot/shadowroot.js"
 import {get_link_local, get_img_link} from "/assets/js/common/html/link.js"
 
-const URL_UPDATE = "/restrict/promotions/update"
 const ACTION = "promotions.update"
 
 export class FormPromotionUpdate extends LitElement {
@@ -78,6 +77,8 @@ export class FormPromotionUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+    url: { type: String },
+    url_terms: { type: String },
 
     texts: {
       converter: (strjson) => {
@@ -501,7 +502,11 @@ export class FormPromotionUpdate extends LitElement {
         
         <div class="flex-row">
           <div class="form-group col-12">
-            <label for="content">${this.texts.f09}</label>
+            <label for="content">
+            ${html([
+              get_link_local(this.url_terms.concat("?mode=test"), this.texts.f09)
+            ])}
+            </label>
             <div id="field-content">
               <textarea type="text" id="content" .value=${this._content} class="form-control" maxlength="2000" 
                         ?disabled=${this._is_published || this._num_subscribed || this._disabled_date}></textarea>
@@ -607,7 +612,7 @@ export class FormPromotionUpdate extends LitElement {
     error.clear()
 
     const response = await injson.put(
-        URL_UPDATE.concat(`/${this.fields.uuid}`), {
+        this.url, {
           _action: ACTION,
           _csrf: this.csrf,
           id: this.fields.id,

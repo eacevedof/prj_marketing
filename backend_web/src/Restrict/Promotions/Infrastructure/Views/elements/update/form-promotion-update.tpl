@@ -1,9 +1,11 @@
 <?php
 use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Date\DateComponent;
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $promotion = $result["promotion"];
-
+$urlpost = Routes::url("promotion.update", ["uuid"=>$promotion["uuid"]]);
+$urlterms = Routes::url("terms.by-promotion", ["promoslug"=>$promotion["slug"]]);
 $date = CF::get(DateComponent::class);
 $datefrom = $date->get_jsdt($promotion["date_from"]);
 $dateto = $date->get_jsdt($promotion["date_to"]);
@@ -99,10 +101,11 @@ $promotion = [
 <div id="main" class="tab-pane active">
   <form-promotion-update
       csrf=<?php $this->_echo_js($csrf);?>
-
+      url=<?php $this->_echo_js($urlpost);?>
+      url_terms=<?php $this->_echo_js($urlterms);?>
       texts="<?php $this->_echo_jslit($texts);?>"
 
       fields="<?php $this->_echo_jslit($promotion);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-update.js"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-update.js?now"></script>

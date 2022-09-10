@@ -120,7 +120,7 @@ return [
     ["url"=>"/restrict/promotions/create","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInsertController", "method"=>"create", "name"=>""],
     ["url"=>"/restrict/promotions/insert","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsInsertController", "method"=>"insert", "allowed"=>["post"], "name"=>""],
     ["url"=>"/restrict/promotions/edit/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController", "method"=>"edit", "name"=>""],
-    ["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>""],
+    ["url"=>"/restrict/promotions/update/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsUpdateController", "method"=>"update", "allowed"=>["put"], "name"=>"promotion.update"],
     ["url"=>"/restrict/promotions/delete/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsDeleteController", "method"=>"remove", "allowed"=>["delete"], "name"=>""],
     ["url"=>"/restrict/promotions/undelete/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsDeleteController", "method"=>"undelete", "allowed"=>["patch"], "name"=>""],
     ["url"=>"/restrict/promotions/export/:uuid","controller"=>"App\Restrict\Promotions\Infrastructure\Controllers\PromotionsSearchExportController", "method"=>"export", "allowed"=>["post"], "name"=>""],
