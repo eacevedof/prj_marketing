@@ -7,7 +7,6 @@ import { cssformflex } from "/assets/js/common/formflex-lit-css.js"
 import { cssfielderror } from "/assets/js/common/fielderrors-lit-css.js"
 import { selector, get_formdata } from "/assets/js/common/shadowroot/shadowroot.js"
 
-
 const ACTION = "promotionui.update"
 
 export class FormPromotionRaffleUpdate extends LitElement {
@@ -42,6 +41,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
 
   static properties = {
     csrf: { type: String },
+    url: { type: String },
     promotionuuid: {type:String},
     iseditable: {type:String},
 
@@ -471,7 +471,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
     error.clear()
 
     const response = await injson.put(
-      URL_UPDATE.replace(":uuid", this.promotionuuid), {
+      this.url, {
         _action: ACTION,
         _csrf: this.csrf,
         id: this.fields.id,
