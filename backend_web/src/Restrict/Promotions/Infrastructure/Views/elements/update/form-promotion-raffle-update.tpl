@@ -4,6 +4,8 @@ use App\Shared\Infrastructure\Components\Date\DateComponent;
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $promotion = $result["promotion"];
+if (is_null($promotion["date_raffle"])) return;
+
 $urlpost = Routes::url("promotion.raffle.update", ["uuid"=>$promotion["uuid"]]);
 $date = CF::get(DateComponent::class);
 $datefrom = $date->get_jsdt($promotion["date_from"]);
@@ -105,4 +107,4 @@ $promotion = [
       fields="<?php $this->_echo_jslit($promotion);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?xx"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?mm"></script>

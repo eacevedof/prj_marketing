@@ -7,7 +7,7 @@ import { cssformflex } from "/assets/js/common/formflex-lit-css.js"
 import { cssfielderror } from "/assets/js/common/fielderrors-lit-css.js"
 import { selector, get_formdata } from "/assets/js/common/shadowroot/shadowroot.js"
 
-const ACTION = "promotionui.update"
+const ACTION = "promotion.raffle.update"
 
 export class FormPromotionRaffleUpdate extends LitElement {
   static get styles() {
@@ -64,32 +64,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
     _btncancel: { type: String, state: true },
 
     _id: { type: String, state: true },
-    _uuid: { type: String, state: true },
-    _id_owner: { type: String, state: true },
-    _id_promotion: { type: String, state: true },
-    _input_email: { type: String, state: true },
-    _pos_email: { type: String, state: true },
-    _input_name1: { type: String, state: true },
-    _pos_name1: { type: String, state: true },
-    _input_name2: { type: String, state: true },
-    _pos_name2: { type: String, state: true },
-    _input_language: { type: String, state: true },
-    _pos_language: { type: String, state: true },
-    _input_country: { type: String, state: true },
-    _pos_country: { type: String, state: true },
-    _input_phone1: { type: String, state: true },
-    _pos_phone1: { type: String, state: true },
-    _input_birthdate: { type: String, state: true },
-    _pos_birthdate: { type: String, state: true },
-    _input_gender: { type: String, state: true },
-    _pos_gender: { type: String, state: true },
-    _input_address: { type: String, state: true },
-    _pos_address: { type: String, state: true },
-    _disabled_date: { type: String, state: true },
-    _input_is_mailing: { type: String, state: true },
-    _pos_is_mailing: { type: String, state: true },
-    _input_is_terms: { type: String, state: true },
-    _pos_is_terms: { type: String, state: true },
   }
 
   //2
@@ -106,292 +80,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
 
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
 
-    console.log("UI IS EDITABLE", this.iseditable,typeof this.iseditable)
   }
-
-  get_inputs() {
-    const inputs = {
-      email: {
-        position: this._pos_email,
-        enabled: this._input_email,
-        input: html`
-          <tr>
-            <td>${this.texts.f06}</td>
-            <td>
-              <select id="input_email" class="form-control" required disabled>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_email}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_email" 
-                     .value=${this._pos_email} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_email")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      name1: {
-        position: this._pos_name1,
-        enabled: this._input_name1,
-        input: html`
-          <tr>
-            <td>${this.texts.f08}</td>
-            <td>
-              <select id="input_name1" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} 
-                      @change=${e => this._handle_keyup(e, "_input_name1")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_name1}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_name1" 
-                     .value=${this._pos_name1} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_name1")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      phone1: {
-        position: this._pos_phone1,
-        enabled: this._input_phone1,
-        input: html`
-          <tr>
-            <td>${this.texts.f16}</td>
-            <td>
-              <select id="input_phone1" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_phone1")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_phone1}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_phone1" 
-                     .value=${this._pos_phone1} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_phone1")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      name2: {
-        position: this._pos_name2,
-        enabled: this._input_name2,
-        input: html`
-          <tr>
-            <td>${this.texts.f10}</td>
-            <td>
-              <select id="input_name2" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_name2")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_name2}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_name2" 
-                     .value=${this._pos_name2} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_name2")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      language: {
-        position: this._pos_language,
-        enabled: this._input_language,
-        input: html`
-          <tr>
-            <td>${this.texts.f12}</td>
-            <td>
-              <select id="input_language" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_language")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_language}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_language" 
-                     .value=${this._pos_language} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_language")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      country: {
-        position: this._pos_country,
-        enabled: this._input_country,
-        input: html`
-          <tr>
-            <td>${this.texts.f14}</td>
-            <td>
-              <select id="input_country" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_country")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_country}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_country" 
-                     .value=${this._pos_country} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_country")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      birthdate: {
-        position: this._pos_birthdate,
-        enabled: this._input_birthdate,
-        input: html`
-          <tr>
-            <td>${this.texts.f18}</td>
-            <td>
-              <select id="input_birthdate" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_birthdate")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_birthdate}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_birthdate" 
-                     .value=${this._pos_birthdate} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_birthdate")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-
-      gender: {
-        position: this._pos_gender,
-        enabled: this._input_gender,
-        input: html`
-          <tr>
-            <td>${this.texts.f20}</td>
-            <td>
-              <select id="input_gender" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_gender")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_gender}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_gender" 
-                     .value=${this._pos_gender} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_gender")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      address: {
-        position: this._pos_address,
-        enabled: this._input_address,
-        input: html`
-          <tr>
-            <td>${this.texts.f22}</td>
-            <td>
-              <select id="input_address" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_address")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_address} >${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_address" 
-                     .value=${this._pos_address} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_address")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-      is_mailing: {
-        position: this._pos_is_mailing,
-        enabled: this._input_is_mailing,
-        input: html`
-          <tr>
-            <td>${this.texts.f24}</td>
-            <td>
-              <select id="input_is_mailing" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_mailing")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_is_mailing}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_is_mailing" 
-                     .value=${this._pos_is_mailing} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_is_mailing")}
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-          `
-      },
-
-      is_terms: {
-        position: this._pos_is_terms,
-        enabled: this._input_is_terms,
-        input: html`
-          <tr>
-            <td>${this.texts.f26}</td>
-            <td>
-              <select id="input_is_terms" class="form-control" required 
-                      ?disabled=${this.iseditable!=="1" || this._disabled_date} @change=${e => this._handle_keyup(e, "_input_is_terms")}>
-                ${this._notoryes.map((item) =>
-                    html`<option value=${item.key} ?selected=${item.key===this._input_is_terms}>${item.value}</option>`
-                )}
-              </select>
-            </td>
-            <td>
-              <input type="number" id="pos_is_terms" 
-                     .value=${this._pos_is_terms} 
-                     ?disabled=${this._disabled_date}
-                     @change=${e => this._handle_keyup(e, "_pos_is_terms")} 
-                     min="1" max="999" class="form-control" maxlength="3">
-            </td>
-          </tr>
-        `
-      },
-    }
-
-    const fields = Array.from(Object.keys(inputs))
-      .map(field => ({
-        field,
-        enabled: parseInt(inputs[field].enabled),
-        order: parseInt(inputs[field].position),
-      }))
-      .sort((ogt, olt) => ogt.order - olt.order)
-
-    const ordered = {}
-    fields.filter(obj => obj.enabled).forEach(obj => ordered[obj.field] = inputs[obj.field])
-    fields.filter(obj => !obj.enabled).forEach(obj => ordered[obj.field] = inputs[obj.field])
-    return ordered
-  }//get_inputs
 
   _handle_keyup(e, field) {
     const value = e.target.value
@@ -400,7 +89,12 @@ export class FormPromotionRaffleUpdate extends LitElement {
 
   //4
   render() {
-    const inputs = Array.from(Object.keys(this.get_inputs())).map(field => this.get_inputs()[field])
+    const subscribers = [
+      {
+        name: "juan",
+        email: "juan@g.com"
+      }
+    ]
     return html`
     <form @submit=${this.on_submit}>
       <div>
@@ -409,15 +103,15 @@ export class FormPromotionRaffleUpdate extends LitElement {
       <table>
         <thead>
           <tr>
-            <th>${this.texts.tr05}</th><th>${this.texts.tr06}</th><th>${this.texts.tr07}</th>
+            <th>${this.texts.tr05}</th><th>${this.texts.tr06}</th>
           </tr>
         </thead>
         <tbody>
-          ${inputs.map(obj => obj?.input)}
+          ${subscribers.map(obj => html([`<tr><td>${obj.name}</td><td>${obj.email}</td></tr>`]))}
         </tbody>
       </table>
    
-    ${this._disabled_date
+      ${this._disabled_date
         ? null
         : html`
           <div class="form-group">
@@ -452,11 +146,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
     catch (e) {
       console.log(e)
     }
-  }
-
-  //6
-  updated() {
-    //aqui se deberia des setear la prpiedad despues de una llamada async
   }
 
   async on_submit(e) {
@@ -506,7 +195,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
     //this.requestUpdate()
   }//on_submit
 
-}//FormEdit
+}
 
 if (!customElements.get("form-promotion-raffle-update"))
   customElements.define("form-promotion-raffle-update", FormPromotionRaffleUpdate)
