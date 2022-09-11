@@ -157,6 +157,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository implements
                 "m.description",
                 "m.id_promotion",
                 "m.id_promouser",
+                "m.id_raffle",
                 "m.date_subscription",
                 "m.date_confirm",
                 "m.date_execution",
