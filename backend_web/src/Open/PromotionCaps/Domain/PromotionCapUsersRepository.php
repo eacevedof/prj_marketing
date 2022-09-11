@@ -143,6 +143,54 @@ final class PromotionCapUsersRepository extends AppRepository
         return array_merge($r, $sysdata);
     }
 
+    public function get_info_raffle(string $promouuid, array $fields=[]): array
+    {
+        $promouuid = $this->_get_sanitized($promouuid);
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promocapusers.get_info(uuid)")
+            ->set_table("$this->table as m")
+            ->set_getfields([
+                "m.insert_user",
+                "m.insert_date",
+                "m.update_user",
+                "m.update_date",
+                "m.delete_user",
+                "m.delete_date",
+                "m.id",
+                "m.uuid",
+                "m.id_owner",
+                "m.code_erp",
+                "m.description",
+                "m.id_promotion",
+                "m.id_language",
+                "m.id_country",
+                "m.phone1",
+                "m.email",
+                "m.birthdate",
+                "m.name1",
+                "m.name2",
+                "m.id_gender",
+                "m.address"
+            ])
+            ->add_join("INNER JOIN app_promotioncap_subscriptions ps ON ps.id_promouser = m.id")
+            ->add_join("INNER JOIN app_promotion p ON ps.id_promotion = p.id")
+            ->add_and("p.uuid='$promouuid'")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("ps.delete_date IS NULL")
+            ->add_and("p.delete_date IS NULL")
+            ->add_and("ps.id_raffle IS NOT NULL")
+            ->add_orderby("ps.id_raffle")
+            ->select()->sql()
+        ;
+        if ($fields) $sql->set_getfields($fields);
+        $r = $this->query($sql);
+        if (!$r) return [];
+
+        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
+
+        return array_merge($r, $sysdata);
+    }
+
     public function is_subscribed_by_email(int $idpromotion, string $email): bool
     {
         $email = $this->get_sanitized($email);

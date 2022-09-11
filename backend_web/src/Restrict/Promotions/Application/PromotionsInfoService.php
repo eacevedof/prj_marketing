@@ -10,7 +10,7 @@ use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
+use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\TimezoneType;
 use App\Shared\Domain\Enums\ExceptionType;
