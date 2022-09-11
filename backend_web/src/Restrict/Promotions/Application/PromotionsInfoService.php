@@ -120,12 +120,14 @@ final class PromotionsInfoService extends AppService
                     $this->auth->get_tz(),
                 )
                 : null,
-            "raffle" => [
-                "date_raffle" => $promotion["date_raffle"],
-                "winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners((int) $promotion["id"])
-            ]
+            "raffle" => $promotion["date_raffle"]
+                ? [
+                    "date_raffle" => $promotion["date_raffle"],
+                    "winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners((int) $promotion["id"])
+                ]: null
         ];
     }
 }
 //900 184 184
 //91 377 97 79
+//91 218 58 97
