@@ -124,7 +124,8 @@ final class PromotionsInfoService extends AppService
                 ? [
                     "date_raffle" => $promotion["date_raffle"],
                     "winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners((int) $promotion["id"])
-                ]: null
+                ]
+                : null
         ];
     }
 }
