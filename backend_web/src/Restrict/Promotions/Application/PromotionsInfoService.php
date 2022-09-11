@@ -123,7 +123,7 @@ final class PromotionsInfoService extends AppService
             "raffle" => $promotion["date_raffle"]
                 ? [
                     "promotion" => $promotion["description"],
-                    "timezone" => $promotion["tz"],
+                    "timezone" => RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]),
                     "date_raffle" => $promotion["date_raffle"],
                     "winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners(
                         (int) $promotion["id"],

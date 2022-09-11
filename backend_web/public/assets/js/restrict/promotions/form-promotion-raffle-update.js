@@ -72,7 +72,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
     this._btncancel = this.texts.tr02
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
 
-    console.log("THIS -",this._date_raffle, this._winners)
+    console.log("THIS -",this._date_raffle, this._winners, this._timezone)
   }
 
   _handle_keyup(e, field) {
