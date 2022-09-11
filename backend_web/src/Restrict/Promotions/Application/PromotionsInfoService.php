@@ -85,14 +85,14 @@ final class PromotionsInfoService extends AppService
     private function _map_entity(array &$promotion): void
     {
         $promotion["is_editable"] = !$this->repopromotion->has_subscribers_by_uuid($promotion["uuid"]);
-        $tzto = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
-        if ($tzto === TimezoneType::UTC) return;
+        $promotz = RF::get(ArrayRepository::class)->get_timezone_description_by_id((int) $promotion["id_tz"]);
+        if ($promotz === TimezoneType::UTC) return;
         $utc = CF::get(UtcComponent::class);
-        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], TimezoneType::UTC, $tzto);
-        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], TimezoneType::UTC, $tzto);
-        $promotion["date_execution"] = $utc->get_dt_into_tz($promotion["date_execution"], TimezoneType::UTC, $tzto);
+        $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], TimezoneType::UTC, $promotz);
+        $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], TimezoneType::UTC, $promotz);
+        $promotion["date_execution"] = $utc->get_dt_into_tz($promotion["date_execution"], TimezoneType::UTC, $promotz);
         $promotion["date_raffle"] = $promotion["date_raffle"]
-            ? $utc->get_dt_into_tz($promotion["date_raffle"], TimezoneType::UTC, $tzto)
+            ? $utc->get_dt_into_tz($promotion["date_raffle"], TimezoneType::UTC, $promotz)
             : null
         ;
     }
