@@ -91,7 +91,10 @@ final class PromotionsInfoService extends AppService
         $promotion["date_from"] = $utc->get_dt_into_tz($promotion["date_from"], TimezoneType::UTC, $tzto);
         $promotion["date_to"] = $utc->get_dt_into_tz($promotion["date_to"], TimezoneType::UTC, $tzto);
         $promotion["date_execution"] = $utc->get_dt_into_tz($promotion["date_execution"], TimezoneType::UTC, $tzto);
-        $promotion["date_raffle"] = $utc->get_dt_into_tz($promotion["date_raffle"], TimezoneType::UTC, $tzto);
+        $promotion["date_raffle"] = $promotion["date_raffle"]
+            ? $utc->get_dt_into_tz($promotion["date_raffle"], TimezoneType::UTC, $tzto)
+            : null
+        ;
     }
 
     public function get_for_edit(): array
@@ -117,7 +120,10 @@ final class PromotionsInfoService extends AppService
                     $this->auth->get_tz(),
                 )
                 : null,
-            "raffle" => null
+            "raffle" => [
+                "date_raffle" => $promotion["date_raffle"],
+                "winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners((int) $promotion["id"])
+            ]
         ];
     }
 }

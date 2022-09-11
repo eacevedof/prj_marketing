@@ -143,9 +143,8 @@ final class PromotionCapUsersRepository extends AppRepository
         return array_merge($r, $sysdata);
     }
 
-    public function get_raffle_winners(string $promouuid, array $fields=[]): array
+    public function get_raffle_winners(int $promoid, array $fields=[]): array
     {
-        $promouuid = $this->_get_sanitized($promouuid);
         $sql = $this->_get_qbuilder()
             ->set_comment("promocapusers.get_info(uuid)")
             ->set_table("$this->table as m")
@@ -174,7 +173,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ])
             ->add_join("INNER JOIN app_promotioncap_subscriptions ps ON ps.id_promouser = m.id")
             ->add_join("INNER JOIN app_promotion p ON ps.id_promotion = p.id")
-            ->add_and("p.uuid='$promouuid'")
+            ->add_and("p.id=$promoid")
             ->add_and("m.delete_date IS NULL")
             ->add_and("ps.delete_date IS NULL")
             ->add_and("p.delete_date IS NULL")
