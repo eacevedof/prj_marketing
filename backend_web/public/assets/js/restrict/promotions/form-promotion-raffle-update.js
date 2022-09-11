@@ -76,10 +76,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
     this._issending = false
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
-
-console.log(this.fields)
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
-
   }
 
   _handle_keyup(e, field) {
@@ -105,7 +102,7 @@ console.log(this.fields)
         </tbody>
       </table>
    
-      ${this._disabled_date
+      ${this._disabled_date || ((new Date(this._date_raffle) > new Date()))
         ? null
         : html`
           <div class="form-group">
@@ -115,14 +112,6 @@ console.log(this.fields)
                   this._issending
                       ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
                       : null
-              }
-            </button>
-            <button type="button" ?disabled=${this._issending} @click=${this._on_cancel}
-                    class="btn btn-secondary mt-3 mb-0">
-              ${this._btncancel}
-              ${this._issending
-                  ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                  : null
               }
             </button>
           </div>

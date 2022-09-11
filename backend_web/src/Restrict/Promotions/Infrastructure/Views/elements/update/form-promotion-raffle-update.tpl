@@ -15,7 +15,7 @@ $dateexecution = $date->get_jsdt($promotion["date_execution"]);
 $raffle["date_raffle"] = $date->get_jsdt($raffle["date_raffle"]);
 
 $texts = [
-    "tr00" => __("Save"),
+    "tr00" => __("Run raffle"),
     "tr01" => __("Processing..."),
     "tr02" => __("Cancel"),
     "tr03" => __("Error"),
