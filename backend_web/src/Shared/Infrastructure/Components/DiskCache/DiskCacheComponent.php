@@ -26,7 +26,7 @@ final class DiskCacheComponent
         $this->pathfinal = $path;
     }
 
-    private function _get_cached_files(): array
+    private function _get_cached_files_by_hashname(): array
     {
         if (!is_dir($this->pathfinal)) {
             //705 es lo minimo para que funcione desde web
@@ -38,14 +38,14 @@ final class DiskCacheComponent
         if (count($files) == 2) return [];
         
         $files = array_filter($files, function ($file) {
-           return strstr($file, $this->hashname); 
+            return strstr($file, $this->hashname);
         });
         return array_values($files);
     }
 
     private function _get_cached_file(): string
     {
-        $files = $this->_get_cached_files();
+        $files = $this->_get_cached_files_by_hashname();
         return $files[0] ?? "";
     }
 
@@ -57,7 +57,7 @@ final class DiskCacheComponent
 
     private function _remove_olds(): void
     {
-        $files = $this->_get_cached_files();
+        $files = $this->_get_cached_files_by_hashname();
         foreach ($files as $file) {
             $path = "{$this->pathfinal}/$file";
             if (is_file($path)) unlink($path);
@@ -97,7 +97,7 @@ final class DiskCacheComponent
         $this->pathsub = $pathsub;
         return $this;
     }
-    
+
     public function set_keyname(string $keyname): self
     {
         $this->keyname = $keyname;
