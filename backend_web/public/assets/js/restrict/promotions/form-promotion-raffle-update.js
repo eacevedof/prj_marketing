@@ -93,7 +93,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
         <b>${this.texts.tr06} ${this._timezone}</b>:
         <span>${new Date(this._date_raffle).toLocaleString("es-ES", { timeZone: this._timezone })}</span>
       </div>
-      <hr/>
       ${//this._disabled_date || ((new Date(this._date_raffle) > new Date()) || !this._winners)
         this._disabled_date || !this._winners
         ? null
@@ -109,7 +108,8 @@ export class FormPromotionRaffleUpdate extends LitElement {
             </button>
           </div>
           `
-        }      
+        }
+      <hr/>
       <h6>${this.texts.tr07}</h6>
       <table class="">
         <thead>
