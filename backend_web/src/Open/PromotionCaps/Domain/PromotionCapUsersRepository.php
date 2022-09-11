@@ -143,7 +143,7 @@ final class PromotionCapUsersRepository extends AppRepository
         return array_merge($r, $sysdata);
     }
 
-    public function get_info_raffle(string $promouuid, array $fields=[]): array
+    public function get_raffle_winners(string $promouuid, array $fields=[]): array
     {
         $promouuid = $this->_get_sanitized($promouuid);
         $sql = $this->_get_qbuilder()
