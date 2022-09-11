@@ -24,3 +24,4 @@ src/xxx-module/*
 !src/xxx-module/files
 ./vendor.zip
 /public/images/qr
+/public/index.php.prod
