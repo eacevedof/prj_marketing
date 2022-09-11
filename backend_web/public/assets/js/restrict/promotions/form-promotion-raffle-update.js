@@ -94,6 +94,22 @@ export class FormPromotionRaffleUpdate extends LitElement {
         <span>${new Date(this._date_raffle).toLocaleString("es-ES", { timeZone: this._timezone })}</span>
       </div>
       <hr/>
+      ${//this._disabled_date || ((new Date(this._date_raffle) > new Date()) || !this._winners)
+        this._disabled_date || !this._winners
+        ? null
+        : html`
+          <div class="form-group">
+            <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
+            ${this._btnsend}
+            ${
+              this._issending
+              ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
+              : null
+            }
+            </button>
+          </div>
+          `
+        }      
       <h6>${this.texts.tr07}</h6>
       <table class="">
         <thead>
@@ -110,22 +126,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
           ${this._winners.map(obj => html([`<tr><td>${obj.name}</td><td>${obj.email}</td></tr>`]))}
         </tbody>
       </table>
-   
-      ${this._disabled_date || ((new Date(this._date_raffle) > new Date()) || this._winners)
-        ? null
-        : html`
-          <div class="form-group">
-            <button id="btn-submit" ?disabled=${this._issending} class="btn btn-primary mt-3 mb-0">
-              ${this._btnsend}
-              ${
-                  this._issending
-                      ? html`<img src="/assets/images/common/loading.png" width="25" height="25"/>`
-                      : null
-              }
-            </button>
-          </div>
-        `
-    }
     </form>
     `
   }
