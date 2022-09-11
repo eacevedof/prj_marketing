@@ -5,7 +5,7 @@
 */
 $promotion = $result["promotion"];
 $raffle = $result["raffle"] ?? null;
-if (is_null($raffle) || is_null($promotion["date_raffle"])) return;
+if (is_null($raffle)) return;
 ?>
 <li>
   <a href="#raffle" data-bs-toggle="tab" aria-expanded="false">

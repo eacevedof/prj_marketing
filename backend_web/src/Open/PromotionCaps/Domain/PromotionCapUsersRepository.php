@@ -179,10 +179,9 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_and("p.delete_date IS NULL")
             ->add_and("ps.id_raffle IS NOT NULL")
             ->add_orderby("ps.id_raffle")
-            ->select()->sql()
         ;
         if ($fields) $sql->set_getfields($fields);
-        $r = $this->query($sql);
+        $r = $this->query($sql->select()->sql());
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);

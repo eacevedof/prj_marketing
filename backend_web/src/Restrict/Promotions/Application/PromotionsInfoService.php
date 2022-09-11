@@ -123,7 +123,10 @@ final class PromotionsInfoService extends AppService
             "raffle" => $promotion["date_raffle"]
                 ? [
                     "date_raffle" => $promotion["date_raffle"],
-                    "winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners((int) $promotion["id"])
+                    "winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners(
+                        (int) $promotion["id"],
+                        ["m.id","m.uuid","m.name1", "m.email", "m.phone1"]
+                    )
                 ]
                 : null
         ];

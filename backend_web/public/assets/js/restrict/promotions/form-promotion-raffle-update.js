@@ -63,7 +63,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
     _btnsend: { type: String, state: true },
     _btncancel: { type: String, state: true },
 
-    _id: { type: String, state: true },
   }
 
   //2
@@ -78,6 +77,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
 
+console.log(this.fields)
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
 
   }
@@ -89,12 +89,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
 
   //4
   render() {
-    const subscribers = [
-      {
-        name: "juan",
-        email: "juan@g.com"
-      }
-    ]
     return html`
     <form @submit=${this.on_submit}>
       <div>
@@ -107,7 +101,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
           </tr>
         </thead>
         <tbody>
-          ${subscribers.map(obj => html([`<tr><td>${obj.name}</td><td>${obj.email}</td></tr>`]))}
+          ${this._winners.map(obj => html([`<tr><td>${obj.name}</td><td>${obj.email}</td></tr>`]))}
         </tbody>
       </table>
    
