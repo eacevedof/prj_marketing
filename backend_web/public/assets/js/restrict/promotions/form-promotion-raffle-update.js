@@ -56,6 +56,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
     _issending: { type: Boolean, state: true },
     _btnsend: { type: String, state: true },
     _btncancel: { type: String, state: true },
+    _winners: {type: Array}
 
   }
 
@@ -85,13 +86,15 @@ export class FormPromotionRaffleUpdate extends LitElement {
     return html`
     <form @submit=${this.on_submit}>
       <div>
-        <b>${this._promotion}</b><br/>
+        <b>${this._promotion}</b><br/><br/>
         <b>${this.texts.tr05} ${this._timezone}</b>:
         <span>${new Date().toLocaleString("es-ES", { timeZone: this._timezone })}</span>
-        <br/>
+        <br/><br/>
         <b>${this.texts.tr06} ${this._timezone}</b>:
         <span>${new Date(this._date_raffle).toLocaleString("es-ES", { timeZone: this._timezone })}</span>
       </div>
+      <hr/>
+      <h6>${this.texts.tr07}</h6>
       <table class="">
         <thead>
           <tr>

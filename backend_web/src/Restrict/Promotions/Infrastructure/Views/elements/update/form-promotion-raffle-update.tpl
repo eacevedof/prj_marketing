@@ -22,6 +22,7 @@ $texts = [
     "tr04" => __("<b>Data updated</b>"),
     "tr05" => __("Current time in"),
     "tr06" => __("Raffle time"),
+    "tr07" => __("Winners"),
 
     "f00" => __("Nº"),
     "f01" => __("Code"),
