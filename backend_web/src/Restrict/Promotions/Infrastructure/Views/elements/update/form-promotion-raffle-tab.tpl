@@ -6,7 +6,7 @@
 if (is_null($result["promotion"]["date_raffle"])) return;
 ?>
 <li>
-  <a href="#ui" data-bs-toggle="tab" aria-expanded="false">
+  <a href="#raffle" data-bs-toggle="tab" aria-expanded="false">
     <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
     <span class="hidden-xs"><?=__("Raffle")?></span>
   </a>

@@ -98,7 +98,7 @@ $promotion = [
     "businessowners" => $businessowners,
 ];
 ?>
-<div id="main" class="tab-pane active">
+<div id="raffle" class="tab-pane">
   <form-promotion-raffle-update
       csrf=<?php $this->_echo_js($csrf);?>
       url="<?php $this->_echo($urlpost);?>"
@@ -107,4 +107,4 @@ $promotion = [
       fields="<?php $this->_echo_jslit($promotion);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?mm"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?r=1"></script>
