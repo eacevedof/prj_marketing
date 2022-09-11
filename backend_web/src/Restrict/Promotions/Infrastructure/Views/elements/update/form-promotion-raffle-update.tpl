@@ -21,12 +21,14 @@ $texts = [
     "tr03" => __("Error"),
     "tr04" => __("<b>Data updated</b>"),
     "tr05" => __("Current time in"),
+    "tr06" => __("Raffle time"),
 
     "f00" => __("Nº"),
     "f01" => __("Code"),
-    "f02" => __("Email"),
-    "f03" => __("Phone"),
-    "f04" => __("Action"),
+    "f02" => __("Name"),
+    "f03" => __("Email"),
+    "f04" => __("Phone"),
+    "f05" => __("Action"),
 ];
 ?>
 <div id="raffle" class="tab-pane">
@@ -38,4 +40,4 @@ $texts = [
       fields="<?php $this->_echo_jslit($raffle);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?r=1"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?r=3"></script>

@@ -28,10 +28,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
     return get_formdata(this.shadowRoot)(this.fields)(["uuid", "id", "id_promotion", "id_owner","notoryes","disabled_date"])
   }
 
-  _on_cancel() {
-    window.modalraw.hide()
-  }
-
   //1
   constructor() {
     super()
@@ -42,8 +38,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
   static properties = {
     csrf: { type: String },
     url: { type: String },
-    promotionuuid: {type:String},
-    iseditable: {type:String},
 
     texts: {
       converter: (strjson) => {
@@ -77,6 +71,8 @@ export class FormPromotionRaffleUpdate extends LitElement {
     this._btnsend = this.texts.tr00
     this._btncancel = this.texts.tr02
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
+
+    console.log("THIS -",this._date_raffle, this._winners)
   }
 
   _handle_keyup(e, field) {
@@ -89,12 +85,22 @@ export class FormPromotionRaffleUpdate extends LitElement {
     return html`
     <form @submit=${this.on_submit}>
       <div>
-        <label for="uuid">${this._uuid}</label>
+        <b>${this._promotion}</b><br/>
+        <b>${this.texts.tr05} ${this._timezone}</b>:
+        <span>${new Date().toLocaleString("es-ES", { timeZone: this._timezone })}</span>
+        <br/>
+        <b>${this.texts.tr06} ${this._timezone}</b>:
+        <span>${new Date(this._date_raffle).toLocaleString("es-ES", { timeZone: this._timezone })}</span>
       </div>
-      <table>
+      <table class="">
         <thead>
           <tr>
-            <th>${this.texts.tr05}</th><th>${this.texts.tr06}</th>
+            <th>${this.texts.f00}</th>
+            <th>${this.texts.f01}</th>
+            <th>${this.texts.f02}</th>
+            <th>${this.texts.f03}</th>
+            <th>${this.texts.f04}</th>
+            <th>${this.texts.f05}</th>            
           </tr>
         </thead>
         <tbody>
@@ -102,7 +108,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
         </tbody>
       </table>
    
-      ${this._disabled_date || ((new Date(this._date_raffle) > new Date()))
+      ${this._disabled_date || ((new Date(this._date_raffle) > new Date()) || this._winners)
         ? null
         : html`
           <div class="form-group">
@@ -119,16 +125,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
     }
     </form>
     `
-  }
-
-  //5
-  firstUpdated() {
-    try {
-      this._$get("pos_email").focus()
-    }
-    catch (e) {
-      console.log(e)
-    }
   }
 
   async on_submit(e) {
