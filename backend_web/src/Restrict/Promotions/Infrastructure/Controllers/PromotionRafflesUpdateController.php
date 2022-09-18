@@ -7,8 +7,7 @@ namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Picklist\Application\PicklistService;
-use App\Restrict\Promotions\Application\PromotionUiUpdateService;
+use App\Restrict\Promotions\Application\PromotionRaffleUpdateService;
 use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
@@ -16,13 +15,10 @@ use \Exception;
 
 final class PromotionRafflesUpdateController extends RestrictController
 {
-    private PicklistService $picklist;
-
     public function __construct()
     {
         parent::__construct();
         $this->_if_noauth_tologin();
-        $this->picklist = SF::get(PicklistService::class);
     }
 
     //@patch
@@ -42,7 +38,7 @@ final class PromotionRafflesUpdateController extends RestrictController
 
         try {
             $request = ["_promotionuuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable(PromotionUiUpdateService::class, $request);
+            $update = SF::get_callable(PromotionRaffleUpdateService::class, $request);
             $result = $update();
             $this->_get_json()->set_payload([
                 "message"=> __("{0} {1} successfully updated", __("Promotion UI"), $uuid),
@@ -59,6 +55,5 @@ final class PromotionRafflesUpdateController extends RestrictController
                 ->set_error([$e->getMessage()])
                 ->show();
         }
-    }//update
-
-}//PromotionUisUpdateController
+    }
+}

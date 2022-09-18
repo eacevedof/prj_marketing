@@ -24,10 +24,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
 
   _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
-  _get_data() {
-    return get_formdata(this.shadowRoot)(this.fields)(["uuid", "id", "id_promotion", "id_owner","notoryes","disabled_date"])
-  }
-
   //1
   constructor() {
     super()
@@ -73,7 +69,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
     this._btncancel = this.texts.tr02
     for (let p in this.fields) this["_".concat(p)] = this.fields[p]
 
-    console.log("THIS -",this._date_raffle, this._winners, this._timezone)
+    //console.log("THIS -",this._date_raffle, this._winners, this._timezone)
   }
 
   _handle_keyup(e, field) {
@@ -148,8 +144,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
         id: this.fields.id,
         uuid: this.fields.uuid,
         id_owner: this.fields.id_owner,
-
-        ...this._get_data()
       }
     )
 

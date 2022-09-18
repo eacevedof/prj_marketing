@@ -175,15 +175,6 @@ final class PromotionRaffleUpdateService extends AppService
         return $this->validator;
     }
 
-    private function _remove_readonly(array &$promotionui): void
-    {
-        $remove = [
-            "uuid", "id_owner", "id_promotion"
-        ];
-        foreach ($remove as $field)
-            unset($promotionui[$field]);
-    }
-
     private function _update(array $promouireq, array $promotionui): array
     {
         if ($promouireq["id"] !== $promotionui["id"])
@@ -200,7 +191,6 @@ final class PromotionRaffleUpdateService extends AppService
         $promouireq = $this->entitypromotionui->map_request($promouireq);
         $this->_check_entity_permission();
         $this->entitypromotionui->add_sysupdate($promouireq, $this->authuser["id"]);
-        $this->_remove_readonly($promouireq);
         $this->repopromotionui->update($promouireq);
         return [
             "id" => $promotionui["id"],
