@@ -225,6 +225,7 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_and("ps.delete_date IS NULL")
             //los que no tienen tipo ganador
             ->add_and("ps.id_raffle IS NULL")
+            ->add_and("ps.date_confirm IS NOT NULL")
             ->add_orderby("ps.id")
         ;
         if ($fields) $sql->set_getfields($fields);
