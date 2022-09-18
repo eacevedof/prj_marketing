@@ -58,7 +58,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         return array_merge($r, $sysdata);
     }
 
-    public function update_raffle_winner(int $id, int $idraffle): array
+    public function update_raffle_winner(int $id, int $idraffle): void
     {
         $sql = $this->_get_qbuilder()
             ->set_comment("promotioncap_subscriptions.update_raffle_winners")

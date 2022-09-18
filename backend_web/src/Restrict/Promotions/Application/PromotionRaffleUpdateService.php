@@ -104,21 +104,21 @@ final class PromotionRaffleUpdateService extends AppService
         $participants = array_column($participants, "id");
 
         $winners = [];
-        $tmp = array_rand($participants);
-        $winners[1] = $participants[$tmp[0]];
-        unset($participants[$tmp[0]]);
+        $subsid = array_rand($participants);
+        $winners[1] = $participants[$subsid];
+        unset($participants[$subsid]);
 
         if (!$participants) return $winners;
 
-        $tmp = array_rand($participants);
-        $winners[2] = $participants[$tmp[0]];
-        unset($participants[$tmp[0]]);
+        $subsid = array_rand($participants);
+        $winners[2] = $participants[$subsid];
+        unset($participants[$subsid]);
 
         if (!$participants) return $winners;
 
-        $tmp = array_rand($participants);
-        $winners[3] = $participants[$tmp[0]];
-        unset($participants[$tmp[0]]);
+        $subsid = array_rand($participants);
+        $winners[3] = $participants[$subsid];
+        unset($participants[$subsid]);
         return $winners;
     }
 
