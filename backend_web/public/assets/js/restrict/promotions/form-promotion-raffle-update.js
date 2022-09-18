@@ -170,6 +170,8 @@ export class FormPromotionRaffleUpdate extends LitElement {
       return window.snack.set_time(4).set_inner(errors.join("<br/>")).set_color(SNACK.ERROR).show()
     }
 
+    this._winners = response.result?.winners ?? []
+
     const $dt = document.getElementById("table-datatable")
     if ($dt) $($dt).DataTable().ajax.reload()
     window.snack.set_time(4)

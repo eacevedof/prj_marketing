@@ -125,6 +125,6 @@ final class PromotionRaffleUpdateService extends AppService
     public function __invoke(): array
     {
         $this->_check_entity_permission();
-        return $this->_update();
+        return [ "winners" => $this->_update()];
     }
 }
