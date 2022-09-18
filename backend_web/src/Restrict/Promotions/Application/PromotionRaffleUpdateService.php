@@ -3,18 +3,13 @@ namespace App\Restrict\Promotions\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Promotions\Domain\PromotionRepository;
-use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Restrict\Promotions\Domain\PromotionUiEntity;
-use App\Shared\Domain\Entities\FieldsValidator;
+use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
-use App\Shared\Infrastructure\Exceptions\FieldsException;
 
 final class PromotionRaffleUpdateService extends AppService
 {
@@ -79,7 +74,14 @@ final class PromotionRaffleUpdateService extends AppService
 
     private function _update(): array
     {
-        dd($this->input);
+        $r = ["winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners(
+            $this->idpromotion,
+            ["m.id","m.uuid","m.name1", "m.email", "m.phone1"]
+        )];
+
+        if ($r["winners"])
+            $this->_exception(__("Raffle already done"), ExceptionType::CODE_BAD_REQUEST);
+
 
     }
 

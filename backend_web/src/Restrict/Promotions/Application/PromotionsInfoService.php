@@ -134,6 +134,3 @@ final class PromotionsInfoService extends AppService
         ];
     }
 }
-//900 184 184
-//91 377 97 79
-//91 218 58 97
