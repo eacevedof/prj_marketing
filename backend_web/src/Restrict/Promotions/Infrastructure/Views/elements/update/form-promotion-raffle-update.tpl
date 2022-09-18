@@ -13,7 +13,7 @@ $datefrom = $date->get_jsdt($promotion["date_from"]);
 $dateto = $date->get_jsdt($promotion["date_to"]);
 $dateexecution = $date->get_jsdt($promotion["date_execution"]);
 $raffle["date_raffle"] = $date->get_jsdt($raffle["date_raffle"]);
-dd($raffle["winners"]);
+//dd($raffle["winners"]);
 $texts = [
     "tr00" => __("Run raffle"),
     "tr01" => __("Processing..."),
@@ -41,4 +41,4 @@ $texts = [
       fields="<?php $this->_echo_jslit($raffle);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?r=8"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?r=9"></script>
