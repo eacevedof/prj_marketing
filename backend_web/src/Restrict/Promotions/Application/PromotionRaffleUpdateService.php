@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Promotions\Application;
 
+use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -90,6 +91,8 @@ final class PromotionRaffleUpdateService extends AppService
             $this->_exception(__("No participants for this raffle"), ExceptionType::CODE_BAD_REQUEST);
 
         $winners = $this->_get_winners($r["participants"]);
+
+        $promocapuserrepo = RF::get(PromotionCapSubscriptionsRepository::class);
 
     }
 

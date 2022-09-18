@@ -58,4 +58,20 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         return array_merge($r, $sysdata);
     }
 
+    public function update_raffle_winner(int $id, int $idraffle): array
+    {
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promotioncap_subscriptions.update_raffle_winners")
+            ->set_table("$this->table")
+            ->add_update_fv("id_raffle", $idraffle)
+            ->add_and("id=$id")
+        ;
+
+        if ($this->auth) {
+            $iduser = $this->auth->get_user()["id"];
+            $sql->add_update_fv("update_user", $iduser);
+        }
+        $sql = $sql->update()->sql();
+        $this->execute($sql);
+    }
 }
