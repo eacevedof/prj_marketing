@@ -15,6 +15,6 @@ tr.green {
     color: #22c03c;
 }
 tr.grey {
-    color: #ECF0FA
+    color: #CCC;
 }
 `;
