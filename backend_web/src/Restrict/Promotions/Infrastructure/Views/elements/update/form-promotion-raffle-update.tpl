@@ -13,7 +13,7 @@ $datefrom = $date->get_jsdt($promotion["date_from"]);
 $dateto = $date->get_jsdt($promotion["date_to"]);
 $dateexecution = $date->get_jsdt($promotion["date_execution"]);
 $raffle["date_raffle"] = $date->get_jsdt($raffle["date_raffle"]);
-dd($raffle);
+dd($raffle["winners"]);
 $texts = [
     "tr00" => __("Run raffle"),
     "tr01" => __("Processing..."),

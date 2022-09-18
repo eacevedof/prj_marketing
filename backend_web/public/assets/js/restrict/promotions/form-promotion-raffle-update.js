@@ -119,7 +119,9 @@ export class FormPromotionRaffleUpdate extends LitElement {
           </tr>
         </thead>
         <tbody>
-          ${this._winners.map(obj => html([`<tr><td>${obj.name}</td><td>${obj.email}</td></tr>`]))}
+          ${this._winners.map(obj => html([
+              `<tr><td>${obj.id}</td><td>${obj.uuid}</td><td>${obj.name1}</td><td>${obj.email}</td><td>${obj.phone1}</td></tr>`
+          ]))}
         </tbody>
       </table>
     </form>
