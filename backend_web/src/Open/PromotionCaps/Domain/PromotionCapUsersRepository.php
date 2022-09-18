@@ -146,7 +146,7 @@ final class PromotionCapUsersRepository extends AppRepository
     public function get_raffle_winners(int $promoid, array $fields=[]): array
     {
         $sql = $this->_get_qbuilder()
-            ->set_comment("promocapusers.get_info(uuid)")
+            ->set_comment("promocapusers.get_raffle_winners")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
@@ -179,6 +179,53 @@ final class PromotionCapUsersRepository extends AppRepository
             ->add_and("p.delete_date IS NULL")
             ->add_and("ps.id_raffle IS NOT NULL")
             ->add_orderby("ps.id_raffle")
+        ;
+        if ($fields) $sql->set_getfields($fields);
+        $r = $this->query($sql->select()->sql());
+        if (!$r) return [];
+
+        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
+
+        return array_merge($r, $sysdata);
+    }
+
+    public function get_raffle_participants(int $promoid, array $fields=[]): array
+    {
+        $sql = $this->_get_qbuilder()
+            ->set_comment("promocapusers.get_raffle_participants")
+            ->set_table("$this->table as m")
+            ->set_getfields([
+                "m.insert_user",
+                "m.insert_date",
+                "m.update_user",
+                "m.update_date",
+                "m.delete_user",
+                "m.delete_date",
+                "m.id",
+                "m.uuid",
+                "m.id_owner",
+                "m.code_erp",
+                "m.description",
+                "m.id_promotion",
+                "m.id_language",
+                "m.id_country",
+                "m.phone1",
+                "m.email",
+                "m.birthdate",
+                "m.name1",
+                "m.name2",
+                "m.id_gender",
+                "m.address"
+            ])
+            ->add_join("INNER JOIN app_promotioncap_subscriptions ps ON ps.id_promouser = m.id")
+            ->add_join("INNER JOIN app_promotion p ON ps.id_promotion = p.id")
+            ->add_and("m.delete_date IS NULL")
+            ->add_and("p.delete_date IS NULL")
+            ->add_and("p.id=$promoid")
+            ->add_and("ps.delete_date IS NULL")
+            //los que no tienen tipo ganador
+            ->add_and("ps.id_raffle IS NULL")
+            ->add_orderby("ps.id")
         ;
         if ($fields) $sql->set_getfields($fields);
         $r = $this->query($sql->select()->sql());

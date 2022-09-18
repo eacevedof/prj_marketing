@@ -74,15 +74,46 @@ final class PromotionRaffleUpdateService extends AppService
 
     private function _update(): array
     {
-        $r = ["winners" => RF::get(PromotionCapUsersRepository::class)->get_raffle_winners(
-            $this->idpromotion,
-            ["m.id","m.uuid","m.name1", "m.email", "m.phone1"]
-        )];
+        //comprobar que la promocion sea del tipo raffle
+        //comprobar que la fecha de raffle sea la correcta
+
+        $promocapuserrepo = RF::get(PromotionCapUsersRepository::class);
+        $r = [
+            "winners" => $promocapuserrepo->get_raffle_winners($this->idpromotion, ["m.id"]),
+            "participants" => $promocapuserrepo->get_raffle_participants($this->idpromotion, ["m.id"]),
+        ];
 
         if ($r["winners"])
             $this->_exception(__("Raffle already done"), ExceptionType::CODE_BAD_REQUEST);
 
+        if (!$r["participants"])
+            $this->_exception(__("No participants for this raffle"), ExceptionType::CODE_BAD_REQUEST);
 
+        $winners = $this->_get_winners($r["participants"]);
+
+    }
+
+    private function _get_winners(array $participants): array
+    {
+        $participants = array_column($participants, "id");
+
+        $winners = [];
+        $tmp = array_rand($participants);
+        $winners[1] = $participants[$tmp[0]];
+        unset($participants[$tmp[0]]);
+
+        if (!$participants) return $winners;
+
+        $tmp = array_rand($participants);
+        $winners[2] = $participants[$tmp[0]];
+        unset($participants[$tmp[0]]);
+
+        if (!$participants) return $winners;
+
+        $tmp = array_rand($participants);
+        $winners[3] = $participants[$tmp[0]];
+        unset($participants[$tmp[0]]);
+        return $winners;
     }
 
     public function __invoke(): array
