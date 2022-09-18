@@ -90,7 +90,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
         <span>${new Date(this._date_raffle).toLocaleString("es-ES", { timeZone: this._timezone })}</span>
       </div>
       ${//this._disabled_date || ((new Date(this._date_raffle) > new Date()) || !this._winners)
-        this._disabled_date || !this._winners
+        this._disabled_date || this._winners
         ? null
         : html`
           <div class="form-group">
@@ -115,18 +115,16 @@ export class FormPromotionRaffleUpdate extends LitElement {
             <th>${this.texts.f02}</th>
             <th>${this.texts.f03}</th>
             <th>${this.texts.f04}</th>
-            <th>${this.texts.f05}</th>            
           </tr>
         </thead>
         <tbody>
-          ${this._winners.map(obj => html([
-            `<tr>
+          ${this._winners.map( (obj, i) => html([
+            `<tr class="${i===0? "green": ""}">
                 <td>${obj.id}</td>
                 <td>${obj.uuid}</td>
                 <td>${obj.name1}</td>
                 <td>${obj.email}</td>
                 <td>${obj.phone1}</td>
-                <td>xx</td>
             </tr>`
           ]))}
         </tbody>
