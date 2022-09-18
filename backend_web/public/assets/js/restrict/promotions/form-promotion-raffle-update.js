@@ -106,7 +106,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
         }
       <hr/>
       <h6>${this.texts.tr07}</h6>
-      <table class="">
+      <table class="raffle-winners">
         <thead>
           <tr>
             <th>${this.texts.f00}</th>
@@ -123,7 +123,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
                 <td>${obj.uuid}</td>
                 <td>${obj.name1}</td>
                 <td>${obj.email}</td>
-                <td>${obj.phone1}</td>
+                <td>${obj.phone1 ?? ""}</td>
             </tr>`
           ]))}
         </tbody>
