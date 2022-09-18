@@ -118,7 +118,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
         </thead>
         <tbody>
           ${this._winners.map( (obj, i) => html([
-            `<tr class="${i===0? "green": ""}">
+            `<tr class="${i===0? "green": "grey"}">
                 <td>${obj.id}</td>
                 <td>${obj.uuid}</td>
                 <td>${obj.name1}</td>
@@ -128,6 +128,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
           ]))}
         </tbody>
       </table>
+      <hr/>
     </form>
     `
   }
