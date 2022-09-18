@@ -93,7 +93,8 @@ final class PromotionRaffleUpdateService extends AppService
         $winners = $this->_get_winners($r["participants"]);
 
         $promocapuserrepo = RF::get(PromotionCapSubscriptionsRepository::class);
-
+        foreach ($winners as $ipos => $id)
+            $promocapuserrepo->update_raffle_winner($id, $ipos);
     }
 
     private function _get_winners(array $participants): array
