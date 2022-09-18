@@ -74,4 +74,10 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
         $sql = $sql->update()->sql();
         $this->execute($sql);
     }
+
+    public function set_auth(AuthService $auth): self
+    {
+        $this->auth = $auth;
+        return $this;
+    }
 }
