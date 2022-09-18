@@ -5,7 +5,6 @@ import error from "/assets/js/common/fielderrors.js"
 import { SNACK } from "/assets/js/common/snackbar.js"
 import { cssformflex } from "/assets/js/common/formflex-lit-css.js"
 import { cssfielderror } from "/assets/js/common/fielderrors-lit-css.js"
-import { selector, get_formdata } from "/assets/js/common/shadowroot/shadowroot.js"
 
 const ACTION = "promotion.raffle.update"
 
@@ -21,8 +20,6 @@ export class FormPromotionRaffleUpdate extends LitElement {
       cssfielderror
     ];
   }
-
-  _$get(idsel) { return selector(this.shadowRoot)(idsel) }
 
   //1
   constructor() {
