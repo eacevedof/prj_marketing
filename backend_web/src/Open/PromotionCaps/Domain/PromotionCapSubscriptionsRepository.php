@@ -69,7 +69,9 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
 
         if ($this->auth) {
             $iduser = $this->auth->get_user()["id"];
-            $sql->add_update_fv("update_user", $iduser);
+            $sql->add_update_fv("update_user", $iduser)
+                ->add_update_fv("update_date", date("Y-m-d H:i:s"))
+            ;
         }
         $sql = $sql->update()->sql();
         $this->execute($sql);
