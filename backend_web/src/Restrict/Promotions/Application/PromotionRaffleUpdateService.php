@@ -24,9 +24,6 @@ final class PromotionRaffleUpdateService extends AppService
     private array $authuser;
 
     private PromotionRepository $repopromotion;
-    private PromotionUiRepository $repopromotionui;
-    private FieldsValidator $validator;
-    private PromotionUiEntity $entitypromotionui;
     private int $idpromotion;
 
     public function __construct(array $input)
@@ -46,9 +43,6 @@ final class PromotionRaffleUpdateService extends AppService
             $this->_exception(__("{0} with code {1} is not editable", __("Promotion"), $promouuid));
 
         $this->idpromotion = $promotion["id"];
-        $this->entitypromotionui = MF::get(PromotionUiEntity::class);
-        $this->repopromotionui = RF::get(PromotionUiRepository::class)->set_model($this->entitypromotionui);
-        $this->authuser = $this->auth->get_user();
     }
 
     private function _check_permission(): void
@@ -74,7 +68,7 @@ final class PromotionRaffleUpdateService extends AppService
         if ($this->auth->is_sysadmin()) return;
 
         $identowner = (int) $this->repopromotion->get_by_id($this->idpromotion)["id_owner"];
-        //si es bow o bm y su idwoner es el de la ui
+        //si es bow o bm y su idwoner es el del sorteo
         if ($this->auth->get_idowner() === $identowner)
             return;
 
@@ -83,133 +77,15 @@ final class PromotionRaffleUpdateService extends AppService
         );
     }
 
-    private function _add_rules(): FieldsValidator
+    private function _update(): array
     {
-        $fn_isvalidbool = function (string $value){
-            return in_array($value, ["0", "1"]);
-        };
+        dd($this->input);
 
-        $fn_validint = function (string $value){
-            $value = (int) $value;
-            return ($value > -1 && $value < 1000);
-        };
-
-        $this->validator
-            ->add_rule("id", "id", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("uuid", "uuid", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("id_owner", "id_owner", function ($data) {
-                return $data["value"] ? false : __("Empty field is not allowed");
-            })
-            ->add_rule("input_email", "input_email", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_email", "pos_email", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_gender", "input_gender", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_gender", "pos_gender", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_language", "input_language", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_language", "pos_language", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_name1", "input_name1", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_name1", "pos_name1", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_name2", "input_name2", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_name2", "pos_name2", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_phone1", "input_phone1", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_phone1", "pos_phone1", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_address", "input_address", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_address", "pos_address", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_birthdate", "input_birthdate", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_birthdate", "pos_birthdate", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_country", "input_country", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_country", "pos_country", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_is_mailing", "input_is_mailing", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_is_mailing", "pos_is_mailing", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-            ->add_rule("input_is_terms", "input_is_terms", function ($data) use ($fn_isvalidbool) {
-                return ($fn_isvalidbool($data["value"])) ? false : __("Unrecognized value for this field");
-            })
-            ->add_rule("pos_is_terms", "pos_is_terms", function ($data) use ($fn_validint) {
-                return ($fn_validint($data["value"])) ? false : __("Valid values are 1-100");
-            })
-        ;
-        
-        return $this->validator;
-    }
-
-    private function _update(array $promouireq, array $promotionui): array
-    {
-        if ($promouireq["id"] !== $promotionui["id"])
-            $this->_exception(
-                __("This promotion UI does not belong to promotion {0}", $this->input["_promotionuuid"]),
-                ExceptionType::CODE_BAD_REQUEST
-            );
-
-        if ($errors = $this->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
-            throw new FieldsException(__("Fields validation errors"));
-        }
-
-        $promouireq = $this->entitypromotionui->map_request($promouireq);
-        $this->_check_entity_permission();
-        $this->entitypromotionui->add_sysupdate($promouireq, $this->authuser["id"]);
-        $this->repopromotionui->update($promouireq);
-        return [
-            "id" => $promotionui["id"],
-            "uuid" => $promotionui["uuid"]
-        ];
     }
 
     public function __invoke(): array
     {
-        if (!$promouireq = $this->_get_req_without_ops($this->input))
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
         $this->_check_entity_permission();
-        $this->validator = VF::get($promouireq, $this->entitypromotionui);
-
-        $promotionui = $this->repopromotionui->get_by_promotion($this->idpromotion);
-        if (!$promotionui)
-            $this->_exception(__("{0} not found!", __("Promotion UI")), ExceptionType::CODE_NOT_FOUND);
-
-        return $this->_update($promouireq, $promotionui);
+        return $this->_update();
     }
 }
