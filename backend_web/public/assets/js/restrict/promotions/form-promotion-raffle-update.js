@@ -175,10 +175,7 @@ export class FormPromotionRaffleUpdate extends LitElement {
       .set_color(SNACK.SUCCESS)
       .set_inner(this.texts.tr04)
       .show()
-
-    //this.requestUpdate()
-  }//on_submit
-
+  }
 }
 
 if (!customElements.get("form-promotion-raffle-update"))
