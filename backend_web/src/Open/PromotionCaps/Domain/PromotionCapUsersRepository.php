@@ -182,11 +182,7 @@ final class PromotionCapUsersRepository extends AppRepository
         ;
         if ($fields) $sql->set_getfields($fields);
         $r = $this->query($sql->select()->sql());
-        if (!$r) return [];
-
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-
-        return array_merge($r, $sysdata);
+        return $r;
     }
 
     public function get_raffle_participants(int $promoid, array $fields=[]): array
