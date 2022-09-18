@@ -41,4 +41,4 @@ $texts = [
       fields="<?php $this->_echo_jslit($raffle);?>"
   />
 </div>
-<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?r=3"></script>
+<script type="module" src="/assets/js/restrict/promotions/form-promotion-raffle-update.js?r=4"></script>

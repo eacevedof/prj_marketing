@@ -5,6 +5,7 @@ import error from "/assets/js/common/fielderrors.js"
 import { SNACK } from "/assets/js/common/snackbar.js"
 import { cssformflex } from "/assets/js/common/formflex-lit-css.js"
 import { cssfielderror } from "/assets/js/common/fielderrors-lit-css.js"
+import { csspromotionraffle } from "/assets/js/restrict/promotions/form-promotion-raffle-update-css.js"
 
 const ACTION = "promotion.raffle.update"
 
@@ -17,7 +18,8 @@ export class FormPromotionRaffleUpdate extends LitElement {
     return [
       globalStyle,
       cssformflex,
-      cssfielderror
+      cssfielderror,
+      csspromotionraffle,
     ];
   }
 
