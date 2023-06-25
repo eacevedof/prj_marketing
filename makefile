@@ -25,6 +25,10 @@ rebuild: ## rebuild containers
 	docker-compose --env-file ./docker/.env -f docker-compose.yml up -d --build --remove-orphans
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-marketing-db
 
+gitpush: ## git push m=any message
+	clear;
+	git add .; git commit -m "$(m)"; git push;
+
 config:
 	docker-compose --env-file ./docker/.env config
 
