@@ -5,9 +5,10 @@ RUN apt-get update \
     && apt-get -y install --no-install-recommends \
     && apt-get install -y git acl openssl openssh-client wget curl \
     && apt-get install -y librabbitmq-dev libssh-dev libpng-dev zlib1g-dev libzip-dev libxml2-dev libicu-dev \
+    && apt-get install -y msmtp \
     && docker-php-ext-install intl pdo pdo_mysql zip gd soap \
     && pecl install xdebug \
-    && pecl install -y msmtp \
+    # && pecl install msmtp \ esto da error. parece que ya no existe este modulo
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache xdebug \
     # kafka
     && apt-get install -y librdkafka-dev \
