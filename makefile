@@ -11,6 +11,10 @@ help: ## Show this help message
 ip:
 	ipconfig getifaddr en0
 
+gitpush: ## git push
+	clear;
+	git add .; git commit -m "$(m)"; git push;
+
 ps:
 	docker ps | grep marketing
 
