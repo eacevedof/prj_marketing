@@ -37,7 +37,8 @@ final class IndexMain
         session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
         ini_set("session.save_path","/tmp");
         session_start();
-        setcookie(session_name(), session_id(), null, "/");
+        //function setcookie(string $name, $value = '', array $options = []): bool {}
+        setcookie(session_name(), session_id(), ["path" => "/"]);
 
         if (!isset($_SESSION["last_activity"])) $_SESSION["last_activity"] = time();
 

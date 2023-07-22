@@ -23,6 +23,7 @@ abstract class AppRepository
     protected ?AppEntity $entity = null;
     protected ?ComponentMysql $db = null;
     protected string $table = "";
+    //protected array $joins = []; hay un trait que rompe con esto
 
     protected function _get_sanitized(string $value): string
     {
