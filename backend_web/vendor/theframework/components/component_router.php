@@ -126,7 +126,7 @@ final class ComponentRouter
                 if(!$this->_match_type($value, $tag["types"]))
                     return false;
 
-                $this->arArgs[$tag["key"]] = trim(urldecode($value));
+                $this->arArgs[$tag["key"]] = trim(urldecode($value ?? ""));
                 continue;
             }
             $sReqval = $arrequest[$i];

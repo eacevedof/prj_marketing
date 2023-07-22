@@ -23,6 +23,7 @@ final class LoginService extends AppService
     private ComponentEncdecrypt $encdec;
     private UserRepository $repouser;
     private UserPermissionsRepository $repopermission;
+    private UserPreferencesRepository $repouserprefs;
 
     public function __construct(array $input)
     {
