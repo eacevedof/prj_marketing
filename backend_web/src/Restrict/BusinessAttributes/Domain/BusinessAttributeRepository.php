@@ -6,6 +6,8 @@ use App\Shared\Infrastructure\Factories\DbFactory as DbF;
 
 final class BusinessAttributeRepository extends AppRepository
 {
+    private array $joins = [];
+
     public function __construct()
     {
         $this->db = DbF::get_by_default();
