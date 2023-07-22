@@ -42,56 +42,40 @@ final class AuthService
 
     public function get_module_permissions(string $module, ?string $type=null): array
     {
-        switch ($module) {
-            case UserPolicyType::MODULE_USERS:
-                $permission = [
-                    "write" => $this->is_user_allowed(UserPolicyType::USERS_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::USERS_READ),
-                ];
-            break;
-            case UserPolicyType::MODULE_USER_PERMISSIONS:
-                $permission = [
-                    "write" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_READ),
-                ];
-            break;
-            case UserPolicyType::MODULE_USER_PREFERENCES:
-                $permission = [
-                    "write" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_READ),
-                ];
-            break;
-            case UserPolicyType::MODULE_BUSINESSDATA:
-                $permission = [
-                    "write" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_READ),
-                ];
-            break;
-            case UserPolicyType::MODULE_PROMOTIONS:
-                $permission = [
-                    "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_READ),
-                ];
-            break;
-            case UserPolicyType::MODULE_PROMOTIONS_UI:
-                $permission = [
-                    "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_READ),
-                ];
-            break;
-            case UserPolicyType::MODULE_SUBSCRIPTIONS:
-                $permission = [
-                    "write" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE),
-                    "read" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ),
-                ];
-                break;
-            default:
-                $permission = [
-                    "write" => false,
-                    "read" => false,
-                ];
-            break;
-        }
+        $permission = match ($module) {
+            UserPolicyType::MODULE_USERS => [
+                "write" => $this->is_user_allowed(UserPolicyType::USERS_WRITE),
+                "read" => $this->is_user_allowed(UserPolicyType::USERS_READ),
+            ],
+            UserPolicyType::MODULE_USER_PERMISSIONS => [
+                "write" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE),
+                "read" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_READ),
+            ],
+            UserPolicyType::MODULE_USER_PREFERENCES => [
+                "write" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_WRITE),
+                "read" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_READ),
+            ],
+            UserPolicyType::MODULE_BUSINESSDATA => [
+                "write" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE),
+                "read" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_READ),
+            ],
+            UserPolicyType::MODULE_PROMOTIONS => [
+                "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE),
+                "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_READ),
+            ],
+            UserPolicyType::MODULE_PROMOTIONS_UI => [
+                "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_WRITE),
+                "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_READ),
+            ],
+            UserPolicyType::MODULE_SUBSCRIPTIONS => [
+                "write" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE),
+                "read" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ),
+            ],
+            default => [
+                "write" => false,
+                "read" => false,
+            ],
+        };
 
         if (!in_array($type, [UserPolicyType::READ, UserPolicyType::WRITE]))
             return $permission;
