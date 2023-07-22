@@ -25,6 +25,8 @@ final class BillingsSearchService extends AppService
 
     private function _check_permission(): void
     {
+        if($this->auth->is_root_super()) return;
+
         if(!$this->auth->is_user_allowed(UserPolicyType::BILLINGS_READ))
             $this->_exception(
                 __("You are not allowed to perform this operation"),

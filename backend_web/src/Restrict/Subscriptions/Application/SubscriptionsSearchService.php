@@ -28,6 +28,8 @@ final class SubscriptionsSearchService extends AppService
 
     private function _check_permission(): void
     {
+        if($this->auth->is_root_super()) return;
+
         if(!(
             $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ)
             || $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE)

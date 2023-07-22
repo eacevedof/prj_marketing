@@ -24,6 +24,7 @@ return [
     "environments" => [
         "default_migration_table" => "phinxlog",
         "default_environment" => "development",
+
         "production" => [
             "adapter" => "mysql",
             "host" => "host.docker.internal",

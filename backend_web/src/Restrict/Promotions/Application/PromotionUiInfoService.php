@@ -29,6 +29,8 @@ final class PromotionUiInfoService extends AppService
 
     private function _check_permission(): void
     {
+        if($this->auth->is_root_super()) return;
+
         if(!(
             $this->auth->is_user_allowed(UserPolicyType::PROMOTION_UIS_READ)
             || $this->auth->is_user_allowed(UserPolicyType::PROMOTION_UIS_WRITE)

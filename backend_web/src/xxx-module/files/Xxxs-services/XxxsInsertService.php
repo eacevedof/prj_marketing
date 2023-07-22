@@ -61,6 +61,8 @@ final class XxxsInsertService extends AppService
 
     private function _check_permission(): void
     {
+        if($this->auth->is_root_super()) return;
+
         if(!$this->auth->is_user_allowed(UserPolicyType::XXXS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
