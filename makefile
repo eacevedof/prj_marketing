@@ -114,12 +114,12 @@ deploy-test: ## deploy codeonly in test
 deploy-prod: ## deploy codeonly in prod
 	py.sh deploy.codeonly mypromos-prod
 
-log-error: ## logs error
+error: ## logs error
 	cd ./backend_web/logs/error; \
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
 
-log-sql: ## log queries
+sql: ## log queries
 	cd ./backend_web/logs/sql; \
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
