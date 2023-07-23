@@ -198,7 +198,7 @@ final class AppView
     
     private function _echo_js($any): void
     {
-        $json = json_encode($any);
+        $json = json_encode($any, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         echo $json;
     }
 
