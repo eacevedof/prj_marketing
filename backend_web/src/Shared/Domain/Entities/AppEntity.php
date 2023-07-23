@@ -96,7 +96,7 @@ abstract class AppEntity
             $dbfield = $this->get_field($requestkey);
             $dbtype = $this->get_type($dbfield);
             if($dbfield) {
-                $value = trim($request[$requestkey]);
+                $value = trim($request[$requestkey] ?? "");
                 if ($dbtype === EntityType::DATETIME)
                     $value = $this->_get_dt_sanitized($value);
                 $mapped[$dbfield] = $value;
