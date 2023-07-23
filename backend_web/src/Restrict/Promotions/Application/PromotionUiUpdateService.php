@@ -186,7 +186,7 @@ final class PromotionUiUpdateService extends AppService
 
     private function _update(array $promouireq, array $promotionui): array
     {
-        if ($promouireq["id"] !== $promotionui["id"])
+        if (((int) $promouireq["id"]) !== $promotionui["id"])
             $this->_exception(
                 __("This promotion UI does not belong to promotion {0}", $this->input["_promotionuuid"]),
                 ExceptionType::CODE_BAD_REQUEST
