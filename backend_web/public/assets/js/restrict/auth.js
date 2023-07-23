@@ -6,10 +6,10 @@ const auth = {
     writable: 0,
 
     PROFILES: {
-        ROOT: "1",
-        SYS_ADMIN: "2",
-        BUSINESS_OWNER: "3",
-        BUSINESS_MANAGER: "4",
+        ROOT: 1,
+        SYS_ADMIN: 2,
+        BUSINESS_OWNER: 3,
+        BUSINESS_MANAGER: 4,
     },
 
     is_root: idprofile => !idprofile ?auth.id_profile === auth.PROFILES.ROOT : auth.PROFILES.ROOT === idprofile,
