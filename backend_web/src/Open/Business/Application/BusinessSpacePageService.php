@@ -90,19 +90,19 @@ final class BusinessSpacePageService extends AppService
 
         return [
             ["h2" => __("About {0}", $businessname)],
-            ...$this->_get_ps($this->_get_cleaned($spacepage["space_about"])),
+            ...$this->_get_ps($this->_get_cleaned($spacepage["space_about"] ?? "")),
 
             ["h2" => __("Our points programs")],
-            ...explode("\n", $this->_get_cleaned($spacepage["space_plan"])),
+            ...explode("\n", $this->_get_cleaned($spacepage["space_plan"] ?? "")),
 
             ["h2" => __("Current promotions")],
             ["ul" => $promotions],
 
             ["h2" => __("Where are we located?")],
-            ...$this->_get_ps($this->_get_cleaned($spacepage["space_location"])),
+            ...$this->_get_ps($this->_get_cleaned($spacepage["space_location"] ?? "")),
 
             ["h2" => __("Contact us")],
-            ...$this->_get_ps($this->_get_cleaned($spacepage["space_contact"])),
+            ...$this->_get_ps($this->_get_cleaned($spacepage["space_contact"] ?? "")),
 
             ["p" => "<br/><br/><br/>"],
         ];
