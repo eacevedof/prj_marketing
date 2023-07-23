@@ -65,6 +65,7 @@ auth.readable = <?= (int)$authread ?>;
 auth.writable = <?= (int)$authwrite ?>;
 
 const is_infoable = row => {
+
   if (auth.is_root()) return true
   if (row.delete_date) return false
   if (auth.is_sysadmin()) return true
