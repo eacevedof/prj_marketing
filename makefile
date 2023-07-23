@@ -108,6 +108,10 @@ ssh-web: ## web
 ssh-db: ## ssh's into mysql
 	docker exec -it --user root php-marketing-db bash
 
+gitpush: ## git push m=any message
+	clear;
+	git add .; git commit -m "$(m)"; git push;
+
 deploy-test: ## deploy codeonly in test
 	py.sh deploy.codeonly mypromos
 
