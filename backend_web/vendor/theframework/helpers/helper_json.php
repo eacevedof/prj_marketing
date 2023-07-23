@@ -230,7 +230,7 @@ final class HelperJson
         // ok, validation error, or failure
         header("Status: {$this->arResponse["header"]["http"]["message"]}");        
 
-        $sJson = json_encode($this->arResponse["payload"]);
+        $sJson = json_encode($this->arResponse["payload"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         echo $sJson;
         if($exit) exit();
     }

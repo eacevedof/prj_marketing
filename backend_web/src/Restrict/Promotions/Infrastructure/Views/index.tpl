@@ -60,12 +60,11 @@ import auth from "/assets/js/restrict/auth.js"
 
 auth.id_user = <?php $this->_echo_js($authuser["id"]) ?>;
 auth.id_profile = <?php $this->_echo_js($authuser["id_profile"]) ?>;
-auth.id_owner = <?php $this->_echo_js((string) $idowner) ?>;
+auth.id_owner = <?php $this->_echo_js((int) $idowner) ?>;
 auth.readable = <?= (int)$authread ?>;
 auth.writable = <?= (int)$authwrite ?>;
 
 const is_infoable = row => {
-
   if (auth.is_root()) return true
   if (row.delete_date) return false
   if (auth.is_sysadmin()) return true
