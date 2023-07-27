@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Boot\Traits;
 
+use BOOT;
 use TheFramework\Components\ComponentLog;
 
 trait LogTrait
