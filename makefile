@@ -47,7 +47,7 @@ build-web: #nginx
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-web
 	make ps
 
-build-be: #fpm
+build-php: #fpm
 	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-be
 	make ps
 
@@ -59,7 +59,7 @@ restart: ## restart the containers
 	docker-compose --env-file ./docker/.env stop
 	docker-compose --env-file ./docker/.env start
 
-restart-be:
+restart-php:
 	docker restart php-marketing-be
 
 restart-web:
@@ -74,7 +74,7 @@ stop: ## stop containers
 stop-db: ## stop db
 	docker stop php-marketing-db
 
-stop-be: ## stop be
+stop-php: ## stop be
 	docker stop php-marketing-be
 
 stop-web: ## stop web
@@ -99,7 +99,7 @@ rem-cache: ## remove diskcache
 rem-xxx: ## remove xxx-module
 	rm -fr ./backend_web/xxx-module/* !files
 
-ssh-be: ## fpm
+ssh-php: ## fpm
 	docker exec -it --user root php-marketing-be bash
 
 ssh-web: ## web
@@ -128,6 +128,9 @@ sql: ## log queries
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
 
+phpunit:
+	clear;
+	docker exec -it php-marketing-be sh -c "cd  /appdata/www/backend_web/; vendor/bin/phpunit tests"
 
 prepare-pro:  ## prepare pro
 ifeq ($(OS),Linux)

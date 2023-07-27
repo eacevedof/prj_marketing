@@ -32,7 +32,7 @@ make ssh-be
 be; phpunit
 
 en prod:
-/usr/bin/php8.0-cli vendor/bin/phpunit tests
+/usr/bin/php8.2-cli vendor/bin/phpunit tests
 
 ó
 
