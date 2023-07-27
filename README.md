@@ -36,7 +36,7 @@ en prod:
 
 ó
 
-make ssh-be
+make ssh-php
 run-test
 ```
 - esto ejecuta los test incluyendo `testbootstrap.php`
