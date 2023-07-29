@@ -32,16 +32,17 @@ final class ArrayRepository extends AppRepository
         $sql = $this->_get_qbuilder()
             ->set_comment("apparrayrepo.get_promotion_types")
             ->set_table("app_array as m")
-            ->set_getfields(["m.id_pk as id","m.description"])
+            ->set_getfields(["m.id_pk as id", "m.description"])
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.type='$type'")
-            ->add_and("(m.id_owner=-1 OR m.id_owner=$idowner)")
+            ->add_and("m.type = '$type'")
+            ->add_and("(m.id_owner=-1 OR m.id_owner = $idowner)")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
+        $this->map_to_int($this->result, ["id"]);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -51,16 +52,17 @@ final class ArrayRepository extends AppRepository
         $sql = $this->_get_qbuilder()
             ->set_comment("apparrayrepo.get_languages")
             ->set_table("app_array as m")
-            ->set_getfields(["m.id_pk as id","m.description"])
+            ->set_getfields(["m.id_pk as id", "m.description"])
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.type='$type'")
+            ->add_and("m.type= '$type'")
             ->add_and("m.id_owner=-1")
             ->add_orderby("m.order_by")
             ->add_orderby("m.description")
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
+        $this->map_to_int($this->result, ["id"]);
         return $this->_get_associative(["id","description"]);
     }
 
@@ -80,7 +82,8 @@ final class ArrayRepository extends AppRepository
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
-        return $this->_get_associative(["id","description"]);
+        $this->map_to_int($this->result, ["id"]);
+        return $this->_get_associative(["id", "description"]);
     }
 
     public function get_genders(): array
@@ -89,7 +92,7 @@ final class ArrayRepository extends AppRepository
         $sql = $this->_get_qbuilder()
             ->set_comment("apparrayrepo.get_genders")
             ->set_table("app_array as m")
-            ->set_getfields(["m.id_pk as id","m.description"])
+            ->set_getfields(["m.id_pk as id", "m.description"])
             ->add_and("m.is_enabled=1")
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.type='$type'")
@@ -99,7 +102,8 @@ final class ArrayRepository extends AppRepository
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
-        return $this->_get_associative(["id","description"]);
+        $this->map_to_int($this->result, ["id"]);
+        return $this->_get_associative(["id", "description"]);
     }
 
     public function get_timezones(): array
@@ -118,6 +122,7 @@ final class ArrayRepository extends AppRepository
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
+        $this->map_to_int($this->result, ["id"]);
         return $this->_get_associative(["id","description"]);
     }
 

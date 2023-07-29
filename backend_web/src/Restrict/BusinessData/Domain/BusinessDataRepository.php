@@ -147,6 +147,7 @@ final class BusinessDataRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->query($sql);
+        $this->map_to_int($r, ["id", "id_user"]);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
@@ -169,12 +170,15 @@ final class BusinessDataRepository extends AppRepository
             ->set_getfields(["m.*", "ar1.description AS e_timezone"])
             ->add_join("LEFT JOIN app_array ar1 ON m.id_tz = ar1.id_pk AND ar1.type='$type'")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_user=$iduser")
+            ->add_and("m.id_user = $iduser")
         ;
         if ($fields) $sql->set_getfields($fields);
 
         $sql = $sql->select()->sql();
-        return $this->query($sql)[0] ?? [];
+
+        $r = $this->query($sql);
+        $this->map_to_int($r, ["id", "id_user", "id_tz"]);
+        return $r[0] ?? [];
     }
 
     public function get_by_slug(string $slug, array $fields=[]): array
@@ -187,11 +191,14 @@ final class BusinessDataRepository extends AppRepository
             ->set_getfields(["m.*"])
             ->add_join("LEFT JOIN app_array ar1 ON m.id_tz = ar1.id_pk AND ar1.type='$type'")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.slug='$slug'")
+            ->add_and("m.slug = '$slug'")
             ->set_limit(1);
         if ($fields) $sql->set_getfields($fields);
         $sql = $sql->select()->sql();
-        return $this->query($sql)[0] ?? [];
+
+        $r = $this->query($sql);
+        $this->map_to_int($r, ["id", "id_user", "id_tz"]);
+        return $r[0] ?? [];
     }
 
     public function get_space_by_promotion(string $promouuid): array
@@ -209,7 +216,7 @@ final class BusinessDataRepository extends AppRepository
                 "p.bgimage_xs AS promoimage"
             ])
             ->add_join("INNER JOIN app_promotion AS p ON p.id_owner = bd.id_user")
-            ->add_and("p.uuid='$promouuid'")
+            ->add_and("p.uuid = '$promouuid'")
             ->add_and("bd.delete_date IS NULL")
             ->add_and("p.delete_date IS NULL")
             ->select()->sql()
@@ -259,7 +266,7 @@ final class BusinessDataRepository extends AppRepository
             ->set_getfields(["m.business_name","m.disabled_date","m.disabled_user","m.disabled_reason"])
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.disabled_date IS NOT NULL")
-            ->add_and("m.id_user=$iduser")
+            ->add_and("m.id_user = $iduser")
         ;
         $sql = $sql->select()->sql();
         return $this->query($sql)[0] ?? [];
@@ -273,7 +280,7 @@ final class BusinessDataRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields(["p.slug, p.description, p.bgimage_xs, CONVERT_TZ(p.date_from,'UTC','$tz') date_from, CONVERT_TZ(p.date_to,'UTC','$tz') date_to"])
             ->add_join("INNER JOIN app_promotion p ON m.id_user = p.id_owner")
-            ->add_and("m.slug='$businessslug'")
+            ->add_and("m.slug = '$businessslug'")
             ->add_and("m.delete_date IS NULL")
             ->add_and("p.delete_date IS NULL")
             ->add_and("m.disabled_date IS NULL")

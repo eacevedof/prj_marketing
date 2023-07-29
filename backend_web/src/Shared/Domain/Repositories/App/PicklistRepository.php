@@ -36,6 +36,7 @@ final class PicklistRepository extends AppRepository
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
+        $this->map_to_int($this->result, ["id"]);
         return $this->_get_associative(["id","description"]);
     }
 
