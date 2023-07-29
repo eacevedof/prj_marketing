@@ -40,7 +40,9 @@ final class BusinessAttributeRepository extends AppRepository
             ->add_and("m.id_user=$iduser")
             ->select()->sql()
         ;
-        return $this->db->query($sql);
+        $result = $this->db->query($sql);
+        $this->map_to_int($result, ["id", "id_user"]);
+        return $result;
     }
 
     public function get_spacepage_by_businessslug(string $businesslug): array
@@ -62,7 +64,9 @@ final class BusinessAttributeRepository extends AppRepository
             ->add_and("bd.slug='$businesslug'")
             ->select()->sql()
         ;
-        return $this->db->query($sql);
+        $result = $this->db->query($sql);
+        $this->map_to_int($result, ["id", "id_user"]);
+        return $result;
     }
 
 }

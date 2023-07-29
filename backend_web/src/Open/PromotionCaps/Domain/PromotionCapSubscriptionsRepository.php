@@ -53,6 +53,7 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->query($sql);
+        $this->map_to_int($r, ["id", "id_owner", "id_promotion", "id_promouser"]);
         if (!$r) return [];
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
         return array_merge($r, $sysdata);

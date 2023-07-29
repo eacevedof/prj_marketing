@@ -14,6 +14,7 @@ use TheFramework\Components\ComponentLog;
 
 trait LogTrait
 {
+
     protected function log($mxVar, $title=null): void
     {
         $oLog = new ComponentLog("sql",BOOT::PATH_LOGS);

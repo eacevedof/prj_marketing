@@ -306,4 +306,18 @@ abstract class AppRepository
         }
     }
 
+    protected function map_to_int(array &$rows, array $fields): void
+    {
+        if (!$rows) return;
+        if (!$fields) return;
+
+        foreach ($rows as $i => $row) {
+            foreach ($row as $field=>$value) {
+                if (!in_array($field, $fields))
+                    continue;
+                $rows[$i][$field] = (int) $value;
+            }
+        }
+    }
+
 }//AppRepository

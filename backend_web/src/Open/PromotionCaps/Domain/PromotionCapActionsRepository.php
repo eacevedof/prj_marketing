@@ -97,23 +97,23 @@ final class PromotionCapActionsRepository extends AppRepository
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.id",
-"m.id_promotion",
-"m.id_promouser",
-"m.id_type",
-"m.url_req",
-"m.url_ref",
-"m.remote_ip",
-"m.insert_date"
+                "m.id_promotion",
+                "m.id_promouser",
+                "m.id_type",
+                "m.url_req",
+                "m.url_ref",
+                "m.remote_ip",
+                "m.insert_date"
             ])
             //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
-            ->add_and("m.uuid='$uuid'")
+            ->add_and("m.uuid = '$uuid'")
             ->select()->sql()
         ;
         $r = $this->query($sql);
+        $this->map_to_int($r, ["id", "id_promotion", "id_promouser", "id_type"]);
         if (!$r) return [];
 
         $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-
         return array_merge($r, $sysdata);
     }
 

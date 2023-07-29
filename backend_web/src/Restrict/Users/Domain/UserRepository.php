@@ -155,6 +155,8 @@ final class UserRepository extends AppRepository implements IEventDispatcher
         ;
         $r = $this->query($sql);
         if(count($r)>1 || !$r) return [];
+
+        $this->map_to_int($r, ["id", "id_language", "id_profile", "id_parent"]);
         return $r[0];
     }
 
@@ -169,7 +171,8 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        return intval($r[0]["id"] ?? 0);
+        $this->map_to_int($r, ["id"]);
+        return $r[0]["id"] ?? 0;
     }
 
     public function get_info_by_uuid(string $uuid): array
@@ -199,6 +202,7 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ->select()->sql()
         ;
         $r = $this->query($sql);
+        $this->map_to_int($r, ["id", "id_profile", "id_parent", "id_country", "id_language"]);
         return $r[0] ?? [];
     }
 
@@ -211,6 +215,7 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ->select()->sql()
         ;
         $r = $this->query($sql);
+        $this->map_to_int($r, ["id", "id_parent"]);
         return $r;
     }
 
@@ -251,9 +256,9 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ->set_comment("user.is_owner")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
-            ->add_and("m.is_enabled=1")
+            ->add_and("m.is_enabled = 1")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id=$iduser")
+            ->add_and("m.id = $iduser")
             ->add_and("m.id_profile=$idprofile")
             ->select()->sql()
         ;
