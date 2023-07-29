@@ -78,6 +78,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query");
+            $this->logerr($this->db, "on-query db");
             $this->_exception(__("Error reading data"));
         }
     }
@@ -91,7 +92,8 @@ abstract class AppRepository
             ];
         }
         catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query-wiht-count");
+            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query-with-count");
+            $this->logerr($this->db, "on-query-with-count db");
             $this->_exception(__("Error reading data"));
         }
     }
@@ -103,6 +105,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-execute");
+            $this->logerr($this->db, "on-execute db");
             $this->_exception(__("Error persiting data"));
         }
     }
@@ -125,6 +128,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-insert");
+            $this->logerr($this->db, "on-insert db");
             $this->_exception(__("Error persiting data"));
         }
     }//insert
@@ -161,6 +165,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-update");
+            $this->logerr($this->db, "on-update db");
             $this->_exception(__("Error updating data"));
         }
     }//update
@@ -187,6 +192,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-delete");
+            $this->logerr($this->db, "on-delete db");
             $this->_exception(__("Error deleting data"));
         }
     }//delete
@@ -212,6 +218,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-sysdata");
+            $this->logerr($this->db, "on-sysdata db");
             $this->_exception(__("Error reading sysdata"));
         }
     }
@@ -240,6 +247,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-id-by-uuid");
+            $this->logerr($this->db, "on-get-id-by-uuid db");
             $this->_exception(__("Error reading data"));
         }
     }
@@ -261,6 +269,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-id");
+            $this->logerr($this->db, "on-get-by-id db");
             $this->_exception(__("Error reading data"));
         }
     }
@@ -282,6 +291,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-uuid");
+            $this->logerr($this->db, "on-get-by-uuid db");
             $this->_exception(__("Error reading data"));
         }
     }
@@ -302,6 +312,7 @@ abstract class AppRepository
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-is-deleted");
+            $this->logerr($this->db, "on-is-deleted db");
             $this->_exception(__("Error reading data"));
         }
     }
