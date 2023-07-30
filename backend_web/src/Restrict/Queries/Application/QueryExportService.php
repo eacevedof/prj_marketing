@@ -21,6 +21,8 @@ final class QueryExportService extends AppService implements IEventDispatcher
     private array $columns;
     private string $filename;
 
+    private ?object $auth;
+
     public function __construct(array $input)
     {
         $this->_load_input($input);
@@ -29,12 +31,16 @@ final class QueryExportService extends AppService implements IEventDispatcher
     private function _load_input(array $input): void
     {
         if (!$input) $this->_exception(__("Empty request"), ExceptionType::CODE_BAD_REQUEST);
+
         $this->requuid = trim($input["req_uuid"] ?? "");
         if (!$this->requuid) $this->_exception(__("No request id received"), ExceptionType::CODE_BAD_REQUEST);
+
         $this->columns = $input["columns"] ?? [];
         if (!$this->columns) $this->_exception(__("No request columns received"), ExceptionType::CODE_BAD_REQUEST);
+
         if (strlen(json_encode($this->columns))> self::LIMIT_PARAMS)
             $this->_exception(__("Request payload is too big"), ExceptionType::CODE_BAD_REQUEST);
+
         $this->filename = $input["filename"] ?? "export";
     }
 
@@ -87,8 +93,9 @@ final class QueryExportService extends AppService implements IEventDispatcher
 
     public function __invoke(): void
     {
+        $this->auth = SF::get_auth();
         $this->_check_permission();
-        $iduser = SF::get_auth()->get_user()["id"] ?? -1;
+        $iduser = $this->auth->get_user()["id"] ?? -1;
         if (!$query = RF::get(QueryRepository::class)->get_by_uuid_and_iduser($this->requuid, $iduser, ["id","query", "total"]))
             $this->_exception(
                 __("Request id {0} not found!", $this->requuid),
