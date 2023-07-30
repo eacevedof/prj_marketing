@@ -33,10 +33,19 @@ trait RequestTrait
         if (!$request) $request = $this->request->get_post();
         
         $without = [];
-        foreach ($request as $key=>$value)
-            if(substr($key,0,1)!="_")
-                $without[$key] = is_string($value) && trim($value)==="" ? null : trim($value ?? "");
+        foreach ($request as $key=>$value) {
+            //si no empieza con "_xxxx"
+            if (substr($key, 0, 1) === "_")
+                continue;
 
+            $tmpValue = is_string($value) && trim($value) === ""
+                            ? null
+                            : trim($value ?? "")
+                        ;
+            if (strstr($key, "id_") && is_numeric($value))
+                $tmpValue = (int) $value;
+            $without[$key] = $tmpValue;
+        }
         return $without;
     }
 
