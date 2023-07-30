@@ -181,7 +181,18 @@ final class PromotionUiRepository extends AppRepository
         ;
         if ($fields) $sql->set_getfields($fields);
         $sql = $sql->select()->sql();
-        return $this->query($sql)[0] ?? [];
+
+        $r = $this->query($sql);
+        $this->map_to_int(
+            $r,
+            [
+                "id", "id_owner", "id_promotion", "input_email", "pos_email", "input_name1",
+                "pos_name1", "input_name2", "pos_name2", "input_language", "pos_language",
+                "input_country", "pos_country", "input_phone1", "pos_phone1", "input_birthdate", "pos_birthdate",
+                "input_gender"
+            ]
+        );
+        return $r[0] ?? [];
     }
 
     public function get_active_fields(int $idpromotion): array
