@@ -64,11 +64,21 @@ auth.id_owner = <?php $this->_echo_js((int) $idowner) ?>;
 auth.readable = <?= (int)$authread ?>;
 auth.writable = <?= (int)$authwrite ?>;
 
+/*
+console.log(
+    "auth", auth,
+    "is-bm", auth.is_business_manager(),
+    "can-write", auth.can_write(),
+    "can-read", auth.can_read()
+)
+ */
+
 const is_infoable = row => {
   if (auth.is_root()) return true
   if (row.delete_date) return false
   if (auth.is_sysadmin()) return true
   if (auth.is_business_owner() && auth.have_sameowner(row.id_owner)) return true
+  //console.log("row.id-owner", row.id_owner, "auth-id-owner", auth.id_owner)
   return (auth.is_business_manager() && auth.have_sameowner(row.id_owner) && (auth.can_write() || auth.can_read()))
 }
 
