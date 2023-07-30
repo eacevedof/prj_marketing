@@ -28,10 +28,10 @@ const auth = {
         ? [auth.PROFILES.ROOT, auth.PROFILES.SYS_ADMIN].includes(auth.id_profile)
         : [auth.PROFILES.ROOT, auth.PROFILES.SYS_ADMIN].includes(idprofile),
 
-    can_read: () => auth.readable===1,
-    can_write: () => auth.writable===1,
+    can_read: () => auth.readable === 1,
+    can_write: () => auth.writable === 1,
 
-    have_sameowner: idowner => auth.id_owner === idowner,
+    have_sameowner: idowner => auth.id_owner === parseInt(idowner),
 }
 
 export default auth
