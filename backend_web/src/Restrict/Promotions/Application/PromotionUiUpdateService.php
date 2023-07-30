@@ -178,7 +178,7 @@ final class PromotionUiUpdateService extends AppService
     private function _remove_readonly(array &$promotionui): void
     {
         $remove = [
-            "uuid", "id_owner", "id_promotion"
+            "uuid", "id_owner", "id_promotion", "input_email"
         ];
         foreach ($remove as $field)
             unset($promotionui[$field]);
