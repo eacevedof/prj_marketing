@@ -214,6 +214,7 @@ abstract class AppRepository
         $sql = $qb->select()->sql();
         try {
             $r = $this->db->query($sql);
+            $this->map_to_int($r, ["id"]);
             return $r[0]["update_date"] ?? "";
         }
         catch (Exception $ex) {
@@ -243,7 +244,8 @@ abstract class AppRepository
         ;
         try {
             $r = $this->db->query($sql);
-            return intval($r[0]["id"] ?? 0);
+            $this->map_to_int($r, ["id"]);
+            return $r[0]["id"] ?? 0;
         }
         catch (Exception $ex) {
             $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-id-by-uuid");
@@ -265,6 +267,7 @@ abstract class AppRepository
         $sql = $sql->select()->sql();
         try {
             $r = $this->db->query($sql);
+            $this->map_to_int($r, ["id"]);
             return $r[0] ?? [];
         }
         catch (Exception $ex) {
@@ -311,6 +314,7 @@ abstract class AppRepository
         ;
         try {
             $r = $this->db->query($sql);
+            $this->map_to_int($r, ["id"]);
             return (bool) ($r[0]["delete_date"] ?? "");
         }
         catch (Exception $ex) {
