@@ -284,9 +284,12 @@ abstract class AppRepository
             ->add_and("m.uuid='$uuid'")
         ;
         if ($fields) $sql->set_getfields($fields);
+
         $sql = $sql->select()->sql();
         try {
             $r = $this->db->query($sql);
+            //@eaftodo aqui hay que incluir el resto de ids que sean enteros
+            $this->map_to_int($r, ["id"]);
             return $r[0] ?? [];
         }
         catch (Exception $ex) {
