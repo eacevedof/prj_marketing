@@ -40,7 +40,7 @@ abstract class AppRepository
         throw new RepositoryException($message, $code);
     }
 
-    private function _get_pks($arData)
+    private function _get_pks(array $arData): array
     {
         $pks = [];
         foreach($arData as $fieldname=>$sValue)
@@ -49,7 +49,7 @@ abstract class AppRepository
         return $pks;
     }
 
-    private function _get_no_pks($arData)
+    private function _get_no_pks(array $arData): array
     {
         $pks = [];
         foreach($arData as $fieldname=>$sValue)

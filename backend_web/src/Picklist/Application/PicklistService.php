@@ -113,17 +113,17 @@ final class PicklistService extends AppService
         return $this->repopicklist->get_business_owners();
     }
 
-    public function get_users(?string $notid=null): array
+    public function get_users(?int $notIdUser=null): array
     {
         $users = $this->repopicklist->get_users();
-        if (!$notid)
+        if (!$notIdUser)
             return $users;
-        $idsuer = array_search($notid,$users);
+        $idsuer = array_search($notIdUser, $users);
         if($idsuer) unset($users[$idsuer]);
         return $users;
     }
 
-    public function get_not_or_yes(array $conf = ["n"=>"0", "y"=>"1"]): array
+    public function get_not_or_yes(array $conf = ["n" => 0, "y" => 1]): array
     {
         return [
             [ "key" => $conf["n"], "value" =>__("No")],
