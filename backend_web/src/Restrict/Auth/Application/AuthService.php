@@ -86,7 +86,7 @@ final class AuthService
         return [$permission["write"]];
     }
 
-    public function is_root(?string $idprofile=null): bool
+    public function is_root(?int $idprofile=null): bool
     {
         return $idprofile
             ? ($idprofile === UserProfileType::ROOT)
@@ -102,28 +102,28 @@ final class AuthService
         );
     }
 
-    public function is_sysadmin(?string $idprofile=null): bool
+    public function is_sysadmin(?int $idprofile=null): bool
     {
         return $idprofile
             ? ($idprofile === UserProfileType::SYS_ADMIN)
             : (self::$authuser["id_profile"] ?? "") === UserProfileType::SYS_ADMIN;
     }
 
-    public function is_business_owner(?string $idprofile=null): bool
+    public function is_business_owner(?int $idprofile=null): bool
     {
         return $idprofile
             ? ($idprofile === UserProfileType::BUSINESS_OWNER)
-            : (self::$authuser["id_profile"] ?? "") === UserProfileType::BUSINESS_OWNER;
+            : (self::$authuser["id_profile"] ?? null) === UserProfileType::BUSINESS_OWNER;
     }
 
-    public function is_business_manager(?string $idprofile=null): bool
+    public function is_business_manager(?int $idprofile=null): bool
     {
         return $idprofile
             ? ($idprofile === UserProfileType::BUSINESS_MANAGER)
             : (self::$authuser["id_profile"] ?? "") === UserProfileType::BUSINESS_MANAGER;
     }
 
-    public function is_business(?string $idprofile=null): bool
+    public function is_business(?int $idprofile=null): bool
     {
         $business = [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER];
         return $idprofile
@@ -131,7 +131,7 @@ final class AuthService
             : in_array(self::$authuser["id_profile"] ?? "", $business);
     }
 
-    public function is_system(?string $idprofile=null): bool
+    public function is_system(?int $idprofile=null): bool
     {
         $system = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN];
         return $idprofile
@@ -139,10 +139,6 @@ final class AuthService
             : in_array(self::$authuser["id_profile"] ?? "", $system);
     }
 
-    public function have_sameowner(string $idowner): bool
-    {
-        return $idowner === (string) $this->get_idowner();
-    }
 
     public function get_idowner(): ?int
     {

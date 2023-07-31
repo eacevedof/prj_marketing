@@ -161,7 +161,7 @@ final class BusinessDataRepository extends AppRepository
         return $this;
     }
 
-    public function get_by_user(int $iduser, array $fields=[]): array
+    public function get_by_user(int $idUser, array $fields=[]): array
     {
         $type = AppArrayType::TIMEZONE;
         $sql = $this->_get_qbuilder()
@@ -170,7 +170,7 @@ final class BusinessDataRepository extends AppRepository
             ->set_getfields(["m.*", "ar1.description AS e_timezone"])
             ->add_join("LEFT JOIN app_array ar1 ON m.id_tz = ar1.id_pk AND ar1.type='$type'")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_user = $iduser")
+            ->add_and("m.id_user = $idUser")
         ;
         if ($fields) $sql->set_getfields($fields);
 
