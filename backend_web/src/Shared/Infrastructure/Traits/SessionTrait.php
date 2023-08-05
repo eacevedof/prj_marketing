@@ -12,11 +12,7 @@ namespace App\Shared\Infrastructure\Traits;
 use App\Shared\Infrastructure\Components\Session\SessionComponent;
 use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SsF;
 
-/**
- * Trait SessionTrait
- * @package App\Traits
- * this->session, _load_session()
- */
+
 trait SessionTrait
 {
     protected ?SessionComponent $session = null;

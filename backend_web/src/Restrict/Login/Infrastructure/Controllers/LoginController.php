@@ -9,6 +9,8 @@
  */
 namespace App\Restrict\Login\Infrastructure\Controllers;
 
+use App\Restrict\Login\Application\Dtos\LoginDto;
+use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SsF;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Login\Application\LoginService;
@@ -38,8 +40,12 @@ final class LoginController extends RestrictController
                 ->show();
 
         try {
-            $post = $this->request->get_post();
-            $result = SF::get(LoginService::class, $post)->get_access();
+            $loginDto = LoginDto::fromPrimitives([
+                "email" => $this->request->get_post("email"),
+                "password" => $this->request->get_post("password"),
+                "session" => SsF::get(),
+            ]);
+            $result = SF::get(LoginService::class)->get_access($loginDto);
             $redirect = $this->request->get_redirect();
             $this->_get_json()
                 ->set_payload([
