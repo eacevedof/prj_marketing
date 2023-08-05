@@ -1,6 +1,7 @@
 <?php
 namespace App\Restrict\Login\Application;
 
+use App\Restrict\Login\Application\Dtos\LoginDto;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\SessionTrait;
 use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
@@ -25,23 +26,24 @@ final class LoginService extends AppService
     private UserPermissionsRepository $repopermission;
     private UserPreferencesRepository $repouserprefs;
 
-    public function __construct(array $input)
+    private LoginDto $loginDto;
+
+    public function __construct()
     {
-        $this->input = $input;
-        $this->_load_session();
         $this->encdec = $this->_get_encdec();
         $this->repouser = RF::get(UserRepository::class);
         $this->repopermission = RF::get(UserPermissionsRepository::class);
         $this->repouserprefs = RF::get(UserPreferencesRepository::class);
     }
 
-    public function get_access(): array
+    public function get_access(LoginDto $loginDto): array
     {
-        $email = $this->input["email"];
-        if (!$email) $this->_exception(__("Empty email"), ExceptionType::CODE_BAD_REQUEST);
+        $this->loginDto = $loginDto;
+        if (!$email =$this->loginDto->email())
+            $this->_exception(__("Empty email"), ExceptionType::CODE_BAD_REQUEST);
 
-        $password = $this->input["password"];
-        if (!$password) $this->_exception(__("Empty password"), ExceptionType::CODE_BAD_REQUEST);
+        if (!$password = $this->loginDto->password())
+            $this->_exception(__("Empty password"), ExceptionType::CODE_BAD_REQUEST);
 
         $aruser = $this->repouser->get_by_email($email);
         if (!($secret = ($aruser["secret"] ?? ""))) $this->_exception(__("Invalid data"), ExceptionType::CODE_BAD_REQUEST);

@@ -4,7 +4,7 @@ namespace App\Shared\Infrastructure\Components\Request;
 
 final class RequestComponent
 {
-    public function get_post($sKey=null, $default=null)
+    public function get_post(?string $sKey=null, mixed $default=null): mixed
     {
         if(!$sKey) return $_POST ?? [];
         return $_POST[$sKey] ?? $default;
