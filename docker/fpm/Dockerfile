@@ -1,5 +1,5 @@
 #docker/fpm/Dockerfile
-FROM php:8.0.12-fpm
+FROM php:8.2.8-fpm
 
 RUN apt-get update \
     && apt-get -y install --no-install-recommends \
