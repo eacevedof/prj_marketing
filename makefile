@@ -29,6 +29,19 @@ rebuild: ## rebuild containers
 	docker-compose --env-file ./docker/.env -f docker-compose.yml up -d --build --remove-orphans
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-marketing-db
 
+rebuild-web: ## rebuild web image (nginx)
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-web
+	docker ps
+
+rebuild-php: ## rebuild php-fpm image and launch container php-marketing-be
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-be
+	docker ps
+
+rebuild-db: ## rebuild mssql image and launch container php-marketing-db (mysql)
+	docker-compose --env-file ./docker/.env up -d --no-deps --force-recreate --build php-marketing-db
+	docker ps
+
+
 config:
 	docker-compose --env-file ./docker/.env config
 
