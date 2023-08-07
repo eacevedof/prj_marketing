@@ -43,7 +43,7 @@ final class LoginController extends RestrictController
                 "email" => $this->request->get_post("email"),
                 "password" => $this->request->get_post("password"),
             ]);
-            $result = SF::get(LoginService::class)->get_access($loginDto);
+            $result = SF::get(LoginService::class)->getAccessData($loginDto);
             $redirect = $this->request->get_redirect();
             $this->_get_json()
                 ->set_payload([
