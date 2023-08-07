@@ -107,15 +107,15 @@ final class UsersInfoService extends AppService
         )[0];
 
         return [
-            "user" => $this->_get_with_sysdata($user, $tz = $this->auth->get_tz()),
+            "user" => $this->_get_row_with_sysdata($user, $tz = $this->auth->get_tz()),
             "permissions" => $ispermissions
-                ? $this->_get_with_sysdata($this->repopermission->get_by_user($iduser = $user["id"]), $tz)
+                ? $this->_get_row_with_sysdata($this->repopermission->get_by_user($iduser = $user["id"]), $tz)
                 : null,
             "businessdata" => $isbusinessdata
-                ? $this->_get_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
+                ? $this->_get_row_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
                 : null,
             "businessattributespace" => $isbusinessdata
-                ? $this->_get_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
+                ? $this->_get_row_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
                 : null,
             "preferences" => $ispreferences ? $this->repoprefs->get_by_user($iduser) : null,
         ];
@@ -145,15 +145,15 @@ final class UsersInfoService extends AppService
         )[0];
 
         return [
-            "user" => $this->_get_with_sysdata($user, $tz = $this->auth->get_tz()),
+            "user" => $this->_get_row_with_sysdata($user, $tz = $this->auth->get_tz()),
             "permissions" => $ispermissions
-                ? $this->_get_with_sysdata($this->repopermission->get_by_user($iduser = $user["id"]), $tz)
+                ? $this->_get_row_with_sysdata($this->repopermission->get_by_user($iduser = $user["id"]), $tz)
                 : null,
             "businessdata" => $isbusinessdata
-                ? $this->_get_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
+                ? $this->_get_row_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
                 : null,
             "businessattributespace" => $isbusinessdata
-                ? $this->_get_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
+                ? $this->_get_row_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
                 : null,
             "preferences" => $ispreferences ? $this->repoprefs->get_by_user($iduser) : null,
         ];
