@@ -112,7 +112,7 @@ final class PromotionsInfoService extends AppService
         return [
             "promotion" => $promotion,
             "promotionui" => $ispromotionui
-                ? $this->_get_with_sysdata(
+                ? $this->_get_row_with_sysdata(
                     $this->repopromoui->get_by_promotion((int) $promotion["id"]),
                     $this->auth->get_tz(),
                 )

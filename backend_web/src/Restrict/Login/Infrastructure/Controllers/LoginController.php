@@ -1,12 +1,4 @@
 <?php
-/**
- * @author Eduardo Acevedo Farje.
- * @link eduardoaf.com
- * @name App\Controllers\Restrict\LoginController
- * @file LoginController.php v1.0.0
- * @date 30-10-2021 14:33 SPAIN
- * @observations
- */
 namespace App\Restrict\Login\Infrastructure\Controllers;
 
 use App\Restrict\Login\Application\Dtos\LoginDto;
@@ -43,13 +35,13 @@ final class LoginController extends RestrictController
                 "email" => $this->request->get_post("email"),
                 "password" => $this->request->get_post("password"),
             ]);
-            $result = SF::get(LoginService::class)->getAccessData($loginDto);
+            $result = SF::get(LoginService::class)->get_access_data($loginDto);
             $redirect = $this->request->get_redirect();
             $this->_get_json()
                 ->set_payload([
                     "message"=>__("auth ok"),
                     "lang" => $result["lang"],
-                    UserPreferenceType::URL_DEFAULT_MODULE => $redirect?:$result[UserPreferenceType::URL_DEFAULT_MODULE]
+                    UserPreferenceType::URL_DEFAULT_MODULE => $redirect ?: $result[UserPreferenceType::URL_DEFAULT_MODULE]
                 ])->show();
         }
         catch (Exception $e)
