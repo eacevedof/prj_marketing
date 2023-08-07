@@ -37,7 +37,7 @@ final class LoginService extends AppService
         $this->userPreferencesRepository = RF::get(UserPreferencesRepository::class);
     }
 
-    public function get_access(LoginDto $loginDto): array
+    public function getAccessData(LoginDto $loginDto): array
     {
         $this->loginDto = $loginDto;
         if (!$email =$this->loginDto->email())
