@@ -35,13 +35,13 @@ final class LoginController extends RestrictController
                 "email" => $this->request->get_post("email"),
                 "password" => $this->request->get_post("password"),
             ]);
-            $result = SF::get(LoginService::class)->get_access_data($loginDto);
-            $redirect = $this->request->get_redirect();
+            $accessData = SF::get(LoginService::class)->get_access_or_fail($loginDto);
+            $redirectUrl = $this->request->get_redirect();
             $this->_get_json()
                 ->set_payload([
                     "message"=>__("auth ok"),
-                    "lang" => $result["lang"],
-                    UserPreferenceType::URL_DEFAULT_MODULE => $redirect ?: $result[UserPreferenceType::URL_DEFAULT_MODULE]
+                    "lang" => $accessData["lang"],
+                    UserPreferenceType::URL_DEFAULT_MODULE => $redirectUrl ?: $accessData[UserPreferenceType::URL_DEFAULT_MODULE]
                 ])->show();
         }
         catch (Exception $e)
@@ -58,4 +58,5 @@ final class LoginController extends RestrictController
         $this->_load_session()->destroy();
         $this->response->location(UrlType::LOGIN_FORM);
     }
+
 }//LoginController
