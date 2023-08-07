@@ -24,7 +24,7 @@ save-db: ## copia el dump a la carpeta db
 restore-db: ## copia el dump a la carpeta db
 	cp ./backend_web/db/db_mypromos.sql ${HOME}/dockercfg/db_dumps
 
-rebuild: ## rebuild containers
+rebuild-all: ## rebuild containers
 	docker-compose --env-file ./docker/.env -f docker-compose.yml down
 	docker-compose --env-file ./docker/.env -f docker-compose.yml up -d --build --remove-orphans
 	docker-compose --env-file ./docker/.env up -d --no-deps --build php-marketing-db
