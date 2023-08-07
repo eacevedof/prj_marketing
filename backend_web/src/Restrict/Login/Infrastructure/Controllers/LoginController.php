@@ -1,9 +1,9 @@
 <?php
 namespace App\Restrict\Login\Infrastructure\Controllers;
 
-use App\Restrict\Login\Application\Dtos\LoginDto;
 use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Login\Application\Dtos\LoginDto;
 use App\Restrict\Login\Application\LoginService;
 use App\Restrict\Users\Domain\Enums\UserPreferenceType;
 use App\Shared\Domain\Enums\PageType;
