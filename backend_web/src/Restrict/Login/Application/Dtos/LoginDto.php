@@ -1,14 +1,11 @@
 <?php
 namespace App\Restrict\Login\Application\Dtos;
 
-use App\Shared\Infrastructure\Components\Session\SessionComponent;
-
 final readonly class LoginDto
 {
     public function __construct(
         private string $email,
-        private string $password,
-        private ?SessionComponent $session,
+        private string $password
     )
     {}
 
@@ -17,13 +14,7 @@ final readonly class LoginDto
         return new self(
             (string) ($primitives["email"] ?? ""),
             (string) ($primitives["password"] ?? ""),
-            $primitives["session"] ?? null,
         );
-    }
-
-    public function session(): ?SessionComponent
-    {
-        return $this->session;
     }
 
     public function email(): string
