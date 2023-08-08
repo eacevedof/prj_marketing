@@ -20,7 +20,7 @@ use \Exception;
 final class UsersPermissionsUpdateController extends RestrictController
 {
 
-    //@patch
+    //@put
     public function update(string $uuid): void
     {
         $this->_if_noauth_tologin();

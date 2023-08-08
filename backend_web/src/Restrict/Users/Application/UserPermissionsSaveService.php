@@ -21,40 +21,40 @@ final class UserPermissionsSaveService extends AppService
 {
     use RequestTrait;
 
-    private AuthService $auth;
-    private array $authuser;
+    private AuthService $authService;
+    private array $authUser;
 
-    private UserRepository $repouser;
-    private UserPermissionsRepository $repouserpermissions;
-    private FieldsValidator $validator;
-    private UserPermissionsEntity $entityuserpermissions;
-    private int $iduser;
+    private UserRepository $userRepository;
+    private UserPermissionsRepository $userPermissionsRepository;
+    private FieldsValidator $fieldsValidator;
+    private UserPermissionsEntity $userPermissionsEntity;
+    private int $idUser;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
+        $this->authService = SF::get_auth();
         $this->_check_permission();
 
         $this->input = $input;
         if (!$useruuid = $this->input["_useruuid"])
             $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->repouser = RF::get(UserRepository::class);
-        if (!$this->iduser = $this->repouser->get_id_by_uuid($useruuid))
+        $this->userRepository = RF::get(UserRepository::class);
+        if (!$this->idUser = $this->userRepository->get_id_by_uuid($useruuid))
             $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
-        if ($this->iduser === 1)
+        if ($this->idUser === 1)
             $this->_exception(__("You can not add permissions to this user"));
 
-        $this->entityuserpermissions = MF::get(UserPermissionsEntity::class);
-        $this->repouserpermissions = RF::get(UserPermissionsRepository::class)->set_model($this->entityuserpermissions);
-        $this->authuser = $this->auth->get_user();
+        $this->userPermissionsEntity = MF::get(UserPermissionsEntity::class);
+        $this->userPermissionsRepository = RF::get(UserPermissionsRepository::class)->set_model($this->userPermissionsEntity);
+        $this->authUser = $this->authService->get_user();
     }
 
     private function _check_permission(): void
     {
-        if($this->auth->is_root_super()) return;
+        if($this->authService->is_root_super()) return;
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE))
+        if(!$this->authService->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE))
             $this->_exception(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
@@ -64,25 +64,25 @@ final class UserPermissionsSaveService extends AppService
     private function _check_entity_permission(): void
     {
         //si es super puede interactuar con la entidad
-        if ($this->auth->is_root_super()) return;
+        if ($this->authService->is_root_super()) return;
 
         //si el us en sesion se quiere agregar permisos
-        $permuser = $this->repouser->get_by_id($this->iduser);
-        $idauthuser = (int) $this->authuser["id"];
-        if ($idauthuser === $this->iduser)
+        $permuser = $this->userRepository->get_by_id($this->idUser);
+        $idauthuser = (int) $this->authUser["id"];
+        if ($idauthuser === $this->idUser)
             $this->_exception(__("You are not allowed to change your own permissions"));
 
         //un root puede cambiar el de cualquiera (menos el de el mismo, if anterior)
-        if ($this->auth->is_root()) return;
+        if ($this->authService->is_root()) return;
 
         //un sysadmin puede cambiar solo a los que tiene debajo
-        if ($this->auth->is_sysadmin() && $this->auth->is_business($permuser["id_profile"])) return;
+        if ($this->authService->is_sysadmin() && $this->authService->is_business($permuser["id_profile"])) return;
 
-        $identowner = $this->repouser->get_idowner($this->iduser);
+        $identowner = $this->userRepository->get_idowner($this->idUser);
         //si logado es propietario y el bm a modificar le pertenece
-        if ($this->auth->is_business_owner()
-            && $this->auth->is_business_manager($permuser["id_profile"])
-            && ((int) $this->authuser["id"]) === $identowner
+        if ($this->authService->is_business_owner()
+            && $this->authService->is_business_manager($permuser["id_profile"])
+            && ((int) $this->authUser["id"]) === $identowner
         )
             return;
 
@@ -95,7 +95,7 @@ final class UserPermissionsSaveService extends AppService
 
     private function _skip_validation_insert(): self
     {
-        $this->validator
+        $this->fieldsValidator
             ->add_skip("id")
             ->add_skip("uuid")
             ->add_skip("id_user")
@@ -105,7 +105,7 @@ final class UserPermissionsSaveService extends AppService
 
     private function _add_rules(): FieldsValidator
     {
-        $this->validator
+        $this->fieldsValidator
             ->add_rule("id", "id", function ($data) {
                 if ($data["data"]["_new"]) return false;
                 return $data["value"] ? false : __("Empty field is not allowed");
@@ -143,7 +143,7 @@ final class UserPermissionsSaveService extends AppService
             })
         ;
         
-        return $this->validator;
+        return $this->fieldsValidator;
     }
 
     private function _is_valid_json(string $string): bool
@@ -166,10 +166,10 @@ final class UserPermissionsSaveService extends AppService
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entityuserpermissions->map_request($update);
+        $update = $this->userPermissionsEntity->map_request($update);
         $this->_check_entity_permission();
-        $this->entityuserpermissions->add_sysupdate($update, $this->authuser["id"]);
-        $this->repouserpermissions->update($update);
+        $this->userPermissionsEntity->add_sysupdate($update, $this->authUser["id"]);
+        $this->userPermissionsRepository->update($update);
         return [
             "id" => $permissions["id"],
             "uuid" => $update["uuid"]
@@ -179,16 +179,16 @@ final class UserPermissionsSaveService extends AppService
     private function _insert(array $update): array
     {
         $update["_new"] = true;
-        $this->validator = VF::get($update, $this->entityuserpermissions);
+        $this->fieldsValidator = VF::get($update, $this->userPermissionsEntity);
         if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
             $this->_set_errors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
-        $update["id_user"] = $this->iduser;
+        $update["id_user"] = $this->idUser;
         $update["uuid"] = uniqid();
-        $update = $this->entityuserpermissions->map_request($update);
-        $this->entityuserpermissions->add_sysinsert($update, $this->authuser["id"]);
-        $id = $this->repouserpermissions->insert($update);
+        $update = $this->userPermissionsEntity->map_request($update);
+        $this->userPermissionsEntity->add_sysinsert($update, $this->authUser["id"]);
+        $id = $this->userPermissionsRepository->insert($update);
         return [
             "id" => $id,
             "uuid" => $update["uuid"]
@@ -203,9 +203,9 @@ final class UserPermissionsSaveService extends AppService
         $this->_check_entity_permission();
 
         $update["_new"] = false;
-        $this->validator = VF::get($update, $this->entityuserpermissions);
+        $this->fieldsValidator = VF::get($update, $this->userPermissionsEntity);
 
-        return ($permissions = $this->repouserpermissions->get_by_user($this->iduser))
+        return ($permissions = $this->userPermissionsRepository->get_by_user($this->idUser))
             ? $this->_update($update, $permissions)
             : $this->_insert($update);
     }
