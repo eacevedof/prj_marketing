@@ -36,18 +36,34 @@ final class UserPermissionsSaveService extends AppService
         $this->_check_permission();
 
         $this->input = $input;
-        if (!$useruuid = $this->input["_useruuid"])
+        if (!$userUuid = $this->input["_useruuid"])
             $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
 
         $this->userRepository = RF::get(UserRepository::class);
-        if (!$this->idUser = $this->userRepository->get_id_by_uuid($useruuid))
-            $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
+        if (!$this->idUser = $this->userRepository->get_id_by_uuid($userUuid))
+            $this->_exception(__("{0} with code {1} not found", __("User"), $userUuid));
+
         if ($this->idUser === 1)
             $this->_exception(__("You can not add permissions to this user"));
 
         $this->userPermissionsEntity = MF::get(UserPermissionsEntity::class);
         $this->userPermissionsRepository = RF::get(UserPermissionsRepository::class)->set_model($this->userPermissionsEntity);
         $this->authUser = $this->authService->get_user();
+    }
+
+    public function __invoke(): array
+    {
+        if (!$update = $this->_get_req_without_ops($this->input))
+            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+
+        $this->_check_entity_permission();
+
+        $update["_new"] = false;
+        $this->fieldsValidator = VF::get($update, $this->userPermissionsEntity);
+
+        return ($permissions = $this->userPermissionsRepository->get_by_user($this->idUser))
+            ? $this->_update($update, $permissions)
+            : $this->_insert($update);
     }
 
     private function _check_permission(): void
@@ -193,20 +209,5 @@ final class UserPermissionsSaveService extends AppService
             "id" => $id,
             "uuid" => $update["uuid"]
         ];
-    }
-
-    public function __invoke(): array
-    {
-        if (!$update = $this->_get_req_without_ops($this->input))
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
-
-        $this->_check_entity_permission();
-
-        $update["_new"] = false;
-        $this->fieldsValidator = VF::get($update, $this->userPermissionsEntity);
-
-        return ($permissions = $this->userPermissionsRepository->get_by_user($this->idUser))
-            ? $this->_update($update, $permissions)
-            : $this->_insert($update);
     }
 }
