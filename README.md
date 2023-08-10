@@ -42,17 +42,32 @@ run-test
 - esto ejecuta los test incluyendo `testbootstrap.php`
 
 ### Profiles
-- root
+- **root (RT)**
   - Ve todo sin ninguna restricción incluso soft-deletes
   - no se filtra por jerarquia vertical
   - originalmente no se ve afectado por las policies que se apliquen.
-- sys admin
+- **sys admin (SA)**
   - Tiene todas las acciones CRUD pero se filtra el acceso por permisos
   - no se filtra por jerarquia vertical
-- business owner
+- **business owner (BOW)**
   - Ve ciertos módulos (acceso por permisos) tiene acceso CRUD en estos si el es propietario o en caso de usuarios a 
-    aquellos que esten debajo de él
-- business manager
+    aquellos que esten debajo de él.
+  - Permisios iniciales de un **BOW**
+    ```json
+    [
+    "users:read",
+    "users:write",
+    "promotions:read",
+    "promotions:write",
+    "userpermissions:read",
+    "userpermissions:write",
+    "businessdata:read",
+    "businessdata:write",
+    "userpreferences:read",
+    "userpreferences:write"
+    ]    
+    ```
+- **business manager (BM)**
   - Ve ciertos módulos y CRUD dependiendo de permisos.
   
 ### Ejemplo carga de tab:
