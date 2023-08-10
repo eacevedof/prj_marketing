@@ -7,31 +7,28 @@
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Controllers\Open;
 
-use App\Shared\Infrastructure\Controllers\AppController;
-use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Shared\Infrastructure\Traits\ViewTrait;
-use App\Shared\Infrastructure\Traits\ResponseTrait;
-use App\Shared\Infrastructure\Traits\SessionTrait;
 use App\Shared\Domain\Enums\SessionType;
+use App\Shared\Infrastructure\Controllers\AppController;
+use App\Shared\Infrastructure\Traits\{RequestTrait, ResponseTrait, SessionTrait, ViewTrait};
 
 abstract class OpenController extends AppController
 {
     use RequestTrait;
-    use ViewTrait;
     use ResponseTrait;
     use SessionTrait;
+    use ViewTrait;
 
     public function __construct()
     {
-        $this->_load_request();
-        $this->_load_view();
-        $this->_load_response();
-        $this->_load_session();
-        $this->set_layout("open/open/mypromos")
-            ->add_var("authuser", $this->session->get(SessionType::AUTH_USER));
+        $this->_loadRequestComponentInstance();
+        $this->_loadViewInstance();
+        $this->_loadResponseComponentInstance();
+        $this->_loadSessionComponentInstance();
+        $this->setLayoutBySubPath("open/open/mypromos")
+            ->addGlobalVar("authUser", $this->sessionComponent->get(SessionType::AUTH_USER));
     }
 
 }//OpenController
-

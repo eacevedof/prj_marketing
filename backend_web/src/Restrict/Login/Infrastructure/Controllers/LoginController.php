@@ -1,62 +1,61 @@
 <?php
+
 namespace App\Restrict\Login\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Login\Application\Dtos\LoginDto;
+use Exception;
 use App\Restrict\Login\Application\LoginService;
+use App\Restrict\Login\Application\Dtos\LoginDto;
 use App\Restrict\Users\Domain\Enums\UserPreferenceType;
-use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\UrlType;
-use App\Shared\Domain\Enums\ResponseType;
-use \Exception;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Domain\Enums\{PageType, ResponseType, UrlType};
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class LoginController extends RestrictController
 {
     public function index(): void
     {
-        $this->add_var(PageType::TITLE, __("Login"))
-            ->add_var(PageType::H1, __("Login"))
-            ->add_var(PageType::CSRF, $this->csrf->get_token())
+        $this->addGlobalVar(PageType::TITLE, __("Login"))
+            ->addGlobalVar(PageType::H1, __("Login"))
+            ->addGlobalVar(PageType::CSRF, $this->csrfService->getCsrfToken())
             ->render();
     }
 
     //@post
     public function access(): void
     {
-        if (!$this->csrf->is_valid($this->_get_csrf()))
-            $this->_get_json()
-                ->set_code(ResponseType::UNAUTHORIZED)
-                ->set_error([__("Invalid CSRF token")])
+        if (!$this->csrfService->isValidCsrfToken($this->_getCsrfTokenFromRequest())) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::UNAUTHORIZED)
+                ->setErrors([__("Invalid CSRF token")])
                 ->show();
+        }
 
         try {
             $loginDto = LoginDto::fromPrimitives([
-                "email" => $this->request->get_post("email"),
-                "password" => $this->request->get_post("password"),
+                "email" => $this->requestComponent->getPost("email"),
+                "password" => $this->requestComponent->getPost("password"),
             ]);
-            $accessData = SF::get(LoginService::class)->get_access_or_fail($loginDto);
-            $redirectUrl = $this->request->get_redirect();
-            $this->_get_json()
-                ->set_payload([
-                    "message"=>__("auth ok"),
+            $accessData = SF::getInstanceOf(LoginService::class)->get_access_or_fail($loginDto);
+            $redirectUrl = $this->requestComponent->getRedirectUrl();
+            $this->_getJsonInstanceFromResponse()
+                ->setPayload([
+                    "message" => __("auth ok"),
                     "lang" => $accessData["lang"],
                     UserPreferenceType::URL_DEFAULT_MODULE => $redirectUrl ?: $accessData[UserPreferenceType::URL_DEFAULT_MODULE]
                 ])->show();
-        }
-        catch (Exception $e)
-        {
-            $this->_get_json()
-                ->set_code(ResponseType::UNAUTHORIZED)
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::UNAUTHORIZED)
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }
 
     public function logout(): void
     {
-        $this->_load_session()->destroy();
-        $this->response->location(UrlType::LOGIN_FORM);
+        $this->_loadSessionComponentInstance();
+        $this->sessionComponent->destroy();
+        $this->responseComponent->location(UrlType::LOGIN_FORM);
     }
 
 }//LoginController

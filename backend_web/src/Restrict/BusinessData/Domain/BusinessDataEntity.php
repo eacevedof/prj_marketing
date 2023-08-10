@@ -6,10 +6,11 @@
  * @file BusinessDataEntity.php v1.0.0
  * @date %DATE% SPAIN
  */
+
 namespace App\Restrict\BusinessData\Domain;
 
-use App\Shared\Domain\Entities\AppEntity;
 use App\Shared\Domain\Enums\EntityType;
+use App\Shared\Domain\Entities\AppEntity;
 
 final class BusinessDataEntity extends AppEntity
 {

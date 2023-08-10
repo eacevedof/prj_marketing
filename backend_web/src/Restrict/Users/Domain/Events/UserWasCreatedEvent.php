@@ -1,49 +1,47 @@
 <?php
+
 namespace App\Restrict\Users\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class UserWasCreatedEvent extends AbsEvent
+final class UserWasCreatedEvent extends AbstractEvent
 {
     private string $uuid;
     private string $email;
-    private int $idprofile;
-    private ?int $idparent;
+    private int $idProfile;
+    private ?int $idParent;
 
     public function __construct(
-        int $iduser,
-        string $uuid,
-        string $email,
-        int $idprofile,
-
-        ?int $idparent = null,
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($iduser, $eventid, $occuredon, $correlationid, $causationid);
+        int     $idUser,
+        string  $uuid,
+        string  $email,
+        int     $idProfile,
+        ?int    $idParent = null,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($idUser, $eventId, $occurredOn, $correlationId, $causationId);
         $this->uuid = $uuid;
         $this->email = $email;
-        $this->idprofile = $idprofile;
-        $this->idparent = $idparent;
+        $this->idProfile = $idProfile;
+        $this->idParent = $idParent;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "user.created";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["uuid"],
@@ -51,19 +49,19 @@ final class UserWasCreatedEvent extends AbsEvent
             $body["id_profile"],
             $body["id_parent"],
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
             "uuid" => $this->uuid,
             "email" => $this->email,
-            "id_parent" => $this->idparent,
-            "id_profile" => $this->idprofile,
+            "id_parent" => $this->idParent,
+            "id_profile" => $this->idProfile,
         ];
     }
 
@@ -77,13 +75,13 @@ final class UserWasCreatedEvent extends AbsEvent
         return $this->email;
     }
 
-    public function id_parent(): int
+    public function idParent(): int
     {
-        return $this->idparent;
+        return $this->idParent;
     }
 
-    public function id_profile(): int
+    public function idProfile(): int
     {
-        return $this->idprofile;
+        return $this->idProfile;
     }
 }

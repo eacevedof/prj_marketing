@@ -4,7 +4,7 @@
  * @var array $result
  */
 if (is_null($preferences = $result["preferences"])) return;
-$iduser = $result["user"]["id"];
+$idUser = $result["user"]["id"];
 
 $texts = [
   "tr00" => __("Save"),
@@ -28,12 +28,12 @@ $preferences = array_map(function(array $row) {
 ?>
 <div id="preferences" class="tab-pane">
   <form-user-preferences-update
-      csrf=<?php $this->_echo_js($csrf);?>
+      csrf=<?php $this->_echoJs($csrf);?>
 
       useruuid="<?=$uuid?>"
-      texts="<?php $this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echoJsLit($texts);?>"
 
-      fields="<?php $this->_echo_jslit($preferences);?>"
+      fields="<?php $this->_echoJsLit($preferences);?>"
   />
 </div>
 <script type="module" src="/assets/js/restrict/users/preferences/form-user-preferences-update.js"></script>

@@ -8,29 +8,31 @@
  * @date 01-06-2014 12:45
  * @observations
  */
+
 namespace TheFramework\Components;
 
-class ComponentGetter 
+class ComponentGetter
 {
-    public function __construct() 
+    public function __construct()
     {
-        
+
     }
-    
-    //https://stackoverflow.com/questions/724391/saving-image-from-php-url    
-    public function save_image($inPath,$outPath)
-    { 
+
+    //https://stackoverflow.com/questions/724391/saving-image-from-php-url
+    public function save_image($inPath, $outPath)
+    {
         //Download images from remote server
         $in = fopen($inPath, "rb");
         $out = fopen($outPath, "wb");
 
-        while($chunk = fread($in,8192))
-            fwrite($out,$chunk, 8192);
+        while($chunk = fread($in, 8192)) {
+            fwrite($out, $chunk, 8192);
+        }
 
         fclose($in);
         fclose($out);
-    }    
-    
+    }
+
     public function download()
     {
         $arUrls = [
@@ -42,19 +44,21 @@ class ComponentGetter
             //"https://trello-attachments.s3.amazonaws.com/56daeb36d2c864a40e356154/59be94d10d1afca1022534d4/e441828eaa3fa87561cf674220288a02/IMG-20170917-WA0001.jpg",
         ];
         $sPathDest = "D:\\temp\\";
-        foreach($arUrls as $i=>$sUriImage)
-        {
+        foreach($arUrls as $i => $sUriImage) {
             $sFileName = basename($sUriImage); // to get file name
             $this->debug($sFileName);
             //$this->debug(parse_url($sUriImage));
-            $this->save_image($sUriImage,$sPathDest.$sFileName);
+            $this->save_image($sUriImage, $sPathDest.$sFileName);
         }
     }
-    
+
     public function go()
     {
         echo "ComponentGetter.go :)";
     }
-    
-    public function debug($mxVar){echo var_export($mxVar,1)."\n";}  
+
+    public function debug($mxVar)
+    {
+        echo var_export($mxVar, 1)."\n";
+    }
 }//ComponentGetter

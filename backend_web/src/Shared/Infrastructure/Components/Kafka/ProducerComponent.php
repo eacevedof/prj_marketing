@@ -7,11 +7,14 @@
  * @date 21-06-2020 21:04 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Components\Kafka;
 
-use \BOOT;
-use RdKafka\Conf;
-use RdKafka\Producer;
+use BOOT;
+use RdKafka\{
+    Conf,
+    Producer
+};
 
 final class ProducerComponent
 {
@@ -28,18 +31,18 @@ final class ProducerComponent
 
     private function get_producer(): Producer
     {
-        if(!self::$producer)
-        {
+        if (!self::$producer) {
             $pathkafka = BOOT::PATH_LOGS."/kafka";
             //https://github.com/eacevedof/prj_docker_imgs/blob/master/kafka/php/kafka/producer-2.php
             $CONFIG["callbacks"]["on_success"] = function ($kafka, $message) use ($pathkafka) {
                 @file_put_contents(
                     "$pathkafka/producer_success.log",
-                    var_export($message, true), FILE_APPEND
+                    var_export($message, true),
+                    FILE_APPEND
                 );
             };
 
-            $CONFIG["callbacks"]["on_error"] = function ($kafka, $err, $reason) use($pathkafka) {
+            $CONFIG["callbacks"]["on_error"] = function ($kafka, $err, $reason) use ($pathkafka) {
                 @file_put_contents(
                     "$pathkafka/producer_error.log",
                     sprintf("Kafka error: %s (reason: %s)", rd_kafka_err2str($err), $reason) . PHP_EOL,
@@ -47,7 +50,7 @@ final class ProducerComponent
                 );
             };
 
-            $conf = new Conf();
+            $conf = new Conf;
             $conf->set("metadata.broker.list", self::KAFKA_SOCKET);
             $conf->setDrMsgCb($CONFIG["callbacks"]["on_success"]);
             $conf->setErrorCb($CONFIG["callbacks"]["on_error"]);
@@ -62,7 +65,7 @@ final class ProducerComponent
         return json_encode($data);
     }
 
-    private function get_message($mxvar, string $title="", string $type=""): array
+    private function get_message($mxvar, string $title = "", string $type = ""): array
     {
         $message = [
             "type"  => $type,
@@ -72,15 +75,14 @@ final class ProducerComponent
 
         if(is_string($mxvar) || is_numeric($mxvar)) {
             $message["message"] = $mxvar;
-        }
-        else {
-            $message["message"] = var_export($mxvar,1);
+        } else {
+            $message["message"] = var_export($mxvar, 1);
         }
 
         return $message;
     }
 
-    public function send($mxvar, string $title="", string $type=ProducerComponent::TYPE_DEBUG): void
+    public function send($mxvar, string $title = "", string $type = ProducerComponent::TYPE_DEBUG): void
     {
         $message = $this->get_message($mxvar, $title, $type);
         $json = $this->get_json($message);
@@ -89,16 +91,14 @@ final class ProducerComponent
         $topic = $producer->newTopic(self::KAFKA_TOPIC);
         $topic->produce(RD_KAFKA_PARTITION_UA, 0, $json);
 
-        for ($flushRetries = 0; $flushRetries < 3; $flushRetries++)
-        {
+        for ($flushRetries = 0; $flushRetries < 3; $flushRetries++) {
             $result = $producer->flush(self::REQUEST_SLEEP_TIME);
             if (RD_KAFKA_RESP_ERR_NO_ERROR === $result) {
                 break;
             }
         }
 
-        if (RD_KAFKA_RESP_ERR_NO_ERROR !== $result)
-        {
+        if (RD_KAFKA_RESP_ERR_NO_ERROR !== $result) {
             return;
             //throw new \RuntimeException("Producer was unable to flush. Messages might be lost!\n");
         }

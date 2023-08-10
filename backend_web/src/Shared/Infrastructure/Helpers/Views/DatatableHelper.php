@@ -2,25 +2,28 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Helpers\Views\DatatableHelper
- * @file AppHelper.php 1.0.0
+ * @name App\Shared\Infrastructure\Helpers\Views\DatatableHelper
+ * @file DatatableHelper.php 1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  * @tags: #apify
  */
+
 namespace App\Shared\Infrastructure\Helpers\Views;
 
-use App\Shared\Infrastructure\Helpers\IHelper;
-use App\Shared\Infrastructure\Helpers\AppHelper;
+use App\Shared\Infrastructure\Helpers\{
+    AppHelper,
+    IHelper
+};
 
 final class DatatableHelper extends AppHelper implements IHelper
 {
     private array $columns = [];
     private array $language;
-    private int $perpage = 25;
+    private int $perPage = 25;
     private array $actions = [];
-    private string $colname = "";
-    private array $searchopts = [];
+    private string $colName = "";
+    private array $searchOptions = [];
 
     public function __construct()
     {
@@ -48,107 +51,107 @@ final class DatatableHelper extends AppHelper implements IHelper
         ];
     }
 
-    private function _get_json($data): string
+    private function _getJsonEncoded($data): string
     {
         return json_encode($data);
     }
 
-    public function add_column(string $name): self
+    public function addColumn(string $colName): self
     {
-        $this->colname = $name;
-        $this->columns[$name] = [
+        $this->colName = $colName;
+        $this->columns[$colName] = [
             "css" => "",
             "is_virtual" => false,
             "is_visible" => true,
-            "name" => $name,
-            "path_schema" => $name,
+            "name" => $colName,
+            "path_schema" => $colName,
             "is_orderable" => true,
             "is_searchable" => true,
-            "label" => $name,
+            "label" => $colName,
             "tooltip" => "",
             "input" => "",
         ];
 
         return $this;
     }
-    
-    public function is_visible(bool $isvisible=true): self
+
+    public function isVisible(bool $isVisible = true): self
     {
-        $this->columns[$this->colname]["is_visible"] = $isvisible;
+        $this->columns[$this->colName]["is_visible"] = $isVisible;
         return $this;
     }
 
-    public function is_orderable(bool $isordenable=false): self
+    public function isOrderable(bool $isOrderable = false): self
     {
-        $this->columns[$this->colname]["is_orderable"] = $isordenable;
+        $this->columns[$this->colName]["is_orderable"] = $isOrderable;
         return $this;
     }
 
-    public function is_virtual(bool $isvirtual=true): self
+    public function isVirtual(bool $isVirtual = true): self
     {
-        $this->columns[$this->colname]["is_virtual"] = $isvirtual;
+        $this->columns[$this->colName]["is_virtual"] = $isVirtual;
         return $this;
     }
 
-    public function is_searchable(bool $issearchable=false): self
+    public function isSearchable(bool $isSearchable = false): self
     {
-        $this->columns[$this->colname]["is_searchable"] = $issearchable;
+        $this->columns[$this->colName]["is_searchable"] = $isSearchable;
         return $this;
     }
 
-    public function add_label(string $label): self
+    public function addLabel(string $label): self
     {
-        $this->columns[$this->colname]["label"] = $label;
+        $this->columns[$this->colName]["label"] = $label;
         return $this;
     }
 
-    public function add_tooltip(string $tooltip): self
+    public function addTooltip(string $tooltip): self
     {
-        $this->columns[$this->colname]["tooltip"] = $tooltip;
+        $this->columns[$this->colName]["tooltip"] = $tooltip;
         return $this;
     }
 
-    public function add_type(string $type): self
+    public function addType(string $type): self
     {
-        $this->columns[$this->colname]["type"] = $type;
+        $this->columns[$this->colName]["type"] = $type;
         return $this;
     }
 
-    public function path_schema(string $path): self
+    public function pathSchema(string $path): self
     {
-        $this->columns[$this->colname]["path_schema"] = $path;
+        $this->columns[$this->colName]["path_schema"] = $path;
         return $this;
     }
 
-    public function set_colname(string $name): self
+    public function setColName(string $colName): self
     {
-        $this->colname = $name;
+        $this->colName = $colName;
         return $this;
     }
 
-    private function _get_attribs(array $coldata): string
+    private function _getHtmlAttribsFromColumnData(array $colData): string
     {
-        $orderable = ($coldata["is_orderable"] ?? "");
-        $orderable = ($isvirtual = $coldata["is_virtual"] ?? "") ? false: $orderable;
+        $orderable = ($colData["is_orderable"] ?? "");
+        $orderable = ($isvirtual = $colData["is_virtual"] ?? "") ? false : $orderable;
 
-        $searchable = ($coldata["is_searchable"] ?? "");
-        $searchable = $isvirtual ? false: $searchable;
-        $type = ($coldata["type"] ?? "string");
+        $searchable = ($colData["is_searchable"] ?? "");
+        $searchable = $isvirtual ? false : $searchable;
+        $type = ($colData["type"] ?? "string");
 
         $attribs = [
-            ($coldata["css"] ?? "") ? "class=\"{$coldata["css"]}\"": "",
-            ($coldata["is_visible"] ?? "") ? "visible=\"{$coldata["is_visible"]}\"": "",
-            ($coldata["name"] ?? "") ? "column=\"{$coldata["name"]}\"": "",
-            ($coldata["path_schema"] ?? "") ? "path=\"{$coldata["path_schema"]}\"" : "",
+            ($colData["css"] ?? "") ? "class=\"{$colData["css"]}\"" : "",
+            ($colData["is_visible"] ?? "") ? "visible=\"{$colData["is_visible"]}\"" : "",
+            ($colData["name"] ?? "") ? "column=\"{$colData["name"]}\"" : "",
+            ($colData["path_schema"] ?? "") ? "path=\"{$colData["path_schema"]}\"" : "",
             $orderable ? "orderable=\"$orderable\"" : "",
             $searchable ? "searchable=\"$searchable\"" : "",
             "type=\"$type\"",
         ];
         $attribs = trim(implode(" ", $attribs));
-        return $attribs ? " $attribs": "";
+        return $attribs ? " $attribs" : "";
     }
 
-    private function _get_actions_attrs(): string
+    private function _getHtmlAttribsFromActions(): string
     {
         $attribs = ["approle=\"actions\""];
         $actions = array_unique($this->actions);
@@ -159,84 +162,94 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode(" ", $attribs);
     }
 
-    public function get_ths(): string
+    public function getHtmlThs(): string
     {
-        if(!$this->columns) return "";
+        if (!$this->columns) {
+            return "";
+        }
         $ths = ["<th></th>"];
-        foreach ($this->columns as $coldata) {
-            $attribs = $this->_get_attribs($coldata);
-            $label = htmlentities($coldata["label"]);
+        foreach ($this->columns as $columnConfig) {
+            $attribs = $this->_getHtmlAttribsFromColumnData($columnConfig);
+            $label = htmlentities($columnConfig["label"]);
             $tooltip = "";
-            if($coldata["tooltip"]) {
-                $tooltip = htmlentities($coldata["tooltip"]);
+            if ($columnConfig["tooltip"]) {
+                $tooltip = htmlentities($columnConfig["tooltip"]);
                 $tooltip = "<i data-tooltip=\"$tooltip\"></i>";
             }
             $th = "<th$attribs><span title=\"$label\">$label</span>$tooltip</th>";
             $ths[] = $th;
         }
-        if($this->actions) {
+        if ($this->actions) {
             $actions = __("Actions");
             $actions = htmlentities($actions);
-            $attrs = $this->_get_actions_attrs();
+            $attrs = $this->_getHtmlAttribsFromActions();
             $ths[] = "<th $attrs>$actions</th>";
         }
         return implode("\n", $ths);
     }
 
-    public function get_tf(): string
+    public function getHtmlTdsForTableFoot(): string
     {
-        if(!$this->columns) return "";
+        if (!$this->columns) {
+            return "";
+        }
         $ths = ["<td></td>"];
-        foreach ($this->columns as $coldata) {
-            $data["css"] = $coldata["css"];
-            $data["label"] = $coldata["label"];
-            $data["tooltip"] = $coldata["tooltip"];
+        foreach ($this->columns as $columConfig) {
+            $data["css"] = $columConfig["css"];
+            $data["label"] = $columConfig["label"];
+            $data["tooltip"] = $columConfig["tooltip"];
 
-            $attribs = $this->_get_attribs($data);
+            $attribs = $this->_getHtmlAttribsFromColumnData($data);
             $label = htmlentities($data["label"]);
             $tooltip = "";
-            if($data["tooltip"]) {
+            if ($data["tooltip"]) {
                 $tooltip = htmlentities($data["tooltip"]);
                 $tooltip = "<i data-tooltip=\"$tooltip\"></i>";
             }
             $th = "<th$attribs><span title=\"$label\">$label</span>$tooltip</th>";
             $ths[] = $th;
         }
-        if($this->actions) {
+        if ($this->actions) {
             $actions = __("Actions");
             $actions = htmlentities($actions);
-            $attrs = $this->_get_actions_attrs();
+            $attrs = $this->_getHtmlAttribsFromActions();
             $ths[] = "<th $attrs>$actions</th>";
         }
         return implode("\n", $ths);
     }
 
-    public function get_search_tds(): string
+    public function getSearchableTds(): string
     {
         $tds = ["<td></td>"];
         $i = 0;
-        foreach ($this->columns as $colname => $coldata) {
+        foreach ($this->columns as $column => $colConfig) {
             $i++;
-            $title = __("search")." ".$coldata["label"];
+            $title = __("search")." ".$colConfig["label"];
             $input = "<input type=\"text\" placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$i}\" />";
-            $options = $this->searchopts[$colname] ?? null;
-            $select = $this->_get_select($options, $coldata, $i);
-            if($select) $input = $select;
-            $issearch = ($coldata["is_searchable"] && !$coldata["is_virtual"]);
-            if(!$issearch) $input = "";
-            $tds[] = "<td search=\"$colname\">$input</td>";
+            $options = $this->searchOptions[$column] ?? null;
+            $select = $this->_getHtmlSelect($options, $colConfig, $i);
+            if ($select) {
+                $input = $select;
+            }
+            $issearch = ($colConfig["is_searchable"] && !$colConfig["is_virtual"]);
+            if (!$issearch) {
+                $input = "";
+            }
+            $tds[] = "<td search=\"$column\">$input</td>";
         }
-        if($this->actions) {
+        if ($this->actions) {
             $tds[] = "<th></th>";
         }
         return implode("\n", $tds);
     }
 
-    private function _get_select(?array $options, array $coldata, int $i): string
+    private function _getHtmlSelect(?array $options, array $colConfig, int $i): string
     {
-        if($options === null) return "";
+        if ($options === null) {
+            return "";
+        }
 
-        $title = __("search")." ".$coldata["label"];
+        $title = __("search")." ".$colConfig["label"];
         $select = [
             "<select placeholder=\"{$title}\" approle=\"column-search\" appcolidx=\"{$i}\" />"
         ];
@@ -248,30 +261,30 @@ final class DatatableHelper extends AppHelper implements IHelper
         return implode("\n", $select);
     }
 
-    public function show_perpage(): void
+    public function showPerPageInfo(): void
     {
-        echo $this->_get_json($this->perpage);
+        echo $this->_getJsonEncoded($this->perPage);
     }
 
     public function add_search_opts(array $options): self
     {
-        $this->searchopts[$this->colname] = $options;
+        $this->searchOptions[$this->colName] = $options;
         return $this;
     }
 
-    public function add_action(string $action): self
+    public function addAction(string $action): self
     {
         $this->actions[] = $action;
         return $this;
     }
 
-    public function show_actions(): void
+    public function showActions(): void
     {
-        echo $this->_get_json(array_unique($this->actions));
+        echo $this->_getJsonEncoded(array_unique($this->actions));
     }
 
-    public function show_lanaguage(): void
+    public function showLanguage(): void
     {
-        echo $this->_get_json($this->language);
+        echo $this->_getJsonEncoded($this->language);
     }
 }//DatatableHelper

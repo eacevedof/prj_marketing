@@ -65,11 +65,65 @@ run-test
     "businessdata:write",
     "userpreferences:read",
     "userpreferences:write"
-    ]    
+    ]
     ```
+  - Permisos existentes 
+  ```
+  "dashboard:read",
+  "users:read",
+  "users:write",
+  "userpermissions:read",
+  "userpermissions:write",
+  "userpreferences:read",
+  "userpreferences:write",
+  "businessdata:read",
+  "businessdata:write",
+  "promotions:read",
+  "promotions:write",
+  "promotionsui:read",
+  "promotionstats:read",
+  "promotionsui:write",
+  "subscriptions:read",
+  "subscriptions:write",
+  "billings:read"
+  ```
 - **business manager (BM)**
   - Ve ciertos módulos y CRUD dependiendo de permisos.
-  
+
+### Ejemplo terminos y condiciones
+```
+#ES
+Solo para los primeros cinco suscriptores.
+Solo válida para un lunch special por suscripción.
+La fecha límite para el consumo es 20/08/2022 13:30
+Esta promoción te permite acumular 1 punto.
+```
+### Ejemplo Tags
+```
+sopa de pollo, tacu tacu, seco a la huachana, aji de gallina, filet a la chorrillana, combinado
+```
+### Ejemplo About
+```
+Este es un proyecto bla bla bla
+```
+### Ejemplo Points Program
+```
+Acumula 10 puntos y gana un viaje a Suiza
+```
+### Ejemplo Location
+```
+Calle Juan Efron 88
+<a href="https://www.google.com/maps/place/Caya+G.+F.+Betico+Croes+152,+Oranjestad,+Aruba/@12.5189601,-70.0309033,17z/data=!3m1!4b1!4m5!3m4!1s0x8e853894e2ca1f09:0x9a74e6e217c0a32c!8m2!3d12.5189601!4d-70.0287146" target="_blank" rel="nofollow noopener noreferer">Abrir en Google Maps</a>
+```
+### Ejemplo Contact
+```
+Email: <a href="mailto:somemail@hotmail.com" rel="nofollow noopener noreferer">somemail@hotmail.com</a>
+Teléfono: <a href="tel:+297 582 7591" rel="nofollow noopener noreferer">+297 582 7591</a>
+Telegram: <a href="https://t.me/c/1394909256/17561" rel="nofollow noopener noreferer">+297 699 4346</a>
+Horario: 11:30 – 21:00
+```
+
+
 ### Ejemplo carga de tab:
 - [http://localhost:900/restrict/promotions/1?uuid=626e89da5d8ac&view=edit&tab=ui](http://localhost:900/restrict/promotions/1?uuid=626e89da5d8ac&view=edit&tab=ui)
 
@@ -191,7 +245,7 @@ php8.1-cli -c ~ -r "mail('xxx@gmail.com', 'PHP done', 'Test from PHP as wwwrun g
 php8.1-cli -c ~ mail.php
 
 # para ejecutar comandos
-cd $PATHWEB/db; /usr/bin/php8.0-cli phinx migrate -e testing
+cd $PATHWEB/db; /usr/bin/php8.2-cli phinx migrate -e testing
 ```
 
 ### Errores

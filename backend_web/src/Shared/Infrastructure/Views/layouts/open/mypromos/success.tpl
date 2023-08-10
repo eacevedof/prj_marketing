@@ -10,10 +10,10 @@ use App\Shared\Infrastructure\Helpers\Views\EnvIconHelper;
 <head>
   <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="UTF-8">
-  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? EnvIconHelper::icon())?>"/>
+  <link rel="icon" href="<?php $this->_echoHtmlEscaped($space["businessfavicon"] ?? EnvIconHelper::getIconPath())?>"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
+  <title><?php $this->_echoHtmlEscaped($pagetitle ?? "")?></title>
   <?php
   $this->_element("common/elem-cookiebot");
   $this->_element("open/mypromos/elem-css-common");
@@ -39,7 +39,7 @@ $this->_element("common/elem-band-env");
   <section class="section-grid center-x">
     <div class="div-texts">
       <img src="/themes/mypromos/images/icon-success.svg" class="icon">
-      <h1><?php $this->_echo_nohtml($h1); ?></h1>
+      <h1><?php $this->_echoHtmlEscaped($h1); ?></h1>
       <?php
       use App\Shared\Infrastructure\Helpers\Views\DivTextsHelper;
       use App\Shared\Infrastructure\Factories\HelperFactory as HF;

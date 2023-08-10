@@ -7,6 +7,7 @@
  * @date 31-10-2020 17:46 SPAIN
  * @observations
  */
+
 namespace App\Console\Application;
 
 interface IConsole

@@ -7,36 +7,37 @@
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Users\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use Exception;
+use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Users\Application\UserPreferencesListService;
-use App\Shared\Domain\Enums\ResponseType;
-use \Exception;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class UsersPreferencesListController extends RestrictController
 {
     //@get
     public function index(string $uuid): void
     {
-        $this->_if_noauth_tologin();
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        $this->_redirectToLoginIfNoAuthUser();
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
         try {
-            $list = SF::get_callable(UserPreferencesListService::class, ["_useruuid"=>$uuid]);
+            $list = SF::getCallableService(UserPreferencesListService::class, ["_useruuid" => $uuid]);
             $result = $list();
-            $this->_get_json()->set_payload([
+            $this->_getJsonInstanceFromResponse()->setPayload([
                 "result" => $result,
             ])->show();
-        }
-        catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }

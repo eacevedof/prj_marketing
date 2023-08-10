@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Restrict\Login\Application\Dtos;
 
 final readonly class LoginDto
@@ -6,8 +7,8 @@ final readonly class LoginDto
     public function __construct(
         private string $email,
         private string $password
-    )
-    {}
+    ) {
+    }
 
     public static function fromPrimitives(array $primitives): self
     {

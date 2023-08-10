@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Unit;
 
 use Tests\Boot\AbsTestBase;
@@ -6,7 +7,7 @@ use App\Shared\Domain\Enums\SessionType;
 
 abstract class AbsUnitTest extends AbsTestBase
 {
-    protected function _load_session(int $i=0): void
+    protected function _load_session(int $i = 0): void
     {
         $users = [
             [

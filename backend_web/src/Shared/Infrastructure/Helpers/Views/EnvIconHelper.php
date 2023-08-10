@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Shared\Infrastructure\Helpers\Views;
 
-use \ENV;
+use ENV;
 
 final class EnvIconHelper
 {
@@ -19,13 +20,13 @@ final class EnvIconHelper
         ENV::PROD => "/favicon/favicon-logo-orange.svg",
     ];
 
-    public static function icon(): string
+    public static function getIconPath(): string
     {
         $env = (string) ENV::env();
         return self::ENV_LOGO[$env] ?? "";
     }
 
-    public static function icon_restrict(): string
+    public static function getIconPathForRestrictSpace(): string
     {
         $env = (string) ENV::env();
         return self::ENV_LOGO_RESTRICT[$env] ?? "";

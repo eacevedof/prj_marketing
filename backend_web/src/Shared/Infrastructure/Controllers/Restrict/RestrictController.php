@@ -7,30 +7,26 @@
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Controllers\Restrict;
 
-use App\Restrict\BusinessData\Application\BusinessDataDisabledService;
-use App\Shared\Infrastructure\Controllers\AppController;
-use App\Shared\Infrastructure\Traits\SessionTrait;
-use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Shared\Infrastructure\Traits\ViewTrait;
-use App\Shared\Infrastructure\Traits\ResponseTrait;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Auth\Application\CsrfService;
 use App\Restrict\Login\Application\ModulesService;
+use App\Shared\Infrastructure\Controllers\AppController;
+use App\Restrict\Auth\Application\{AuthService, CsrfService};
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
-use App\Shared\Domain\Enums\UrlType;
+use App\Restrict\BusinessData\Application\BusinessDataDisabledService;
+use App\Shared\Infrastructure\Traits\{RequestTrait, ResponseTrait, SessionTrait, ViewTrait};
 
 abstract class RestrictController extends AppController
 {
-    use SessionTrait;
     use RequestTrait;
-    use ViewTrait;
     use ResponseTrait;
+    use SessionTrait;
+    use ViewTrait;
 
-    protected AuthService $auth;
-    protected CsrfService $csrf;
+    protected AuthService $authService;
+    protected CsrfService $csrfService;
 
     /**
      * Builds request, response, auth, csrf, restrict-layout and toppmenu
@@ -38,46 +34,61 @@ abstract class RestrictController extends AppController
      */
     public function __construct()
     {
-        $this->_load_request();
-        $this->_load_response();
+        $this->_loadRequestComponentInstance();
+        $this->_loadResponseComponentInstance();
 
-        $this->auth = SF::get_auth();
-        $this->csrf = SF::get(CsrfService::class);
+        $this->authService = SF::getAuthService();
+        $this->csrfService = SF::getInstanceOf(CsrfService::class);
 
-        $this->_load_view()->set_layout("restrict/restrict");
-        $this->add_var("authuser", $this->auth->get_user());
-        $this->_add_topmenu();
-        $this->_add_bowdisabled();
+        $this->_loadViewInstance()->setPartLayout("restrict/restrict");
+        $this->addGlobalVar("authUser", $this->authService->getAuthUserArray());
+        $this->_addTopModulesMenu();
+        $this->_addBusinessOwnerDisabled();
     }
 
-    protected function _add_topmenu(): void
+    protected function _addTopModulesMenu(): void
     {
-        $service = SF::get_callable(ModulesService::class);
-        $this->add_var("topmenu", $service->get_menu());
+        /**
+         * @type ModulesService $service
+         */
+        $service = SF::getCallableService(ModulesService::class);
+        $this->addGlobalVar("topmenu", $service->getMenuConfiguration());
     }
 
     /**
      * Works only after __construct() execution
      */
-    protected function _if_noauth_tologin(): void
+    protected function _redirectToLoginIfNoAuthUser(): void
     {
-        if(!$this->auth->get_user()) {
-            $redirect = $this->request->get_request_uri();
-            $loginurl = Routes::url("login");
-            if (strstr($redirect, "/restrict")) $loginurl = "$loginurl?redirect=".urlencode($redirect);
-            $this->response->location($loginurl);
+        if ($this->authService->getAuthUserArray()) {
+            return;
         }
+
+        $redirect = $this->requestComponent->getRequestUri();
+        $loginUrl = Routes::getUrlByRouteName("login");
+        if (strstr($redirect, "/restrict")) {
+            $loginUrl = "$loginUrl?redirect=".urlencode($redirect);
+        }
+        $this->responseComponent->location($loginUrl);
     }
 
-    protected function _add_bowdisabled(): void
+    protected function _addBusinessOwnerDisabled(): void
     {
-        $this->add_var("bowdisabled", []);
-        if (!($iduser = $this->auth->get_user()["id"] ?? "")) return;
-        if ($this->auth->is_system()) return;
+        $this->addGlobalVar("bowdisabled", []);
+        if (!($idUser = $this->authService->getAuthUserArray()["id"] ?? "")) {
+            return;
+        }
+        if ($this->authService->hasAuthUserSystemProfile()) {
+            return;
+        }
 
-        $this->add_var(
+        /**
+         * @type BusinessDataDisabledService $service
+         */
+        $service = SF::getInstanceOf(BusinessDataDisabledService::class);
+        $this->addGlobalVar(
             "bowdisabled",
-            SF::get(BusinessDataDisabledService::class)->get_disabled_data_by_user($this->auth->get_idowner($iduser))
+            $service->getDisabledDataByUser($this->authService->getIdOwner())
         );
     }
 

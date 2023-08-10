@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -11,13 +12,13 @@ final class CreateBaseArray extends AbsMigration
         $this->_create_table();
         $this->_initial_load();
     }
-    
+
     private function _create_table(): void
     {
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -49,23 +50,23 @@ final class CreateBaseArray extends AbsMigration
         ])
         ->addColumn("order_by", "integer", [
             "limit" => 5,
-            "default"=>100,
+            "default" => 100,
             "null" => true,
         ])
         ->create();
 
-        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
-            ->addIndex(["type"], ["name"=>"type_idx"])
-            ->addIndex(["id_pk"], ["name"=>"id_pk_idx"])
-            ->addIndex(["description"], ["name"=>"description_idx"])
-            ->addIndex(["order_by"], ["name"=>"order_by_idx"])
-            ->addIndex(["id","type"], ["name"=>"id__type_idx"])
+        $table->addIndex(["delete_date"], ["name" => "delete_date_idx"])
+            ->addIndex(["is_enabled"], ["name" => "is_enabled_idx"])
+            ->addIndex(["uuid"], ["name" => "uuid_idx"])
+            ->addIndex(["type"], ["name" => "type_idx"])
+            ->addIndex(["id_pk"], ["name" => "id_pk_idx"])
+            ->addIndex(["description"], ["name" => "description_idx"])
+            ->addIndex(["order_by"], ["name" => "order_by_idx"])
+            ->addIndex(["id","type"], ["name" => "id__type_idx"])
             ->update()
         ;
     }
-    
+
     private function _initial_load(): void
     {
         $sqls = [
@@ -78,8 +79,9 @@ final class CreateBaseArray extends AbsMigration
             "INSERT INTO base_array ( id,type,id_pk,description,order_by) VALUES ('9','platform','2','mobile','100');",
             "INSERT INTO base_array ( id,type,id_pk,description,order_by) VALUES ('10','platform','3','console','100');",
         ];
-        foreach ($sqls as $sql)
+        foreach ($sqls as $sql) {
             $this->execute($sql);
+        }
     }
 
     public function down(): void

@@ -25,7 +25,7 @@ $texts = [
 <dialog class="dialog">
   <form-home-contact-send
       csrf="<?=$csrf?>"
-      texts="<?php $this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echoJsLit($texts);?>"
   />
 </dialog>
 <script type="module" src="/assets/js/open/home/form-home-contact-send.js"></script>

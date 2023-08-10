@@ -7,64 +7,60 @@
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use Exception;
 use App\Picklist\Application\PicklistService;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Domain\Enums\{PageType, ResponseType};
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Promotions\Application\PromotionsInfoService;
-use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
-use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use \Exception;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Shared\Infrastructure\Exceptions\{ForbiddenException, NotFoundException};
 
 final class PromotionsInfoController extends RestrictController
 {
     private PicklistService $picklist;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->picklist = SF::get(PicklistService::class);
+        $this->picklist = SF::getInstanceOf(PicklistService::class);
     }
 
     //@modal
     public function info(string $uuid): void
     {
-        $this->add_var(PageType::TITLE, __("Promotion info"))
-            ->add_var(PageType::H1, __("Promotion info"))
-            ->add_var("ismodal",1);
+        $this->addGlobalVar(PageType::TITLE, __("Promotion info"))
+            ->addGlobalVar(PageType::H1, __("Promotion info"))
+            ->addGlobalVar("ismodal", 1);
 
         try {
-            $info = SF::get_callable(PromotionsInfoService::class, [$uuid]);
+            $info = SF::getCallableService(PromotionsInfoService::class, [$uuid]);
             $result = $info();
-            $this->add_var("uuid", $uuid)
-                ->add_var("result", $result)
-                ->add_var("statspermission", $this->auth->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ))
-                ->render_nl();
-        }
-        catch (NotFoundException $e) {
-            $this->add_header(ResponseType::NOT_FOUND)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("404")
-                ->render_nl();
-        }
-        catch (ForbiddenException $e) {
-            $this->add_header(ResponseType::FORBIDDEN)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
-        }
-        catch (Exception $e) {
-            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+            $this->addGlobalVar("uuid", $uuid)
+                ->addGlobalVar("result", $result)
+                ->addGlobalVar("statspermission", $this->authService->hasAuthUserPolicy(UserPolicyType::PROMOTION_STATS_READ))
+                ->renderViewOnly();
+        } catch (NotFoundException $e) {
+            $this->addHeaderCode(ResponseType::NOT_FOUND)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("404")
+                ->renderViewOnly();
+        } catch (ForbiddenException $e) {
+            $this->addHeaderCode(ResponseType::FORBIDDEN)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("403")
+                ->renderViewOnly();
+        } catch (Exception $e) {
+            $this->addHeaderCode(ResponseType::INTERNAL_SERVER_ERROR)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("500")
+                ->renderViewOnly();
         }
     }
 

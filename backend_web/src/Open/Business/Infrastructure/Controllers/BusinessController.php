@@ -7,66 +7,65 @@
  * @date 30-10-2021 14:33 SPAIN
  * @observations
  */
+
 namespace App\Open\Business\Infrastructure\Controllers;
 
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Infrastructure\Controllers\Open\OpenController;
+use Exception;
+use App\Shared\Domain\Enums\{PageType, ResponseType};
 use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Open\Business\Application\BusinessSpaceService;
-use App\Open\Business\Application\BusinessSpacePageService;
-use App\Shared\Domain\Enums\PageType;
-use Exception;
+use App\Shared\Infrastructure\Controllers\Open\OpenController;
+use App\Open\Business\Application\{
+    BusinessSpacePageService,
+    BusinessSpaceService
+};
 
 final class BusinessController extends OpenController
 {
-    public function index(string $businessslug): void
+    public function index(string $businessSlug): void
     {
-        if (!$businessslug)
-            $this->set_layout("open/mypromos/error")
-                ->add_header($code = ResponseType::BAD_REQUEST)
-                ->add_var(PageType::TITLE, $title = __("Partner space error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("error", __("Missing partner"))
-                ->add_var("code", $code)
-                ->render_nv();
+        if (!$businessSlug) {
+            $this->setLayoutBySubPath("open/mypromos/error")
+                ->addHeaderCode($code = ResponseType::BAD_REQUEST)
+                ->addGlobalVar(PageType::TITLE, $title = __("Partner space error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("error", __("Missing partner"))
+                ->addGlobalVar("code", $code)
+                ->renderLayoutOnly();
+        }
 
         try {
-            $space = SF::get(BusinessSpaceService::class)->get_data_by_slug($businessslug);
-            $this->set_layout("open/mypromos/business")
-                ->add_var(PageType::TITLE, $title = $space["business"])
-                ->add_var(PageType::H1, $title)
-                ->add_var("space", $space)
-                ->add_var(
+            $space = SF::getInstanceOf(BusinessSpaceService::class)->getBusinessDataByBusinessSlug($businessSlug);
+            $this->setLayoutBySubPath("open/mypromos/business")
+                ->addGlobalVar(PageType::TITLE, $title = $space["business"])
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("space", $space)
+                ->addGlobalVar(
                     "result",
-                    SF::get(BusinessSpacePageService::class)->get_page_by_businessslug($businessslug)
+                    SF::getInstanceOf(BusinessSpacePageService::class)->getPageByBusinessSlug($businessSlug)
                 )
-                ->render_nv();
+                ->renderLayoutOnly();
         }
         catch (NotFoundException $e) {
-            $this->add_header(ResponseType::NOT_FOUND)
-                ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Partner space error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("space", [])
-                ->add_var("error", $e->getMessage())
-                ->add_var("code", $e->getCode())
-                ->render_nv();
+            $this->addHeaderCode(ResponseType::NOT_FOUND)
+                ->setPartLayout("open/mypromos/error")
+                ->addGlobalVar(PageType::TITLE, $title = __("Partner space error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("space", [])
+                ->addGlobalVar("error", $e->getMessage())
+                ->addGlobalVar("code", $e->getCode())
+                ->renderLayoutOnly();
         }
         catch (Exception $e) {
-            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Partner space error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("space", [])
-                ->add_var("error", $e->getMessage())
-                ->add_var("code", $e->getCode())
-                ->render_nv();
+            $this->addHeaderCode(ResponseType::INTERNAL_SERVER_ERROR)
+                ->setPartLayout("open/mypromos/error")
+                ->addGlobalVar(PageType::TITLE, $title = __("Partner space error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("space", [])
+                ->addGlobalVar("error", $e->getMessage())
+                ->addGlobalVar("code", $e->getCode())
+                ->renderLayoutOnly();
         }
     }
 
-
 }//BusinessController
-
-
-

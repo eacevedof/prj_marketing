@@ -7,16 +7,21 @@
  * @date 20-11-2021 00:50 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Factories\Specific;
 
-use App\Shared\Domain\Entities\AppEntity;
-use App\Shared\Domain\Entities\FieldsValidator;
+use App\Shared\Domain\Entities\{AppEntity, FieldsValidator};
 
 final class ValidatorFactory
 {
-    public static function get(array $request, ?AppEntity $entity=null): FieldsValidator
+    public static function getFieldValidator(array $request, ?AppEntity $entity = null): FieldsValidator
     {
         return new FieldsValidator($request, $entity);
+    }
+
+    public static function getFieldValidatorFromDto(object $requestDto, ?AppEntity $entity = null): FieldsValidator
+    {
+        return new FieldsValidator($requestDto, $entity);
     }
 
 }//ValidatorFactory

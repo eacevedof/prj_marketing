@@ -5,7 +5,7 @@
  */
 if (is_null($result["permissions"])) return;
 
-$iduser = $result["user"]["id"];
+$idUser = $result["user"]["id"];
 $permissions = $result["permissions"];
 
 $texts = [
@@ -22,7 +22,7 @@ $texts = [
 ];
 
 $permissions = [
-    "id_user" => $iduser,
+    "id_user" => $idUser,
 
     "id" => $permissions["id"] ?? "",
     "uuid" => $permissions["uuid"] ?? "",
@@ -31,12 +31,12 @@ $permissions = [
 ?>
 <div id="permissions" class="tab-pane">
   <form-user-permissions-update
-      csrf=<?php $this->_echo_js($csrf);?>
+      csrf=<?php $this->_echoJs($csrf);?>
 
       useruuid="<?=$uuid?>"
-      texts="<?php $this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echoJsLit($texts);?>"
 
-      fields="<?php $this->_echo_jslit($permissions);?>"
+      fields="<?php $this->_echoJsLit($permissions);?>"
   />
 </div>
 <script type="module" src="/assets/js/restrict/users/permissions/form-user-permissions-update.js"></script>

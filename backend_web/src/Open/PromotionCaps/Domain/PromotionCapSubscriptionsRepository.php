@@ -1,29 +1,29 @@
 <?php
+
 namespace App\Open\PromotionCaps\Domain;
 
+use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
+use App\Shared\Domain\Repositories\Common\SysFieldRepository;
+use App\Shared\Infrastructure\Factories\{DbFactory as DbF, RepositoryFactory as RF};
 
 final class PromotionCapSubscriptionsRepository extends AppRepository
 {
     use SearchRepoTrait;
 
-    private ?AuthService $auth = null;
+    private ?AuthService $authService = null;
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_promotioncap_subscriptions";
     }
 
     public function get_info(string $uuid): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $uuid = $this->_getSanitizedString($uuid);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("promotioncap_subscriptions.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -53,10 +53,12 @@ final class PromotionCapSubscriptionsRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        $this->map_to_int($r, ["id", "id_owner", "id_promotion", "id_promouser"]);
-        if (!$r) return [];
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-        return array_merge($r, $sysdata);
+        $this->mapFieldsToInt($r, ["id", "id_owner", "id_promotion", "id_promouser"]);
+        if (!$r) {
+            return [];
+        }
+        $sysData = RF::getInstanceOf(SysFieldRepository::class)->getSysDataByRowData($r = $r[0]);
+        return array_merge($r, $sysData);
     }
 
 }

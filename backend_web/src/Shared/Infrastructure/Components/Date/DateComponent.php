@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Components\Date;
 
-use \DateTimeImmutable;
+use DateTimeImmutable;
 
 final class DateComponent
 {
@@ -14,15 +14,17 @@ final class DateComponent
     public const DATE = "date";
     public const DATETIME = "datetime";
 
-    public function get_seconds_between(string $dtlt, string $dtgt): int
+    public function getSecondsBetween(string $dtFrom, string $dtTo): int
     {
-        if ($dtlt === $dtgt) return 0;
-        $dt1 = (new DateTimeImmutable($dtlt))->getTimestamp();
-        $dt2 = (new DateTimeImmutable($dtgt))->getTimestamp();
+        if ($dtFrom === $dtTo) {
+            return 0;
+        }
+        $dt1 = (new DateTimeImmutable($dtFrom))->getTimestamp();
+        $dt2 = (new DateTimeImmutable($dtTo))->getTimestamp();
         return ($dt2 - $dt1);
     }
 
-    public function get_date_only(string $date): string
+    public function getDateOnly(string $date): string
     {
         $date = trim($date);
         $sep = strstr($date, "T") ? "T" : " ";
@@ -30,16 +32,17 @@ final class DateComponent
         return $parts[0] ?? "";
     }
 
-    public function is_valid(string $date): bool
+    public function isValidDate(string $date): bool
     {
-        if (!$dateonly = $this->get_date_only($date))
+        if (!$dateOnly = $this->getDateOnly($date)) {
             return false;
+        }
 
-        list($y, $m, $d) = explode("-", $dateonly);
+        list($y, $m, $d) = explode("-", $dateOnly);
         return checkdate($m, $d, $y);
     }
 
-    public function explode(string $date, string $format=self::SOURCE_YMD): array
+    public function getDateExploded(string $date, string $format = self::SOURCE_YMD): array
     {
         $sep = strstr($date, "T") ? "T" : " ";
         $parts = explode($sep, $date);
@@ -50,29 +53,32 @@ final class DateComponent
         $parts = explode($sep, $date);
 
         $ymd = $date;
-        if ($format===self::SOURCE_YMD)
+        if ($format === self::SOURCE_YMD) {
             $ymd = [
                 "y" => $parts[0],
                 "m" => $parts[1],
                 "d" => $parts[2],
             ];
+        }
 
-        if ($format===self::SOURCE_DMY)
+        if ($format === self::SOURCE_DMY) {
             $ymd = [
                 "y" => $parts[2],
                 "m" => $parts[1],
                 "d" => $parts[0],
             ];
+        }
 
-        if ($format===self::SOURCE_MDY)
+        if ($format === self::SOURCE_MDY) {
             $ymd = [
                 "y" => $parts[2],
                 "m" => $parts[0],
                 "d" => $parts[1],
             ];
+        }
 
         $return = [
-            "date"=> $ymd,
+            "date" => $ymd,
         ];
 
         $time = explode(":", $time);
@@ -85,9 +91,9 @@ final class DateComponent
         return $return;
     }
 
-    public function to_db(string $date, string $format=self::DATETIME): string
+    public function getDateInDbFormat(string $date, string $format = self::DATETIME): string
     {
-        $clean = str_replace(" ","T", $date);
+        $clean = str_replace(" ", "T", $date);
         $seconds = strtotime($clean);
         switch ($format) {
             case self::DATETIME: return date("Y-m-d H:i:s", $seconds);
@@ -97,29 +103,36 @@ final class DateComponent
         return $clean;
     }
 
-    public function get_jsdt(string $dbdt): string
+    public function getDateInJsFormat(string $dtDb): string
     {
-        if (!$dbdt) return $dbdt;
+        if (!$dtDb) {
+            return $dtDb;
+        }
         //$dbdt = substr($dbdt, 0, 16);
-        return str_replace(" ","T", $dbdt);
+        return str_replace(" ", "T", $dtDb);
     }
 
-    public function get_dbdt(string $jsdt): string
+    public function getDateInDbFormat00(string $dtJs): string
     {
-        if (!$jsdt) return $jsdt;
-        if (strlen($jsdt)==16) $jsdt = "$jsdt:00";
-        if (strstr($jsdt,"T"))
-            $jsdt = str_replace("T"," ", $jsdt);
-        return $jsdt;
+        if (!$dtJs) {
+            return $dtJs;
+        }
+        if (strlen($dtJs) === 16) {
+            $dtJs = "$dtJs:00";
+        }
+        if (strstr($dtJs, "T")) {
+            $dtJs = str_replace("T", " ", $dtJs);
+        }
+        return $dtJs;
     }
 
-    public function add_time(string $dt, int $seconds): string
+    public function addSecondsToDate(string $dt, int $seconds): string
     {
         $newdate = strtotime($dt) + $seconds;
         return date("Y-m-d H:i:s", $newdate);
     }
 
-    public function get_last_hour(string $dt): string
+    public function getLastSecondInSomeDate(string $dt): string
     {
         $sep = strstr($dt, "T") ? "T" : " ";
         $date = explode($sep, $dt)[0];

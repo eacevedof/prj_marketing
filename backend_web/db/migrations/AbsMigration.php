@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Migrations;
 
-use Phinx\Migration\AbstractMigration;
 use Phinx\Db\Table;
+use Phinx\Migration\AbstractMigration;
 
 abstract class AbsMigration extends AbstractMigration
 {
@@ -45,7 +47,7 @@ abstract class AbsMigration extends AbstractMigration
         ->addColumn("update_date", "datetime", [
             "default" => "CURRENT_TIMESTAMP",
             "null" => true,
-            "update"=> "CURRENT_TIMESTAMP"
+            "update" => "CURRENT_TIMESTAMP"
         ])
         ->addColumn("delete_platform", "string", [
             "limit" => 3,
@@ -69,7 +71,7 @@ abstract class AbsMigration extends AbstractMigration
         ])
         ->addColumn("is_erpsent", "string", [
             "limit" => 3,
-            "default" =>0,
+            "default" => 0,
             "null" => true,
             "comment" => "en procesos etl indica si se ha exportado"
         ])
@@ -81,7 +83,7 @@ abstract class AbsMigration extends AbstractMigration
         ])
         ->addColumn("i", "integer", [
             "limit" => 11,
-            "default"=> null,
+            "default" => null,
             "null" => true,
             "comment" => "en procesos de etl con disp offline el autoid en la máquina"
         ]);

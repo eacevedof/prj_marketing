@@ -1,8 +1,10 @@
 <?php
+
 namespace Boot;
 
-if (!is_file("../vendor/autoload.php"))
+if (!is_file("../vendor/autoload.php")) {
     throw new \Exception("Missing vendor/autoload.php");
+}
 include_once "../vendor/autoload.php";
 include_once "../vendor/theframework/bootstrap.php";
 
@@ -15,10 +17,10 @@ include_once("listeners/eventbus.php");
 */
 include_once "../boot/appbootstrap.php";
 
-use \BOOT;
-use \ENV;
+use BOOT;
+use ENV;
 use TheFramework\Components\ComponentRouter;
-use \Throwable;
+use Throwable;
 
 final class IndexMain
 {
@@ -35,12 +37,14 @@ final class IndexMain
     private function _load_session(): void
     {
         session_name(getenv("APP_COOKIEID") ?: "MARKETINGID");
-        ini_set("session.save_path","/tmp");
+        ini_set("session.save_path", "/tmp");
         session_start();
         //function setcookie(string $name, $value = '', array $options = []): bool {}
         setcookie(session_name(), session_id(), ["path" => "/"]);
 
-        if (!isset($_SESSION["last_activity"])) $_SESSION["last_activity"] = time();
+        if (!isset($_SESSION["last_activity"])) {
+            $_SESSION["last_activity"] = time();
+        }
 
         if (($_SESSION["last_activity"] + self::SESSION_TIME_SECONDS) < time()) {
             $_SESSION = ["last_activity" => time()];
@@ -61,21 +65,23 @@ final class IndexMain
             header("Access-Control-Max-Age: 86400");    // cache for 1 day
             //header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
         }
-// Access-Control headers are received during OPTIONS requests
+        // Access-Control headers are received during OPTIONS requests
         if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
-            if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]))
+            if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"])) {
                 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+            }
 
-            if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]))
+            if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"])) {
                 header("Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]}");
+            }
         }
-//si se está en producción se desactivan los mensajes en el navegador
-        if (($_ENV["APP_ENV"] ?? "")===ENV::PROD) {
+        //si se está en producción se desactivan los mensajes en el navegador
+        if (($_ENV["APP_ENV"] ?? "") === ENV::PROD) {
             $today = date("Ymd");
-            ini_set("display_errors",0);
-            ini_set("log_errors",1);
+            ini_set("display_errors", 0);
+            ini_set("log_errors", 1);
             //Define where do you want the log to go, syslog or a file of your liking with
-            ini_set("error_log",BOOT::PATH_LOGS."/error/sys_$today.log");
+            ini_set("error_log", BOOT::PATH_LOGS."/error/sys_$today.log");
         }
     }
 
@@ -93,15 +99,18 @@ final class IndexMain
     {
         $router = new ComponentRouter($this->routes);
         $arrundata = $router->get_rundata();
-        $this->routes = []; unset($router);
-        
+        $this->routes = [];
+        unset($router);
+
         if($methods = ($arrundata["allowed"] ?? [])) {
-            if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods))
+            if(!in_array($method = strtolower($_SERVER["REQUEST_METHOD"]), $methods)) {
                 throw new \Exception("request method {$method} not allowed");
+            }
         }
 
-        if(!$_POST && $json = file_get_contents("php://input")) 
+        if(!$_POST && $json = file_get_contents("php://input")) {
             $_POST = json_decode($json, 1);
+        }
 
         $_REQUEST["APP_ACTION"] = $arrundata;
         $_REQUEST["lang"] = $this->_get_language();
@@ -115,16 +124,26 @@ final class IndexMain
     public static function on_error(Throwable $ex): void
     {
         $uuid = uniqid();
-        if ($_POST) lgerr($_POST,"index-exception $uuid POST", "error");
-        if ($_GET) lgerr($_GET,"index-exception $uuid GET", "error");
-        if ($_SESSION) lgerr($_SESSION,"index-exception $uuid SESSION", "error");
-        if ($_REQUEST) lgerr($_REQUEST,"index-exception $uuid REQUEST", "error");
-        if ($_ENV) lgerr($_ENV,"index-exception $uuid ENV", "error");
+        if ($_POST) {
+            lgerr($_POST, "index-exception $uuid POST", "error");
+        }
+        if ($_GET) {
+            lgerr($_GET, "index-exception $uuid GET", "error");
+        }
+        if ($_SESSION) {
+            lgerr($_SESSION, "index-exception $uuid SESSION", "error");
+        }
+        if ($_REQUEST) {
+            lgerr($_REQUEST, "index-exception $uuid REQUEST", "error");
+        }
+        if ($_ENV) {
+            lgerr($_ENV, "index-exception $uuid ENV", "error");
+        }
         lgerr($ex->getMessage(), "index-exception $uuid", "error");
-        lgerr($ex->getTraceAsString(),"index-exception $uuid TRACE", "error");
+        lgerr($ex->getTraceAsString(), "index-exception $uuid TRACE", "error");
         lgerr($ex->getFile()." : (line: {$ex->getLine()})", "file-line $uuid", "error");
 
-        $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
+        $code = $ex->getCode() !== 0 ? $ex->getCode() : 500;
         http_response_code($code);
         $response = [
             "code" => $code,
@@ -142,20 +161,34 @@ final class IndexMain
 
     public static function debug(Throwable $ex): void
     {
-        if (ENV::is_prod()) return;
-        if (!ENV::is_debug()) return;
+        if (ENV::is_prod()) {
+            return;
+        }
+        if (!ENV::is_debug()) {
+            return;
+        }
 
         $content = [];
         $content["Exception"] = $ex->getMessage();
         $content["File"] = $ex->getFile()."(".$ex->getLine().")";
-        $code = $ex->getCode()!==0 ? $ex->getCode(): 500;
+        $code = $ex->getCode() !== 0 ? $ex->getCode() : 500;
         $content["response"] = $code;
 
-        if ($_POST) $content["POST"] = var_export($_POST, 1);
-        if ($_GET) $content["GET"] = var_export($_GET, 1);
-        if ($_SESSION) $content["SESSION"] = var_export($_SESSION, 1);
-        if ($_REQUEST) $content["REQUEST"] = var_export($_REQUEST, 1);
-        if ($_ENV) $content["ENV"] = var_export($_ENV, 1);
+        if ($_POST) {
+            $content["POST"] = var_export($_POST, 1);
+        }
+        if ($_GET) {
+            $content["GET"] = var_export($_GET, 1);
+        }
+        if ($_SESSION) {
+            $content["SESSION"] = var_export($_SESSION, 1);
+        }
+        if ($_REQUEST) {
+            $content["REQUEST"] = var_export($_REQUEST, 1);
+        }
+        if ($_ENV) {
+            $content["ENV"] = var_export($_ENV, 1);
+        }
 
         echo "<pre>";
         print_r($content);

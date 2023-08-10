@@ -6,38 +6,35 @@
  * @file QueryRepository.php v1.0.0
  * @date %DATE% SPAIN
  */
+
 namespace App\Restrict\Queries\Domain;
 
 use App\Shared\Domain\Repositories\AppRepository;
-use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
-use TheFramework\Components\Db\ComponentQB;
 
 final class QueryRepository extends AppRepository
 {
-
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_query";
     }
 
-    public function get_by_uuid_and_iduser(string $uuid, int $iduser, array $fields=[]): array
+    public function getQueryByUuidAndIdUser(string $queryUuid, int $idUser, array $fields = []): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
-            ->set_comment("app_query.get_by_uuid_and_iduser")
+        $queryUuid = $this->_getSanitizedString($queryUuid);
+        $sql = $this->_getQueryBuilderInstance()
+            ->set_comment("app_query.getQueryByUuidAndIdUser")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
-            ->add_and("m.uuid='$uuid'")
-            ->add_and("m.insert_user=$iduser")
+            ->add_and("m.uuid = '$queryUuid'")
+            ->add_and("m.insert_user = $idUser")
         ;
-        if ($fields) $sql->set_getfields($fields);
+        if ($fields) {
+            $sql->set_getfields($fields);
+        }
         $sql = $sql->select()->sql();
-        $r = $this->db->query($sql);
+        $r = $this->componentMysql->query($sql);
         return $r[0] ?? [];
     }
 

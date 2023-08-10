@@ -6,10 +6,11 @@
  * @file PromotionEntity.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN
  */
+
 namespace App\Restrict\Promotions\Domain;
 
-use App\Shared\Domain\Entities\AppEntity;
 use App\Shared\Domain\Enums\EntityType;
+use App\Shared\Domain\Entities\AppEntity;
 
 final class PromotionEntity extends AppEntity
 {

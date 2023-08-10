@@ -14,67 +14,67 @@ use App\Shared\Domain\Enums\ExceptionType;
 
 final class XxxsSearchService extends AppService
 {
-    private AuthService $auth;
+    private AuthService $authService;
     private XxxRepository $repoxxx;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
         $this->input = $input;
-        $this->repoxxx = RF::get(XxxRepository::class);
+        $this->repoxxx = RF::getInstanceOf(XxxRepository::class);
     }
 
     public function __invoke(): array
     {
-        $search = CF::get_datatable($this->input)->get_search();
-        return $this->repoxxx->set_auth($this->auth)->search($search);
+        $search = CF::getDatatableComponent($this->input)->getSearchPayload();
+        return $this->repoxxx->set_auth($this->authService)->search($search);
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) return;
 
-        if(!(
-            $this->auth->is_user_allowed(UserPolicyType::XXXS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::XXXS_WRITE)
+        if (!(
+            $this->authService->hasAuthUserPolicy(UserPolicyType::XXXS_READ)
+            || $this->authService->hasAuthUserPolicy(UserPolicyType::XXXS_WRITE)
         ))
-            $this->_exception(
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
     }
 
-    public function get_datatable(): DatatableHelper
+    public function getDatatableHelper(): DatatableHelper
     {
-        $dthelp = HF::get(DatatableHelper::class)->add_column("id")->is_visible(false);
+        $datatableHelper = HF::get(DatatableHelper::class)->addColumn("id")->isVisible(false);
 
-        if($this->auth->is_root())
-            $dthelp
-                ->add_column("delete_date")->add_label(__("Deleted at"))
-                ->add_column("e_deletedby")->add_label(__("Deleted by"));
+        if ($this->authService->isAuthUserRoot())
+            $datatableHelper
+                ->addColumn("delete_date")->addLabel(__("Deleted at"))
+                ->addColumn("e_deletedby")->addLabel(__("Deleted by"));
 
-        $dthelp->add_column("uuid")->add_label(__("Code"))->add_tooltip(__("uuid"))
+        $datatableHelper->addColumn("uuid")->addLabel(__("Code"))->addTooltip(__("uuid"))
             %DT_COLUMNS%
         ;
 
-        if($this->auth->is_root())
-            $dthelp->add_action("show")
-                ->add_action("add")
-                ->add_action("edit")
-                ->add_action("del")
-                ->add_action("undel")
+        if ($this->authService->isAuthUserRoot())
+            $datatableHelper->addAction("show")
+                ->addAction("add")
+                ->addAction("edit")
+                ->addAction("del")
+                ->addAction("undel")
             ;
 
-        if($this->auth->is_user_allowed(UserPolicyType::XXXS_WRITE))
-            $dthelp->add_action("add")
-                ->add_action("edit")
-                ->add_action("del");
+        if ($this->authService->hasAuthUserPolicy(UserPolicyType::XXXS_WRITE))
+            $datatableHelper->addAction("add")
+                ->addAction("edit")
+                ->addAction("del");
 
-        if($this->auth->is_user_allowed(UserPolicyType::XXXS_READ))
-            $dthelp->add_action("show");
+        if ($this->authService->hasAuthUserPolicy(UserPolicyType::XXXS_READ))
+            $datatableHelper->addAction("show");
 
-        return $dthelp;
+        return $datatableHelper;
     }
 }

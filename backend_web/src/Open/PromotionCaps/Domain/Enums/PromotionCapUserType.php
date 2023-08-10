@@ -16,7 +16,7 @@ abstract class PromotionCapUserType
     public const INPUT_IS_MAILING = "is_mailing";
     public const INPUT_IS_TERMS = "is_terms";
 
-    public static function get_all(): array
+    public static function getAllPromotionCapUserTypes(): array
     {
         return [
             self::INPUT_EMAIL,

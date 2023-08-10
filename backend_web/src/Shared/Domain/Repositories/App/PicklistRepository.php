@@ -7,6 +7,7 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Domain\Repositories\App;
 
 use App\Shared\Domain\Repositories\AppRepository;
@@ -21,12 +22,12 @@ final class PicklistRepository extends AppRepository
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
     }
 
-    public function get_users(): array
+    public function getAllUsers(): array
     {
-        $sql = $this->_get_qbuilder()
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("picklist.get_users")
             ->set_table("base_user as m")
             ->set_getfields(["m.id","m.description"])
@@ -36,14 +37,14 @@ final class PicklistRepository extends AppRepository
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
-        $this->map_to_int($this->result, ["id"]);
-        return $this->_get_associative(["id", "description"]);
+        $this->mapFieldsToInt($this->result, ["id"]);
+        return $this->_getKeyValueArray(["id", "description"]);
     }
 
-    public function get_users_by_profile(int $idProfile): array
+    public function getUsersByIdProfile(int $idProfile): array
     {
-        $sql = $this->_get_qbuilder()
-            ->set_comment("picklist.get_users_by_profile(profileid)")
+        $sql = $this->_getQueryBuilderInstance()
+            ->set_comment("picklist.getUsersByIdProfile")
             ->set_table("base_user as m")
             ->set_getfields([
                 "m.id",
@@ -57,13 +58,13 @@ final class PicklistRepository extends AppRepository
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
-        $this->map_to_int($this->result, ["id"]);
-        return $this->_get_associative(["id", "description"]);
+        $this->mapFieldsToInt($this->result, ["id"]);
+        return $this->_getKeyValueArray(["id", "description"]);
     }
 
-    public function get_business_owners(): array
+    public function getAllBusinessOwners(): array
     {
-        $sql = $this->_get_qbuilder()
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("picklist.get_business_owners")
             ->set_table("base_user as m")
             ->set_getfields([
@@ -78,8 +79,8 @@ final class PicklistRepository extends AppRepository
             ->select()->sql()
         ;
         $this->result = $this->query($sql);
-        $this->map_to_int($this->result, ["id"]);
-        return $this->_get_associative(["id","description"]);
+        $this->mapFieldsToInt($this->result, ["id"]);
+        return $this->_getKeyValueArray(["id","description"]);
     }
 
 }//PicklistRepository

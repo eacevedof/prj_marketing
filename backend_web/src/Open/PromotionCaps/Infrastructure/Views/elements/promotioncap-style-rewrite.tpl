@@ -7,9 +7,9 @@ promotioncap-style-rewrite.tpl
 */
 .main-flex {
 <?php
-echo $bdhelp->get_style_body();
-BH::echo_style("background-color", $promotion["bgcolor"]);
-BH::echo_style("background-image", $promotion["bgimage_xs"]);
+echo $bdhelp->getStyleBody();
+BH::echoStyle("background-color", $promotion["bgcolor"]);
+BH::echoStyle("background-image", $promotion["bgimage_xs"]);
 ?>
 }
 </style>

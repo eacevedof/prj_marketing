@@ -7,25 +7,27 @@
  * @date 18-11-2021 21:51 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Traits;
-use App\Shared\Infrastructure\Components\Response\ResponseComponent;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Infrastructure\Factories\ComponentFactory;
+
 use TheFramework\Helpers\HelperJson;
+use App\Shared\Infrastructure\Factories\ComponentFactory;
+use App\Shared\Infrastructure\Components\Response\ResponseComponent;
 
 trait ResponseTrait
 {
-    protected ?ResponseComponent $response = null;
+    protected ?ResponseComponent $responseComponent = null;
 
-    protected function _load_response(): ResponseComponent
+    protected function _loadResponseComponentInstance(): ResponseComponent
     {
-        if (!$this->response)
-            $this->response = ComponentFactory::get(ResponseComponent::class);
-        return $this->response;
+        if (!$this->responseComponent) {
+            $this->responseComponent = ComponentFactory::getInstanceOf(ResponseComponent::class);
+        }
+        return $this->responseComponent;
     }
 
-    protected function _get_json(): HelperJson
+    protected function _getJsonInstanceFromResponse(): HelperJson
     {
-        return $this->response->json();
+        return $this->responseComponent->json();
     }
 }//ResponseTrait

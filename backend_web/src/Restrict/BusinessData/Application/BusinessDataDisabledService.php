@@ -1,19 +1,20 @@
 <?php
+
 namespace App\Restrict\BusinessData\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 
 final class BusinessDataDisabledService extends AppService
 {
-    public function __invoke(int $idowner): bool
+    public function __invoke(int $idOwner): bool
     {
-        return RF::get(BusinessDataRepository::class)->is_disabled_by_iduser($idowner);
+        return RF::getInstanceOf(BusinessDataRepository::class)->isBusinessDataDisabledByIdUser($idOwner);
     }
 
-    public function get_disabled_data_by_user(int $idowner): array
+    public function getDisabledDataByUser(int $idOwner): array
     {
-        return RF::get(BusinessDataRepository::class)->get_disabled_data_by_iduser($idowner);
+        return RF::getInstanceOf(BusinessDataRepository::class)->getDisabledBusinessDataByIdUser($idOwner);
     }
 }

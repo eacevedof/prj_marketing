@@ -5,7 +5,7 @@
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 if (!isset($h1)) return;
-$url = Routes::url("dashboard")
+$url = Routes::getUrlByRouteName("dashboard")
 ?>
 <div class="breadcrumb-header justify-content-between">
   <div class="my-auto">

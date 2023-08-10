@@ -6,7 +6,7 @@
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $spaceurl = ($space["businessslug"] ?? "")
-              ? Routes::url("business.space", ["businessslug"=>$space["businessslug"]])
+              ? Routes::getUrlByRouteName("business.space", ["businessSlug" =>$space["businessslug"]])
               : "/";
 
 $urllogo = $space["businesslogo"] ?? "/themes/mypromos/images/mypromos-logo-orange.svg";

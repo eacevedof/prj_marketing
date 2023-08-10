@@ -2,46 +2,45 @@
 
 namespace App\Shared\Infrastructure\Components\Redis;
 
-use \Redis;
+use Redis;
 
 final class RedisComponent
 {
     private const REDIS_SERVER = "host.docker.internal";
     private const REDIS_PORT = "6379";
-    private static $redis;
+    private static Redis $redis;
 
     private string $key;
-    private $value;
+    private mixed $value;
     private float $ttl; //seconds ejemplo 300.5
 
     public function __construct()
     {
-        if(!self::$redis)
-        {
-            self::$redis = new Redis();
+        if (!self::$redis) {
+            self::$redis = new Redis;
             self::$redis->connect(self::REDIS_SERVER, self::REDIS_PORT);
         }
     }
 
-    public function set_key(string $key): RedisComponent
+    public function setKey(string $key): self
     {
         $this->key = $key;
         return $this;
     }
 
-    public function set_value($mxvalue): RedisComponent
+    public function setValue(mixed $mxValue): self
     {
-        $this->value = $mxvalue;
+        $this->value = $mxValue;
         return $this;
     }
 
-    public function set_ttl(float $seconds): RedisComponent
+    public function setTtl(float $seconds): self
     {
         $this->ttl = $seconds;
         return $this;
     }
 
-    public function get_bykey(): string
+    public function getValueByKey(): string
     {
         return self::$redis->get($this->key);
     }
@@ -51,7 +50,7 @@ final class RedisComponent
         self::$redis->set($this->key, $this->value);
     }
 
-    public function set(string $key, string $value, float $expire=300): void
+    public function set(string $key, string $value, float $expire = 300): void
     {
         self::$redis->set($key, $value);
         self::$redis->expire($key, $expire);
@@ -62,10 +61,12 @@ final class RedisComponent
         return self::$redis->get($key);
     }
 
-    public function save_query(string $table = ""): RedisComponent
+    public function saveQuery(string $table = ""): self
     {
         $prefix = "query-";
-        if($table) $prefix .= "$table-";
+        if ($table) {
+            $prefix .= "$table-";
+        }
         $hash = $prefix.md5($this->key);
         $json = json_encode($this->value);
         self::$redis->set($hash, $json);
@@ -73,66 +74,81 @@ final class RedisComponent
         return $this;
     }
 
-    public function get_query(string $table = ""): array
+    public function getQueryResult(string $table = ""): array
     {
         $prefix = "query-";
-        if($table) $prefix .= "$table-";
+        if ($table) {
+            $prefix .= "$table-";
+        }
         $hash = $prefix.md5($this->key);
         $json = self::$redis->get($hash);
-        if(!$json) return [];
-        $array = json_decode($json, true);
+        if (!$json) {
+            return [];
+        }
+        $array = json_decode($json, true, JSON_UNESCAPED_UNICODE);
         return $array;
     }
 
-    public function save_querycount(string $table = ""): RedisComponent
+    public function saveQueryCount(string $table = ""): self
     {
         $prefix = "query-count-";
-        if($table) $prefix .= "$table-";
+        if ($table) {
+            $prefix .= "$table-";
+        }
         $hash = $prefix.md5($this->key);
         self::$redis->set($hash, (int) $this->value);
         self::$redis->expire($hash, $this->ttl);
         return $this;
     }
 
-    public function get_querycount(string $table = ""): int
+    public function getQueryCount(string $table = ""): int
     {
         $prefix = "query-count-";
-        if($table) $prefix .= "$table-";
+        if ($table) {
+            $prefix .= "$table-";
+        }
         $hash = $prefix.md5($this->key);
         $count = self::$redis->get($hash);
         return (int) $count;
     }
 
-    public function delete_query_and_count(string $table = ""): void
+    public function deleteQueryAndCount(string $table = ""): void
     {
         $prefix = "query-";
-        if($table) $prefix .= "$table-";
+        if ($table) {
+            $prefix .= "$table-";
+        }
         $hash1 = $prefix.md5($this->key);
 
         $prefix = "query-count-";
-        if($table) $prefix .= "$table-";
+        if ($table) {
+            $prefix .= "$table-";
+        }
         $hash2 = $prefix.md5($this->key);
 
         self::$redis->del($hash1, $hash2);
     }
 
-    public function cache_del_all(string $table): void
+    public function deleteAllHavingTable(string $table): void
     {
         $keys1 = self::$redis->keys("query-$table-*");
         $keys = self::$redis->keys("query-count-$table-*");
-        $keys = array_merge($keys1,$keys);
-        foreach ($keys as $key)
+        $keys = array_merge($keys1, $keys);
+        foreach ($keys as $key) {
             self::$redis->del($key);
+        }
     }
 
-    public function get_querysingle(): string
+    public function getQuerySingle(): string
     {
         $hash = "query-single-".md5($this->key);
-        if(!$value = self::$redis->get($hash)) return "";
+        if (!$value = self::$redis->get($hash)) {
+            return "";
+        }
         return $value;
     }
 
-    public function save_querysingle(): RedisComponent
+    public function saveQuerySingle(): self
     {
         $hash = "query-single-".md5($this->key);
         self::$redis->set($hash, $this->value);

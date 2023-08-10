@@ -7,9 +7,10 @@
  * @date 31-10-2020 17:46 SPAIN
  * @observations
  */
+
 namespace App\Console\Application;
 
-use \BOOT;
+use BOOT;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\ConsoleTrait;
 
@@ -22,8 +23,8 @@ final class HelpService extends AppService implements IConsole
     public function __construct(array $input)
     {
         $this->input = $input;
-        $pathservices = BOOT::PATH_CONSOLE."/services.php";
-        $this->commands = include($pathservices);
+        $pathFileServices = BOOT::PATH_CONSOLE."/services.php";
+        $this->commands = include($pathFileServices);
     }
 
     public function run(): void
@@ -37,6 +38,6 @@ final class HelpService extends AppService implements IConsole
             $i++;
         }
         $message = implode("", $lines)."\n";
-        $this->_pr($message,"help menu");
+        $this->_pr($message, "help menu");
     }
 }

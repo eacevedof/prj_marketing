@@ -8,49 +8,56 @@
  * @observations
  * @tags: #ui
  */
+
 namespace App\Shared\Infrastructure\Traits;
+
 use App\Shared\Infrastructure\Views\AppView;
 
 trait ViewTrait
 {
     protected ?AppView $view = null;
 
-    protected function _load_view(): AppView
+    protected function _loadViewInstance(): AppView
     {
-        if(!$this->view) $this->view = new AppView();
+        if (!$this->view) {
+            $this->view = new AppView;
+        }
         return $this->view;
     }
 
-    protected function set_layout(string $pathlayout): AppView
+    protected function setLayoutBySubPath(string $pathLayout): AppView
     {
-        $this->_load_view()->set_layout($pathlayout);
+        $this->_loadViewInstance()->setPartLayout($pathLayout);
         return $this->view;
     }
 
-    protected function set_template(string $pathtemplate): AppView
+    protected function setTemplateBySubPath(string $pathTemplate): AppView
     {
-        $this->_load_view()->set_template($pathtemplate);
+        $this->_loadViewInstance()->setPartViewName($pathTemplate);
         return $this->view;
     }
 
-    protected function add_var(string $varname, $value): AppView
+    protected function addGlobalVar(string $varName, $value): AppView
     {
-        $this->_load_view()->add_var($varname, $value);
+        $this->_loadViewInstance()->addGlobalVar($varName, $value);
         return $this->view;
     }
 
-    protected function add_header(int $code): AppView
+    protected function addHeaderCode(int $code): AppView
     {
-        $this->_load_view()->add_header($code);
+        $this->_loadViewInstance()->addHeaderCode($code);
         return $this->view;
     }
 
-    protected function render($vars=[], string $pathtemplate=""): void
+    protected function render(array $vars = [], string $pathTemplate = ""): void
     {
-        $this->_load_view();
-        foreach ($vars as $k => $v)
-            $this->view->add_var($k,$v);
-        if($pathtemplate) $this->view->set_template($pathtemplate);
+        $this->_loadViewInstance();
+        foreach ($vars as $varName => $varValue) {
+            $this->view->addGlobalVar($varName, $varValue);
+        }
+        if ($pathTemplate) {
+            $this->view->setPartViewName($pathTemplate);
+        }
         $this->view->render();
     }
 

@@ -8,17 +8,17 @@
  * @observations
  * @tags: #apify
  */
+
 namespace App\Shared\Infrastructure\Views;
 
-use \BOOT;
-use App\Shared\Infrastructure\Traits\DiskCacheTrait;
-use App\Shared\Infrastructure\Traits\LogTrait;
-use \Exception;
+use BOOT;
+use Exception;
+use App\Shared\Infrastructure\Traits\{DiskCacheTrait, LogTrait};
 
 final class AppView
 {
-    use LogTrait;
     use DiskCacheTrait;
+    use LogTrait;
 
     private const PATH_LAYOUTS = BOOT::PATH_SRC."/Shared/Infrastructure/Views/layouts";
     private const PATH_ELEMENTS = BOOT::PATH_SRC."/Shared/Infrastructure/Views/elements";
@@ -27,324 +27,363 @@ final class AppView
     private const PATH_ASSETS_IMG = "/assets/images/";
     private const PATH_ASSETS_CSS = "/assets/css/";
 
-    private array $araction;
-    private bool $docache = false;
-    private bool $useview = true;
-    private string $requri;
+    private array $actionParts;
+    private bool $doCache = false;
+    private bool $useView = true;
+    private string $requestUri;
 
     private array $globals = [];
     private array $locals = [];
-    private array $headers = [];
+    private array $httpHeaderCodes = [];
 
-    private array $pathtpl;
+    private array $pathTplParts;
 
     //se necesita dentro del layout
-    private string $pathtemplate = "";
+    private string $pathTemplate = "";
 
     public function __construct()
     {
-        $this->requri = $_SERVER["REQUEST_URI"];
-        $this->araction = $_REQUEST["APP_ACTION"] ?? [];
-        $this->pathtpl = [
+        $this->requestUri = $_SERVER["REQUEST_URI"] ?? "";
+        $this->actionParts = $_REQUEST["APP_ACTION"] ?? [];
+        $this->pathTplParts = [
             "layout" => self::PATH_LAYOUTS."/open/open.tpl",
             "viewfolder" => "",
             "viewname" => "",
         ];
-        $this->_load_viewfolder_by_controller();
-        $this->_load_viewname_by_method();
-        $this->_load_diskcache();
+        $this->_loadViewFolderFromController();
+        $this->_loadViewNameFromMethod();
+        $this->_loadDiskCacheInstance();
     }
 
-    private function _exception(string $message, int $code=500): void
+    private function _throwException(string $message, int $code = 500): void
     {
-        $this->logerr($message,"app-view.exception");
+        $this->logErr($message, "app-view.exception");
         throw new Exception($message, $code);
     }
 
-    private function _load_viewfolder_by_controller(): void
+    private function _loadViewFolderFromController(): void
     {
-        if (!$strcontroller = $this->araction["controller"] ?? "") return;
+        if (!$strController = ($this->actionParts["controller"] ?? "")) {
+            return;
+        }
 
-        $parts = explode("\\",$strcontroller);
+        $parts = explode("\\", $strController);
         unset($parts[0]);
         $parts = array_reverse($parts);
-        unset($parts[0]); unset($parts[1]);
+        unset($parts[0]);
+        unset($parts[1]);
         $parts = array_reverse($parts);
         $parts[] = "Views";
-        $strcontroller = implode("/", $parts);
-        $this->pathtpl["viewfolder"] = BOOT::PATH_SRC."/$strcontroller";
+        $strController = implode("/", $parts);
+        $this->pathTplParts["viewfolder"] = BOOT::PATH_SRC."/$strController";
     }
 
-    private function _load_viewname_by_method(): void
+    private function _loadViewNameFromMethod(): void
     {
-        $araction = $this->araction["method"] ?? "index";
-        $this->pathtpl["viewname"] = "$araction.tpl";
+        $actionMethod = $this->actionParts["method"] ?? "index";
+        $this->pathTplParts["viewname"] = "$actionMethod.tpl";
     }
 
-    private function _load_pathtemplate(): void
+    private function _loadPathTemplate(): void
     {
-        $this->pathtemplate = $this->pathtpl["viewfolder"]."/".$this->pathtpl["viewname"];
+        $this->pathTemplate = $this->pathTplParts["viewfolder"]."/".$this->pathTplParts["viewname"];
     }
 
     private function _template(): void
     {
-        if (!$this->useview) return;
+        if (!$this->useView) {
+            return;
+        }
 
-        if(!is_file($this->pathtemplate))
-            $this->_exception("template {$this->pathtemplate} does not exist!");
+        if (!is_file($this->pathTemplate)) {
+            $this->_throwException("template {$this->pathTemplate} does not exist!");
+        }
 
-        foreach ($this->globals as $name => $value)
+        foreach ($this->globals as $name => $value) {
             $$name = $value;
+        }
 
-        foreach ($this->locals as $name => $value)
+        foreach ($this->locals as $name => $value) {
             $$name = $value;
+        }
 
-        include_once($this->pathtemplate);
+        include_once($this->pathTemplate);
     }
 
-    private function _element(string $pathelement, $vars = []): void
+    private function _element(string $pathElement, array $vars = []): void
     {
-        $path = self::PATH_ELEMENTS."/$pathelement.tpl";
-        if(!is_file($path)) $this->_exception("element $path does not exist!");
+        $path = self::PATH_ELEMENTS."/$pathElement.tpl";
+        if (!is_file($path)) {
+            $this->_throwException("element $path does not exist!");
+        }
 
-        foreach ($this->globals as $name => $value)
+        foreach ($this->globals as $name => $value) {
             $$name = $value;
+        }
 
-        foreach ($vars as $name => $value)
+        foreach ($vars as $name => $value) {
             $$name = $value;
+        }
 
         include($path);
     }
 
-    private function _element_view(string $pathelement, $vars = []): void
+    private function _includeViewElement(string $subPathElement, array $vars = []): void
     {
-        $path = "{$this->pathtpl["viewfolder"]}/elements/$pathelement.tpl";
-        if(!is_file($path)) $this->_exception("element $path does not exist!");
+        $pathTpl = "{$this->pathTplParts["viewfolder"]}/elements/$subPathElement.tpl";
+        if (!is_file($pathTpl)) {
+            $this->_throwException("element $pathTpl does not exist!");
+        }
 
-        foreach ($this->globals as $name => $value)
+        foreach ($this->globals as $name => $value) {
             $$name = $value;
+        }
 
-        foreach ($vars as $name => $value)
+        foreach ($vars as $name => $value) {
             $$name = $value;
+        }
 
-        include($path);
+        include($pathTpl);
     }
 
-    private function _asset_js_module($pathjs):string
+    private function _getAssetJsTagAsModule(string|array $pathJs): string
     {
-        return $this->_asset_js($pathjs, "module");
+        return $this->_getAssetJsTag($pathJs, "module");
     }
 
-    private function _asset_js($pathjs, $type=""):string
+    private function _getAssetJsTag(string|array $pathJs, $type = ""): string
     {
         $type = $type ? " type=\"$type\"" : " ";
 
-        if (is_string($pathjs)) {
-            $path = self::PATH_ASSETS_JS.$pathjs.".js";
-            $fc = substr($pathjs, 0, 1);
-            if ($fc==="/") $path = $pathjs.".js";
+        if (is_string($pathJs)) {
+            $path = self::PATH_ASSETS_JS.$pathJs.".js";
+            $fc = substr($pathJs, 0, 1);
+            if ($fc === "/") {
+                $path = $pathJs.".js";
+            }
             return "<script{$type}src=\"$path\"></script>";
         }
 
-        if (is_array($pathjs)) {
+        if (is_array($pathJs)) {
             $html = [];
-            foreach ($pathjs as $path_js) {
+            foreach ($pathJs as $path_js) {
                 $path = self::PATH_ASSETS_JS.$path_js.".js";
                 $fc = substr($path_js, 0, 1);
-                if ($fc==="/") $path = $path_js.".js";
+                if ($fc === "/") {
+                    $path = $path_js.".js";
+                }
                 $html[] = "<script{$type}src=\"$path\"></script>";
             }
-            return implode("\n",$html);
+            return implode("\n", $html);
         }
         return "";
     }
 
-    private function _asset_css($pathcss):string
+    private function _getAssetCssTag(string | array $pathCss): string
     {
-        if (is_string($pathcss)) {
-            $path = self::PATH_ASSETS_CSS . $pathcss . ".css";
-            $fc = substr($pathcss, 0, 1);
-            if ($fc==="/") $path = $pathcss.".css";
+        if (is_string($pathCss)) {
+            $path = self::PATH_ASSETS_CSS . $pathCss . ".css";
+            $fc = substr($pathCss, 0, 1);
+            if ($fc === "/") {
+                $path = $pathCss.".css";
+            }
             return "<link href=\"$path\" rel=\"stylesheet\">";
         }
 
-        if (is_array($pathcss)) {
+        if (is_array($pathCss)) {
             $html = [];
-            foreach ($pathcss as $path_css) {
+            foreach ($pathCss as $path_css) {
                 $path = self::PATH_ASSETS_CSS . $path_css . ".css";
                 $fc = substr($path_css, 0, 1);
-                if ($fc==="/") $path = $path_css.".css";
+                if ($fc === "/") {
+                    $path = $path_css.".css";
+                }
                 $html[] = "<link href=\"$path\" rel=\"stylesheet\">";
             }
-            return implode("\n",$html);
+            return implode("\n", $html);
         }
         return "";
     }
 
-    private function _asset_img(string $pathimg):string
+    private function _getAssetImgPath(string $pathImg): string
     {
-        $path = self::PATH_ASSETS_IMG.$pathimg;
+        $path = self::PATH_ASSETS_IMG.$pathImg;
         return $path;
     }
-    
-    private function _cache_exit(): void
+
+    private function _cacheExit(): void
     {
-        if ($this->docache && $this->diskcache->is_alive()) {
-            $content = $this->diskcache->get_content();
-            $this->_send_headers();
+        if ($this->doCache && $this->diskCacheComponent->isCachedFileAlive()) {
+            $content = $this->diskCacheComponent->getCachedFileContent();
+            $this->_sendResponseHeaders();
             exit($content);
-        }   
+        }
     }
-    
-    private function _echo_js($any): void
+
+    private function _echoJs(mixed $any): void
     {
         $json = json_encode($any, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         echo $json;
     }
 
-    private function _echo_jslit($any): void
+    private function _echoJsLit(mixed $any): void
     {
         $json = json_encode($any, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        echo str_replace("\"","&quot;", $json);
+        echo str_replace("\"", "&quot;", $json);
     }
 
-    private function _echo(?string $any, bool $raw=true): void
+    private function _echo(?string $any, bool $raw = true): void
     {
         $any = ($any ?? "");
         echo $raw ? $any : htmlentities($any);
     }
 
-    private function _echo_nohtml(?string $any): void
+    private function _echoHtmlEscaped(?string $any): void
     {
         echo htmlentities($any);
     }
 
-    private function _nohtml(?string $any): string
+    private function _getHtmlEscaped(?string $any): string
     {
         return htmlentities($any);
     }
-    
-    private function _send_headers(): void
+
+    private function _sendResponseHeaders(): void
     {
-        $headers = array_unique($this->headers);
-        foreach ($headers as $code)
+        $headers = array_unique($this->httpHeaderCodes);
+        foreach ($headers as $code) {
             http_response_code($code);
+        }
     }
 
-    private function _flush_and_exit(): void
+    private function _flushAndExit(): void
     {
-        $this->_send_headers();
-        if ($this->docache) {
+        $this->_sendResponseHeaders();
+        if ($this->doCache) {
             $content = ob_get_contents();
             $now = date("Y-m-d H:i:s");
             $content .= "<!-- cached at $now -->";
-            $this->diskcache->write($content);
+            $this->diskCacheComponent->write($content);
             exit($content);
         }
         //$isflushok = ob_end_flush();
         die();
     }
 
-    public function set_layout(string $pathlayout): self
+    public function setPartLayout(string $pathLayout): self
     {
-        $this->pathtpl["layout"] = self::PATH_LAYOUTS ."/$pathlayout.tpl";
+        $this->pathTplParts["layout"] = self::PATH_LAYOUTS ."/$pathLayout.tpl";
         return $this;
     }
 
-    public function set_foldertpl(string $folder): self
+    public function setPartViewFolder(string $folder): self
     {
-        $this->pathtpl["viewfolder"] = BOOT::PATH_SRC."/$folder";
+        $this->pathTplParts["viewfolder"] = BOOT::PATH_SRC."/$folder";
         return $this;
     }
 
-    public function set_template(string $viewname): self
+    public function setPartViewName(string $viewName): self
     {
-        $this->pathtpl["viewname"] = "$viewname.tpl";
+        $this->pathTplParts["viewname"] = "$viewName.tpl";
         return $this;
     }
 
-    public function cache(int $time=3600, string $folder=""): self
+    public function cache(int $time = 3600, string $folder = ""): self
     {
         if (!$time) {
-            $this->docache = false;
+            $this->doCache = false;
             return $this;
         }
-        $this->docache = true;
-        $this->diskcache
-            ->set_keyname($this->requri)->set_time($time)->set_folder($folder);
+        $this->doCache = true;
+        $this->diskCacheComponent
+            ->setKeyToBeHashed($this->requestUri)->setSecondsTtl($time)->setSubFolder($folder);
         return $this;
     }
 
-    public function add_var(string $name, $var): self
+    public function addGlobalVar(string $name, mixed $var): self
     {
-        if(trim($name)!=="") $this->globals[$name] = $var;
+        if(trim($name) !== "") {
+            $this->globals[$name] = $var;
+        }
         return $this;
     }
 
-    public function add_header(int $code): self
+    public function addHeaderCode(int $code): self
     {
-        $this->headers[] = $code;
+        $this->httpHeaderCodes[] = $code;
         return $this;
     }
 
     public function render(array $vars = []): void
     {
-        $this->_cache_exit();
+        $this->_cacheExit();
         $this->locals = $vars;
-        
-        if(!is_file($this->pathtpl["layout"]))
-            $this->_exception("layout {$this->pathtpl["layout"]} not found");
 
-        $this->_load_pathtemplate();
-        if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
+        if (!is_file($this->pathTplParts["layout"])) {
+            $this->_throwException("layout {$this->pathTplParts["layout"]} not found");
+        }
 
-        foreach ($this->globals as $name => $value)
+        $this->_loadPathTemplate();
+        if (!is_file($this->pathTemplate)) {
+            $this->_throwException("template {$this->pathTemplate} not found");
+        }
+
+        foreach ($this->globals as $name => $value) {
             $$name = $value;
+        }
 
-        foreach ($this->locals as $name => $value)
+        foreach ($this->locals as $name => $value) {
             $$name = $value;
+        }
 
-        include_once($this->pathtpl["layout"]);
+        include_once($this->pathTplParts["layout"]);
 
-        $this->_flush_and_exit();
+        $this->_flushAndExit();
     }
 
-    public function render_nv(array $vars = []): void
+    public function renderLayoutOnly(array $vars = []): void
     {
-        $this->useview = false;
-        $this->_cache_exit();
+        $this->useView = false;
+        $this->_cacheExit();
         $this->locals = $vars;
 
-        if(!is_file($this->pathtpl["layout"]))
-            $this->_exception("layout {$this->pathtpl["layout"]} not found");
+        if (!is_file($this->pathTplParts["layout"])) {
+            $this->_throwException("layout {$this->pathTplParts["layout"]} not found");
+        }
 
-        foreach ($this->globals as $name => $value)
+        foreach ($this->globals as $name => $value) {
             $$name = $value;
+        }
 
-        foreach ($this->locals as $name => $value)
+        foreach ($this->locals as $name => $value) {
             $$name = $value;
+        }
 
-        include_once($this->pathtpl["layout"]);
+        include_once($this->pathTplParts["layout"]);
 
-        $this->_flush_and_exit();
+        $this->_flushAndExit();
     }
 
-    public function render_nl(array $vars = []): void
+    public function renderViewOnly(array $vars = []): void
     {
-        $this->_cache_exit();
+        $this->_cacheExit();
         $this->locals = $vars;
 
-        $this->_load_pathtemplate();
-        if(!is_file($this->pathtemplate)) $this->_exception("template {$this->pathtemplate} not found");
+        $this->_loadPathTemplate();
+        if (!is_file($this->pathTemplate)) {
+            $this->_throwException("template {$this->pathTemplate} not found");
+        }
 
-        foreach ($this->globals as $name => $value)
+        foreach ($this->globals as $name => $value) {
             $$name = $value;
+        }
 
-        foreach ($this->locals as $name => $value)
+        foreach ($this->locals as $name => $value) {
             $$name = $value;
+        }
 
-        include_once($this->pathtemplate);
-        $this->_flush_and_exit();
+        include_once($this->pathTemplate);
+        $this->_flushAndExit();
     }
-        
+
 }//AppView

@@ -8,39 +8,51 @@
  * @date 06-11-2021 18:18
  * @observations
  */
+
 namespace TheFramework\Components;
 
 class ComponentFaker
 {
-    public function get_int(?int $maxl=null, ?int $minl=null): int
+    public function get_int(?int $maxl = null, ?int $minl = null): int
     {
-        if(!$minl) $minl = 1;
-        if(!$maxl) $maxl = 10;
+        if (!$minl) {
+            $minl = 1;
+        }
+        if (!$maxl) {
+            $maxl = 10;
+        }
 
-        if($maxl<$minl) return 1;
+        if ($maxl < $minl) {
+            return 1;
+        }
 
         $all = [];
-        for($i=0; $i<$minl; $i++)
-            if($i!==0)
-                $all[] = rand(0,9);
-            else
-                $all[] = rand(1,9);
+        for($i = 0; $i < $minl; $i++) {
+            if ($i !== 0) {
+                $all[] = rand(0, 9);
+            } else {
+                $all[] = rand(1, 9);
+            }
+        }
 
-        if(rand(0,1))
+        if (rand(0, 1)) {
             (int) implode("", $all);
+        }
 
-        $missing = $maxl-count($all);
-        for($i=0; $i<$missing; $i++) {
-            if(rand(0,1)) continue;
+        $missing = $maxl - count($all);
+        for($i = 0; $i < $missing; $i++) {
+            if (rand(0, 1)) {
+                continue;
+            }
             $all[] = rand(0, 9);
         }
 
         return (int) implode("", $all);
     }
 
-    public function get_rndint(int $min=0, int $max=9): int
+    public function get_rndint(int $min = 0, int $max = 9): int
     {
-        if($max<$min) {
+        if ($max < $min) {
             $min = 0;
             $max = 9;
         }
@@ -48,22 +60,24 @@ class ComponentFaker
         return rand($min, $max);
     }
 
-    public function get_float(int $intl=3, int $decl=2): float
+    public function get_float(int $intl = 3, int $decl = 2): float
     {
         $float = [];
-        for($i=0; $i<$intl; $i++)
+        for($i = 0; $i < $intl; $i++) {
             $float[] = $this->get_rndint();
+        }
 
         $float[] = ".";
-        for($i=0; $i<$decl; $i++)
+        for($i = 0; $i < $decl; $i++) {
             $float[] = $this->get_rndint();
+        }
 
-        return (float) implode("",$float);
+        return (float) implode("", $float);
     }
 
     private function _rand_value(array $array)
     {
-        $i = array_rand($array,1);
+        $i = array_rand($array, 1);
         return $array[$i];
     }
 
@@ -100,33 +114,39 @@ class ComponentFaker
     public function get_time(): string
     {
         $all = [];
-        $int = $this->get_rndint(0,23);
+        $int = $this->get_rndint(0, 23);
         $all["hh"] = sprintf("%02d", $int);
 
-        $int = $this->get_rndint(0,59);
+        $int = $this->get_rndint(0, 59);
         $all["mm"] = sprintf("%02d", $int);
 
-        $int = $this->get_rndint(0,59);
+        $int = $this->get_rndint(0, 59);
         $all["ss"] = sprintf("%02d", $int);
 
         return implode(":", $all);
     }
 
-    public function get_date(string $mindate="2000-01-01", string $maxdate="2021-01-01"): string
+    public function get_date(string $mindate = "2000-01-01", string $maxdate = "2021-01-01"): string
     {
-        if(!trim($mindate)) $mindate = "1900-01-01";
-        if(!trim($maxdate)) $maxdate = date("Y-m-d");
+        if (!trim($mindate)) {
+            $mindate = "1900-01-01";
+        }
+        if (!trim($maxdate)) {
+            $maxdate = date("Y-m-d");
+        }
 
-        $armindate = explode("-",$mindate);
-        $armaxdate = explode("-",$maxdate);
+        $armindate = explode("-", $mindate);
+        $armaxdate = explode("-", $maxdate);
 
-        if($maxdate<$mindate) $armaxdate[0] = (string)(((int) $mindate[0])+1);
+        if ($maxdate < $mindate) {
+            $armaxdate[0] = (string)(((int) $mindate[0]) + 1);
+        }
 
-        $mindate = implode("-",$armindate);
-        $maxdate = implode("-",$armaxdate);
+        $mindate = implode("-", $armindate);
+        $maxdate = implode("-", $armaxdate);
 
         $dates = [$mindate];
-        while($mindate<$maxdate) {
+        while($mindate < $maxdate) {
             $mindate = date("Y-m-d", strtotime("$mindate 00:00:00") + 86400);
             $dates[] = $mindate;
         }
@@ -134,47 +154,46 @@ class ComponentFaker
         return $this->_rand_value($dates);
     }
 
-    public function get_datetime(string $mindate="1900-01-01", string $maxdate="2021-01-01"): string
+    public function get_datetime(string $mindate = "1900-01-01", string $maxdate = "2021-01-01"): string
     {
         $all["date"] = $this->get_date();
         $all["time"] = $this->get_time();
         return implode(" ", $all);
     }
 
-    public function get_hash(int $len=16): string
+    public function get_hash(int $len = 16): string
     {
         $timestamp = time();
         $hash = md5($timestamp);
-        return substr($hash,0, $len);
+        return substr($hash, 0, $len);
     }
 
-    public function get_word(int $len=10): string
+    public function get_word(int $len = 10): string
     {
         $options = ["c","v"];
         $start = $this->_rand_value($options);
         $word = [];
-        for($i=0; $i<$len; $i++) {
-            if($start==="c") {
+        for($i = 0; $i < $len; $i++) {
+            if ($start === "c") {
                 $word[] = $this->get_consonant();
                 $start = "v";
-            }
-            else {
+            } else {
                 $word[] = $this->get_vouwel();
                 $start = "c";
             }
         }
-        return implode("",$word);
+        return implode("", $word);
     }
 
-    public function get_paragraph(int $words=20, int $maxwlen=10): string
+    public function get_paragraph(int $words = 20, int $maxwlen = 10): string
     {
-        $paragraph=[];
-        for ($i=0; $i<$words; $i++) {
+        $paragraph = [];
+        for ($i = 0; $i < $words; $i++) {
             $ilen = $this->get_rndint(1, $maxwlen);
             $paragraph[] = $this->get_word($ilen);
             //break;
         }
-        return implode(" ",$paragraph);
+        return implode(" ", $paragraph);
     }
 
     public function get_email(): string

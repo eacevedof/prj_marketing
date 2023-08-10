@@ -1,80 +1,77 @@
 <?php
+
 namespace App\Open\PromotionCaps\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class PromotionCapCancelledEvent extends AbsEvent
+final class PromotionCapCancelledEvent extends AbstractEvent
 {
-    private int $idpromotion;
-    private string $idtypeprev;
-    private int $istest;
+    private int $idPromotion;
+    private string $idTypePrev;
+    private int $isTestMode;
 
     public function __construct(
-        int $idcapuser,
-
-        int $idpromotion,
-        string $idtypeprev,
-        int $istest,
-
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->idpromotion = $idpromotion;
-        $this->idtypeprev = $idtypeprev;
-        $this->istest = $istest;
+        int     $idCapUser,
+        int     $idPromotion,
+        string  $idTypePrev,
+        int     $isTestMode,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($idCapUser, $eventId, $occurredOn, $correlationId, $causationId);
+        $this->idPromotion = $idPromotion;
+        $this->idTypePrev = $idTypePrev;
+        $this->isTestMode = $isTestMode;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "promotioncap.cancelled";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["id_promotion"],
             $body["id_type_prev"],
             $body["is_test"],
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
-            "id_promotion" => $this->idpromotion,
-            "id_type_prev" => $this->idtypeprev,
-            "is_test" => $this->istest,
+            "id_promotion" => $this->idPromotion,
+            "id_type_prev" => $this->idTypePrev,
+            "is_test" => $this->isTestMode,
         ];
     }
 
-    public function id_promotion(): string
+    public function idPromotion(): string
     {
-        return $this->idpromotion;
+        return $this->idPromotion;
     }
 
-    public function id_type_prev(): string
+    public function idTypePrev(): string
     {
-        return $this->idtypeprev;
+        return $this->idTypePrev;
     }
 
-    public function is_test(): int
+    public function isTestMode(): int
     {
-        return $this->istest;
+        return $this->isTestMode;
     }
 }

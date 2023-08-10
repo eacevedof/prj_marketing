@@ -7,21 +7,17 @@
  * @date %DATE% SPAIN
  * @observations
  */
+
 namespace App\Restrict\Xxxs\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use Exception;
 use App\Picklist\Application\PicklistService;
-use App\Restrict\Xxxs\Application\XxxsUpdateService;
-use App\Restrict\Xxxs\Application\XxxsInfoService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Domain\Enums\ExceptionType;
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
-use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use App\Shared\Infrastructure\Exceptions\FieldsException;
-use \Exception;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Domain\Enums\{ExceptionType, PageType, ResponseType};
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Restrict\Xxxs\Application\{XxxsInfoService, XxxsUpdateService};
+use App\Shared\Infrastructure\Exceptions\{FieldsException, ForbiddenException, NotFoundException};
 
 final class XxxsUpdateController extends RestrictController
 {
@@ -30,89 +26,86 @@ final class XxxsUpdateController extends RestrictController
     public function __construct()
     {
         parent::__construct();
-        $this->_if_noauth_tologin();
-        $this->picklist = SF::get(PicklistService::class);
+        $this->_redirectToLoginIfNoAuthUser();
+        $this->picklist = SF::getInstanceOf(PicklistService::class);
     }
 
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)) {
-            $this->add_var(PageType::TITLE, __("Unauthorized"))
-                ->add_var(PageType::H1, __("Unauthorized"))
-                ->add_var("ismodal",1)
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_WRITE)) {
+            $this->addGlobalVar(PageType::TITLE, __("Unauthorized"))
+                ->addGlobalVar(PageType::H1, __("Unauthorized"))
+                ->addGlobalVar("ismodal", 1)
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("403")
+                ->renderViewOnly();
         }
 
-        $this->add_var("ismodal",1);
+        $this->addGlobalVar("ismodal", 1);
         try {
-            $edit = SF::get(XxxsInfoService::class, [$uuid]);
+            $edit = SF::getInstanceOf(XxxsInfoService::class, [$uuid]);
             $result = $edit->get_for_edit();
-            $this->set_template("update")
-                ->add_var(PageType::TITLE, __("Edit xxx {0}", $uuid))
-                ->add_var(PageType::H1, __("Edit xxx {0}", $uuid))
-                ->add_var(PageType::CSRF, $this->csrf->get_token())
-                ->add_var("uuid", $uuid)
-                ->add_var("result", $result)
-                ->render_nl();
-        }
-        catch (NotFoundException $e) {
-            $this->add_header(ResponseType::NOT_FOUND)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("404")
-                ->render_nl();
-        }
-        catch (ForbiddenException $e) {
-            $this->add_header(ResponseType::FORBIDDEN)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
-        }
-        catch (Exception $e) {
-            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+            $this->setTemplateBySubPath("update")
+                ->addGlobalVar(PageType::TITLE, __("Edit xxx {0}", $uuid))
+                ->addGlobalVar(PageType::H1, __("Edit xxx {0}", $uuid))
+                ->addGlobalVar(PageType::CSRF, $this->csrfService->getCsrfToken())
+                ->addGlobalVar("uuid", $uuid)
+                ->addGlobalVar("result", $result)
+                ->renderViewOnly();
+        } catch (NotFoundException $e) {
+            $this->addHeaderCode(ResponseType::NOT_FOUND)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("404")
+                ->renderViewOnly();
+        } catch (ForbiddenException $e) {
+            $this->addHeaderCode(ResponseType::FORBIDDEN)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("403")
+                ->renderViewOnly();
+        } catch (Exception $e) {
+            $this->addHeaderCode(ResponseType::INTERNAL_SERVER_ERROR)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("500")
+                ->renderViewOnly();
         }
     }//edit
 
     //@patch
     public function update(string $uuid): void
     {
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
-        if (!$this->csrf->is_valid($this->_get_csrf()))
-            $this->_get_json()
-                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
-                ->set_error([__("Invalid CSRF token")])
+        if (!$this->csrfService->isValidCsrfToken($this->_getCsrfTokenFromRequest())) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ExceptionType::CODE_UNAUTHORIZED)
+                ->setErrors([__("Invalid CSRF token")])
                 ->show();
+        }
 
         try {
-            $request = ["uuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable(XxxsUpdateService::class, $request);
+            $request = ["uuid" => $uuid] + $this->requestComponent->getPost();
+            $update = SF::getCallableService(XxxsUpdateService::class, $request);
             $result = $update();
-            $this->_get_json()->set_payload([
-                "message"=> __("{0} {1} successfully updated", __("Xxx"), $uuid),
+            $this->_getJsonInstanceFromResponse()->setPayload([
+                "message" => __("{0} {1} successfully updated", __("Xxx"), $uuid),
                 "result" => $result,
             ])->show();
-        }
-        catch (FieldsException $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([["fields_validation" => $update->get_errors()]])
+        } catch (FieldsException $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([["fields_validation" => $update->getErrors()]])
                 ->show();
-        }
-        catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }//update

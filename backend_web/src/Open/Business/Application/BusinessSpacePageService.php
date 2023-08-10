@@ -1,110 +1,109 @@
 <?php
+
 namespace App\Open\Business\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Shared\Infrastructure\Components\Date\UtcComponent;
-use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 use App\Restrict\BusinessAttributes\Domain\BusinessAttributeRepository;
+use App\Shared\Infrastructure\Factories\{ComponentFactory as CF, RepositoryFactory as RF};
 
 final class BusinessSpacePageService extends AppService
 {
-    private function _get_sanitized_html(string $html): string
+    public function getPageByBusinessSlug(string $businessSlug): array
+    {
+        $promotions = $this->_getPromotions($businessSlug);
+        $spacePage = RF::getInstanceOf(BusinessAttributeRepository::class)->getSpacePageByBusinessSlug($businessSlug);
+
+        $printKeys = [
+            "space_about", "space_plan", "space_location", "space_contact"
+        ];
+        $map = [];
+        array_map(function ($attr) use (&$map, $printKeys) {
+            $key = $attr["attr_key"];
+            if (in_array($key, $printKeys)) {
+                $map[$key] = $attr["attr_value"];
+            }
+        }, $spacePage);
+        $spacePage = $map;
+        $businessName = RF::getInstanceOf(BusinessDataRepository::class)->getBusinessDataByBusinessDataSlug($businessSlug, ["business_name"])["business_name"] ?? "";
+
+        return [
+            ["h2" => __("About {0}", $businessName)],
+            ...$this->_getHtmlParagraphs($this->_getCleanedHtml($spacePage["space_about"] ?? "")),
+
+            ["h2" => __("Our points programs")],
+            ...explode("\n", $this->_getCleanedHtml($spacePage["space_plan"] ?? "")),
+
+            ["h2" => __("Current promotions")],
+            ["ul" => $promotions],
+
+            ["h2" => __("Where are we located?")],
+            ...$this->_getHtmlParagraphs($this->_getCleanedHtml($spacePage["space_location"] ?? "")),
+
+            ["h2" => __("Contact us")],
+            ...$this->_getHtmlParagraphs($this->_getCleanedHtml($spacePage["space_contact"] ?? "")),
+
+            ["p" => "<br/><br/><br/>"],
+        ];
+    }
+
+    private function _getSanitizedHtml(string $html): string
     {
         return strip_tags($html, "<a>");
     }
 
-    private function _get_all_links(string $html): array
+    private function _getAllLinks(string $html): array
     {
         $patten = "/<a[^<^>^\\]*>[^<^>]*<\/a>/imsx";
         preg_match_all($patten, $html, $result);
         return $result[0];
     }
 
-    private function _get_link_replaces(array $links): array
+    private function _getLinkReplaces(array $links): array
     {
         $result = [];
         $pattern = "/rel=\".*\"/i";
-        foreach ($links as $link)
-        {
+        foreach ($links as $link) {
             $linkr = preg_replace($pattern, "rel=\"nofollow noopener noreferer\"", $link);
             if (!strstr($linkr, " rel=\"")) {
-                $linkr = str_replace("<a ","<a rel=\"nofollow noopener noreferer\" ", $linkr);
+                $linkr = str_replace("<a ", "<a rel=\"nofollow noopener noreferer\" ", $linkr);
             }
             $result[$link] = $linkr;
         }
         return $result;
     }
 
-    private function _get_cleaned(string $html): string
+    private function _getCleanedHtml(string $html): string
     {
-        $html = $this->_get_sanitized_html($html);
-        $links = $this->_get_all_links($html);
-        $linksr = $this->_get_link_replaces($links);
-        $html = str_replace(array_keys($linksr),array_values($linksr),$html);
+        $html = $this->_getSanitizedHtml($html);
+        $links = $this->_getAllLinks($html);
+        $linksReplaced = $this->_getLinkReplaces($links);
+        $html = str_replace(array_keys($linksReplaced), array_values($linksReplaced), $html);
         return $html;
     }
 
-    private function _get_promotions(string $businessslug): array
+    private function _getPromotions(string $businessSlug): array
     {
-        $tz = CF::get(UtcComponent::class)->get_timezone_by_ip($_SERVER["REMOTE_ADDR"]);
-        $promotions = RF::get(BusinessDataRepository::class)->get_top5_last_running_promotions_by_slug($businessslug, $tz);
-        $promotions = array_map(function (array $row) use ($businessslug, $tz) {
+        $tz = CF::getInstanceOf(UtcComponent::class)->getTimezoneByIp($_SERVER["REMOTE_ADDR"]);
+        $promotions = RF::getInstanceOf(BusinessDataRepository::class)->getTop5LastRunningPromotionsByBusinessSlug($businessSlug, $tz);
+        $promotions = array_map(function (array $row) use ($businessSlug, $tz) {
             $description = htmlentities($row["description"]);
-            $url = Routes::url("subscription.create", ["businessslug"=>$businessslug, "promotionslug"=>$row["slug"]]);
+            $url = Routes::getUrlByRouteName("subscription.create", ["businessSlug" => $businessSlug, "promotionSlug" => $row["slug"]]);
             return "<a href=\"$url\">{$description}</a> <small>Desde: {$row["date_from"]} / Hasta: {$row["date_to"]} $tz</small>";
         }, $promotions);
         return $promotions;
     }
 
-    private function _get_ps(string $html): array
+    private function _getHtmlParagraphs(string $html): array
     {
         $lines = explode("\n", $html);
         $ps = [];
-        foreach ($lines as $line)
-        {
-            $ps[] = ["p"=>$line];
+        foreach ($lines as $line) {
+            $ps[] = ["p" => $line];
         }
         return $ps;
     }
 
-    public function get_page_by_businessslug(string $businessslug): array
-    {
-        $promotions = $this->_get_promotions($businessslug);
-        $spacepage = RF::get(BusinessAttributeRepository::class)->get_spacepage_by_businessslug($businessslug);
-
-        $printkeys = [
-            "space_about", "space_plan", "space_location", "space_contact"
-        ];
-        $map = [];
-        array_map(function ($attr) use (&$map, $printkeys){
-            $key = $attr["attr_key"];
-            if (in_array($key, $printkeys))
-                $map[$key] = $attr["attr_value"];
-        }, $spacepage);
-        $spacepage = $map;
-        $businessname = RF::get(BusinessDataRepository::class)->get_by_slug($businessslug, ["business_name"])["business_name"] ?? "";
-
-
-        return [
-            ["h2" => __("About {0}", $businessname)],
-            ...$this->_get_ps($this->_get_cleaned($spacepage["space_about"] ?? "")),
-
-            ["h2" => __("Our points programs")],
-            ...explode("\n", $this->_get_cleaned($spacepage["space_plan"] ?? "")),
-
-            ["h2" => __("Current promotions")],
-            ["ul" => $promotions],
-
-            ["h2" => __("Where are we located?")],
-            ...$this->_get_ps($this->_get_cleaned($spacepage["space_location"] ?? "")),
-
-            ["h2" => __("Contact us")],
-            ...$this->_get_ps($this->_get_cleaned($spacepage["space_contact"] ?? "")),
-
-            ["p" => "<br/><br/><br/>"],
-        ];
-    }
 }

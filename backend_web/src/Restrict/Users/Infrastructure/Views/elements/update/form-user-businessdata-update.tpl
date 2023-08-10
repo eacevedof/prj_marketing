@@ -6,7 +6,7 @@
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 if (is_null($result["businessdata"])) return;
 
-$iduser = $result["user"]["id"];
+$idUser = $result["user"]["id"];
 $businessdata = $result["businessdata"];
 
 $texts = [
@@ -43,7 +43,7 @@ $texts = [
 ];
 
 $businessdata = [
-    "id_user" => $iduser,
+    "id_user" => $idUser,
 
     "id" => $businessdata["id"] ?? "",
     "uuid" => $businessdata["uuid"] ?? "",
@@ -67,18 +67,18 @@ $businessdata = [
     "url_social_twitter" => $businessdata["url_social_twitter"] ?? "",
     "url_social_tiktok" => $businessdata["url_social_tiktok"] ?? "",
 
-    "spaceurl" => Routes::url("business.space", ["businessslug"=>$businessdata["slug"] ?? ""]),
+    "spaceurl" => Routes::getUrlByRouteName("business.space", ["businessSlug" =>$businessdata["slug"] ?? ""]),
     "timezones" => $timezones,
 ];
 ?>
 <div id="businessdata" class="tab-pane">
     <form-user-businessdata-update
-        csrf=<?php $this->_echo_js($csrf);?>
+        csrf=<?php $this->_echoJs($csrf);?>
 
         useruuid="<?=$uuid?>"
-        texts="<?php $this->_echo_jslit($texts);?>"
+        texts="<?php $this->_echoJsLit($texts);?>"
 
-        fields="<?php $this->_echo_jslit($businessdata);?>"
+        fields="<?php $this->_echoJsLit($businessdata);?>"
     />
 </div>
 <script type="module" src="/assets/js/restrict/users/businessdata/form-user-businessdata-update.js"></script>

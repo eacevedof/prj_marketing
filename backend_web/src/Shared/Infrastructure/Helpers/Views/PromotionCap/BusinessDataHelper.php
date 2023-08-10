@@ -1,12 +1,15 @@
 <?php
+
 namespace App\Shared\Infrastructure\Helpers\Views\PromotionCap;
 
-use App\Shared\Infrastructure\Helpers\IHelper;
-use App\Shared\Infrastructure\Helpers\AppHelper;
+use App\Shared\Infrastructure\Helpers\{
+    AppHelper,
+    IHelper
+};
 
 final class BusinessDataHelper extends AppHelper implements IHelper
 {
-    private array $businessdata;
+    private array $businessData;
 
     private const HEAD = "head";
     private const BODY = "body";
@@ -29,53 +32,66 @@ final class BusinessDataHelper extends AppHelper implements IHelper
         ]
     ];
 
-    public function __construct(array $businessdata)
+    public function __construct(array $businessData)
     {
-        $this->businessdata = $businessdata;
+        $this->businessData = $businessData;
     }
 
-    public function get_style_header(): string
+    public function getStyleHeader(): string
     {
         $style = [];
         $part = $this->mapping[self::HEAD];
         foreach ($part as $field => $css) {
-            if (!$value = trim($this->businessdata[$field])) continue;
-            if (strstr($field,"bgimage")) $value = "url(\"$value\")";
+            if (!$value = trim($this->businessData[$field])) {
+                continue;
+            }
+            if (strstr($field, "bgimage")) {
+                $value = "url(\"$value\")";
+            }
             $style[] = "{$css}: $value";
         }
-        return $style ? implode("; ",$style): "";
+        return $style ? implode("; ", $style) : "";
     }
 
-    public function get_style_body(): string
+    public function getStyleBody(): string
     {
         $style = [];
         $part = $this->mapping[self::BODY];
         foreach ($part as $field => $css) {
-            if (!$value = trim($this->businessdata[$field])) continue;
-            if (strstr($field,"bgimage"))
+            if (!$value = trim($this->businessData[$field])) {
+                continue;
+            }
+            if (strstr($field, "bgimage")) {
                 $value = "linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)), url(\"$value\")";
+            }
             $style[] = "{$css}: $value !important";
         }
-        return $style ? implode("; ",$style): "";
+        return $style ? implode("; ", $style) : "";
     }
 
-    public function get_footer_links(): string
+    public function getFooterLinks(): string
     {
         $links = [];
         $part = $this->mapping[self::FOOTER];
         foreach ($part as $field) {
-            if (!$value = trim($this->businessdata[$field])) continue;
+            if (!$value = trim($this->businessData[$field])) {
+                continue;
+            }
             $links[] = "<li><a href=\"{$value}\" target=\"_blank\" rel=\"nofollow\">{$value}</a></li>";
         }
         return $links
-            ? "<ul class=\"menu simple\">".implode(" ",$links)."</ul>"
+            ? "<ul class=\"menu simple\">".implode(" ", $links)."</ul>"
             : "";
     }
 
-    public static function echo_style(string $property, ?string $value): void
+    public static function echoStyle(string $property, ?string $value): void
     {
-        if (!$value) return;
-        if (strstr($property,"background-image")) $value = "url(\"$value\")!important";
+        if (!$value) {
+            return;
+        }
+        if (strstr($property, "background-image")) {
+            $value = "url(\"$value\")!important";
+        }
         echo "$property: $value;";
     }
 }

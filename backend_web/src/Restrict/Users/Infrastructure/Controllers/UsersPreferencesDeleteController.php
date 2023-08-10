@@ -7,51 +7,51 @@
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Users\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use Exception;
+use App\Shared\Infrastructure\Exceptions\FieldsException;
+use App\Shared\Domain\Enums\{ExceptionType, ResponseType};
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Users\Application\UserPreferencesDeleteService;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Domain\Enums\ExceptionType;
-use App\Shared\Infrastructure\Exceptions\FieldsException;
-use \Exception;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class UsersPreferencesDeleteController extends RestrictController
 {
     //@delete
     public function delete(string $uuid): void
     {
-        $this->_if_noauth_tologin();
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        $this->_redirectToLoginIfNoAuthUser();
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
-        if (!$this->csrf->is_valid($this->_get_csrf()))
-            $this->_get_json()
-                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
-                ->set_error([__("Invalid CSRF token")])
+        if (!$this->csrfService->isValidCsrfToken($this->_getCsrfTokenFromRequest())) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ExceptionType::CODE_UNAUTHORIZED)
+                ->setErrors([__("Invalid CSRF token")])
                 ->show();
+        }
 
         try {
-            $request = ["_useruuid"=>$uuid] + $this->request->get_post();
-            $delete = SF::get_callable(UserPreferencesDeleteService::class, $request);
+            $request = ["_useruuid" => $uuid] + $this->requestComponent->getPost();
+            $delete = SF::getCallableService(UserPreferencesDeleteService::class, $request);
             $result = $delete();
-            $this->_get_json()->set_payload([
-                "message"=> __("{0} successfully deleted", __("User preference")),
+            $this->_getJsonInstanceFromResponse()->setPayload([
+                "message" => __("{0} successfully deleted", __("User preference")),
                 "result" => $result,
             ])->show();
-        }
-        catch (FieldsException $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([["fields_validation" => $delete->get_errors()]])
+        } catch (FieldsException $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([["fields_validation" => $delete->getErrors()]])
                 ->show();
-        }
-        catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }//delete

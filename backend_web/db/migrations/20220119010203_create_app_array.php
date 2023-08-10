@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateAppArray extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -49,25 +50,25 @@ final class CreateAppArray extends AbsMigration
         ])
         ->addColumn("id_owner", "integer", [
             "limit" => 11,
-            "default"=>-1,
+            "default" => -1,
             "null" => false,
         ])
         ->addColumn("order_by", "integer", [
             "limit" => 5,
-            "default"=>100,
+            "default" => 100,
             "null" => true,
         ])
         ->create();
 
-        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
-            ->addIndex(["type"], ["name"=>"type_idx"])
-            ->addIndex(["id_pk"], ["name"=>"id_pk_idx"])
-            ->addIndex(["description"], ["name"=>"description_idx"])
-            ->addIndex(["id_owner"], ["name"=>"id_owner"])
-            ->addIndex(["order_by"], ["name"=>"order_by_idx"])
-            ->addIndex(["id","type"], ["name"=>"id__type_idx"])
+        $table->addIndex(["delete_date"], ["name" => "delete_date_idx"])
+            ->addIndex(["is_enabled"], ["name" => "is_enabled_idx"])
+            ->addIndex(["uuid"], ["name" => "uuid_idx"])
+            ->addIndex(["type"], ["name" => "type_idx"])
+            ->addIndex(["id_pk"], ["name" => "id_pk_idx"])
+            ->addIndex(["description"], ["name" => "description_idx"])
+            ->addIndex(["id_owner"], ["name" => "id_owner"])
+            ->addIndex(["order_by"], ["name" => "order_by_idx"])
+            ->addIndex(["id","type"], ["name" => "id__type_idx"])
             ->update()
         ;
     }
@@ -965,8 +966,9 @@ final class CreateAppArray extends AbsMigration
             "INSERT INTO app_array (is_enabled,TYPE,id_pk,description) VALUES ('1','gender','2','Other');",
         ];
 
-        foreach ($sqls as $sql)
+        foreach ($sqls as $sql) {
             $this->execute($sql);
+        }
     }
 
     public function down(): void

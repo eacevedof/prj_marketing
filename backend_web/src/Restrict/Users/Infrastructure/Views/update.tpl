@@ -4,7 +4,7 @@
  * @var string $uuid
  * @var array $result
  */
-echo $this->_asset_css([
+echo $this->_getAssetCssTag([
     "vendor/theme-min/icons",
     "common/tooltip"
 ]);
@@ -18,22 +18,22 @@ echo $this->_asset_css([
     <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
 <?php
-$this->_element_view("update/form-user-update-tab");
-$this->_element_view("update/form-user-permissions-update-tab");
-$this->_element_view("update/form-user-businessdata-update-tab");
-$this->_element_view("update/form-user-businessattribute-space-update-tab");
-$this->_element_view("update/form-user-preferences-update-tab");
+$this->_includeViewElement("update/form-user-update-tab");
+$this->_includeViewElement("update/form-user-permissions-update-tab");
+$this->_includeViewElement("update/form-user-businessdata-update-tab");
+$this->_includeViewElement("update/form-user-businessattribute-space-update-tab");
+$this->_includeViewElement("update/form-user-preferences-update-tab");
 ?>
       </ul>
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
 <?php
-$this->_element_view("update/form-user-update");
-$this->_element_view("update/form-user-permissions-update");
-$this->_element_view("update/form-user-businessdata-update");
-$this->_element_view("update/form-user-businessattribute-space-update");
-$this->_element_view("update/form-user-preferences-update");
+$this->_includeViewElement("update/form-user-update");
+$this->_includeViewElement("update/form-user-permissions-update");
+$this->_includeViewElement("update/form-user-businessdata-update");
+$this->_includeViewElement("update/form-user-businessattribute-space-update");
+$this->_includeViewElement("update/form-user-preferences-update");
 ?>
     </div><!--tab-content-->
   </div><!--card-body-->

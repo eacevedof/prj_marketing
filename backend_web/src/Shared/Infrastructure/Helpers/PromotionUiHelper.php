@@ -1,33 +1,40 @@
 <?php
+
 namespace App\Shared\Infrastructure\Helpers;
 
 use App\Open\PromotionCaps\Domain\Enums\PromotionCapUserType;
 
 final class PromotionUiHelper extends AppHelper implements IHelper
 {
-    private array $promotionui;
+    private array $promotionUi;
 
-    public function __construct(array $promotionui)
+    public function __construct(array $promotionUi)
     {
-        $this->promotionui = $promotionui;
+        $this->promotionUi = $promotionUi;
     }
 
-    public static function get_instance(array $promotionui): self
+    public static function fromPrimitives(array $promotionUi): self
     {
-        return new self($promotionui);
+        return new self($promotionUi);
     }
 
-    public function get_inputs(): array
+    public function getInputs(): array
     {
         $mapped = [];
-        foreach ($this->promotionui as $field => $value) {
+        foreach ($this->promotionUi as $field => $value) {
             $parts = explode("_", $field);
             $prefix = $parts[0];
-            if ($prefix!=="input") continue;
-            if (!$value) continue;
+            if ($prefix !== "input") {
+                continue;
+            }
+            if (!$value) {
+                continue;
+            }
             $input = $parts[1];
-            if(strstr($field,"_is_")) $input = "{$parts[1]}_{$parts[2]}";
-            $mapped[$input] = $this->promotionui["pos_$input"];
+            if(strstr($field, "_is_")) {
+                $input = "{$parts[1]}_{$parts[2]}";
+            }
+            $mapped[$input] = $this->promotionUi["pos_$input"];
         }
         asort($mapped);
         $mapped = array_keys($mapped);

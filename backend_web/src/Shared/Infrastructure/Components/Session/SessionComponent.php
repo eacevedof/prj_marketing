@@ -4,18 +4,18 @@ namespace App\Shared\Infrastructure\Components\Session;
 
 final class SessionComponent
 {
-    public function add(string $key, $mxvalue): self
+    public function addValue(string $key, mixed $mxValue): self
     {
-        $_SESSION[$key] = $mxvalue;
+        $_SESSION[$key] = $mxValue;
         return $this;
     }
 
     public function remove(string $key): self
     {
         unset($_SESSION[$key]);
-        return  $this;
+        return $this;
     }
-    
+
     public function destroy(): self
     {
         $_SESSION = [];
@@ -44,16 +44,19 @@ final class SessionComponent
         return $this;
     }
 
-    public function get(string $key="")
+    public function get(string $key = ""): mixed
     {
-        if (!$key) return $_SESSION;
+        if (!$key) {
+            return $_SESSION;
+        }
         return $_SESSION[$key] ?? null;
     }
 
-    public function get_once(string $key)
+    public function getOnce(string $key): mixed
     {
-        $value =  $this->get($key);
+        $value = $this->get($key);
         unset($_SESSION[$key]);
+        return $value;
     }
 
 }

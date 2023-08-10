@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateAppIpUntracked extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -32,7 +33,7 @@ final class CreateAppIpUntracked extends AbsMigration
         ->addColumn("update_date", "datetime", [
             "default" => "CURRENT_TIMESTAMP",
             "null" => true,
-            "update"=> "CURRENT_TIMESTAMP"
+            "update" => "CURRENT_TIMESTAMP"
         ])
         ->addColumn("id_user", "integer", [
             "limit" => 11,
@@ -61,20 +62,22 @@ final class CreateAppIpUntracked extends AbsMigration
         ])
         ->addColumn("is_enabled", "integer", [
             "limit" => 4,
-            "null"=>true,
-            "default"=> 1,
+            "null" => true,
+            "default" => 1,
         ])
         ->create();
 
         $table
-            ->addIndex(["id_user"], ["name"=>"id_user_idx"])
-            ->addIndex(["id_owner"], ["name"=>"id_owner_idx"])
-            ->addIndex(["remote_ip"], ["name"=>"remote_ip_idx"])
+            ->addIndex(["id_user"], ["name" => "id_user_idx"])
+            ->addIndex(["id_owner"], ["name" => "id_owner_idx"])
+            ->addIndex(["remote_ip"], ["name" => "remote_ip_idx"])
             ->update()
         ;
     }
 
-    private function _initial_load(): void { }
+    private function _initial_load(): void
+    {
+    }
 
     public function down(): void
     {

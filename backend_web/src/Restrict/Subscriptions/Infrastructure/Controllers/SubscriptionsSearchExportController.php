@@ -1,36 +1,37 @@
 <?php
+
 namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Queries\Application\QueryExportService;
+use Exception;
 use App\Shared\Domain\Enums\ResponseType;
-use \Exception;
+use App\Restrict\Queries\Application\QueryExportService;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class SubscriptionsSearchExportController extends RestrictController
 {
     //@post
     public function export(string $uuid): void
     {
-        if (!$this->auth->get_user())
-            $this->_get_json()
-                ->set_code(ResponseType::UNAUTHORIZED)
-                ->set_error([__("Your session has finished please re-login")])
+        if (!$this->authService->getAuthUserArray()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::UNAUTHORIZED)
+                ->setErrors([__("Your session has finished please re-login")])
                 ->show();
+        }
 
         try {
-            SF::get_callable(
+            SF::getCallableService(
                 QueryExportService::class,
                 [
                     "req_uuid" => $uuid,
-                    "columns" => $this->request->get_post("columns", []),
+                    "columns" => $this->requestComponent->getPost("columns", []),
                     "filename" => "subscriptions",
                 ]
             )();
-        }
-        catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }

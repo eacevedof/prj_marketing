@@ -7,180 +7,200 @@
  * @date 19-11-2021 20:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Domain\Entities;
+
 use App\Shared\Domain\Enums\EntityType;
+use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
+use App\Shared\Infrastructure\Components\Formatter\TextComponent;
 
 final class FieldsValidator
 {
     private array $rules = [];
-    private array $request;
-    private ?AppEntity $entity;
+    private array $requestArray;
+    private ?AppEntity $appEntity;
     private array $errors = [];
-    private array $skip = [];
+    private array $skippAbleFields = [];
 
-    public function __construct(array $request, ?AppEntity $entity=null)
+    public function __construct(array | object $request, ?AppEntity $entity = null)
     {
-        $this->request = $request;
-        $this->entity = $entity;
-    }
-    
-    private function _is_length($field): bool
-    {
-        $reqkey = $this->entity->get_requestkey($field);
-        $ilen = $this->entity->get_length($field);
-        $value = $this->request[$reqkey] ?? "";
-        return (strlen($value) <= $ilen);
+        $this->requestArray = is_object($request)
+            ? CF::getInstanceOf(TextComponent::class)->getObjectAsArrayInSnakeCase($request)
+            : $request;
+        $this->appEntity = $entity;
     }
 
-    private function _is_datetime_ok(string $datetime): bool
+    private function _isLengthOk(string $fieldName): bool
     {
-        $datetime = str_replace("T"," ", $datetime);
+        $requestKey = $this->appEntity->getRequestKeyByFieldName($fieldName);
+        $fieldLength = $this->appEntity->getLength($fieldName);
+        $value = $this->requestArray[$requestKey] ?? "";
+        return (strlen($value) <= $fieldLength);
+    }
+
+    private function _isDatetimeOk(string $datetime): bool
+    {
+        $datetime = str_replace("T", " ", $datetime);
         return (date("Y-m-d H:i:s", strtotime($datetime)) == $datetime);
     }
 
-    private function _is_date(string $field): bool
+    private function _isFieldTypeDate(string $fieldName): bool
     {
-        return in_array($this->entity->get_type($field), [EntityType::DATE, EntityType::DATETIME]);
+        return in_array(
+            $this->appEntity->getTypeByFieldName($fieldName),
+            [EntityType::DATE, EntityType::DATETIME]
+        );
     }
-    
-    private function _is_type($field): bool
+
+    private function _isFieldTypeOk(string $fieldName): bool
     {
-        $reqkey = $this->entity->get_requestkey($field);
-        $type = $this->entity->get_type($field);
-        $value = $this->request[$reqkey] ?? null;
+        $requestKey = $this->appEntity->getRequestKeyByFieldName($fieldName);
+        $requestValue = $this->requestArray[$requestKey] ?? null;
+        if ($this->_isEmpty($requestValue)) {
+            return true;
+        }
 
-        if ($this->_is_empty($value)) return true;
-
-        switch ($type) {
-            case EntityType::INT: return is_numeric($value);
-            case EntityType::DECIMAL: return is_float($value) || is_numeric($value);
-            case EntityType::DATE: return strtotime($value);
-            //ejemplo datetime: 2022-01-22 00:00:00
-            case EntityType::DATETIME: return $this->_is_datetime_ok($value);
-            case EntityType::STRING: return is_string($field) || is_numeric($value) || is_float($value);
+        $fieldType = $this->appEntity->getTypeByFieldName($fieldName);
+        switch ($fieldType) {
+            case EntityType::INT: return is_numeric($requestValue);
+            case EntityType::DECIMAL: return is_float($requestValue) || is_numeric($requestValue);
+            case EntityType::DATE: return strtotime($requestValue);
+                //ejemplo datetime: 2022-01-22 00:00:00
+            case EntityType::DATETIME: return $this->_isDatetimeOk($requestValue);
+            case EntityType::STRING: return is_string($requestValue);
         }
         return false;
     }
 
-    private function _is_empty(?string $val): bool { return $val==="" || is_null($val);}
-
-    private function _get_reqkeys(): array
+    private function _isEmpty(?string $val): bool
     {
-        return array_keys($this->request);
+        return $val === "" || is_null($val);
     }
 
-    private function _check_rules(): void
+    private function _getKeysFromArrayRequest(): array
+    {
+        return array_keys($this->requestArray);
+    }
+
+    private function _evaluateAllRulesAndAppendErrors(): void
     {
         foreach($this->rules as $rule) {
             $field = $rule["field"];
-            $reqkey = $field;
-            $label = $this->request["label-$field"] ?? "";
+            $requestKey = $field;
+            $label = $this->requestArray["label-$field"] ?? "";
 
-            if ($this->entity) {
-                $reqkey = $this->entity->get_requestkey($field);
-                $label = $this->entity->get_label($field);
+            if ($this->appEntity) {
+                $requestKey = $this->appEntity->getRequestKeyByFieldName($field);
+                $label = $this->appEntity->getLabel($field);
             }
 
             $message = $rule["fn"]([
-                "data" => $this->request,
+                "data" => $this->requestArray,
                 "field" => $field,
-                "value" => $this->request[$reqkey] ?? null,
+                "value" => $this->requestArray[$requestKey] ?? null,
                 "label" => $label
             ]);
-            
-            if ($message)
-                $this->_add_error($reqkey, $rule["rule"], $message, $label);
+
+            if ($message) {
+                $this->_addError($requestKey, $rule["rule"], $message, $label);
+            }
 
         }//foreach
     }
 
-    private function _add_error(string $field, string $rule, string $message, string $label): self
+    private function _addError(string $fieldName, string $ruleName, string $message, string $label): void
     {
         $this->errors[] = [
-            "field" => $field,
-            "rule" => $rule,
+            "field" => $fieldName,
+            "rule" => $ruleName,
             "label" => $label,
             "message" => $message,
         ];
-        return $this;
     }
 
-    private function _is_operation(string $key): bool
+    private function _isOperationField(string $requestKey): bool
     {
-        return (substr($key,0,1)=="_");
+        return (str_starts_with($requestKey, "_"));
     }
 
-    private function _in_skip(string $key): bool
+    private function _isFieldSkippAble(string $requestKey): bool
     {
-        return in_array($key,$this->skip);
+        return in_array($requestKey, $this->skippAbleFields);
     }
 
-    private function _check_entity_fields(array $reqkeys): void
+    private function _checkEntityFields(array $requestKeys): void
     {
-        if (!$this->entity) return;
+        if (!$this->appEntity) {
+            return;
+        }
 
-        foreach ($reqkeys as $reqkey) {
-            if($this->_is_operation($reqkey) || $this->_in_skip($reqkey))
+        foreach ($requestKeys as $requestKey) {
+            if ($this->_isOperationField($requestKey) || $this->_isFieldSkippAble($requestKey)) {
                 continue;
+            }
 
-            $field = $this->entity->get_field($reqkey);
-            if(!$field) {
-                $this->_add_error(
-                    $reqkey,
+            $field = $this->appEntity->getFieldNamedByRequestKey($requestKey);
+            if (!$field) {
+                $this->_addError(
+                    $requestKey,
                     "unrecognized",
                     __("Unrecognized field"),
-                    "");
+                    ""
+                );
                 continue;
             }
 
-            $label = $this->entity->get_label($field);
+            $label = $this->appEntity->getLabel($field);
+            if (!($this->_isLengthOk($field) || $this->_isFieldTypeDate($field))) {
+                $fieldLength = $this->appEntity->getLength($field);
+                $requestValueLength = strlen($this->requestArray[$requestKey] ?? "");
 
-            if (!($this->_is_length($field) || $this->_is_date($field))) {
-                $ilen = $this->entity->get_length($field);
-                $ilenreq = strlen($this->request[$reqkey] ?? "");
-
-                $this->_add_error(
-                    $reqkey,
+                $this->_addError(
+                    $requestKey,
                     "length",
-                    __("Max length allowed is {0} chars. {1} size is {2}",$ilen, $label, $ilenreq),
-                    $label);
+                    __("Max length allowed is {0} chars. {1} size is {2}", $fieldLength, $label, $requestValueLength),
+                    $label
+                );
                 continue;
             }
 
-            if (!$this->_is_type($field)) {
-                $type = $this->entity->get_type($field);
-                $this->_add_error(
-                    $reqkey,
+            if (!$this->_isFieldTypeOk($field)) {
+                $type = $this->appEntity->getTypeByFieldName($field);
+                $this->_addError(
+                    $requestKey,
                     "type",
-                    __("Wrong datatype. Allowed: {0}",$type),
-                    $label);
+                    __("Wrong datatype. Allowed: {0}", $type),
+                    $label
+                );
             }
         }
     }
 
-    public function get_errors(): array
+    public function getErrors(): array
     {
-        $reqkeys = $this->_get_reqkeys();
-        $this->_check_entity_fields($reqkeys);
-        if($this->errors) return $this->errors;
-        $this->_check_rules();
+        $requestKeys = $this->_getKeysFromArrayRequest();
+        $this->_checkEntityFields($requestKeys);
+        if ($this->errors) {
+            return $this->errors;
+        }
+        $this->_evaluateAllRulesAndAppendErrors();
         return $this->errors;
     }
 
-    public function add_skip(string $field): self
+    public function addSkipableField(string $fieldName): self
     {
-        $this->skip[] = $field;
+        $this->skippAbleFields[] = $fieldName;
         return $this;
     }
 
-    public function add_rule(string $field, string $rule, callable $fn): self
+    public function addRule(string $fieldName, string $ruleName, callable $fn): self
     {
-        $this->rules[] = ["field"=>$field, "rule"=>$rule, "fn"=>$fn];
+        $this->rules[] = ["field" => $fieldName, "rule" => $ruleName, "fn" => $fn];
         return $this;
     }
 
-    public function get_skip(): array
+    public function getSkippAbleFields(): array
     {
-        return $this->skip;
+        return $this->skippAbleFields;
     }
 }

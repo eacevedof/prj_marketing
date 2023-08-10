@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateAppPromotioncapActions extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -67,17 +68,19 @@ final class CreateAppPromotioncapActions extends AbsMigration
         ->create();
 
         $table
-            ->addIndex(["id_promotion"], ["name"=>"id_promotion_idx"])
-            ->addIndex(["id_promouser"], ["name"=>"id_promouser_idx"])
-            ->addIndex(["id_type"], ["name"=>"id_type_idx"])
-            ->addIndex(["is_test"], ["name"=>"is_test_idx"])
+            ->addIndex(["id_promotion"], ["name" => "id_promotion_idx"])
+            ->addIndex(["id_promouser"], ["name" => "id_promouser_idx"])
+            ->addIndex(["id_type"], ["name" => "id_type_idx"])
+            ->addIndex(["is_test"], ["name" => "is_test_idx"])
             ->update()
         ;
 
         $this->_initial_load();
     }
 
-    private function _initial_load(): void {}
+    private function _initial_load(): void
+    {
+    }
 
     public function down(): void
     {

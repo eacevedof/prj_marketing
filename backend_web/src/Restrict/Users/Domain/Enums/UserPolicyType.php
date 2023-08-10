@@ -5,50 +5,50 @@ namespace App\Restrict\Users\Domain\Enums;
 abstract class UserPolicyType
 {
     //modulos
-    const MODULE_USERS = "users";
-    const MODULE_USER_PERMISSIONS = "userpermissions";
-    const MODULE_USER_PREFERENCES = "userpreferences";
-    const MODULE_BUSINESSDATA = "businessdata";
-    const MODULE_PROMOTIONS = "promotions";
-    const MODULE_PROMOTIONS_UI = "promotionsui";
-    const MODULE_PROMOTIONS_BILLING = "promotionsbilling";
-    const MODULE_SUBSCRIPTIONS = "subscriptions";
+    public const MODULE_USERS = "users";
+    public const MODULE_USER_PERMISSIONS = "userpermissions";
+    public const MODULE_USER_PREFERENCES = "userpreferences";
+    public const MODULE_BUSINESSDATA = "businessdata";
+    public const MODULE_PROMOTIONS = "promotions";
+    public const MODULE_PROMOTIONS_UI = "promotionsui";
+    public const MODULE_PROMOTIONS_BILLING = "promotionsbilling";
+    public const MODULE_SUBSCRIPTIONS = "subscriptions";
 
     //politicas
-    const DASHBOARD_READ = "dashboard:read";
+    public const DASHBOARD_READ = "dashboard:read";
 
-    const USERS_READ = "users:read";
-    const USERS_WRITE = "users:write";
+    public const USERS_READ = "users:read";
+    public const USERS_WRITE = "users:write";
 
-    const USER_PERMISSIONS_READ = "userpermissions:read";
-    const USER_PERMISSIONS_WRITE = "userpermissions:write";
+    public const USER_PERMISSIONS_READ = "userpermissions:read";
+    public const USER_PERMISSIONS_WRITE = "userpermissions:write";
 
-    const USER_PREFERENCES_READ = "userpreferences:read";
-    const USER_PREFERENCES_WRITE = "userpreferences:write";
+    public const USER_PREFERENCES_READ = "userpreferences:read";
+    public const USER_PREFERENCES_WRITE = "userpreferences:write";
 
-    const BUSINESSDATA_READ = "businessdata:read";
-    const BUSINESSDATA_WRITE = "businessdata:write";
+    public const BUSINESSDATA_READ = "businessdata:read";
+    public const BUSINESSDATA_WRITE = "businessdata:write";
 
     //promociones
-    const PROMOTIONS_READ = "promotions:read";
-    const PROMOTIONS_WRITE = "promotions:write";
+    public const PROMOTIONS_READ = "promotions:read";
+    public const PROMOTIONS_WRITE = "promotions:write";
 
-    const PROMOTIONS_UI_READ = "promotionsui:read";
-    const PROMOTIONS_UI_WRITE = "promotionsui:write";
+    public const PROMOTIONS_UI_READ = "promotionsui:read";
+    public const PROMOTIONS_UI_WRITE = "promotionsui:write";
 
-    const PROMOTION_STATS_READ = "promotionstats:read";
+    public const PROMOTION_STATS_READ = "promotionstats:read";
 
     //subscriptions
-    const SUBSCRIPTIONS_READ = "subscriptions:read";
-    const SUBSCRIPTIONS_WRITE = "subscriptions:write";
+    public const SUBSCRIPTIONS_READ = "subscriptions:read";
+    public const SUBSCRIPTIONS_WRITE = "subscriptions:write";
 
     //billing
-    const BILLINGS_READ = "billings:read";
+    public const BILLINGS_READ = "billings:read";
 
-    const WRITE = "write";
-    const READ = "read";
+    public const WRITE = "write";
+    public const READ = "read";
 
-    public static function get_all(): array
+    public static function getAllPolicies(): array
     {
         return [
             self::DASHBOARD_READ,

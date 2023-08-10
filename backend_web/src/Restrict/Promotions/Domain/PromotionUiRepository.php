@@ -6,26 +6,26 @@
  * @file PromotionUiRepository.php v1.0.0
  * @date %DATE% SPAIN
  */
+
 namespace App\Restrict\Promotions\Domain;
 
+use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
-use TheFramework\Components\Db\ComponentQB;
 use App\Shared\Infrastructure\Helpers\PromotionUiHelper;
+use App\Shared\Domain\Repositories\Common\SysFieldRepository;
+use App\Shared\Infrastructure\Factories\{DbFactory as DbF, RepositoryFactory as RF};
 
 final class PromotionUiRepository extends AppRepository
 {
     use SearchRepoTrait;
 
-    private ?AuthService $auth = null;
+    private ?AuthService $authService = null;
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_promotion_ui";
         $this->joins = [
             "fields" => [
@@ -39,14 +39,14 @@ final class PromotionUiRepository extends AppRepository
         ];
     }
 
-    private function _add_auth_condition(ComponentQB $qb): void
+    private function _addConditionByAuthService(ComponentQB $qb): void
     {
-        if (!$this->auth->get_user()) {
+        if (!$this->authService->getAuthUserArray()) {
             $qb->add_and("1 = 0");
             return;
         }
 
-        if($this->auth->is_root()) {
+        if ($this->authService->isAuthUserRoot()) {
             $qb->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
                 ->add_getfield("m.insert_user");
@@ -56,21 +56,21 @@ final class PromotionUiRepository extends AppRepository
         //como no es root no puede ver borrados o desactivados
         $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
 
-        $autuser = $this->auth->get_user();
-        if($this->auth->is_business_owner()) {
-            $qb->add_andoper("m.id_owner", $autuser["id"]);
+        $authUser = $this->authService->getAuthUserArray();
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $qb->add_andoper("m.id_owner", $authUser["id"]);
             return;
         }
 
-        if($this->auth->is_business_manager()) {
-            $idparent = $autuser["id_parent"];
-            $qb->add_andoper("m.id_owner", $idparent);
+        if ($this->authService->hasAuthUserBusinessManagerProfile()) {
+            $idParent = $authUser["id_parent"];
+            $qb->add_andoper("m.id_owner", $idParent);
         }
     }
 
     public function search(array $search): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("promotion_ui.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
@@ -102,22 +102,22 @@ final class PromotionUiRepository extends AppRepository
                 "m.delete_date"
             ])
             ->set_limit(25, 0)
-            ->set_orderby(["m.id"=>"DESC"])
+            ->set_orderby(["m.id" => "DESC"])
         ;
-        $this->_add_joins($qb);
-        $this->_add_search_filter($qb, $search);
-        $this->_add_auth_condition($qb);
+        $this->_addJoinsToQueryBuilder($qb);
+        $this->_addSearchFilterToQueryBuilder($qb, $search);
+        $this->_addConditionByAuthService($qb);
 
         $sql = $qb->select()->sql();
-        $sqlcount = $qb->sqlcount();
-        $r = $this->query_with_count($sqlcount, $sql);
+        $sqlCount = $qb->sqlcount();
+        $r = $this->getQueryWithCount($sqlCount, $sql);
         return $r;
     }
 
-    public function get_info(string $uuid): array
+    public function getPromotionUiInfoByPromotionUiUuid(string $uuid): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $uuid = $this->_getSanitizedString($uuid);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("promotion_ui.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -157,51 +157,53 @@ final class PromotionUiRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        if (!$r) return [];
+        if (!$r) {
+            return [];
+        }
 
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
+        $sysData = RF::getInstanceOf(SysFieldRepository::class)->getSysDataByRowData($r = $r[0]);
 
-        return array_merge($r, $sysdata);
+        return array_merge($r, $sysData);
     }
 
-    public function set_auth(AuthService $auth): self
+    public function setAuthService(AuthService $authService): self
     {
-        $this->auth = $auth;
+        $this->authService = $authService;
         return $this;
     }
 
-    public function get_by_promotion(int $idpromotion, array $fields = []): array
+    public function getPromotionUiByIdPromotion(int $idPromotion, array $fields = []): array
     {
-        $sql = $this->_get_qbuilder()
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("promotionuirepository.get_by_promotion")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_promotion=$idpromotion")
+            ->add_and("m.id_promotion=$idPromotion")
         ;
-        if ($fields) $sql->set_getfields($fields);
+        if ($fields) {
+            $sql->set_getfields($fields);
+        }
         $sql = $sql->select()->sql();
 
         $r = $this->query($sql);
-        $this->map_to_int(
+        $this->mapFieldsToInt(
             $r,
             [
-                "id", "id_owner", "id_promotion", "input_email", "pos_email", "input_name1",
-                "pos_name1", "input_name2", "pos_name2", "input_language", "pos_language",
-                "input_country", "pos_country", "input_phone1", "pos_phone1", "input_birthdate", "pos_birthdate",
-                "input_gender"
+                "id", "id_owner", "id_promotion", "pos_email", "pos_name1", "pos_name2", "input_language", "pos_language",
+                "input_country", "pos_country", "pos_phone1", "pos_birthdate", "input_gender"
             ]
         );
         return $r[0] ?? [];
     }
 
-    public function get_active_fields(int $idpromotion): array
+    public function getActiveFieldsByIdPromotion(int $idPromotion): array
     {
-        $promotionui = $this->get_by_promotion($idpromotion, [
+        $promotionUi = $this->getPromotionUiByIdPromotion($idPromotion, [
             "input_email","pos_email","input_name1","pos_name1","input_name2","pos_name2","input_language","pos_language",
             "input_country","pos_country","input_phone1","pos_phone1","input_birthdate","pos_birthdate","input_gender",
             "pos_gender","input_address","pos_address", "input_is_mailing", "pos_is_mailing", "input_is_terms", "pos_is_terms"
         ]);
-        return PromotionUiHelper::get_instance($promotionui)->get_inputs();;
+        return PromotionUiHelper::fromPrimitives($promotionUi)->getInputs();
     }
 }

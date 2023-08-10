@@ -4,66 +4,78 @@ namespace App\Shared\Infrastructure\Components\Hierarchy;
 
 final class HierarchyComponent
 {
-    private function _get_parent(string $id, array $withparents)
+    private function _getIdParentByIdChild(string $idChild, array $childrenAndParents): array|string
     {
-        $newar = array_filter($withparents, function(array $item) use ($id){
-            return (string)$item["id"] === $id;
+        $parentsByChild = array_filter($childrenAndParents, function (array $item) use ($idChild) {
+            return (string) $item["id"] === $idChild;
         });
-        if (!$newar) return [];
+        if (!$parentsByChild) {
+            return [];
+        }
 
-        $newar = array_values($newar);
+        $parentsByChild = array_values($parentsByChild);
         //print_r($newar);
-        $idparent = $newar[0]["id_parent"];
-        if(!$idparent) return $newar[0];
+        $idParent = $parentsByChild[0]["id_parent"];
+        if (!$idParent) {
+            return $parentsByChild[0];
+        }
 
         //obtener el item padre directo
-        $newar = array_filter($withparents, function($item) use ($idparent){
-            return $item["id"] === $idparent;
+        $parentsByChild = array_filter($childrenAndParents, function ($item) use ($idParent) {
+            return $item["id"] === $idParent;
         });
-        $newar = array_values($newar);
+        $parentsByChild = array_values($parentsByChild);
         //print_r($newar);
-        $idparent = $newar[0]["id_parent"];
-        if(!$idparent) return $newar[0];
+        $idParent = $parentsByChild[0]["id_parent"];
+        if (!$idParent) {
+            return $parentsByChild[0];
+        }
 
-        return $this->_get_parent($idparent, $withparents);
+        return $this->_getIdParentByIdChild($idParent, $childrenAndParents);
     }
 
-    private function _load_childs(string $id, array $ar, array &$ac=[]): void
-    {
-        $childs = array_filter($ar, function ($item) use ($id){
-            return (string) $item["id_parent"] === $id;
+    private function _addChildrenToAccumulator(
+        string $idParent,
+        array $childrenAndParents,
+        array &$accumulator = []
+    ): void {
+        $children = array_filter($childrenAndParents, function ($item) use ($idParent) {
+            return (string) $item["id_parent"] === $idParent;
         });
 
-        if(!$childs) return;
+        if (!$children) {
+            return;
+        }
 
-        $ids = array_map(function ($item){
+        $ids = array_map(function ($item) {
             return $item["id"];
-        }, $childs);
+        }, $children);
 
-        $ac = array_merge($ac, $ids);
-        foreach ($ids as $id)
-            $this->_load_childs($id, $ar, $ac);
+        $accumulator = array_merge($accumulator, $ids);
+        foreach ($ids as $idParent) {
+            $this->_addChildrenToAccumulator($idParent, $childrenAndParents, $accumulator);
+        }
     }
 
-    public function get_childs(string $id, array $data): array
+    public function getChildrenIds(string $idParent, array $childrenAndParents): array
     {
-        $childids = [];
-        $this->_load_childs($id, $data, $childids);
+        $childrenIds = [];
+        $this->_addChildrenToAccumulator($idParent, $childrenAndParents, $childrenIds);
 
-        $childids = array_map(function (string $childid) use ($data) {
-            $found = array_filter($data, function ($d) use($childid) {
-                return (string) $d["id"] === $childid;
+        $childrenIds = array_map(function (string $idChild) use ($childrenAndParents) {
+            $found = array_filter($childrenAndParents, function ($arItem) use ($idChild) {
+                return (string) $arItem["id"] === $idChild;
             });
             $found = array_values($found);
             return $found[0];
-        }, $childids);
+        }, $childrenIds);
 
-        $childids = array_values($childids);
-        return $childids;
+        $childrenIds = array_values($childrenIds);
+        return $childrenIds;
     }
 
-    public function get_topparent(string $id, array $data): array
+    public function getTopParent(string $idChild, array $childrenAndParents): array
     {
-        return $this->_get_parent($id, $data);
+        return $this->_getIdParentByIdChild($idChild, $childrenAndParents);
     }
 }

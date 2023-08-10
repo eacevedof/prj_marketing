@@ -7,10 +7,10 @@
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $urls = [
-    "home" => Routes::url("home"),
-    "terms" => Routes::url("terms.general"),
-    "cookies" => Routes::url("cookies.policy"),
-    "privacy" => Routes::url("privacy.policy"),
+    "home" => Routes::getUrlByRouteName("home"),
+    "terms" => Routes::getUrlByRouteName("terms.general"),
+    "cookies" => Routes::getUrlByRouteName("cookies.policy"),
+    "privacy" => Routes::getUrlByRouteName("privacy.policy"),
 ];
 if ($_SERVER["REQUEST_URI"] === "/") {
   $space["urltwitter"] = $space["urltwitter"] ?? "https://twitter.com/mypromoses";

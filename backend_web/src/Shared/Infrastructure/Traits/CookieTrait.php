@@ -7,23 +7,20 @@
  * @date 21-07-2020 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Traits;
 
 use TheFramework\Components\Session\ComponentCookie;
 
-/**
- * Trait CookieTrait
- * @package App\Traits
- * this->cookie, _cookieinit()
- */
 trait CookieTrait
 {
-    private ?ComponentCookie $cookie = null;
+    private ?ComponentCookie $componentCookie = null;
 
-    protected function _load_cookie(): ComponentCookie
+    protected function _loadComponentCookieInstance(): void
     {
-        if(!$this->cookie) $this->cookie = new ComponentCookie();
-        return $this->cookie;
+        if (!$this->componentCookie) {
+            $this->componentCookie = new ComponentCookie;
+        }
     }
 
 }//CookieTrait

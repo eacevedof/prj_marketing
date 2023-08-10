@@ -1,121 +1,142 @@
 <?php
+
 namespace App\Apify\Application\Security;
+
+use Exception;
 use App\Shared\Infrastructure\Services\AppService;
 use TheFramework\Components\Config\ComponentConfig;
-use TheFramework\Components\Session\ComponentEncdecrypt;
+use TheFramework\Components\Session\ComponentEncDecrypt;
 
 final class LoginMiddleService extends AppService
 {
     private const POST_USER_KEY = "apify-user";
     private const POST_PASSWORD_KEY = "apify-password";
 
-    private $origin = null;
-    private $post = [];
+    private ?string $origin = null;
+    private array $post = [];
+    private ?ComponentEncDecrypt $componentEncdecrypt = null;
 
-    /**
-     * @var ComponentEncdecrypt
-     */
-    private $encdec = null;
-
-    public function __construct($post=[])
+    public function __construct(array $post = [])
     {
         //el post con los datos de usuario
         $this->post = $post;
         //necesito el dominio pq la encriptación va por dominio en el encdecrypt.json
         $this->origin = $this->post["remotehost"] ?? "";
-        $this->_load_encdec();
+        $this->_loadComponentEncdecryptByConfigJson();
     }
 
-    private function _get_encdec_config(): array
+    private function _getEncDecConfigFromJsonFile(): array
     {
-        $sPathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
-        $arconf = (new ComponentConfig($sPathfile))->get_node("domain",$this->origin);
-        return $arconf;
+        $jsonFile = $this->getEnvValue("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
+        $configDecrypt = (new ComponentConfig($jsonFile))->get_node("domain", $this->origin);
+        return $configDecrypt;
     }
 
-    private function _load_encdec(): void
+    private function _loadComponentEncdecryptByConfigJson(): void
     {
-        $config = $this->_get_encdec_config();
+        $config = $this->_getEncDecConfigFromJsonFile();
         //$this->logd($config,"_load_encdec");
-        if(!$config) throw new \Exception("domain {$this->origin} is not authorized 2 by middle");
+        if (!$config) {
+            throw new \Exception("domain {$this->origin} is not authorized 2 by middle");
+        }
 
-        $this->encdec = new ComponentEncdecrypt(1);
-        $this->encdec->set_sslmethod($config["sslenc_method"]??"");
-        $this->encdec->set_sslkey($config["sslenc_key"]??"");
-        $this->encdec->set_sslsalt($config["sslsalt"]??"");
+        $this->componentEncdecrypt = new ComponentEncDecrypt(1);
+        $this->componentEncdecrypt->setSslMethod($config["sslenc_method"] ?? "");
+        $this->componentEncdecrypt->setSslKey($config["sslenc_key"] ?? "");
+        $this->componentEncdecrypt->setSaltString($config["sslsalt"] ?? "");
     }
 
-    private function _get_login_config($hostname=""): array
+    private function _getLoginConfigByHostName(string $hostName = ""): array
     {
-        if(!$hostname) $hostname = $this->origin;
-        $sPathfile = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."pos-login.json";
-        $arconfig = (new ComponentConfig($sPathfile))->get_node("domain",$hostname);
-        return $arconfig;
+        if (!$hostName) {
+            $hostName = $this->origin;
+        }
+        $pathJson = $_ENV["APP_LOGIN"] ?? __DIR__.DIRECTORY_SEPARATOR."pos-login.json";
+        $config = (new ComponentConfig($pathJson))->get_node("domain", $hostName);
+        return $config;
     }
 
-    private function _get_user_password($hostname, $username): string
+    private function _getUserPasswordByHostNameAndUserName(string $hostName, string $userName): string
     {
-        $arconfig = $this->_get_login_config($hostname);
-        foreach($arconfig["users"] as $aruser)
-            if($aruser["user"] === $username)
-                return $aruser[self::POST_PASSWORD_KEY] ?? "";
+        $loginConfig = $this->_getLoginConfigByHostName($hostName);
+        foreach($loginConfig["users"] as $arUserConf) {
+            if ($arUserConf["user"] === $userName) {
+                return $arUserConf[self::POST_PASSWORD_KEY] ?? "";
+            }
+        }
 
         return "";
     }
 
-    private function _get_remote_ip(): string {return $this->post["remoteip"] ?? "";}
+    private function _getRemoteIp(): string
+    {
+        return $this->post["remoteip"] ?? "";
+    }
 
-    private function _get_user_agent(): string {return $this->post["useragent"] ?? ":)"; }
+    private function _getUserAgent(): string
+    {
+        return $this->post["useragent"] ?? ":)";
+    }
 
-    private function _get_data_tokenized(): string
+    private function _getFingerPrintTokenized(): string
     {
         $username = $this->post[self::POST_USER_KEY];
-        $arpackage = [
+        $arPackage = [
             "salt0"    => date("Ymd-His"),
-            "domain"   => $this->domain,
-            "salt1"    => rand(0,3),
-            "remoteip" => $this->_get_remote_ip(),
-            "salt2"    => rand(3,7),
-            "useragent" => md5($this->_get_user_agent()),
-            "salt3"    => rand(7,11),
+            "domain"   => $this->origin,
+            "salt1"    => rand(0, 3),
+            "remoteip" => $this->_getRemoteIp(),
+            "salt2"    => rand(3, 7),
+            "useragent" => md5($this->_getUserAgent()),
+            "salt3"    => rand(7, 11),
             "username" => $username,
-            "salt4"    => rand(11,15),
-            "password" => md5($this->_get_user_password($this->domain, $username)),
-            "salt5"    => rand(15,19),
+            "salt4"    => rand(11, 15),
+            "password" => md5($this->_getUserPasswordByHostNameAndUserName($this->origin, $username)),
+            "salt5"    => rand(15, 19),
             "today"    => date("Ymd-His"),
         ];
 
-        $instring = implode("|",$arpackage);
-        $this->logd($instring,"instring");
-        $token = $this->encdec->get_sslencrypted($instring);
+        $inString = implode("|", $arPackage);
+        $this->logDebug($inString, "instring");
+        $token = $this->componentEncdecrypt->getSslEncrypted($inString);
         return $token;
     }
 
-    public function get_token(): string
+    public function getAuthTokenOrFail(): string
     {
-        if(!$this->origin) throw new \Exception("No origin domain provided");
-        $username = $this->post[self::POST_USER_KEY] ?? "";
-        if(!$username) throw new \Exception("No user provided");
+        if (!$this->origin) {
+            throw new Exception("No origin domain provided");
+        }
+
+        $userName = $this->post[self::POST_USER_KEY] ?? "";
+        if (!$userName) {
+            throw new Exception("No user provided");
+        }
 
         $password = $this->post[self::POST_PASSWORD_KEY] ?? "";
-        if(!$password) throw new \Exception("No password provided");
+        if (!$password) {
+            throw new Exception("No password provided");
+        }
 
-        $remoteip = $this->post["remoteip"] ?? "";
-        if(!$remoteip) throw new \Exception("No remote ip provided");
+        $remoteIp = $this->post["remoteip"] ?? "";
+        if (!$remoteIp) {
+            throw new Exception("No remote ip provided");
+        }
 
-        $config = $this->_get_login_config();
-        if(!$config) throw new \Exception("Source hostname not authorized");
+        $config = $this->_getLoginConfigByHostName();
+        if (!$config) {
+            throw new Exception("Source hostname not authorized");
+        }
 
         $users = $config["users"] ?? [];
-        foreach ($users as $user)
-        {
-            if($user["apifyuser"] === $username &&
-                $this->encdec->check_hashpassword($password, $user["apifypassword"])
-            )
-            {
-                return $this->_get_data_tokenized();
+        foreach ($users as $user) {
+            if(
+                $user["apifyuser"] === $userName &&
+                $this->componentEncdecrypt->isValidPassword($password, $user["apifypassword"])
+            ) {
+                return $this->_getFingerPrintTokenized();
             }
         }
-        throw new \Exception("Bad user or password");
+        throw new Exception("Bad user or password");
     }
 }

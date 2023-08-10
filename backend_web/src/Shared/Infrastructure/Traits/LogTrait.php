@@ -7,52 +7,54 @@
  * @date 01-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Traits;
 
-use \BOOT;
+use BOOT;
 use TheFramework\Components\ComponentLog;
 
 trait LogTrait
 {
-
-    protected function log($mxVar, $title=null): void
+    protected function logSql(mixed $mxVar, $title = null): void
     {
-        $oLog = new ComponentLog("sql",BOOT::PATH_LOGS);
+        $oLog = new ComponentLog("sql", BOOT::PATH_LOGS);
         $oLog->save($mxVar, $title);
     }
 
-    protected function logreq($mxVar, $title=null): void
+    protected function logRequest(mixed $mxVar, $title = null): void
     {
-        $oLog = new ComponentLog("request",BOOT::PATH_LOGS);
+        $oLog = new ComponentLog("request", BOOT::PATH_LOGS);
         $oLog->save($mxVar, $title);
     }
 
-    protected function logd($mxVar, $title=null): void
+    protected function logDebug(mixed $mxVar, $title = null): void
     {
-        $oLog = new ComponentLog("debug",BOOT::PATH_LOGS);
+        $oLog = new ComponentLog("debug", BOOT::PATH_LOGS);
         $oLog->save($mxVar, $title);
     }
 
-    protected function logerr($mxVar, $title=null): void
+    protected function logErr(mixed $mxVar, $title = null): void
     {
-        $oLog = new ComponentLog("error",BOOT::PATH_LOGS);
+        $oLog = new ComponentLog("error", BOOT::PATH_LOGS);
         $oLog->save($mxVar, $title);
     }
 
-    protected function logkafka($mxVar, $title=null): void
+    protected function logKafka(mixed $mxVar, $title = null): void
     {
-        $oLog = new ComponentLog("kafka",BOOT::PATH_LOGS);
+        $oLog = new ComponentLog("kafka", BOOT::PATH_LOGS);
         $oLog->save($mxVar, $title);
     }
 
-    protected function logpr($mxVar, $title=null): void
+    protected function logPr(mixed $mxVar, $title = null): void
     {
-        $oLog = new ComponentLog("debug",BOOT::PATH_LOGS);
+        $oLog = new ComponentLog("debug", BOOT::PATH_LOGS);
         $mxVar = print_r($mxVar, 1);
         $oLog->save($mxVar, $title);
         echo date("Y-m-d H:i:s");
-        if($title) echo "\n$title:";
+        if ($title) {
+            echo "\n$title:";
+        }
         echo "\n$mxVar\n\n";
     }
-    
+
 }//LogTrait

@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Shared\Infrastructure\Bus;
 
-use App\Shared\Domain\Bus\Command\ICommandBus;
-use App\Shared\Domain\Bus\Command\ICommandHandler;
-use App\Shared\Domain\Bus\Command\ICommand;
-
-use \InvalidArgumentException;
+use InvalidArgumentException;
+use App\Shared\Domain\Bus\Command\{
+    ICommand,
+    ICommandBus,
+    ICommandHandler
+};
 
 final class CommandBus implements ICommandBus
 {
@@ -20,7 +22,7 @@ final class CommandBus implements ICommandBus
     public static function instance(): self
     {
         if (null === self::$instance) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
         return self::$instance;
     }
@@ -33,7 +35,9 @@ final class CommandBus implements ICommandBus
     public function publish(ICommand $command)
     {
         $commandHandler = $this->handlers[get_class($command)] ?? "";
-        if (!$commandHandler) throw new InvalidArgumentException();
+        if (!$commandHandler) {
+            throw new InvalidArgumentException;
+        }
         //usa el invoke
         return $commandHandler($command);
     }
