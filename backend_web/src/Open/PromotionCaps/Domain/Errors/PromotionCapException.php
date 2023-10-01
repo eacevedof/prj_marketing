@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Open\PromotionCaps\Domain\Errors;
 
-use \DomainException;
+use DomainException;
 
 final class PromotionCapException extends DomainException
 {

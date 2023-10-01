@@ -1,39 +1,37 @@
 <?php
+
 namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Subscriptions\Application\SubscriptionsSearchService;
+use Exception;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use \Exception;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Domain\Enums\{PageType, ResponseType, UrlType};
+use App\Restrict\Subscriptions\Application\SubscriptionsSearchService;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class SubscriptionsSearchController extends RestrictController
 {
-
-    public function index(?string $page=null): void
+    public function index(?string $page = null): void
     {
-        $this->_if_noauth_tologin();
+        $this->_redirectToLoginIfNoAuthUser();
         try {
-            $search = SF::get(SubscriptionsSearchService::class);
+            $search = SF::getInstanceOf(SubscriptionsSearchService::class);
 
-            $this->add_var(PageType::TITLE, __("Subscriptions"))
-                ->add_var(PageType::H1, __("Subscriptions"))
-                ->add_var("dthelp", $search->get_datatable())
-                ->add_var("idowner", $this->auth->get_idowner())
-                ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ))
-                ->add_var("authwrite", $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
+            $this->addGlobalVar(PageType::TITLE, __("Subscriptions"))
+                ->addGlobalVar(PageType::H1, __("Subscriptions"))
+                ->addGlobalVar("datatableHelper", $search->getDatatableHelper())
+                ->addGlobalVar("idOwner", $this->authService->getIdOwner())
+                ->addGlobalVar("authRead", $this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_READ))
+                ->addGlobalVar("authWrite", $this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_WRITE))
                 ->render();
         }
         catch (ForbiddenException $e) {
-            $this->response->location(UrlType::ERROR_FORBIDDEN);
+            $this->responseComponent->location(UrlType::ERROR_FORBIDDEN);
         }
         catch (Exception $e) {
-            $this->logerr($e->getMessage(), "promotionscontroller.index");
-            $this->response->location(UrlType::ERROR_INTERNAL);
+            $this->logErr($e->getMessage(), "promotionscontroller.index");
+            $this->responseComponent->location(UrlType::ERROR_INTERNAL);
         }
 
     }//index
@@ -41,22 +39,24 @@ final class SubscriptionsSearchController extends RestrictController
     //@get
     public function search(): void
     {
-        if (!$this->auth->get_user())
-            $this->_get_json()
-                ->set_code(ResponseType::UNAUTHORIZED)
-                ->set_error([__("Your session has finished please re-login")])
+        if (!$this->authService->getAuthUserArray()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::UNAUTHORIZED)
+                ->setErrors([__("Your session has finished please re-login")])
                 ->show();
+        }
 
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
         try {
-            $search = SF::get_callable(SubscriptionsSearchService::class, $this->request->get_get());
+            $search = SF::getCallableService(SubscriptionsSearchService::class, $this->requestComponent->getGet());
             $result = $search();
-            $this->_get_json()->set_payload([
+            $this->_getJsonInstanceFromResponse()->setPayload([
                 "message"  => __("auth ok"),
                 "result"   => $result["result"],
                 "filtered" => $result["total"],
@@ -65,8 +65,8 @@ final class SubscriptionsSearchController extends RestrictController
             ])->show();
         }
         catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }//search

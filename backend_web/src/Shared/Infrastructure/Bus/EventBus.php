@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Shared\Infrastructure\Bus;
 
-use App\Shared\Domain\Bus\Event\IEventBus;
-use App\Shared\Domain\Bus\Event\IEventSubscriber;
-use App\Shared\Domain\Bus\Event\IEvent;
+use App\Shared\Domain\Bus\Event\{
+    IEvent,
+    IEventBus,
+    IEventSubscriber
+};
 
 final class EventBus implements IEventBus
 {
@@ -14,7 +17,7 @@ final class EventBus implements IEventBus
     public static function instance(): self
     {
         if (null === self::$instance) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
         return self::$instance;
     }
@@ -41,12 +44,12 @@ final class EventBus implements IEventBus
     {
         foreach ($domainEvents as $event) {
             foreach($this->subscribers as $subscriber) {
-                $subscriber->on_event($event);
+                $subscriber->onSubscribedEvent($event);
             }
         }
     }
 
-    public function of_id(int $id): ?IEventSubscriber
+    public function ofId(int $id): ?IEventSubscriber
     {
         return $this->subscribers[$id] ?? null;
     }

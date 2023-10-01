@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -16,7 +17,7 @@ final class CreateAppQueryActions extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -59,8 +60,8 @@ final class CreateAppQueryActions extends AbsMigration
         ->create();
 
         $table
-            ->addIndex(["id", "id_query"], ["name"=>"id__id_query_idx"])
-            ->addIndex(["id_query"], ["name"=>"id_query_idx"])
+            ->addIndex(["id", "id_query"], ["name" => "id__id_query_idx"])
+            ->addIndex(["id_query"], ["name" => "id_query_idx"])
             ->update();
     }
 

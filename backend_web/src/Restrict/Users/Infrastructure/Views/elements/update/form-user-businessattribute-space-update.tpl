@@ -6,12 +6,12 @@
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 if (is_null($result["businessattributespace"])) return;
 
-$iduser = $result["user"]["id"];
+$idUser = $result["user"]["id"];
 $businessattributespace = $result["businessattributespace"];
-$url = Routes::url("businessattributespace.update", ["uuid"=>$uuid]);
+$url = Routes::getUrlByRouteName("businessattributespace.update", ["uuid"=>$uuid]);
 
 $spaceurl = ($slug = $result["businessdata"]["slug"] ?? "")
-    ? Routes::url("business.space", ["businessslug"=>$slug])
+    ? Routes::getUrlByRouteName("business.space", ["businessSlug" =>$slug])
     : "";
 $texts = [
     "tr00" => __("Save"),
@@ -28,11 +28,11 @@ $texts = [
 ?>
 <div id="businessattributespace" class="tab-pane">
     <form-user-businessattribute-space-update
-        csrf=<?php $this->_echo_js($csrf);?>
+        csrf=<?php $this->_echoJs($csrf);?>
         url="<?php $this->_echo($url);?>"
         spaceurl="<?php $this->_echo($spaceurl);?>"
-        texts="<?php $this->_echo_jslit($texts);?>"
-        fields="<?php $this->_echo_jslit($businessattributespace);?>"
+        texts="<?php $this->_echoJsLit($texts);?>"
+        fields="<?php $this->_echoJsLit($businessattributespace);?>"
     />
 </div>
 <script type="module" src="/assets/js/restrict/users/businessdata/form-user-businessattribute-space-update.js"></script>

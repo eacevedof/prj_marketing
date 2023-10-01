@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Open\PrivacyPolicy\Application;
 
 use App\Shared\Infrastructure\Services\AppService;

@@ -1,32 +1,28 @@
 <?php
+
 namespace App\Shared\Infrastructure\Services;
 
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Shared\Infrastructure\Traits\ErrorTrait;
-use App\Shared\Infrastructure\Traits\LogTrait;
-use App\Shared\Infrastructure\Traits\EnvTrait;
-use App\Shared\Infrastructure\Components\Date\UtcComponent;
-use TheFramework\Components\Config\ComponentConfig;
-use TheFramework\Components\Session\ComponentEncdecrypt;
+use Exception;
 use App\Shared\Domain\Enums\ExceptionType;
-use App\Shared\Infrastructure\Exceptions\BadRequestException;
-use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
-use \Exception;
+use TheFramework\Components\Config\ComponentConfig;
+use TheFramework\Components\Session\ComponentEncDecrypt;
+use App\Shared\Infrastructure\Components\Date\UtcComponent;
+use App\Shared\Domain\Repositories\Common\SysFieldRepository;
+use App\Shared\Infrastructure\Traits\{EnvTrait, ErrorTrait, LogTrait};
+use App\Shared\Infrastructure\Factories\{ComponentFactory as CF, RepositoryFactory as RF};
+use App\Shared\Infrastructure\Exceptions\{BadRequestException, ForbiddenException, NotFoundException};
 
 abstract class AppService
 {
+    use EnvTrait;
     use ErrorTrait;
     use LogTrait;
-    use EnvTrait;
 
     protected mixed $input;
 
-    protected function _exception(string $message, int $code=ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
+    protected function _throwException(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
     {
-        $this->logerr($message,"app-service.exception");
+        $this->logErr($message, "app-service.exception");
         switch ($code) {
             case ExceptionType::CODE_BAD_REQUEST: throw new BadRequestException($message);
             case ExceptionType::CODE_FORBIDDEN: throw new ForbiddenException($message);
@@ -35,29 +31,33 @@ abstract class AppService
         throw new Exception($message, $code);
     }
 
-    protected function _get_encdec(): ComponentEncdecrypt
+    protected function _getEncDecryptInstance(): ComponentEncDecrypt
     {
-        $pathfile = $this->get_env("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
-        $config = (new ComponentConfig($pathfile))->get_node("domain", $this->get_env("APP_DOMAIN"));
-        if(!$config) $this->_exception("Domain {$this->get_env("APP_DOMAIN")} is not authorized");
+        $pathFile = $this->getEnvValue("APP_ENCDECRYPT") ?? __DIR__.DIRECTORY_SEPARATOR."encdecrypt.json";
+        $config = (new ComponentConfig($pathFile))->get_node("domain", $this->getEnvValue("APP_DOMAIN"));
+        if (!$config) {
+            $this->_throwException("Domain {$this->getEnvValue("APP_DOMAIN")} is not authorized");
+        }
 
-        $encdec = new ComponentEncdecrypt(1);
-        $encdec->set_sslmethod($config["sslenc_method"] ?? "");
-        $encdec->set_sslkey($config["sslenc_key"] ?? "");
-        $encdec->set_sslsalt($config["sslsalt"] ?? "");
-        return $encdec;
+        $encDecrypt = new ComponentEncDecrypt;
+        $encDecrypt->setSslMethod($config["sslenc_method"] ?? "");
+        $encDecrypt->setSslKey($config["sslenc_key"] ?? "");
+        $encDecrypt->setSaltString($config["sslsalt"] ?? "");
+        return $encDecrypt;
     }
 
-    protected function _get_row_with_sysdata(array $row, string $tz=UtcComponent::TZ_UTC): array
+    protected function _getRowWithSysDataByTz(array $row, string $tz = UtcComponent::TZ_UTC): array
     {
-        $datefields = ["insert_date", "update_date", "delete_date"];
-        $utc = CF::get(UtcComponent::class);
-        foreach($row as $field=>$value)
-            if(in_array($field, $datefields) && $value)
-                $row[$field] = $utc->get_utcdt_in_tz($value, $tz);
+        $dateFields = ["insert_date", "update_date", "delete_date"];
+        $utc = CF::getInstanceOf(UtcComponent::class);
+        foreach($row as $field => $dtValue) {
+            if(in_array($field, $dateFields) && $dtValue) {
+                $row[$field] = $utc->getUtcDtInTargetTz($dtValue, $tz);
+            }
+        }
 
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($row);
-        return array_merge($row, $sysdata);
+        $sysData = RF::getInstanceOf(SysFieldRepository::class)->getSysDataByRowData($row);
+        return array_merge($row, $sysData);
     }
 
 }//AppService

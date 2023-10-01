@@ -1,82 +1,104 @@
 <?php
+
 namespace App\Open\Business\Application;
 
-use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
-use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
-use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Restrict\Promotions\Domain\PromotionRepository;
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
+use App\Shared\Infrastructure\Exceptions\NotFoundException;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Infrastructure\Helpers\{
+    RoutesHelper as Routes,
+    UrlDomainHelper
+};
+use App\Open\PromotionCaps\Domain\{
+    PromotionCapSubscriptionsRepository,
+    PromotionCapUsersRepository
+};
 
 final class BusinessSpaceService extends AppService
 {
-    private int $istest;
+    private int $isTestMode;
 
     //"_test_mode" => $this->request->get_get("mode", "")==="test",
-    public function __construct(array $input=[])
+    public function __construct(array $input = [])
     {
-        $this->istest = (int)($input["_test_mode"] ?? "");
+        $this->isTestMode = (int) ($input["_test_mode"] ?? "");
     }
 
-    public function get_data_by_promotion(string $promouuid): array
+    public function getBusinessDataByPromotionUuid(string $promotionUuid): array
     {
-        $space =  RF::get(BusinessDataRepository::class)->get_space_by_promotion($promouuid);
-        if (!$space) return [];
+        $space =  RF::getInstanceOf(BusinessDataRepository::class)->getSpaceByPromotionUuid($promotionUuid);
+        if (!$space) {
+            return [];
+        }
 
-        $url = Routes::url("subscription.create", [
-            "businessslug"=>$space["businessslug"],
-            "promotionslug"=>$space["promoslug"]
+        $url = Routes::getUrlByRouteName("subscription.create", [
+            "businessSlug" => $space["businessslug"],
+            "promotionSlug" => $space["promoslug"]
         ]);
 
-        if ($this->istest) $url .= "?mode=test";
-        $space["promotionlink"] = UrlDomainHelper::get_instance()->get_full_url($url);
+        if ($this->isTestMode) {
+            $url .= "?mode=test";
+        }
+        $space["promotionlink"] = UrlDomainHelper::getInstance()->getDomainUrlWithAppend($url);
         return $space;
     }
 
-    public function get_data_by_promotion_slug(string $promoslug): array
+    public function getDataByPromotionSlug(string $promotionSlug): array
     {
-        $promouuid = RF::get(PromotionRepository::class)->get_by_slug($promoslug, ["uuid"]);
-        if (!$promouuid) return [];
-        return $this->get_data_by_promotion($promouuid["uuid"]);
+        $promotionUuid = RF::getInstanceOf(PromotionRepository::class)->getPromotionByPromotionSlug($promotionSlug, ["uuid"]);
+        if (!$promotionUuid) {
+            return [];
+        }
+        return $this->getBusinessDataByPromotionUuid($promotionUuid["uuid"]);
     }
 
-    public function get_data_by_promocap(string $promocapuuid): array
+    public function getDataByPromotionCapByPromotionCapUuid(string $promotionCapUuid): array
     {
-        $promoid = RF::get(PromotionCapSubscriptionsRepository::class)->get_by_uuid($promocapuuid, ["id_promotion"])["id_promotion"] ?? 0;
-        $promouuid = RF::get(PromotionRepository::class)->get_by_id($promoid, ["uuid"]);
-        if (!$promouuid) return [];
-        return $this->get_data_by_promotion($promouuid["uuid"]);
+        $idPromotion = RF::getInstanceOf(PromotionCapSubscriptionsRepository::class)->getEntityByEntityUuid(
+            $promotionCapUuid,
+            ["id_promotion"]
+        )["id_promotion"] ?? 0;
+
+        $promotionUUid = RF::getInstanceOf(PromotionRepository::class)->getEntityByEntityId($idPromotion, ["uuid"]);
+        if (!$promotionUUid) {
+            return [];
+        }
+        return $this->getBusinessDataByPromotionUuid($promotionUUid["uuid"]);
     }
 
-    public function get_data_by_promocapuser(string $capuseruuid): array
+    public function getDataByPromotionCapUser(string $promotionCapUserUuid): array
     {
-        $promoid = RF::get(PromotionCapUsersRepository::class)->get_by_uuid($capuseruuid, ["id_promotion"])["id_promotion"] ?? 0;
-        $promouuid = RF::get(PromotionRepository::class)->get_by_id($promoid, ["uuid"]);
-        if (!$promouuid) return [];
-        return $this->get_data_by_promotion($promouuid["uuid"]);
+        $idPromotion = RF::getInstanceOf(PromotionCapUsersRepository::class)->getEntityByEntityUuid(
+            $promotionCapUserUuid,
+            ["id_promotion"]
+        )["id_promotion"] ?? 0;
+        $promotionUuid = RF::getInstanceOf(PromotionRepository::class)->getEntityByEntityId($idPromotion, ["uuid"]);
+        if (!$promotionUuid) {
+            return [];
+        }
+        return $this->getBusinessDataByPromotionUuid($promotionUuid["uuid"]);
     }
 
-    public function get_data_by_slug(string $businessslug): array
+    public function getBusinessDataByBusinessSlug(string $businessSlug): array
     {
-        $bd = RF::get(BusinessDataRepository::class)->get_by_slug(
-            $businessslug,
+        $bd = RF::getInstanceOf(BusinessDataRepository::class)->getBusinessDataByBusinessDataSlug(
+            $businessSlug,
             [
                 "slug", "business_name", "url_business", "url_favicon", "user_logo_1", "url_social_fb", "url_social_ig",
                 "url_social_twitter", "url_social_tiktok","body_bgimage"
             ]
         );
         if (!$bd) {
-            throw new NotFoundException(__("Partner “{0}“ not found!", $businessslug));
+            throw new NotFoundException(__("Partner “{0}“ not found!", $businessSlug));
         }
 
         return [
             "business" => $bd["business_name"],
-            //"businessurl" => Routes::url("business.space", ["businessslug"=>$bd["slug"]]),
+            //"businessurl" => Routes::url("business.space", ["businessSlug" =>$bd["slug"]]),
             //quiza conviene usar la url de su sitio original en el logo y en los restantes usar el del espacio
-            "businessslug" => $bd["slug"],
+            "businessSlug" => $bd["slug"],
             "businessfavicon" => $bd["url_favicon"],
             "businessurl" => $bd["url_business"],
             "businesslogo" => $bd["user_logo_1"],
@@ -88,15 +110,17 @@ final class BusinessSpaceService extends AppService
         ];
     }
 
-    public function get_promotion_url(string $promouuid): string
+    public function getPromotionUrlByPromotionUuid(string $promotionUuid): string
     {
-        $space =  RF::get(BusinessDataRepository::class)->get_space_by_promotion($promouuid);
-        if (!$space) return [];
+        $space =  RF::getInstanceOf(BusinessDataRepository::class)->getSpaceByPromotionUuid($promotionUuid);
+        if (!$space) {
+            return "";
+        }
 
-        $url = Routes::url("subscription.create", [
-            "businessslug"=>$space["businessslug"],
-            "promotionslug"=>$space["promoslug"]
+        $url = Routes::getUrlByRouteName("subscription.create", [
+            "businessSlug" => $space["businessslug"],
+            "promotionSlug" => $space["promoslug"]
         ]);
-        return $this->istest ? "$url?mode=test" : $url;
+        return $this->isTestMode ? "$url?mode=test" : $url;
     }
 }

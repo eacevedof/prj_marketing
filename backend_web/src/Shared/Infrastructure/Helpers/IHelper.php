@@ -8,6 +8,7 @@
  * @observations
  * @tags: #apify
  */
+
 namespace App\Shared\Infrastructure\Helpers;
 
 interface IHelper

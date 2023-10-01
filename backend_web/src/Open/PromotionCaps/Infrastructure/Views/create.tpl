@@ -16,24 +16,24 @@ $promotionui = $result["promotionui"] ?? [];
 $bdhelp = HF::get(BH::class, $businessdata);
 $uihelp = HF::get(PH::class, $promotionui);
 
-$this->_element_view("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdhelp"=>$bdhelp]);
+$this->_includeViewElement("promotioncap-style-rewrite", ["promotion"=>$promotion,"bdhelp"=>$bdhelp]);
 
-$spaceurl = Routes::url("business.space", ["businessslug"=>$businessdata["slug"]]);
+$spaceurl = Routes::getUrlByRouteName("business.space", ["businessSlug" =>$businessdata["slug"]]);
 ?>
 <main class="main-flex">
   <!-- nav to fixed -->
   <nav class="nav-flex">
     <a href="<?php $this->_echo($spaceurl) ?>">
-      <img src="<?php $this->_echo_nohtml($businessdata["user_logo_1"]) ?>">
+      <img src="<?php $this->_echoHtmlEscaped($businessdata["user_logo_1"]) ?>">
     </a>
-    <h1><?php $this->_echo_nohtml($promotion["description"]) ?></h1>
+    <h1><?php $this->_echoHtmlEscaped($promotion["description"]) ?></h1>
   </nav>
   <section class="section">
   <?php
-  $this->_element_view("form-promotion-cap-insert", [
+  $this->_includeViewElement("form-promotion-cap-insert", [
     "uihelp" => $uihelp,
     "promotionuuid" => $promotion["uuid"],
-    "promotionslug" => $promotion["slug"],
+    "promotionSlug" => $promotion["slug"],
     "languages" => $languages,
     "countries" => $countries,
     "genders" => $genders,

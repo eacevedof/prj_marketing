@@ -11,8 +11,9 @@ class ComponentQueryarray
         $this->array = $data;
     }
 
-    public function get_colum($colname){
-        return array_column($this->array,$colname);
+    public function get_colum($colname)
+    {
+        return array_column($this->array, $colname);
     }
 
     public function where()
@@ -20,6 +21,9 @@ class ComponentQueryarray
 
     }
 
-    public function set_array2($array){$this->array2 = $array;}
+    public function set_array2($array)
+    {
+        $this->array2 = $array;
+    }
 
 }//ComponentQueryarray

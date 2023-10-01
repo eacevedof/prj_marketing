@@ -10,14 +10,14 @@
   <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? EnvIconHelper::icon())?>"/>
-  <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
+  <link rel="icon" href="<?php $this->_echoHtmlEscaped($space["businessfavicon"] ?? EnvIconHelper::icon())?>"/>
+  <title><?php $this->_echoHtmlEscaped($pagetitle ?? "")?></title>
   <?php
   $this->_element("common/elem-cookiebot");
-  echo $this->_asset_css([
+  echo $this->_getAssetCssTag([
       "vendor/snackbar/snackbar.min"
   ]);
-  echo $this->_asset_js([
+  echo $this->_getAssetJsTag([
       "vendor/jquery/jquery-3.6.0",
       "vendor/snackbar/snackbar.min"
   ])

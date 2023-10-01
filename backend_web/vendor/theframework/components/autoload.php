@@ -1,4 +1,5 @@
 <?php
+
 //components autoload
 //autoload.php 2.3.0
 $pathcompsroot = dirname(__FILE__).DIRECTORY_SEPARATOR;
@@ -15,21 +16,31 @@ $compsubfolders[] = $pathcompsroot."db".DIRECTORY_SEPARATOR."integration";
 $compsubfolders[] = $pathcompsroot."db".DIRECTORY_SEPARATOR."context";
 $includepath = implode(PATH_SEPARATOR, $compsubfolders);
 set_include_path($includepath);
+unset($compsubfolders);
 
 //a partir de un nombre de namespace busca el archivo y hace un include
-spl_autoload_register(function($fqnamespace) {
+spl_autoload_register(function ($fqnamespace) {
     //si no existe
-    if (!strstr($fqnamespace,"TheFramework")) return;
-    $nsparts = explode("\\",$fqnamespace);
+    if (!strstr($fqnamespace, "TheFramework")) {
+        return;
+    }
+    $nsparts = explode("\\", $fqnamespace);
     $classname = end($nsparts);
-    if(!strstr($classname,"Component")) return;
+    if (!strstr($classname, "Component")) {
+        return;
+    }
+    if (stream_resolve_include_path($classFile = "$classname.php")) {
+        include_once $classFile;
+        return;
+    }
     //https://autohotkey.com/docs/misc/RegEx-QuickRef.htm
-    // (?<=...) and (?<!...) are positive and negative look-behinds (respectively) 
-    // because they look to the left of the current position rather than the right 
-    $classname = preg_replace("/(?<!^)([A-Z])/","_\\1",$classname);
-    $classname = str_replace("Component","",$classname);
+    // (?<=...) and (?<!...) are positive and negative look-behinds (respectively)
+    // because they look to the left of the current position rather than the right
+    $classname = preg_replace("/(?<!^)([A-Z])/", "_\\1", $classname);
+    $classname = str_replace("Component", "", $classname);
     $classname = strtolower($classname);
     $classname = "component$classname.php";
-    if(stream_resolve_include_path($classname)) include_once $classname;
+    if (stream_resolve_include_path($classname)) {
+        include_once $classname;
+    }
 });
-

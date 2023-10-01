@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateBaseUser extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -141,13 +142,13 @@ final class CreateBaseUser extends AbsMigration
         ])*/
         ->create();
 
-        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
-            ->addIndex(["email"], ["name"=>"email_idx"])
-            ->addIndex(["secret"], ["name"=>"secret_idx"])
-            ->addIndex(["description"], ["name"=>"description_idx"])
-            ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
+        $table->addIndex(["delete_date"], ["name" => "delete_date_idx"])
+            ->addIndex(["is_enabled"], ["name" => "is_enabled_idx"])
+            ->addIndex(["uuid"], ["name" => "uuid_idx"])
+            ->addIndex(["email"], ["name" => "email_idx"])
+            ->addIndex(["secret"], ["name" => "secret_idx"])
+            ->addIndex(["description"], ["name" => "description_idx"])
+            ->addIndex(["id","uuid"], ["name" => "id__uuid_idx"])
             ->update()
         ;
     }
@@ -158,38 +159,38 @@ final class CreateBaseUser extends AbsMigration
         $array = [
             [
                 //secret: eaf
-                "id"=>"1", "email"=>"root@sys.sys", "description"=>"Root One", "secret"=>$secret,
-                "fullname" => "Super Root", "uuid"=>"sys000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id" => "1", "email" => "root@sys.sys", "description" => "Root One", "secret" => $secret,
+                "fullname" => "Super Root", "uuid" => "sys000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
                 "id_language" => "2", "id_profile" => "1", "id_parent" => "null"
             ],
             [
-                "id"=>"2", "email"=>"sysadm@sys.sys", "description"=>"Sys One", "secret"=>$secret,
-                "fullname" => "Root Admin", "uuid"=>"sys000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id" => "2", "email" => "sysadm@sys.sys", "description" => "Sys One", "secret" => $secret,
+                "fullname" => "Root Admin", "uuid" => "sys000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
                 "id_language" => "2", "id_profile" => "2", "id_parent" => "null"
             ],
             [
-                "id"=>"3", "email"=>"bow@bow.com", "description"=>"Business Owner One", "secret"=>$secret,
-                "fullname" => "Business Owner Demo", "uuid"=>"demo000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id" => "3", "email" => "bow@bow.com", "description" => "Business Owner One", "secret" => $secret,
+                "fullname" => "Business Owner Demo", "uuid" => "demo000001", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
                 "id_language" => "2", "id_profile" => "3", "id_parent" => "null"
             ],
             [
-                "id"=>"4", "email"=>"adm@bow.com", "description"=>"Admin Of Business Owner One", "secret"=>$secret,
-                "fullname" => "Business Admin", "uuid"=>"demo000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
+                "id" => "4", "email" => "adm@bow.com", "description" => "Admin Of Business Owner One", "secret" => $secret,
+                "fullname" => "Business Admin", "uuid" => "demo000002", "id_gender" => "1", "id_nationality" => "1", "id_country" => "69",
                 "id_language" => "2", "id_profile" => "4", "id_parent" => 3
             ],
         ];
 
         foreach ($array as $item) {
             list(
-                "id"=>$id, "email"=>$email, "description"=>$description, "secret"=>$secret, "fullname"=>$fullname,
-                "uuid"=>$uuid, "id_gender"=>$idgender, "id_nationality"=>$idnationality, "id_country"=>$idcountry,
-                "id_language"=>$idlanguage, "id_profile"=>$idprofile, "id_parent" => $idparent
+                "id" => $id, "email" => $email, "description" => $description, "secret" => $secret, "fullname" => $fullname,
+                "uuid" => $uuid, "id_gender" => $idgender, "id_nationality" => $idnationality, "id_country" => $idcountry,
+                "id_language" => $idlanguage, "id_profile" => $idprofile, "id_parent" => $idParent
             ) = $item;
 
             $sql = "
             INSERT INTO {$this->tablename} 
             (id, `email`,`description`, secret, fullname, uuid, id_gender, id_nationality, id_country, id_language, id_profile, id_parent)
-            VALUES($id, '$email', '$description', '$secret','$fullname','$uuid','$idgender','$idnationality','$idcountry','$idlanguage','$idprofile', $idparent)
+            VALUES($id, '$email', '$description', '$secret','$fullname','$uuid','$idgender','$idnationality','$idcountry','$idlanguage','$idprofile', $idParent)
             ";
             $this->execute($sql);
         }
@@ -200,4 +201,3 @@ final class CreateBaseUser extends AbsMigration
         $this->table($this->tablename)->drop()->save();
     }
 }
-

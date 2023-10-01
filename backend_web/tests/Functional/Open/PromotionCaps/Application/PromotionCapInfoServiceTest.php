@@ -1,115 +1,119 @@
 <?php
-namespace App\Open\PromotionCaps\Application;
 
-use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
-use App\Restrict\Promotions\Domain\PromotionRepository;
-use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Shared\Domain\Bus\Event\IEventDispatcher;
-use App\Shared\Infrastructure\Bus\EventBus;
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+namespace Tests\Functional\Open\PromotionCaps\Application;
+
 use App\Shared\Domain\Enums\ExceptionType;
-use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
+use App\Shared\Infrastructure\Bus\EventBus;
+use App\Shared\Domain\Bus\Event\IEventDispatcher;
+use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
+use App\Open\PromotionCaps\Domain\Events\PromotionCapActionHasOccurredEvent;
+use App\Restrict\Promotions\Domain\{PromotionRepository, PromotionUiRepository};
+use App\Shared\Infrastructure\Factories\{RepositoryFactory as RF, ServiceFactory as SF};
 
-final class PromotionCapInfoServiceTest extends AppService  implements IEventDispatcher
+final class PromotionCapInfoServiceTest extends AppService implements IEventDispatcher
 {
     use RequestTrait;
 
-    private BusinessDataRepository $repobusinessdata;
-    private PromotionRepository $repopromotion;
-    private PromotionUiRepository $repopromotionui;
+    private BusinessDataRepository $businessDataRepository;
+    private PromotionRepository $promotionRepository;
+    private PromotionUiRepository $promotionUiRepository;
 
-    private array $businesssdata;
+    private array $businessData;
     private array $promotion;
-    private array $promotionui;
-    private int $istest;
+    private array $promotionUi;
+    private int $isTestMode;
 
     public function __construct(array $input)
     {
-        $this->_load_input($input);
-        $this->istest = (int)($input["_test_mode"] ?? "");
+        $this->_loadInput($input);
+        $this->isTestMode = (int) ($input["_test_mode"] ?? "");
 
-        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
-        $this->repopromotion = RF::get(PromotionRepository::class);
-        $this->repopromotionui = RF::get(PromotionUiRepository::class);
+        $this->businessDataRepository = RF::getInstanceOf(BusinessDataRepository::class);
+        $this->promotionRepository = RF::getInstanceOf(PromotionRepository::class);
+        $this->promotionUiRepository = RF::getInstanceOf(PromotionUiRepository::class);
     }
 
-    private function _load_input(array $input): void
+    private function _loadInput(array $input): void
     {
-        foreach ($input as $k => $v)
+        foreach ($input as $k => $v) {
             $this->input[$k] = trim($v);
+        }
     }
 
-    private function _promocap_exception(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
+    private function _promotionCapException(string $message, int $code = ExceptionType::CODE_INTERNAL_SERVER_ERROR): void
     {
         throw new PromotionCapException($message, $code);
     }
 
-    private function _load_businessdata(): void
+    private function _loadBusinessData(): void
     {
-        $businessslug = $this->input["businessslug"];
-        $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
-        if (!$this->businesssdata)
-            $this->_promocap_exception(__("Business account {0} not found!", $businessslug), ExceptionType::CODE_NOT_FOUND);
+        $businessSlug = $this->input["businessslug"];
+        $this->businessData = $this->businessDataRepository->getBusinessDataByBusinessDataSlug($businessSlug);
+        if (!$this->businessData) {
+            $this->_promotionCapException(__("Business account {0} not found!", $businessSlug), ExceptionType::CODE_NOT_FOUND);
+        }
     }
 
-    private function _dispatch(): void
+    private function _dispatchEvents(): void
     {
-        $this->_load_request();
+        $this->_loadRequestComponentInstance();
 
         EventBus::instance()->publish(...[
-            PromotionCapActionHasOccurredEvent::from_primitives(-1, [
+            PromotionCapActionHasOccurredEvent::fromPrimitives(-1, [
                 "id_promotion" => $this->promotion["id"] ?? -1,
                 "id_promouser" => null,
                 "id_type" => PromotionCapActionType::VIEWED,
-                "url_req" => $this->request->get_request_uri(),
-                "url_ref" => $this->request->get_referer(),
-                "remote_ip" => $this->request->get_remote_ip(),
-                "is_test" => $this->istest,
+                "url_req" => $this->requestComponent->getRequestUri(),
+                "url_ref" => $this->requestComponent->getReferer(),
+                "remote_ip" => $this->requestComponent->getRemoteIp(),
+                "is_test" => $this->isTestMode,
             ])
         ]);
     }
 
-    private function _load_promotion(): void
+    private function _loadPromotionByPromotionSlug(): void
     {
-        $promotionslug = $this->input["promotionslug"];
-        $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
-        $this->_dispatch();
+        $promotionSlug = $this->input["promotionslug"];
+        $this->promotion = $this->promotionRepository->getPromotionByPromotionSlug($promotionSlug);
+        $this->_dispatchEvents();
 
-        SF::get(PromotionCapCheckService::class, [
+        SF::getInstanceOf(PromotionCapCheckService::class, [
             "promotion" => $this->promotion,
-            "is_test" => $this->istest,
-            "user" => SF::get_auth()->get_user(),
-        ])->is_suitable_or_fail();
+            "is_test" => $this->isTestMode,
+            "user" => SF::getAuthService()->getAuthUserArray(),
+        ])->isPromotionSuitableOrFail();
     }
 
-    private function _load_promotionui(): void
+    private function _loadPromotionUiByPromotionId(): void
     {
-        $this->promotionui = $this->repopromotionui->get_by_promotion((int) $this->promotion["id"]);
-        if (!$this->promotionui)
-            $this->_promocap_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
+        $this->promotionUi = $this->promotionUiRepository->getPromotionUiByIdPromotion((int) $this->promotion["id"]);
+        if (!$this->promotionUi) {
+            $this->_promotionCapException(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
+        }
     }
 
     public function __invoke(): array
     {
-        if (!($this->input["businessslug"] ?? ""))
-            $this->_promocap_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
+        if (!($this->input["businessslug"] ?? "")) {
+            $this->_promotionCapException(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        if (!($this->input["promotionslug"] ?? ""))
-            $this->_promocap_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
+        if (!($this->input["promotionslug"] ?? "")) {
+            $this->_promotionCapException(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        $this->_load_businessdata();
-        $this->_load_promotion();
-        $this->_load_promotionui();
+        $this->_loadBusinessData();
+        $this->_loadPromotionByPromotionSlug();
+        $this->_loadPromotionUiByPromotionId();
 
         return [
-            "businessdata" => $this->businesssdata,
+            "businessdata" => $this->businessData,
             "promotion" => $this->promotion,
-            "promotionui" => $this->promotionui,
+            "promotionui" => $this->promotionUi,
 
             "metadata" => [],
         ];

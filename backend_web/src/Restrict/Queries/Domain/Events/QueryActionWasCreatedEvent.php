@@ -1,70 +1,68 @@
 <?php
+
 namespace App\Restrict\Queries\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class QueryActionWasCreatedEvent extends AbsEvent
+final class QueryActionWasCreatedEvent extends AbstractEvent
 {
-    private int $idquery;
+    private int $idQuery;
     private string $description;
     private string $params;
 
     public function __construct(
-        int $id,
-        int $idquery,
-        string $description,
-        string $params,
-
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($id, $eventid, $occuredon, $correlationid, $causationid);
-        $this->idquery = $idquery;
+        int     $id,
+        int     $idQuery,
+        string  $description,
+        string  $params,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($id, $eventId, $occurredOn, $correlationId, $causationId);
+        $this->idQuery = $idQuery;
         $this->description = $description;
         $this->params = $params;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "queryaction.created";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["id_query"],
             $body["description"],
             $body["params"],
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
-            "id_query" => $this->idquery,
+            "id_query" => $this->idQuery,
             "description" => $this->description,
             "params" => $this->params,
         ];
     }
 
-    public function id_query(): int
+    public function idQuery(): int
     {
-        return $this->idquery;
+        return $this->idQuery;
     }
 
     public function description(): string

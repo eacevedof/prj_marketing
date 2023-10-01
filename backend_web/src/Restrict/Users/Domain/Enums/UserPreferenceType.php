@@ -4,8 +4,8 @@ namespace App\Restrict\Users\Domain\Enums;
 
 abstract class UserPreferenceType
 {
-    const URL_DEFAULT_MODULE = "url_default_module";
-    const KEY_TZ = "tz";
+    public const URL_DEFAULT_MODULE = "url_default_module";
+    public const KEY_TZ = "tz";
 
-    const TZ_UTC = "UTC";
+    public const TZ_UTC = "UTC";
 }

@@ -8,85 +8,105 @@
  * @observations
  * @tags: #ui
  */
+
 namespace App\Shared\Infrastructure\Traits;
 
 use TheFramework\Components\Db\ComponentQB;
 
 trait SearchRepoTrait
 {
-    private array $calcfields = [];
+    private array $calculatedFields = [];
     private array $joins = [
         "fields" => [],
         "on" => [],
     ];
 
-    private function get_sanitized(?string $strval): ?string
+    private function _getSanitizedStringForSearchValue(?string $searchText): ?string
     {
-        if($strval===null) return null;
-        $strval = str_replace("\\","\\\\",$strval);
-        $strval = str_replace("'","\'",$strval);
-        return $strval;
-    }//get_sanitized
+        if ($searchText === null) {
+            return null;
+        }
+        $searchText = str_replace("\\", "\\\\", $searchText);
+        $searchText = str_replace("'", "\'", $searchText);
+        return $searchText;
+    }
 
-    private function _get_join_field(string $field): string
+    private function _getJoinField(string $field): string
     {
         $key = array_search($field, $this->joins["fields"]);
-        if ($key===false) return "";
+        if ($key === false) {
+            return "";
+        }
         return $key;
     }
 
-    private function _get_calc_field(string $field): string
+    private function _getCalculatedField(string $field): string
     {
-        $key = array_search($field, $this->calcfields);
-        if ($key===false) return "m.$field";
+        $key = array_search($field, $this->calculatedFields);
+        if ($key === false) {
+            return "m.$field";
+        }
         return $key;
     }
 
-    private function _get_condition(string $field, string $value): string
+    private function _getLikeCondition(string $field, string $value): string
     {
-        $value = $this->get_sanitized($value);
-        $found = $this->_get_join_field($field);
-        if (!$found) $found = $this->_get_calc_field($field);
+        $value = $this->_getSanitizedStringForSearchValue($value);
+        $found = $this->_getJoinField($field);
+        if (!$found) {
+            $found = $this->_getCalculatedField($field);
+        }
         return "$found LIKE '%$value%'";
     }
 
-    private function _add_joins(ComponentQB $qb): void
+    private function _addJoinsToQueryBuilder(ComponentQB $qb): void
     {
-        foreach ($this->joins["fields"] as $field => $alias)
+        foreach ($this->joins["fields"] as $field => $alias) {
             $qb->add_getfield("$field as $alias");
+        }
 
-        foreach ($this->joins["on"] as $join)
+        foreach ($this->joins["on"] as $join) {
             $qb->add_join($join);
+        }
     }
 
-    private function _add_calcfields(ComponentQB $qb): void
+    private function _addCalculatedFieldToQueryBuilder(ComponentQB $qb): void
     {
-        foreach ($this->calcfields as $calc => $field)
+        foreach ($this->calculatedFields as $calc => $field) {
             $qb->add_getfield("$calc as $field");
+        }
     }
 
-    private function _add_search_filter(ComponentQB $qb, array $search): void
+    private function _addSearchFilterToQueryBuilder(ComponentQB $qb, array $search): void
     {
-        if(!$search) return;
+        if (!$search) {
+            return;
+        }
 
-        if($fields = $search["fields"])
-            foreach ($fields as $field => $value )
-                $qb->add_and($this->_get_condition($field, $value));
+        if ($fields = $search["fields"]) {
+            foreach ($fields as $field => $value) {
+                $qb->add_and($this->_getLikeCondition($field, $value));
+            }
+        }
 
-        if($limit = $search["limit"])
+        if ($limit = $search["limit"]) {
             $qb->set_limit($limit["length"], $limit["from"]);
+        }
 
-        if($order = $search["order"]) {
-            $field = $this->_get_join_field($order["field"]);
-            if (!$field) $field = $this->_get_calc_field($order["field"]);
+        if ($order = $search["order"]) {
+            $field = $this->_getJoinField($order["field"]);
+            if (!$field) {
+                $field = $this->_getCalculatedField($order["field"]);
+            }
             $qb->set_orderby([$field => "{$order["dir"]}"]);
         }
 
-        if($global = $search["global"]) {
+        if ($global = $search["global"]) {
             $or = [];
-            foreach ($search["all"] as $field)
-                $or[] = $this->_get_condition($field, $global);
-            $or = implode(" OR ",$or);
+            foreach ($search["all"] as $field) {
+                $or[] = $this->_getLikeCondition($field, $global);
+            }
+            $or = implode(" OR ", $or);
             $qb->add_and("($or)");
         }
     }

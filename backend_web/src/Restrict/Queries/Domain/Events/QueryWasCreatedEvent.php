@@ -1,31 +1,30 @@
 <?php
+
 namespace App\Restrict\Queries\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class QueryWasCreatedEvent extends AbsEvent
+final class QueryWasCreatedEvent extends AbstractEvent
 {
     private string $uuid;
     private string $description;
     private string $query;
     private string $total;
     private string $module;
-    
+
     public function __construct(
-        int $id,
-        string $uuid,
-        string $description,
-        string $query,
-        int $total,
-        string $module,
-        
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($id, $eventid, $occuredon, $correlationid, $causationid);
+        int     $id,
+        string  $uuid,
+        string  $description,
+        string  $query,
+        int     $total,
+        string  $module,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($id, $eventId, $occurredOn, $correlationId, $causationId);
         $this->uuid = $uuid;
         $this->description = $description;
         $this->query = $query;
@@ -33,20 +32,19 @@ final class QueryWasCreatedEvent extends AbsEvent
         $this->module = $module;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "query.created";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["uuid"],
@@ -55,13 +53,13 @@ final class QueryWasCreatedEvent extends AbsEvent
             $body["total"],
             $body["module"],
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
             "uuid" => $this->uuid,

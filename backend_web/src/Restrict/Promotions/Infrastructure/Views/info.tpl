@@ -110,7 +110,7 @@
       </div><!--tab-conditions-->
 
       <?php
-      $this->_element_view("statistics");
+      $this->_includeViewElement("statistics");
       ?>
     </div><!--tab-content-->
   </div><!--card-body-->

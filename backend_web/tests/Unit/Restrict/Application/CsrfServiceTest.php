@@ -1,11 +1,11 @@
 <?php
+
 namespace Tests\Restrict\Auth\Application;
 
+use Exception;
 use Tests\Unit\AbsUnitTest;
+use App\Restrict\Auth\Application\{AuthService, CsrfService};
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Auth\Application\CsrfService;
-use \Exception;
 
 final class CsrfServiceTest extends AbsUnitTest
 {
@@ -14,10 +14,10 @@ final class CsrfServiceTest extends AbsUnitTest
     public function setUp(): void
     {
         $this->_load_session();
-        $this->authService = AuthService::getme();
+        $this->authService = AuthService::getInstance();
     }
 
-    private function _load_server(int $i=0): void
+    private function _load_server(int $i = 0): void
     {
         $servers = [
             [
@@ -46,36 +46,36 @@ final class CsrfServiceTest extends AbsUnitTest
     public function test_get_token_for_root(): void
     {
         $this->_load_server();
-        $csrfService = SF::get(CsrfService::class);
-        $this->assertNotEmpty($token = $csrfService->get_token());
-        $this->assertTrue($csrfService->is_valid($token));
+        $csrfService = SF::getInstanceOf(CsrfService::class);
+        $this->assertNotEmpty($token = $csrfService->getCsrfToken());
+        $this->assertTrue($csrfService->isValidCsrfToken($token));
     }
 
     public function test_get_token_for_root_in_empty_server(): void
     {
         $this->_load_server(1);
-        $csrfService = SF::get(CsrfService::class);
-        $this->assertNotEmpty($token = $csrfService->get_token());
-        $this->assertTrue($csrfService->is_valid($token));
+        $csrfService = SF::getInstanceOf(CsrfService::class);
+        $this->assertNotEmpty($token = $csrfService->getCsrfToken());
+        $this->assertTrue($csrfService->isValidCsrfToken($token));
     }
 
     public function test_is_valid_token_for_random_string(): void
     {
         $this->_load_server(1);
         $this->expectExceptionMessage("Invalid csrf 1");
-        SF::get(CsrfService::class)->is_valid("SOME-RareToken-8789$5");
+        SF::getInstanceOf(CsrfService::class)->isValidCsrfToken("SOME-RareToken-8789$5");
     }
 
     public function test_wrong_token_for_swapping_servers(): void
     {
         $this->expectException(Exception::class);
         $this->_load_server();
-        $service = SF::get(CsrfService::class);
-        $tokenforserv0 = $service->get_token();
+        $service = SF::getInstanceOf(CsrfService::class);
+        $tokenforserv0 = $service->getCsrfToken();
         //fake request
         $this->_load_server(2);
-        $service = SF::get(CsrfService::class);
-        $isvalid = $service->is_valid($tokenforserv0);
+        $service = SF::getInstanceOf(CsrfService::class);
+        $isvalid = $service->isValidCsrfToken($tokenforserv0);
     }
 
 }

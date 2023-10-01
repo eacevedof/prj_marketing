@@ -141,8 +141,10 @@ const dt_render = (options) => {
       //alert("on hiddenbuttons")
       //e.target es <table ...> </table>
       let tr = dttable.row(row.index()).node()
+      if (!tr) return
       //console.log("row",tr)
       tr = tr.nextSibling
+      if (!tr) return
       //console.log("row",tr)
       if (tr.classList.contains("child"))
         dtbutton($table, dttable).rowbuttons_listeners(tr)

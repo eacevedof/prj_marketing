@@ -7,39 +7,46 @@
  * @date 31-10-2022 17:46 SPAIN
  * @observations
  */
+
 namespace App\Console\Application\Dev\Builder;
 
 final class ExtraBuilder
 {
     private string $type;
-    private string $pathtpl;
-    private string $pathmodule;
+    private string $pathTpl;
+    private string $pathModule;
     private array $aliases;
     private array $fields;
-    private array $skipfields;
+    private array $skipFields;
 
     public const TYPE_EXTRA_MD = "extra.md";
 
-    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_EXTRA_MD)
-    {
-       $this->pathtpl = $pathtpl;
-       $this->pathmodule = $pathmodule;
-       $this->aliases = $aliases;
-       $this->fields = $fields;
-       $this->type = $type;
-       $this->_load_skip_fields();;
+    public function __construct(
+        array  $aliases,
+        array  $fields,
+        string $pathTpl,
+        string $pathModule,
+        string $type = self::TYPE_EXTRA_MD
+    ) {
+        $this->pathTpl = $pathTpl;
+        $this->pathModule = $pathModule;
+        $this->aliases = $aliases;
+        $this->fields = $fields;
+        $this->type = $type;
+        $this->_loadSkipFields();
+        ;
     }
 
-    private function _load_skip_fields(): void
+    private function _loadSkipFields(): void
     {
-        $this->skipfields = [
+        $this->skipFields = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
             , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
             "update_date"
         ];
     }
-    
-    private function _replace(string $content, array $replaces=[]): string
+
+    private function _replace(string $content, array $replaces = []): string
     {
         $basic = [
             "Xxxs" => $this->aliases["uppercased-plural"],
@@ -52,7 +59,7 @@ final class ExtraBuilder
         return str_replace(array_keys($basic), array_values($basic), $content);
     }
 
-    private function _get_translation(string $key): string
+    private function _getTranslationIdAndStr(string $key): string
     {
         return "
         msgid \"$key\"
@@ -60,23 +67,24 @@ final class ExtraBuilder
         ";
     }
 
-    private function _build_extra_md(): void
+    private function _buildExtraDataInMd(): void
     {
         //tags %PO_KEYS%
-
         $pokeys = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
+            if (in_array($fieldname, $this->skipFields)) {
+                continue;
+            }
             $trkey = "tr_$fieldname";
-            $pokeys[] = $this->_get_translation($trkey);
+            $pokeys[] = $this->_getTranslationIdAndStr($trkey);
         }
         $pokeys = implode("", $pokeys);
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl, [
             "%PO_KEYS%" => trim($pokeys)
         ]);
-        $pathfile = "{$this->pathmodule}/{$this->type}";
+        $pathfile = "{$this->pathModule}/{$this->type}";
         file_put_contents($pathfile, $contenttpl);
     }
 
@@ -84,8 +92,8 @@ final class ExtraBuilder
     {
         switch ($this->type) {
             case self::TYPE_EXTRA_MD:
-                $this->_build_extra_md();
-            break;
+                $this->_buildExtraDataInMd();
+                break;
         }
     }
 }

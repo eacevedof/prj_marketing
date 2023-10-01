@@ -141,6 +141,10 @@ sql: ## log queries
 	rm -f *.log; touch app_${TODAY}.log; clear; \
 	tail -f app_${TODAY}.log;
 
+pint: ## run laravel pint
+	clear
+	cd ./backend_web; vendor/bin/pint
+
 phpunit:
 	clear;
 	docker exec -it php-marketing-be sh -c "cd  /appdata/www/backend_web/; vendor/bin/phpunit tests"

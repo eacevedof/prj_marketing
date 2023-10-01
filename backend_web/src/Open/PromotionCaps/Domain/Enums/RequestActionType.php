@@ -7,7 +7,7 @@ abstract class RequestActionType
     public const PROMOTIONCAP_INSERT = "promotioncap.insert";
     public const HOME_CONTACT_SEND = "home.contact.send";
 
-    public static function get_all(): array
+    public static function getAllRequestActionTypes(): array
     {
         return [
             self::PROMOTIONCAP_INSERT,

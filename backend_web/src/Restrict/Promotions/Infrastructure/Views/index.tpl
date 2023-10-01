@@ -1,17 +1,17 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
- * @var App\Helpers\Views\DatatableHelper $dthelp
- * @var array $authuser
+ * @var App\Shared\Infrastructure\Helpers\Views\DatatableHelper $datatableHelper
+ * @var array $authUser
  * @var string $h1
- * @var ?string $idowner
- * @var bool $authread
- * @var bool $authwrite
+ * @var ?string $idOwner
+ * @var bool $authRead
+ * @var bool $authWrite
  */
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
-if(!isset($authread)) $authread=false;
-if(!isset($authwrite)) $authwrite=false;
+if (!isset($authRead)) $authRead=false;
+if (!isset($authWrite)) $authWrite=false;
 
 $this->_element("restrict/elem-bowdisabled");
 $this->_element("common/elem-datatable-asset");
@@ -32,16 +32,16 @@ $this->_element("common/elem-datatable-asset");
           <table id="table-datatable" class="table text-md-nowrap table-striped">
             <thead>
             <tr>
-              <?= $dthelp->get_ths() ?>
+              <?= $datatableHelper->getHtmlThs() ?>
             </tr>
             <tr row="search" class="hidden">
-              <?= $dthelp->get_search_tds() ?>
+              <?= $datatableHelper->getSearchableTds() ?>
             </tr>
             </thead>
             <tbody approle="tbody"></tbody>
             <tfoot>
             <tr>
-              <?= $dthelp->get_tf() ?>
+              <?= $datatableHelper->getHtmlTdsForTableFoot() ?>
             </tr>
             </tfoot>
           </table>
@@ -58,11 +58,11 @@ import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 import {get_link_local} from "/assets/js/common/html/link.js"
 import auth from "/assets/js/restrict/auth.js"
 
-auth.id_user = <?php $this->_echo_js($authuser["id"]) ?>;
-auth.id_profile = <?php $this->_echo_js($authuser["id_profile"]) ?>;
-auth.id_owner = <?php $this->_echo_js((int) $idowner) ?>;
-auth.readable = <?= (int)$authread ?>;
-auth.writable = <?= (int)$authwrite ?>;
+auth.id_user = <?php $this->_echoJs($authUser["id"]) ?>;
+auth.id_profile = <?php $this->_echoJs($authUser["id_profile"]) ?>;
+auth.id_owner = <?php $this->_echoJs((int) $idOwner) ?>;
+auth.readable = <?= (int)$authRead ?>;
+auth.writable = <?= (int)$authWrite ?>;
 
 /*
 console.log(
@@ -155,11 +155,11 @@ dtcolumn.add_column({
   }
 })
 
-const urlsubscripton = <?php $this->_echo_js(Routes::url("subscription.create")); ?>;
+const urlsubscripton = <?php $this->_echoJs(Routes::getUrlByRouteName("subscription.create")); ?>;
 dtcolumn.add_column({
   data: "description",
   render: (v,t,row) => {
-    const url = urlsubscripton.replace(":businessslug", row.e_business_slug).replace(":promotionslug",row.slug).concat("?mode=test")
+    const url = urlsubscripton.replace(":businessSlug", row.e_business_slug).replace(":promotionSlug",row.slug).concat("?mode=test")
     if (row.disabled_date) return `<span class="tx-warning">${v}</span>`
     if (row.is_published==="1") v = `<span class="tx-success"><u>${v}</u></span>`
     if (row.is_published!=="1") v = `<span class="tx-gray-500"><u>${v}</u></span>`
@@ -169,19 +169,19 @@ dtcolumn.add_column({
 
 rowswal.set_texts({
   delswal: {
-    error: <?php $this->_echo_js(__("<b>Error on delete</b>"));?>,
-    success: <?php $this->_echo_js(__("Data successfully deleted"));?>
+    error: <?php $this->_echoJs(__("<b>Error on delete</b>"));?>,
+    success: <?php $this->_echoJs(__("Data successfully deleted"));?>
   },
   undelswal: {
-    error: <?php $this->_echo_js(__("<b>Error on restore</b>"));?>,
-    success: <?php $this->_echo_js(__("Data successfully restored"));?>
+    error: <?php $this->_echoJs(__("<b>Error on restore</b>"));?>,
+    success: <?php $this->_echoJs(__("Data successfully restored"));?>
   },
 })
 
 dt_render({
-  URL_MODULE: <?php $this->_echo_js(Routes::url("module.promotions", ["page"=>"","_nods"])); ?>,
+  URL_MODULE: <?php $this->_echoJs(Routes::getUrlByRouteName("module.promotions", ["page"=>"","_nods"])); ?>,
   ID_TABLE: "table-datatable",
-  ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
+  ITEMS_PER_PAGE: <?php $datatableHelper->showPerPageInfo();?>,
 })
 </script>
 <?php

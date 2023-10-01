@@ -2,111 +2,123 @@
 
 namespace App\Shared\Infrastructure\Components\DiskCache;
 
-use \BOOT;
+use BOOT;
 
 final class DiskCacheComponent
 {
     private string $pathcache = BOOT::PATH_DISK_CACHE ?? "./";
-    private string $pathsub = "";
-    protected int $time = 3600;
-    private string $keyname = "";
-    private string $hashname = "";
-    private string $pathfinal = "";
+    private string $pathSubFolder = "";
+    private int $secondsTtl = 3600;
+    private string $keyToBeHashed = "";
+    private string $hashName = "";
+    private string $pathFinalDir = "";
 
-    private function _load_hashname(): self
+    private function _loadHashName(): void
     {
-        $this->hashname = md5($this->keyname);
-        return $this;
+        $this->hashName = md5($this->keyToBeHashed);
     }
 
-    private function _load_pathfinal(): void
+    private function _loadPathFinalDir(): void
     {
         $path = $this->pathcache;
-        if ($this->pathsub) $path .= "/$this->pathsub";
-        $this->pathfinal = $path;
+        if ($this->pathSubFolder) {
+            $path .= "/$this->pathSubFolder";
+        }
+        $this->pathFinalDir = $path;
     }
 
-    private function _get_cached_files(): array
+    private function _getAllCachedFilesByHashName(): array
     {
-        if (!is_dir($this->pathfinal)) {
+        if (!is_dir($this->pathFinalDir)) {
             //705 es lo minimo para que funcione desde web
-            mkdir($this->pathfinal, 0705, true);
+            mkdir($this->pathFinalDir, 0705, true);
             chmod($this->pathcache, 0705);
         }
 
-        $files = scandir($this->pathfinal);
-        if (count($files) == 2) return [];
-        
+        $files = scandir($this->pathFinalDir);
+        if (count($files) === 2) {
+            return [];
+        }
+
         $files = array_filter($files, function ($file) {
-           return strstr($file, $this->hashname); 
+            return strstr($file, $this->hashName);
         });
         return array_values($files);
     }
 
-    private function _get_cached_file(): string
+    private function _getFirstCachedFileByHashName(): string
     {
-        $files = $this->_get_cached_files();
+        $files = $this->_getAllCachedFilesByHashName();
         return $files[0] ?? "";
     }
 
-    private function _get_dietime(string $date): int
+    private function _getExpirationTimeAsInt(string $date): int
     {
         //$now = date("Y-m-d H:i:s");
-        return (int) date("YmdHis", (strtotime($date) + $this->time));
+        return (int) date("YmdHis", (strtotime($date) + $this->secondsTtl));
     }
 
-    private function _remove_olds(): void
+    private function _removeAllCachedByHashName(): void
     {
-        $files = $this->_get_cached_files();
+        $files = $this->_getAllCachedFilesByHashName();
         foreach ($files as $file) {
-            $path = "{$this->pathfinal}/$file";
-            if (is_file($path)) unlink($path);
+            $path = "{$this->pathFinalDir}/$file";
+            if (is_file($path)) {
+                unlink($path);
+            }
         }
     }
 
-    public function is_alive(): bool
+    public function isCachedFileAlive(): bool
     {
-        $this->_load_hashname()->_load_pathfinal();        
-        $filename = $this->_get_cached_file();
-        if (!$filename) return false;
-        $enddate = explode("-",$filename);
-        $enddate = end($enddate);
-        $enddate = substr_replace($enddate ,"", -4);
-        if (!($enddate && is_numeric($enddate))) return false;
-        return (((int) $enddate) > ((int) date("YmdHis")));
+        $this->_loadHashName();
+        $this->_loadPathFinalDir();
+        $fileName = $this->_getFirstCachedFileByHashName();
+        if (!$fileName) {
+            return false;
+        }
+        $expirationDate = explode("-", $fileName);
+        $expirationDate = end($expirationDate);
+        $expirationDate = substr_replace($expirationDate, "", -4);
+        if (!($expirationDate && is_numeric($expirationDate))) {
+            return false;
+        }
+        return (
+            ((int) $expirationDate) > ((int) date("YmdHis"))
+        );
     }
 
     public function write(string $content): string
     {
-        $this->_remove_olds();
-        $dietime = $this->_get_dietime(date("YmdHis"));
-        $path = "{$this->pathfinal}/$this->hashname-{$dietime}.dat";
+        $this->_removeAllCachedByHashName();
+        $dieTimeAsInt = $this->_getExpirationTimeAsInt(date("YmdHis"));
+        $path = "{$this->pathFinalDir}/$this->hashName-{$dieTimeAsInt}.dat";
         $r = file_put_contents($path, $content);
-        return "{$this->hashname} $dietime cache until: ".date("Y-m-d H:i:s", $dietime);
+        return "{$this->hashName} $dieTimeAsInt cache until: ".date("Y-m-d H:i:s", $dieTimeAsInt);
     }
 
-    public function get_content(): ?string
+    public function getCachedFileContent(): ?string
     {
-        $filename = $this->_get_cached_file();
-        $filename = "$this->pathfinal/$filename";
+        $filename = $this->_getFirstCachedFileByHashName();
+        $filename = "$this->pathFinalDir/$filename";
         return file_get_contents($filename);
     }
 
-    public function set_folder(string $pathsub): self
+    public function setSubFolder(string $pathSubFolder): self
     {
-        $this->pathsub = $pathsub;
-        return $this;
-    }
-    
-    public function set_keyname(string $keyname): self
-    {
-        $this->keyname = $keyname;
+        $this->pathSubFolder = $pathSubFolder;
         return $this;
     }
 
-    public function set_time(int $time): self
+    public function setKeyToBeHashed(string $keyToBeHashed): self
     {
-        $this->time = $time;
+        $this->keyToBeHashed = $keyToBeHashed;
+        return $this;
+    }
+
+    public function setSecondsTtl(int $secondsTtl): self
+    {
+        $this->secondsTtl = $secondsTtl;
         return $this;
     }
 }

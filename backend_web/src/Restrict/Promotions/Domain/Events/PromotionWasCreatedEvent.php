@@ -1,63 +1,61 @@
 <?php
+
 namespace App\Restrict\Promotions\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class PromotionWasCreatedEvent extends AbsEvent
+final class PromotionWasCreatedEvent extends AbstractEvent
 {
     private string $uuid;
-    private int $idowner;
+    private int $idOwner;
     private string $slug;
 
     public function __construct(
-        int $iduser,
-        string $uuid,
-        int $idowner,
-        string $slug,
-
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($iduser, $eventid, $occuredon, $correlationid, $causationid);
+        int     $idUser,
+        string  $uuid,
+        int     $idOwner,
+        string  $slug,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($idUser, $eventId, $occurredOn, $correlationId, $causationId);
         $this->uuid = $uuid;
-        $this->idowner = $idowner;
+        $this->idOwner = $idOwner;
         $this->slug = $slug;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "promotion.created";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["uuid"],
             $body["id_owner"],
             $body["slug"],
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
             "uuid" => $this->uuid,
-            "id_owner" => $this->idowner,
+            "id_owner" => $this->idOwner,
             "slug" => $this->slug,
         ];
     }
@@ -67,9 +65,9 @@ final class PromotionWasCreatedEvent extends AbsEvent
         return $this->uuid;
     }
 
-    public function id_owner(): int
+    public function idOwner(): int
     {
-        return $this->idowner;
+        return $this->idOwner;
     }
 
     public function slug(): string

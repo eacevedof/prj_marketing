@@ -1,23 +1,23 @@
 <?php
+
 namespace App\Open\PromotionCaps\Domain;
 
+use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
-use TheFramework\Components\Db\ComponentQB;
+use App\Shared\Domain\Repositories\Common\SysFieldRepository;
+use App\Shared\Infrastructure\Factories\{DbFactory as DbF, RepositoryFactory as RF};
 
 final class PromotionCapActionsRepository extends AppRepository
 {
     use SearchRepoTrait;
 
-    private ?AuthService $auth = null;
+    private ?AuthService $authService = null;
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_promotioncap_actions";
         $this->joins = [
             "fields" => [
@@ -31,14 +31,14 @@ final class PromotionCapActionsRepository extends AppRepository
         ];
     }
 
-    private function _add_auth_condition(ComponentQB $qb): void
+    private function _addConditionByAuthService(ComponentQB $qb): void
     {
-        if (!$this->auth->get_user()) {
+        if (!$this->authService->getAuthUserArray()) {
             $qb->add_and("1 = 0");
             return;
         }
 
-        if($this->auth->is_root()) {
+        if ($this->authService->isAuthUserRoot()) {
             $qb->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
                 ->add_getfield("m.insert_user");
@@ -48,51 +48,51 @@ final class PromotionCapActionsRepository extends AppRepository
         //como no es root no puede ver borrados o desactivados
         $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
 
-        $autuser = $this->auth->get_user();
-        if($this->auth->is_business_owner()) {
-            $qb->add_andoper("m.id_owner", $autuser["id"]);
+        $authUser = $this->authService->getAuthUserArray();
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $qb->add_andoper("m.id_owner", $authUser["id"]);
             return;
         }
 
-        if($this->auth->is_business_manager()) {
-            $idparent = $autuser["id_parent"];
-            $qb->add_andoper("m.id_owner", $idparent);
+        if ($this->authService->hasAuthUserBusinessManagerProfile()) {
+            $idParent = $authUser["id_parent"];
+            $qb->add_andoper("m.id_owner", $idParent);
         }
     }
 
     public function search(array $search): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("promotioncap_actions.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
             ->set_getfields([
                 "m.id",
-"m.id_promotion",
-"m.id_promouser",
-"m.id_type",
-"m.url_req",
-"m.url_ref",
-"m.remote_ip",
+                "m.id_promotion",
+                "m.id_promouser",
+                "m.id_type",
+                "m.url_req",
+                "m.url_ref",
+                "m.remote_ip",
                 "m.delete_date"
             ])
             ->set_limit(25, 0)
-            ->set_orderby(["m.id"=>"DESC"])
+            ->set_orderby(["m.id" => "DESC"])
         ;
-        $this->_add_joins($qb);
-        $this->_add_search_filter($qb, $search);
-        $this->_add_auth_condition($qb);
+        $this->_addJoinsToQueryBuilder($qb);
+        $this->_addSearchFilterToQueryBuilder($qb, $search);
+        $this->_addConditionByAuthService($qb);
 
         $sql = $qb->select()->sql();
-        $sqlcount = $qb->sqlcount();
-        $r = $this->query_with_count($sqlcount, $sql);
+        $sqlCount = $qb->sqlcount();
+        $r = $this->getQueryWithCount($sqlCount, $sql);
         return $r;
     }
 
     public function get_info(string $uuid): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $uuid = $this->_getSanitizedString($uuid);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("promotioncap_actions.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -110,11 +110,13 @@ final class PromotionCapActionsRepository extends AppRepository
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        $this->map_to_int($r, ["id", "id_promotion", "id_promouser", "id_type"]);
-        if (!$r) return [];
+        $this->mapFieldsToInt($r, ["id", "id_promotion", "id_promouser", "id_type"]);
+        if (!$r) {
+            return [];
+        }
 
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-        return array_merge($r, $sysdata);
+        $sysData = RF::getInstanceOf(SysFieldRepository::class)->getSysDataByRowData($r = $r[0]);
+        return array_merge($r, $sysData);
     }
 
 

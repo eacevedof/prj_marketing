@@ -1,161 +1,178 @@
 <?php
+
 namespace App\Restrict\Users\Application;
 
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Users\Domain\UserRepository;
-use App\Restrict\Users\Domain\UserPermissionsRepository;
-use App\Restrict\Users\Domain\UserPreferencesRepository;
-use App\Restrict\BusinessData\Domain\BusinessDataRepository;
-use App\Restrict\BusinessAttributes\Domain\BusinessAttributeRepository;
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Restrict\Users\Domain\Enums\{UserPolicyType, UserProfileType};
+use App\Restrict\BusinessAttributes\Domain\BusinessAttributeRepository;
+use App\Shared\Infrastructure\Factories\{RepositoryFactory as RF, ServiceFactory as SF};
+use App\Restrict\Users\Domain\{UserPermissionsRepository, UserPreferencesRepository, UserRepository};
 
 final class UsersInfoService extends AppService
 {
-    private AuthService $auth;
-    private array $authuser;
-    private UserRepository $repouser;
-    private UserPermissionsRepository $repopermission;
-    private UserPreferencesRepository $repoprefs;
-    private BusinessDataRepository $repobusinessdata;
-    private BusinessAttributeRepository $repobusinessattribute;
+    private AuthService $authService;
+    private array $authUserArray;
+    private UserRepository $userRepository;
+    private UserPermissionsRepository $userPermissionRepository;
+    private UserPreferencesRepository $userPreferencesRepository;
+    private BusinessDataRepository $businessDataRepository;
+    private BusinessAttributeRepository $businessAttributeRepository;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
-        if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No {0} code provided", __("user")), ExceptionType::CODE_BAD_REQUEST);
+        if (!$this->input = $input[0] ?? "") {
+            $this->_throwException(__("No {0} code provided", __("user")), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        $this->authuser = $this->auth->get_user();
-        $this->repouser = RF::get(UserRepository::class);
-        $this->repopermission = RF::get(UserPermissionsRepository::class);
-        $this->repoprefs = RF::get(UserPreferencesRepository::class);
-        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
-        $this->repobusinessattribute = RF::get(BusinessAttributeRepository::class);
+        $this->authUserArray = $this->authService->getAuthUserArray();
+        $this->userRepository = RF::getInstanceOf(UserRepository::class);
+        $this->userPermissionRepository = RF::getInstanceOf(UserPermissionsRepository::class);
+        $this->userPreferencesRepository = RF::getInstanceOf(UserPreferencesRepository::class);
+        $this->businessDataRepository = RF::getInstanceOf(BusinessDataRepository::class);
+        $this->businessAttributeRepository = RF::getInstanceOf(BusinessAttributeRepository::class);
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) {
+            return;
+        }
 
-        if(!(
-            $this->auth->is_user_allowed(UserPolicyType::USERS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::USERS_WRITE)
-        ))
-            $this->_exception(
+        if (!(
+            $this->authService->hasAuthUserPolicy(UserPolicyType::USERS_READ)
+            || $this->authService->hasAuthUserPolicy(UserPolicyType::USERS_WRITE)
+        )) {
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+        }
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _checkEntityPermissionOrFail(array $entity): void
     {
-        $iduser = (int) $entity["id"];
-        $idauthuser = (int)$this->authuser["id"];
-        if ($this->auth->is_root() || $idauthuser === $iduser) return;
+        $idUser = (int) $entity["id"];
+        $idAuthUser = (int) $this->authUserArray["id"];
+        if ($this->authService->isAuthUserRoot() || $idAuthUser === $idUser) {
+            return;
+        }
 
-        if ($this->auth->is_sysadmin()
+        if ($this->authService->isAuthUserSysadmin()
             && in_array($entity["id_profile"], [UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
-        )
+        ) {
             return;
+        }
 
-        $identowner = $this->repouser->get_idowner($iduser);
+        $idEntityOwner = $this->userRepository->getIdOwnerByIdUser($idUser);
         //si logado es propietario del bm
-        if ($this->auth->is_business_owner()
+        if ($this->authService->isAuthUserBusinessOwner()
             && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
-            && $idauthuser === $identowner
-        )
+            && $idAuthUser === $idEntityOwner
+        ) {
             return;
+        }
 
         //si el logado es bm y la ent es del mismo owner
-        $idauthowner = $this->repouser->get_idowner($idauthuser);
-        if ($this->auth->is_business_manager() && $idauthowner === $identowner)
+        $idAuthOwner = $this->userRepository->getIdOwnerByIdUser($idAuthUser);
+        if ($this->authService->hasAuthUserBusinessManagerProfile() && $idAuthOwner === $idEntityOwner) {
             return;
+        }
 
-        $this->_exception(
-            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        $this->_throwException(
+            __("You are not allowed to perform this operation"),
+            ExceptionType::CODE_FORBIDDEN
         );
     }
 
     public function __invoke(): array
     {
-        if(!$user = $this->repouser->get_info_by_uuid($this->input))
-            $this->_exception(
+        if (!$user = $this->userRepository->getUserInfoByUserUuid($this->input)) {
+            $this->_throwException(
                 __("{0} with code {1} not found", __("User"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
+        }
 
         //comprueba propiedad de la entidad
-        $this->_check_entity_permission($user);
+        $this->_checkEntityPermissionOrFail($user);
 
-        $ispermissions = $this->auth->get_module_permissions(
-                UserPolicyType::MODULE_USER_PERMISSIONS, UserPolicyType::READ
-            )[0];
-
-        $isbusinessdata = $this->auth->get_module_permissions(
-                UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::READ
-            )[0] && $this->auth->is_business_owner($user["id_profile"]);
-
-        $ispreferences = $this->auth->get_module_permissions(
-            UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::READ
+        $isUserPermissionsAllowed = $this->authService->getModulePermissions(
+            UserPolicyType::MODULE_USER_PERMISSIONS,
+            UserPolicyType::READ
         )[0];
 
+        $isBusinessDataAllowed = $this->authService->getModulePermissions(
+            UserPolicyType::MODULE_BUSINESSDATA,
+            UserPolicyType::READ
+        )[0] && $this->authService->isAuthUserBusinessOwner($user["id_profile"]);
+
+        $isUserPreferencesAllowed = $this->authService->getModulePermissions(
+            UserPolicyType::MODULE_USER_PREFERENCES,
+            UserPolicyType::READ
+        )[0];
+
+        $idUser = $user["id"];
         return [
-            "user" => $this->_get_row_with_sysdata($user, $tz = $this->auth->get_tz()),
-            "permissions" => $ispermissions
-                ? $this->_get_row_with_sysdata($this->repopermission->get_by_user($iduser = $user["id"]), $tz)
+            "user" => $this->_getRowWithSysDataByTz($user, $tz = $this->authService->getAuthUserTZ()),
+            "permissions" => $isUserPermissionsAllowed
+                ? $this->_getRowWithSysDataByTz($this->userPermissionRepository->getUserPermissionByIdUser($idUser), $tz)
                 : null,
-            "businessdata" => $isbusinessdata
-                ? $this->_get_row_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
+            "businessdata" => $isBusinessDataAllowed
+                ? $this->_getRowWithSysDataByTz($this->businessDataRepository->getBusinessDataByIdUser($idUser), $tz)
                 : null,
-            "businessattributespace" => $isbusinessdata
-                ? $this->_get_row_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
+            "businessattributespace" => $isBusinessDataAllowed
+                ? $this->_getRowWithSysDataByTz($this->businessAttributeRepository->getSpacePageByIdUser($idUser), $tz)
                 : null,
-            "preferences" => $ispreferences ? $this->repoprefs->get_by_user($iduser) : null,
+            "preferences" => $isUserPreferencesAllowed ? $this->userPreferencesRepository->getUserPreferenceByIdUser($idUser) : null,
         ];
     }
 
-    public function get_for_edit(): array
+    public function getUsersInfoForEdition(): array
     {
-        if(!$user = $this->repouser->get_by_uuid($this->input))
-            $this->_exception(
+        if (!$user = $this->userRepository->getEntityByEntityUuid($this->input)) {
+            $this->_throwException(
                 __("User with code {0} not found", $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
+        }
 
         //comprueba propiedad de la entidad
-        $this->_check_entity_permission($user);
+        $this->_checkEntityPermissionOrFail($user);
 
-        $ispermissions = $this->auth->get_module_permissions(
-            UserPolicyType::MODULE_USER_PERMISSIONS, UserPolicyType::WRITE
+        $isUserPermissionAllowed = $this->authService->getModulePermissions(
+            UserPolicyType::MODULE_USER_PERMISSIONS,
+            UserPolicyType::WRITE
         )[0];
 
-        $isbusinessdata = $this->auth->get_module_permissions(
-                UserPolicyType::MODULE_BUSINESSDATA, UserPolicyType::WRITE
-            )[0] && $this->auth->is_business_owner($user["id_profile"]);
+        $isBusinessDataAllowed = $this->authService->getModulePermissions(
+            UserPolicyType::MODULE_BUSINESSDATA,
+            UserPolicyType::WRITE
+        )[0] && $this->authService->isAuthUserBusinessOwner($user["id_profile"]);
 
-        $ispreferences = $this->auth->get_module_permissions(
-            UserPolicyType::MODULE_USER_PREFERENCES, UserPolicyType::WRITE
+        $isUserPreferencesAllowed = $this->authService->getModulePermissions(
+            UserPolicyType::MODULE_USER_PREFERENCES,
+            UserPolicyType::WRITE
         )[0];
 
+        $idUser = $user["id"];
         return [
-            "user" => $this->_get_row_with_sysdata($user, $tz = $this->auth->get_tz()),
-            "permissions" => $ispermissions
-                ? $this->_get_row_with_sysdata($this->repopermission->get_by_user($iduser = $user["id"]), $tz)
+            "user" => $this->_getRowWithSysDataByTz($user, $tz = $this->authService->getAuthUserTZ()),
+            "permissions" => $isUserPermissionAllowed
+                ? $this->_getRowWithSysDataByTz($this->userPermissionRepository->getUserPermissionByIdUser($idUser), $tz)
                 : null,
-            "businessdata" => $isbusinessdata
-                ? $this->_get_row_with_sysdata($this->repobusinessdata->get_by_user($iduser), $tz)
+            "businessdata" => $isBusinessDataAllowed
+                ? $this->_getRowWithSysDataByTz($this->businessDataRepository->getBusinessDataByIdUser($idUser), $tz)
                 : null,
-            "businessattributespace" => $isbusinessdata
-                ? $this->_get_row_with_sysdata($this->repobusinessattribute->get_spacepage_by_iduser($iduser), $tz)
+            "businessattributespace" => $isBusinessDataAllowed
+                ? $this->_getRowWithSysDataByTz($this->businessAttributeRepository->getSpacePageByIdUser($idUser), $tz)
                 : null,
-            "preferences" => $ispreferences ? $this->repoprefs->get_by_user($iduser) : null,
+            "preferences" => $isUserPreferencesAllowed ? $this->userPreferencesRepository->getUserPreferenceByIdUser($idUser) : null,
         ];
     }
 }

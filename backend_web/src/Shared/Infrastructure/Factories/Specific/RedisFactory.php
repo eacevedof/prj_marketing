@@ -6,8 +6,8 @@ use App\Shared\Infrastructure\Components\Redis\RedisComponent;
 
 final class RedisFactory
 {
-    public static function get(): RedisComponent
+    public static function getInstance(): RedisComponent
     {
-        return new RedisComponent();
+        return new RedisComponent;
     }
 }

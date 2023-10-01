@@ -9,6 +9,6 @@ abstract class UserProfileType
     public const BUSINESS_OWNER = 3;
     public const BUSINESS_MANAGER = 4;
 
-    const ROOT_SUPER_UUID = "sys000001";
-    const ROOT_SUPER_ID = 1;
+    public const ROOT_SUPER_UUID = "sys000001";
+    public const ROOT_SUPER_ID = 1;
 }

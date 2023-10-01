@@ -1,13 +1,13 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
- * @var array $authuser
+ * @var array $authUser
  * @var array $topmenu
  */
 use App\Shared\Infrastructure\Helpers\Views\EnvIconHelper;
-$logourl = EnvIconHelper::icon_restrict();
-$authuser = $authuser ?? [];
-if ($authuser):
+$logourl = EnvIconHelper::getIconPathForRestrictSpace();
+$authUser = $authUser ?? [];
+if ($authUser):
 ?>
 <style>
 .div-container *{

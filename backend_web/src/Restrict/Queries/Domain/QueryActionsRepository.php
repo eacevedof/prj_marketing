@@ -6,25 +6,25 @@
  * @file Query_actionsRepository.php v1.0.0
  * @date %DATE% SPAIN
  */
+
 namespace App\Restrict\Queries\Domain;
 
+use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
-use TheFramework\Components\Db\ComponentQB;
+use App\Shared\Domain\Repositories\Common\SysFieldRepository;
+use App\Shared\Infrastructure\Factories\{DbFactory as DbF, RepositoryFactory as RF};
 
 final class QueryActionsRepository extends AppRepository
 {
     use SearchRepoTrait;
 
-    private ?AuthService $auth = null;
+    private ?AuthService $authService = null;
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_query_actions";
         $this->joins = [
             "fields" => [
@@ -38,14 +38,14 @@ final class QueryActionsRepository extends AppRepository
         ];
     }
 
-    private function _add_auth_condition(ComponentQB $qb): void
+    private function _addConditionByAuthService(ComponentQB $qb): void
     {
-        if (!$this->auth->get_user()) {
+        if (!$this->authService->getAuthUserArray()) {
             $qb->add_and("1 = 0");
             return;
         }
 
-        if($this->auth->is_root()) {
+        if ($this->authService->isAuthUserRoot()) {
             $qb->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
                 ->add_getfield("m.insert_user");
@@ -55,75 +55,76 @@ final class QueryActionsRepository extends AppRepository
         //como no es root no puede ver borrados o desactivados
         $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
 
-        $autuser = $this->auth->get_user();
-        if($this->auth->is_business_owner()) {
-            $qb->add_andoper("m.id_owner", $autuser["id"]);
+        $authUser = $this->authService->getAuthUserArray();
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $qb->add_andoper("m.id_owner", $authUser["id"]);
             return;
         }
 
-        if($this->auth->is_business_manager()) {
-            $idparent = $autuser["id_parent"];
-            $qb->add_andoper("m.id_owner", $idparent);
+        if ($this->authService->hasAuthUserBusinessManagerProfile()) {
+            $idParent = $authUser["id_parent"];
+            $qb->add_andoper("m.id_owner", $idParent);
         }
     }
 
     public function search(array $search): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("query_actions.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
             ->set_getfields([
                 "m.id",
-"m.id_query",
-"m.description",
+                "m.id_query",
+                "m.description",
                 "m.delete_date"
             ])
             ->set_limit(25, 0)
-            ->set_orderby(["m.id"=>"DESC"])
+            ->set_orderby(["m.id" => "DESC"])
         ;
-        $this->_add_joins($qb);
-        $this->_add_search_filter($qb, $search);
-        $this->_add_auth_condition($qb);
+        $this->_addJoinsToQueryBuilder($qb);
+        $this->_addSearchFilterToQueryBuilder($qb, $search);
+        $this->_addConditionByAuthService($qb);
 
         $sql = $qb->select()->sql();
-        $sqlcount = $qb->sqlcount();
-        $r = $this->db->set_sqlcount($sqlcount)->query($sql);
+        $sqlCount = $qb->sqlcount();
+        $r = $this->componentMysql->set_sqlcount($sqlCount)->query($sql);
 
         return [
             "result" => $r,
-            "total" => $this->db->get_foundrows()
+            "total" => $this->componentMysql->get_foundrows()
         ];
     }
 
-    public function get_info(string $uuid): array
+    public function getQueryInfoByQueryUuid(string $queryUuid): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $queryUuid = $this->_getSanitizedString($queryUuid);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("query_actions.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
-"m.insert_date",
-"m.id",
-"m.id_query",
-"m.description"
+                "m.insert_date",
+                "m.id",
+                "m.id_query",
+                "m.description"
             ])
             //->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id AND ar1.type='language'")
-            ->add_and("m.uuid='$uuid'")
+            ->add_and("m.uuid='$queryUuid'")
             ->select()->sql()
         ;
-        $r = $this->db->query($sql);
-        if (!$r) return [];
+        $r = $this->componentMysql->query($sql);
+        if (!$r) {
+            return [];
+        }
 
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-
-        return array_merge($r, $sysdata);
+        $sysData = RF::getInstanceOf(SysFieldRepository::class)->getSysDataByRowData($r = $r[0]);
+        return array_merge($r, $sysData);
     }
 
-    public function set_auth(AuthService $auth): self
+    public function setAuthService(AuthService $authService): self
     {
-        $this->auth = $auth;
+        $this->authService = $authService;
         return $this;
     }
 

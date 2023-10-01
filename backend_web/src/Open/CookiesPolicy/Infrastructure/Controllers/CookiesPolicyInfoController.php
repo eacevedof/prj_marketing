@@ -1,36 +1,32 @@
 <?php
+
 namespace App\Open\CookiesPolicy\Infrastructure\Controllers;
 
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Infrastructure\Controllers\Open\OpenController;
+use Exception;
+use App\Shared\Domain\Enums\{PageType, ResponseType};
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Open\CookiesPolicy\Application\CookiesPolicyInfoService;
-use App\Shared\Domain\Enums\PageType;
-use \Exception;
 
 final class CookiesPolicyInfoController extends OpenController
 {
     public function index(): void
     {
         try {
-            $terms = SF::get_callable(CookiesPolicyInfoService::class)();
-            $this->set_layout("open/mypromos/info")
-                ->add_var(PageType::TITLE, $title = __("Cookies Policy"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("result", $terms)
-                ->render_nv();
-        }
-        catch (Exception $e) {
-            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Cookies Policy error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("error", $e->getMessage())
-                ->add_var("code", $e->getCode())
-                ->render_nv();
+            $terms = SF::getCallableService(CookiesPolicyInfoService::class)();
+            $this->setLayoutBySubPath("open/mypromos/info")
+                ->addGlobalVar(PageType::TITLE, $title = __("Cookies Policy"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("result", $terms)
+                ->renderLayoutOnly();
+        } catch (Exception $e) {
+            $this->addHeaderCode(ResponseType::INTERNAL_SERVER_ERROR)
+                ->setPartLayout("open/mypromos/error")
+                ->addGlobalVar(PageType::TITLE, $title = __("Cookies Policy error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("error", $e->getMessage())
+                ->addGlobalVar("code", $e->getCode())
+                ->renderLayoutOnly();
         }
     }
 }
-
-
-

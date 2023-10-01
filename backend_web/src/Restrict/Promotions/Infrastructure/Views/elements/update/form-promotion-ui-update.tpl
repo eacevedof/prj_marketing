@@ -91,13 +91,13 @@ $promotionui = [
 ?>
 <div id="ui" class="tab-pane mb-2">
   <form-promotion-ui-update
-      csrf=<?php $this->_echo_js($csrf);?>
-      promotionuuid=<?php $this->_echo_js($result["promotion"]["uuid"]);?>
-      iseditable=<?php $this->_echo_js((int)$result["promotion"]["is_editable"]);?>
+      csrf=<?php $this->_echoJs($csrf);?>
+      promotionuuid=<?php $this->_echoJs($result["promotion"]["uuid"]);?>
+      iseditable=<?php $this->_echoJs((int)$result["promotion"]["is_editable"]);?>
 
-      texts="<?php $this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echoJsLit($texts);?>"
 
-      fields="<?php $this->_echo_jslit($promotionui);?>"
+      fields="<?php $this->_echoJsLit($promotionui);?>"
   />
 </div>
 <script type="module" src="/assets/js/restrict/promotions/form-promotion-ui-update.js"></script>

@@ -7,20 +7,21 @@
  * @date 21-07-2020 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Traits;
 
 use App\Shared\Infrastructure\Components\Session\SessionComponent;
 use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SsF;
 
-
 trait SessionTrait
 {
-    protected ?SessionComponent $session = null;
+    protected ?SessionComponent $sessionComponent = null;
 
-    protected function _load_session(): SessionComponent
+    protected function _loadSessionComponentInstance(): void
     {
-        if(!$this->session) $this->session = SsF::get();
-        return $this->session;
+        if (!$this->sessionComponent) {
+            $this->sessionComponent = SsF::get();
+        }
     }
 
 }//SessionTrait

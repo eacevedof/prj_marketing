@@ -14,14 +14,14 @@
     <div class="tabs-menu">
       <ul class="nav nav-tabs profile navtab-custom panel-tabs">
         <?php
-        $this->_element_view("update-status/main-tab");
+        $this->_includeViewElement("update-status/main-tab");
         ?>
       </ul>
     </div><!--nav-->
 
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <?php
-      $this->_element_view("update-status/form-subscription-update");
+      $this->_includeViewElement("update-status/form-subscription-update");
       ?>
     </div><!--tab-content-->
   </div><!--card-body-->

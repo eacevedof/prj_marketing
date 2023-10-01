@@ -7,22 +7,44 @@
  * @date 21-07-2020 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Traits;
 
 trait EnvTrait
 {
-    protected function get_env($key=null){ return ($key===null)?$_ENV:$_ENV[$key] ?? "";}
+    protected function getEnvValue(?string $key = null): string|array
+    {
+        return ($key === null) ? $_ENV : $_ENV[$key] ?? "";
+    }
 
-    protected function get_appenv($key){return $this->get_env("APP_{$key}");}
+    protected function getAppEnvValue($key): string
+    {
+        return $this->getEnvValue("APP_{$key}");
+    }
 
-    protected function is_envprod(){return $this->get_appenv("ENV")==="prod";}
+    protected function isEnvProd(): bool
+    {
+        return $this->getAppEnvValue("ENV") === "prod";
+    }
 
-    protected function is_envtest(){return $this->get_appenv("ENV")==="test";}
+    protected function isEnvTest(): bool
+    {
+        return $this->getAppEnvValue("ENV") === "test";
+    }
 
-    protected function is_envdev(){return $this->get_appenv("ENV")==="dev";}
+    protected function isEnvDev(): bool
+    {
+        return $this->getAppEnvValue("ENV") === "dev";
+    }
 
-    protected function is_envlocal(){return $this->get_appenv("ENV")==="local";}
+    protected function isEnvLocal(): bool
+    {
+        return $this->getAppEnvValue("ENV") === "local";
+    }
 
-    protected function add_env(string $key, $mxvalue){$_ENV[$key] = $mxvalue;}
+    protected function addToEnv(string $key, mixed $mxValue): void
+    {
+        $_ENV[$key] = $mxValue;
+    }
 
 }//EnvTrait

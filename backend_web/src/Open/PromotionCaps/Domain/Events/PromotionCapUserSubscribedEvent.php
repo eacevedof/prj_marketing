@@ -1,59 +1,56 @@
 <?php
+
 namespace App\Open\PromotionCaps\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class PromotionCapUserSubscribedEvent extends AbsEvent
+final class PromotionCapUserSubscribedEvent extends AbstractEvent
 {
     private string $uuid;
     private string $email;
-    private int $idowner;
-    private int $idpromotion;
-    private string $remoteip;
-    private string $datesubscription;
-    private int $istest;
+    private int $idOwner;
+    private int $idPromotion;
+    private string $remoteIp;
+    private string $dateSubscription;
+    private int $isTestMode;
 
     public function __construct(
-        int $idcapuser,
-
-        string $uuid,
-        string $email,
-        int $idowner,
-        int $idpromotion,
-        string $remoteip,
-        string $datesubscription,
-        int $istest,
-
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
+        int     $idCapUser,
+        string  $uuid,
+        string  $email,
+        int     $idOwner,
+        int     $idPromotion,
+        string  $remoteIp,
+        string  $dateSubscription,
+        int     $isTestMode,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($idCapUser, $eventId, $occurredOn, $correlationId, $causationId);
         $this->uuid = $uuid;
         $this->email = $email;
-        $this->idowner = $idowner;
-        $this->idpromotion = $idpromotion;
-        $this->remoteip = $remoteip;
-        $this->datesubscription = $datesubscription;
-        $this->istest = $istest;
+        $this->idOwner = $idOwner;
+        $this->idPromotion = $idPromotion;
+        $this->remoteIp = $remoteIp;
+        $this->dateSubscription = $dateSubscription;
+        $this->isTestMode = $isTestMode;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "promotioncapuser.created";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["uuid"],
@@ -64,22 +61,22 @@ final class PromotionCapUserSubscribedEvent extends AbsEvent
             $body["date_subscription"],
             $body["is_test"],
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
             "uuid" => $this->uuid,
             "email" => $this->email,
-            "id_owner" => $this->idowner,
-            "id_promotion" => $this->idpromotion,
-            "remote_ip" => $this->remoteip,
-            "date_subscription" => $this->datesubscription,
-            "is_test" => $this->istest,
+            "id_owner" => $this->idOwner,
+            "id_promotion" => $this->idPromotion,
+            "remote_ip" => $this->remoteIp,
+            "date_subscription" => $this->dateSubscription,
+            "is_test" => $this->isTestMode,
         ];
     }
 
@@ -93,28 +90,28 @@ final class PromotionCapUserSubscribedEvent extends AbsEvent
         return $this->email;
     }
 
-    public function id_owner(): int
+    public function idOwner(): int
     {
-        return $this->idowner;
+        return $this->idOwner;
     }
 
-    public function id_promotion(): int
+    public function idPromotion(): int
     {
-        return $this->idpromotion;
+        return $this->idPromotion;
     }
 
-    public function remote_ip(): string
+    public function remoteIp(): string
     {
-        return $this->remoteip;
+        return $this->remoteIp;
     }
 
-    public function date_subscription(): string
+    public function dateSubscription(): string
     {
-        return $this->datesubscription;
+        return $this->dateSubscription;
     }
 
-    public function is_test(): int
+    public function isTestMode(): int
     {
-        return $this->istest;
+        return $this->isTestMode;
     }
 }

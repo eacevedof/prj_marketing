@@ -7,34 +7,35 @@
  * @date 01-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Traits;
 
 use App\Shared\Infrastructure\Components\Kafka\ProducerComponent;
 
 trait KafkaLogTrait
 {
-    protected function log($mxVar,$sTitle=NULL)
+    protected function log(mixed $mxVar, ?string $title = null): void
     {
-        $oLog = new ProducerComponent();
-        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_SQL);
-    }
-    
-    protected function logd($mxVar,$sTitle=NULL)
-    {
-        $oLog = new ProducerComponent();
-        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_DEBUG);
+        $oLog = new ProducerComponent;
+        $oLog->save($mxVar, $title, ProducerComponent::TYPE_SQL);
     }
 
-    protected function logerr($mxVar,$sTitle=NULL)
+    protected function logd(mixed $mxVar, ?string $title = null): void
     {
-        $oLog = new ProducerComponent();
-        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_ERROR);
+        $oLog = new ProducerComponent;
+        $oLog->save($mxVar, $title, ProducerComponent::TYPE_DEBUG);
     }
 
-    protected function logkafka($mxVar,$sTitle=NULL)
+    protected function logerr(mixed $mxVar, ?string $title = null): void
     {
-        $oLog = new ProducerComponent();
-        $oLog->save($mxVar, $sTitle, ProducerComponent::TYPE_KAFKA);
+        $oLog = new ProducerComponent;
+        $oLog->save($mxVar, $title, ProducerComponent::TYPE_ERROR);
+    }
+
+    protected function logkafka(mixed $mxVar, ?string $title = null): void
+    {
+        $oLog = new ProducerComponent;
+        $oLog->save($mxVar, $title, ProducerComponent::TYPE_KAFKA);
     }
 
 }//KafkaLogTrait

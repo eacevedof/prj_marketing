@@ -13,7 +13,7 @@ export const PATTERNS = {
   DATE: /^\d{4}[./-]\d{2}[./-]\d{2}$/,
   ADDRESS: /^[a-zA-ZÑñáéíóú]+[a-zA-ZÑñáéíóú0-9\s,\.'\-]{3,}[a-zA-Z0-9\.]$/,
   ZERO_ONE: /^[0,1]{1}$/,
-  GENDER: /^[1,2,3]{1}$/,
+  GENDER: /^[0,1,2]{1}$/,
   INTEGER: /^[\d]{1,}$/
 }
 

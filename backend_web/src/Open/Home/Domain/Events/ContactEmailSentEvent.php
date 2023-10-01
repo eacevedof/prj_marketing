@@ -1,54 +1,51 @@
 <?php
+
 namespace App\Open\Home\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class ContactEmailSentEvent extends AbsEvent
+final class ContactEmailSentEvent extends AbstractEvent
 {
-    private string $emailuuid;
+    private string $emailUuid;
     private string $email;
     private string $name;
     private string $subject;
     private string $message;
 
     public function __construct(
-        int $idemail,
+        int     $idEmail,
+        string  $emailUuid,
+        string  $email,
+        string  $name,
+        string  $subject,
+        string  $message,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($idEmail, $eventId, $occurredOn, $correlationId, $causationId);
 
-        string $emailuuid,
-        string $email,
-        string $name,
-        string $subject,
-        string $message,
-
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($idemail, $eventid, $occuredon, $correlationid, $causationid);
-        
-        $this->emailuuid = $emailuuid;
+        $this->emailUuid = $emailUuid;
         $this->email = $email;
         $this->name = $name;
         $this->subject = $subject;
         $this->message = $message;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "contactemail.sent";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["emailuuid"],
@@ -56,18 +53,17 @@ final class ContactEmailSentEvent extends AbsEvent
             $body["name"],
             $body["subject"],
             $body["message"],
-
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
-            "emailuuid" => $this->emailuuid,
+            "emailuuid" => $this->emailUuid,
             "email" => $this->email,
             "name" => $this->name,
             "subject" => $this->subject,
@@ -75,16 +71,16 @@ final class ContactEmailSentEvent extends AbsEvent
         ];
     }
 
-    public function subscription_uuid(): string
+    public function emailUuid(): string
     {
-        return $this->emailuuid;
+        return $this->emailUuid;
     }
 
     public function email(): string
     {
         return $this->email;
     }
-    
+
     public function name(): string
     {
         return $this->name;

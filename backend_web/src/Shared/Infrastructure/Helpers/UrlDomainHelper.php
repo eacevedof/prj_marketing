@@ -1,34 +1,37 @@
 <?php
+
 namespace App\Shared\Infrastructure\Helpers;
 
 final class UrlDomainHelper extends AppHelper implements IHelper
 {
-    private string $env;
-    private string $domain;
+    private string $appEnv;
+    private string $appDomain;
 
     public function __construct()
     {
-        $this->env = getenv("APP_ENV");
-        $this->domain = getenv("APP_DOMAIN");
+        $this->appEnv = getenv("APP_ENV");
+        $this->appDomain = getenv("APP_DOMAIN");
     }
 
-    public static function get_instance(): self
+    public static function getInstance(): self
     {
-        return new self();
+        return new self;
     }
 
-    private function _get_full_url(): string
+    private function _getDomainFullUrlByAppEnv(): string
     {
-        return match ($this->env) {
-            "local" => "http://$this->domain",
-            default => "https://$this->domain",
+        return match ($this->appEnv) {
+            "local" => "http://$this->appDomain",
+            default => "https://$this->appDomain",
         };
     }
 
-    public function get_full_url(?string $append=null): string
+    public function getDomainUrlWithAppend(?string $append = null): string
     {
-        $url = $this->_get_full_url();
-        if (is_null($append)) return $url;
+        $url = $this->_getDomainFullUrlByAppEnv();
+        if (is_null($append)) {
+            return $url;
+        }
         return str_starts_with($append, "/") ? "$url$append" : "$url/$append";
     }
 }

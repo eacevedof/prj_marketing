@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Restrict\BusinessAttributes\Domain;
 
 use App\Shared\Domain\Repositories\AppRepository;
@@ -10,7 +11,7 @@ final class BusinessAttributeRepository extends AppRepository
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_business_attribute";
         $this->joins = [
             "fields" => [
@@ -24,9 +25,9 @@ final class BusinessAttributeRepository extends AppRepository
         ];
     }
 
-    public function get_spacepage_by_iduser(int $iduser): array
+    public function getSpacePageByIdUser(int $idUser): array
     {
-        $sql = $this->_get_qbuilder()
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("business_attribute.get_spacepage_by_iduser(iduser)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -37,18 +38,18 @@ final class BusinessAttributeRepository extends AppRepository
             ])
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.attr_key LIKE '%space_%'")
-            ->add_and("m.id_user=$iduser")
+            ->add_and("m.id_user=$idUser")
             ->select()->sql()
         ;
-        $result = $this->db->query($sql);
-        $this->map_to_int($result, ["id", "id_user"]);
+        $result = $this->componentMysql->query($sql);
+        $this->mapFieldsToInt($result, ["id", "id_user"]);
         return $result;
     }
 
-    public function get_spacepage_by_businessslug(string $businesslug): array
+    public function getSpacePageByBusinessSlug(string $businessSlug): array
     {
-        $businesslug = $this->_get_sanitized($businesslug);
-        $sql = $this->_get_qbuilder()
+        $businessSlug = $this->_getSanitizedString($businessSlug);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("business_attribute.get_spacepage_by_businessslug(businesslug)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -61,13 +62,12 @@ final class BusinessAttributeRepository extends AppRepository
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.attr_key LIKE '%space_%'")
             ->add_and("bd.delete_date IS NULL")
-            ->add_and("bd.slug='$businesslug'")
+            ->add_and("bd.slug='$businessSlug'")
             ->select()->sql()
         ;
-        $result = $this->db->query($sql);
-        $this->map_to_int($result, ["id", "id_user"]);
+        $result = $this->componentMysql->query($sql);
+        $this->mapFieldsToInt($result, ["id", "id_user"]);
         return $result;
     }
 
 }
-

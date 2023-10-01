@@ -1,118 +1,149 @@
 <?php
+
 namespace App\Restrict\Queries\Application;
 
-use App\Restrict\Queries\Domain\Events\QueryActionWasCreatedEvent;
+use App\Shared\Domain\Enums\ExceptionType;
+use App\Shared\Infrastructure\Bus\EventBus;
+use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Queries\Domain\QueryRepository;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
-use App\Shared\Infrastructure\Bus\EventBus;
-use App\Shared\Infrastructure\Components\Export\CsvComponent;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Domain\Enums\ExceptionType;
+use App\Shared\Infrastructure\Components\Export\CsvComponent;
+use App\Restrict\Queries\Domain\Events\QueryActionWasCreatedEvent;
+use App\Shared\Infrastructure\Factories\{ComponentFactory as CF, RepositoryFactory as RF, ServiceFactory as SF};
 
 final class QueryExportService extends AppService implements IEventDispatcher
 {
     private const LIMIT_PARAMS = 19999;
     private const LIMIT_DOWNLOAD = 1000;
-    private string $requuid;
+    private string $reqUuid;
     private array $columns;
     private string $filename;
 
-    private ?object $auth;
+    private ?AuthService $authService;
 
     public function __construct(array $input)
     {
-        $this->_load_input($input);
+        $this->_loadInput($input);
     }
 
-    private function _load_input(array $input): void
+    private function _loadInput(array $input): void
     {
-        if (!$input) $this->_exception(__("Empty request"), ExceptionType::CODE_BAD_REQUEST);
+        if (!$input) {
+            $this->_throwException(__("Empty request"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        $this->requuid = trim($input["req_uuid"] ?? "");
-        if (!$this->requuid) $this->_exception(__("No request id received"), ExceptionType::CODE_BAD_REQUEST);
+        $this->reqUuid = trim($input["req_uuid"] ?? "");
+        if (!$this->reqUuid) {
+            $this->_throwException(__("No request id received"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
         $this->columns = $input["columns"] ?? [];
-        if (!$this->columns) $this->_exception(__("No request columns received"), ExceptionType::CODE_BAD_REQUEST);
+        if (!$this->columns) {
+            $this->_throwException(__("No request columns received"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        if (strlen(json_encode($this->columns))> self::LIMIT_PARAMS)
-            $this->_exception(__("Request payload is too big"), ExceptionType::CODE_BAD_REQUEST);
+        if (strlen($this->getJson($this->columns)) > self::LIMIT_PARAMS) {
+            $this->_throwException(__("Request payload is too big"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
         $this->filename = $input["filename"] ?? "export";
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) {
+            return;
+        }
 
-        if(!(
-            SF::get_auth()->is_user_allowed(UserPolicyType::PROMOTIONS_READ)
-            || SF::get_auth()->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)
-        ))
-            $this->_exception(
+        if (!(
+            SF::getAuthService()->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_READ)
+            || SF::getAuthService()->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_WRITE)
+        )) {
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+        }
     }
 
-    private function _transform_by_columns(array &$data): void
+    private function _applyOnlyAllowedColumns(array &$data): void
     {
-        foreach($this->columns as $column => $label)
+        foreach($this->columns as $column => $label) {
             $this->columns[$column] = html_entity_decode($label);
-        
-        $colums = array_keys($this->columns);
+        }
+
+        $columns = array_keys($this->columns);
         $transformed = [];
         foreach ($data as $row) {
-            $tmprow = [];
+            $tmpRow = [];
             foreach ($row as $column => $value) {
-                if (!in_array($column, $colums)) continue;
-                $tmprow[$this->columns[$column]] = $value;
+                if (!in_array($column, $columns)) {
+                    continue;
+                }
+                $tmpRow[$this->columns[$column]] = $value;
             }
-            if (!$tmprow) continue;
-            $transformed[] = $tmprow;
+            if (!$tmpRow) {
+                continue;
+            }
+            $transformed[] = $tmpRow;
         }
         $data = $transformed;
     }
 
-    private function _dispatch(array $payload): void
+    private function _dispatchEvents(array $payload): void
     {
         EventBus::instance()->publish(...[
-            QueryActionWasCreatedEvent::from_primitives(
+            QueryActionWasCreatedEvent::fromPrimitives(
                 -1,
                 [
-                    "id_query"=>$payload["id"],
-                    "description"=>"excel-export",
-                    "params"=> json_encode($this->columns),
+                    "id_query" => $payload["id"],
+                    "description" => "excel-export",
+                    "params" => $this->getJson($this->columns),
                 ]
             )
         ]);
     }
 
+    private function getJson(mixed $var): string
+    {
+        return json_encode($var, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
     public function __invoke(): void
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
-        $iduser = $this->auth->get_user()["id"] ?? -1;
-        if (!$query = RF::get(QueryRepository::class)->get_by_uuid_and_iduser($this->requuid, $iduser, ["id","query", "total"]))
-            $this->_exception(
-                __("Request id {0} not found!", $this->requuid),
+        $this->authService = SF::getAuthService();
+
+        $this->_checkPermissionOrFail();
+        $idUser = $this->authService->getAuthUserArray()["id"] ?? -1;
+        $query = RF::getInstanceOf(QueryRepository::class)
+                    ->getQueryByUuidAndIdUser(
+                        $this->reqUuid,
+                        $idUser,
+                        ["id","query", "total"]
+                    );
+        if (!$query) {
+            $this->_throwException(
+                __("Request id {0} not found!", $this->reqUuid),
                 ExceptionType::CODE_NOT_FOUND
             );
-        if (($total = (int)$query["total"])>self::LIMIT_DOWNLOAD)
-            $this->_exception(
+        }
+        if (($total = (int) $query["total"]) > self::LIMIT_DOWNLOAD) {
+            $this->_throwException(
                 __("The amount of rows {0} exceed the limit {1}", $total, self::LIMIT_DOWNLOAD),
                 ExceptionType::CODE_EXPECTATION_FAILED
             );
+        }
 
         $sql = $query["query"];
         $sql = explode(" LIMIT ", $sql)[0];
-        $result = RF::get(QueryRepository::class)->query($sql);
-        $this->_transform_by_columns($result);
+        $result = RF::getInstanceOf(QueryRepository::class)->query($sql);
+        $this->_applyOnlyAllowedColumns($result);
         $now = date("Y-m-d_H-i-s");
-        $this->_dispatch($query);
-        CF::get(CsvComponent::class)->download_as_excel("{$this->filename}-$now.xls", $result);
+        $this->_dispatchEvents($query);
+
+        CF::getInstanceOf(CsvComponent::class)
+            ->downloadResponseAsExcel("{$this->filename}-$now.xls", $result);
     }
 }

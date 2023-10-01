@@ -1,225 +1,270 @@
 <?php
+
 namespace App\Restrict\Users\Application;
 
+use App\Shared\Domain\Enums\ExceptionType;
+use App\Checker\Application\CheckerService;
+use App\Restrict\Users\Domain\UserRepository;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Domain\Entities\FieldsValidator;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Checker\Application\CheckerService;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Infrastructure\Components\Formatter\TextComponent;
-use App\Restrict\Users\Domain\UserRepository;
-use App\Restrict\BusinessData\Domain\BusinessDataEntity;
-use App\Restrict\BusinessData\Domain\BusinessDataRepository;
-use App\Shared\Domain\Entities\FieldsValidator;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Domain\Enums\ExceptionType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
+use App\Shared\Infrastructure\Components\Formatter\TextComponent;
+use App\Shared\Infrastructure\Factories\Specific\ValidatorFactory as VF;
+use App\Restrict\BusinessData\Domain\{BusinessDataEntity, BusinessDataRepository};
+use App\Shared\Infrastructure\Factories\{ComponentFactory as CF, EntityFactory as MF, RepositoryFactory as RF, ServiceFactory as SF};
 
 final class UserBusinessDataSaveService extends AppService
 {
     use RequestTrait;
 
-    private AuthService $auth;
-    private array $authuser;
+    private AuthService $authService;
+    private array $authUserArray;
 
-    private UserRepository $repouser;
-    private BusinessDataRepository $repobusinessdata;
-    private FieldsValidator $validator;
-    private BusinessDataEntity $entitybusinessdata;
-    private int $bdiduser;
+    private UserRepository $userRepository;
+    private BusinessDataRepository $businessDataRepository;
+    private FieldsValidator $fieldsValidator;
+    private BusinessDataEntity $businessDataEntity;
+    private int $idUserOfBusinessData;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
         $this->input = $input;
-        if (!$useruuid = $this->input["_useruuid"])
-            $this->_exception(__("No {0} code provided", __("user")),ExceptionType::CODE_BAD_REQUEST);
+        if (!$useruuid = $this->input["_useruuid"]) {
+            $this->_throwException(__("No {0} code provided", __("user")), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        $this->repouser = RF::get(UserRepository::class);
-        if (!$this->bdiduser = $this->repouser->get_id_by_uuid($useruuid))
-            $this->_exception(__("{0} with code {1} not found", __("User"), $useruuid));
+        $this->userRepository = RF::getInstanceOf(UserRepository::class);
+        if (!$this->idUserOfBusinessData = $this->userRepository->getEntityIdByEntityUuid($useruuid)) {
+            $this->_throwException(__("{0} with code {1} not found", __("User"), $useruuid));
+        }
 
-        $this->entitybusinessdata = MF::get(BusinessDataEntity::class);
-        $this->repobusinessdata = RF::get(BusinessDataRepository::class)->set_model($this->entitybusinessdata);
-        $this->authuser = $this->auth->get_user();
+        $this->businessDataEntity = MF::getInstanceOf(BusinessDataEntity::class);
+        $this->businessDataRepository = RF::getInstanceOf(BusinessDataRepository::class)->setAppEntity($this->businessDataEntity);
+        $this->authUserArray = $this->authService->getAuthUserArray();
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) {
+            return;
+        }
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE))
-            $this->_exception(
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::BUSINESSDATA_WRITE)) {
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+        }
     }
 
-    private function _check_entity_permission(): void
+    private function _checkEntityPermissionOrFail(): void
     {
         //si es super puede interactuar con la entidad
-        if ($this->auth->is_system()) return;
+        if ($this->authService->hasAuthUserSystemProfile()) {
+            return;
+        }
 
         //si el us en sesion quiere cambiar su bd
-        $idauthuser = (int) $this->authuser["id"];
-        if ($idauthuser === $this->bdiduser)
+        $idAuthUser = (int) $this->authUserArray["id"];
+        if ($idAuthUser === $this->idUserOfBusinessData) {
             return;
+        }
 
         //si el propietario del us de sesion coincide con el de la entidad
-        if ($this->auth->get_idowner() === $this->bdiduser)
+        if ($this->authService->getIdOwner() === $this->idUserOfBusinessData) {
             return;
+        }
 
-        $this->_exception(
-            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        $this->_throwException(
+            __("You are not allowed to perform this operation"),
+            ExceptionType::CODE_FORBIDDEN
         );
     }
 
-    private function _skip_validation_insert(): self
+    private function _skipValidationFields(): self
     {
-        $this->validator
-            ->add_skip("id")
-            ->add_skip("uuid")
-            ->add_skip("id_user")
-            ->add_skip("slug")
+        $this->fieldsValidator
+            ->addSkipableField("id")
+            ->addSkipableField("uuid")
+            ->addSkipableField("id_user")
+            ->addSkipableField("slug")
         ;
         return $this;
     }
 
-    private function _add_rules(): FieldsValidator
+    private function _addRulesToFieldsValidator(): FieldsValidator
     {
-        $this->validator
-            ->add_rule("id", "id", function ($data) {
-                if ($data["data"]["_new"]) return false;
+        $this->fieldsValidator
+            ->addRule("id", "id", function ($data) {
+                if ($data["data"]["_new"]) {
+                    return false;
+                }
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("uuid", "uuid", function ($data) {
-                if ($data["data"]["_new"]) return false;
+            ->addRule("uuid", "uuid", function ($data) {
+                if ($data["data"]["_new"]) {
+                    return false;
+                }
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("id_user", "id_user", function ($data) {
-                if ($data["data"]["_new"]) return false;
+            ->addRule("id_user", "id_user", function ($data) {
+                if ($data["data"]["_new"]) {
+                    return false;
+                }
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("id_tz", "id_tz", function ($data) {
+            ->addRule("id_tz", "id_tz", function ($data) {
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("business_name", "business_name", function ($data) {
-                if (!$data["data"]["_new"]) return false;
+            ->addRule("business_name", "business_name", function ($data) {
+                if (!$data["data"]["_new"]) {
+                    return false;
+                }
                 return $data["value"] ? false : __("Empty field is not allowed");
             })
-            ->add_rule("user_logo_1", "user_logo_1", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("user_logo_1", "user_logo_1", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("user_logo_2", "user_logo_2", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("user_logo_2", "user_logo_2", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("user_logo_3", "user_logo_3", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("user_logo_3", "user_logo_3", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
 
-            ->add_rule("url_favicon", "url_favicon", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("url_favicon", "url_favicon", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
 
-            ->add_rule("head_bgcolor", "head_bgcolor", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
+            ->addRule("head_bgcolor", "head_bgcolor", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidColor($value) ? __("Invalid hex color") : false;
             })
-            ->add_rule("head_color", "head_color", function ($data) {
-                if (!$value = $data["value"]) return false;
-
-                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
+            ->addRule("head_color", "head_color", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidColor($value) ? __("Invalid hex color") : false;
             })
-            ->add_rule("head_bgimage", "head_bgimage", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("head_bgimage", "head_bgimage", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("body_bgcolor", "body_bgcolor", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
+            ->addRule("body_bgcolor", "body_bgcolor", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidColor($value) ? __("Invalid hex color") : false;
             })
-            ->add_rule("body_color", "body_color", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_color($value) ? __("Invalid hex color"): false;
+            ->addRule("body_color", "body_color", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidColor($value) ? __("Invalid hex color") : false;
             })
-            ->add_rule("body_bgimage", "body_bgimage", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("body_bgimage", "body_bgimage", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("url_business", "url_business", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("url_business", "url_business", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("url_social_fb", "url_social_fb", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("url_social_fb", "url_social_fb", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("url_social_ig", "url_social_ig", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("url_social_ig", "url_social_ig", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("url_social_twitter", "url_social_twitter", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("url_social_twitter", "url_social_twitter", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
-            ->add_rule("url_social_tiktok", "url_social_tiktok", function ($data) {
-                if (!$value = $data["value"]) return false;
-                return !CheckerService::is_valid_url($value) ? __("Invalid url value") : false;
+            ->addRule("url_social_tiktok", "url_social_tiktok", function ($data) {
+                if (!$value = $data["value"]) {
+                    return false;
+                }
+                return !CheckerService::isValidUrl($value) ? __("Invalid url value") : false;
             })
         ;
 
-        return $this->validator;
+        return $this->fieldsValidator;
     }
 
-    private function _update(array $update, array $businessdata): array
+    private function _update(array $businessDataToUpdate, array $dbBusinessData): array
     {
-        unset($update["business_name"]);
-        if ($businessdata["id"] !== $update["id"])
-            $this->_exception(
-                __("This {0} does not belong to user {1}", __("Business data") ,$this->input["_useruuid"]),
+        unset($businessDataToUpdate["business_name"]);
+        if ($dbBusinessData["id"] !== $businessDataToUpdate["id"]) {
+            $this->_throwException(
+                __("This {0} does not belong to user {1}", __("Business data"), $this->input["_useruuid"]),
                 ExceptionType::CODE_BAD_REQUEST
             );
+        }
 
         //no se hace skip pq se tiene que cumplir todo
-        if ($errors = $this->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
+        if ($errors = $this->_addRulesToFieldsValidator()->getErrors()) {
+            $this->_setErrors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entitybusinessdata->map_request($update);
-        $this->_check_entity_permission();
-        $this->entitybusinessdata->add_sysupdate($update, $this->authuser["id"]);
-        $this->repobusinessdata->update($update);
+        $businessDataToUpdate = $this->businessDataEntity->getAllKeyValueFromRequest($businessDataToUpdate);
+        $this->_checkEntityPermissionOrFail();
+        $this->businessDataEntity->addSysUpdate($businessDataToUpdate, $this->authUserArray["id"]);
+        $this->businessDataRepository->update($businessDataToUpdate);
         return [
-            "id" => $businessdata["id"],
-            "uuid" => $update["uuid"]
+            "id" => $dbBusinessData["id"],
+            "uuid" => $businessDataToUpdate["uuid"]
         ];
     }
 
     private function _insert(array $update): array
     {
         $update["_new"] = true;
-        $this->validator = VF::get($update, $this->entitybusinessdata);
-        if ($errors = $this->_skip_validation_insert()->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
+        $this->fieldsValidator = VF::getFieldValidator($update, $this->businessDataEntity);
+        if ($errors = $this->_skipValidationFields()->_addRulesToFieldsValidator()->getErrors()) {
+            $this->_setErrors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
-        $update["id_user"] = $this->bdiduser;
+        $update["id_user"] = $this->idUserOfBusinessData;
         $update["uuid"] = uniqid();
-        $update["slug"] = CF::get(TextComponent::class)->slug($update["business_name"])."-$this->bdiduser";
-        $update = $this->entitybusinessdata->map_request($update);
-        $this->entitybusinessdata->add_sysinsert($update, $this->authuser["id"]);
-        $id = $this->repobusinessdata->insert($update);
+        $update["slug"] = CF::getInstanceOf(TextComponent::class)->getSlug($update["business_name"])."-$this->idUserOfBusinessData";
+        $update = $this->businessDataEntity->getAllKeyValueFromRequest($update);
+        $this->businessDataEntity->addSysInsert($update, $this->authUserArray["id"]);
+        $id = $this->businessDataRepository->insert($update);
         return [
             "id" => $id,
             "uuid" => $update["uuid"],
@@ -230,16 +275,17 @@ final class UserBusinessDataSaveService extends AppService
     public function __invoke(): array
     {
         unset($this->input["slug"]);
-        if (!$update = $this->_get_req_without_ops($this->input))
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$businessDataToUpdate = $this->_getRequestWithoutOperations($this->input)) {
+            $this->_throwException(__("Empty data"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        $this->_check_entity_permission();
+        $this->_checkEntityPermissionOrFail();
 
-        $update["_new"] = false;
-        $this->validator = VF::get($update, $this->entitybusinessdata);
+        $businessDataToUpdate["_new"] = false;
+        $this->fieldsValidator = VF::getFieldValidator($businessDataToUpdate, $this->businessDataEntity);
 
-        return ($businessdata = $this->repobusinessdata->get_by_user($this->bdiduser))
-            ? $this->_update($update, $businessdata)
-            : $this->_insert($update);
+        return ($dbBusinessData = $this->businessDataRepository->getBusinessDataByIdUser($this->idUserOfBusinessData))
+            ? $this->_update($businessDataToUpdate, $dbBusinessData)
+            : $this->_insert($businessDataToUpdate);
     }
 }

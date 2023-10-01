@@ -1,17 +1,10 @@
 <?php
-/**
- * @author Eduardo Acevedo Farje.
- * @link eduardoaf.com
- * @name TheFramework\Components\Db\Context\ComponentContext 
- * @file component_context.php v3.1.0
- * @date 24-07-2020 20:37 SPAIN
- * @observations
- */
+
 namespace TheFramework\Components\Db\Context;
 
-use \Exception;
+use Exception;
 
-class ComponentContext
+final class ComponentContext
 {
     private $isError;
     private $arErrors;
@@ -22,120 +15,162 @@ class ComponentContext
     private $idSelected;
     private $arSelected;
 
-    public function __construct($sPathfile="", $idSelected="")
+    public function __construct(string $sPathfile = "", string $idSelected = "")
     {
         $this->idSelected = $idSelected;
         $this->arContexts = [];
-        if(!$sPathfile) $sPathfile = $_ENV["APP_CONTEXTS"] ?? __DIR__.DIRECTORY_SEPARATOR."contexts.json";
-        if(!is_file($sPathfile))
-        {
-            $this->add_error("No context file found: $sPathfile");
-            return -1;
+
+        if (!$sPathfile) {
+            $sPathfile = $_ENV["APP_CONTEXTS"] ?? __DIR__.DIRECTORY_SEPARATOR."contexts.json";
         }
-        $this->_load_array_fromjson($sPathfile);
-        $this->_load_context_noconf();
-        $this->_load_selected();
+
+        if (!is_file($sPathfile)) {
+            $this->addError("No context file found: $sPathfile");
+            return;
+        }
+        $this->_loadArrayFromJson($sPathfile);
+        $this->_loadPublicContexts();
+        $this->_loadSelectedContext();
     }
 
-    private function _load_array_fromjson(string $sPathfile): void
+    private function _loadArrayFromJson(string $sPathfile): void
     {
-        if($sPathfile)
-            if(is_file($sPathfile))
-            {
+        if ($sPathfile) {
+            if (is_file($sPathfile)) {
                 $sJson = file_get_contents($sPathfile);
-                $this->arContexts = json_decode($sJson,1);
-                if (is_null($this->arContexts))
+                $this->arContexts = json_decode($sJson, 1, JSON_UNESCAPED_UNICODE);
+                if (is_null($this->arContexts)) {
                     throw new Exception("Contexts not loaded");
-
+                }
+            } else {
+                $this->addError("_load_array_fromjson: file $sPathfile not found");
             }
-            else
-                $this->add_error("_load_array_fromjson: file $sPathfile not found");
-        else
-            $this->add_error("_load_array_fromjson: no pathfile passed");
+        } else {
+            $this->addError("_load_array_fromjson: no pathfile passed");
+        }
     }
 
     /**
      * carga la información que no es sensible, por eso se elimina schemas
      */
-    private function _load_context_noconf()
+    private function _loadPublicContexts(): void
     {
-        foreach($this->arContexts as $arContext)
-        {
+        foreach($this->arContexts as $arContext) {
             unset($arContext["schemas"],$arContext["server"],$arContext["port"]);
             $this->arContextPublic[] = $arContext;
         }
     }
 
-    private function _load_selected()
+    private function _loadSelectedContext(): void
     {
-//pr($this->idSelected);
+        //pr($this->idSelected);
         //si no se pasa id se asume que no se ha seleccionado un contexto
-        $this->arSelected["ctx"] = $this->get_by_id($this->idSelected);
-//pr($this->arSelected,"arselected");die;
-        if($this->arSelected["ctx"])
+        $this->arSelected["ctx"] = $this->getContextById($this->idSelected);
+        //pr($this->arSelected,"arselected");die;
+        if ($this->arSelected["ctx"]) {
             $this->arSelected["ctx"] = $this->arSelected["ctx"][array_keys($this->arSelected["ctx"])[0]];
+        }
 
-        $this->arSelected["pubconfig"] = $this->get_pubconfig_by("id",$this->idSelected);
+        $this->arSelected["pubconfig"] = $this->getPublicConfigByKV("id", $this->idSelected);
         //pr($this->arSelected,"arSelected");
     }
 
-    private function _get_filter_level_1($sKey, $sValue, $arArray=[])
-    {
-        if(!$sKey && !$sValue) return [];
-        if(!$arArray) $arArray = $this->arContexts;
-        //pr("key:v -> $sKey, $sValue");
-        //print_r($arArray);die;
-        $arFiltered = array_filter($arArray, function($arConfig) use($sKey,$sValue) {
+    private function _getContextInLevel1By(
+        string $sKey,
+        string $sValue,
+        array $arArray = []
+    ): array {
+        if (!$sKey && !$sValue) {
+            return [];
+        }
+        if (!$arArray) {
+            $arArray = $this->arContexts;
+        }
+
+        $arFiltered = array_filter($arArray, function ($arConfig) use ($sKey, $sValue) {
             $confval = $arConfig[$sKey] ?? "";
             return $confval === $sValue;
         });
         return $arFiltered;
     }
 
-    public function get_config(){ return $this->arContexts;}
-
-    public function get_by_id($id){ return $this->_get_filter_level_1("id",$id); }
-
-    public function get_by($key,$val){ return $this->_get_filter_level_1($key,$val); }
-
-    public function get_config_by($key,$val)
+    public function getContexts(): array
     {
-        $arConfig = $this->_get_filter_level_1($key,$val);
+        return $this->arContexts;
+    }
 
-        if($arConfig) {
+    public function getContextById(string $id): array
+    {
+        return $this->_getContextInLevel1By("id", $id);
+    }
+
+    public function getContextByKV(string $key, string $val): array
+    {
+        return $this->_getContextInLevel1By($key, $val);
+    }
+
+    public function getSchemasByKV(string $key, string $val): array
+    {
+        $arConfig = $this->_getContextInLevel1By($key, $val);
+        if ($arConfig) {
             $arConfig = $arConfig[array_keys($arConfig)[0]];
             return $arConfig["schemas"];
         }
         return [];
     }
 
-    public function get_selected(){return $this->arSelected;}
-    public function get_selected_id(): string {return $this->arSelected["ctx"]["id"] ?? "";}
-
-    public function get_schemas(): array {return $this->arSelected["ctx"]["schemas"] ?? [];}
-
-    public function get_pubconfig_by($key,$val)
+    public function getSelected(): array
     {
-        $arConfig = $this->_get_filter_level_1($key,$val,$this->arContextPublic);
-        if($arConfig)
+        return $this->arSelected;
+    }
+    public function getSelectedId(): string
+    {
+        return $this->arSelected["ctx"]["id"] ?? "";
+    }
+
+    public function getSelectedSchemas(): array
+    {
+        return $this->arSelected["ctx"]["schemas"] ?? [];
+    }
+
+    public function getPublicConfigByKV(string $key, string $val): array
+    {
+        $arConfig = $this->_getContextInLevel1By($key, $val, $this->arContextPublic);
+        if ($arConfig) {
             return $arConfig[array_keys($arConfig)[0]];
+        }
         return [];
     }
 
-    public function get_pubconfig(){return $this->arContextPublic;}
-    public function get_errors(){return isset($this->arErrors)?$this->arErrors:[];}
-    public function is_error(){return $this->isError;}
-    public function get_dbname($alias){
-        $schemas = $this->get_schemas();
-        foreach ($schemas as $schema){
+    public function getPublicConfig(): array
+    {
+        return $this->arContextPublic;
+    }
+    public function getErrors(): array
+    {
+        return isset($this->arErrors) ? $this->arErrors : [];
+    }
+    public function isError(): bool
+    {
+        return $this->isError;
+    }
+    public function getDbNameByAlias(string $alias): string
+    {
+        $schemas = $this->getSelectedSchemas();
+        foreach ($schemas as $schema) {
             $schalias = $schema["alias"] ?? "";
-            if($schalias === $alias)
+            if ($schalias === $alias) {
                 return $schema["database"] ?? "";
+            }
         }
         return "";
     }
 
-    private function add_error($sMessage){$this->isError = true; $this->arErrors[] = $sMessage;}
+    private function _addError(string $message): void
+    {
+        $this->isError = true;
+        $this->arErrors[] = $message;
+    }
 
 }//ComponentContext
 

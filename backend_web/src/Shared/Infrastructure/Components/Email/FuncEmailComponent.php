@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Shared\Infrastructure\Components\Email;
 
 final class FuncEmailComponent extends AbsEmail
@@ -8,8 +9,9 @@ final class FuncEmailComponent extends AbsEmail
 
     private function _boundary()
     {
-        if($this->attachments)
+        if ($this->attachments) {
             $this->boundary = md5(uniqid());
+        }
         return $this;
     }
 
@@ -21,8 +23,7 @@ final class FuncEmailComponent extends AbsEmail
             "Content-Transfer-Encoding: 8bit",
         ];
 
-        if($this->boundary)
-        {
+        if ($this->boundary) {
             $headers = [
                 "MIME-Version: 1.0",
                 "Content-Type: multipart/mixed; boundary=\"$this->boundary\"",
@@ -44,15 +45,17 @@ final class FuncEmailComponent extends AbsEmail
 
     private function _header_cc()
     {
-        if($this->emails_cc)
-            $this->headers[] = "cc: ".implode(", ",$this->emails_cc);
+        if ($this->emails_cc) {
+            $this->headers[] = "cc: ".implode(", ", $this->emails_cc);
+        }
         return $this;
     }
 
     private function _header_bcc()
     {
-        if($this->emails_bcc)
-            $this->headers[] = "bcc: ".implode(", ",$this->emails_bcc);
+        if ($this->emails_bcc) {
+            $this->headers[] = "bcc: ".implode(", ", $this->emails_bcc);
+        }
         return $this;
     }
 
@@ -64,7 +67,9 @@ final class FuncEmailComponent extends AbsEmail
 
     private function _get_multipart()
     {
-        if(!$this->boundary) return "";
+        if (!$this->boundary) {
+            return "";
+        }
         $content[] = "--$this->boundary";
         $content[] = "Content-Type: text/html; charset=UTF-8";
         $content[] = "Content-Transfer-Encoding: 8bit";
@@ -75,13 +80,17 @@ final class FuncEmailComponent extends AbsEmail
     {
         //https://stackoverflow.com/questions/12301358/send-attachments-with-php-mail
         $pathfile = $arattach["path"];
-        if(!is_file($pathfile)) return "";
+        if (!is_file($pathfile)) {
+            return "";
+        }
 
         $mime = $arattach["mime"] ?? "application/octet-stream";
         $alias = $arattach["filename"] ?? basename($pathfile);
 
         $content = file_get_contents($pathfile);
-        if(!$content) return "";
+        if (!$content) {
+            return "";
+        }
 
         $content = chunk_split(base64_encode($content));
         $separator = $this->boundary;
@@ -100,9 +109,8 @@ final class FuncEmailComponent extends AbsEmail
 
     public function send()
     {
-        try
-        {
-            if($this->email_from && $this->emails_to) {
+        try {
+            if ($this->email_from && $this->emails_to) {
                 $header = $this->_boundary()
                     ->_header_from()
                     ->_header_mime()
@@ -114,34 +122,38 @@ final class FuncEmailComponent extends AbsEmail
                 $content = $this->_get_multipart().PHP_EOL;
                 $content .= $this->content.PHP_EOL;
 
-                foreach ($this->attachments as $arattach)
+                foreach ($this->attachments as $arattach) {
                     $content .= $this->_get_attachment($arattach);
+                }
 
-                $this->logpr($this->emails_to,"TO ->");
+                $this->logpr($this->emails_to, "TO ->");
                 $this->logpr($this->headers, "HEADER ->");
-                $this->logpr($content,"BODY ->");
+                $this->logpr($content, "BODY ->");
 
-                $this->emails_to = implode(", ",$this->emails_to);
+                $this->emails_to = implode(", ", $this->emails_to);
                 $r = mail($this->emails_to, $this->subject, $content, $header);
-                if(!$r) {
+                if (!$r) {
                     $this->_add_error("Error sending email!");
                     $this->_add_error(error_get_last());
                 }
-            }
-            else {
+            } else {
                 $this->_add_error("No target emails!");
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->_add_error($e->getMessage());
-        }
-        finally {
+        } finally {
             return $this;
         }
     }
 
-    public function set_title_from(string $title){$this->titlefrom = $title; return $this;}
+    public function set_title_from(string $title)
+    {
+        $this->titlefrom = $title;
+        return $this;
+    }
 
-    private function logpr(){}
+    private function logpr()
+    {
+    }
 
 }

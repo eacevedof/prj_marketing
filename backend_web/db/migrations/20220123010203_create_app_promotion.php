@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateAppPromotion extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -190,22 +191,24 @@ final class CreateAppPromotion extends AbsMigration
         ])
         ->create();
 
-        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["is_enabled"], ["name"=>"is_enabled_idx"])
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
-            ->addIndex(["id_owner"], ["name"=>"id_owner_idx"])
-            ->addIndex(["description"], ["name"=>"description_idx"])
-            ->addIndex(["slug"], ["name"=>"slug_idx"])
-            ->addIndex(["date_from"], ["name"=>"date_from_idx"])
-            ->addIndex(["date_to"], ["name"=>"date_to_idx"])
-            ->addIndex(["disabled_date"], ["name"=>"disabled_date_idx"])
-            ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
-            ->addIndex(["date_from","date_to"], ["name"=>"date_from__date_to_idx"])
+        $table->addIndex(["delete_date"], ["name" => "delete_date_idx"])
+            ->addIndex(["is_enabled"], ["name" => "is_enabled_idx"])
+            ->addIndex(["uuid"], ["name" => "uuid_idx"])
+            ->addIndex(["id_owner"], ["name" => "id_owner_idx"])
+            ->addIndex(["description"], ["name" => "description_idx"])
+            ->addIndex(["slug"], ["name" => "slug_idx"])
+            ->addIndex(["date_from"], ["name" => "date_from_idx"])
+            ->addIndex(["date_to"], ["name" => "date_to_idx"])
+            ->addIndex(["disabled_date"], ["name" => "disabled_date_idx"])
+            ->addIndex(["id","uuid"], ["name" => "id__uuid_idx"])
+            ->addIndex(["date_from","date_to"], ["name" => "date_from__date_to_idx"])
             ->update()
         ;
     }
 
-    private function _initial_load(): void { }
+    private function _initial_load(): void
+    {
+    }
 
     public function down(): void
     {

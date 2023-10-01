@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateAppBusinessAttribute extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -43,9 +44,9 @@ final class CreateAppBusinessAttribute extends AbsMigration
         ])
         ->create();
 
-        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["id_user"], ["name"=>"id_user_idx"])
-            ->addIndex(["attr_key"], ["name"=>"attr_key_idx"])
+        $table->addIndex(["delete_date"], ["name" => "delete_date_idx"])
+            ->addIndex(["id_user"], ["name" => "id_user_idx"])
+            ->addIndex(["attr_key"], ["name" => "attr_key_idx"])
             ->update()
         ;
     }
@@ -59,4 +60,3 @@ final class CreateAppBusinessAttribute extends AbsMigration
         $this->table($this->tablename)->drop()->save();
     }
 }
-

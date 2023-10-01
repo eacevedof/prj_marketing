@@ -1,117 +1,133 @@
 <?php
+
 namespace App\Restrict\Users\Application;
 
-use App\Shared\Infrastructure\Services\AppService;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\Users\Domain\UserEntity;
-use App\Restrict\Users\Domain\UserRepository;
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Restrict\Users\Domain\{UserEntity, UserRepository};
+use App\Restrict\Users\Domain\Enums\{UserPolicyType, UserProfileType};
+use App\Shared\Infrastructure\Factories\{EntityFactory as MF, RepositoryFactory as RF, ServiceFactory as SF};
 
 final class UsersDeleteService extends AppService
 {
-    private AuthService $auth;
-    private array $authuser;
+    private AuthService $authService;
+    private array $authUserArray;
     private UserRepository $repouser;
     private UserEntity $entityuser;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
         $this->input = $input;
-        if(!$this->input["uuid"])
-            $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$this->input["uuid"]) {
+            $this->_throwException(__("Empty required code"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        $this->authuser = $this->auth->get_user();
-        $this->entityuser = MF::get(UserEntity::class);
-        $this->repouser = RF::get(UserRepository::class)->set_model($this->entityuser);
+        $this->authUserArray = $this->authService->getAuthUserArray();
+        $this->entityuser = MF::getInstanceOf(UserEntity::class);
+        $this->repouser = RF::getInstanceOf(UserRepository::class)->setAppEntity($this->entityuser);
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) {
+            return;
+        }
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
-            $this->_exception(
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::USERS_WRITE)) {
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+        }
     }
 
     private function _check_entity_delete_permission(array $entity): void
     {
-        $iduser = (int)$entity["id"];
-        $idauthuser = (int)$this->authuser["id"];
+        $idUser = (int) $entity["id"];
+        $idauthuser = (int) $this->authUserArray["id"];
 
         //si el logado quiere borrarse a si mismo
-        if ($idauthuser === $iduser)
-            $this->_exception(
-                __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        if ($idauthuser === $idUser) {
+            $this->_throwException(
+                __("You are not allowed to perform this operation"),
+                ExceptionType::CODE_FORBIDDEN
             );
+        }
 
-        if ($this->auth->is_root()) return;
-
-        if ($this->auth->is_sysadmin()
-            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
-        )
+        if ($this->authService->isAuthUserRoot()) {
             return;
+        }
 
-        $identyowner = $this->repouser->get_idowner($iduser);
+        if ($this->authService->isAuthUserSysadmin()
+            && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
+        ) {
+            return;
+        }
+
+        $identyowner = $this->repouser->getIdOwnerByIdUser($idUser);
         //si el usuario logado es owner y quiere eliminar un manager que le pertenece
-        if ($this->auth->is_business_owner()
+        if ($this->authService->isAuthUserBusinessOwner()
             && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
             && $idauthuser === $identyowner
-        )
+        ) {
             return;
+        }
 
-        $this->_exception(
-            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        $this->_throwException(
+            __("You are not allowed to perform this operation"),
+            ExceptionType::CODE_FORBIDDEN
         );
     }
 
     private function _check_entity_undelete_permission(array $entity): void
     {
-        $iduser = (int) $entity["id"];
-        $idauthuser = (int) $this->authuser["id"];
-        if ($idauthuser === $iduser)
-            $this->_exception(
-                __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        $idUser = (int) $entity["id"];
+        $idauthuser = (int) $this->authUserArray["id"];
+        if ($idauthuser === $idUser) {
+            $this->_throwException(
+                __("You are not allowed to perform this operation"),
+                ExceptionType::CODE_FORBIDDEN
             );
+        }
 
-        if ($this->auth->is_root()) return;
+        if ($this->authService->isAuthUserRoot()) {
+            return;
+        }
 
-        $this->_exception(
-            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        $this->_throwException(
+            __("You are not allowed to perform this operation"),
+            ExceptionType::CODE_FORBIDDEN
         );
     }
 
     public function __invoke(): array
     {
         $entity = $this->input;
-        if (!$iduser = $this->repouser->get_id_by_uuid($entity["uuid"]))
-            $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
+        if (!$idUser = $this->repouser->getEntityIdByEntityUuid($entity["uuid"])) {
+            $this->_throwException(__("Data not found"), ExceptionType::CODE_NOT_FOUND);
+        }
 
-        $entity["id"] = $iduser;
-        if (!$this->entityuser->do_match_keys($entity))
-            $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
+        $entity["id"] = $idUser;
+        if (!$this->entityuser->areAllPksPresent($entity)) {
+            $this->_throwException(__("Not all keys provided"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        if ($this->repouser->is_deleted($iduser))
-            $this->_exception(
+        if ($this->repouser->isDeletedByEntityId($idUser)) {
+            $this->_throwException(
                 __("This item is already deleted {0}", $entity["uuid"]),
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
+        }
 
-        $entity = $this->repouser->get_by_id($iduser);
+        $entity = $this->repouser->getEntityByEntityId($idUser);
         $this->_check_entity_delete_permission($entity);
 
-        $updatedate = $this->repouser->get_sysupdate($entity);
-        $this->entityuser->add_sysdelete($entity, $updatedate, $this->authuser["id"]);
+        $updatedate = $this->repouser->getSysUpdateDateByPkFields($entity);
+        $this->entityuser->addSysDelete($entity, $updatedate, $this->authUserArray["id"]);
         $affected = $this->repouser->update($entity);
         //$this->repouser->delete($entity);
         return [
@@ -119,42 +135,45 @@ final class UsersDeleteService extends AppService
             "uuid" => $entity["uuid"]
         ];
     }
-    
+
     public function undelete(): array
     {
         $entity = $this->input;
-        if (!$iduser = $this->repouser->get_id_by_uuid($entity["uuid"]))
-            $this->_exception(__("Data not found"),ExceptionType::CODE_NOT_FOUND);
+        if (!$idUser = $this->repouser->getEntityIdByEntityUuid($entity["uuid"])) {
+            $this->_throwException(__("Data not found"), ExceptionType::CODE_NOT_FOUND);
+        }
 
-        $entity["id"] = $iduser;
-        if (!$this->entityuser->do_match_keys($entity))
-            $this->_exception(__("Not all keys provided"),ExceptionType::CODE_BAD_REQUEST);
+        $entity["id"] = $idUser;
+        if (!$this->entityuser->areAllPksPresent($entity)) {
+            $this->_throwException(__("Not all keys provided"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        if (!$this->repouser->is_deleted($iduser))
-            $this->_exception(
+        if (!$this->repouser->isDeletedByEntityId($idUser)) {
+            $this->_throwException(
                 __("Is not possible to restore entity {0}", $entity["uuid"]),
                 ExceptionType::CODE_NOT_ACCEPTABLE
             );
+        }
 
-        $entity = $this->repouser->get_by_id($iduser);
+        $entity = $this->repouser->getEntityByEntityId($idUser);
         $this->_check_entity_undelete_permission($entity);
-        $idauthuser = $this->authuser["id"];
+        $idauthuser = $this->authUserArray["id"];
 
         $entity = [
             "uuid" => $entity["uuid"],
-            "id" => $iduser,
+            "id" => $idUser,
             "delete_date" => null,
             "delete_user" => null,
             "delete_platform" => null,
-            "cru_csvnote" => $this->repouser->get_csvcru($entity, $idauthuser),
+            "cru_csvnote" => $this->repouser->getCsvCru($entity, $idauthuser),
         ];
 
-        $this->entityuser->add_sysupdate($entity, $idauthuser);
+        $this->entityuser->addSysUpdate($entity, $idauthuser);
         $affected = $this->repouser->update($entity);
 
         return [
             "affected" => $affected,
             "uuid" => $entity["uuid"]
-        ];                
+        ];
     }
 }

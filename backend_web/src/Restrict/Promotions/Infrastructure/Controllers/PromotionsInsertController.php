@@ -7,81 +7,80 @@
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Promotions\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use Exception;
 use App\Picklist\Application\PicklistService;
-use App\Restrict\Promotions\Application\PromotionsInsertService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Domain\Enums\PageType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
-use App\Shared\Domain\Enums\ResponseType;
+use App\Shared\Domain\Enums\{PageType, ResponseType};
 use App\Shared\Infrastructure\Exceptions\FieldsException;
-use \Exception;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Promotions\Application\PromotionsInsertService;
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class PromotionsInsertController extends RestrictController
 {
     //@modal (creation form)
     public function create(): void
     {
-        if (!$this->auth->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE)) {
-            $this->add_var(PageType::TITLE, __("Unauthorized"))
-                ->add_var(PageType::H1, __("Unauthorized"))
-                ->add_var("ismodal",1)
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_WRITE)) {
+            $this->addGlobalVar(PageType::TITLE, __("Unauthorized"))
+                ->addGlobalVar(PageType::H1, __("Unauthorized"))
+                ->addGlobalVar("ismodal", 1)
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("403")
+                ->renderViewOnly();
         }
 
-        $picklist = SF::get(PicklistService::class);
+        $picklist = SF::getInstanceOf(PicklistService::class);
         //to-do business owners que tengan businessdata
-        $businessowners =  ($this->auth->is_root() || $this->auth->is_sysadmin())
-            ? $picklist->get_business_owners()
+        $businessowners =  ($this->authService->isAuthUserRoot() || $this->authService->isAuthUserSysadmin())
+            ? $picklist->getBusinessOwners()
             : [];
 
-        $this->set_template("insert")
-            ->add_var(PageType::CSRF, $this->csrf->get_token())
-            ->add_var(PageType::H1, __("New promotion"))
-            ->add_var("timezones", $picklist->get_timezones())
-            ->add_var("businessowners", $businessowners)
-            ->add_var("notoryes", $picklist->get_not_or_yes())
-            ->render_nl();
+        $this->setTemplateBySubPath("insert")
+            ->addGlobalVar(PageType::CSRF, $this->csrfService->getCsrfToken())
+            ->addGlobalVar(PageType::H1, __("New promotion"))
+            ->addGlobalVar("timezones", $picklist->getTimezones())
+            ->addGlobalVar("businessowners", $businessowners)
+            ->addGlobalVar("notoryes", $picklist->getNotOrYesOptions())
+            ->renderViewOnly();
     }
 
     //@post
     public function insert(): void
     {
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
-        if (!$this->csrf->is_valid($this->_get_csrf()))
-            $this->_get_json()
-                ->set_code(ResponseType::FORBIDDEN)
-                ->set_error([__("Invalid CSRF token")])
+        if (!$this->csrfService->isValidCsrfToken($this->_getCsrfTokenFromRequest())) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::FORBIDDEN)
+                ->setErrors([__("Invalid CSRF token")])
                 ->show();
+        }
 
         try {
-            $insert = SF::get_callable(PromotionsInsertService::class, $this->request->get_post());
+            $insert = SF::getCallableService(PromotionsInsertService::class, $this->requestComponent->getPost());
             $result = $insert();
-            $this->_get_json()->set_payload([
-                "message" => __("{0} successfully created","Promotion"),
+            $this->_getJsonInstanceFromResponse()->setPayload([
+                "message" => __("{0} successfully created", "Promotion"),
                 "result" => $result,
             ])->show();
-        }
-        catch (FieldsException $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([
-                    ["fields_validation" => $insert->get_errors()]
+        } catch (FieldsException $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([
+                    ["fields_validation" => $insert->getErrors()]
                 ])
                 ->show();
-        }
-        catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
 

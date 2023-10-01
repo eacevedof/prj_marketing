@@ -15,7 +15,7 @@ $texts = [
     "f01" => __("Password")."*",
 ];
 
-$url = Routes::url("login.access")
+$url = Routes::getUrlByRouteName("login.access")
 ?>
 <div class="card box-shadow-0">
   <div class="card-header">
@@ -25,7 +25,7 @@ $url = Routes::url("login.access")
     <form-login
         csrf="<?php $this->_echo($csrf);?>"
         url="<?php $this->_echo($url);?>"
-        texts="<?php $this->_echo_jslit($texts);?>"
+        texts="<?php $this->_echoJsLit($texts);?>"
     />
   </div>
 </div>

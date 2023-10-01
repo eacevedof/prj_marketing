@@ -11,7 +11,7 @@ $texts = [
   "f01" => __("Notes"),
 ];
 
-$puturl = Routes::url("qr.updatestatus");
+$puturl = Routes::getUrlByRouteName("qr.updatestatus");
 ?>
 <script async="false" type="module">
 import { BarcodeDetectorPolyfill } from "https://cdn.jsdelivr.net/npm/@undecaf/barcode-detector-polyfill@0.9.11/dist/main.js";
@@ -24,7 +24,7 @@ import { BarcodeDetectorPolyfill } from "https://cdn.jsdelivr.net/npm/@undecaf/b
 <div id="main" class="tab-pane active">
   <h4><?=__("Voucher QR code validation")?></h4>
   <form-subscription-qr-update
-      texts="<?php $this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echoJsLit($texts);?>"
       url="<?php $this->_echo($puturl)?>"
   />
   <script type="module" src="/assets/js/restrict/subscriptions/form-subscription-qr-update.js"></script>

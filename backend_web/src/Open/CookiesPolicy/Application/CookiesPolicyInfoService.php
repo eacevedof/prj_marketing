@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Open\CookiesPolicy\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
@@ -85,18 +86,18 @@ final class CookiesPolicyInfoService extends AppService
                 __("Remember that certain functions and the full functionality of the Website may not be available after disabling cookies."),
             ]],
             ["p" => __(
-            "In order for visitors to the Website to have the possibility to prevent Google Analytics from using their data, Google has developed a Google opt-out browser add-on, available here: {0}",
-            "<a href=\"https://tools.google.com/dlpage/gaoptout\" target=\"_blank\">https://tools.google.com/dlpage/gaoptout</a>."
+                "In order for visitors to the Website to have the possibility to prevent Google Analytics from using their data, Google has developed a Google opt-out browser add-on, available here: {0}",
+                "<a href=\"https://tools.google.com/dlpage/gaoptout\" target=\"_blank\">https://tools.google.com/dlpage/gaoptout</a>."
             ),],
             ["h2" => __("5.- Cookies on mobile devices")],
             ["p" => __("Cookies and other storage devices are also used when you access the Website from mobile devices.")],
             ["p" => __("As with computer browsers, mobile device browsers allow you to make changes to privacy options or settings to disable or delete cookies.")],
             ["p" => __("If you wish to modify the privacy options, follow the instructions specified by the developer of your mobile device browser. Below, you can find some examples of the links that will guide you to modify the privacy options on your mobile device:")],
             ["ul" => [
-               "IOS (<a href=\"http://goo.gl/61xevS\" target=\"_blank\">http://goo.gl/61xevS)</a>",
-               "Windows Phone (<a href=\"https://goo.gl/tKyb0y\" target=\"_blank\">https://goo.gl/tKyb0y</a>)",
-               "Chrome Mobile (<a href=\"http://goo.gl/XJp7N\" target=\"_blank\">http://goo.gl/XJp7N</a>)",
-               "Opera Mobile (<a href=\"http://goo.gl/Nzr8s7\" target=\"_blank\">http://goo.gl/Nzr8s7</a>)",
+                "IOS (<a href=\"http://goo.gl/61xevS\" target=\"_blank\">http://goo.gl/61xevS)</a>",
+                "Windows Phone (<a href=\"https://goo.gl/tKyb0y\" target=\"_blank\">https://goo.gl/tKyb0y</a>)",
+                "Chrome Mobile (<a href=\"http://goo.gl/XJp7N\" target=\"_blank\">http://goo.gl/XJp7N</a>)",
+                "Opera Mobile (<a href=\"http://goo.gl/Nzr8s7\" target=\"_blank\">http://goo.gl/Nzr8s7</a>)",
             ]],
             ["h2" => __("<span id=\"section-6\">6.- Acceptance, configuration or rejection of cookies, and more information</span>")],
             ["p" => __("In the cookie banner, you can click the “ACCEPT ALL” button to accept all cookies. Likewise, you can click on “ACCEPT SELECTION“ to accept only the cookies marked in the configuration boxes available in the banner, or you can click on “REJECT“ to reject unnecessary cookies.")],

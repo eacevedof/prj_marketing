@@ -1,4 +1,5 @@
 <?php
+
 //constants.php 20200721
 define("PATH_ROOT", dirname(__DIR__));
 
@@ -16,14 +17,32 @@ abstract class ENV
         self::PROD => "",
     ];
 
-    public static function is_local(): bool { return self::LOCAL === getenv("APP_ENV");}
-    public static function is_dev(): bool { return self::DEV === getenv("APP_ENV");}
-    public static function is_test(): bool { return self::TEST === getenv("APP_ENV");}
-    public static function is_prod(): bool { return self::PROD === getenv("APP_ENV");}
+    public static function is_local(): bool
+    {
+        return self::LOCAL === getenv("APP_ENV");
+    }
+    public static function is_dev(): bool
+    {
+        return self::DEV === getenv("APP_ENV");
+    }
+    public static function is_test(): bool
+    {
+        return self::TEST === getenv("APP_ENV");
+    }
+    public static function is_prod(): bool
+    {
+        return self::PROD === getenv("APP_ENV");
+    }
 
-    public static function env(): string { return getenv("APP_ENV");}
+    public static function env(): string
+    {
+        return getenv("APP_ENV");
+    }
 
-    public static function is_debug(): bool { return (bool) getenv("APP_DEBUG"); }
+    public static function is_debug(): bool
+    {
+        return (bool) getenv("APP_DEBUG");
+    }
 
     public static function color(): string
     {

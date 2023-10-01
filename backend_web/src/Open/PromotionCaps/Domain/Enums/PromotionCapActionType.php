@@ -11,7 +11,7 @@ abstract class PromotionCapActionType
     public const CANCELLED = 4;
     public const FINISHED = 5;
 
-    public static function get_all(): array
+    public static function getAllPromotionCapTypes(): array
     {
         return [
             self::VIEWED,

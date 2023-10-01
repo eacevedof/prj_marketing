@@ -20,66 +20,66 @@ final class XxxsUpdateService extends AppService
 {
     use RequestTrait;
 
-    private AuthService $auth;
-    private array $authuser;
+    private AuthService $authService;
+    private array $authUserArray;
     private XxxRepository $repoxxx;
     private FieldsValidator $validator;
     private XxxEntity $entityxxx;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
         $this->input = $input;
         if (!$this->input["uuid"])
-            $this->_exception(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
+            $this->_throwException(__("Empty required code"),ExceptionType::CODE_BAD_REQUEST);
 
-        $this->entityxxx = MF::get(XxxEntity::class);
-        $this->validator = VF::get($this->input, $this->entityxxx);
-        $this->repoxxx = RF::get(XxxRepository::class);
-        $this->repoxxx->set_model($this->entityxxx);
-        $this->authuser = $this->auth->get_user();
+        $this->entityxxx = MF::getInstanceOf(XxxEntity::class);
+        $this->validator = VF::getFieldValidator($this->input, $this->entityxxx);
+        $this->repoxxx = RF::getInstanceOf(XxxRepository::class);
+        $this->repoxxx->setAppEntity($this->entityxxx);
+        $this->authUserArray= $this->authService->getAuthUserArray();
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) return;
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::XXXS_WRITE))
-            $this->_exception(
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::XXXS_WRITE))
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _checkEntityPermissionOrFail(array $entity): void
     {
-        $idxxx = $this->repoxxx->get_id_by_uuid($entity["uuid"]);
-        $idauthuser = (int)$this->authuser["id"];
-        if ($this->auth->is_root() || $idauthuser === $idxxx) return;
+        $idxxx = $this->repoxxx->getEntityIdByEntityUuid($entity["uuid"]);
+        $idauthuser = (int)$this->authUserArray["id"];
+        if ($this->authService->isAuthUserRoot() || $idauthuser === $idxxx) return;
 
-        if ($this->auth->is_sysadmin()
+        if ($this->authService->isAuthUserSysadmin()
             && in_array($entity["id_profile"], [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER])
         )
             return;
 
-        $identowner = $this->repoxxx->get_idowner($idxxx);
+        $identowner = $this->repoxxx->getIdOwnerByIdUser($idxxx);
         //si logado es propietario y el bm a modificar le pertenece
-        if ($this->auth->is_business_owner()
+        if ($this->authService->isAuthUserBusinessOwner()
             && in_array($entity["id_profile"], [UserProfileType::BUSINESS_MANAGER])
             && $idauthuser === $identowner
         )
             return;
 
-        $this->_exception(
+        $this->_throwException(
             __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
         );
     }
 
     private function _skip_validation(): self
     {
-        $this->validator->add_skip("id");
+        $this->validator->addSkipableField("id");
         return $this;
     }
 
@@ -93,17 +93,17 @@ final class XxxsUpdateService extends AppService
 
     public function __invoke(): array
     {
-        if (!$update = $this->_get_req_without_ops($this->input))
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$update = $this->_getRequestWithoutOperations($this->input))
+            $this->_throwException(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
+        if ($errors = $this->_skip_validation()->_add_rules()->getErrors()) {
+            $this->_setErrors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $update = $this->entityxxx->map_request($update);
-        $this->_check_entity_permission($update);
-        $this->entityxxx->add_sysupdate($update, $this->authuser["id"]);
+        $update = $this->entityxxx->getAllKeyValueFromRequest($update);
+        $this->_checkEntityPermissionOrFail($update);
+        $this->entityxxx->addSysUpdate($update, $this->authUserArray["id"]);
 
         $affected = $this->repoxxx->update($update);
         return [

@@ -1,69 +1,78 @@
 <?php
+
 namespace App\Restrict\Billings\Application;
 
-use App\Restrict\Billings\Domain\BillingsRepository;
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Restrict\Billings\Domain\BillingsRepository;
+use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
+use App\Shared\Infrastructure\Factories\{
+    ComponentFactory as CF,
+    HelperFactory as HF,
+    RepositoryFactory as RF,
+    ServiceFactory as SF
+};
 
 final class BillingsSearchService extends AppService
 {
-    private AuthService $auth;
+    private AuthService $authService;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
         $this->input = $input;
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) {
+            return;
+        }
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::BILLINGS_READ))
-            $this->_exception(
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::BILLINGS_READ)) {
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+        }
     }
 
     public function __invoke(): array
     {
-        $search = CF::get_datatable($this->input)->get_search();
-        return RF::get(BillingsRepository::class)->set_auth($this->auth)->search($search);
+        $search = CF::getDatatableComponent($this->input)->getSearchPayload();
+        return RF::getInstanceOf(BillingsRepository::class)->setAuthService($this->authService)->search($search);
     }
 
-    public function get_datatable(): DatatableHelper
+    public function getDatatableHelper(): DatatableHelper
     {
-        $dthelp = HF::get(DatatableHelper::class)->add_column("id")->is_visible(false);
-        if ($this->auth->is_system())
-            $dthelp
-                ->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"))
-                ->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"));
+        $dtHelper = HF::get(DatatableHelper::class)->addColumn("id")->isVisible(false);
+        if ($this->authService->hasAuthUserSystemProfile()) {
+            $dtHelper
+                ->addColumn("e_owner")->addLabel(__("Owner"))->addTooltip(__("Owner"))
+                ->addColumn("e_business")->addLabel(__("Business"))->addTooltip(__("Business"));
+        }
 
-        $dthelp
-            ->add_column("uuid")->add_label(__("Code"))->add_tooltip(__("Code"))
-            ->add_column("description")->add_label(__("Promotion"))->add_tooltip(__("Promotion"))
-            ->add_column("num_executed")->add_label(__("Exec"))->add_tooltip(__("Exec"))
-            ->add_column("e_returned")->add_label(__("Ret"))->add_tooltip(__("Ret"))
-            ->add_column("e_earned")->add_label(__("Earn"))->add_tooltip(__("Earn"));
+        $dtHelper
+            ->addColumn("uuid")->addLabel(__("Code"))->addTooltip(__("Code"))
+            ->addColumn("description")->addLabel(__("Promotion"))->addTooltip(__("Promotion"))
+            ->addColumn("num_executed")->addLabel(__("Exec"))->addTooltip(__("Exec"))
+            ->addColumn("e_returned")->addLabel(__("Ret"))->addTooltip(__("Ret"))
+            ->addColumn("e_earned")->addLabel(__("Earn"))->addTooltip(__("Earn"));
 
-        $dthelp->add_action("export");
-        if ($this->auth->is_system())
-            $dthelp->add_column("e_percent")->add_label(__("%"))->add_tooltip(__("%"));
+        $dtHelper->addAction("export");
+        if ($this->authService->hasAuthUserSystemProfile()) {
+            $dtHelper->addColumn("e_percent")->addLabel(__("%"))->addTooltip(__("%"));
+        }
 
-        $dthelp->add_column("e_commission")->add_label(__("Bill"))->add_tooltip(__("Bill"));
-        $dthelp->add_column("e_invested")->add_label(__("Inv"))->add_tooltip(__("Inv"));
+        $dtHelper->addColumn("e_commission")->addLabel(__("Bill"))->addTooltip(__("Bill"));
+        $dtHelper->addColumn("e_invested")->addLabel(__("Inv"))->addTooltip(__("Inv"));
 
-        if ($this->auth->is_system())
-            $dthelp->add_column("e_b_earnings")->add_label(__("R. earn"))->add_tooltip(__("R. earn"));
-        return $dthelp;
+        if ($this->authService->hasAuthUserSystemProfile()) {
+            $dtHelper->addColumn("e_b_earnings")->addLabel(__("R. earn"))->addTooltip(__("R. earn"));
+        }
+        return $dtHelper;
     }
 }

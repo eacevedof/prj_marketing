@@ -7,16 +7,17 @@
  * @date 31-10-2022 17:46 SPAIN
  * @observations
  */
+
 namespace App\Console\Application\Dev\Builder;
 
 final class FrontBuilder
 {
     private string $type;
-    private string $pathtpl;
-    private string $pathmodule;
+    private string $pathTpl;
+    private string $pathModule;
     private array $aliases;
     private array $fields;
-    private array $skipfields;
+    private array $skipFields;
 
     public const TYPE_INSERT_JS     = "Xxxs-front/insert.js";
     public const TYPE_INSERT_TPL    = "Xxxs-front/insert.tpl";
@@ -26,26 +27,32 @@ final class FrontBuilder
     public const TYPE_INDEX_TPL     = "Xxxs-front/index.tpl";
     public const TYPE_CSS           = "Xxxs-front/xxxs.css";
 
-    public function __construct(array $aliases, array $fields, string $pathtpl, string $pathmodule, string $type=self::TYPE_INSERT_JS)
-    {
-       $this->pathtpl = $pathtpl;
-       $this->pathmodule = $pathmodule;
-       $this->aliases = $aliases;
-       $this->fields = $fields;
-       $this->type = $type;
-       $this->_load_skip_fields();;
+    public function __construct(
+        array  $aliases,
+        array  $fields,
+        string $pathTpl,
+        string $pathModule,
+        string $type = self::TYPE_INSERT_JS
+    ) {
+        $this->pathTpl = $pathTpl;
+        $this->pathModule = $pathModule;
+        $this->aliases = $aliases;
+        $this->fields = $fields;
+        $this->type = $type;
+        $this->_loadSkipFields();
+        ;
     }
-    
-    private function _load_skip_fields(): void
+
+    private function _loadSkipFields(): void
     {
-        $this->skipfields = [
+        $this->skipFields = [
             "processflag", "insert_platform", "insert_user", "insert_date", "delete_platform", "delete_user"
             , "delete_date", "cru_csvnote", "is_erpsent", "is_enabled", "i", "update_platform", "update_user",
             "update_date"
-        ];        
+        ];
     }
-    
-    private function _replace(string $content, array $replaces=[]): string
+
+    private function _replace(string $content, array $replaces = []): string
     {
         $basic = [
             "Xxxs" => $this->aliases["uppercased-plural"],
@@ -58,42 +65,45 @@ final class FrontBuilder
         return str_replace(array_keys($basic), array_values($basic), $content);
     }
 
-    private function _create_file(string $pathfile, string $content):void
+    private function _createFile(string $pathfile, string $content): void
     {
         //esta creando un modulo por fuera de files por eso peta
         $dirname = dirname($pathfile);
-        if (!is_dir($dirname)) //$r = mkdir($dirname,0777,1);
+        if (!is_dir($dirname)) { //$r = mkdir($dirname,0777,1);
             exec("mkdir -p $dirname");
+        }
         sleep(1);
         $r = file_put_contents($pathfile, $content);
-        if ($r === false)
+        if ($r === false) {
             exit("ERROR on creation:\n\t$dirname\n\t$pathfile\n");
+        }
     }
 
-    private function _get_field_details(string $field): array
+    private function _getFieldDetails(string $field): array
     {
-       $type = array_filter($this->fields, function ($item) use ($field) {
-           return $item["field_name"] === $field;
-       });
-       $type = array_values($type);
-       return $type[0] ?? [];
+        $type = array_filter($this->fields, function ($item) use ($field) {
+            return $item["field_name"] === $field;
+        });
+        $type = array_values($type);
+        return $type[0] ?? [];
     }
 
     private function _get_length(string $field): string
     {
-        $fielddet = $this->_get_field_details($field);
+        $fielddet = $this->_getFieldDetails($field);
         $length = $fielddet["field_length"] ?? "";
-        if (!$length)
+        if (!$length) {
             $length = $fielddet["ntot"] ?? "";
+        }
         return $length;
     }
-    
-    private function _get_properties_js(string $field): string
+
+    private function _getJsProperties(string $field): string
     {
         return "_{$field}: {type: String, state:true},";
     }
 
-    private function _get_html_fields(string $field, string $pos): string
+    private function _getHtmlFields(string $field, string $pos): string
     {
         $len = $this->_get_length($field);
         return "<div class=\"form-group\">
@@ -104,14 +114,16 @@ final class FrontBuilder
                 </div>";
     }
 
-    private function _build_create_js(): void
+    private function _buildInsertJsFile(): void
     {
         //tags %FIELDS%
         $arfields = [];
-        foreach ($this->fields as $i =>$field) {
+        foreach ($this->fields as $i => $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields + ["id","uuid"])) continue;
-            $arfields[$i] = $this->_get_properties_js($fieldname);
+            if (in_array($fieldname, $this->skipFields + ["id","uuid"])) {
+                continue;
+            }
+            $arfields[$i] = $this->_getJsProperties($fieldname);
         }
         $strfields = implode("\n", $arfields);
         $firstfield = $this->fields[array_keys($arfields)[0]]["field_name"];
@@ -120,31 +132,35 @@ final class FrontBuilder
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
+            if (in_array($fieldname, $this->skipFields)) {
+                continue;
+            }
             $pos = sprintf("%02d", $i);
-            $arfields[] = $this->_get_html_fields($fieldname, $pos);
+            $arfields[] = $this->_getHtmlFields($fieldname, $pos);
             $i++;
         }
         $htmlfields = implode("\n", $arfields);
 
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl, [
-            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
+            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%" => $firstfield
         ]);
 
         $pathfile = $this->_replace($this->type);
-        $pathfile = "{$this->pathmodule}/{$pathfile}";
-        $this->_create_file($pathfile, $contenttpl);
+        $pathfile = "{$this->pathModule}/{$pathfile}";
+        $this->_createFile($pathfile, $contenttpl);
     }
 
-    private function _build_update_js(): void
+    private function _buildUpdateJsFile(): void
     {
         //tags %FIELDS%
         $arfields = [];
-        foreach ($this->fields as $i =>$field) {
+        foreach ($this->fields as $i => $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
-            $arfields[$i] = $this->_get_properties_js($fieldname);
+            if (in_array($fieldname, $this->skipFields)) {
+                continue;
+            }
+            $arfields[$i] = $this->_getJsProperties($fieldname);
         }
         $strfields = implode("\n", $arfields);
         $firstfield = $this->fields[array_keys($arfields)[0]]["field_name"];
@@ -153,24 +169,26 @@ final class FrontBuilder
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
+            if (in_array($fieldname, $this->skipFields)) {
+                continue;
+            }
             $pos = sprintf("%02d", $i);
-            $arfields[] = $this->_get_html_fields($fieldname, $pos);
+            $arfields[] = $this->_getHtmlFields($fieldname, $pos);
             $i++;
         }
         $htmlfields = implode("\n", $arfields);
 
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl, [
-            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%"=>$firstfield
+            "%FIELDS%" => $strfields, "%HTML_FIELDS%" => $htmlfields, "%yyy%" => $firstfield
         ]);
 
         $pathfile = $this->_replace($this->type);
-        $pathfile = "{$this->pathmodule}/{$pathfile}";
-        $this->_create_file($pathfile, $contenttpl);
+        $pathfile = "{$this->pathModule}/{$pathfile}";
+        $this->_createFile($pathfile, $contenttpl);
     }
 
-    private function _build_create_tpl(): void
+    private function _buildCreateTpl(): void
     {
         //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
         $trs = [];
@@ -178,7 +196,9 @@ final class FrontBuilder
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
+            if (in_array($fieldname, $this->skipFields)) {
+                continue;
+            }
             $pos = sprintf("%02d", $i);
             $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
             $kvs[] = "\"$fieldname\" => \"\",";
@@ -187,15 +207,15 @@ final class FrontBuilder
         $trs = implode("\n", $trs);
         $kvs = implode("\n", $kvs);
 
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
 
         $pathfile = $this->_replace($this->type);
-        $pathfile = "{$this->pathmodule}/{$pathfile}";
-        $this->_create_file($pathfile, $contenttpl);
+        $pathfile = "{$this->pathModule}/{$pathfile}";
+        $this->_createFile($pathfile, $contenttpl);
     }
 
-    private function _build_update_tpl(): void
+    private function _buildUpdateTpl(): void
     {
         //tags %FIELD_LABELS%, %FIELD_KEY_AND_VALUES%
         $trs = [];
@@ -203,7 +223,9 @@ final class FrontBuilder
         $i = 0;
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
+            if (in_array($fieldname, $this->skipFields)) {
+                continue;
+            }
             $pos = sprintf("%02d", $i);
             $trs[] = "\"f$pos\" => __(\"tr_{$fieldname}\"),";
             $kvs[] = "\"$fieldname\" => \$result[\"{$fieldname}\"],";
@@ -212,77 +234,79 @@ final class FrontBuilder
         $trs = implode("\n", $trs);
         $kvs = implode("\n", $kvs);
 
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELD_LABELS%" => $trs, "%FIELD_KEY_AND_VALUES%" => $kvs]);
 
         $pathfile = $this->_replace($this->type);
-        $pathfile = "{$this->pathmodule}/{$pathfile}";
-        $this->_create_file($pathfile, $contenttpl);
+        $pathfile = "{$this->pathModule}/{$pathfile}";
+        $this->_createFile($pathfile, $contenttpl);
     }
 
-    private function _build_info_tpl(): void
+    private function _buildInfoTpl(): void
     {
         //tags %FIELD_KEY_AND_VALUES%
         $kvs = [];
         foreach ($this->fields as $field) {
             $fieldname = $field["field_name"];
-            if (in_array($fieldname, $this->skipfields)) continue;
+            if (in_array($fieldname, $this->skipFields)) {
+                continue;
+            }
             $kvs[] = "<li><b><?=__(\"tr_{$fieldname}\")?>:</b>&ensp;<span><?=\${$this->aliases["lowered"]}[\"{$fieldname}\"] ?? \"\"?></span></li>";
         }
         $kvs = implode("\n", $kvs);
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl, ["%FIELD_KEY_AND_VALUES%" => $kvs]);
 
         $pathfile = $this->_replace($this->type);
-        $pathfile = "{$this->pathmodule}/{$pathfile}";
-        $this->_create_file($pathfile, $contenttpl);
+        $pathfile = "{$this->pathModule}/{$pathfile}";
+        $this->_createFile($pathfile, $contenttpl);
     }
 
-    private function _build_css(): void
+    private function _buildCssFile(): void
     {
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl);
 
         $pathfile = $this->_replace($this->type);
-        $pathfile = "{$this->pathmodule}/{$pathfile}";
-        $this->_create_file($pathfile, $contenttpl);
+        $pathfile = "{$this->pathModule}/{$pathfile}";
+        $this->_createFile($pathfile, $contenttpl);
     }
 
-    private function _build_index_tpl(): void
+    private function _buildIndexTpl(): void
     {
-        $contenttpl = file_get_contents($this->pathtpl);
+        $contenttpl = file_get_contents($this->pathTpl);
         $contenttpl = $this->_replace($contenttpl);
 
         $pathfile = $this->_replace($this->type);
-        $pathfile = "{$this->pathmodule}/{$pathfile}";
-        $this->_create_file($pathfile, $contenttpl);
+        $pathfile = "{$this->pathModule}/{$pathfile}";
+        $this->_createFile($pathfile, $contenttpl);
     }
 
     public function build(): void
     {
         switch ($this->type) {
             case self::TYPE_INSERT_JS:
-                $this->_build_create_js();
-            break;
+                $this->_buildInsertJsFile();
+                break;
             case self::TYPE_UPDATE_JS:
-                $this->_build_update_js();
-            break;
+                $this->_buildUpdateJsFile();
+                break;
             case self::TYPE_INSERT_TPL:
-                $this->_build_create_tpl();
-            break;
+                $this->_buildCreateTpl();
+                break;
             case self::TYPE_UPDATE_TPL:
-                $this->_build_update_tpl();
-            break;
+                $this->_buildUpdateTpl();
+                break;
 
             case self::TYPE_INFO_TPL:
-                $this->_build_info_tpl();
-            break;
+                $this->_buildInfoTpl();
+                break;
             case self::TYPE_INDEX_TPL:
-                $this->_build_index_tpl();
-            break;
+                $this->_buildIndexTpl();
+                break;
             case self::TYPE_CSS:
-                $this->_build_css();
-            break;
+                $this->_buildCssFile();
+                break;
         }
     }
 }

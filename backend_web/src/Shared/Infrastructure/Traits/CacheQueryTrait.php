@@ -7,49 +7,50 @@
  * @date 01-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Infrastructure\Traits;
 
 use App\Shared\Infrastructure\Factories\Specific\RedisFactory;
 
 trait CacheQueryTrait
 {
-    protected function get_cached(string $query, string $table=""): array
+    protected function _getCachedResult(string $query, string $table = ""): array
     {
-        return RedisFactory::get()->set_key($query)->get_query($table);
+        return RedisFactory::getInstance()->setKey($query)->getQueryResult($table);
     }
 
-    protected function addto_cache(string $query, array $array, float $ttl=300, string $table=""): void
+    protected function _addToCache(string $query, array $array, float $ttl = 300, string $table = ""): void
     {
-        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($array)->save_query($table);
+        RedisFactory::getInstance()->setTtl($ttl)->setKey($query)->setValue($array)->saveQuery($table);
     }
 
-    protected function get_cachedsingle(string $query): string
+    protected function _getCachedSingle(string $query): string
     {
-        return RedisFactory::get()->set_key($query)->get_querysingle();
+        return RedisFactory::getInstance()->setKey($query)->getQuerySingle();
     }
 
-    protected function addto_cachesingle(string $query, string $value, float $ttl=300): void
+    protected function _addToCacheSingle(string $query, string $value, float $ttl = 300): void
     {
-        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($value)->save_querysingle();
+        RedisFactory::getInstance()->setTtl($ttl)->setKey($query)->setValue($value)->saveQuerySingle();
     }
 
-    protected function get_cachedcount(string $query, string $table=""): int
+    protected function _getCachedCount(string $query, string $table = ""): int
     {
-        return RedisFactory::get()->set_key($query)->get_querycount($table);
+        return RedisFactory::getInstance()->setKey($query)->getQueryCount($table);
     }
 
-    protected function addto_cachecount(string $query, int $count, float $ttl=300, string $table=""): void
+    protected function _addToCacheCount(string $query, int $count, float $ttl = 300, string $table = ""): void
     {
-        RedisFactory::get()->set_ttl($ttl)->set_key($query)->set_value($count)->save_querycount($table);
+        RedisFactory::getInstance()->setTtl($ttl)->setKey($query)->setValue($count)->saveQueryCount($table);
     }
 
-    protected function cache_del_qandcount(string $query, string $table=""): void
+    protected function _cacheDelQueryAndCount(string $query, string $table = ""): void
     {
-        RedisFactory::get()->set_key($query)->delete_query_and_count($table);
+        RedisFactory::getInstance()->setKey($query)->deleteQueryAndCount($table);
     }
 
-    protected function cache_del_all(string $table): void
+    protected function _cacheDeleteAll(string $table): void
     {
-        RedisFactory::get()->cache_del_all($table);
+        RedisFactory::getInstance()->deleteAllHavingTable($table);
     }
 }//CacheQueryTrait

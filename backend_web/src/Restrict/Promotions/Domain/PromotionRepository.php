@@ -6,29 +6,29 @@
  * @file PromotionRepository.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN
  */
+
 namespace App\Restrict\Promotions\Domain;
 
-use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Shared\Infrastructure\Bus\EventBus;
+use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Repositories\AppRepository;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\Common\SysfieldRepository;
-use App\Shared\Infrastructure\Bus\EventBus;
 use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
-use TheFramework\Components\Db\ComponentQB;
+use App\Shared\Domain\Repositories\Common\SysFieldRepository;
+use App\Open\PromotionCaps\Domain\Enums\PromotionCapActionType;
+use App\Shared\Infrastructure\Factories\{DbFactory as DbF, RepositoryFactory as RF};
 
 final class PromotionRepository extends AppRepository implements IEventDispatcher
 {
     use SearchRepoTrait;
 
-    private ?AuthService $auth = null;
+    private ?AuthService $authService = null;
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_promotion";
         $this->joins = [
             "fields" => [
@@ -47,14 +47,14 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
         ];
     }
 
-    private function _add_auth_condition(ComponentQB $qb): void
+    private function _addConditionByAuthService(ComponentQB $qb): void
     {
-        if (!$this->auth->get_user()) {
+        if (!$this->authService->getAuthUserArray()) {
             $qb->add_and("1 = 0");
             return;
         }
 
-        if($this->auth->is_root()) {
+        if ($this->authService->isAuthUserRoot()) {
             $qb->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
                 ->add_getfield("m.insert_user");
@@ -64,28 +64,28 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
         //como no es root no puede ver borrados o desactivados
         $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
 
-        $authuser = $this->auth->get_user();
-        if($this->auth->is_business_owner()) {
-            $qb->add_andoper("m.id_owner", $authuser["id"]);
+        $authUser = $this->authService->getAuthUserArray();
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $qb->add_andoper("m.id_owner", $authUser["id"]);
             return;
         }
 
-        if($this->auth->is_business_manager()) {
-            $idparent = $authuser["id_parent"];
-            $qb->add_andoper("m.id_owner", $idparent);
+        if ($this->authService->hasAuthUserBusinessManagerProfile()) {
+            $idParent = $authUser["id_parent"];
+            $qb->add_andoper("m.id_owner", $idParent);
         }
     }
 
-    private function _dispatch(array $payload): void
+    private function _dispatchEvents(array $payload): void
     {
         EventBus::instance()->publish(...[
-            QueryWasCreatedEvent::from_primitives(-1, $payload)
+            QueryWasCreatedEvent::fromPrimitives(-1, $payload)
         ]);
     }
 
     public function search(array $search): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("promotion.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
@@ -119,17 +119,17 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
                 "m.num_executed",
             ])
             ->set_limit(25)
-            ->set_orderby(["m.id"=>"DESC"])
+            ->set_orderby(["m.id" => "DESC"])
         ;
-        $this->_add_joins($qb);
-        $this->_add_search_filter($qb, $search);
-        $this->_add_auth_condition($qb);
+        $this->_addJoinsToQueryBuilder($qb);
+        $this->_addSearchFilterToQueryBuilder($qb, $search);
+        $this->_addConditionByAuthService($qb);
 
         $sql = $qb->select()->sql();
-        $sqlcount = $qb->sqlcount();
-        $r = $this->query_with_count($sqlcount, $sql);
+        $sqlCount = $qb->sqlcount();
+        $r = $this->getQueryWithCount($sqlCount, $sql);
 
-        $this->_dispatch([
+        $this->_dispatchEvents([
             "uuid" => $md5 = md5($sql)."-".uniqid(),
             "description" => "read:search",
             "query" => $sql,
@@ -141,11 +141,11 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
         return $r;
     }
 
-    public function get_info(string $uuid): array
+    public function getPromotionInfoByPromotionUuid(string $promotionUuid): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $qb = $this->_get_qbuilder()
-            ->set_comment("promotion.get_info(uuid)")
+        $promotionUuid = $this->_getSanitizedString($promotionUuid);
+        $qb = $this->_getQueryBuilderInstance()
+            ->set_comment("promotion.getPromotionInfoByPromotionUuid")
             ->set_table("$this->table as m")
             ->set_getfields([
                 "m.insert_user",
@@ -189,115 +189,142 @@ final class PromotionRepository extends AppRepository implements IEventDispatche
                 "m.disabled_reason",
                 "m.disabled_user",
             ])
-            ->add_and("m.uuid='$uuid'")
+            ->add_and("m.uuid='$promotionUuid'")
         ;
-        $this->_add_joins($qb);
+        $this->_addJoinsToQueryBuilder($qb);
         $sql = $qb->select()->sql();
         $r = $this->query($sql);
-        if (!$r) return [];
+        if (!$r) {
+            return [];
+        }
 
-        $sysdata = RF::get(SysfieldRepository::class)->get_sysdata($r = $r[0]);
-
-        return array_merge($r, $sysdata);
+        $sysData = RF::getInstanceOf(SysFieldRepository::class)->getSysDataByRowData($r = $r[0]);
+        return array_merge($r, $sysData);
     }
 
-    public function set_auth(AuthService $auth): self
+    public function setAuthService(AuthService $authService): self
     {
-        $this->auth = $auth;
+        $this->authService = $authService;
         return $this;
     }
 
-    public function is_launched_by_uuid(string $uuid): bool
+    public function isPromotionLaunchedByPromotionUuid(string $promotionUuid): bool
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $qb = $this->_get_qbuilder()
-            ->set_comment("promotion.is_launched_by_uuid")
+        $promotionUuid = $this->_getSanitizedString($promotionUuid);
+        $qb = $this->_getQueryBuilderInstance()
+            ->set_comment("promotion.isPromotionLaunchedByPromotionUuid")
             ->set_table("$this->table as m")
             ->set_getfields(["m.is_launched",])
-            ->add_and("m.uuid='$uuid'");
+            ->add_and("m.uuid='$promotionUuid'");
         $sql = $qb->select()->sql();
         $r = $this->query($sql);
         return (bool) $r[0]["is_launched"];
     }
 
-    public function has_subscribers_by_uuid(string $uuid): bool
+    public function doesPromotionHaveSubscribersByPromotionUuid(string $promotionUuid): bool
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $qb = $this->_get_qbuilder()
-            ->set_comment("promotion.has_subscribers")
+        $promotionUuid = $this->_getSanitizedString($promotionUuid);
+        $qb = $this->_getQueryBuilderInstance()
+            ->set_comment("promotion.doesPromotionHaveSubscribersByPromotionUuid")
             ->set_table("$this->table as m")
             ->set_getfields(["m.num_subscribed",])
-            ->add_and("m.uuid='$uuid'");
+            ->add_and("m.uuid='$promotionUuid'");
         $sql = $qb->select()->sql();
         $r = $this->query($sql);
         return (bool) $r[0]["num_subscribed"];
     }
 
-    public function update_slug_with_id(int $id): void
+    public function updatePromotionSlugWithPromotionId(int $idPromotion): void
     {
-        $sql = "UPDATE $this->table SET slug=CONCAT(slug,'-', id) WHERE id=$id";
+        $sql = "
+        -- updatePromotionSlugWithPromotionId
+        UPDATE $this->table SET slug = CONCAT(slug,'-', id) WHERE id = $idPromotion
+        ";
         $this->execute($sql);
     }
 
-    public function get_by_slug(string $slug, array $fields=[]): array
+    public function getPromotionByPromotionSlug(string $promotionSlug, array $fields = []): array
     {
-        $slug = $this->get_sanitized($slug);
-        $sql = $this->_get_qbuilder()
-            ->set_comment("promotion.get_by_slug")
+        $promotionSlug = $this->_getSanitizedString($promotionSlug);
+        $sql = $this->_getQueryBuilderInstance()
+            ->set_comment("promotion.getPromotionByPromotionSlug")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.slug='$slug'")
+            ->add_and("m.slug='$promotionSlug'")
             ->set_limit(1)
         ;
-        if ($fields) $sql->set_getfields($fields);
+        if ($fields) {
+            $sql->set_getfields($fields);
+        }
         $sql = $sql->select()->sql();
         return $this->query($sql)[0] ?? [];
     }
 
-    public function increase_viewed(int $id): void
+    public function increaseViewedByPromotionId(int $promotionId): void
     {
-        $sql = "UPDATE {$this->table} SET num_viewed=num_viewed + 1 WHERE 1 AND id={$id}";
+        $sql = "
+        -- increaseViewedByPromotionId
+        UPDATE {$this->table} SET num_viewed = num_viewed + 1 WHERE 1 AND id = {$promotionId}
+        ";
         $this->execute($sql);
     }
 
-    public function increase_subscribed(int $id): void
+    public function increaseSubscribedByPromotionId(int $promotionId): void
     {
-        $sql = "/*increase_subscribed*/UPDATE {$this->table} SET num_subscribed=num_subscribed + 1 WHERE 1 AND id={$id}";
+        $sql = "
+        -- increaseSubscribedByPromotionId
+        UPDATE {$this->table} SET num_subscribed=num_subscribed + 1 WHERE 1 AND id = {$promotionId}
+        ";
         $this->execute($sql);
     }
 
-    public function increase_confirmed(int $id): void
+    public function increaseConfirmedByPromotionId(int $promotionId): void
     {
-        $sql = "/*increase_confirmed*/UPDATE {$this->table} SET num_confirmed=num_confirmed + 1 WHERE 1 AND id={$id}";
+        $sql = "
+        -- increaseConfirmedByPromotionId
+        UPDATE {$this->table} SET num_confirmed=num_confirmed + 1 WHERE 1 AND id = {$promotionId}
+        ";
         $this->execute($sql);
     }
 
-    public function increase_executed(int $id): void
+    public function increaseExecutedByPromotionId(int $promotionId): void
     {
-        $sql = "/*increase_executed*/UPDATE {$this->table} SET num_executed=num_executed + 1 WHERE 1 AND id={$id}";
+        $sql = "
+        -- increaseExecutedByPromotionId
+        UPDATE {$this->table} SET num_executed=num_executed + 1 WHERE 1 AND id = {$promotionId}
+        ";
         $this->execute($sql);
     }
 
-    public function decrease_subscribed(int $id): void
+    public function decreaseSubscribedByPromotionId(int $promotionId): void
     {
-        $sql = "/*decrease_subscribed*/UPDATE {$this->table} SET num_subscribed=num_subscribed - 1 WHERE 1 AND id={$id}";
+        $sql = "
+        -- decreaseSubscribedByPromotionId
+        UPDATE {$this->table} SET num_subscribed=num_subscribed - 1 WHERE 1 AND id = {$promotionId}
+        ";
         $this->execute($sql);
     }
 
-    public function decrease_confirmed(int $id): void
+    public function decreaseConfirmedByPromotionId(int $promotionId): void
     {
-        $sql = "/*decrease_confirmed*/UPDATE {$this->table} SET num_confirmed=num_confirmed - 1 WHERE 1 AND id={$id}";
+        $sql = "
+        -- decreaseConfirmedByPromotionId
+        UPDATE {$this->table} SET num_confirmed=num_confirmed - 1 WHERE 1 AND id = {$promotionId}
+        ";
         $this->execute($sql);
     }
 
-    public function get_statistics_by_uuid(string $uuid): array
+    public function getPromotionCapStatisticsByPromotionUuid(string $promotionUuid): array
     {
-        if (!$id = $this->get_id_by_uuid($uuid)) return [];
+        if (!$id = $this->getEntityIdByEntityUuid($promotionUuid)) {
+            return [];
+        }
 
-        list($v, $s, $c, $e) = PromotionCapActionType::get_all();
+        list($v, $s, $c, $e) = PromotionCapActionType::getAllPromotionCapTypes();
 
         $sql = "
+        -- getStatistics
         SELECT COUNT(id) n, 'viewed'
         FROM app_promotioncap_actions pa
         WHERE 1

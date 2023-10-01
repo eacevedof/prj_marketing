@@ -1,67 +1,68 @@
 <?php
+
 namespace App\Picklist\Application;
 
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Repositories\App\PicklistRepository;
-use App\Shared\Domain\Repositories\Base\ArrayRepository as BaseArray;
-use App\Shared\Domain\Repositories\App\ArrayRepository as AppArray;
+use App\Shared\Infrastructure\Services\AppService;
 use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Shared\Domain\Repositories\Base\ArrayRepository as BaseArray;
+use App\Shared\Infrastructure\Factories\{RepositoryFactory as RF, ServiceFactory as SF};
+use App\Shared\Domain\Repositories\App\{ArrayRepository as AppArray, PicklistRepository};
 
 //todo quitar AppService? mmm no creo el sf necesita ese tipo
 final class PicklistService extends AppService
 {
-    private PicklistRepository $repopicklist;
-    private AppArray $repoapparray;
-    private BaseArray $repobasearray;
-    private AuthService $auth;
+    private PicklistRepository $picklistRepository;
+    private AppArray $appArrayRepository;
+    private BaseArray $baseArrayRepository;
+    private AuthService $authService;
 
     public function __construct()
     {
-        $this->auth = SF::get_auth();
-        $this->repopicklist = RF::get(PicklistRepository::class);
-        $this->repobasearray = RF::get(BaseArray::class);
-        $this->repoapparray = RF::get(AppArray::class);
+        $this->authService = SF::getAuthService();
+        $this->picklistRepository = RF::getInstanceOf(PicklistRepository::class);
+        $this->baseArrayRepository = RF::getInstanceOf(BaseArray::class);
+        $this->appArrayRepository = RF::getInstanceOf(AppArray::class);
     }
 
-    public function get_countries(): array
+    public function getCountries(): array
     {
-        return $this->repoapparray->get_countries();
+        return $this->appArrayRepository->getCountries();
     }
 
-    public function get_languages(): array
+    public function getLanguages(): array
     {
-        return $this->repoapparray->get_languages();
+        return $this->appArrayRepository->getLanguages();
     }
 
-    public function get_genders(): array
+    public function getGenders(): array
     {
-        return $this->repoapparray->get_genders();
+        return $this->appArrayRepository->getGenders();
     }
 
-    public function get_timezones(): array
+    public function getTimezones(): array
     {
-        return $this->repoapparray->get_timezones();
+        return $this->appArrayRepository->getTimezones();
     }
 
-    public function get_profiles(): array
+    public function getUserProfiles(): array
     {
-        $profiles = $this->repobasearray->get_profiles();
+        $profiles = $this->baseArrayRepository->getAllProfiles();
 
-        if ($this->auth->is_root()) return $profiles;
+        if ($this->authService->isAuthUserRoot()) {
+            return $profiles;
+        }
 
-        if ($this->auth->is_sysadmin()) {
-            $profiles = array_filter($profiles, function ($profile){
+        if ($this->authService->isAuthUserSysadmin()) {
+            $profiles = array_filter($profiles, function ($profile) {
                 $notin = [UserProfileType::ROOT];
                 return !in_array($profile["key"], $notin);
             });
             return array_values($profiles);
         }
 
-        if ($this->auth->is_business_owner()) {
-            $profiles = array_filter($profiles, function ($profile){
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $profiles = array_filter($profiles, function ($profile) {
                 $notin = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN];
                 return !in_array($profile["key"], $notin);
             });
@@ -69,37 +70,37 @@ final class PicklistService extends AppService
         }
 
         //business manager
-        $profiles = array_filter($profiles, function ($profile){
+        $profiles = array_filter($profiles, function ($profile) {
             $notin = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN, UserProfileType::BUSINESS_OWNER];
             return !in_array($profile["key"], $notin);
         });
         return array_values($profiles);
     }
 
-    public function get_promotion_types(): array
+    public function getPromotionTypes(): array
     {
-        return $this->repoapparray->get_promotion_types(
-            $this->auth->get_idowner()
+        return $this->appArrayRepository->getPromotionTypesByIdOwner(
+            $this->authService->getIdOwner()
         );
     }
 
-    public function get_users_by_profile(string $profileid): array
+    public function getUsersByProfile(string $profileId): array
     {
-        $users = $this->repopicklist->get_users_by_profile($profileid);
+        $users = $this->picklistRepository->getUsersByIdProfile($profileId);
 
-        if ($this->auth->is_business_owner()) {
-            $idparent = $this->auth->get_user()["id"];
-            $users = array_filter($users, function ($user) use($idparent) {
-                return in_array($user["key"], [$idparent,""]) ;
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $idParent = $this->authService->getAuthUserArray()["id"];
+            $users = array_filter($users, function ($user) use ($idParent) {
+                return in_array($user["key"], [$idParent,""]) ;
             });
             $users = array_values($users);
             return $users;
         }
 
-        if ($this->auth->is_business_manager()) {
-            $idparent = $this->auth->get_user()["id_parent"];
-            $users = array_filter($users, function ($user) use($idparent) {
-                return in_array($user["key"], [$idparent,""]) ;
+        if ($this->authService->hasAuthUserBusinessManagerProfile()) {
+            $idParent = $this->authService->getAuthUserArray()["id_parent"];
+            $users = array_filter($users, function ($user) use ($idParent) {
+                return in_array($user["key"], [$idParent,""]) ;
             });
             $users = array_values($users);
             return $users;
@@ -108,26 +109,29 @@ final class PicklistService extends AppService
         return $users;
     }
 
-    public function get_business_owners(): array
+    public function getBusinessOwners(): array
     {
-        return $this->repopicklist->get_business_owners();
+        return $this->picklistRepository->getAllBusinessOwners();
     }
 
-    public function get_users(?int $notIdUser=null): array
+    public function getUsers(?int $notIdUser = null): array
     {
-        $users = $this->repopicklist->get_users();
-        if (!$notIdUser)
+        $users = $this->picklistRepository->getAllUsers();
+        if (!$notIdUser) {
             return $users;
+        }
         $idsuer = array_search($notIdUser, $users);
-        if($idsuer) unset($users[$idsuer]);
+        if ($idsuer) {
+            unset($users[$idsuer]);
+        }
         return $users;
     }
 
-    public function get_not_or_yes(array $conf = ["n" => 0, "y" => 1]): array
+    public function getNotOrYesOptions(array $conf = ["n" => 0, "y" => 1]): array
     {
         return [
-            [ "key" => $conf["n"], "value" =>__("No")],
-            [ "key" => $conf["y"], "value" =>__("Yes")],
+            [ "key" => $conf["n"], "value" => __("No")],
+            [ "key" => $conf["y"], "value" => __("Yes")],
         ];
     }
 }

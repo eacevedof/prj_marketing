@@ -7,85 +7,87 @@
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Users\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use Exception;
 use App\Picklist\Application\PicklistService;
+use App\Shared\Domain\Enums\{PageType, ResponseType};
 use App\Restrict\Users\Application\UsersInsertService;
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Domain\Enums\PageType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
-use App\Shared\Domain\Enums\ResponseType;
 use App\Shared\Infrastructure\Exceptions\FieldsException;
-use \Exception;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Restrict\Users\Domain\Enums\{UserPolicyType, UserProfileType};
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class UsersInsertController extends RestrictController
 {
-    private PicklistService $picklist;
-    
     public function __construct()
     {
         parent::__construct();
-        $this->_if_noauth_tologin();
-        $this->picklist = SF::get(PicklistService::class);
+        $this->_redirectToLoginIfNoAuthUser();
     }
 
     //@modal
     public function create(): void
     {
-        if (!$this->auth->is_user_allowed(UserPolicyType::USERS_WRITE)) {
-            $this->add_var(PageType::TITLE, __("Unauthorized"))
-                ->add_var(PageType::H1, __("Unauthorized"))
-                ->add_var("ismodal",1)
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::USERS_WRITE)) {
+            $this->addGlobalVar(PageType::TITLE, __("Unauthorized"))
+                ->addGlobalVar(PageType::H1, __("Unauthorized"))
+                ->addGlobalVar("ismodal", 1)
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("403")
+                ->renderViewOnly();
         }
 
-        $this->add_var(PageType::CSRF, $this->csrf->get_token())
-            ->set_template("insert")
-            ->add_var(PageType::H1, __("New user"))
-            ->add_var("profiles", $this->picklist->get_profiles())
-            ->add_var("parents", $this->picklist->get_users_by_profile(UserProfileType::BUSINESS_OWNER))
-            ->add_var("countries", $this->picklist->get_countries())
-            ->add_var("languages", $this->picklist->get_languages())
-            ->render_nl();
+        $picklistService = SF::getInstanceOf(PicklistService::class);
+        $this->addGlobalVar(PageType::CSRF, $this->csrfService->getCsrfToken())
+            ->setPartViewName("insert")
+            ->addGlobalVar(PageType::H1, __("New user"))
+            ->addGlobalVar("profiles", $picklistService->getUserProfiles())
+            ->addGlobalVar("parents", $picklistService->getUsersByProfile(UserProfileType::BUSINESS_OWNER))
+            ->addGlobalVar("countries", $picklistService->getCountries())
+            ->addGlobalVar("languages", $picklistService->getLanguages())
+            ->renderViewOnly();
     }//create
 
     //@post
     public function insert(): void
     {
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
-        if (!$this->csrf->is_valid($this->_get_csrf()))
-            $this->_get_json()
-                ->set_code(ResponseType::FORBIDDEN)
-                ->set_error([__("Invalid CSRF token")])
+        if (!$this->csrfService->isValidCsrfToken($this->_getCsrfTokenFromRequest())) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::FORBIDDEN)
+                ->setErrors([__("Invalid CSRF token")])
                 ->show();
-        
+        }
+
         try {
-            $insert = SF::get_callable(UsersInsertService::class, $this->request->get_post());
-            $result = $insert();
-            $this->_get_json()->set_payload([
+            /**
+             * @type UsersInsertService $usersInsertService
+             */
+            $usersInsertService = SF::getCallableService(UsersInsertService::class, $this->requestComponent->getPost());
+            $userInserted = $usersInsertService();
+            $this->_getJsonInstanceFromResponse()->setPayload([
                 "message" => __("{0} successfully created", __("User")),
-                "result" => $result,
+                "result" => $userInserted,
             ])->show();
         }
         catch (FieldsException $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([
-                    ["fields_validation" => $insert->get_errors()]
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([
+                    ["fields_validation" => $usersInsertService->getErrors()]
                 ])
                 ->show();
         }
         catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
 

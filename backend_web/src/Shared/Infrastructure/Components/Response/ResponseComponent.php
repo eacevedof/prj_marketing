@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Shared\Infrastructure\Components\Response;
+
 use TheFramework\Helpers\HelperJson;
 
 final class ResponseComponent
@@ -9,10 +10,10 @@ final class ResponseComponent
 
     public function json(): HelperJson
     {
-        return new HelperJson();
+        return new HelperJson;
     }
 
-    public function add_header(string $key, string $value=""): self
+    public function addHeader(string $key, string $value = ""): self
     {
         $this->headers[] = "$key: $value";
         return $this;
