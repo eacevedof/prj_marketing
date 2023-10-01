@@ -2,11 +2,12 @@
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
  * @var array $promotionui
- * @var string $promotionslug
+ * @var string $promotionSlug
  */
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
-$url = Routes::url("terms.by-promotion", ["promoslug"=>$promotionslug]);
-$businessslug = $result["businessdata"]["slug"] ?? "";
+
+$url = Routes::getUrlByRouteName("terms.by-promotion", ["promotionSlug" => $promotionSlug]);
+$businessSlug = $result["businessdata"]["slug"] ?? "";
 $texts = [
     "tr00" => __("Subscribe"),
     "tr01" => __("Processing..."),
@@ -43,16 +44,17 @@ $texts = [
     ),
 ];
 $result = [
-    "inputs" => $uihelp->get_inputs(),
+    "inputs" => $uihelp->getInputs(),
     "languages" => $languages,
     "countries" => $countries,
     "genders" => $genders,
 ];
+//dd($genders);
 ?>
 <form-promotion-cap-insert
-    businessslug="<?=$businessslug?>"
+    businessslug="<?=$businessSlug?>"
     promotionuuid="<?=$promotionuuid?>"
-    texts="<?php $this->_echo_jslit($texts);?>"
-    fields="<?php $this->_echo_jslit($result);?>"
+    texts="<?php $this->_echoJsLit($texts);?>"
+    fields="<?php $this->_echoJsLit($result);?>"
 />
 <script type="module" src="/assets/js/open/promotioncap/form-promotion-cap-insert.js"></script>

@@ -12,50 +12,50 @@ $helper = HF::get(BusinessDataHelper::class);
 <div id="businessdata" class="tab-pane">
   <ol>
     <li><b><?=__("Business name")?>:</b>&ensp;<span><?=$businessdata["business_name"] ?? ""?></span></li>
-    <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$helper->get_link_domain($businessdata, "slug")?></li>
+    <li><b><?=__("Slug")?>:</b>&ensp;<span><?=$helper->getBlankLinkDomain($businessdata, "slug")?></li>
     <li><b><?=__("Timezone")?>:</b>&ensp;<span><?=$businessdata["e_timezone"] ?? ""?></span></li>
-    <li><b><?=__("Url logo 1")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_1")?></li>
-    <li><b><?=__("Url logo 2")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_2")?></li>
-    <li><b><?=__("Url logo 3")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "user_logo_3")?></li>
-    <li><b><?=__("Url favicon")?>:</b>&ensp;<?=$helper->get_img_link($businessdata, "url_favicon")?></li>
+    <li><b><?=__("Url logo 1")?>:</b>&ensp;<?=$helper->getImgBlankLink($businessdata, "user_logo_1")?></li>
+    <li><b><?=__("Url logo 2")?>:</b>&ensp;<?=$helper->getImgBlankLink($businessdata, "user_logo_2")?></li>
+    <li><b><?=__("Url logo 3")?>:</b>&ensp;<?=$helper->getImgBlankLink($businessdata, "user_logo_3")?></li>
+    <li><b><?=__("Url favicon")?>:</b>&ensp;<?=$helper->getImgBlankLink($businessdata, "url_favicon")?></li>
   </ol>
   <br/>
   <ol>
-    <li><b><?=__("Head bg color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "head_bgcolor")?></li>
-    <li><b><?=__("Head color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "head_color")?></li>
+    <li><b><?=__("Head bg color")?>:</b>&ensp;<?=$helper->getSpanColored($businessdata, "head_bgcolor")?></li>
+    <li><b><?=__("Head color")?>:</b>&ensp;<?=$helper->getSpanColored($businessdata, "head_color")?></li>
     <li>
       <b><?=__("Url head bg image")?>:</b>&ensp;
-      <?=$helper->get_img_link($businessdata, "head_bgimage")?>
+      <?=$helper->getImgBlankLink($businessdata, "head_bgimage")?>
     </li>
 
-    <li><b><?=__("Body bg color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "body_bgcolor")?></li></li>
-    <li><b><?=__("Body color")?>:</b>&ensp;<?=$helper->get_color($businessdata, "body_color")?></li>
+    <li><b><?=__("Body bg color")?>:</b>&ensp;<?=$helper->getSpanColored($businessdata, "body_bgcolor")?></li></li>
+    <li><b><?=__("Body color")?>:</b>&ensp;<?=$helper->getSpanColored($businessdata, "body_color")?></li>
     <li>
       <b><?=__("Url body bg image")?>:</b>&ensp;
-      <?=$helper->get_img_link($businessdata, "body_bgimage")?>
+      <?=$helper->getImgBlankLink($businessdata, "body_bgimage")?>
     </li>
   </ol>
   <br/>
   <ol>
     <li>
       <b><?=__("Url business")?>:</b>&ensp;
-      <?=$helper->get_link($businessdata, "url_business")?>
+      <?=$helper->getBlankLink($businessdata, "url_business")?>
     </li>
     <li>
       <b><?=__("Url Facebook")?>:</b>&ensp;
-      <?=$helper->get_link($businessdata, "url_social_fb")?>
+      <?=$helper->getBlankLink($businessdata, "url_social_fb")?>
     </li>
     <li>
       <b><?=__("Url Instagram")?>:</b>&ensp;
-      <?=$helper->get_link($businessdata, "url_social_ig")?>
+      <?=$helper->getBlankLink($businessdata, "url_social_ig")?>
     </li>
     <li>
       <b><?=__("Url Twitter")?>:</b>&ensp;
-      <?=$helper->get_link($businessdata, "url_social_twitter")?>
+      <?=$helper->getBlankLink($businessdata, "url_social_twitter")?>
     </li>
     <li>
       <b><?=__("Url Tiktok")?>:</b>&ensp;
-      <?=$helper->get_link($businessdata, "url_social_tiktok")?>
+      <?=$helper->getBlankLink($businessdata, "url_social_tiktok")?>
     </li>
   </ol>
   <br/>

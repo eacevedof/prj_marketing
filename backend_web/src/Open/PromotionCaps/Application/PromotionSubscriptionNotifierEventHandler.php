@@ -1,25 +1,18 @@
 <?php
+
 namespace App\Open\PromotionCaps\Application;
 
+use Exception;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Domain\Bus\Event\IEventSubscriber;
-use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Infrastructure\Traits\LogTrait;
-use App\Shared\Infrastructure\Traits\RequestTrait;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapConfirmedEvent;
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
-use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
-use App\Shared\Infrastructure\Helpers\QrHelper;
-use App\Shared\Infrastructure\Components\Email\FuncEmailComponent;
-use App\Shared\Infrastructure\Components\Email\FromTemplate;
-use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
+use App\Shared\Domain\Bus\Event\{IEvent, IEventSubscriber};
 use App\Open\PromotionCaps\Domain\PromotionCapUsersRepository;
+use App\Shared\Infrastructure\Traits\{LogTrait, RequestTrait};
+use App\Restrict\Subscriptions\Domain\Events\SubscriptionExecutedEvent;
+use App\Shared\Infrastructure\Components\Email\{FromTemplate, FuncEmailComponent};
+use App\Shared\Infrastructure\Helpers\{QrHelper, RoutesHelper as Routes, UrlDomainHelper};
+use App\Open\PromotionCaps\Domain\Events\{PromotionCapConfirmedEvent, PromotionCapUserSubscribedEvent};
 
-use \Exception;
+use App\Shared\Infrastructure\Factories\{ComponentFactory as CF, HelperFactory as HF, RepositoryFactory as RF};
 
 final class PromotionSubscriptionNotifierEventHandler extends AppService implements IEventSubscriber
 {
@@ -28,57 +21,61 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
 
     private UrlDomainHelper $domain;
     private string $lang;
-    private array $tpls;
+    private array $emailTemplatesPaths;
 
     public function __construct()
     {
         //esto se hace en el listener no para cada llamada del evento
-        $this->_load_request();
-        $this->lang = $this->request->get_lang();
+        $this->_loadRequestComponentInstance();
+        $this->lang = $this->requestComponent->getLang();
 
-        $this->domain = UrlDomainHelper::get_instance();
-        $this->tpls = [
+        $this->domain = UrlDomainHelper::getInstance();
+        $this->emailTemplatesPaths = [
             "subscription" => realpath(__DIR__."/../Infrastructure/Views/email/email-subscription.tpl"),
             "confirmation" => realpath(__DIR__."/../Infrastructure/Views/email/email-confirmation.tpl"),
             "execution" => realpath(__DIR__."/../Infrastructure/Views/email/email-execution.tpl"),
         ];
     }
 
-    private function _on_subscription(IEvent $domevent): void
+    private function _onSubscription(IEvent $domainEvent): void
     {
-        if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return;
+        if(get_class($domainEvent) !== PromotionCapUserSubscribedEvent::class) {
+            return;
+        }
 
-        $pathtpl = $this->tpls["subscription"];
-        if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
+        $pathSubscriptionTemplate = $this->emailTemplatesPaths["subscription"];
+        if (!is_file($pathSubscriptionTemplate)) {
+            throw new Exception("Wrong path $pathSubscriptionTemplate");
+        }
 
-        $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
+        $data = RF::getInstanceOf(PromotionCapUsersRepository::class)->getSubscriptionData($domainEvent->aggregateId());
 
-        $url = Routes::url("business.space", ["businessslug" => $data["businessslug"]]);
-        $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $url = Routes::getUrlByRouteName("business.space", ["businessSlug" => $data["businessslug"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
+        $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["space_link"] = $link;
 
-        $url = Routes::url("subscription.confirm", ["businessslug" => $data["businessslug"], "subscriptionuuid"=>$data["subscode"]]);
-        $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $url = Routes::getUrlByRouteName("subscription.confirm", ["businessSlug" => $data["businessslug"], "subscriptionuuid" => $data["subscode"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
+        $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["confirm_link"] = $link;
 
-        $url = Routes::url("subscription.cancel", ["businessslug"=>$data["businessslug"], "subscriptionuuid"=>$data["subscode"]]);
-        $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $url = Routes::getUrlByRouteName("subscription.cancel", ["businessSlug" => $data["businessslug"], "subscriptionuuid" => $data["subscode"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
+        $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
-        $url = Routes::url("terms.by-promotion", ["promoslug"=>$data["promoslug"]]);
-        $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $url = Routes::getUrlByRouteName("terms.by-promotion", ["promotionSlug" => $data["promoslug"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
+        $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["terms_link"] = $link;
 
-        $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
-        $this->log($html,"_on_subscription");
+        $html = FromTemplate::getFileContent($pathSubscriptionTemplate, ["data" => $data]);
+        $this->logSql($html, "_on_subscription");
         /**
          * @var FuncEmailComponent $email
          */
-        $email = CF::get(FuncEmailComponent::class);
+        $email = CF::getInstanceOf(FuncEmailComponent::class);
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
@@ -88,47 +85,51 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         ;
     }
 
-    private function _on_confirmation(IEvent $domevent): void
+    private function _onSubscriptionConfirmation(IEvent $domainEvent): void
     {
-        if(get_class($domevent)!==PromotionCapConfirmedEvent::class) return;
+        if(get_class($domainEvent) !== PromotionCapConfirmedEvent::class) {
+            return;
+        }
 
-        $pathtpl = $this->tpls["confirmation"];
-        if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
+        $pathConfirmationTpl = $this->emailTemplatesPaths["confirmation"];
+        if (!is_file($pathConfirmationTpl)) {
+            throw new Exception("Wrong path $pathConfirmationTpl");
+        }
 
-        $data = RF::get(PromotionCapUsersRepository::class)->get_subscription_data($domevent->aggregate_id());
+        $data = RF::getInstanceOf(PromotionCapUsersRepository::class)->getSubscriptionData($domainEvent->aggregateId());
 
-        $url = Routes::url("business.space", ["businessslug" => $data["businessslug"]]);
-        $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $url = Routes::getUrlByRouteName("business.space", ["businessSlug" => $data["businessslug"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
+        $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["space_link"] = $link;
 
-        $url = Routes::url("user.points", ["businessslug"=>$data["businessslug"], "capuseruuid"=>$data["capusercode"]]);
-        $link = $this->domain->get_full_url($url);
+        $url = Routes::getUrlByRouteName("user.points", ["businessSlug" => $data["businessslug"], "capuseruuid" => $data["capusercode"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
         $data["points_link"] = $link;
 
-        $url = Routes::url("subscription.cancel", ["businessslug"=>$data["businessslug"], "subscriptionuuid"=>$subsuuid = $data["subscode"]]);
-        $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $url = Routes::getUrlByRouteName("subscription.cancel", ["businessSlug" => $data["businessslug"], "subscriptionuuid" => $subscriptionUuid = $data["subscode"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
+        $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
 
-        $url = Routes::url("terms.by-promotion", ["promoslug"=>$data["promoslug"]]);
-        $link = $this->domain->get_full_url($url);
-        $link .= $domevent->is_test() ? "?mode=test" : "";
+        $url = Routes::getUrlByRouteName("terms.by-promotion", ["promotionSlug" => $data["promoslug"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
+        $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["terms_link"] = $link;
 
-        $value = "$subsuuid-{$data["execode"]}";
-        $dateexec = str_replace(["-",":"," "],["","",""],$data["promodateexec"]);
-        $filename = "$subsuuid-{$dateexec}";
-        $link = HF::get(QrHelper::class, ["value" => $value, "filename"=>$filename ])->save_image()->get_public_url();
+        $value = "$subscriptionUuid-{$data["execode"]}";
+        $promotionExecutionDate = str_replace(["-",":"," "], ["","",""], $data["promodateexec"]);
+        $filename = "$subscriptionUuid-{$promotionExecutionDate}";
+        $link = HF::get(QrHelper::class, ["value" => $value, "filename" => $filename ])->saveImage()->getPublicUrl();
         //$link = "https://res.cloudinary.com/ioedu/image/upload/v1660317474/prj-marketing/partners/codigo-qr-ejemplo.png";
         $data["qr_link"] = $link;
 
-        $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
-        $this->log($html,"on_confirmation");
+        $html = FromTemplate::getFileContent($pathConfirmationTpl, ["data" => $data]);
+        $this->logSql($html, "on_confirmation");
         /**
          * @var FuncEmailComponent $email
          */
-        $email = CF::get(FuncEmailComponent::class);
+        $email = CF::getInstanceOf(FuncEmailComponent::class);
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
@@ -138,28 +139,32 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         ;
     }
 
-    private function _on_execution(IEvent $domevent): void
+    private function _onSubscriptionExecution(IEvent $domainEvent): void
     {
-        if(get_class($domevent)!==SubscriptionExecutedEvent::class) return;
+        if(get_class($domainEvent) !== SubscriptionExecutedEvent::class) {
+            return;
+        }
 
-        $pathtpl = $this->tpls["execution"];
-        if (!is_file($pathtpl)) throw new Exception("Wrong path $pathtpl");
+        $pathExecutionTpl = $this->emailTemplatesPaths["execution"];
+        if (!is_file($pathExecutionTpl)) {
+            throw new Exception("Wrong path $pathExecutionTpl");
+        }
 
-        $data = RF::get(PromotionCapUsersRepository::class)->get_data_by_subsuuid($domevent->uuid());
+        $data = RF::getInstanceOf(PromotionCapUsersRepository::class)->getDataByPromotionCapSubscriptionUuid($domainEvent->uuid());
 
-        $url = Routes::url("business.space", ["businessslug" => $data["businessslug"]]);
-        $link = $this->domain->get_full_url($url);
+        $url = Routes::getUrlByRouteName("business.space", ["businessSlug" => $data["businessslug"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
         $data["space_link"] = $link;
 
-        $url = Routes::url("user.points", ["businessslug"=>$data["businessslug"], "capuseruuid"=>$data["capusercode"]]);
-        $link = $this->domain->get_full_url($url);
+        $url = Routes::getUrlByRouteName("user.points", ["businessSlug" => $data["businessslug"], "capuseruuid" => $data["capusercode"]]);
+        $link = $this->domain->getDomainUrlWithAppend($url);
         $data["points_link"] = $link;
-        $html = FromTemplate::get_content($pathtpl, ["data"=>$data]);
-        $this->log($html,"on_confirmation");
+        $html = FromTemplate::getFileContent($pathExecutionTpl, ["data" => $data]);
+        $this->logSql($html, "on_confirmation");
         /**
          * @var FuncEmailComponent $email
          */
-        $email = CF::get(FuncEmailComponent::class);
+        $email = CF::getInstanceOf(FuncEmailComponent::class);
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
             ->add_to($data["email"])
@@ -169,13 +174,13 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         ;
     }
 
-    public function on_event(IEvent $domevent): IEventSubscriber
+    public function onSubscribedEvent(IEvent $domainEvent): IEventSubscriber
     {
-        $this->request->set_lang("es");
-        $this->_on_subscription($domevent);
-        $this->_on_confirmation($domevent);
-        $this->_on_execution($domevent);
-        $this->request->set_lang($this->lang);
+        $this->requestComponent->setLang("es");
+        $this->_onSubscription($domainEvent);
+        $this->_onSubscriptionConfirmation($domainEvent);
+        $this->_onSubscriptionExecution($domainEvent);
+        $this->requestComponent->setLang($this->lang);
         return $this;
     }
 }

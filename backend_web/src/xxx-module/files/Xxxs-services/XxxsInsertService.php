@@ -23,8 +23,8 @@ final class XxxsInsertService extends AppService
 {
     use RequestTrait;
 
-    private AuthService $auth;
-    private array $authuser;
+    private AuthService $authService;
+    private array $authUserArray;
     private XxxRepository $repoxxx;
     private FieldsValidator $validator;
     private XxxEntity $entityxxx;
@@ -34,37 +34,37 @@ final class XxxsInsertService extends AppService
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
-        $this->datecomp = CF::get(DateComponent::class);
+        $this->datecomp = CF::getInstanceOf(DateComponent::class);
         $this->_map_dates($input);
         $this->input = $input;
-        $this->entityxxx = MF::get(XxxEntity::class);
-        $this->validator = VF::get($this->input, $this->entityxxx);
+        $this->entityxxx = MF::getInstanceOf(XxxEntity::class);
+        $this->validator = VF::getFieldValidator($this->input, $this->entityxxx);
 
-        $this->repoxxx = RF::get(XxxRepository::class);
-        $this->repoapparray = RF::get(ArrayRepository::class);
-        $this->authuser = $this->auth->get_user();
-        $this->textformat = CF::get(TextComponent::class);
+        $this->repoxxx = RF::getInstanceOf(XxxRepository::class);
+        $this->repoapparray = RF::getInstanceOf(ArrayRepository::class);
+        $this->authUserArray= $this->authService->getAuthUserArray();
+        $this->textformat = CF::getInstanceOf(TextComponent::class);
     }
 
     private function _map_dates(array &$input): void
     {
         $date = $input["date_from"] ?? "";
-        $date = $this->datecomp->to_db($date);
+        $date = $this->datecomp->getDateInDbFormat($date);
         $input["date_from"] = $date;
         $date = $input["date_to"] ?? "";
-        $date = $this->datecomp->to_db($date);
+        $date = $this->datecomp->getDateInDbFormat($date);
         $input["date_to"] = $date;
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) return;
 
-        if(!$this->auth->is_user_allowed(UserPolicyType::XXXS_WRITE))
-            $this->_exception(
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::XXXS_WRITE))
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
@@ -72,7 +72,7 @@ final class XxxsInsertService extends AppService
 
     private function _skip_validation(): self
     {
-        $this->validator->add_skip("id");
+        $this->validator->addSkipableField("id");
         return $this;
     }
 
@@ -86,20 +86,20 @@ final class XxxsInsertService extends AppService
 
     public function __invoke(): array
     {
-        if (!$insert = $this->_get_req_without_ops($this->input))
-            $this->_exception(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
+        if (!$insert = $this->_getRequestWithoutOperations($this->input))
+            $this->_throwException(__("Empty data"),ExceptionType::CODE_BAD_REQUEST);
 
-        if ($errors = $this->_skip_validation()->_add_rules()->get_errors()) {
-            $this->_set_errors($errors);
+        if ($errors = $this->_skip_validation()->_add_rules()->getErrors()) {
+            $this->_setErrors($errors);
             throw new FieldsException(__("Fields validation errors"));
         }
 
-        $insert = $this->entityxxx->map_request($insert);
+        $insert = $this->entityxxx->getAllKeyValueFromRequest($insert);
         $insert["uuid"] = uniqid();
-        $insert["slug"] = $this->textformat->slug($insert["description"]);
-        if (!$this->auth->is_system()) $insert["id_owner"] = $this->auth->get_idowner();
+        $insert["slug"] = $this->textformat->getSlug($insert["description"]);
+        if (!$this->authService->hasAuthUserSystemProfile()) $insert["id_owner"] = $this->authService->getIdOwner();
 
-        $this->entityxxx->add_sysinsert($insert, $this->authuser["id"]);
+        $this->entityxxx->addSysInsert($insert, $this->authUserArray["id"]);
         $id = $this->repoxxx->insert($insert);
 
         return [

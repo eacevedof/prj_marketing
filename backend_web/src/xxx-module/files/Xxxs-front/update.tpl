@@ -43,11 +43,11 @@ $result = [
     <div class="tab-content border-start border-bottom border-right border-top-0 p-2 br-dark">
       <div id="main" class="tab-pane active">
         <form-xxx-update
-          csrf=<?php $this->_echo_js($csrf);?>
+          csrf=<?php $this->_echoJs($csrf);?>
 
-          texts="<?php $this->_echo_jslit($texts);?>"
+          texts="<?php $this->_echoJsLit($texts);?>"
 
-          fields="<?php $this->_echo_jslit($result);?>"
+          fields="<?php $this->_echoJsLit($result);?>"
         />
       </div>
     </div><!--tab-content-->

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Boot;
 
 use PHPUnit\Framework\TestCase;

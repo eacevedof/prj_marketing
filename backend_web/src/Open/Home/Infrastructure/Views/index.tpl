@@ -62,7 +62,7 @@
   ?>
 </main>
 <?php
-$this->_element_view("form-home-contact-send");
+$this->_includeViewElement("form-home-contact-send");
 ?>
 <script type="module">
 import set_cookie, {get_cookie} from "/assets/js/common/cookie.js"
@@ -93,7 +93,7 @@ langs.forEach(anchor => anchor.addEventListener("click", ()=>{
 //$btncta.click()
 window.addEventListener("DOMContentLoaded", ()=>{
   let lang = get_cookie("lang")
-  if (!lang) lang = <?php $this->_echo_js(getenv("APP_DEFAULT_LANG") ?? "es") ?>;
+  if (!lang) lang = <?php $this->_echoJs(getenv("APP_DEFAULT_LANG") ?? "es") ?>;
   set_cookie("lang", lang)
 
   const active = "nav-li-item-active"

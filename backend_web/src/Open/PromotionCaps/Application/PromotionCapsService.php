@@ -1,12 +1,12 @@
 <?php
+
 namespace App\Open\PromotionCaps\Application;
 
-use App\Restrict\Promotions\Domain\PromotionRepository;
-use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\BusinessData\Domain\BusinessDataRepository;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Restrict\BusinessData\Domain\BusinessDataRepository;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Restrict\Promotions\Domain\{PromotionRepository, PromotionUiRepository};
 
 final class PromotionCapsService extends AppService
 {
@@ -20,40 +20,45 @@ final class PromotionCapsService extends AppService
 
     public function __construct(array $input)
     {
-        if (!$input["businessslug"])
-            $this->_exception(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
+        if (!$input["businessslug"]) {
+            $this->_throwException(__("No business account provided"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        if (!$input["promotionslug"])
-            $this->_exception(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
+        if (!$input["promotionslug"]) {
+            $this->_throwException(__("No promotion name provided"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
         $this->input = $input;
 
-        $this->repobusinessdata = RF::get(BusinessDataRepository::class);
-        $this->repopromotion = RF::get(PromotionRepository::class);
-        $this->repopromotionui = RF::get(PromotionUiRepository::class);
+        $this->repobusinessdata = RF::getInstanceOf(BusinessDataRepository::class);
+        $this->repopromotion = RF::getInstanceOf(PromotionRepository::class);
+        $this->repopromotionui = RF::getInstanceOf(PromotionUiRepository::class);
     }
 
     private function _load_businessdata(): void
     {
-        $businessslug = $this->input["businessslug"];
-        $this->businesssdata = $this->repobusinessdata->get_by_slug($businessslug);
-        if (!$this->businesssdata)
-            $this->_exception(__("Business account {0} not found!", $businessslug), ExceptionType::CODE_NOT_FOUND);
+        $businessSlug = $this->input["businessslug"];
+        $this->businesssdata = $this->repobusinessdata->getBusinessDataByBusinessDataSlug($businessSlug);
+        if (!$this->businesssdata) {
+            $this->_throwException(__("Business account {0} not found!", $businessSlug), ExceptionType::CODE_NOT_FOUND);
+        }
     }
 
     private function _load_promotion(): void
     {
         $promotionslug = $this->input["promotionslug"];
-        $this->promotion = $this->repopromotion->get_by_slug($promotionslug);
-        if (!$this->promotion)
-            $this->_exception(__("{0} {1} not found!", __("Promotion"), $promotionslug), ExceptionType::CODE_NOT_FOUND);
+        $this->promotion = $this->repopromotion->getPromotionByPromotionSlug($promotionslug);
+        if (!$this->promotion) {
+            $this->_throwException(__("{0} {1} not found!", __("Promotion"), $promotionslug), ExceptionType::CODE_NOT_FOUND);
+        }
     }
 
     private function _load_promotionui(): void
     {
-        $this->promotionui = $this->repopromotionui->get_by_promotion((int) $this->promotion["id"]);
-        if (!$this->promotionui)
-            $this->_exception(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
+        $this->promotionui = $this->repopromotionui->getPromotionUiByIdPromotion((int) $this->promotion["id"]);
+        if (!$this->promotionui) {
+            $this->_throwException(__("Missing promotion UI configuration!"), ExceptionType::CODE_FAILED_DEPENDENCY);
+        }
     }
 
     public function __invoke(): array

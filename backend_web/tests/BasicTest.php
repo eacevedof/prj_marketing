@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests;
 
 use Tests\Boot\AbsTestBase;
@@ -12,6 +13,6 @@ final class BasicTest extends AbsTestBase
 
     public function testOk()
     {
-        $this->assertSame(true, 1=="1");
+        $this->assertSame(true, 1 == "1");
     }
 }

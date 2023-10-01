@@ -1,28 +1,30 @@
 <?php
+
 namespace App\Restrict\Login\Application;
 
+use App\Shared\Domain\Enums\SessionType;
+use App\Restrict\Auth\Application\AuthService;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Domain\Enums\SessionType;
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 final class ModulesService
 {
-    private AuthService $auth;
-    private array $permissions;
+    private AuthService $authService;
+    private array $allowedPolicies;
     private array $modules;
 
     public function __construct()
     {
-        $this->auth = SF::get_auth();
-        $this->permissions = $this->auth->get_user()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
-        if ($this->auth->is_root_super())
-            $this->permissions = UserPolicyType::get_all();
-        $this->_load_modules();
+        $this->authService = SF::getAuthService();
+        $this->allowedPolicies = $this->authService->getAuthUserArray()[SessionType::AUTH_USER_PERMISSIONS] ?? [];
+        if ($this->authService->isAuthUserSuperRoot()) {
+            $this->allowedPolicies = UserPolicyType::getAllPolicies();
+        }
+        $this->_loadModules();
     }
 
-    private function _load_modules(): void
+    private function _loadModules(): void
     {
         $this->modules = [
             "users" => [
@@ -57,7 +59,7 @@ final class ModulesService
                         "url" => "/restrict/subscriptions",
                     ],
                     "edit" => [
-                        "url" => Routes::url("qr.validate"),
+                        "url" => Routes::getUrlByRouteName("qr.validate"),
                     ],
                 ]
             ],
@@ -74,17 +76,17 @@ final class ModulesService
 
     }// _load_modules
 
-    private function _has_policy(string $policy): bool
+    private function _isAllowedPolicy(string $policy): bool
     {
-        return in_array($policy, $this->permissions);
+        return in_array($policy, $this->allowedPolicies);
     }
-    
-    private function _exclude_nowrite(array &$modules): void
+
+    private function _removeNoWriteableActions(array &$modules): void
     {
         $tmp = $modules;
         foreach ($tmp as $module => $config) {
             $policy = "$module:write";
-            if (!$this->_has_policy($policy)) {
+            if (!$this->_isAllowedPolicy($policy)) {
                 unset($tmp[$module]["actions"]["create"]);
                 unset($tmp[$module]["actions"]["edit"]);
             }
@@ -92,47 +94,52 @@ final class ModulesService
         $modules = $tmp;
     }
 
-    private function _exclude_noread(array &$modules): void
+    private function _removeNoReadableActions(array &$modules): void
     {
         $tmp = $modules;
         foreach ($tmp as $module => $config) {
-            $policyr = "$module:read";
-            $policyw = "$module:write";
-            if (!($this->_has_policy($policyr) || $this->_has_policy($policyw)))
+            $policyRead = "$module:read";
+            $policyWrite = "$module:write";
+            if (!(
+                $this->_isAllowedPolicy($policyRead) || $this->_isAllowedPolicy($policyWrite)
+            )) {
                 unset($tmp[$module]["actions"]["search"]);
+            }
         }
         $modules = $tmp;
     }
 
-    private function _exclude_empty(array &$modules): void
+    private function _removeEmptyActions(array &$modules): void
     {
         $tmp = $modules;
         foreach ($tmp as $module => $config) {
-            if (!$tmp[$module]["actions"])
+            if (!$tmp[$module]["actions"]) {
                 unset($tmp[$module]);
+            }
         }
         $modules = $tmp;
     }
 
-    private function _get_filtered_modules(): array
+    private function _getFinalAllowedModules(): array
     {
         $modules = $this->modules;
-        if ($this->auth->is_root() && !$this->permissions)
+        if ($this->authService->isAuthUserRoot() && !$this->allowedPolicies) {
             return $modules;
-        $this->_exclude_nowrite($modules);
-        $this->_exclude_noread($modules);
-        $this->_exclude_empty($modules);
+        }
+        $this->_removeNoWriteableActions($modules);
+        $this->_removeNoReadableActions($modules);
+        $this->_removeEmptyActions($modules);
         return $modules;
     }
-        
+
     public function __invoke(): array
     {
-        return $this->_get_filtered_modules();
+        return $this->_getFinalAllowedModules();
     }
 
-    public function get_menu(): array
+    public function getMenuConfiguration(): array
     {
-        $modules = $this->_get_filtered_modules();
+        $modules = $this->_getFinalAllowedModules();
         $tmp = [];
         foreach ($modules as $module => $config) {
             $tmp[$module] = [

@@ -10,60 +10,68 @@ final class DatatableComponent
     public function __construct(array $request)
     {
         $this->request = $request;
-        $this->_load_fields();
+        $this->_loadFieldsPositionAndValues();
     }
 
-    protected function _get_sanitized(?string $value)
+    private function _getSanitizedString(?string $value): ?string
     {
-        if($value===null) return null;
-        return str_replace("'","\\'", $value);
+        if ($value === null) {
+            return null;
+        }
+        return str_replace("'", "\\'", $value);
     }
 
-    private function _load_fields(): void
+    private function _loadFieldsPositionAndValues(): void
     {
         foreach ($this->request["columns"] as $i => $column) {
-            if(!$name = ($column["data"] ?? ""))
+            if (!$name = ($column["data"] ?? "")) {
                 continue;
+            }
             $value = $column["search"]["value"] ?? "";
-            $this->fields[$name] = ["position"=>$i, "value"=>$value];
+            $this->fields[$name] = ["position" => $i, "value" => $value];
         }
     }
 
-    public function get_search(): array
+    public function getSearchPayload(): array
     {
-        if(!$this->request) return [];
+        if (!$this->request) {
+            return [];
+        }
 
         $search = [
-            "global" => $this->_get_sanitized($this->request["search"]["value"] ?? ""),
+            "global" => $this->_getSanitizedString($this->request["search"]["value"] ?? ""),
             "fields" => [],
             "all" => [],
-            "order" => $this->_get_order(),
-            "limit" => $this->_get_limit()
+            "order" => $this->_getOrderByConfig(),
+            "limit" => $this->_getLimitConfig()
         ];
 
         foreach ($this->fields as $field => $data) {
             $search["all"][] = $field;
-            if ($value = $data["value"])
-                $search["fields"][$field] = $this->_get_sanitized($value);
+            if ($value = $data["value"]) {
+                $search["fields"][$field] = $this->_getSanitizedString($value);
+            }
         }
         return $search;
     }
 
-    private function _get_order(): array
+    private function _getOrderByConfig(): array
     {
-        $pos = (int)$this->request["order"][0]["column"] ?? 0;
+        $pos = (int) $this->request["order"][0]["column"] ?? 0;
 
-        foreach ($this->fields as $fieldname => $data)
-            if($data["position"] === $pos)
+        foreach ($this->fields as $fieldName => $data) {
+            if ($data["position"] === $pos) {
                 break;
+            }
+        }
 
         return [
-            "field" => $fieldname,
+            "field" => $fieldName,
             "dir"  => $this->request["order"][0]["dir"] ?? "ASC"
         ];
     }
 
-    private function _get_limit(): array
+    private function _getLimitConfig(): array
     {
         return [
             "from" => $this->request["start"] ?? 0,

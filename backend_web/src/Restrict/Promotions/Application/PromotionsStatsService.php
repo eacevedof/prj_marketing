@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Restrict\Promotions\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\Promotions\Domain\PromotionRepository;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Restrict\Promotions\Domain\PromotionRepository;
+use App\Shared\Infrastructure\Factories\{RepositoryFactory as RF, ServiceFactory as SF};
 
 final class PromotionsStatsService extends AppService
 {
@@ -16,10 +16,11 @@ final class PromotionsStatsService extends AppService
 
     public function __invoke(): ?array
     {
-        if(!SF::get_auth()->is_user_allowed(UserPolicyType::PROMOTION_STATS_READ))
+        if (!SF::getAuthService()->hasAuthUserPolicy(UserPolicyType::PROMOTION_STATS_READ)) {
             return null;
+        }
 
-        $stats = RF::get(PromotionRepository::class)->get_statistics_by_uuid($this->input["uuid"]);
+        $stats = RF::getInstanceOf(PromotionRepository::class)->getPromotionCapStatisticsByPromotionUuid($this->input["uuid"]);
 
         $final = [];
         foreach (array_column($stats, "viewed") as $type) {

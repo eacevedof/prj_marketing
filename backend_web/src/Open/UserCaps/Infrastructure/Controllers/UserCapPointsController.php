@@ -3,44 +3,46 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  */
+
 namespace App\Open\UserCaps\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Open\OpenController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use Exception;
+use App\Shared\Domain\Enums\{PageType, ResponseType};
 use App\Open\Business\Application\BusinessSpaceService;
 use App\Open\UserCaps\Application\UserCapPointsService;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Domain\Enums\PageType;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Infrastructure\Controllers\Open\OpenController;
 use App\Open\PromotionCaps\Domain\Errors\PromotionCapException;
-use \Exception;
 
 final class UserCapPointsController extends OpenController
 {
-    public function index(string $businessslug, string $capuseruuid): void
+    public function index(string $businessSlug, string $capuseruuid): void
     {
-        if (!($businessslug && $capuseruuid))
-            $this->set_layout("open/mypromos/error")
-                ->add_header($code = ResponseType::BAD_REQUEST)
-                ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("error", __("Missing partner and/or user code"))
-                ->add_var("code", $code)
-                ->render_nv();
+        if (!($businessSlug && $capuseruuid)) {
+            $this->setLayoutBySubPath("open/mypromos/error")
+                ->addHeaderCode($code = ResponseType::BAD_REQUEST)
+                ->addGlobalVar(PageType::TITLE, $title = __("Accumulated points error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("error", __("Missing partner and/or user code"))
+                ->addGlobalVar("code", $code)
+                ->renderLayoutOnly();
+        }
 
-        $istest = ($this->request->get_get("mode", "")==="test");
-        $space = SF::get(BusinessSpaceService::class, ["_test_mode" => $istest])->get_data_by_promocapuser($capuseruuid);
-        if (!$space)
-            $this->add_header($code = ResponseType::NOT_FOUND)
-                ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("space", $space)
-                ->add_var("error", __("{0} not found!", __("Subscriber")))
-                ->add_var("code", $code)
-                ->render_nv();
+        $istest = ($this->requestComponent->getGet("mode", "") === "test");
+        $space = SF::getInstanceOf(BusinessSpaceService::class, ["_test_mode" => $istest])->getDataByPromotionCapUser($capuseruuid);
+        if (!$space) {
+            $this->addHeaderCode($code = ResponseType::NOT_FOUND)
+                ->setPartLayout("open/mypromos/error")
+                ->addGlobalVar(PageType::TITLE, $title = __("Accumulated points error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("space", $space)
+                ->addGlobalVar("error", __("{0} not found!", __("Subscriber")))
+                ->addGlobalVar("code", $code)
+                ->renderLayoutOnly();
+        }
 
         try {
-            $userpoints = SF::get_callable(UserCapPointsService::class, [
+            $userpoints = SF::getCallableService(UserCapPointsService::class, [
                 "businessuuid" => $space["businesscode"] ?? "",
                 "capuseruuid" => $capuseruuid,
             ]);
@@ -48,38 +50,33 @@ final class UserCapPointsController extends OpenController
 
             $title = $result["business_name"] ?? "";
             $title = __("Accumulated points of “{0}“ at “{1}“", $result["username"] ?? $result["email"], $title);
-            $this->set_layout("open/mypromos/success")
-                ->add_var(PageType::TITLE, $title)
-                ->add_var(PageType::H1, $title)
-                ->add_var("space", $space)
-                ->add_var("total", $result["total_points"])
-                ->add_var("result", $result["result"]);
+            $this->setLayoutBySubPath("open/mypromos/success")
+                ->addGlobalVar(PageType::TITLE, $title)
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("space", $space)
+                ->addGlobalVar("total", $result["total_points"])
+                ->addGlobalVar("result", $result["result"]);
 
             unset($userpoints, $result, $title, $businessuuid, $capuseruuid);
             $this->render();
-        }
-        catch (PromotionCapException $e) {
-            $this->add_header($e->getCode())
-                ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("space", $space)
-                ->add_var("error", $e->getMessage())
-                ->add_var("code", $e->getCode())
+        } catch (PromotionCapException $e) {
+            $this->addHeaderCode($e->getCode())
+                ->setPartLayout("open/mypromos/error")
+                ->addGlobalVar(PageType::TITLE, $title = __("Accumulated points error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("space", $space)
+                ->addGlobalVar("error", $e->getMessage())
+                ->addGlobalVar("code", $e->getCode())
                 ->render();
-        }
-        catch (Exception $e) {
-            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->set_layout("open/mypromos/error")
-                ->add_var(PageType::TITLE, $title = __("Accumulated points error!"))
-                ->add_var(PageType::H1, $title)
-                ->add_var("space", $space)
-                ->add_var("error", $e->getMessage())
-                ->add_var("code", $e->getCode())
+        } catch (Exception $e) {
+            $this->addHeaderCode(ResponseType::INTERNAL_SERVER_ERROR)
+                ->setPartLayout("open/mypromos/error")
+                ->addGlobalVar(PageType::TITLE, $title = __("Accumulated points error!"))
+                ->addGlobalVar(PageType::H1, $title)
+                ->addGlobalVar("space", $space)
+                ->addGlobalVar("error", $e->getMessage())
+                ->addGlobalVar("code", $e->getCode())
                 ->render();
         }
     }
 }
-
-
-

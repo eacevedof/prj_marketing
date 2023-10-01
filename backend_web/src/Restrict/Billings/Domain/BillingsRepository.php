@@ -1,29 +1,30 @@
 <?php
+
 namespace App\Restrict\Billings\Domain;
 
-use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
+use App\Shared\Infrastructure\Bus\EventBus;
+use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Repositories\AppRepository;
-use App\Shared\Infrastructure\Bus\EventBus;
 use App\Shared\Infrastructure\Traits\SearchRepoTrait;
 use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Restrict\Auth\Application\AuthService;
-use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
 
 final class BillingsRepository extends AppRepository implements IEventDispatcher
 {
     use SearchRepoTrait;
 
-    private ?AuthService $auth = null;
+    private ?AuthService $authService = null;
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "app_promotion";
         $this->joins = [
             "fields" => [
                 "u1.description" => "e_owner",
-                "bd.business_name"=>"e_business",
+                "bd.business_name" => "e_business",
                 "bd.slug" => "e_business_slug",
 
                 //"billing.num_executed" => "e_num_executed",
@@ -71,35 +72,35 @@ final class BillingsRepository extends AppRepository implements IEventDispatcher
         ];
     }
 
-    private function _add_auth_condition(ComponentQB $qb): void
+    private function _addConditionByAuthService(ComponentQB $qb): void
     {
-        if (!$this->auth->get_user()) {
+        if (!$this->authService->getAuthUserArray()) {
             $qb->add_and("1 = 0");
             return;
         }
 
-        $autuser = $this->auth->get_user();
-        if($this->auth->is_business_owner()) {
-            $qb->add_andoper("m.id_owner", $autuser["id"]);
+        $authUser = $this->authService->getAuthUserArray();
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $qb->add_andoper("m.id_owner", $authUser["id"]);
             return;
         }
 
-        if($this->auth->is_business_manager()) {
-            $idparent = $autuser["id_parent"];
-            $qb->add_andoper("m.id_owner", $idparent);
+        if ($this->authService->hasAuthUserBusinessManagerProfile()) {
+            $idParent = $authUser["id_parent"];
+            $qb->add_andoper("m.id_owner", $idParent);
         }
     }
 
-    private function _dispatch(array $payload): void
+    private function _dispatchEvents(array $payload): void
     {
         EventBus::instance()->publish(...[
-            QueryWasCreatedEvent::from_primitives(-1, $payload)
+            QueryWasCreatedEvent::fromPrimitives(-1, $payload)
         ]);
     }
 
     public function search(array $search): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("billings.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
@@ -114,15 +115,15 @@ final class BillingsRepository extends AppRepository implements IEventDispatcher
             ])
             ->set_limit(25, 0)
         ;
-        $this->_add_joins($qb);
-        $this->_add_search_filter($qb, $search);
-        $this->_add_auth_condition($qb);
+        $this->_addJoinsToQueryBuilder($qb);
+        $this->_addSearchFilterToQueryBuilder($qb, $search);
+        $this->_addConditionByAuthService($qb);
 
         $sql = $qb->select()->sql();
-        $sqlcount = $qb->sqlcount();
-        $r = $this->query_with_count($sqlcount, $sql);
+        $sqlCount = $qb->sqlcount();
+        $r = $this->getQueryWithCount($sqlCount, $sql);
 
-        $this->_dispatch([
+        $this->_dispatchEvents([
             "uuid" => $md5 = md5($sql)."-".uniqid(),
             "description" => "read:search",
             "query" => $sql,
@@ -133,9 +134,9 @@ final class BillingsRepository extends AppRepository implements IEventDispatcher
         return $r;
     }
 
-    public function set_auth(AuthService $auth): self
+    public function setAuthService(AuthService $authService): self
     {
-        $this->auth = $auth;
+        $this->authService = $authService;
         return $this;
     }
 }

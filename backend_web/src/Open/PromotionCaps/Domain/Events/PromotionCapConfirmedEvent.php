@@ -1,91 +1,87 @@
 <?php
+
 namespace App\Open\PromotionCaps\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class PromotionCapConfirmedEvent extends AbsEvent
+final class PromotionCapConfirmedEvent extends AbstractEvent
 {
-    private string $subsuuid;
+    private string $subscriptionUuid;
     private string $email;
-    private string $dateconfirm;
-    private int $istest;
+    private string $dateConfirm;
+    private int $isTestMode;
 
     public function __construct(
-        int $idcapuser,
-
-        string $subsuuid,
-        string $email,
-        string $dateconfirm,
-        int $istest,
-
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($idcapuser, $eventid, $occuredon, $correlationid, $causationid);
-        $this->subsuuid = $subsuuid;
+        int     $idCapUser,
+        string  $subscriptionUuid,
+        string  $email,
+        string  $dateConfirm,
+        int     $isTestMode,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($idCapUser, $eventId, $occurredOn, $correlationId, $causationId);
+        $this->subscriptionUuid = $subscriptionUuid;
         $this->email = $email;
-        $this->dateconfirm = $dateconfirm;
-        $this->istest = $istest;
+        $this->dateConfirm = $dateConfirm;
+        $this->isTestMode = $isTestMode;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "promotioncap.confirmed";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["subsuuid"],
             $body["email"],
             $body["date_confirm"],
             $body["is_test"],
-
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
-            "subsuuid" => $this->subsuuid,
+            "subsuuid" => $this->subscriptionUuid,
             "email" => $this->email,
-            "date_confirm" => $this->dateconfirm,
-            "is_test" => $this->istest,
+            "date_confirm" => $this->dateConfirm,
+            "is_test" => $this->isTestMode,
         ];
     }
 
-    public function subscription_uuid(): string
+    public function subscriptionUuid(): string
     {
-        return $this->subsuuid;
+        return $this->subscriptionUuid;
     }
 
     public function email(): string
     {
         return $this->email;
     }
-    
-    public function date_confirm(): string
+
+    public function dateConfirm(): string
     {
-        return $this->dateconfirm;
+        return $this->dateConfirm;
     }
 
-    public function is_test(): int
+    public function isTestMode(): int
     {
-        return $this->istest;
+        return $this->isTestMode;
     }
 }

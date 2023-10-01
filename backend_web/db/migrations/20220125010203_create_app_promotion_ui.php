@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateAppPromotionUi extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -143,12 +144,12 @@ final class CreateAppPromotionUi extends AbsMigration
         ])
         ->create();
 
-        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
-            ->addIndex(["id_owner"], ["name"=>"id_owner_idx"])
-            ->addIndex(["description"], ["name"=>"description_idx"])
-            ->addIndex(["id_promotion"], ["name"=>"id_promotion_idx"])
-            ->addIndex(["id", "uuid"], ["name"=>"id__uuid_idx"])
+        $table->addIndex(["delete_date"], ["name" => "delete_date_idx"])
+            ->addIndex(["uuid"], ["name" => "uuid_idx"])
+            ->addIndex(["id_owner"], ["name" => "id_owner_idx"])
+            ->addIndex(["description"], ["name" => "description_idx"])
+            ->addIndex(["id_promotion"], ["name" => "id_promotion_idx"])
+            ->addIndex(["id", "uuid"], ["name" => "id__uuid_idx"])
             ->update()
         ;
 

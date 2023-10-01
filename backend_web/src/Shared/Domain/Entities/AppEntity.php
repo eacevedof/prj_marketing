@@ -7,17 +7,18 @@
  * @date 28-06-2018 00:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Domain\Entities;
 
-use App\Shared\Domain\Enums\EntityType;
-use App\Shared\Domain\Enums\PlatformType;
+use ReflectionObject;
+use App\Shared\Domain\Enums\{EntityType, PlatformType};
 
 abstract class AppEntity
 {
     protected array $fields;
     protected array $pks;
 
-    protected array $sysfields = [
+    protected array $sysFields = [
         EntityType::INSERT_DATE,
         EntityType::INSERT_USER,
         EntityType::INSERT_PLATFORM,
@@ -34,57 +35,67 @@ abstract class AppEntity
         EntityType::I,
     ];
 
-    public function get_fields(): array {return $this->fields;}
-    public function get_pks(): array {return $this->pks;}
-
-    public function in_fields(string $fieldname): bool
+    public function getFields(): array
     {
-        if(in_array($fieldname, $this->sysfields)) return true;
-
-        return (bool) ($this->fields[$fieldname] ?? false);
+        return $this->fields;
+    }
+    public function getPks(): array
+    {
+        return $this->pks;
     }
 
-    public function get_label(string $field): string
+    public function isInFields(string $fieldName): bool
     {
-        return $this->fields[$field]["label"] ?? "";
+        if(in_array($fieldName, $this->sysFields)) {
+            return true;
+        }
+
+        return (bool) ($this->fields[$fieldName] ?? false);
     }
 
-    public function get_requestkey(string $field): string
+    public function getLabel(string $fieldName): string
     {
-        return $this->fields[$field][EntityType::REQUEST_KEY] ?? $field;
+        return $this->fields[$fieldName]["label"] ?? "";
     }
 
-    public function get_type(string $field): string
+    public function getRequestKeyByFieldName(string $fieldName): string
     {
-        return $this->fields[$field]["config"]["type"] ?? "";
+        return $this->fields[$fieldName][EntityType::REQUEST_KEY] ?? $fieldName;
     }
 
-    public function get_length(string $field): ?int
+    public function getTypeByFieldName(string $fieldName): string
     {
-        return $this->fields[$field]["config"]["length"] ?? null;
+        return $this->fields[$fieldName]["config"]["type"] ?? "";
     }
 
-    public function get_field(string $requestkey): string
+    public function getLength(string $fieldName): ?int
     {
-        foreach ($this->fields as $field => $array) {
-            if(($array[EntityType::REQUEST_KEY] ?? "") === $requestkey)
-                return $field;
+        return $this->fields[$fieldName]["config"]["length"] ?? null;
+    }
+
+    public function getFieldNamedByRequestKey(string $requestKey): string
+    {
+        foreach ($this->fields as $fieldName => $array) {
+            if(($array[EntityType::REQUEST_KEY] ?? "") === $requestKey) {
+                return $fieldName;
+            }
         }
         return "";
     }
 
-    private function _get_dt_sanitized(string $dt): string
+    private function _getDtSanitized(string $dt): string
     {
-        if (strlen($dt)==16) $dt = "$dt:00";
-        if (strstr($dt,"T"))
-            $dt = str_replace("T"," ", $dt);
+        if (strlen($dt) == 16) {
+            $dt = "$dt:00";
+        }
+        if (str_contains($dt, "T")) {
+            $dt = str_replace("T", " ", $dt);
+        }
         return $dt;
     }
 
-    public function map_request(array $request): array
+    public function getAllKeyValueFromRequest(array|object $request): array
     {
-        $reqkeys = array_keys($request);
-        $mapped = [];
         $nullables = [
             EntityType::DATE,
             EntityType::DATETIME,
@@ -92,57 +103,84 @@ abstract class AppEntity
             EntityType::DECIMAL
         ];
 
-        foreach ($reqkeys as $requestkey) {
-            $dbfield = $this->get_field($requestkey);
-            $dbtype = $this->get_type($dbfield);
-            if($dbfield) {
-                $value = trim($request[$requestkey] ?? "");
-                if ($dbtype === EntityType::DATETIME)
-                    $value = $this->_get_dt_sanitized($value);
-                $mapped[$dbfield] = $value;
+        if (is_object($request))
+            $request = $this->getObjectAsArrayInSnakeCase($request);
+
+        $requestKeys = array_keys($request);
+        $mapped = [];
+        foreach ($requestKeys as $requestKey) {
+            $dbFieldName = $this->getFieldNamedByRequestKey($requestKey);
+            $dbFieldType = $this->getTypeByFieldName($dbFieldName);
+            $fieldValue = "";
+            if ($dbFieldName) {
+                $fieldValue = trim($request[$requestKey] ?? "");
+                if ($dbFieldType === EntityType::DATETIME) {
+                    $fieldValue = $this->_getDtSanitized($fieldValue);
+                }
+                $mapped[$dbFieldName] = $fieldValue;
             }
-            
-            if(in_array($dbtype, $nullables) && $value==="")
-                $mapped[$dbfield] = null;
+
+            if(in_array($dbFieldType, $nullables) && $fieldValue === "") {
+                $mapped[$dbFieldName] = null;
+            }
         }
         return $mapped;
     }
 
-    public function do_match_keys(array $pkvals): bool
+    private function getObjectAsArrayInSnakeCase(object $objectDto): array
     {
-        if(!$pkvals) return false;
-        $keys = array_keys($pkvals);
-        foreach ($this->pks as $pkfield) {
-            if (!in_array($pkfield, $keys))
+        $asArray = [];
+        $reflection = new ReflectionObject($objectDto);
+        $reflectionProperties = $reflection->getProperties();
+        $reflectionProperties = array_map(fn ($item) => $item->getName(), $reflectionProperties);
+        foreach ($reflectionProperties as $reflectionProperty) {
+            $value = $objectDto->{$reflectionProperty}();
+            $propertySnake = preg_replace("/([a-z])([A-Z])/", "$1_$2", $reflectionProperty);
+            $propertySnake = strtolower($propertySnake);
+            $asArray[$propertySnake] = $value;
+        }
+        return $asArray;
+    }
+
+    public function areAllPksPresent(array $pkValues): bool
+    {
+        if (!$pkValues) {
+            return false;
+        }
+        $pkNames = array_keys($pkValues);
+        foreach ($this->pks as $pkFieldName) {
+            if (!in_array($pkFieldName, $pkNames)) {
                 return false;
-            $value = $pkvals[$pkfield];
-            if (!$value)
+            }
+            $value = $pkValues[$pkFieldName];
+            if (!$value) {
                 return false;
+            }
         }
         return true;
     }
-    public function add_sysinsert(array &$request, string $user, string $platform=PlatformType::WEB): self
+    public function addSysInsert(array &$request, string $idUser, string $platform = PlatformType::WEB): self
     {
         $request[EntityType::INSERT_DATE] = date("Y-m-d H:i:s");
-        $request[EntityType::INSERT_USER] = $user;
+        $request[EntityType::INSERT_USER] = $idUser;
         $request[EntityType::INSERT_PLATFORM] = $platform;
         return $this;
     }
 
-    public function add_sysupdate(array &$request, string $user, string $platform=PlatformType::WEB): self
+    public function addSysUpdate(array &$request, string $idUser, string $platform = PlatformType::WEB): self
     {
         $request[EntityType::UPDATE_DATE] = date("Y-m-d H:i:s");
-        $request[EntityType::UPDATE_USER] = $user;
+        $request[EntityType::UPDATE_USER] = $idUser;
         $request[EntityType::UPDATE_PLATFORM] = $platform;
         return $this;
     }
 
-    public function add_sysdelete(array &$request, string $updatedate, string $user, string $platform=PlatformType::WEB): self
+    public function addSysDelete(array &$request, string $updateDate, string $idUser, string $platform = PlatformType::WEB): self
     {
         $request[EntityType::DELETE_DATE] = date("Y-m-d H:i:s");
-        $request[EntityType::DELETE_USER] = $user;
+        $request[EntityType::DELETE_USER] = $idUser;
         $request[EntityType::DELETE_PLATFORM] = $platform;
-        $request[EntityType::UPDATE_DATE] = $updatedate;
+        $request[EntityType::UPDATE_DATE] = $updateDate;
         return $this;
     }
 

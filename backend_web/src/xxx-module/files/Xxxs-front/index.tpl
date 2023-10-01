@@ -1,8 +1,8 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
- * @var App\Shared\Infrastructure\Helpers\Views\DatatableHelper $dthelp
- * @var array $authuser
+ * @var App\Shared\Infrastructure\Helpers\Views\DatatableHelper $datatableHelper
+ * @var array $authUser
  * @var string $h1
  */
 $this->_element("restrict/elem-bowdisabled");
@@ -24,16 +24,16 @@ $this->_element("common/elem-datatable-asset");
           <table id="table-datatable" class="table text-md-nowrap table-striped">
             <thead>
               <tr>
-                <?= $dthelp->get_ths() ?>
+                <?= $datatableHelper->getHtmlThs() ?>
               </tr>
               <tr row="search" class="hidden">
-                <?= $dthelp->get_search_tds() ?>
+                <?= $datatableHelper->getSearchableTds() ?>
               </tr>
             </thead>
             <tbody approle="tbody"></tbody>
             <tfoot>
               <tr>
-                <?= $dthelp->get_tf() ?>
+                <?= $datatableHelper->getHtmlTdsForTableFoot() ?>
               </tr>
             </tfoot>
           </table>
@@ -48,8 +48,8 @@ import dt_render from "/assets/js/common/datatable/dttable.js"
 import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 
-const sessusrid = <?php $this->_echo_js($authuser["id"]);?>;
-const sesprofile = <?php $this->_echo_js($authuser["id_profile"]);?>;
+const sessusrid = <?php $this->_echoJs($authUser["id"]);?>;
+const sesprofile = <?php $this->_echoJs($authUser["id_profile"]);?>;
 
 const PROFILES = {
   ROOT:"1",
@@ -145,19 +145,19 @@ dtcolumn.add_column({
 
 rowswal.set_texts({
   delswal: {
-    error: <?php $this->_echo_js(__("<b>Error on delete</b>"));?>,
-    success: <?php $this->_echo_js(__("Data successfully deleted"));?>
+    error: <?php $this->_echoJs(__("<b>Error on delete</b>"));?>,
+    success: <?php $this->_echoJs(__("Data successfully deleted"));?>
   },
   undelswal: {
-    error: <?php $this->_echo_js(__("<b>Error on restore</b>"));?>,
-    success: <?php $this->_echo_js(__("Data successfully restored"));?>
+    error: <?php $this->_echoJs(__("<b>Error on restore</b>"));?>,
+    success: <?php $this->_echoJs(__("Data successfully restored"));?>
   },
 })
 
 dt_render({
   URL_MODULE: "/restrict/xxxs",
   ID_TABLE: "table-datatable",
-  ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
+  ITEMS_PER_PAGE: <?php $datatableHelper->showPerPageInfo();?>,
 })
 </script>
 <?php

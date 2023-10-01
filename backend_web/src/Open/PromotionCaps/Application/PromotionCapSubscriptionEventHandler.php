@@ -1,36 +1,36 @@
 <?php
+
 namespace App\Open\PromotionCaps\Application;
 
-use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionEntity;
-use App\Open\PromotionCaps\Domain\PromotionCapSubscriptionsRepository;
 use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Domain\Bus\Event\IEventSubscriber;
-use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Shared\Domain\Bus\Event\{IEvent, IEventSubscriber};
+use App\Open\PromotionCaps\Domain\Events\PromotionCapUserSubscribedEvent;
+use App\Shared\Infrastructure\Factories\{EntityFactory as MF, RepositoryFactory as RF};
+use App\Open\PromotionCaps\Domain\{PromotionCapSubscriptionEntity, PromotionCapSubscriptionsRepository};
 
 final class PromotionCapSubscriptionEventHandler extends AppService implements IEventSubscriber
 {
-    public function on_event(IEvent $domevent): IEventSubscriber
+    public function onSubscribedEvent(IEvent $domainEvent): IEventSubscriber
     {
-        if(get_class($domevent)!==PromotionCapUserSubscribedEvent::class) return $this;
+        if(get_class($domainEvent) !== PromotionCapUserSubscribedEvent::class) {
+            return $this;
+        }
 
         $subscription = [
-            "id_promouser" => $domevent->aggregate_id(),
+            "id_promouser" => $domainEvent->aggregateId(),
             "uuid" => "sb".uniqid(),
-            "id_owner" => $domevent->id_owner(),
-            "id_promotion" => $domevent->id_promotion(),
-            "remote_ip" => $domevent->remote_ip(),
-            "date_subscription" => $domevent->date_subscription(),
+            "id_owner" => $domainEvent->idOwner(),
+            "id_promotion" => $domainEvent->idPromotion(),
+            "remote_ip" => $domainEvent->remoteIp(),
+            "date_subscription" => $domainEvent->dateSubscription(),
             "code_execution" => "",
-            "is_test" => $domevent->is_test(),
+            "is_test" => $domainEvent->isTestMode(),
         ];
 
-        $iduser = AuthService::getme()->get_user()["id"] ?? -1;
-        MF::get(PromotionCapSubscriptionEntity::class)->add_sysinsert($subscription, $iduser);
-        RF::get(PromotionCapSubscriptionsRepository::class)->insert($subscription);
+        $idUser = AuthService::getInstance()->getAuthUserArray()["id"] ?? -1;
+        MF::getInstanceOf(PromotionCapSubscriptionEntity::class)->addSysInsert($subscription, $idUser);
+        RF::getInstanceOf(PromotionCapSubscriptionsRepository::class)->insert($subscription);
         return $this;
     }
 }

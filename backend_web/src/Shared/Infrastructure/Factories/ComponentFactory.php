@@ -6,12 +6,12 @@ use App\Shared\Infrastructure\Components\Datatable\DatatableComponent;
 
 final class ComponentFactory
 {
-    public static function get(string $component): ?object
+    public static function getInstanceOf(string $component): ?object
     {
-        return new $component();
+        return new $component;
     }
 
-    public static function get_datatable(array $input): ?DatatableComponent
+    public static function getDatatableComponent(array $input): ?DatatableComponent
     {
         return new DatatableComponent($input);
     }

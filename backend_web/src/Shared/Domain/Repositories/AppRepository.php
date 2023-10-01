@@ -7,332 +7,352 @@
  * @date 28-06-2018 00:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Domain\Repositories;
-use App\Shared\Infrastructure\Traits\LogTrait;
+
+use Exception;
 use App\Shared\Domain\Entities\AppEntity;
-use TheFramework\Components\Db\ComponentQB;
-use TheFramework\Components\Db\ComponentMysql;
-use App\Shared\Infrastructure\Exceptions\RepositoryException;
 use App\Shared\Domain\Enums\ExceptionType;
-use \Exception;
+use App\Shared\Infrastructure\Traits\LogTrait;
+use App\Shared\Infrastructure\Exceptions\RepositoryException;
+use TheFramework\Components\Db\{ComponentMysql, ComponentQB};
 
 abstract class AppRepository
 {
     use LogTrait;
 
-    protected ?AppEntity $entity = null;
-    protected ?ComponentMysql $db = null;
+    protected ?AppEntity $appEntity = null;
+    protected ?ComponentMysql $componentMysql = null;
     protected string $table = "";
     //protected array $joins = []; hay un trait que rompe con esto
 
-    protected function _get_sanitized(string $value): string
+    protected function _getSanitizedString(string $value): string
     {
-        return str_replace("'","\\'", $value);
+        return str_replace("'", "\\'", $value);
     }
 
-    protected function _get_qbuilder(): ComponentQB
+    protected function _getQueryBuilderInstance(): ComponentQB
     {
-        return new ComponentQB();
+        return new ComponentQB;
     }
 
-    protected function _exception(string $message, int $code=ExceptionType::CODE_REQUESTED_RANGE_NOT_SATISFIABLE): void
-    {
+    protected function throwRepositoryException(
+        string $message,
+        int $code = ExceptionType::CODE_REQUESTED_RANGE_NOT_SATISFIABLE
+    ): void {
         throw new RepositoryException($message, $code);
     }
 
-    private function _get_pks(array $arData): array
+    private function _getPkFieldsAndValues(array $arData): array
     {
         $pks = [];
-        foreach($arData as $fieldname=>$sValue)
-            if(in_array($fieldname,$this->entity->get_pks()))
-                $pks[$fieldname] = $sValue;
+        foreach($arData as $fieldName => $sValue) {
+            if(in_array($fieldName, $this->appEntity->getPks())) {
+                $pks[$fieldName] = $sValue;
+            }
+        }
         return $pks;
     }
 
-    private function _get_no_pks(array $arData): array
+    private function _getNoPkFieldsAndValues(array $arData): array
     {
         $pks = [];
-        foreach($arData as $fieldname=>$sValue)
-            if(!in_array($fieldname, $this->entity->get_pks()))
-                $pks[$fieldname] = $sValue;
+        foreach($arData as $fieldName => $sValue) {
+            if (!in_array($fieldName, $this->appEntity->getPks())) {
+                $pks[$fieldName] = $sValue;
+            }
+        }
         return $pks;
     }
 
-    private function _is_in_entity(string $fieldname): bool
+    private function _fieldInEntityFields(string $fieldName): bool
     {
-        if (!$this->entity) return true;
-        return $this->entity->in_fields($fieldname);
+        if (!$this->appEntity) {
+            return true;
+        }
+        return $this->appEntity->isInFields($fieldName);
     }
 
-    public function set_model(AppEntity $entity): self
+    public function setAppEntity(AppEntity $appEntity): self
     {
-        $this->entity = $entity;
+        $this->appEntity = $appEntity;
         return $this;
     }
 
-    public function query(?string $sql, ?int $col=null, ?int $row=null): array|string|null
+    public function query(?string $sql, ?int $col = null, ?int $row = null): array|string|null
     {
         try {
-            $mxRet = $this->db->query($sql, $col, $row);
+            $mxRet = $this->componentMysql->query($sql, $col, $row);
             return $mxRet;
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query");
-            $this->logerr($this->db, "on-query db");
-            $this->_exception(__("Error reading data"));
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query");
+            $this->logErr($this->componentMysql, "on-query db");
+            $this->throwRepositoryException(__("Error reading data"));
         }
     }
 
-    public function query_with_count(string $sqlcount, ?string $sql): array
+    public function getQueryWithCount(string $sqlCount, ?string $sql): array
     {
         try {
             return [
-                "result" => $this->db->set_sqlcount($sqlcount)->query($sql),
-                "total" => $this->db->get_foundrows(),
+                "result" => $this->componentMysql->set_sqlcount($sqlCount)->query($sql),
+                "total" => $this->componentMysql->get_foundrows(),
             ];
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query-with-count");
-            $this->logerr($this->db, "on-query-with-count db");
-            $this->_exception(__("Error reading data"));
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-query-with-count");
+            $this->logErr($this->componentMysql, "on-query-with-count db");
+            $this->throwRepositoryException(__("Error reading data"));
         }
     }
 
     public function execute(?string $sql): int|false
     {
         try {
-            return $this->db->exec($sql);
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-execute");
-            $this->logerr($this->db, "on-execute db");
-            $this->_exception(__("Error persiting data"));
+            return $this->componentMysql->exec($sql);
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-execute");
+            $this->logErr($this->componentMysql, "on-execute db");
+            $this->throwRepositoryException(__("Error persiting data"));
         }
     }
 
     public function insert(array $request): int
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.insert")
-            ->set_db($this->db)
+            ->set_db($this->componentMysql)
             ->set_table($this->table);
 
         foreach($request as $field => $value) {
-            if (!$this->_is_in_entity($field)) continue;
+            if (!$this->_fieldInEntityFields($field)) {
+                continue;
+            }
             $qb->add_insert_fv($field, $value);
         }
 
         try {
             $qb->insert()->exec($qb::WRITE);
-            return $this->db->get_lastid();
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-insert");
-            $this->logerr($this->db, "on-insert db");
-            $this->_exception(__("Error persiting data"));
+            return $this->componentMysql->get_lastid();
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-insert");
+            $this->logErr($this->componentMysql, "on-insert db");
+            $this->throwRepositoryException(__("Error persiting data"));
         }
     }//insert
 
     public function update(array $request): int
     {
-        $pks = $this->_get_pks($request);
-        if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        $pks = $this->_getPkFieldsAndValues($request);
+        if (!$pks) {
+            $this->throwRepositoryException(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        }
 
-        $mutables = $this->_get_no_pks($request);
-        if(!$mutables)
-            $this->_exception(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        $mutables = $this->_getNoPkFieldsAndValues($request);
+        if (!$mutables) {
+            $this->throwRepositoryException(__("No data to update"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        }
 
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.update")
-            ->set_db($this->db)
+            ->set_db($this->componentMysql)
             ->set_table($this->table);
 
         //valores del "SET"
-        foreach($mutables as $fieldname=>$sValue) {
-            if (!$this->_is_in_entity($fieldname)) continue;
-            $qb->add_update_fv($fieldname, $sValue);
+        foreach($mutables as $fieldName => $sValue) {
+            if (!$this->_fieldInEntityFields($fieldName)) {
+                continue;
+            }
+            $qb->add_update_fv($fieldName, $sValue);
         }
 
         //valores del WHERE
-        foreach($pks as $fieldname=>$sValue) {
-            if (!$this->_is_in_entity($fieldname)) continue;
-            $qb->add_pk_fv($fieldname, $sValue);
+        foreach($pks as $fieldName => $sValue) {
+            if (!$this->_fieldInEntityFields($fieldName)) {
+                continue;
+            }
+            $qb->add_pk_fv($fieldName, $sValue);
         }
 
         try {
             $qb->update()->exec($qb::WRITE);
-            return $this->db->get_affected();
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-update");
-            $this->logerr($this->db, "on-update db");
-            $this->_exception(__("Error updating data"));
+            return $this->componentMysql->get_affected();
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-update");
+            $this->logErr($this->componentMysql, "on-update db");
+            $this->throwRepositoryException(__("Error updating data"));
         }
     }//update
 
     public function delete(array $request): int
     {
-        $pks = $this->_get_pks($request);
-        if(!$pks) $this->_exception(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        $pks = $this->_getPkFieldsAndValues($request);
+        if (!$pks) {
+            $this->throwRepositoryException(__("No code/s provided"), ExceptionType::CODE_UNPROCESSABLE_ENTITY);
+        }
 
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.delete")
-            ->set_db($this->db)
+            ->set_db($this->componentMysql)
             ->set_table($this->table);
 
         //valores del WHERE
-        foreach($pks as $fieldname=>$sValue) {
-            if (!$this->_is_in_entity($fieldname)) continue;
-            $qb->add_pk_fv($fieldname, $sValue);
+        foreach($pks as $fieldName => $sValue) {
+            if (!$this->_fieldInEntityFields($fieldName)) {
+                continue;
+            }
+            $qb->add_pk_fv($fieldName, $sValue);
         }
 
         try {
             $qb->delete()->exec($qb::WRITE);
-            return $this->db->get_affected();
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-delete");
-            $this->logerr($this->db, "on-delete db");
-            $this->_exception(__("Error deleting data"));
+            return $this->componentMysql->get_affected();
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-delete");
+            $this->logErr($this->componentMysql, "on-delete db");
+            $this->throwRepositoryException(__("Error deleting data"));
         }
     }//delete
 
-    public function get_sysupdate(array $pks): string
+    public function getSysUpdateDateByPkFields(array $pkFieldsAndValues): string
     {
-        if(!$pks) return "";
+        if (!$pkFieldsAndValues) {
+            return "";
+        }
 
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.get_sysupdate")
-            ->set_db($this->db)
+            ->set_db($this->componentMysql)
             ->set_getfields(["m.update_date"])
             ->set_table("$this->table as m")
         ;
 
-        foreach($pks as $fieldname=>$sValue)
-            $qb->add_pk_fv($fieldname, $sValue);
+        foreach($pkFieldsAndValues as $fieldName => $sValue) {
+            $qb->add_pk_fv($fieldName, $sValue);
+        }
 
         $sql = $qb->select()->sql();
         try {
-            $r = $this->db->query($sql);
-            $this->map_to_int($r, ["id"]);
+            $r = $this->componentMysql->query($sql);
+            $this->mapFieldsToInt($r, ["id"]);
             return $r[0]["update_date"] ?? "";
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-sysdata");
-            $this->logerr($this->db, "on-sysdata db");
-            $this->_exception(__("Error reading sysdata"));
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-sysdata");
+            $this->logErr($this->componentMysql, "on-sysdata db");
+            $this->throwRepositoryException(__("Error reading sysdata"));
         }
     }
 
-    public function get_csvcru(array $row, string $iduser): string
+    public function getCsvCru(array $row, string $idUser): string
     {
         $now = date("Y-m-d H:i:s");
         $crucsv = $row["cru_csvnote"] ?? "";
-        $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($iduser:$now)|".$crucsv;
-        return substr($crucsv,0,499);
+        $crucsv = "delete_user:{$row["delete_user"]},delete_date:{$row["delete_date"]},delete_platform:{$row["delete_platform"]},($idUser:$now)|".$crucsv;
+        return substr($crucsv, 0, 499);
     }
 
-    public function get_id_by_uuid(string $uuid): int
+    public function getEntityIdByEntityUuid(string $entityUuid): int
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $entityUuid = $this->_getSanitizedString($entityUuid);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.get_id_by_uuid")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
-            ->add_and("m.uuid='$uuid'")
+            ->add_and("m.uuid='$entityUuid'")
             ->select()->sql()
         ;
         try {
-            $r = $this->db->query($sql);
-            $this->map_to_int($r, ["id"]);
+            $r = $this->componentMysql->query($sql);
+            $this->mapFieldsToInt($r, ["id"]);
             return $r[0]["id"] ?? 0;
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-id-by-uuid");
-            $this->logerr($this->db, "on-get-id-by-uuid db");
-            $this->_exception(__("Error reading data"));
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-id-by-uuid");
+            $this->logErr($this->componentMysql, "on-get-id-by-uuid db");
+            $this->throwRepositoryException(__("Error reading data"));
         }
     }
 
-    public function get_by_id(string $id, array $fields=[]): array
+    public function getEntityByEntityId(string $entityId, array $fields = []): array
     {
-        $id = (int) $id;
-        $sql = $this->_get_qbuilder()
+        $entityId = (int) $entityId;
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.get_by_id")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
-            ->add_and("m.id=$id")
+            ->add_and("m.id=$entityId")
         ;
-        if ($fields) $sql->set_getfields($fields);
+        if ($fields) {
+            $sql->set_getfields($fields);
+        }
         $sql = $sql->select()->sql();
         try {
-            $r = $this->db->query($sql);
-            $this->map_to_int($r, ["id"]);
+            $r = $this->componentMysql->query($sql);
+            $this->mapFieldsToInt($r, ["id"]);
             return $r[0] ?? [];
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-id");
-            $this->logerr($this->db, "on-get-by-id db");
-            $this->_exception(__("Error reading data"));
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-id");
+            $this->logErr($this->componentMysql, "on-get-by-id db");
+            $this->throwRepositoryException(__("Error reading data"));
         }
     }
 
-    public function get_by_uuid(string $uuid, array $fields=[]): array
+    public function getEntityByEntityUuid(string $entityUuid, array $fields = []): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $entityUuid = $this->_getSanitizedString($entityUuid);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.get_by_uuid")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
-            ->add_and("m.uuid='$uuid'")
+            ->add_and("m.uuid='$entityUuid'")
         ;
-        if ($fields) $sql->set_getfields($fields);
+        if ($fields) {
+            $sql->set_getfields($fields);
+        }
 
         $sql = $sql->select()->sql();
         try {
-            $r = $this->db->query($sql);
+            $r = $this->componentMysql->query($sql);
             //@eaftodo aqui hay que incluir el resto de ids que sean enteros
-            $this->map_to_int($r, ["id"]);
+            $this->mapFieldsToInt($r, ["id"]);
             return $r[0] ?? [];
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-uuid");
-            $this->logerr($this->db, "on-get-by-uuid db");
-            $this->_exception(__("Error reading data"));
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-get-by-uuid");
+            $this->logErr($this->componentMysql, "on-get-by-uuid db");
+            $this->throwRepositoryException(__("Error reading data"));
         }
     }
 
-    public function is_deleted(string $id): bool
+    public function isDeletedByEntityId(string $entityId): bool
     {
-        $id = (int) $id;
-        $sql = $this->_get_qbuilder()
+        $entityId = (int) $entityId;
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("apprepository.is_deleted")
             ->set_table("$this->table as m")
             ->set_getfields(["m.delete_date"])
-            ->add_and("m.id=$id")
+            ->add_and("m.id=$entityId")
             ->select()->sql()
         ;
         try {
-            $r = $this->db->query($sql);
-            $this->map_to_int($r, ["id"]);
+            $r = $this->componentMysql->query($sql);
+            $this->mapFieldsToInt($r, ["id"]);
             return (bool) ($r[0]["delete_date"] ?? "");
-        }
-        catch (Exception $ex) {
-            $this->logerr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-is-deleted");
-            $this->logerr($this->db, "on-is-deleted db");
-            $this->_exception(__("Error reading data"));
+        } catch (Exception $ex) {
+            $this->logErr([$ex->getMessage(), $ex->getCode(), $ex->getLine(), $ex->getFile()], "on-is-deleted");
+            $this->logErr($this->componentMysql, "on-is-deleted db");
+            $this->throwRepositoryException(__("Error reading data"));
         }
     }
 
-    protected function map_to_int(array &$rows, array $fields): void
+    protected function mapFieldsToInt(array &$rows, array $fields): void
     {
-        if (!$rows) return;
-        if (!$fields) return;
+        if (!$rows || !$fields) {
+            return;
+        }
 
         foreach ($rows as $i => $row) {
-            foreach ($row as $field=>$value) {
-                if (!in_array($field, $fields))
+            foreach ($row as $field => $value) {
+                if (!in_array($field, $fields)) {
                     continue;
+                }
                 $rows[$i][$field] = (int) $value;
             }
         }

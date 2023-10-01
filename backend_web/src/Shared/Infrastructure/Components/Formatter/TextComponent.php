@@ -2,16 +2,18 @@
 
 namespace App\Shared\Infrastructure\Components\Formatter;
 
+use ReflectionObject;
+
 final class TextComponent
 {
-    public function slug(string $toslug): string
+    public function getSlug(string $toSlug): string
     {
         $divider = "-";
-        $toslug = trim($toslug);
-        $toslug = preg_replace("/\s+/", " ",$toslug);
-        $toslug = str_replace(" ", $divider, $toslug);
-        $toslug = $this->_remove_accents($toslug);
-        $text = preg_replace("~[^\pL\d]+~u", $divider, $toslug);
+        $toSlug = trim($toSlug);
+        $toSlug = preg_replace("/\s+/", " ", $toSlug);
+        $toSlug = str_replace(" ", $divider, $toSlug);
+        $toSlug = $this->_getWithoutAccents($toSlug);
+        $text = preg_replace("~[^\pL\d]+~u", $divider, $toSlug);
         // transliterate
         $text = iconv("utf-8", "us-ascii//TRANSLIT", $text);
         // remove unwanted characters
@@ -24,50 +26,54 @@ final class TextComponent
         return $text;
     }
 
-    private function _remove_accents(string $withaccents): string
+    private function _getWithoutAccents(string $withAccents): string
     {
         //Reemplazamos la A y a
-        $withaccents = str_replace(
+        $withAccents = str_replace(
             ["Á", "À", "Â", "Ä", "á", "à", "ä", "â", "ª"],
             ["A", "A", "A", "A", "a", "a", "a", "a", "a"],
-            $withaccents
+            $withAccents
         );
 
         //Reemplazamos la E y e
-        $withaccents = str_replace(
+        $withAccents = str_replace(
             ["É", "È", "Ê", "Ë", "é", "è", "ë", "ê"],
             ["E", "E", "E", "E", "e", "e", "e", "e"],
-            $withaccents );
-
-        //Reemplazamos la I y i
-        $withaccents = str_replace(
-            ["Í", "Ì", "Ï", "Î", "í", "ì", "ï", "î"],
-            ["I", "I", "I", "I", "i", "i", "i", "i"],
-            $withaccents );
-
-        //Reemplazamos la O y o
-        $withaccents = str_replace(
-            ["Ó", "Ò", "Ö", "Ô", "ó", "ò", "ö", "ô"],
-            ["O", "O", "O", "O", "o", "o", "o", "o"],
-            $withaccents );
-
-        //Reemplazamos la U y u
-        $withaccents = str_replace(
-            ["Ú", "Ù", "Û", "Ü", "ú", "ù", "ü", "û"],
-            ["U", "U", "U", "U", "u", "u", "u", "u"],
-            $withaccents );
-
-        //Reemplazamos la N, n, C y c
-        $withaccents = str_replace(
-            ["Ñ", "ñ", "Ç", "ç"],
-            ["N", "n", "C", "c"],
-            $withaccents
+            $withAccents
         );
 
-        return $withaccents;
+        //Reemplazamos la I y i
+        $withAccents = str_replace(
+            ["Í", "Ì", "Ï", "Î", "í", "ì", "ï", "î"],
+            ["I", "I", "I", "I", "i", "i", "i", "i"],
+            $withAccents
+        );
+
+        //Reemplazamos la O y o
+        $withAccents = str_replace(
+            ["Ó", "Ò", "Ö", "Ô", "ó", "ò", "ö", "ô"],
+            ["O", "O", "O", "O", "o", "o", "o", "o"],
+            $withAccents
+        );
+
+        //Reemplazamos la U y u
+        $withAccents = str_replace(
+            ["Ú", "Ù", "Û", "Ü", "ú", "ù", "ü", "û"],
+            ["U", "U", "U", "U", "u", "u", "u", "u"],
+            $withAccents
+        );
+
+        //Reemplazamos la N, n, C y c
+        $withAccents = str_replace(
+            ["Ñ", "ñ", "Ç", "ç"],
+            ["N", "n", "C", "c"],
+            $withAccents
+        );
+
+        return $withAccents;
     }
 
-    public function get_random_word(int $charlen=4, int $numbers=2): string
+    public function getRandomWord(int $charLen = 4, int $numbers = 2): string
     {
         $chars = "bcdfghjklmnpqrstvxyz";
         $chars = str_split($chars);
@@ -75,21 +81,25 @@ final class TextComponent
         $vocals = str_split($vocals);
 
         $word = [];
-        for($i=0; $i<$charlen; $i++) {
-            $word[] = (($i%2)===0) ? $chars[array_rand($chars)] : $vocals[array_rand($vocals)];
+        for($i = 0; $i < $charLen; $i++) {
+            $word[] = (($i % 2) === 0) ? $chars[array_rand($chars)] : $vocals[array_rand($vocals)];
         }
 
-        if(!$numbers) return strtoupper(implode("", $word));
-        for($i=0; $i<$numbers; $i++){
+        if (!$numbers) {
+            return strtoupper(implode("", $word));
+        }
+        for($i = 0; $i < $numbers; $i++) {
             $word[] = rand(0, 9);
         }
         return strtoupper(implode("", $word));
     }
 
-    public function get_csv_cleaned(string $csv): string
+    public function getBlanksAsNull(string $csv): string
     {
         $csv = trim(strtolower($csv));
-        if (!strstr($csv, ",")) return $csv;
+        if (!strstr($csv, ",")) {
+            return $csv;
+        }
 
         $parts = explode(",", $csv);
         $parts = array_map(function (string $string) {
@@ -102,9 +112,24 @@ final class TextComponent
         return implode(", ", $parts);
     }
 
-    public function get_cancelled_email(string $email): string
+    public function getCancelledEmail(string $email): string
     {
         $email = explode("@", $email)[0];
         return "$email@cancelled.can";
+    }
+
+    public function getObjectAsArrayInSnakeCase(object $objectDto): array
+    {
+        $asArray = [];
+        $reflection = new ReflectionObject($objectDto);
+        $reflectionProperties = $reflection->getProperties();
+        $reflectionProperties = array_map(fn ($item) => $item->getName(), $reflectionProperties);
+        foreach ($reflectionProperties as $reflectionProperty) {
+            $value = $objectDto->{$reflectionProperty}();
+            $propertySnake = preg_replace("/([a-z])([A-Z])/", "$1_$2", $reflectionProperty);
+            $propertySnake = strtolower($propertySnake);
+            $asArray[$propertySnake] = $value;
+        }
+        return $asArray;
     }
 }

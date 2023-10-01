@@ -1,108 +1,102 @@
 <?php
+
 namespace App\Restrict\Subscriptions\Infrastructure\Controllers;
 
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Restrict\Subscriptions\Application\SubscriptionsUpdateService;
-use App\Restrict\Subscriptions\Application\SubscriptionsInfoService;
+use Exception;
 use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Domain\Enums\ExceptionType;
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
-use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use App\Shared\Infrastructure\Exceptions\FieldsException;
-use \Exception;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Domain\Enums\{ExceptionType, PageType, ResponseType};
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
+use App\Restrict\Subscriptions\Application\{SubscriptionsInfoService, SubscriptionsUpdateService};
+use App\Shared\Infrastructure\Exceptions\{FieldsException, ForbiddenException, NotFoundException};
 
 final class SubscriptionsUpdateController extends RestrictController
 {
     public function __construct()
     {
         parent::__construct();
-        $this->_if_noauth_tologin();
+        $this->_redirectToLoginIfNoAuthUser();
     }
 
     //@modal
     public function edit(string $uuid): void
     {
-        if (!$this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
-            $this->add_var(PageType::TITLE, __("Unauthorized"))
-                ->add_var(PageType::H1, __("Unauthorized"))
-                ->add_var("ismodal",1)
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
+        if (!$this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_WRITE)) {
+            $this->addGlobalVar(PageType::TITLE, __("Unauthorized"))
+                ->addGlobalVar(PageType::H1, __("Unauthorized"))
+                ->addGlobalVar("ismodal", 1)
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("403")
+                ->renderViewOnly();
+        }
 
-        $this->add_var("ismodal",1);
+        $this->addGlobalVar("ismodal", 1);
         try {
-            $edit = SF::get(SubscriptionsInfoService::class, [$uuid]);
+            $edit = SF::getInstanceOf(SubscriptionsInfoService::class, [$uuid]);
             $result = $edit->get_info_for_execute_date();
 
-            $this->set_template("update-status")
-                ->add_var(PageType::TITLE, __("Edit subscription {0}", $uuid))
-                ->add_var(PageType::H1, __("Edit subscription {0}", $uuid))
-                ->add_var(PageType::CSRF, $this->csrf->get_token())
-                ->add_var("user", $this->auth->get_user())
-                ->add_var("uuid", $uuid)
-                ->add_var("result", $result);
-            $this->view->render_nl();
-        }
-        catch (NotFoundException $e) {
-            $this->add_header(ResponseType::NOT_FOUND)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("404")
-                ->render_nl();
-        }
-        catch (ForbiddenException $e) {
-            $this->add_header(ResponseType::FORBIDDEN)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("403")
-                ->render_nl();
-        }
-        catch (Exception $e) {
-            $this->logerr($e->getMessage(),"subscriptionupdate.controller");
-            $this->add_header(ResponseType::INTERNAL_SERVER_ERROR)
-                ->add_var(PageType::H1, $e->getMessage())
-                ->set_foldertpl("Open/Errors/Infrastructure/Views")
-                ->set_template("500")
-                ->render_nl();
+            $this->setTemplateBySubPath("update-status")
+                ->addGlobalVar(PageType::TITLE, __("Edit subscription {0}", $uuid))
+                ->addGlobalVar(PageType::H1, __("Edit subscription {0}", $uuid))
+                ->addGlobalVar(PageType::CSRF, $this->csrfService->getCsrfToken())
+                ->addGlobalVar("user", $this->authService->getAuthUserArray())
+                ->addGlobalVar("uuid", $uuid)
+                ->addGlobalVar("result", $result);
+            $this->view->renderViewOnly();
+        } catch (NotFoundException $e) {
+            $this->addHeaderCode(ResponseType::NOT_FOUND)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("404")
+                ->renderViewOnly();
+        } catch (ForbiddenException $e) {
+            $this->addHeaderCode(ResponseType::FORBIDDEN)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("403")
+                ->renderViewOnly();
+        } catch (Exception $e) {
+            $this->logErr($e->getMessage(), "subscriptionupdate.controller");
+            $this->addHeaderCode(ResponseType::INTERNAL_SERVER_ERROR)
+                ->addGlobalVar(PageType::H1, $e->getMessage())
+                ->setPartViewFolder("Open/Errors/Infrastructure/Views")
+                ->setPartViewName("500")
+                ->renderViewOnly();
         }
     }//edit
 
     //@patch
     public function update_status(string $uuid): void
     {
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
-        if (!$this->csrf->is_valid($this->_get_csrf()))
-            $this->_get_json()
-                ->set_code(ExceptionType::CODE_UNAUTHORIZED)
-                ->set_error([__("Invalid CSRF token")])
+        if (!$this->csrfService->isValidCsrfToken($this->_getCsrfTokenFromRequest())) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ExceptionType::CODE_UNAUTHORIZED)
+                ->setErrors([__("Invalid CSRF token")])
                 ->show();
+        }
 
         try {
-            $request = ["uuid"=>$uuid] + $this->request->get_post();
-            $update = SF::get_callable(SubscriptionsUpdateService::class, $request);
+            $request = ["uuid" => $uuid] + $this->requestComponent->getPost();
+            $update = SF::getCallableService(SubscriptionsUpdateService::class, $request);
             $result = $update();
-            $this->_get_json()->set_payload([
-                "message"=> __("{0} {1} successfully updated", __("Subscription"), $uuid),
+            $this->_getJsonInstanceFromResponse()->setPayload([
+                "message" => __("{0} {1} successfully updated", __("Subscription"), $uuid),
                 "result" => $result,
             ])->show();
-        }
-        catch (FieldsException $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([["fields_validation" => $update->get_errors()]])
+        } catch (FieldsException $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([["fields_validation" => $update->getErrors()]])
                 ->show();
-        }
-        catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }//update

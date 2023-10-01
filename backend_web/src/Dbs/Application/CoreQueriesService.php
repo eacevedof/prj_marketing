@@ -7,26 +7,26 @@
  * @date 15-01-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Dbs\Application;
 
 use App\Shared\Infrastructure\Services\AppService;
 
 final class CoreQueriesService extends AppService
 {
-
-    public function get_fields_min(string $dbname, string $table): string
+    public function getFieldsMin(string $dbName, string $table): string
     {
         return "
         /*CoreQueriesService.get_fields_min*/
         SELECT information_schema.columns.column_name field_name
         FROM information_schema.columns 
         WHERE 1
-        AND table_schema = '$dbname'
+        AND table_schema = '$dbName'
         AND table_name = '$table'        
         ";
     }//get_fields
 
-    public function get_fields(string $dbname, string $table): string
+    public function getFields(string $dbname, string $table): string
     {
         return "
         /*CoreQueriesService.get_fields*/
@@ -54,7 +54,7 @@ final class CoreQueriesService extends AppService
         ";
     }//get_fields
 
-    public function get_tables(string $dbname, ?string $table=null): string
+    public function getTables(string $dbname, ?string $table = null): string
     {
         $sql = "
         /*CoreQueriesService.get_tables*/
@@ -63,17 +63,19 @@ final class CoreQueriesService extends AppService
         WHERE 1
         AND table_schema='$dbname'
         ";
-        if($table) $sql .= " AND table_name='$table'";
+        if ($table) {
+            $sql .= " AND table_name='$table'";
+        }
 
         $sql .= " ORDER BY 1";
         return $sql;
     }//get_tables
 
-    public function get_field(string $dbname, string $table, string $field): string
+    public function getField(string $dbname, string $table, string $field): string
     {
         return "
         /*CoreQueriesService.get_fields*/
-        SELECT DISTINCT table_name,LOWER(column_name) AS field_name
+        SELECT DISTINCT table_name, LOWER(column_name) AS field_name
         ,LOWER(DATA_TYPE) AS field_type
         ,IF(pkfields.field_name IS null,0,1) is_pk
         ,character_maximum_length AS field_length

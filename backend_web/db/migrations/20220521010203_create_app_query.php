@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -16,7 +17,7 @@ final class CreateAppQuery extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             //"engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -64,9 +65,9 @@ final class CreateAppQuery extends AbsMigration
         ->create();
 
         $table
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
-            ->addIndex(["module"], ["name"=>"module_idx"])
-            ->addIndex(["id","uuid"], ["name"=>"id__uuid_idx"])
+            ->addIndex(["uuid"], ["name" => "uuid_idx"])
+            ->addIndex(["module"], ["name" => "module_idx"])
+            ->addIndex(["id","uuid"], ["name" => "id__uuid_idx"])
             ->update()
         ;
     }

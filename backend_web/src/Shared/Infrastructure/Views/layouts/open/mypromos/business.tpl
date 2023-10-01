@@ -12,8 +12,8 @@ use App\Shared\Infrastructure\Helpers\Views\EnvIconHelper;
   <?php $this->_element("common/elem-gtag-js"); ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="<?php $this->_echo_nohtml($space["businessfavicon"] ?? EnvIconHelper::icon())?>"/>
-  <title><?php $this->_echo_nohtml($pagetitle ?? "")?></title>
+  <link rel="icon" href="<?php $this->_echoHtmlEscaped($space["businessfavicon"] ?? EnvIconHelper::getIconPath())?>"/>
+  <title><?php $this->_echoHtmlEscaped($pagetitle ?? "")?></title>
   <?php
   $this->_element("common/elem-cookiebot");
   $this->_element("open/mypromos/elem-css-common");
@@ -32,7 +32,7 @@ $this->_element("common/elem-band-env");
 if ($bgimage = $space["businessbgimage"]):
 ?>
 .main-grid {
-  background-image: url(<?php $this->_echo_nohtml($bgimage)?>);
+  background-image: url(<?php $this->_echoHtmlEscaped($bgimage)?>);
 }
 <?php
 endif;
@@ -52,7 +52,7 @@ endif;
   ?>
   <section class="section-grid center-x">
     <div class="div-texts">
-      <h1><?php $this->_echo_nohtml($h1); ?></h1>
+      <h1><?php $this->_echoHtmlEscaped($h1); ?></h1>
       <?php
       use App\Shared\Infrastructure\Helpers\Views\DivTextsHelper;
       use App\Shared\Infrastructure\Factories\HelperFactory as HF;

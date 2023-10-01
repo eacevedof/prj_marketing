@@ -7,6 +7,7 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Shared\Domain\Repositories\Base;
 
 use App\Shared\Domain\Repositories\AppRepository;
@@ -21,12 +22,12 @@ final class ArrayRepository extends AppRepository
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
     }
 
-    public function get_profiles(): array
+    public function getAllProfiles(): array
     {
-        $sql = $this->_get_qbuilder()
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("picklist.get_profiles")
             ->set_table("base_array as m")
             ->set_getfields(["m.id","m.description"])
@@ -37,8 +38,8 @@ final class ArrayRepository extends AppRepository
             ->add_orderby("m.description")
             ->select()->sql()
         ;
-        $this->result = $this->db->query($sql);
-        return $this->_get_associative(["id","description"]);
+        $this->result = $this->componentMysql->query($sql);
+        return $this->_getKeyValueArray(["id","description"]);
     }
 
 }//ArrayRepository

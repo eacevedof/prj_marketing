@@ -1,75 +1,85 @@
 <?php
+
 namespace App\Restrict\Auth\Application;
 
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\Users\Domain\UserRepository;
 use App\Shared\Domain\Enums\SessionType;
-use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Restrict\Users\Domain\UserRepository;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
+use App\Restrict\Users\Domain\Enums\{UserPolicyType, UserProfileType};
+use App\Shared\Infrastructure\Factories\Specific\SessionFactory as SF;
 
 final class AuthService
 {
     private static ?AuthService $authService = null;
-    private static ?array $authuser = null;
+    private static ?array $authUserArray = null;
 
-    private function __construct() {}
-
-    private function __clone() {}
-
-    public static function getme(): self
+    private function __construct()
     {
-        if (!self::$authService)
-            self::$authService = new AuthService();
+    }
+
+    private function __clone()
+    {
+    }
+
+    public static function getInstance(): self
+    {
+        if (!self::$authService) {
+            self::$authService = new AuthService;
+        }
         return self::$authService;
     }
 
-    public function get_user(): ?array
+    public function getAuthUserArray(): ?array
     {
-        if (!self::$authuser)
-            self::$authuser = SF::get()->get(SessionType::AUTH_USER) ?? [];
-        return self::$authuser;
+        if (!self::$authUserArray) {
+            self::$authUserArray = SF::get()->get(SessionType::AUTH_USER) ?? [];
+        }
+        return self::$authUserArray;
     }
 
-    public function is_user_allowed(string $action): bool
+    public function hasAuthUserPolicy(string $action): bool
     {
-        if(!self::$authuser) return false;
-        if($this->is_root()) return true;
+        if (!self::$authUserArray) {
+            return false;
+        }
+        if ($this->isAuthUserRoot()) {
+            return true;
+        }
 
-        $permissions = self::$authuser[SessionType::AUTH_USER_PERMISSIONS] ?? [];
+        $permissions = self::$authUserArray[SessionType::AUTH_USER_PERMISSIONS] ?? [];
         return in_array($action, $permissions);
     }
 
-    public function get_module_permissions(string $module, ?string $type=null): array
+    public function getModulePermissions(string $module, ?string $rwAction = null): array
     {
         $permission = match ($module) {
             UserPolicyType::MODULE_USERS => [
-                "write" => $this->is_user_allowed(UserPolicyType::USERS_WRITE),
-                "read" => $this->is_user_allowed(UserPolicyType::USERS_READ),
+                "write" => $this->hasAuthUserPolicy(UserPolicyType::USERS_WRITE),
+                "read" => $this->hasAuthUserPolicy(UserPolicyType::USERS_READ),
             ],
             UserPolicyType::MODULE_USER_PERMISSIONS => [
-                "write" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_WRITE),
-                "read" => $this->is_user_allowed(UserPolicyType::USER_PERMISSIONS_READ),
+                "write" => $this->hasAuthUserPolicy(UserPolicyType::USER_PERMISSIONS_WRITE),
+                "read" => $this->hasAuthUserPolicy(UserPolicyType::USER_PERMISSIONS_READ),
             ],
             UserPolicyType::MODULE_USER_PREFERENCES => [
-                "write" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_WRITE),
-                "read" => $this->is_user_allowed(UserPolicyType::USER_PREFERENCES_READ),
+                "write" => $this->hasAuthUserPolicy(UserPolicyType::USER_PREFERENCES_WRITE),
+                "read" => $this->hasAuthUserPolicy(UserPolicyType::USER_PREFERENCES_READ),
             ],
             UserPolicyType::MODULE_BUSINESSDATA => [
-                "write" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_WRITE),
-                "read" => $this->is_user_allowed(UserPolicyType::BUSINESSDATA_READ),
+                "write" => $this->hasAuthUserPolicy(UserPolicyType::BUSINESSDATA_WRITE),
+                "read" => $this->hasAuthUserPolicy(UserPolicyType::BUSINESSDATA_READ),
             ],
             UserPolicyType::MODULE_PROMOTIONS => [
-                "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_WRITE),
-                "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_READ),
+                "write" => $this->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_WRITE),
+                "read" => $this->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_READ),
             ],
             UserPolicyType::MODULE_PROMOTIONS_UI => [
-                "write" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_WRITE),
-                "read" => $this->is_user_allowed(UserPolicyType::PROMOTIONS_UI_READ),
+                "write" => $this->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_UI_WRITE),
+                "read" => $this->hasAuthUserPolicy(UserPolicyType::PROMOTIONS_UI_READ),
             ],
             UserPolicyType::MODULE_SUBSCRIPTIONS => [
-                "write" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE),
-                "read" => $this->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ),
+                "write" => $this->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_WRITE),
+                "read" => $this->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_READ),
             ],
             default => [
                 "write" => false,
@@ -77,88 +87,89 @@ final class AuthService
             ],
         };
 
-        if (!in_array($type, [UserPolicyType::READ, UserPolicyType::WRITE]))
+        if (!in_array($rwAction, [UserPolicyType::READ, UserPolicyType::WRITE])) {
             return $permission;
+        }
 
-        if ($type===UserPolicyType::READ)
+        if ($rwAction === UserPolicyType::READ) {
             return [$permission["write"] || $permission["read"]];
+        }
 
         return [$permission["write"]];
     }
 
-    public function is_root(?int $idprofile=null): bool
+    public function isAuthUserRoot(?int $idProfile = null): bool
     {
-        return $idprofile
-            ? ($idprofile === UserProfileType::ROOT)
-            : (self::$authuser["id_profile"] ?? "") === UserProfileType::ROOT;
+        return $idProfile
+            ? ($idProfile === UserProfileType::ROOT)
+            : ((int) (self::$authUserArray["id_profile"] ?? "")) === UserProfileType::ROOT;
     }
 
-    public function is_root_super(): bool
+    public function isAuthUserSuperRoot(): bool
     {
-        if (!self::$authuser) return false;
+        if (!self::$authUserArray) {
+            return false;
+        }
         return (
-            self::$authuser["uuid"] === UserProfileType::ROOT_SUPER_UUID &&
-            ((int) self::$authuser["id"])=== UserProfileType::ROOT_SUPER_ID
+            self::$authUserArray["uuid"] === UserProfileType::ROOT_SUPER_UUID &&
+            ((int) self::$authUserArray["id"]) === UserProfileType::ROOT_SUPER_ID
         );
     }
 
-    public function is_sysadmin(?int $idprofile=null): bool
+    public function isAuthUserSysadmin(?int $idProfile = null): bool
     {
-        return $idprofile
-            ? ($idprofile === UserProfileType::SYS_ADMIN)
-            : (self::$authuser["id_profile"] ?? "") === UserProfileType::SYS_ADMIN;
+        return $idProfile
+            ? ($idProfile === UserProfileType::SYS_ADMIN)
+            : ((int) (self::$authUserArray["id_profile"] ?? "")) === UserProfileType::SYS_ADMIN;
     }
 
-    public function is_business_owner(?int $idprofile=null): bool
+    public function isAuthUserBusinessOwner(?int $idProfile = null): bool
     {
-        return $idprofile
-            ? ($idprofile === UserProfileType::BUSINESS_OWNER)
-            : (self::$authuser["id_profile"] ?? null) === UserProfileType::BUSINESS_OWNER;
+        return $idProfile
+            ? ($idProfile === UserProfileType::BUSINESS_OWNER)
+            : (self::$authUserArray["id_profile"] ?? null) === UserProfileType::BUSINESS_OWNER;
     }
 
-    public function is_business_manager(?int $idprofile=null): bool
+    public function hasAuthUserBusinessManagerProfile(?int $idProfile = null): bool
     {
-        return $idprofile
-            ? ($idprofile === UserProfileType::BUSINESS_MANAGER)
-            : (self::$authuser["id_profile"] ?? "") === UserProfileType::BUSINESS_MANAGER;
+        return $idProfile
+            ? ($idProfile === UserProfileType::BUSINESS_MANAGER)
+            : ((int) (self::$authUserArray["id_profile"] ?? "")) === UserProfileType::BUSINESS_MANAGER;
     }
 
-    public function is_business(?int $idprofile=null): bool
+    public function isIdProfileBusinessProfile(?int $idProfile): bool
     {
-        $business = [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER];
-        return $idprofile
-            ? in_array($idprofile, $business)
-            : in_array(self::$authuser["id_profile"] ?? "", $business);
+        return in_array($idProfile, [UserProfileType::BUSINESS_OWNER, UserProfileType::BUSINESS_MANAGER]);
     }
 
-    public function is_system(?int $idprofile=null): bool
+    public function hasAuthUserSystemProfile(): bool
     {
         $system = [UserProfileType::ROOT, UserProfileType::SYS_ADMIN];
-        return $idprofile
-            ? in_array($idprofile, $system)
-            : in_array(self::$authuser["id_profile"] ?? "", $system);
+        return in_array((int) (self::$authUserArray["id_profile"] ?? ""), $system);
     }
 
-
-    public function get_idowner(): ?int
+    public function getIdOwner(): ?int
     {
-        if ($this->is_root() || $this->is_sysadmin())
+        if ($this->isAuthUserRoot() || $this->isAuthUserSysadmin()) {
             return null;
-        if ($this->is_business_owner())
-            return self::$authuser["id"];
+        }
 
-        return RF::get(UserRepository::class)->get_idowner(self::$authuser["id"]);
+        if ($this->isAuthUserBusinessOwner()) {
+            return self::$authUserArray["id"];
+        }
+
+        return RF::getInstanceOf(UserRepository::class)->getIdOwnerByIdUser(self::$authUserArray["id"]);
     }
 
-    public function get_tz(): string
+    public function getAuthUserTZ(): string
     {
         //return "Europe/Madrid";
-        return $this->get_user()[SessionType::AUTH_USER_TZ] ?? "";
+        return $this->getAuthUserArray()[SessionType::AUTH_USER_TZ] ?? "";
     }
 
     public static function reset(): void
     {
         self::$authService = null;
-        self::$authuser = null;
+        self::$authUserArray = null;
     }
 }

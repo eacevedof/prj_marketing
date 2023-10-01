@@ -1,13 +1,13 @@
 <?php
+
 namespace App\Open\TermsConditions\Application;
 
-use App\Shared\Infrastructure\Exceptions\NotFoundException;
 use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 use App\Shared\Infrastructure\Helpers\UrlDomainHelper;
 use App\Restrict\Promotions\Domain\PromotionRepository;
-use App\Shared\Domain\Enums\LanguageType;
-use App\Shared\Domain\Enums\RequestType;
+use App\Shared\Domain\Enums\{LanguageType, RequestType};
+use App\Shared\Infrastructure\Exceptions\NotFoundException;
+use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
 
 final class TermsConditionsInfoService extends AppService
 {
@@ -15,15 +15,15 @@ final class TermsConditionsInfoService extends AppService
 
     public function __construct(array $input = [])
     {
-        $this->input = $input["promoslug"] ?? "";
+        $this->input = $input["promotionSlug"] ?? "";
         $lang = trim($input[RequestType::LANG] ?? "");
         $lang = strtolower($lang);
         $this->lang = LanguageType::exists($lang) ? $lang : LanguageType::ES;
     }
 
-    private function _general_terms(): array
+    private function _getPortalGeneralTermsAndConditions(): array
     {
-        $domain = UrlDomainHelper::get_instance()->get_full_url();
+        $domain = UrlDomainHelper::getInstance()->getDomainUrlWithAppend();
         return [
             ["h2" => __("1. Portal Owner")],
             ["p" => __("This Legal Notice regulates the conditions of use of the website <a href=\"{0}\" target=\"_blank\">{1}</a> (hereinafter, the “Website“ or the “Portal“) responsibility of:", $domain, $domain)],
@@ -98,16 +98,17 @@ final class TermsConditionsInfoService extends AppService
 
     public function __invoke(): array
     {
-        return $this->_general_terms();
+        return $this->_getPortalGeneralTermsAndConditions();
     }
 
-    private function _get_conditions_by_language(string $conditions): array
+    private function _getConditionsByLanguageFromPromotionContent(string $conditions): array
     {
         //busca #EN, #en #es_ES
         $pattern = "/\#[a-z,\_,A-Z]{2,6}\s*[\r\n]/im";
-        preg_match_all($pattern, $conditions,$found);
-        if (!$found = $found[0])
+        preg_match_all($pattern, $conditions, $found);
+        if (!$found = $found[0]) {
             return explode("\n", $conditions);
+        }
 
         $found = array_unique($found);
         $found = array_filter($found, function (string $hashlang) {
@@ -115,36 +116,41 @@ final class TermsConditionsInfoService extends AppService
             return $hashlang === "#{$this->lang}";
         });
         $found = array_values($found);
-        if (!$found) return explode("\n", $conditions);
+        if (!$found) {
+            return explode("\n", $conditions);
+        }
 
         //$hashlang = str_replace(["#","\n"],"",$found[0]);
         $hashlang = $found[0];
         $pattern = "/{$hashlang}(.*?)\#/ims";
-        preg_match_all($pattern, $conditions,$found);
+        preg_match_all($pattern, $conditions, $found);
         $subconds = trim($found[1][0] ?? "");
-        if ($subconds)
+        if ($subconds) {
             return explode("\n", $subconds);
+        }
 
         $start = strpos($conditions, $hashlang);
         $subconds = substr($conditions, $start);
         $subconds = str_replace($hashlang, "", $subconds);
-        return explode("\n", $subconds);;
+        return explode("\n", $subconds);
     }
 
-    private function _promotion_terms(array $promotion): array
+    private function _getPromotionTermsAndConditions(array $promotion): array
     {
         //todo hay que agregar las fechas limites
         // hasta agotar existencias
         // rifable o acumulativa (tratarlo en en el contador)
         $lines = trim($promotion["content"]);
-        if (!$lines) return [
-            ["h2" => "- ".__("Promotion Terms: {0}", $promotion["descripton"])],
-            ["p" => __("This promotion expires at: {0} UTC", $promotion["date_to"])],
-        ];
-        $lines = $this->_get_conditions_by_language($promotion["content"]);
+        if (!$lines) {
+            return [
+                ["h2" => "- ".__("Promotion Terms: {0}", $promotion["descripton"])],
+                ["p" => __("This promotion expires at: {0} UTC", $promotion["date_to"])],
+            ];
+        }
+        $lines = $this->_getConditionsByLanguageFromPromotionContent($promotion["content"]);
 
         $conds[0] = ["h2" => "- ".__("Promotion Terms: {0}", $promotion["description"])];
-        $conds[1] = ["ul"=>[]];
+        $conds[1] = ["ul" => []];
         foreach ($lines as $line) {
             $conds[1]["ul"][] = $line;
         }
@@ -153,18 +159,19 @@ final class TermsConditionsInfoService extends AppService
         return $conds;
     }
 
-    public function get_by_promotion(): array
+    public function getSummarizedPortalAndPromotionConditions(): array
     {
-        $promotion = RF::get(PromotionRepository::class)->get_by_slug(
+        $promotion = RF::getInstanceOf(PromotionRepository::class)->getPromotionByPromotionSlug(
             $this->input,
             ["description","content","date_to", "is_raffleable", "is_cumulative"]
         );
-        if (!$promotion)
+        if (!$promotion) {
             throw new NotFoundException(__("Promotion not found"));
+        }
 
         return array_merge(
-            $this->_promotion_terms($promotion),
-            $this->_general_terms(),
+            $this->_getPromotionTermsAndConditions($promotion),
+            $this->_getPortalGeneralTermsAndConditions(),
         );
     }
 }

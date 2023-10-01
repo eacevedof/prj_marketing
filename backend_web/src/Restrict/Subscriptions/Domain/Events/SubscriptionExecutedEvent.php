@@ -1,56 +1,53 @@
 <?php
+
 namespace App\Restrict\Subscriptions\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class SubscriptionExecutedEvent extends AbsEvent
+final class SubscriptionExecutedEvent extends AbstractEvent
 {
     private string $uuid;
     private string $dateexecution;
 
     public function __construct(
         int $idsubscription,
-
         string $uuid,
         string $dateexecution,
-
         ?string $eventid = null,
         ?int $occuredon = null,
         ?string $correlationid = null,
         ?string $causationid = null
-    )
-    {
+    ) {
         parent::__construct($idsubscription, $eventid, $occuredon, $correlationid, $causationid);
         $this->uuid = $uuid;
         $this->dateexecution = $dateexecution;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "subscription.executed";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["uuid"], //app_promotioncap.uuid
             $body["date_execution"],
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
             "uuid" => $this->uuid,

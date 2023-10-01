@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 use Migrations\AbsMigration;
 
@@ -17,7 +18,7 @@ final class CreateBaseUserPermissions extends AbsMigration
         $table = $this->table("{$this->tablename}", [
             "engine" => "MyISAM",
             "collation" => "utf8_general_ci",
-            "id"=> false,
+            "id" => false,
             "primary_key" => ["id"]
         ]);
 
@@ -44,9 +45,9 @@ final class CreateBaseUserPermissions extends AbsMigration
         ])
         ->create();
 
-        $table->addIndex(["delete_date"], ["name"=>"delete_date_idx"])
-            ->addIndex(["uuid"], ["name"=>"uuid_idx"])
-            ->addIndex(["id_user"], ["name"=>"id_user_idx"])
+        $table->addIndex(["delete_date"], ["name" => "delete_date_idx"])
+            ->addIndex(["uuid"], ["name" => "uuid_idx"])
+            ->addIndex(["id_user"], ["name" => "id_user_idx"])
             ->update()
         ;
     }
@@ -60,4 +61,3 @@ final class CreateBaseUserPermissions extends AbsMigration
         $this->table($this->tablename)->drop()->save();
     }
 }
-

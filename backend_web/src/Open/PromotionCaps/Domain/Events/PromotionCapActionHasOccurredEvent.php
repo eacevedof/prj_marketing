@@ -1,60 +1,57 @@
 <?php
+
 namespace App\Open\PromotionCaps\Domain\Events;
 
-use App\Shared\Infrastructure\Bus\AbsEvent;
+use App\Shared\Infrastructure\Bus\AbstractEvent;
 
-final class PromotionCapActionHasOccurredEvent extends AbsEvent
+final class PromotionCapActionHasOccurredEvent extends AbstractEvent
 {
-    private int $idpromotion;
-    private ?int $idcapuser;
-    private int $idtype;
-    private string $urlreq;
-    private ?string $urlref;
-    private string $remoteip;
-    private int $istest;
+    private int $idPromotion;
+    private ?int $idCapUser;
+    private int $idType;
+    private string $urlRequest;
+    private ?string $urlReferer;
+    private string $remoteIp;
+    private int $isTestMode;
 
     public function __construct(
-        int $idaggregate,
+        int     $idAggregate,
+        int     $idPromotion,
+        ?int    $idCapUser,
+        int     $idType,
+        string  $urlReq,
+        ?string $urlRef,
+        string  $remoteIp,
+        int     $isTestMode,
+        ?string $eventId = null,
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ) {
+        parent::__construct($idAggregate, $eventId, $occurredOn, $correlationId, $causationId);
 
-        int $idpromotion,
-        ?int $idcapuser,
-        int $idtype,
-        string $urlreq,
-        ?string $urlref,
-        string $remoteip,
-        int $istest,
-
-        ?string $eventid = null,
-        ?int $occuredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    )
-    {
-        parent::__construct($idaggregate, $eventid, $occuredon, $correlationid, $causationid);
-
-        $this->idpromotion = $idpromotion;
-        $this->idcapuser = $idcapuser;
-        $this->idtype = $idtype;
-        $this->urlreq = $urlreq;
-        $this->urlref = $urlref;
-        $this->remoteip = $remoteip;
-        $this->istest = $istest;
+        $this->idPromotion = $idPromotion;
+        $this->idCapUser = $idCapUser;
+        $this->idType = $idType;
+        $this->urlRequest = $urlReq;
+        $this->urlReferer = $urlRef;
+        $this->remoteIp = $remoteIp;
+        $this->isTestMode = $isTestMode;
     }
 
-    public static function event_name(): string
+    public static function eventName(): string
     {
         return "promotioncapa.created";
     }
 
-    public static function from_primitives(
-        int $aggregateId,
-        array $body,
+    public static function fromPrimitives(
+        int     $aggregateId,
+        array   $body,
         ?string $eventId = null,
-        ?int $occurredon = null,
-        ?string $correlationid = null,
-        ?string $causationid = null
-    ): AbsEvent
-    {
+        ?int    $occurredOn = null,
+        ?string $correlationId = null,
+        ?string $causationId = null
+    ): AbstractEvent {
         return new self(
             $aggregateId,
             $body["id_promotion"],
@@ -64,59 +61,58 @@ final class PromotionCapActionHasOccurredEvent extends AbsEvent
             $body["url_ref"],
             $body["remote_ip"],
             $body["is_test"],
-
             $eventId,
-            $occurredon,
-            $correlationid,
-            $causationid
+            $occurredOn,
+            $correlationId,
+            $causationId
         );
     }
 
-    public function to_primitives(): array
+    public function toPrimitives(): array
     {
         return [
-            "id_promotion" => $this->idpromotion,
-            "id_promouser" => $this->idcapuser,
-            "id_type" => $this->idtype,
-            "url_req" => $this->urlreq,
-            "url_ref" => $this->urlref,
-            "remote_ip" => $this->remoteip,
-            "is_test" => $this->istest,
+            "id_promotion" => $this->idPromotion,
+            "id_promouser" => $this->idCapUser,
+            "id_type" => $this->idType,
+            "url_req" => $this->urlRequest,
+            "url_ref" => $this->urlReferer,
+            "remote_ip" => $this->remoteIp,
+            "is_test" => $this->isTestMode,
         ];
     }
 
-    public function id_promotion(): int
+    public function idPromotion(): int
     {
-        return $this->idpromotion;
+        return $this->idPromotion;
     }
 
-    public function id_capuser(): ?int
+    public function idCapUser(): ?int
     {
-        return $this->idcapuser;
+        return $this->idCapUser;
     }
 
-    public function id_type(): int
+    public function idType(): int
     {
-        return $this->idtype;
+        return $this->idType;
     }
 
-    public function url_req(): string
+    public function urlRequest(): string
     {
-        return $this->urlreq;
+        return $this->urlRequest;
     }
 
-    public function url_ref(): ?string
+    public function urlReferer(): ?string
     {
-        return $this->urlref;
+        return $this->urlReferer;
     }
 
-    public function remote_ip(): string
+    public function remoteIp(): string
     {
-        return $this->remoteip;
+        return $this->remoteIp;
     }
 
-    public function is_test(): int
+    public function isTestMode(): int
     {
-        return $this->istest;
+        return $this->isTestMode;
     }
 }

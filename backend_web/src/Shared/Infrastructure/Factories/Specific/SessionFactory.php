@@ -8,6 +8,6 @@ final class SessionFactory
 {
     public static function get(): SessionComponent
     {
-        return new SessionComponent();
+        return new SessionComponent;
     }
 }

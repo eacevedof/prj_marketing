@@ -7,38 +7,40 @@
  * @date 28-01-2019 19:00 SPAIN
  * @observations
  */
+
 namespace App\Dbs\Application;
 
 use App\Shared\Domain\Behaviours\SchemaBehaviour;
 
 final class SchemaService
 {
-    private SchemaBehaviour $behavschema;
+    private SchemaBehaviour $schemaBehaviour;
     private string $dbname;
 
-    public function __construct(?Object $db=null)
+    public function __construct(?Object $db = null)
     {
         //necesitaria un objeto de db
         $this->dbname = $db->get_config("database");
-        $this->behavschema = new SchemaBehaviour($db);
+        $this->schemaBehaviour = new SchemaBehaviour($db);
     }
 
-    public function get_tables(): array
+    public function getTables(): array
     {
-        return $this->behavschema->get_tables($this->dbname);
+        return $this->schemaBehaviour->getTables($this->dbname);
     }
 
-    public function get_fields_info(string $table): array
+    public function getFieldsInfo(string $table): array
     {
-        return $this->behavschema->get_fields_info($table, $this->dbname);
+        return $this->schemaBehaviour->getFieldsInfo($table, $this->dbname);
     }
 
-    public function get_tables_info(string $tables=""): array
+    public function getTablesInfo(string $csvTables = ""): array
     {
-        $artables = $tables ? explode(",",$tables) : $this->get_tables();
+        $tables = $csvTables ? explode(",", $csvTables) : $this->getTables();
         $return = [];
-        foreach ($artables as $table)
-            $return[$table] = $this->get_fields_info($table);
+        foreach ($tables as $table) {
+            $return[$table] = $this->getFieldsInfo($table);
+        }
         return $return;
     }
 

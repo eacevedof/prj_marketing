@@ -1,86 +1,98 @@
 <?php
+
 namespace App\Restrict\Subscriptions\Application;
 
-use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\HelperFactory as HF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Shared\Infrastructure\Helpers\Views\DatatableHelper;
+use App\Restrict\Subscriptions\Domain\PromotionCapSubscriptionsRepository;
+use App\Shared\Infrastructure\Factories\{
+    ComponentFactory as CF,
+    HelperFactory as HF,
+    RepositoryFactory as RF,
+    ServiceFactory as SF
+};
 
 final class SubscriptionsSearchService extends AppService
 {
-    private AuthService $auth;
-    private PromotionCapSubscriptionsRepository $repopromotion;
+    private AuthService $authService;
+    private PromotionCapSubscriptionsRepository $promotionCapSubscriptionsRepository;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
         $this->input = $input;
-        $this->repopromotion = RF::get(PromotionCapSubscriptionsRepository::class);
+        $this->promotionCapSubscriptionsRepository = RF::getInstanceOf(PromotionCapSubscriptionsRepository::class);
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) {
+            return;
+        }
 
-        if(!(
-            $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE)
-        ))
-            $this->_exception(
+        if (!(
+            $this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_READ)
+            || $this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_WRITE)
+        )) {
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+        }
     }
 
     public function __invoke(): array
     {
-        $search = CF::get_datatable($this->input)->get_search();
-        return $this->repopromotion->set_auth($this->auth)->search($search);
+        $search = CF::getDatatableComponent($this->input)->getSearchPayload();
+        return $this->promotionCapSubscriptionsRepository->setAuthService($this->authService)->search($search);
     }
 
-    public function get_datatable(): DatatableHelper
+    public function getDatatableHelper(): DatatableHelper
     {
-        $dthelp = HF::get(DatatableHelper::class)->add_column("id")->is_visible(false);
+        $datatableHelper = HF::get(DatatableHelper::class)->addColumn("id")->isVisible(false);
 
-        if($this->auth->is_root())
-            $dthelp
-                ->add_column("delete_date")->add_label(__("Deleted at"))
-                ->add_column("e_deletedby")->add_label(__("Deleted by"));
+        if ($this->authService->isAuthUserRoot()) {
+            $datatableHelper
+                ->addColumn("delete_date")->addLabel(__("Deleted at"))
+                ->addColumn("e_deletedby")->addLabel(__("Deleted by"));
+        }
 
-        $dthelp->add_column("uuid")->add_label(__("Cod. Susbscription"))->add_tooltip(__("Cod. Susbscription"));
-        if($this->auth->is_system())
-            $dthelp->add_column("e_owner")->add_label(__("Owner"))->add_tooltip(__("Owner"));
+        $datatableHelper->addColumn("uuid")->addLabel(__("Cod. Susbscription"))->addTooltip(__("Cod. Susbscription"));
+        if ($this->authService->hasAuthUserSystemProfile()) {
+            $datatableHelper->addColumn("e_owner")->addLabel(__("Owner"))->addTooltip(__("Owner"));
+        }
 
-        if($this->auth->is_system())
-            $dthelp->add_column("e_business")->add_label(__("Business"))->add_tooltip(__("Business"));
+        if ($this->authService->hasAuthUserSystemProfile()) {
+            $datatableHelper->addColumn("e_business")->addLabel(__("Business"))->addTooltip(__("Business"));
+        }
 
-        $dthelp
-            ->add_column("c_is_test")->add_label(__("Test"))->add_tooltip(__("Test"))
-            ->add_column("e_promotion")->add_label(__("Promotion"))->add_tooltip(__("Promotion"))
-            ->add_column("e_usercode")->add_label(__("Cod. User"))->add_tooltip(__("Cod. User"))
-            ->add_column("e_username")->add_label(__("Name"))->add_tooltip(__("Name"))
-            ->add_column("e_status")->add_label(__("Status"))->add_tooltip(__("Status"))
-            ->add_column("notes")->add_label(__("Notes"))->add_tooltip(__("Notes"))
+        $datatableHelper
+            ->addColumn("c_is_test")->addLabel(__("Test"))->addTooltip(__("Test"))
+            ->addColumn("e_promotion")->addLabel(__("Promotion"))->addTooltip(__("Promotion"))
+            ->addColumn("e_usercode")->addLabel(__("Cod. User"))->addTooltip(__("Cod. User"))
+            ->addColumn("e_username")->addLabel(__("Name"))->addTooltip(__("Name"))
+            ->addColumn("e_status")->addLabel(__("Status"))->addTooltip(__("Status"))
+            ->addColumn("notes")->addLabel(__("Notes"))->addTooltip(__("Notes"))
         ;
 
-        $dthelp->add_action("export");
-        if($this->auth->is_root())
-            $dthelp->add_action("show");
+        $datatableHelper->addAction("export");
+        if ($this->authService->isAuthUserRoot()) {
+            $datatableHelper->addAction("show");
+        }
 
-        if($this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_READ))
-            $dthelp->add_action("show");
+        if ($this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_READ)) {
+            $datatableHelper->addAction("show");
+        }
 
-        if ($this->auth->is_user_allowed(UserPolicyType::SUBSCRIPTIONS_WRITE))
-            $dthelp->add_action("edit");
+        if ($this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_WRITE)) {
+            $datatableHelper->addAction("edit");
+        }
 
-        return $dthelp;
+        return $datatableHelper;
     }
 }

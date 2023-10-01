@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Shared\Infrastructure\Exceptions;
-use \Exception;
+
+use Exception;
 use App\Shared\Domain\Enums\ExceptionType;
 
 final class ForbiddenException extends Exception

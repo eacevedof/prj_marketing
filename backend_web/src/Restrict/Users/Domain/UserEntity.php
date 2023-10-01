@@ -7,10 +7,11 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Users\Domain;
 
-use App\Shared\Domain\Entities\AppEntity;
 use App\Shared\Domain\Enums\EntityType;
+use App\Shared\Domain\Entities\AppEntity;
 
 final class UserEntity extends AppEntity
 {
@@ -49,7 +50,7 @@ final class UserEntity extends AppEntity
                     "length" => 20
                 ]
             ],
-            
+
             "fullname" => [
                 "label" => __("Fullname"),
                 EntityType::REQUEST_KEY => "fullname",

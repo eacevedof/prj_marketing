@@ -2,34 +2,34 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name App\Repositories\UserRepository 
+ * @name App\Repositories\UserRepository
  * @file UserRepository.php v1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Users\Domain;
 
-use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
+use App\Shared\Infrastructure\Bus\EventBus;
+use TheFramework\Components\Db\ComponentQB;
+use App\Restrict\Auth\Application\AuthService;
 use App\Shared\Domain\Bus\Event\IEventDispatcher;
 use App\Shared\Domain\Repositories\AppRepository;
-use App\Shared\Infrastructure\Bus\EventBus;
-use App\Shared\Infrastructure\Traits\SearchRepoTrait;
-use App\Shared\Infrastructure\Components\Hierarchy\HierarchyComponent;
-use App\Shared\Infrastructure\Factories\DbFactory as DbF;
-use App\Shared\Infrastructure\Factories\ComponentFactory as CF;
-use App\Restrict\Auth\Application\AuthService;
-use TheFramework\Components\Db\ComponentQB;
 use App\Restrict\Users\Domain\Enums\UserProfileType;
+use App\Shared\Infrastructure\Traits\SearchRepoTrait;
+use App\Restrict\Queries\Domain\Events\QueryWasCreatedEvent;
+use App\Shared\Infrastructure\Components\Hierarchy\HierarchyComponent;
+use App\Shared\Infrastructure\Factories\{ComponentFactory as CF, DbFactory as DbF};
 
 final class UserRepository extends AppRepository implements IEventDispatcher
 {
     use SearchRepoTrait;
 
-    private ?AuthService $auth = null;
+    private ?AuthService $authService = null;
 
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "base_user";
         $this->joins = [
             "fields" => [
@@ -51,48 +51,48 @@ final class UserRepository extends AppRepository implements IEventDispatcher
         ];
     }
 
-    private function _add_auth_condition(ComponentQB $qb): void
+    private function _addAuthUserConditionToQueryBuilder(ComponentQB $qb): void
     {
-        if (!$this->auth->is_root()) {
+        if (!$this->authService->isAuthUserRoot()) {
             $qb->add_and("m.is_enabled=1")->add_and("m.delete_date IS NULL");
         }
 
-        if($this->auth->is_root()) {
+        if ($this->authService->isAuthUserRoot()) {
             $qb->add_getfield("m.delete_user")
                 ->add_getfield("m.insert_date")
                 ->add_getfield("m.insert_user");
             return;
         }
 
-        $user = $this->auth->get_user();
-        if($this->auth->is_business_manager()) {
-            $idparent = $user["id_parent"];
-            $childs = $this->get_childs($idparent);
-            $childs = array_column($childs,"id");
+        $user = $this->authService->getAuthUserArray();
+        if ($this->authService->hasAuthUserBusinessManagerProfile()) {
+            $idParent = $user["id_parent"];
+            $childs = $this->getChildrenIdsByIdUser($idParent);
+            $childs = array_column($childs, "id");
             $qb->add_in("m.id", $childs);
             $qb->add_and("m.delete_date IS NULL");
             return;
         }
 
-        if($this->auth->is_business_owner()) {
-            $childs = $this->get_childs($user["id"]);
-            $childs = array_column($childs,"id");
+        if ($this->authService->isAuthUserBusinessOwner()) {
+            $childs = $this->getChildrenIdsByIdUser($user["id"]);
+            $childs = array_column($childs, "id");
             $childs[] = $user["id"];
             $qb->add_and("m.delete_date IS NULL");
             $qb->add_in("m.id", $childs);
         }
     }
 
-    private function _dispatch(array $payload): void
+    private function _dispatchQueryWasCreatedEvent(array $payload): void
     {
         EventBus::instance()->publish(...[
-            QueryWasCreatedEvent::from_primitives(-1, $payload)
+            QueryWasCreatedEvent::fromPrimitives(-1, $payload)
         ]);
     }
 
     public function search(array $search): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("user.search")
             ->set_table("$this->table as m")
             ->calcfoundrows()
@@ -115,16 +115,16 @@ final class UserRepository extends AppRepository implements IEventDispatcher
                 "m.delete_date"
             ])
             ->set_limit(25, 0)
-            ->set_orderby(["m.id"=>"DESC"])
+            ->set_orderby(["m.id" => "DESC"])
         ;
-        $this->_add_joins($qb);
-        $this->_add_search_filter($qb, $search);
-        $this->_add_auth_condition($qb);
+        $this->_addJoinsToQueryBuilder($qb);
+        $this->_addSearchFilterToQueryBuilder($qb, $search);
+        $this->_addAuthUserConditionToQueryBuilder($qb);
 
         $sql = $qb->select()->sql();
-        $sqlcount = $qb->sqlcount();
-        $r = $this->query_with_count($sqlcount, $sql);
-        $this->_dispatch([
+        $sqlCount = $qb->sqlcount();
+        $r = $this->getQueryWithCount($sqlCount, $sql);
+        $this->_dispatchQueryWasCreatedEvent([
             "uuid" => $md5 = md5($sql)."-".uniqid(),
             "description" => "read:search",
             "query" => $sql,
@@ -136,10 +136,10 @@ final class UserRepository extends AppRepository implements IEventDispatcher
         return $r;
     }
 
-    public function get_by_email(string $email): array
+    public function getUserByEmail(string $email): array
     {
-        $email = $this->_get_sanitized($email);
-        $sql = $this->_get_qbuilder()
+        $email = $this->_getSanitizedString($email);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("user.get_by_email")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -154,16 +154,18 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        if(count($r)>1 || !$r) return [];
+        if(count($r) > 1 || !$r) {
+            return [];
+        }
 
-        $this->map_to_int($r, ["id", "id_language", "id_profile", "id_parent"]);
+        $this->mapFieldsToInt($r, ["id", "id_language", "id_profile", "id_parent"]);
         return $r[0];
     }
 
-    public function email_exists(string $email): int
+    public function getUserIdByEmail(string $email): int
     {
-        $email = $this->_get_sanitized($email);
-        $sql = $this->_get_qbuilder()
+        $email = $this->_getSanitizedString($email);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("user.email_exists")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
@@ -171,14 +173,14 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        $this->map_to_int($r, ["id"]);
+        $this->mapFieldsToInt($r, ["id"]);
         return $r[0]["id"] ?? 0;
     }
 
-    public function get_info_by_uuid(string $uuid): array
+    public function getUserInfoByUserUuid(string $userUuid): array
     {
-        $uuid = $this->_get_sanitized($uuid);
-        $sql = $this->_get_qbuilder()
+        $userUuid = $this->_getSanitizedString($userUuid);
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("user.get_info(uuid)")
             ->set_table("$this->table as m")
             ->set_getfields([
@@ -198,85 +200,85 @@ final class UserRepository extends AppRepository implements IEventDispatcher
             ->add_join("LEFT JOIN app_array ar1 ON m.id_language = ar1.id_pk AND ar1.type='language'")
             ->add_join("LEFT JOIN base_array ar2 ON m.id_profile = ar2.id_pk AND ar2.type='profile'")
             ->add_join("LEFT JOIN app_array ar3 ON m.id_country = ar3.id AND ar3.type='country'")
-            ->add_and("m.uuid='$uuid'")
+            ->add_and("m.uuid='$userUuid'")
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        $this->map_to_int($r, ["id", "id_profile", "id_parent", "id_country", "id_language"]);
+        $this->mapFieldsToInt($r, ["id", "id_profile", "id_parent", "id_country", "id_language"]);
         return $r[0] ?? [];
     }
 
-    public function get_all_hierarchy(): array
+    public function getAllUsersHierarchyIds(): array
     {
-        $sql = $this->_get_qbuilder()
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("get_all_hierarchy")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id", "m.id_parent"])
             ->select()->sql()
         ;
         $r = $this->query($sql);
-        $this->map_to_int($r, ["id", "id_parent"]);
+        $this->mapFieldsToInt($r, ["id", "id_parent"]);
         return $r;
     }
 
-    public function set_auth(AuthService $auth): self
+    public function setAuthService(AuthService $authService): self
     {
-        $this->auth = $auth;
+        $this->authService = $authService;
         return $this;
     }
 
-    public function get_owner(string $iduser): array
+    public function getOwnerOfIdUser(string $idUser): array
     {
         /**
          * @var HierarchyComponent $hier
          */
-        $hier = CF::get(HierarchyComponent::class);
-        return $hier->get_topparent($iduser, $this->get_all_hierarchy());
+        $hier = CF::getInstanceOf(HierarchyComponent::class);
+        return $hier->getTopParent($idUser, $this->getAllUsersHierarchyIds());
     }
 
-    public function get_idowner(string $iduser): int
+    public function getIdOwnerByIdUser(string $idUser): int
     {
-        $owner = $this->get_owner($iduser);
+        $owner = $this->getOwnerOfIdUser($idUser);
         return (int) $owner["id"];
     }
 
-    public function get_childs(string $iduser): array
+    public function getChildrenIdsByIdUser(string $idUser): array
     {
         /**
          * @var HierarchyComponent $hier
          */
-        $hier = CF::get(HierarchyComponent::class);
-        return $hier->get_childs($iduser, $this->get_all_hierarchy());
+        $hier = CF::getInstanceOf(HierarchyComponent::class);
+        return $hier->getChildrenIds($idUser, $this->getAllUsersHierarchyIds());
     }
 
-    public function is_owner(int $iduser): bool
+    public function isIdUserEnabledBusinessOwner(int $idUser): bool
     {
-        $idprofile = UserProfileType::BUSINESS_OWNER;
-        $sql = $this->_get_qbuilder()
-            ->set_comment("user.is_owner")
+        $idProfile = UserProfileType::BUSINESS_OWNER;
+        $sql = $this->_getQueryBuilderInstance()
+            ->set_comment("user.isIdUserBusinessOwner")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.is_enabled = 1")
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id = $iduser")
-            ->add_and("m.id_profile=$idprofile")
+            ->add_and("m.id = $idUser")
+            ->add_and("m.id_profile=$idProfile")
             ->select()->sql()
         ;
-        return (bool) $this->query($sql,0,0);
+        return (bool) $this->query($sql, 0, 0);
     }
 
-    public function is_business(int $iduser): bool
+    public function isIdUserBusinessOwner(int $idUser): bool
     {
         $idprofile = UserProfileType::BUSINESS_OWNER;
-        $sql = $this->_get_qbuilder()
+        $sql = $this->_getQueryBuilderInstance()
             ->set_comment("user.is_owner")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id=$iduser")
+            ->add_and("m.id=$idUser")
             ->add_and("m.id_profile=$idprofile")
             ->select()->sql()
         ;
-        return (bool) $this->query($sql,0,0);
+        return (bool) $this->query($sql, 0, 0);
     }
 }

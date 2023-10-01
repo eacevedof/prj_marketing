@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
  * @version 1.7.1
- * @file functions_debug.php 
+ * @file functions_debug.php
  * @date 22-09-2019 18:44 (SPAIN)
  * @observations: Functions to print variables
  * @requires functions_string.php 1.0.2
@@ -12,138 +12,144 @@
 //pr(__FILE__);// /var/www/wwwtheframework/the_framework/functions/functions_debug.php
 //<editor-fold defaultstate="collapsed" desc="redundantes en index.php">
 //hago esta comprobación para los casos en que theframework se use como mochila
-if(!function_exists("errorson"))
-{
+if(!function_exists("errorson")) {
     //error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-    function errorson($sType="all")
+    function errorson($sType = "all")
     {
-        error_reporting(0);  
-        ini_set("error_log",dirname(dirname(__FILE__))."/errorson.log");
-        ini_set("display_errors",1);
-        switch ($sType) 
-        {
+        error_reporting(0);
+        ini_set("error_log", dirname(dirname(__FILE__))."/errorson.log");
+        ini_set("display_errors", 1);
+        switch ($sType) {
             case "e":
             case "error":
                 error_reporting(E_ERROR);
-            break;
+                break;
 
             case "w":
             case "warning":
                 error_reporting(E_WARNING);
-            break;
+                break;
 
             case "p":
             case "parse":
                 error_reporting(E_PARSE);
-            break;
+                break;
 
             case "n":
             case "notice":
                 error_reporting(E_NOTICE);
-            break;
+                break;
 
             case "a":
             case "all":
                 error_reporting(E_ALL);
-            break;
-        
-            //no
+                break;
+
+                //no
             default:
                 //desactivar toda notificación de error
-                error_reporting(0);                
-                ini_set("display_errors",0);
-            break;
+                error_reporting(0);
+                ini_set("display_errors", 0);
+                break;
         }
     }//errorson
 }//if(!func(errorson)
 
-if(!function_exists("pr"))
-{
-    function pr($var="",$sTitle=NULL)
+if(!function_exists("pr")) {
+    function pr($var = "", $sTitle = null)
     {
-        if($sTitle)
-            $sTitle=" $sTitle: ";
+        if($sTitle) {
+            $sTitle = " $sTitle: ";
+        }
 
-        if(!is_string($var))
-            $var = print_r($var,TRUE);
+        if(!is_string($var)) {
+            $var = print_r($var, true);
+        }
         #F1E087
         $sTagPre = "<pre function=\"pr\" style=\"border:1px solid black;background:yellow; padding:0px; color:black; font-size:12px;\">\n";
-        $sTagFinPre = "</pre>\n";    
+        $sTagFinPre = "</pre>\n";
         echo $sTagPre.$sTitle.$var.$sTagFinPre;
-    }//function pr    
+    }//function pr
 }//if(!func(pr)
 
-if(!function_exists("lg"))
-{
-    function lg($var="",$sTitle=NULL,$sType="custom")
+if(!function_exists("lg")) {
+    function lg($var = "", $sTitle = null, $sType = "custom")
     {
         $sLogdate = date("Ymd");
         $sNow = date("Y-m-d_H:i:s");
-        if($sTitle) $sTitle = "<<  $sTitle >>";
+        if($sTitle) {
+            $sTitle = "<<  $sTitle >>";
+        }
         $sTitle = PHP_EOL."$sNow: $sTitle";
-        if(!is_string($var)) $var = print_r($var,1);
-        if($var) $var = PHP_EOL.$var.PHP_EOL;
+        if(!is_string($var)) {
+            $var = print_r($var, 1);
+        }
+        if($var) {
+            $var = PHP_EOL.$var.PHP_EOL;
+        }
         $var = $sTitle.$var;
 
         $sPathFile = "";
-        if(defined("TFW_PATH_FOLDER_LOG"))
-        {
+        if(defined("TFW_PATH_FOLDER_LOG")) {
             $sPathFile .= TFW_PATH_FOLDER_LOG."/$sType/";
-            if(is_dir($sPathFile))
+            if(is_dir($sPathFile)) {
                 $sPathFile .= "lg_{$sLogdate}.log";
-            else
+            } else {
                 $sPathFile .= "lg_{$sLogdate}_{$sType}.log";
+            }
+        } else {
+            $sPathFile .= "lg_{$sLogdate}_{$sType}.log";
         }
-        else
-           $sPathFile .= "lg_{$sLogdate}_{$sType}.log";
-        
 
-        $oCursor=fopen($sPathFile,"ab");
-        $mxWritten = fwrite($oCursor,$var);
-        if($mxWritten===false)
+
+        $oCursor = fopen($sPathFile, "ab");
+        $mxWritten = fwrite($oCursor, $var);
+        if($mxWritten === false) {
             fclose($oCursor);
+        }
         fclose($oCursor);
-    }//funtion lg    
+    }//funtion lg
 }//if(!func(lg)
 //</editor-fold>
 
-function prd($var="",$sTitle=NULL)
+function prd($var = "", $sTitle = null)
 {
-    pr($var,$sTitle);
+    pr($var, $sTitle);
     die;
-}//function pr    
+}//function pr
 
-function bug($var, $sVarName="var", $isDie=false)
+function bug($var, $sVarName = "var", $isDie = false)
 {
-    if(IS_DEBUG_ALLOWED || 
-       (isset($_SESSION["tfw_user_identificator"]) && ($_SESSION["tfw_user_identificator"]==-10 || $_SESSION["tfw_user_identificator"]==1)))
-    {    
-        if(is_string($var))
-        {
+    if(IS_DEBUG_ALLOWED ||
+       (isset($_SESSION["tfw_user_identificator"]) && ($_SESSION["tfw_user_identificator"] == -10 || $_SESSION["tfw_user_identificator"] == 1))) {
+        if(is_string($var)) {
             $isSQL = false;
             $arSQLWords = array("select","from","inner join","insert into","update","delete");
             $sTmpVar = strtolower($var);
-            foreach($arSQLWords as $sWord)
+            foreach($arSQLWords as $sWord) {
                 //print_r("word:$sWord, string:$sTmpVar",strpos($sWord,$sTmpVar));
-                if(strpos($sTmpVar,$sWord)!==false){$isSQL=true; break;}
+                if(strpos($sTmpVar, $sWord) !== false) {
+                    $isSQL = true;
+                    break;
+                }
+            }
 
             //print_r($isSQL);
-            if($isSQL)
-            {
-                if(!strpos($var,"\nFROM"));
-                    $var = str_replace("FROM","\nFROM",$var);
-                if(!strpos($var,"\nINNER"));
-                    $var = str_replace("INNER","\nINNER",$var);
-                if(!strpos($var,"\nLEFT"));
-                    $var = str_replace("LEFT","\nLEFT",$var);
-                if(!strpos($var,"\nRIGHT"));
-                    $var = str_replace("RIGHT","\nRIGHT",$var);
-                if(!strpos($var,"\nWHERE"));
-                    $var = str_replace("WHERE","\nWHERE",$var);
-                if(!strpos($var,"\nAND"));
-                    $var = str_replace("AND","\nAND",$var);
-                if(!strpos($var,"\nORDER BY"));
-                    $var = str_replace("ORDER BY","\nORDER BY",$var);
+            if($isSQL) {
+                if(!strpos($var, "\nFROM"));
+                $var = str_replace("FROM", "\nFROM", $var);
+                if(!strpos($var, "\nINNER"));
+                $var = str_replace("INNER", "\nINNER", $var);
+                if(!strpos($var, "\nLEFT"));
+                $var = str_replace("LEFT", "\nLEFT", $var);
+                if(!strpos($var, "\nRIGHT"));
+                $var = str_replace("RIGHT", "\nRIGHT", $var);
+                if(!strpos($var, "\nWHERE"));
+                $var = str_replace("WHERE", "\nWHERE", $var);
+                if(!strpos($var, "\nAND"));
+                $var = str_replace("AND", "\nAND", $var);
+                if(!strpos($var, "\nORDER BY"));
+                $var = str_replace("ORDER BY", "\nORDER BY", $var);
             }
         }
         $sTagPre = "<pre function=\"bug\" style=\"background:#CDE552; padding:0px; color:black; font-size:12px;\">\n";
@@ -155,102 +161,106 @@ function bug($var, $sVarName="var", $isDie=false)
         print_r($var);
         echo  "</pre>";
 
-        if($isDie)die;  
+        if($isDie) {
+            die;
+        }
     }
 }//bug()
 
 function bugpf($sKey)
 {
-    if($sKey=="")
-    {
+    if($sKey == "") {
         $arPG = array();
         $arPG["FILES"] = $_FILES;
-        bug($arPG,"FILES");
+        bug($arPG, "FILES");
+    } else {
+        bug($_FILES[$sKey], "\$_FILES[$sKey]");
     }
-    else
-        bug($_FILES[$sKey],"\$_FILES[$sKey]");      
 }//bugpf
 
-function bugfileipath($sFilePath,$isDie=false)
+function bugfileipath($sFilePath, $isDie = false)
 {
     //if(is_firstchar($sFilePath,"/")||is_firstchar($sFilePath,"\\"))
-        //remove_firstchar($sFilePath);
-    //$sFilePath = DIRECTORY_SEPARATOR.$sFilePath;        
-    
-    $arPaths = explode(PATH_SEPARATOR,get_include_path());
-    foreach($arPaths as $sDirPath)
-    {
+    //remove_firstchar($sFilePath);
+    //$sFilePath = DIRECTORY_SEPARATOR.$sFilePath;
+
+    $arPaths = explode(PATH_SEPARATOR, get_include_path());
+    foreach($arPaths as $sDirPath) {
         $sTmpPath = $sDirPath.$sFilePath;
         //echo $sTmpPath."<br>";
-        if(file_exists($sTmpPath))
-        {    
-            bug(TRUE,$sTmpPath,$isDie);
+        if(file_exists($sTmpPath)) {
+            bug(true, $sTmpPath, $isDie);
             return;
         }
     }
-    bug(FALSE,$sFilePath,$isDie);
+    bug(false, $sFilePath, $isDie);
 }//bugfileipath
 
-function bugfile($sFilePath,$sVarName="", $isDie=false)
+function bugfile($sFilePath, $sVarName = "", $isDie = false)
 {
-    if(!$sVarName) $sVarName = $sFilePath;
-    bug(is_file($sFilePath),$sVarName,$isDie);
+    if(!$sVarName) {
+        $sVarName = $sFilePath;
+    }
+    bug(is_file($sFilePath), $sVarName, $isDie);
 }//bugfile
 
-function bugdir($sDirPath,$sVarName="var", $isDie=false)
+function bugdir($sDirPath, $sVarName = "var", $isDie = false)
 {
-    bug(is_dir($sDirPath),$sVarName,$isDie);
+    bug(is_dir($sDirPath), $sVarName, $isDie);
 }//bugdir
 
-function bugpg($sTitle="")
+function bugpg($sTitle = "")
 {
     $arPG = array();
     $arPG["POST"] = $_POST;
     $arPG["GET"] = $_GET;
     $arPG["FILES"] = $_FILES;
-    bug($arPG,"$sTitle POST | GET | FILES");
+    bug($arPG, "$sTitle POST | GET | FILES");
 }
 
-function bugp($sKey="")
+function bugp($sKey = "")
 {
-    if($sKey=="")
-    {
+    if($sKey == "") {
         $arPG = array();
         $arPG["POST"] = $_POST;
-        bug($arPG,"POST");
+        bug($arPG, "POST");
+    } else {
+        bug($_POST[$sKey], "POST[$sKey]");
     }
-    else
-        bug($_POST[$sKey],"POST[$sKey]");    
 }
 
-function bugg($sKey="")
+function bugg($sKey = "")
 {
-    if($sKey=="")
-    {
+    if($sKey == "") {
         $arPG = array();
         $arPG["GET"] = $_GET;
-        bug($arPG,"GET");    
+        bug($arPG, "GET");
+    } else {
+        bug($_GET[$sKey], "GET[$sKey]");
     }
-    else
-        bug($_GET[$sKey],"GET[$sKey]");
 }
 
-function bugss($sKey="")
+function bugss($sKey = "")
 {
-    if($sKey=="")
-    {
+    if($sKey == "") {
         $arPG = array();
         $arPG["session_id()"] = session_id();
         $arPG["SESSION"] = $_SESSION;
-        bug($arPG,"SESSION");    
+        bug($arPG, "SESSION");
+    } else {
+        bug($_SESSION[$sKey], "SESSION[$sKey]");
     }
-    else
-        bug($_SESSION[$sKey],"SESSION[$sKey]");
 }
 
-function bugif($sTitle=""){bug(get_included_files(),"$sTitle included_files");}
+function bugif($sTitle = "")
+{
+    bug(get_included_files(), "$sTitle included_files");
+}
 
-function bugversion(){phpversion();}
+function bugversion()
+{
+    phpversion();
+}
 
 function bugsysinfo()
 {
@@ -262,7 +272,7 @@ function bugsysinfo()
     //echo "- LSUFIX: ".PHP_SHLIB_SUFFIX;    // dll
     //echo "- PATH SEP: ".PATH_SEPARATOR;      // ;
     // 's': Operating system name. eg. FreeBSD.
-    //'n': Host name. eg. localhost.example.com. 
+    //'n': Host name. eg. localhost.example.com.
     //echo php_uname();
     //echo PHP_OS;
     bug($sSysInfo);
@@ -271,58 +281,65 @@ function bugsysinfo()
 /**
  * Bug cookies
  */
-function bugck(){bug($_COOKIE,"cookie");}
-
-function bugipath($sTitle=""){ bug(explode(PATH_SEPARATOR,get_include_path().$sTitle),"included path:");}
-
-function bugcond($var,$isCheckCondition)
+function bugck()
 {
-    //print_r($isCheckCondition);
-    if($isCheckCondition)
-        bug($var);
-    else 
-        pr("isCheckCondition = FALSE");
+    bug($_COOKIE, "cookie");
 }
 
-function bugraw($var,$sVarName=NULL)
+function bugipath($sTitle = "")
+{
+    bug(explode(PATH_SEPARATOR, get_include_path().$sTitle), "included path:");
+}
+
+function bugcond($var, $isCheckCondition)
+{
+    //print_r($isCheckCondition);
+    if($isCheckCondition) {
+        bug($var);
+    } else {
+        pr("isCheckCondition = FALSE");
+    }
+}
+
+function bugraw($var, $sVarName = null)
 {
     $sReturn = "\n";
-    if($sVarName)
+    if($sVarName) {
         $sReturn .= "$sVarName: \n";
+    }
 
-    $sReturn .= print_r($var,1);
+    $sReturn .= print_r($var, 1);
     echo $sReturn;
 }
 
-function bugf($sKey="")
+function bugf($sKey = "")
 {
-    if($sKey=="")
-    {
+    if($sKey == "") {
         $arPG = array();
         $arPG["FILES"] = $_FILES;
-        bug($arPG,"FILES");
+        bug($arPG, "FILES");
+    } else {
+        bug($_FILES[$sKey], "FILES[$sKey]");
     }
-    else
-        bug($_FILES[$sKey],"FILES[$sKey]");    
 }
 
-function bugex(Exception $oEx,$sTitle="exception")
+function bugex(Exception $oEx, $sTitle = "exception")
 {
-    bug("code:{$oEx->getCode()},line:{$oEx->getLine()},file:{$oEx->getFile()},previous:{$oEx->getPrevious()}",$sTitle);
+    bug("code:{$oEx->getCode()},line:{$oEx->getLine()},file:{$oEx->getFile()},previous:{$oEx->getPrevious()}", $sTitle);
 }
 
 function bugconst()
 {
     $arConsts = [
-        "__CLASS__"=>__CLASS__,
-        "__DIR__"=>__DIR__,
-        "__FILE__"=>__FILE__,
-        "__FUNCTION__"=>__FUNCTION__,
-        "__LINE__"=>__LINE__,
-        "__METHOD__"=>__METHOD__,
-        "__METHOD__"=>__METHOD__,
-        "__NAMESPACE__"=>__NAMESPACE__,
-        "__TRAIT__"=>__TRAIT__,
+        "__CLASS__" => __CLASS__,
+        "__DIR__" => __DIR__,
+        "__FILE__" => __FILE__,
+        "__FUNCTION__" => __FUNCTION__,
+        "__LINE__" => __LINE__,
+        "__METHOD__" => __METHOD__,
+        "__METHOD__" => __METHOD__,
+        "__NAMESPACE__" => __NAMESPACE__,
+        "__TRAIT__" => __TRAIT__,
     ];
-    bug($arConsts,"CONSTANTS");
+    bug($arConsts, "CONSTANTS");
 }

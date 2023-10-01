@@ -8,17 +8,15 @@
  * @observations
  * @tags: #apify
  */
+
 namespace App\Shared\Infrastructure\Helpers;
 
-use App\Shared\Infrastructure\Traits\ErrorTrait;
-use App\Shared\Infrastructure\Traits\LogTrait;
-use App\Shared\Infrastructure\Traits\EnvTrait;
-use \Exception;
+use App\Shared\Infrastructure\Traits\{EnvTrait, ErrorTrait, LogTrait};
 
 abstract class AppHelper
 {
+    use EnvTrait;
     use ErrorTrait;
     use LogTrait;
-    use EnvTrait;
 
 }//AppHelper

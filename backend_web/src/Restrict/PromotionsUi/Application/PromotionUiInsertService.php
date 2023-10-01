@@ -1,39 +1,37 @@
 <?php
+
 namespace App\Restrict\PromotionsUi\Application;
 
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Domain\Bus\Event\IEventSubscriber;
-use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Promotions\Domain\PromotionUiEntity;
-use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Restrict\Promotions\Domain\Enums\PromotionUiType;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Shared\Domain\Bus\Event\{IEvent, IEventSubscriber};
 use App\Restrict\Promotions\Domain\Events\PromotionWasCreatedEvent;
+use App\Restrict\Promotions\Domain\{PromotionUiEntity, PromotionUiRepository};
+use App\Shared\Infrastructure\Factories\{EntityFactory as MF, RepositoryFactory as RF, ServiceFactory as SF};
 
 final class PromotionUiInsertService extends AppService implements IEventSubscriber
 {
-    private AuthService $auth;
-    private PromotionUiEntity $promotionui;
-    private PromotionUiRepository $repopromotionuis;
+    private AuthService $authService;
+    private PromotionUiEntity $promotionUiEntity;
+    private PromotionUiRepository $promotionUiRepository;
 
     public function __construct()
     {
-        $this->auth = SF::get_auth();
-        $this->promotionui = MF::get(PromotionUiEntity::class);
-        $this->repopromotionuis = RF::get(PromotionUiRepository::class);
+        $this->authService = SF::getAuthService();
+        $this->promotionUiEntity = MF::getInstanceOf(PromotionUiEntity::class);
+        $this->promotionUiRepository = RF::getInstanceOf(PromotionUiRepository::class);
     }
 
-    public function on_event(IEvent $domevent): IEventSubscriber
+    public function onSubscribedEvent(IEvent $domainEvent): IEventSubscriber
     {
-        if(get_class($domevent)!==PromotionWasCreatedEvent::class) return $this;
+        if(get_class($domainEvent) !== PromotionWasCreatedEvent::class) {
+            return $this;
+        }
 
-        $promotionui = [
+        $promotionUi = [
             "uuid" => uniqid(),
-            "id_owner" => $domevent->id_owner(),
-            "id_promotion" => $domevent->aggregate_id(),
+            "id_owner" => $domainEvent->idOwner(),
+            "id_promotion" => $domainEvent->aggregateId(),
             "input_email" => 1,
             "pos_email" => 10,
             "input_name1" => 1,
@@ -58,8 +56,8 @@ final class PromotionUiInsertService extends AppService implements IEventSubscri
             "pos_is_terms" => 110,
         ];
 
-        $this->promotionui->add_sysinsert($promotionui, $this->auth->get_user()["id"]);
-        $this->repopromotionuis->insert($promotionui);
+        $this->promotionUiEntity->addSysInsert($promotionUi, $this->authService->getAuthUserArray()["id"]);
+        $this->promotionUiRepository->insert($promotionUi);
         return $this;
     }
 }

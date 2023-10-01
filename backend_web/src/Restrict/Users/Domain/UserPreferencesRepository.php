@@ -7,6 +7,7 @@
  * @date 29-11-2018 19:00 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Users\Domain;
 
 use App\Shared\Domain\Repositories\AppRepository;
@@ -16,73 +17,73 @@ final class UserPreferencesRepository extends AppRepository
 {
     public function __construct()
     {
-        $this->db = DbF::get_by_default();
+        $this->componentMysql = DbF::getMysqlInstanceByEnvConfiguration();
         $this->table = "base_user_preferences";
     }
 
-    public function get_by_user(int $iduser): array
+    public function getUserPreferenceByIdUser(int $idUser): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("userpreferences.get_by_user")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_user=$iduser")
+            ->add_and("m.id_user = $idUser")
             ->add_orderby("id", "DESC")
         ;
         return $this->query($qb->select()->sql());
     }
 
-    public function get_by_id_and_user(int $id, int $iduser): int
+    public function getUserPreferenceByIdUserAndIdUserPreference(int $userPreferenceId, int $idUser): int
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("userpreferences.get_by_id_and_user")
             ->set_table("$this->table as m")
             ->set_getfields(["m.*"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id = $id")
-            ->add_and("m.id_user=$iduser")
+            ->add_and("m.id = $userPreferenceId")
+            ->add_and("m.id_user=$idUser")
         ;
         $r = $this->query($qb->select()->sql());
         return (int) ($r[0]["id"] ?? "");
     }
 
-    public function get_id_by_id_and_user(int $id, int $iduser): array
+    public function getUserPreferencesIdByIdAndIdUser(int $id, int $idUser): array
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("userpreferences.get_id_by_id_and_user")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.delete_date IS NULL")
             ->add_and("m.id = $id")
-            ->add_and("m.id_user=$iduser")
+            ->add_and("m.id_user=$idUser")
         ;
         $r = $this->query($qb->select()->sql());
         return $r[0] ?? [];
     }
 
-    public function get_value_by_user_and_key(int $iduser, string $prefkey): ?string
+    public function getPrefValueByIdUserAndPrefKey(int $idUser, string $prefKey): ?string
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("userpreferences.get_value_by_user_and_key")
             ->set_table("$this->table as m")
             ->set_getfields(["m.pref_value"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_user=$iduser")
-            ->add_and("m.pref_key='$prefkey'");
+            ->add_and("m.id_user=$idUser")
+            ->add_and("m.pref_key='$prefKey'");
         $r = $this->query($qb->select()->sql());
         return $r[0]["pref_value"] ?? null;
     }
 
-    public function key_exists(int $iduser, string $prefkey): int
+    public function getUserPreferenceIdByIdUserAndPrefKey(int $idUser, string $prefKey): int
     {
-        $qb = $this->_get_qbuilder()
+        $qb = $this->_getQueryBuilderInstance()
             ->set_comment("userpreferences.key_exists")
             ->set_table("$this->table as m")
             ->set_getfields(["m.id"])
             ->add_and("m.delete_date IS NULL")
-            ->add_and("m.id_user=$iduser")
-            ->add_and("m.pref_key='$prefkey'");
+            ->add_and("m.id_user=$idUser")
+            ->add_and("m.pref_key='$prefKey'");
         $r = $this->query($qb->select()->sql());
         return (int) ($r[0]["id"] ?? 0);
     }

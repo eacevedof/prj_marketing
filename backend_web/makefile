@@ -22,3 +22,10 @@ ifeq ($(OS),Linux)
 else
 	vendor/bin/phpunit --bootstrap ./vendor/theframework/bootstrap.php ./tests/Services/Apify/Security/LoginServiceTest.php --color=auto
 endif
+
+gitpush: ## git push
+	clear;
+	git add .; git commit -m "$(m)"; git push;
+
+pint: ## run laravel pint
+	vendor/bin/pint

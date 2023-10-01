@@ -7,9 +7,10 @@
  * @date 31-10-2022 17:46 SPAIN
  * @observations
  */
+
 namespace App\Console\Application\Dev\Translation;
 
-use \BOOT;
+use BOOT;
 use App\Console\Application\IConsole;
 use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\ConsoleTrait;
@@ -25,47 +26,56 @@ final class TranslationService extends AppService implements IConsole
     private const PATH_SRC = BOOT::PATH_SRC;
     private const PATH_TR_ES = PATH_ROOT."/locale/es/default.po";
 
-    private array $arfiles;
-    private array $skipfolders;
-    private array $trs;
+    private array $arFiles;
+    private array $skipFolders;
+    private array $translations;
 
     public function __construct(array $input)
     {
         $this->input = $input;
-        $this->arfiles = [];
-        $this->skipfolders = [
+        $this->arFiles = [];
+        $this->skipFolders = [
             "/appdata/www/backend_web/src/xxx-module",
             "/appdata/www/backend_web/src/Restrict/Users",
             //"/appdata/www/backend_web/src/Restrict/Promotions",
             "/appdata/www/backend_web/src/Shared/Infrastructure/Helpers/Views/DatatableHelper.php"
         ];
-        $this->trs = [];
+        $this->translations = [];
     }
 
-    public function _get_files(string $pathdir): array
+    public function _getFiles(string $pathDir): array
     {
-        $files = scandir($pathdir);
-        if(count($files)<3) return [];
-        unset($files[0]); unset($files[1]);
+        $files = scandir($pathDir);
+        if(count($files) < 3) {
+            return [];
+        }
+        unset($files[0]);
+        unset($files[1]);
         return array_map(
-            function ($file) use ($pathdir) {
-                return "$pathdir/$file";
+            function ($file) use ($pathDir) {
+                return "$pathDir/$file";
             },
             array_values($files)
         );
     }
 
-    private function _load_files(string $path): void
+    private function _loadFilesRecursive(string $path): void
     {
-        $files = $this->_get_files($path);
+        $files = $this->_getFiles($path);
         foreach ($files as $file) {
-            if(in_array($file, $this->skipfolders)) continue;
-            if (is_file($file)) $this->arfiles[] = $file;
-            if (is_dir($file)) $this->_load_files($file);
+            if(in_array($file, $this->skipFolders)) {
+                continue;
+            }
+            if (is_file($file)) {
+                $this->arFiles[] = $file;
+            }
+            if (is_dir($file)) {
+                $this->_loadFilesRecursive($file);
+            }
         }
     }
 
-    private function _get_trs(string $content, string $pattern): array
+    private function _getTranslations(string $content, string $pattern): array
     {
         //$pattern = self::FIND_TR_PATTERN;
         $pattern = "/$pattern/m";
@@ -75,107 +85,117 @@ final class TranslationService extends AppService implements IConsole
         return array_unique($result);
     }
 
-    private function _add_trs(array $trs): void
+    private function _addTranslations(array $trs): void
     {
-        foreach ($trs as $tr) $this->trs[] = $tr;
+        foreach ($trs as $tr) {
+            $this->translations[] = $tr;
+        }
     }
 
-    private function _get_missing_es(): array
+    private function _getMissingEsTranslations(): array
     {
         $estrs = file_get_contents(self::PATH_TR_ES);
         $missing = [];
-        foreach ($this->trs as $tr) {
-            if (strstr($estrs, $tr) || trim($tr)==="") continue;
+        foreach ($this->translations as $tr) {
+            if (strstr($estrs, $tr) || trim($tr) === "") {
+                continue;
+            }
             $missing[] = "msgid \"$tr\"";
             $missing[] = "msgstr \"$tr\"";
         }
         return $missing;
     }
 
-    private function _get_not_used_es(): array
+    private function _getNotUsedEs(): array
     {
         $estrs = file_get_contents(self::PATH_TR_ES);
         $lines = explode("\n", $estrs);
-        $lines = array_filter($lines, function ($line){
-           return strstr($line, "msgid \"");
+        $lines = array_filter($lines, function ($line) {
+            return strstr($line, "msgid \"");
         });
 
-        $lines = array_map(function ($line){
+        $lines = array_map(function ($line) {
             $line = substr($line, 0, -1);
             return str_replace("msgid \"", "", $line);
         }, $lines);
 
         $missing = [];
         foreach ($lines as $i => $line) {
-            if (!in_array($line, $this->trs))
+            if (!in_array($line, $this->translations)) {
                 $missing[] = "$line ({$i})";
+            }
         }
 
         return $missing;
     }
 
-    private function _get_repeated(): array
+    private function _getRepeatedTranslations(): array
     {
         $estrs = file_get_contents(self::PATH_TR_ES);
         $lines = explode("\n", $estrs);
-        $lines = array_filter($lines, function ($line){
+        $lines = array_filter($lines, function ($line) {
             return strstr($line, "msgid \"");
         });
 
-        $lines = array_map(function ($line){
+        $lines = array_map(function ($line) {
             $line = substr($line, 0, -1);
             return str_replace("msgid \"", "", $line);
         }, $lines);
 
         $count = array_count_values($lines);
-        $count = array_filter($count, function ($num){
-            return $num>1;
+        $count = array_filter($count, function ($num) {
+            return $num > 1;
         });
         $count = array_keys($count);
 
         $found = [];
-        foreach ($lines as $i=>$line)
-            if (in_array($line, $count))
+        foreach ($lines as $i => $line) {
+            if (in_array($line, $count)) {
                 $found[] = "$line ({$i})";
+            }
+        }
 
         return $found;
     }
 
-    private function _load_all_inoked_translations(): void
+    private function _loadAllInvokedTranslations(): void
     {
-        foreach ($this->arfiles as $path) {
+        foreach ($this->arFiles as $path) {
             $content = file_get_contents($path);
-            if (!strstr($content, "__(\"")) continue;
+            if (!strstr($content, "__(\"")) {
+                continue;
+            }
             foreach (self::FIND_TR_PATTERNS as $pattern) {
-                $trs = $this->_get_trs($content, $pattern);
-                $this->_add_trs($trs);
+                $trs = $this->_getTranslations($content, $pattern);
+                $this->_addTranslations($trs);
             }
         }
-        $trs = array_values(array_unique($this->trs));
-        $this->trs = $trs;
+        $trs = array_values(array_unique($this->translations));
+        $this->translations = $trs;
     }
 
     //php run.php modules
     //run get-translation
     public function run(): void
     {
-        $this->_load_files(self::PATH_SRC);
-        $this->_load_all_inoked_translations();
+        $this->_loadFilesRecursive(self::PATH_SRC);
+        $this->_loadAllInvokedTranslations();
 
         $parameter = trim($this->input[0] ?? "");
         switch ($parameter) {
             case "--not-used":
-                $found = $this->_get_not_used_es();
-            break;
+                $found = $this->_getNotUsedEs();
+                break;
             case "--repeated":
-                $found = $this->_get_repeated();
-            break;
+                $found = $this->_getRepeatedTranslations();
+                break;
             default:
-                $found = $this->_get_missing_es();
-            break;
+                $found = $this->_getMissingEsTranslations();
+                break;
         }
 
-        foreach ($found as $tr)
+        foreach ($found as $tr) {
             print_r($tr."\n");
+        }
     }
 }

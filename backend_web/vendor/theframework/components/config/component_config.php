@@ -7,6 +7,7 @@
  * @date 04-06-2020 12:35 SPAIN
  * @observations
  */
+
 namespace TheFramework\Components\Config;
 
 class Node
@@ -22,10 +23,13 @@ class Node
     {
         $node = $this->arnode;
         $keys = array_keys($node);
-        if(!in_array($key,$keys))  return null;
+        if (!in_array($key, $keys)) {
+            return null;
+        }
 
-        if($node[$key] == $value)
+        if ($node[$key] == $value) {
             return $node;
+        }
     }
 }
 
@@ -42,18 +46,19 @@ class ComponentConfig
     private function _loadcontent($path)
     {
         $isfile = is_file($path);
-        if(!$isfile)
+        if (!$isfile) {
             return;
-        $this->arcontent = \json_decode(file_get_contents($path),1);
+        }
+        $this->arcontent = \json_decode(file_get_contents($path), 1);
     }
 
-    public function get_node($key,$value)
+    public function get_node($key, $value)
     {
-        foreach ($this->arcontent as $arnode)
-        {
-            $objnode = (new Node($arnode))->find_by_key($key,$value);
-            if($objnode !== null)
+        foreach ($this->arcontent as $arnode) {
+            $objnode = (new Node($arnode))->find_by_key($key, $value);
+            if ($objnode !== null) {
                 return $arnode;
+            }
         }
         return [];
     }

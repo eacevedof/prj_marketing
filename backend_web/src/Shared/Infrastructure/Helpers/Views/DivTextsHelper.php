@@ -1,8 +1,11 @@
 <?php
+
 namespace App\Shared\Infrastructure\Helpers\Views;
 
-use App\Shared\Infrastructure\Helpers\AppHelper;
-use App\Shared\Infrastructure\Helpers\IHelper;
+use App\Shared\Infrastructure\Helpers\{
+    AppHelper,
+    IHelper
+};
 
 final class DivTextsHelper extends AppHelper implements IHelper
 {
@@ -13,25 +16,30 @@ final class DivTextsHelper extends AppHelper implements IHelper
             return;
         }
 
-        if (is_array($texts))
+        if (is_array($texts)) {
             $this->_print_array($texts);
+        }
     }
 
     private function _print_ul(array $lis): void
     {
         echo "<ul>";
-        foreach ($lis as $li)
-        {
-            if (is_string($li))
+        foreach ($lis as $li) {
+            if (is_string($li)) {
                 echo "<li>$li</li>";
+            }
 
             if (is_array($li)) {
                 echo "<li>";
                 foreach ($li as $part) {
                     $val = $part["b"] ?? "";
-                    if ($val) echo "<b>$val</b>";
+                    if ($val) {
+                        echo "<b>$val</b>";
+                    }
                     $val = $part["span"] ?? "";
-                    if ($val) echo " <span>$val</span>";
+                    if ($val) {
+                        echo " <span>$val</span>";
+                    }
                 }
                 echo "</li>";
             }
@@ -49,13 +57,21 @@ final class DivTextsHelper extends AppHelper implements IHelper
 
             if (is_array($part)) {
                 $h2 = $part["h2"] ?? "";
-                if ($h2) echo "<h2>$h2</h2>";
+                if ($h2) {
+                    echo "<h2>$h2</h2>";
+                }
                 $h3 = $part["h3"] ?? "";
-                if ($h3) echo "<h3>$h3</h3>";
+                if ($h3) {
+                    echo "<h3>$h3</h3>";
+                }
                 $p = $part["p"] ?? "";
-                if ($p) echo "<p>$p</p>";
+                if ($p) {
+                    echo "<p>$p</p>";
+                }
                 $ul = $part["ul"] ?? [];
-                if ($ul) $this->_print_ul($ul);
+                if ($ul) {
+                    $this->_print_ul($ul);
+                }
             }
         }
     }

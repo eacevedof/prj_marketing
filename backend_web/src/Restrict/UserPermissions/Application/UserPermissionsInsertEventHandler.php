@@ -1,45 +1,43 @@
 <?php
+
 namespace App\Restrict\UserPermissions\Application;
 
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Domain\Bus\Event\IEventSubscriber;
-use App\Shared\Domain\Bus\Event\IEvent;
-use App\Shared\Infrastructure\Factories\EntityFactory as MF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
 use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Users\Domain\UserPermissionsEntity;
-use App\Restrict\Users\Domain\UserPermissionsRepository;
-use App\Restrict\Users\Domain\Enums\UserPermissionType;
-use App\Restrict\Users\Domain\Events\UserWasCreatedEvent;
+use App\Shared\Infrastructure\Services\AppService;
 use App\Shared\Infrastructure\Traits\RequestTrait;
+use App\Restrict\Users\Domain\Events\UserWasCreatedEvent;
+use App\Shared\Domain\Bus\Event\{IEvent, IEventSubscriber};
+use App\Restrict\Users\Domain\{UserPermissionsEntity, UserPermissionsRepository};
+use App\Shared\Infrastructure\Factories\{EntityFactory as MF, RepositoryFactory as RF, ServiceFactory as SF};
 
 final class UserPermissionsInsertEventHandler extends AppService implements IEventSubscriber
 {
     use RequestTrait;
 
-    private AuthService $auth;
+    private AuthService $authService;
     private UserPermissionsEntity $userpermission;
     private UserPermissionsRepository $repouserpermissions;
 
     public function __construct()
     {
-        $this->auth = SF::get_auth();
-        $this->userpermission = MF::get(UserPermissionsEntity::class);
-        $this->repouserpermissions = RF::get(UserPermissionsRepository::class);
+        $this->authService = SF::getAuthService();
+        $this->userpermission = MF::getInstanceOf(UserPermissionsEntity::class);
+        $this->repouserpermissions = RF::getInstanceOf(UserPermissionsRepository::class);
     }
 
-    public function on_event(IEvent $domevent): IEventSubscriber
+    public function onSubscribedEvent(IEvent $domainEvent): IEventSubscriber
     {
-        if(get_class($domevent)!==UserWasCreatedEvent::class) return $this;
+        if(get_class($domainEvent) !== UserWasCreatedEvent::class) {
+            return $this;
+        }
 
         $permission = [
-            "id_user" => $domevent->aggregate_id(),
+            "id_user" => $domainEvent->aggregateId(),
             "uuid" => uniqid(),
             "json_rw" => "[]",
         ];
 
-        $this->userpermission->add_sysinsert($permission, $this->auth->get_user()["id"]);
+        $this->userpermission->addSysInsert($permission, $this->authService->getAuthUserArray()["id"]);
         $this->repouserpermissions->insert($permission);
         return $this;
     }

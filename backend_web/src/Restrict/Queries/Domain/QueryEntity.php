@@ -6,10 +6,11 @@
  * @file QueryEntity.php v1.0.0
  * @date %DATE% SPAIN
  */
+
 namespace App\Restrict\Queries\Domain;
 
-use App\Shared\Domain\Entities\AppEntity;
 use App\Shared\Domain\Enums\EntityType;
+use App\Shared\Domain\Entities\AppEntity;
 
 final class QueryEntity extends AppEntity
 {
@@ -67,7 +68,7 @@ final class QueryEntity extends AppEntity
                     "length" => 50,
                 ]
             ],
-       ];
+        ];
 
         $this->pks = [
             "id", "uuid"

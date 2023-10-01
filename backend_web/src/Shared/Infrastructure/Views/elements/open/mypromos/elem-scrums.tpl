@@ -7,8 +7,8 @@ use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
 
 $urls = [
     "home" => ($space["businessslug"] ?? "")
-        ? Routes::url("business.space", ["businessslug" => $space["businessslug"]])
-        : Routes::url("home"),
+        ? Routes::getUrlByRouteName("business.space", ["businessSlug" => $space["businessslug"]])
+        : Routes::getUrlByRouteName("home"),
 
     "promocreate" => $space["promotionlink"] ?? "",
 ];

@@ -115,5 +115,5 @@
   - ~~falta estilos en boton~~
 - ~~generador de módulo .py => php => run build-module xxx~~
 - ~~queries de _array con or de id_owner=-1~~
-- ~~limpieza de código (por ejemplo $this->auth)~~
+- ~~limpieza de código (por ejemplo $this->authService)~~
   - ~~en servicios mejor un private user o solo mantener auth?~~ 

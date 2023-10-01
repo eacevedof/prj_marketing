@@ -4,10 +4,10 @@ use App\Shared\Infrastructure\Components\Date\DateComponent;
 
 $promotion = $result["promotion"];
 
-$date = CF::get(DateComponent::class);
-$datefrom = $date->get_jsdt($promotion["date_from"]);
-$dateto = $date->get_jsdt($promotion["date_to"]);
-$dateexecution = $date->get_jsdt($promotion["date_execution"]);
+$date = CF::getInstanceOf(DateComponent::class);
+$datefrom = $date->getDateInJsFormat($promotion["date_from"]);
+$dateto = $date->getDateInJsFormat($promotion["date_to"]);
+$dateexecution = $date->getDateInJsFormat($promotion["date_execution"]);
 
 $texts = [
     "tr00" => __("Save"),
@@ -93,13 +93,14 @@ $promotion = [
 ];
 //dd($promotion);
 ?>
+<!-- form-promotion-update.tpl -->
 <div id="main" class="tab-pane active">
   <form-promotion-update
-      csrf=<?php $this->_echo_js($csrf);?>
+      csrf=<?php $this->_echoJs($csrf);?>
 
-      texts="<?php $this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echoJsLit($texts);?>"
 
-      fields="<?php $this->_echo_jslit($promotion);?>"
+      fields="<?php $this->_echoJsLit($promotion);?>"
   />
 </div>
 <script type="module" src="/assets/js/restrict/promotions/form-promotion-update.js"></script>

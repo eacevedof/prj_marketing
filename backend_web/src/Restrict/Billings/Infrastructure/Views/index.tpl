@@ -1,15 +1,15 @@
 <?php
 /**
  * @var App\Shared\Infrastructure\Views\AppView $this
- * @var App\Helpers\Views\DatatableHelper $dthelp
- * @var array $authuser
+ * @var App\Shared\Infrastructure\Helpers\Views\DatatableHelper $datatableHelper
+ * @var array $authUser
  * @var string $h1
- * @var ?string $idowner
- * @var bool $authread
- * @var bool $authwrite
+ * @var ?string $idOwner
+ * @var bool $authRead
+ * @var bool $authWrite
  */
-if(!isset($authread)) $authread=false;
-if(!isset($authwrite)) $authwrite=false;
+if (!isset($authRead)) $authRead=false;
+if (!isset($authWrite)) $authWrite=false;
 $this->_element("restrict/elem-bowdisabled");
 $this->_element("common/elem-datatable-asset");
 ?>
@@ -29,16 +29,16 @@ $this->_element("common/elem-datatable-asset");
           <table id="table-datatable" class="table text-md-nowrap table-striped">
             <thead>
             <tr>
-              <?= $dthelp->get_ths() ?>
+              <?= $datatableHelper->getHtmlThs() ?>
             </tr>
             <tr row="search" class="hidden">
-              <?= $dthelp->get_search_tds() ?>
+              <?= $datatableHelper->getSearchableTds() ?>
             </tr>
             </thead>
             <tbody approle="tbody"></tbody>
             <tfoot>
             <tr>
-              <?= $dthelp->get_tf() ?>
+              <?= $datatableHelper->getHtmlTdsForTableFoot() ?>
             </tr>
             </tfoot>
           </table>
@@ -54,11 +54,11 @@ import {rowswal} from "/assets/js/common/datatable/rowswal.js"
 import {dtcolumn} from "/assets/js/common/datatable/dtcolumn.js"
 import auth from "/assets/js/restrict/auth.js"
 
-auth.id_user = <?php $this->_echo_js($authuser["id"]) ?>;
-auth.id_profile = <?php $this->_echo_js($authuser["id_profile"]) ?>;
-auth.id_owner = <?php $this->_echo_js((string) $idowner) ?>;
-auth.readable = <?= (int)$authread ?>;
-auth.writable = <?= (int)$authwrite ?>;
+auth.id_user = <?php $this->_echoJs($authUser["id"]) ?>;
+auth.id_profile = <?php $this->_echoJs($authUser["id_profile"]) ?>;
+auth.id_owner = <?php $this->_echoJs((string) $idOwner) ?>;
+auth.readable = <?= (int)$authRead ?>;
+auth.writable = <?= (int)$authWrite ?>;
 
 const is_infoable = row => {
   if (auth.is_root()) return true
@@ -100,7 +100,7 @@ dtcolumn.add_column({
 dt_render({
   URL_MODULE: "/restrict/billings",
   ID_TABLE: "table-datatable",
-  ITEMS_PER_PAGE: <?php $dthelp->show_perpage();?>,
+  ITEMS_PER_PAGE: <?php $datatableHelper->showPerPageInfo();?>,
 })
 </script>
 <?php

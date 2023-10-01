@@ -16,12 +16,12 @@ use App\Shared\Infrastructure\Components\Date\UtcComponent;
 $tzfrom = date_default_timezone_get();
 $utcfrom = date("Y-m-d H:i:s");
 
-$tzto = $authuser["tz"];
-$dtfrom = ($tzfrom !== $tzto) ? CF::get(UtcComponent::class)->get_dt_into_tz($utcfrom, $tzfrom, $tzto) : $utcfrom;
+$tzto = $authUser["tz"];
+$dtfrom = ($tzfrom !== $tzto) ? CF::getInstanceOf(UtcComponent::class)->getSourceDtIntoTargetTz($utcfrom, $tzfrom, $tzto) : $utcfrom;
 
-$dt = CF::get(DateComponent::class);
-$dtfrom = $dt->get_jsdt($dtfrom);
-$dtto = $dt->get_last_hour($dtfrom);
+$dt = CF::getInstanceOf(DateComponent::class);
+$dtfrom = $dt->getDateInJsFormat($dtfrom);
+$dtto = $dt->getLastSecondInSomeDate($dtfrom);
 
 $texts = [
     "tr00" => __("Save"),
@@ -55,7 +55,7 @@ $texts = [
 
 $result = [
     "id_owner" => "",
-    "id_tz" => $authuser["id_tz"],
+    "id_tz" => $authUser["id_tz"],
     "code_erp" => "",
     "description" => "",
     "date_from" => $dtfrom,
@@ -85,11 +85,11 @@ $result = [
   </div>
   <div class="card-body pt-0">
     <form-promotion-insert
-      csrf=<?php $this->_echo_js($csrf);?>
+      csrf=<?php $this->_echoJs($csrf);?>
 
-      texts="<?php $this->_echo_jslit($texts);?>"
+      texts="<?php $this->_echoJsLit($texts);?>"
 
-      fields="<?php $this->_echo_jslit($result);?>"
+      fields="<?php $this->_echoJsLit($result);?>"
     />
   </div>
 </div>

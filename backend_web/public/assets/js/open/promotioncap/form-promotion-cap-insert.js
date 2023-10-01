@@ -8,7 +8,7 @@ import {cssformsubscription} from "/assets/js/open/promotioncap/form-promotion-c
 import validator, {PATTERNS} from "/assets/js/common/fields-validator.js"
 
 const IS_TEST_MODE = get_parameter("mode") === "test" ? 1 : 0
-const URL_POST = "/partner/:businessslug/promotionscap/:promouuid/insert"
+const URL_POST = "/partner/:businessSlug/promotionscap/:promotionUuid/insert"
 const ACTION = "promotioncap.insert"
 
 export class FormPromotionCapInsert extends LitElement {
@@ -359,7 +359,7 @@ export class FormPromotionCapInsert extends LitElement {
     }
 
     const response = await injson.post(
-      URL_POST.replace(":businessslug",this.businessslug).replace(":promouuid", this.promotionuuid), {
+      URL_POST.replace(":businessSlug",this.businessslug).replace(":promotionUuid", this.promotionuuid), {
         _action: ACTION,
         _csrf: this.csrf,
         _test_mode: IS_TEST_MODE,

@@ -7,51 +7,48 @@
  * @date 23-01-2022 10:22 SPAIN
  * @observations
  */
+
 namespace App\Restrict\Users\Infrastructure\Controllers;
 
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
-use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use Exception;
 use App\Picklist\Application\PicklistService;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Restrict\Users\Application\UsersSearchService;
-use App\Shared\Domain\Enums\PageType;
-use App\Shared\Domain\Enums\ResponseType;
-use App\Shared\Domain\Enums\UrlType;
 use App\Shared\Infrastructure\Exceptions\ForbiddenException;
-use \Exception;
+use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
+use App\Shared\Domain\Enums\{PageType, ResponseType, UrlType};
+use App\Shared\Infrastructure\Controllers\Restrict\RestrictController;
 
 final class UsersSearchController extends RestrictController
 {
     private PicklistService $picklist;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->picklist = SF::get(PicklistService::class);
+        $this->picklist = SF::getInstanceOf(PicklistService::class);
     }
 
-    public function index(?string $page=null): void
+    public function index(?string $page = null): void
     {
-        $this->_if_noauth_tologin();
+        $this->_redirectToLoginIfNoAuthUser();
         try {
-            $search = SF::get(UsersSearchService::class);
+            $search = SF::getInstanceOf(UsersSearchService::class);
 
-            $this->add_var(PageType::TITLE, __("Users"))
-                ->add_var(PageType::H1, __("Users"))
-                ->add_var("languages", $this->picklist->get_languages())
-                ->add_var("profiles", $this->picklist->get_profiles())
-                ->add_var("countries", $this->picklist->get_countries())
-                ->add_var("dthelp", $search->get_datatable())
-                ->add_var("authread", $this->auth->is_user_allowed(UserPolicyType::USERS_READ))
-                ->add_var("authwrite", $this->auth->is_user_allowed(UserPolicyType::USERS_WRITE))
+            $this->addGlobalVar(PageType::TITLE, __("Users"))
+                ->addGlobalVar(PageType::H1, __("Users"))
+                ->addGlobalVar("languages", $this->picklist->getLanguages())
+                ->addGlobalVar("profiles", $this->picklist->getUserProfiles())
+                ->addGlobalVar("countries", $this->picklist->getCountries())
+                ->addGlobalVar("datatableHelper", $search->getDatatableHelper())
+                ->addGlobalVar("authRead", $this->authService->hasAuthUserPolicy(UserPolicyType::USERS_READ))
+                ->addGlobalVar("authWrite", $this->authService->hasAuthUserPolicy(UserPolicyType::USERS_WRITE))
                 ->render();
-        }
-        catch (ForbiddenException $e) {
-            $this->response->location(UrlType::ERROR_FORBIDDEN);
-        }
-        catch (Exception $e) {
-            $this->logerr($e->getMessage(), "userscontroller.index");
-            $this->response->location(UrlType::ERROR_INTERNAL);
+        } catch (ForbiddenException $e) {
+            $this->responseComponent->location(UrlType::ERROR_FORBIDDEN);
+        } catch (Exception $e) {
+            $this->logErr($e->getMessage(), "userscontroller.index");
+            $this->responseComponent->location(UrlType::ERROR_INTERNAL);
         }
 
     }//index
@@ -59,32 +56,33 @@ final class UsersSearchController extends RestrictController
     //@get
     public function search(): void
     {
-        if (!$this->auth->get_user())
-            $this->_get_json()
-                ->set_code(ResponseType::UNAUTHORIZED)
-                ->set_error([__("Your session has finished please re-login")])
+        if (!$this->authService->getAuthUserArray()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::UNAUTHORIZED)
+                ->setErrors([__("Your session has finished please re-login")])
                 ->show();
+        }
 
-        if (!$this->request->is_accept_json())
-            $this->_get_json()
-                ->set_code(ResponseType::BAD_REQUEST)
-                ->set_error([__("Only type json for accept header is allowed")])
+        if (!$this->requestComponent->doClientAcceptJson()) {
+            $this->_getJsonInstanceFromResponse()
+                ->setResponseCode(ResponseType::BAD_REQUEST)
+                ->setErrors([__("Only type json for accept header is allowed")])
                 ->show();
+        }
 
         try {
-            $search = SF::get_callable(UsersSearchService::class, $this->request->get_get());
+            $search = SF::getCallableService(UsersSearchService::class, $this->requestComponent->getGet());
             $result = $search();
-            $this->_get_json()->set_payload([
+            $this->_getJsonInstanceFromResponse()->setPayload([
                 "message"  => __("auth ok"),
                 "result"   => $result["result"],
                 "filtered" => $result["total"],
                 "total"    => $result["total"],
                 "req_uuid" => $result["req_uuid"],
             ])->show();
-        }
-        catch (Exception $e) {
-            $this->_get_json()->set_code($e->getCode())
-                ->set_error([$e->getMessage()])
+        } catch (Exception $e) {
+            $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
+                ->setErrors([$e->getMessage()])
                 ->show();
         }
     }//search

@@ -1,74 +1,84 @@
 <?php
+
 namespace App\Restrict\Promotions\Application;
 
-use App\Shared\Infrastructure\Services\AppService;
-use App\Shared\Infrastructure\Factories\ServiceFactory as SF;
-use App\Shared\Infrastructure\Factories\RepositoryFactory as RF;
-use App\Restrict\Auth\Application\AuthService;
-use App\Restrict\Promotions\Domain\PromotionUiRepository;
-use App\Restrict\Users\Domain\Enums\UserPolicyType;
 use App\Shared\Domain\Enums\ExceptionType;
+use App\Restrict\Auth\Application\AuthService;
+use App\Shared\Infrastructure\Services\AppService;
+use App\Restrict\Users\Domain\Enums\UserPolicyType;
+use App\Restrict\Promotions\Domain\PromotionUiRepository;
+use App\Shared\Infrastructure\Factories\{RepositoryFactory as RF, ServiceFactory as SF};
 
 final class PromotionUiInfoService extends AppService
 {
-    private AuthService $auth;
-    private array $authuser;
+    private AuthService $authService;
+    private array $authUserArray;
     private PromotionUiRepository $repopromoui;
 
     public function __construct(array $input)
     {
-        $this->auth = SF::get_auth();
-        $this->_check_permission();
+        $this->authService = SF::getAuthService();
+        $this->_checkPermissionOrFail();
 
-        if(!$this->input = $input[0] ?? "")
-            $this->_exception(__("No {0} code provided", "promotion_ui"), ExceptionType::CODE_BAD_REQUEST);
+        if (!$this->input = $input[0] ?? "") {
+            $this->_throwException(__("No {0} code provided", "promotion_ui"), ExceptionType::CODE_BAD_REQUEST);
+        }
 
-        $this->authuser = $this->auth->get_user();
-        $this->repopromoui = RF::get(PromotionUiRepository::class);
+        $this->authUserArray = $this->authService->getAuthUserArray();
+        $this->repopromoui = RF::getInstanceOf(PromotionUiRepository::class);
     }
 
-    private function _check_permission(): void
+    private function _checkPermissionOrFail(): void
     {
-        if($this->auth->is_root_super()) return;
+        if ($this->authService->isAuthUserSuperRoot()) {
+            return;
+        }
 
-        if(!(
-            $this->auth->is_user_allowed(UserPolicyType::PROMOTION_UIS_READ)
-            || $this->auth->is_user_allowed(UserPolicyType::PROMOTION_UIS_WRITE)
-        ))
-            $this->_exception(
+        if (!(
+            $this->authService->hasAuthUserPolicy(UserPolicyType::PROMOTION_UIS_READ)
+            || $this->authService->hasAuthUserPolicy(UserPolicyType::PROMOTION_UIS_WRITE)
+        )) {
+            $this->_throwException(
                 __("You are not allowed to perform this operation"),
                 ExceptionType::CODE_FORBIDDEN
             );
+        }
     }
 
-    private function _check_entity_permission(array $entity): void
+    private function _checkEntityPermissionOrFail(array $entity): void
     {
-        if ($this->auth->is_root() || $this->auth->is_sysadmin()) return;
+        if ($this->authService->isAuthUserRoot() || $this->authService->isAuthUserSysadmin()) {
+            return;
+        }
 
-        $idauthuser = (int) $this->authuser["id"];
+        $idauthuser = (int) $this->authUserArray["id"];
         $identowner = (int) $entity["id_owner"];
         //si el owner logado es propietario de la entidad
-        if ($this->auth->is_business_owner() && $idauthuser === $identowner)
+        if ($this->authService->isAuthUserBusinessOwner() && $idauthuser === $identowner) {
             return;
+        }
 
-        $idauthowner = $this->auth->get_idowner();
-        if ($this->auth->is_business_manager() && $idauthowner === $identowner)
+        $idauthowner = $this->authService->getIdOwner();
+        if ($this->authService->hasAuthUserBusinessManagerProfile() && $idauthowner === $identowner) {
             return;
+        }
 
-        $this->_exception(
-            __("You are not allowed to perform this operation"), ExceptionType::CODE_FORBIDDEN
+        $this->_throwException(
+            __("You are not allowed to perform this operation"),
+            ExceptionType::CODE_FORBIDDEN
         );
     }
 
     public function __invoke(): array
     {
-        if(!$promotion_ui = $this->repopromoui->get_info($this->input))
-            $this->_exception(
+        if (!$promotion_ui = $this->repopromoui->getPromotionUiInfoByPromotionUiUuid($this->input)) {
+            $this->_throwException(
                 __("{0} with code {1} not found", __("Promotion UI"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
+        }
 
-        $this->_check_entity_permission($promotion_ui);
+        $this->_checkEntityPermissionOrFail($promotion_ui);
         return [
             "promotion_ui" => $promotion_ui
         ];
@@ -76,12 +86,13 @@ final class PromotionUiInfoService extends AppService
 
     public function get_for_edit(): array
     {
-        if(!$promotion_ui = $this->repopromoui->get_info($this->input))
-            $this->_exception(
+        if (!$promotion_ui = $this->repopromoui->getPromotionUiInfoByPromotionUiUuid($this->input)) {
+            $this->_throwException(
                 __("{0} with code {1} not found", __("Promotion UI"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
-        $this->_check_entity_permission($promotion_ui);
+        }
+        $this->_checkEntityPermissionOrFail($promotion_ui);
         return $promotion_ui;
     }
 }

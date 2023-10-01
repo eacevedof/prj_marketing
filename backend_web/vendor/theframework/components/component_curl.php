@@ -2,57 +2,67 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link eduardoaf.com
- * @name TheApplication\Components\ComponentCurl 
+ * @name TheApplication\Components\ComponentCurl
  * @file ComponentCurl.php 1.1.0
  * @date 08-04-2019 10:10 SPAIN
  * @observations
  */
+
 namespace TheFramework\Components;
 
-class ComponentCurl 
+class ComponentCurl
 {
-    const DS = DIRECTORY_SEPARATOR;
-    
+    public const DS = DIRECTORY_SEPARATOR;
+
     private $sRootUrl;
     private $arOptions;
     private $arGetFields;
     private $arPostFields;
     private $arResult;
     private $arConfig;
-    
-    public function __construct($sRootUrl="") 
+
+    public function __construct($sRootUrl = "")
     {
-        if($sRootUrl) 
+        if ($sRootUrl) {
             $this->sRootUrl = $sRootUrl;
+        }
         $this->arOptions = [];
         $this->arPostFields = [];
         $this->arGetFields = [];
         $this->arResult = [];
         $this->arConfig = [];
     }
-    
-    private function _is_in_options($sK){return isset($this->arOptions[$sK]);}
-    
+
+    private function _is_in_options($sK)
+    {
+        return isset($this->arOptions[$sK]);
+    }
+
     private function _get_opturl()
     {
         $sUrl = "";
-        if($this->sRootUrl) $sUrl = $this->sRootUrl;
-        if($this->_is_in_options(CURLOPT_URL)) 
+        if ($this->sRootUrl) {
+            $sUrl = $this->sRootUrl;
+        }
+        if ($this->_is_in_options(CURLOPT_URL)) {
             $sUrl = $this->arOptions[CURLOPT_URL];
-        
+        }
+
         $sUrl .= "?";
         $arGet = [];
-        foreach($this->arGetFields as $k=>$v)
-            $arGet[]="$k=$v";
-        $sUrl .= implode("&",$arGet);
+        foreach($this->arGetFields as $k => $v) {
+            $arGet[] = "$k=$v";
+        }
+        $sUrl .= implode("&", $arGet);
         return $sUrl;
     }
 
     private function _array_flip($arConst)
     {
         $arFlipped = [];
-        foreach($arConst as $k=>$v)
+        foreach($arConst as $k => $v) {
             $arFlipped[$v] = $k;
+        }
         return $arFlipped;
     }//_array_flip
 
@@ -144,71 +154,113 @@ class ComponentCurl
             "CURL_VERSION_IPV6" => 1,"CURL_VERSION_KERBEROS4" => 2,"CURL_VERSION_KERBEROS5" => 262144,"CURL_VERSION_LARGEFILE" => 512,"CURL_VERSION_LIBZ" => 8,"CURL_VERSION_MULTI_SSL" => 4194304,"CURL_VERSION_NTLM" => 16,
             "CURL_VERSION_NTLM_WB" => 32768,"CURL_VERSION_SPNEGO" => 256,"CURL_VERSION_SSL" => 4,"CURL_VERSION_SSPI" => 2048,"CURL_VERSION_TLSAUTH_SRP" => 16384,"CURL_VERSION_UNIX_SOCKETS" => 524288,"CURL_WRITEFUNC_PAUSE" => 268435457
         ];
-        if(is_integer($mxValue))
+        if (is_integer($mxValue)) {
             //$arConst = array_flip($arConst);
             $arConst = $this->_array_flip($arConst);
-        
-        return isset($arConst[$mxValue])?$arConst[$mxValue]:NULL;
-        
+        }
+
+        return isset($arConst[$mxValue]) ? $arConst[$mxValue] : null;
+
     }//_get_constant
 
-    public function get_result($asArray=0)
+    public function get_result($asArray = 0)
     {
         $this->arConfig = [];
         $oCurl = curl_init();
         $sUrl = $this->_get_opturl();
-        
+
         $this->arConfig[CURLOPT_URL] = [$this->_get_constant(CURLOPT_URL) => $sUrl];
-        if($sUrl) curl_setopt($oCurl, CURLOPT_URL, $sUrl);
-        
-        
-        foreach($this->arOptions as $sK =>$mxV)
-        {
+        if ($sUrl) {
+            curl_setopt($oCurl, CURLOPT_URL, $sUrl);
+        }
+
+
+        foreach($this->arOptions as $sK => $mxV) {
             $this->arConfig[$sK] = [$this->_get_constant($sK) => $mxV];
 
-            if(in_array($mxV,[CURLOPT_POST,CURLOPT_POSTFIELDS]))
+            if (in_array($mxV, [CURLOPT_POST,CURLOPT_POSTFIELDS])) {
                 continue;
+            }
             curl_setopt($oCurl, $sK, $mxV);
         }
 
-        if($this->arPostFields)
-        {
+        if ($this->arPostFields) {
             $this->arConfig[CURLOPT_POST] = [$this->_get_constant(CURLOPT_POST) => $mxV];
             curl_setopt($oCurl, CURLOPT_POST, 1);
             $this->arConfig[CURLOPT_POSTFIELDS] = [$this->_get_constant(CURLOPT_POSTFIELDS) => $mxV];
             curl_setopt($oCurl, CURLOPT_POSTFIELDS, $this->arPostFields);
         }
-        
+
         $this->arResult[CURLOPT_URL] = $sUrl;
-        
+
         $this->arResult["curl_exec"] = curl_exec($oCurl);
-        if($asArray)
-            $this->arResult["curl_exec"] = json_decode($this->arResult["curl_exec"],1);
-        
-        $info = curl_getinfo($oCurl,CURLINFO_HTTP_CODE);
+        if ($asArray) {
+            $this->arResult["curl_exec"] = json_decode($this->arResult["curl_exec"], 1);
+        }
+
+        $info = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
         $this->arConfig[CURLINFO_HTTP_CODE] = [$this->_get_constant(CURLINFO_HTTP_CODE) => $info];
         $this->arResult["curl_getinfo"][CURLINFO_HTTP_CODE] = $info;
-        
+
         print_r($this->arConfig);
         //print_r($this->arOptions);
         //print_r($this->arResult);
         return $this->arResult;
-        
+
     }//get_result
 
-    public function set_rooturl($sUrl){$this->sRootUrl = $sUrl;}
+    public function set_rooturl($sUrl)
+    {
+        $this->sRootUrl = $sUrl;
+    }
 
-    public function set_postfield($sKey=NULL,$sValue=NULL){if(!$sKey) $this->arPostFields=[]; if($sKey) $this->arPostFields[$sKey]=$sValue;}
-    public function add_postfield($sKey,$sValue){$this->arPostFields[$sKey]=$sValue;}
-    
-    public function set_getfield($sKey=NULL,$sValue=NULL){if(!$sKey) $this->arGetFields=[]; if($sKey) $this->arGetFields[$sKey]=$sValue;}
-    public function add_getfield($sKey,$sValue){$this->arGetFields[$sKey]=$sValue;}    
-            
-    public function set_options($sKey=NULL,$sValue=NULL){if(!$sKey) $this->arOptions=[]; if($sKey) $this->arOptions[$sKey]=$sValue;}
-    public function add_option($sKey,$sValue){$this->arOptions[$sKey]=$sValue;}
+    public function set_postfield($sKey = null, $sValue = null)
+    {
+        if (!$sKey) {
+            $this->arPostFields = [];
+        } if ($sKey) {
+            $this->arPostFields[$sKey] = $sValue;
+        }
+    }
+    public function add_postfield($sKey, $sValue)
+    {
+        $this->arPostFields[$sKey] = $sValue;
+    }
 
-    public function get_config(){return $this->arConfig;}
-    public function show_config(){print_r($this->arConfig);}
-  
-    
+    public function set_getfield($sKey = null, $sValue = null)
+    {
+        if (!$sKey) {
+            $this->arGetFields = [];
+        } if ($sKey) {
+            $this->arGetFields[$sKey] = $sValue;
+        }
+    }
+    public function add_getfield($sKey, $sValue)
+    {
+        $this->arGetFields[$sKey] = $sValue;
+    }
+
+    public function set_options($sKey = null, $sValue = null)
+    {
+        if (!$sKey) {
+            $this->arOptions = [];
+        } if ($sKey) {
+            $this->arOptions[$sKey] = $sValue;
+        }
+    }
+    public function add_option($sKey, $sValue)
+    {
+        $this->arOptions[$sKey] = $sValue;
+    }
+
+    public function get_config()
+    {
+        return $this->arConfig;
+    }
+    public function show_config()
+    {
+        print_r($this->arConfig);
+    }
+
+
 }//ComponentCurl

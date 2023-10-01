@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Shared\Infrastructure\Components\Date;
-use \DateTimeZone;
-use \DateTime;
+
+use DateTime;
+use DateTimeZone;
 
 final class UtcComponent
 {
@@ -10,7 +11,7 @@ final class UtcComponent
     public const FORMAT_FULL_DT = "Y-m-d H:i:s";
     public const FORMAT_ONLY_DATE = "Y-m-d";
 
-    private function _get_offset_between_zones(string $targettz, string $sourcetz = self::TZ_UTC): int
+    private function _getSecsDiffBetweenTzs(string $targettz, string $sourcetz = self::TZ_UTC): int
     {
         $tz0 = new DateTimeZone($sourcetz);
         //$tzTarget = new DateTimeZone("Europe/Madrid");
@@ -30,12 +31,11 @@ final class UtcComponent
      * @return string
      * @throws \Exception
      */
-    public function get_utcdt_in_tz(
+    public function getUtcDtInTargetTz(
         string $utcdt,
-        string $targettz=self::TZ_UTC,
-        string $format=self::FORMAT_FULL_DT
-    ): string
-    {
+        string $targettz = self::TZ_UTC,
+        string $format = self::FORMAT_FULL_DT
+    ): string {
         $source = new DateTime($utcdt, new DateTimeZone(self::TZ_UTC));
         $source->setTimezone(new DateTimeZone($targettz));
         return $source->format($format);
@@ -51,13 +51,12 @@ final class UtcComponent
      * @return string
      * @throws \Exception
      */
-    public function get_dt_into_tz(
+    public function getSourceDtIntoTargetTz(
         string $sourcedt,
         string $sourcetz,
-        string $targettz=self::TZ_UTC,
-        string $format=self::FORMAT_FULL_DT
-    ): string
-    {
+        string $targettz = self::TZ_UTC,
+        string $format = self::FORMAT_FULL_DT
+    ): string {
         $source = new DateTime($sourcedt, new DateTimeZone($sourcetz));
         $source->setTimezone(new DateTimeZone($targettz));
         return $source->format($format);
@@ -65,26 +64,28 @@ final class UtcComponent
 
     /**
      * current datetime in TZx (default UTC)
-     * @param string $timezone
+     * @param string $targetTz
      * @param string $format
      * @return string
      * @throws \Exception
      */
-    public function get_nowdt_in_timezone(string $timezone=self::TZ_UTC, string $format=self::FORMAT_FULL_DT): string
+    public function getNowDtIntoTargetTz(string $targetTz = self::TZ_UTC, string $format = self::FORMAT_FULL_DT): string
     {
-        $dt = new DateTime("now", new DateTimeZone($timezone));
+        $dt = new DateTime("now", new DateTimeZone($targetTz));
         return $dt->format($format);
     }
-    
-    private function get_dt_by_ip(string $ip, string $format=self::FORMAT_FULL_DT): string
+
+    private function getDateByIp(string $ip, string $format = self::FORMAT_FULL_DT): string
     {
-        $timezone = $this->get_timezone_by_ip($ip);
-        return $this->get_nowdt_in_timezone($timezone, $format);
+        $timezone = $this->getTimezoneByIp($ip);
+        return $this->getNowDtIntoTargetTz($timezone, $format);
     }
 
-    public function get_timezone_by_ip(string $ip): string
+    public function getTimezoneByIp(string $ip): string
     {
-        if ($ip === "127.0.0.1") return self::TZ_UTC;
+        if ($ip === "127.0.0.1") {
+            return self::TZ_UTC;
+        }
         $info = file_get_contents("http://ip-api.com/json/{$ip}");
         $info = json_decode($info, 1);
         /*
@@ -96,11 +97,16 @@ final class UtcComponent
 
         return ($info["timezone"] ?? self::TZ_UTC);
     }
-    
-    public function get_utcdt_into_iptz(string $utcdt, string $ip, string $format=self::FORMAT_FULL_DT): string
-    {
-        $timezone = $this->get_timezone_by_ip($ip);
-        if ($timezone === self::TZ_UTC) return date($format, strtotime($utcdt));
-        return $this->get_dt_into_tz($utcdt, self::TZ_UTC, $timezone, $format);
+
+    public function getUtcDateIntoIpTimeZone(
+        string $dtUTC,
+        string $targetIp,
+        string $format = self::FORMAT_FULL_DT
+    ): string {
+        $timezoneByIp = $this->getTimezoneByIp($targetIp);
+        if ($timezoneByIp === self::TZ_UTC) {
+            return date($format, strtotime($dtUTC));
+        }
+        return $this->getSourceDtIntoTargetTz($dtUTC, self::TZ_UTC, $timezoneByIp, $format);
     }
 }
