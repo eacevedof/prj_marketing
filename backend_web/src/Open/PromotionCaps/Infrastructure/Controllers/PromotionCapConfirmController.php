@@ -15,9 +15,9 @@ use App\Open\PromotionCaps\Application\PromotionCapsConfirmService;
 
 final class PromotionCapConfirmController extends OpenController
 {
-    public function confirm(string $businessSlug, string $promotionCapUuid): void
+    public function confirm(string $businessSlug, string $subscriptionUuid): void
     {
-        if (!($businessSlug && $promotionCapUuid)) {
+        if (!($businessSlug && $subscriptionUuid)) {
             $this->setLayoutBySubPath("open/mypromos/error")
                 ->addHeaderCode($code = ResponseType::BAD_REQUEST)
                 ->addGlobalVar(PageType::TITLE, $title = __("Subscription confirmation error!"))
@@ -28,7 +28,7 @@ final class PromotionCapConfirmController extends OpenController
         }
 
         $isTestMode = ($this->requestComponent->getGet("mode", "") === "test");
-        $space = SF::getInstanceOf(BusinessSpaceService::class, ["_test_mode" => $isTestMode])->getDataByPromotionCapByPromotionCapUuid($promotionCapUuid);
+        $space = SF::getInstanceOf(BusinessSpaceService::class, ["_test_mode" => $isTestMode])->getDataByPromotionCapByPromotionCapUuid($subscriptionUuid);
         if (!$space) {
             $this->addHeaderCode($code = ResponseType::NOT_FOUND)
                 ->setPartLayout("open/mypromos/error")
@@ -41,12 +41,15 @@ final class PromotionCapConfirmController extends OpenController
         }
 
         try {
-            $insert = SF::getCallableService(PromotionCapsConfirmService::class, [
+            /**
+             * @var PromotionCapsConfirmService $promotionCapsConfirmService
+             */
+            $promotionCapsConfirmService = SF::getCallableService(PromotionCapsConfirmService::class, [
                 "promotionuuid" => $space["promocode"] ?? "",
-                "subscriptionuuid" => $promotionCapUuid,
+                "subscriptionuuid" => $subscriptionUuid,
                 "_test_mode" => $isTestMode,
             ]);
-            $result = $insert();
+            $result = $promotionCapsConfirmService();
             $this->setLayoutBySubPath("open/mypromos/success")
                 ->addGlobalVar(PageType::TITLE, $title = __("Subscription confirmation success!"))
                 ->addGlobalVar(PageType::H1, $title)
@@ -56,9 +59,10 @@ final class PromotionCapConfirmController extends OpenController
                     ["p" => __("Please check your email inbox. You will receive a voucher code which you should show it at <b>{0}</b>", $result["business"])],
                 ]);
 
-            unset($insert, $result, $promotionCapUuid);
+            unset($promotionCapsConfirmService, $result, $subscriptionUuid);
             $this->view->renderLayoutOnly();
-        } catch (PromotionCapException $e) {
+        }
+        catch (PromotionCapException $e) {
             $this->addHeaderCode($e->getCode())
                 ->setPartLayout("open/mypromos/error")
                 ->addGlobalVar(PageType::TITLE, $title = __("Subscription confirmation error!"))
@@ -67,7 +71,8 @@ final class PromotionCapConfirmController extends OpenController
                 ->addGlobalVar("error", $e->getMessage())
                 ->addGlobalVar("code", $e->getCode())
                 ->renderLayoutOnly();
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             $this->addHeaderCode(ResponseType::INTERNAL_SERVER_ERROR)
                 ->setPartLayout("open/mypromos/error")
                 ->addGlobalVar(PageType::TITLE, $title = __("Subscription confirmation error!"))

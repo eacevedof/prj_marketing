@@ -48,29 +48,35 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
             throw new Exception("Wrong path $pathSubscriptionTemplate");
         }
 
-        $data = RF::getInstanceOf(PromotionCapUsersRepository::class)->getSubscriptionData($domainEvent->aggregateId());
+        $subscriptionEmail = RF::getInstanceOf(PromotionCapUsersRepository::class)->getSubscriptionData($domainEvent->aggregateId());
 
-        $url = Routes::getUrlByRouteName("business.space", ["businessSlug" => $data["businessslug"]]);
+        $url = Routes::getUrlByRouteName("business.space", ["businessSlug" => $subscriptionEmail["businessslug"]]);
         $link = $this->domain->getDomainUrlWithAppend($url);
         $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
-        $data["space_link"] = $link;
+        $subscriptionEmail["space_link"] = $link;
 
-        $url = Routes::getUrlByRouteName("subscription.confirm", ["businessSlug" => $data["businessslug"], "subscriptionuuid" => $data["subscode"]]);
+        $url = Routes::getUrlByRouteName(
+            "subscription.confirm",
+            ["businessSlug" => $subscriptionEmail["businessslug"], "subscriptionUuid" => $subscriptionEmail["subscode"]]
+        );
         $link = $this->domain->getDomainUrlWithAppend($url);
         $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
-        $data["confirm_link"] = $link;
+        $subscriptionEmail["confirm_link"] = $link;
 
-        $url = Routes::getUrlByRouteName("subscription.cancel", ["businessSlug" => $data["businessslug"], "subscriptionuuid" => $data["subscode"]]);
+        $url = Routes::getUrlByRouteName(
+            "subscription.cancel",
+            ["businessSlug" => $subscriptionEmail["businessslug"], "subscriptionUuid" => $subscriptionEmail["subscode"]]
+        );
         $link = $this->domain->getDomainUrlWithAppend($url);
         $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
-        $data["unsubscribe_link"] = $link;
+        $subscriptionEmail["unsubscribe_link"] = $link;
 
-        $url = Routes::getUrlByRouteName("terms.by-promotion", ["promotionSlug" => $data["promoslug"]]);
+        $url = Routes::getUrlByRouteName("terms.by-promotion", ["promotionSlug" => $subscriptionEmail["promoslug"]]);
         $link = $this->domain->getDomainUrlWithAppend($url);
         $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
-        $data["terms_link"] = $link;
+        $subscriptionEmail["terms_link"] = $link;
 
-        $html = FromTemplate::getFileContent($pathSubscriptionTemplate, ["data" => $data]);
+        $html = FromTemplate::getFileContent($pathSubscriptionTemplate, ["data" => $subscriptionEmail]);
         $this->logSql($html, "_on_subscription");
         /**
          * @var FuncEmailComponent $email
@@ -78,8 +84,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $email = CF::getInstanceOf(FuncEmailComponent::class);
         $email
             ->set_from(getenv("APP_EMAIL_FROM1"))
-            ->add_to($data["email"])
-            ->set_subject(__("Subscription to “{0}“", $data["promotion"]))
+            ->add_to($subscriptionEmail["email"])
+            ->set_subject(__("Subscription to “{0}“", $subscriptionEmail["promotion"]))
             ->set_content($html)
             ->send()
         ;
@@ -107,7 +113,7 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
         $link = $this->domain->getDomainUrlWithAppend($url);
         $data["points_link"] = $link;
 
-        $url = Routes::getUrlByRouteName("subscription.cancel", ["businessSlug" => $data["businessslug"], "subscriptionuuid" => $subscriptionUuid = $data["subscode"]]);
+        $url = Routes::getUrlByRouteName("subscription.cancel", ["businessSlug" => $data["businessslug"], "subscriptionUuid" => $subscriptionUuid = $data["subscode"]]);
         $link = $this->domain->getDomainUrlWithAppend($url);
         $link .= $domainEvent->isTestMode() ? "?mode=test" : "";
         $data["unsubscribe_link"] = $link;
