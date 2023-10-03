@@ -26,6 +26,7 @@ final class CsvComponent
     {
         $eol = PHP_EOL;
         $fnFilter = function (&$str) {
+            if (is_null($str)) $str = "";
             $str = preg_replace("/\t/", "\\t", $str);
             $str = preg_replace("/\r?\n/", "\\n", $str);
             if(strstr($str, "\"")) {
