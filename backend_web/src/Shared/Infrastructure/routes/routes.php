@@ -16,14 +16,14 @@ return [
     ],
 
     [
-        "url" => "/afiliado/:businessSlug/suscripcion/:subscriptionuuid/confirmar",
+        "url" => "/afiliado/:businessSlug/suscripcion/:subscriptionUuid/confirmar",
         "controller" => "App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapConfirmController",
         "method" => "confirm", "allowed" => ["get"],
         "name" => "subscription.confirm"
     ],
 
     [
-        "url" => "/afiliado/:businessSlug/suscripcion/:subscriptionuuid/cancelar/",
+        "url" => "/afiliado/:businessSlug/suscripcion/:subscriptionUuid/cancelar/",
         "controller" => "App\Open\PromotionCaps\Infrastructure\Controllers\PromotionCapCancelController",
         "method" => "cancel", "allowed" => ["get"],
         "name" => "subscription.cancel"
