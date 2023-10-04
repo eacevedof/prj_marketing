@@ -57,14 +57,17 @@ run-test
     [
     "users:read",
     "users:write",
-    "promotions:read",
-    "promotions:write",
     "userpermissions:read",
     "userpermissions:write",
+    "userpreferences:read",
+    "userpreferences:write",
     "businessdata:read",
     "businessdata:write",
-    "userpreferences:read",
-    "userpreferences:write"
+    "promotions:read",
+    "promotions:write",
+    "subscriptions:read",
+    "subscriptions:write",
+    "billings:read"
     ]
     ```
   - Permisos existentes 
