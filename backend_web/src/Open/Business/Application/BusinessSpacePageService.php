@@ -27,17 +27,20 @@ final class BusinessSpacePageService extends AppService
             }
         }, $spacePage);
         $spacePage = $map;
-        $businessName = RF::getInstanceOf(BusinessDataRepository::class)->getBusinessDataByBusinessDataSlug($businessSlug, ["business_name"])["business_name"] ?? "";
+        $businessData = RF::getInstanceOf(BusinessDataRepository::class)->getBusinessDataByBusinessDataSlug($businessSlug, ["business_name", "url_business"]);
+
+        $businessName = htmlentities(trim($businessData["business_name"] ?? ""));
+        $urlBusiness = htmlentities(trim($businessData["url_business"] ?? ""));
 
         return [
-            ["h2" => __("About {0}", $businessName)],
+            ["h2" => __("About {0}", ...$this->_getUrlBusinessLink($businessName, $urlBusiness))],
             ...$this->_getHtmlParagraphs($this->_getCleanedHtml($spacePage["space_about"] ?? "")),
 
             ["h2" => __("Our points programs")],
             ...explode("\n", $this->_getCleanedHtml($spacePage["space_plan"] ?? "")),
 
             ["h2" => __("Current promotions")],
-            ["ul" => $promotions],
+            ["ul" => $promotions ?: [__("Currently there are no promotions.")]],
 
             ["h2" => __("Where are we located?")],
             ...$this->_getHtmlParagraphs($this->_getCleanedHtml($spacePage["space_location"] ?? "")),
@@ -91,9 +94,15 @@ final class BusinessSpacePageService extends AppService
         $promotions = array_map(function (array $row) use ($businessSlug, $tz) {
             $description = htmlentities($row["description"]);
             $url = Routes::getUrlByRouteName("subscription.create", ["businessSlug" => $businessSlug, "promotionSlug" => $row["slug"]]);
-            return "<a href=\"$url\">{$description}</a> <small>Desde: {$row["date_from"]} / Hasta: {$row["date_to"]} $tz</small>";
+            return "<a href=\"$url\">{$description}</a> <br/><small>Desde: {$row["date_from"]} / Hasta: {$row["date_to"]} $tz</small>";
         }, $promotions);
         return $promotions;
+    }
+
+    private function _getUrlBusinessLink(string $businessName, string $businessUrl): array
+    {
+        if (!$businessUrl) return [$businessName];
+        return ["<a href=\"$businessUrl\" rel=\"nofollow noopener noreferer\" target=\"__blank\">{$businessName}</a>"];
     }
 
     private function _getHtmlParagraphs(string $html): array

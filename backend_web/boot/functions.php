@@ -110,34 +110,34 @@ function get_console_args($argv): array
     return $_ARG;
 }
 
-function __(string $msgid): string
+function __(string $msgId): string
 {
-    if (!$msgid = trim($msgid)) {
+    if (!$msgId = trim($msgId)) {
         return "";
     }
     $args = func_get_args();
     array_shift($args);
-    $msgchanged = $msgid;
+    $msgChanged = $msgId;
     foreach ($args as $i => $str) {
         $rep = "{".$i."}";
-        $msgchanged = str_replace($rep, $str, $msgchanged);
+        $msgChanged = str_replace($rep, $str, $msgChanged);
     }
 
     $lang = strtolower(trim($_REQUEST["lang"] ?? "en"));
     if ($lang === "en") {
-        return $msgchanged;
+        return $msgChanged;
     }
 
-    $pathpo = PATH_ROOT."/locale/$lang/default.po";
-    if(!is_file($pathpo)) {
-        return $msgchanged;
+    $pathPoFile = PATH_ROOT."/locale/$lang/default.po";
+    if(!is_file($pathPoFile)) {
+        return $msgChanged;
     }
 
     if(!($_REQUEST["APP_TRANSLATIONS"][$lang] ?? [])) {
-        $content = file_get_contents($pathpo);
+        $content = file_get_contents($pathPoFile);
         $content = trim($content);
         if (!$content) {
-            return $msgchanged;
+            return $msgChanged;
         }
 
         $lines = explode(PHP_EOL, $content);
@@ -170,20 +170,12 @@ function __(string $msgid): string
         unset($lines, $trs);
     }
 
-    $msgchanged = ($_REQUEST["APP_TRANSLATIONS"][$lang][$msgid] ?? "") ?: $msgid;
+    $msgChanged = ($_REQUEST["APP_TRANSLATIONS"][$lang][$msgId] ?? "") ?: $msgId;
 
     foreach ($args as $i => $str) {
         $rep = "{".$i."}";
-        $msgchanged = str_replace($rep, $str, $msgchanged);
+        $msgChanged = str_replace($rep, $str, $msgChanged);
     }
 
-    return $msgchanged;
-}
-
-use App\Shared\Infrastructure\Factories\Specific\KafkaFactory;
-use \App\Shared\Infrastructure\Components\Kafka\ProducerComponent;
-
-function get_log_producer(): ProducerComponent
-{
-    return KafkaFactory::getProducerInstance();
+    return $msgChanged;
 }
