@@ -1,11 +1,12 @@
 
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
+- en la pestaña ui cuando se habilita un input se reordena y aparece con No marcado
 
 ### To-Do
-- promocion con pais, moneda, en %, y zona IP
+- promocion con país, moneda, en %, y zona IP
 - bd trackinglog
-- python deploy pre-deploy and post-deploy
+
 - replicador de base de datos por alias
 - bigjson config en my-common?
 - perfil agency  
@@ -62,6 +63,7 @@
 - habria que crear una tabla de business_data con configuración de los js de analitica
 
 ### done
+- ~~python deploy pre-deploy and post-deploy~~
 - ~~en texto legal falta logo de la cuenta~~
 - ~~promo ui modificable si no hay nada capturado~~
 - ~~pagina index~~

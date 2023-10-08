@@ -1322,7 +1322,7 @@ msgid "Reproducing, copying, distributing, making available, publicly communicat
 msgstr "Reproducir, copiar, distribuir, hacer disponible, comunicar publicamente, transformar o modificar el contenido excepto en casos autorizados por ley o consentimiento expreso por el Proveedor del Servicio o por quien sea el propietario de los derechos de explotación. "
 
 msgid "This promotion expires at: {0} UTC"
-msgstr "Esta promoción expira el: {0} UTC"
+msgstr "Esta promoción finaliza el: {0} UTC"
 
 msgid "Promotion not found"
 msgstr "Promoción no encontrada"
@@ -1731,6 +1731,9 @@ msgstr "Nuestros planes por puntos"
 
 msgid "Current promotions"
 msgstr "Promociones en curso"
+
+msgid "Currently there are no promotions."
+msgstr "Actualmente no hay promociones en curso."
 
 msgid "Where are we located?"
 msgstr "¿Dónde estamos?"

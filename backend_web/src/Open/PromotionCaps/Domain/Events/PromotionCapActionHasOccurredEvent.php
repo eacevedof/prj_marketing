@@ -41,7 +41,7 @@ final class PromotionCapActionHasOccurredEvent extends AbstractEvent
 
     public static function eventName(): string
     {
-        return "promotioncapa.created";
+        return "promotioncap.action-occurred";
     }
 
     public static function fromPrimitives(

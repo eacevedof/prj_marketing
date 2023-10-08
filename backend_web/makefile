@@ -29,3 +29,6 @@ gitpush: ## git push
 
 pint: ## run laravel pint
 	vendor/bin/pint
+
+restore-devdb: ## no funciona: No module named py
+	py.sh fromserver.database mypromos-dev

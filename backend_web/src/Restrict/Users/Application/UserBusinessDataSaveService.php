@@ -282,6 +282,7 @@ final class UserBusinessDataSaveService extends AppService
         $this->_checkEntityPermissionOrFail();
 
         $businessDataToUpdate["_new"] = false;
+        if (isset($businessDataToUpdate["id"])) $businessDataToUpdate["id"] = (int) $businessDataToUpdate["id"];
         $this->fieldsValidator = VF::getFieldValidator($businessDataToUpdate, $this->businessDataEntity);
 
         return ($dbBusinessData = $this->businessDataRepository->getBusinessDataByIdUser($this->idUserOfBusinessData))

@@ -40,17 +40,22 @@ final class UsersBusinessDataUpdateController extends RestrictController
 
         try {
             $request = ["_useruuid" => $uuid] + $this->requestComponent->getPost();
-            $update = SF::getCallableService(UserBusinessDataSaveService::class, $request);
-            $result = $update();
+            /**
+             * @var UserBusinessDataSaveService $userBusinessDataSaveService
+             */
+            $userBusinessDataSaveService = SF::getCallableService(UserBusinessDataSaveService::class, $request);
+            $result = $userBusinessDataSaveService();
             $this->_getJsonInstanceFromResponse()->setPayload([
                 "message" => __("{0} {1} successfully updated", __("Business data"), $uuid),
                 "result" => $result,
             ])->show();
-        } catch (FieldsException $e) {
+        }
+        catch (FieldsException $e) {
             $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
-                ->setErrors([["fields_validation" => $update->getErrors()]])
+                ->setErrors([["fields_validation" => $userBusinessDataSaveService->getErrors()]])
                 ->show();
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             $this->_getJsonInstanceFromResponse()->setResponseCode($e->getCode())
                 ->setErrors([$e->getMessage()])
                 ->show();
