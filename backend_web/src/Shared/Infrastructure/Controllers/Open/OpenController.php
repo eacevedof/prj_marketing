@@ -27,6 +27,7 @@ abstract class OpenController extends AppController
         $this->_loadViewInstance();
         $this->_loadResponseComponentInstance();
         $this->_loadSessionComponentInstance();
+        $this->_loadHttpLanguage();
         $this->setLayoutBySubPath("open/open/mypromos")
             ->addGlobalVar("authUser", $this->sessionComponent->get(SessionType::AUTH_USER));
     }
