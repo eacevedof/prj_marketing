@@ -13,7 +13,7 @@ final class BusinessSpacePageService extends AppService
 {
     public function getPageByBusinessSlug(string $businessSlug): array
     {
-        $promotions = $this->_getPromotions($businessSlug);
+        $promotions = $this->_getPromotionsByBusinessSlug($businessSlug);
         $spacePage = RF::getInstanceOf(BusinessAttributeRepository::class)->getSpacePageByBusinessSlug($businessSlug);
 
         $printKeys = [
@@ -87,7 +87,7 @@ final class BusinessSpacePageService extends AppService
         return $html;
     }
 
-    private function _getPromotions(string $businessSlug): array
+    private function _getPromotionsByBusinessSlug(string $businessSlug): array
     {
         $tz = CF::getInstanceOf(UtcComponent::class)->getTimezoneByIp($_SERVER["REMOTE_ADDR"]);
         $promotions = RF::getInstanceOf(BusinessDataRepository::class)->getTop5LastRunningPromotionsByBusinessSlug($businessSlug, $tz);
