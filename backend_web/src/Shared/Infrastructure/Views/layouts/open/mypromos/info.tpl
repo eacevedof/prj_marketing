@@ -23,6 +23,7 @@ use App\Shared\Infrastructure\Helpers\Views\EnvIconHelper;
 <?php
 $this->_element("common/elem-band-env");
 ?>
+<!-- mypromos.info.tpl -->
 <main class="main-grid" id="top-mark">
   <div class="div-wave-top">
     <svg viewBox="25 0 550 150" preserveAspectRatio="none" style="height: 300%; width: 110%;">

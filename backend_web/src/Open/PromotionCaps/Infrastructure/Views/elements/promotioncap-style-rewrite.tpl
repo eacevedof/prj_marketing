@@ -10,6 +10,8 @@ promotioncap-style-rewrite.tpl
 echo $bdhelp->getStyleBody();
 BH::echoStyle("background-color", $promotion["bgcolor"]);
 BH::echoStyle("background-image", $promotion["bgimage_xs"]);
+
+echo $bdhelp->getStyleHeader();
 ?>
 }
 </style>

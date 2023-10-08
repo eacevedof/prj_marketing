@@ -27,6 +27,8 @@ final class PromotionSubscriptionNotifierEventHandler extends AppService impleme
     {
         //esto se hace en el listener no para cada llamada del evento
         $this->_loadRequestComponentInstance();
+        //@deuda esto debe venir en el evento
+        $this->_loadHttpLanguage();
         $this->lang = $this->requestComponent->getLang();
 
         $this->domain = UrlDomainHelper::getInstance();

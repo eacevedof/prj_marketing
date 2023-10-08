@@ -59,4 +59,21 @@ trait RequestTrait
         return $request[RequestType::CSRF] ?? "";
     }
 
+    private function _getLanguageByHttpAcceptLanguage(): string
+    {
+        $lang = explode(",", $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+        $lang = $lang[0] ?? "en";
+        $lang = strtolower($lang);
+        $lang = explode("-", $lang);
+        $lang = $lang[0] ?? "en";
+        if (!in_array($lang, ["en", "es"]))
+            return "en";
+        return $lang;
+    }
+
+    protected function _loadHttpLanguage(): void
+    {
+        $_REQUEST["lang"] = $this->_getLanguageByHttpAcceptLanguage();
+    }
+
 }//RequestTrait

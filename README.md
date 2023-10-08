@@ -67,7 +67,8 @@ run-test
     "promotions:write",
     "subscriptions:read",
     "subscriptions:write",
-    "billings:read"
+    "billings:read",
+    "promotionstats:read"
     ]
     ```
   - Permisos existentes 
@@ -84,11 +85,12 @@ run-test
   "promotions:read",
   "promotions:write",
   "promotionsui:read",
-  "promotionstats:read",
   "promotionsui:write",
   "subscriptions:read",
   "subscriptions:write",
-  "billings:read"
+  "billings:read",
+  
+  "promotionstats:read"
   ```
 - **business manager (BM)**
   - Ve ciertos módulos y CRUD dependiendo de permisos.
@@ -261,4 +263,10 @@ Stack trace:
   thrown in /appdata/www/backend_web/vendor/phpunit/phpunit/phpunit on line 61
 
 no bastaba con composer dump habia que ejecutar composer update
+```
+
+### sql
+```sql 
+UPDATE base_user SET secret='$2y$10$BEClm.fzRU2shGk5nMLGRe4f0JnkXofGMBkLZ6sC86f8/aeetCMhC' WHERE 1
+
 ```

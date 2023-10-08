@@ -19,6 +19,7 @@ vendor/*
 /db/*.prod.*
 /db/*.test.*
 /db/*.dev.*
+/db/prod_db_*.sql
 cache/*
 !cache/.gitkeep
 src/xxx-module/*

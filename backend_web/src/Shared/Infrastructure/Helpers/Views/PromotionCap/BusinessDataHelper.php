@@ -39,8 +39,9 @@ final class BusinessDataHelper extends AppHelper implements IHelper
 
     public function getStyleHeader(): string
     {
-        $style = [];
+        $styles = [];
         $part = $this->mapping[self::HEAD];
+        $color = "";
         foreach ($part as $field => $css) {
             if (!$value = trim($this->businessData[$field])) {
                 continue;
@@ -48,9 +49,17 @@ final class BusinessDataHelper extends AppHelper implements IHelper
             if (strstr($field, "bgimage")) {
                 $value = "url(\"$value\")";
             }
-            $style[] = "{$css}: $value";
+            if ($field==="head_color")
+                $color = $value;
+
+            $styles[] = "{$css}: $value";
         }
-        return $style ? implode("; ", $style) : "";
+        if (!$styles)  return "";
+
+        $style = ".nav-flex {".implode("; ", $styles)."}";
+        if (str_contains($style, "color:"))
+            $style .= " .nav-flex h1 {color: $color}";
+        return $style;
     }
 
     public function getStyleBody(): string
