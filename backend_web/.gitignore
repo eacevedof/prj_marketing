@@ -6,7 +6,10 @@ public/themes/valex/assets/_js
 .php-cs-fixer.cache
 #src/Shared/.scannerwork
 
-architecture/*.crswap
+./architecture/*.crswap
+./architecture/*.dtmp
+./architecture/*.bkp
+
 vendor/*
 !/vendor/theframework
 !/vendor/phpqrcode

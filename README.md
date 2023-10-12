@@ -127,10 +127,10 @@ Teléfono: <a href="tel:+297 582 7591" rel="nofollow noopener noreferer">+297 58
 Telegram: <a href="https://t.me/c/1394909256/17561" rel="nofollow noopener noreferer">+297 699 4346</a>
 Horario: 11:30 – 21:00
 ```
-
-
+https://dev.mypromos.es/restrict/promotions//1?view=edit&uuid=6522A88646F6A
 ### Ejemplo carga de tab:
 - [http://localhost:900/restrict/promotions/1?uuid=626e89da5d8ac&view=edit&tab=ui](http://localhost:900/restrict/promotions/1?uuid=626e89da5d8ac&view=edit&tab=ui)
+- [https://dev.xxx.com/restrict/promotions//1?view=edit&uuid=6522A88646F6A](https://dev.xxx.com/restrict/promotions//1?view=edit&uuid=6522A88646F6A)
 
 ### Ejemplo dttable
 ```js
@@ -267,6 +267,8 @@ no bastaba con composer dump habia que ejecutar composer update
 
 ### sql
 ```sql 
+--loc
 UPDATE base_user SET secret='$2y$10$BEClm.fzRU2shGk5nMLGRe4f0JnkXofGMBkLZ6sC86f8/aeetCMhC' WHERE 1
-
+--rest
+UPDATE base_user SET secret='$2y$10$qWULWjIee1qcHUijvVLH9.mH4lheGOHsTSa5zc5UKVDyLbi37FY.W' WHERE 1
 ```

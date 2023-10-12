@@ -46,21 +46,21 @@ final class SubscriptionsInfoService extends AppService
         }
     }
 
-    private function _checkEntityPermissionOrFail(array $entitycapsubs): void
+    private function _checkEntityPermissionOrFail(array $promotionCapEntity): void
     {
         if ($this->authService->isAuthUserRoot() || $this->authService->isAuthUserSysadmin()) {
             return;
         }
 
-        $idAuthUser = (int) $this->authUser["id"];
-        $idEntityOwner = (int) $entitycapsubs["id_owner"];
+        $idAuthUser = (int) $this->authUserArray["id"];
+        $idEntityOwner = (int) $promotionCapEntity["id_owner"];
         //si el owner logado es propietario de la entidad
         if ($this->authService->isAuthUserBusinessOwner() && ($idAuthUser === $idEntityOwner)) {
             return;
         }
 
-        $idauthowner = $this->authService->getIdOwner();
-        if ($this->authService->hasAuthUserBusinessManagerProfile() && ($idauthowner === $idEntityOwner)) {
+        $idAuthOwner = $this->authService->getIdOwner();
+        if ($this->authService->hasAuthUserBusinessManagerProfile() && ($idAuthOwner === $idEntityOwner)) {
             return;
         }
 
@@ -87,17 +87,17 @@ final class SubscriptionsInfoService extends AppService
 
     public function get_info_for_execute_date(): array
     {
-        $capsubscription = $this->promotionCapSubscriptionsRepository->getCapSubscriptionInfoForExecuteDate($this->input);
-        if (!$capsubscription) {
+        $capSubscriptionInfo = $this->promotionCapSubscriptionsRepository->getCapSubscriptionInfoForExecuteDate($this->input);
+        if (!$capSubscriptionInfo) {
             $this->_throwException(
                 __("{0} with code {1} not found", __("Promotion"), $this->input),
                 ExceptionType::CODE_NOT_FOUND
             );
         }
-        $this->_checkEntityPermissionOrFail($capsubscription);
+        $this->_checkEntityPermissionOrFail($capSubscriptionInfo);
 
         return [
-            "subscription" => $capsubscription,
+            "subscription" => $capSubscriptionInfo,
         ];
     }
 }
