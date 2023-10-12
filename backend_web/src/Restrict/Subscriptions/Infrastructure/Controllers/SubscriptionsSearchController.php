@@ -16,11 +16,11 @@ final class SubscriptionsSearchController extends RestrictController
     {
         $this->_redirectToLoginIfNoAuthUser();
         try {
-            $search = SF::getInstanceOf(SubscriptionsSearchService::class);
+            $subscriptionsSearchService = SF::getInstanceOf(SubscriptionsSearchService::class);
 
             $this->addGlobalVar(PageType::TITLE, __("Subscriptions"))
                 ->addGlobalVar(PageType::H1, __("Subscriptions"))
-                ->addGlobalVar("datatableHelper", $search->getDatatableHelper())
+                ->addGlobalVar("datatableHelper", $subscriptionsSearchService->getDatatableHelper())
                 ->addGlobalVar("idOwner", $this->authService->getIdOwner())
                 ->addGlobalVar("authRead", $this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_READ))
                 ->addGlobalVar("authWrite", $this->authService->hasAuthUserPolicy(UserPolicyType::SUBSCRIPTIONS_WRITE))
@@ -54,8 +54,8 @@ final class SubscriptionsSearchController extends RestrictController
         }
 
         try {
-            $search = SF::getCallableService(SubscriptionsSearchService::class, $this->requestComponent->getGet());
-            $result = $search();
+            $subscriptionSearchService = SF::getCallableService(SubscriptionsSearchService::class, $this->requestComponent->getGet());
+            $result = $subscriptionSearchService();
             $this->_getJsonInstanceFromResponse()->setPayload([
                 "message"  => __("auth ok"),
                 "result"   => $result["result"],

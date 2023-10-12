@@ -9,11 +9,13 @@
  * @var bool $authWrite
  */
 use App\Shared\Infrastructure\Helpers\RoutesHelper as Routes;
+
 if (!isset($authRead)) $authRead=false;
 if (!isset($authWrite)) $authWrite=false;
 $this->_element("restrict/elem-bowdisabled");
 $this->_element("common/elem-datatable-asset");
 ?>
+<!-- subscriptions.infrastructure.views.index.tpl subscriptionssearch-->
 <div class="row row-sm">
   <div class="col-xl-12">
     <div class="card">
@@ -57,7 +59,7 @@ import auth from "/assets/js/restrict/auth.js"
 
 auth.id_user = <?php $this->_echoJs($authUser["id"]) ?>;
 auth.id_profile = <?php $this->_echoJs($authUser["id_profile"]) ?>;
-auth.id_owner = <?php $this->_echoJs((string) $idOwner) ?>;
+auth.id_owner = <?php $this->_echoJs($idOwner) ?>;
 auth.readable = <?= (int)$authRead ?>;
 auth.writable = <?= (int)$authWrite ?>;
 

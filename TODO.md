@@ -2,8 +2,11 @@
 ### Errors
 - alta de usuario con bow permite dar de alta otro bow
 - en la pestaña ui cuando se habilita un input se reordena y aparece con No marcado
+- se ha roto el permiso de edición en subscripciones
+- el idioma no lo esta cogiendo
 
 ### To-Do
+- salto de linea en detalle de condiciones "\n"
 - promocion con país, moneda, en %, y zona IP
 - bd trackinglog
 
@@ -61,6 +64,7 @@
   - https://datatables.net/reference/api/ajax.reload()
 - image upload en theframework?? de momento si.
 - habria que crear una tabla de business_data con configuración de los js de analitica
+- 
 
 ### done
 - ~~python deploy pre-deploy and post-deploy~~
