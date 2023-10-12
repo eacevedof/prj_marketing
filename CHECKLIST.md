@@ -2,6 +2,7 @@
 ### Checklist
 - email noreply
 - nombre de dominio
+- obligatoriedad de plan por puntos
 - monetización
   - por rango de ventas
     - de 7 a 15 = 6% (0,42 - 0,9)
