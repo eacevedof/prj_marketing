@@ -2,8 +2,9 @@ import os
 
 ENV_HOME = "HOME"
 ENV_PATHPRJ = "PATHPRJ"
-ENV_DEV_URL = "DEV_URL"
-ENV_PRE_URL = "PRE_URL"
+
+ENV_DEV_URL = "TEST_URL"
+ENV_PRE_URL = "TEST_URL"
 
 
 def getenv(var: str, default: str = "") -> str:

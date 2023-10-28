@@ -8,7 +8,7 @@ def login_usr1_or_fail() -> None:
     browser = get_chrome()
     browser.get(FRONT_URL)
     dom = Dom(browser)
-    sleep(1)
+    sleep(60)
 
     input_email = dom.find_by_id("id-email")
     if len(input_email.get_attribute("value")) == 0:

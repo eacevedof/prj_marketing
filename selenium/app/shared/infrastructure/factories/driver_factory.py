@@ -3,8 +3,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from app.shared.infrastructure.facades.env import *
 
+
 PATH_DRIVER = getenv(ENV_PATHPRJ)
-FRONT_URL = "http://localhost:3000"
+FRONT_URL = "http://localhost:900"
 FRONT_URL = getenv(ENV_PRE_URL, getenv(ENV_DEV_URL, FRONT_URL))
 
 FRONT_URL_HASH = f"{FRONT_URL}/#"
@@ -26,7 +27,7 @@ def get_chrome():
     options.add_argument("start-maximized")
     #options.add_argument("--disable-blink-features=AutomationControlled")
 
-    service = Service(f"{PATH_DRIVER}/chrome-driver-selenium/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing")
+    service = Service(f"{PATH_DRIVER}/chrome-driver-selenium/chromedriver")
     __webdriver = webdriver.Chrome(service=service, options=options)
     #__webdriver.execute_cdp_cmd("Page.setDevToolsFlattened", {"devtoolsFlattened": True})
     __webdriver.execute_script("""
