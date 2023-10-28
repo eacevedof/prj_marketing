@@ -1,0 +1,4 @@
+- El driver descargado de chrome que funciona para esta version de selenium **4.14.0** es:
+- https://googlechromelabs.github.io/chrome-for-testing/
+    - chromedriver	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/118.0.5993.70/mac-x64/chromedriver-mac-x64.zip
+    - Versión 118.0.5993.117 (Build oficial) (x86_64)
